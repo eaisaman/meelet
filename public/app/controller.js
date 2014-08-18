@@ -3,7 +3,7 @@ define(function () {
         urlService.frameSketch();
     }
 
-    function FrameSketchController($scope, $timeout, $q, utilService) {
+    function FrameSketchController($scope, $timeout, $q) {
         //TODO 填充 背景图片 阴影 视角 旋转 缩放 位移 出现/消失/装载/其它事件动画 对齐 按网格移动/改变大小 width/height/border-radius 手势
         $scope.canvasSetting = {}
 
