@@ -1,0 +1,44 @@
+<link rel="stylesheet" type="text/css" href="stylesheets/frameSketch.css"/>
+<link rel="stylesheet" type="text/css" href="fonts/icon-gradient-editor/style.css"/>
+
+<div id="sketchContainer" class="row" ng-controller="FrameSketchController">
+    <div id="canvasHolder" class="col-as-8">
+        <canvas id="c"></canvas>
+    </div>
+
+    <div id="canvasControls" class="col-as-offset-1 col-as-3">
+        <div class="controlRow row">
+            <span>Color:</span>
+
+            <div id="color-control" ui-color-picker picked-Color="canvasSetting.strokeColor">
+            </div>
+        </div>
+
+        <div class="controlRow row">
+            <span>Fill:</span>
+
+            <div id="fill-control" ui-gradient-editor gradient-Color="canvasSetting.fillColor">
+            </div>
+        </div>
+
+        <div class="controlRow row">
+            <span>Angle:</span> <input type="range" id="angle-control" value="0" min="-90" max="90"
+                                       ng-model="canvasSetting.angle"/>
+        </div>
+
+        <div class="controlRow row">
+            <span>Left:</span> <input type="range" id="left-control" value="150" min="0" max="300"
+                                      ng-model="canvasSetting.left"/>
+        </div>
+
+        <div class="controlRow row">
+            <span>Top:</span> <input type="range" id="top-control" value="150" min="0" max="300"
+                                     ng-model="canvasSetting.top"/>
+        </div>
+
+        <div class="controlRow row">
+            <span>Scale:</span> <input type="range" id="scale-control" value="1" min="0.1" max="3"
+                                       step="0.1" ng-model="canvasSetting.scale"/>
+        </div>
+    </div>
+</div>
