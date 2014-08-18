@@ -1,0 +1,221 @@
+@font-face {
+    font-family: 'icon-gradient-editor';
+    src: url('icon-gradient-editor.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.icon-gradient-editor {
+    font-family: 'icon-gradient-editor';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-gradient-editor-brush:before {
+    content: "\e600";
+}
+.icon-gradient-editor-paste:before {
+    content: "\e601";
+}
+.icon-gradient-editor-insert:before {
+    content: "\e602";
+}
+.icon-gradient-editor-remove:before {
+    content: "\e603";
+}
+.icon-gradient-editor-copy:before {
+    content: "\e604";
+}
+.icon-gradient-editor-horizontal-scroll:before {
+    content: "\e605";
+}
+.icon-gradient-editor-vertical-scroll:before {
+    content: "\e606";
+}
+.icon-gradient-editor-equalizer:before {
+    content: "\e607";
+}
+.icon-gradient-editor-grid:before {
+    content: "\e608";
+}
+.icon-gradient-editor-increment:before {
+    content: "\e609";
+}
+.icon-gradient-editor-decrement:before {
+    content: "\e60a";
+}
+.icon-gradient-editor-arrow-left:before {
+    content: "\e60b";
+}
+.icon-gradient-editor-arrow-right:before {
+    content: "\e60c";
+}
+.icon-gradient-editor-arrow-up:before {
+    content: "\e60d";
+}
+.icon-gradient-editor-arrow-down:before {
+    content: "\e60e";
+}
+.icon-gradient-editor-cross:before {
+    content: "\e60f";
+}
+.icon-gradient-editor-simple-arrow-left:before {
+    content: "\e610";
+}
+.icon-gradient-editor-simple-arrow-down:before {
+    content: "\e611";
+}
+.icon-gradient-editor-simple-arrow-up:before {
+    content: "\e612";
+}
+.icon-gradient-editor-simple-arrow-right:before {
+    content: "\e613";
+}
+.icon-gradient-editor-paint-brush:before {
+    content: "\e614";
+}
+.icon-gradient-editor-question:before {
+    content: "\e615";
+}
+
+.icon-gradient-editor-brush-before:before {
+    content: "\e600";
+}
+.icon-gradient-editor-paste-before:before {
+    content: "\e601";
+}
+.icon-gradient-editor-insert-before:before {
+    content: "\e602";
+}
+.icon-gradient-editor-remove-before:before {
+    content: "\e603";
+}
+.icon-gradient-editor-copy-before:before {
+    content: "\e604";
+}
+.icon-gradient-editor-horizontal-scroll-before:before {
+    content: "\e605";
+}
+.icon-gradient-editor-vertical-scroll-before:before {
+    content: "\e606";
+}
+.icon-gradient-editor-equalizer-before:before {
+    content: "\e607";
+}
+.icon-gradient-editor-grid-before:before {
+    content: "\e608";
+}
+.icon-gradient-editor-increment-before:before {
+    content: "\e609";
+}
+.icon-gradient-editor-decrement-before:before {
+    content: "\e60a";
+}
+.icon-gradient-editor-arrow-left-before:before {
+    content: "\e60b";
+}
+.icon-gradient-editor-arrow-right-before:before {
+    content: "\e60c";
+}
+.icon-gradient-editor-arrow-up-before:before {
+    content: "\e60d";
+}
+.icon-gradient-editor-arrow-down-before:before {
+    content: "\e60e";
+}
+.icon-gradient-editor-cross-before:before {
+    content: "\e60f";
+}
+.icon-gradient-editor-simple-arrow-left-before:before {
+    content: "\e610";
+}
+.icon-gradient-editor-simple-arrow-down-before:before {
+    content: "\e611";
+}
+.icon-gradient-editor-simple-arrow-up-before:before {
+    content: "\e612";
+}
+.icon-gradient-editor-simple-arrow-right-before:before {
+    content: "\e613";
+}
+.icon-gradient-editor-paint-brush-before:before {
+    content: "\e614";
+}
+.icon-gradient-editor-question-before:before {
+    content: "\e615";
+}
+
+.icon-gradient-editor-brush-after:after {
+    content: "\e600";
+}
+.icon-gradient-editor-paste-after:after {
+    content: "\e601";
+}
+.icon-gradient-editor-insert-after:after {
+    content: "\e602";
+}
+.icon-gradient-editor-remove-after:after {
+    content: "\e603";
+}
+.icon-gradient-editor-copy-after:after {
+    content: "\e604";
+}
+.icon-gradient-editor-horizontal-scroll-after:after {
+    content: "\e605";
+}
+.icon-gradient-editor-vertical-scroll-after:after {
+    content: "\e606";
+}
+.icon-gradient-editor-equalizer-after:after {
+    content: "\e607";
+}
+.icon-gradient-editor-grid-after:after {
+    content: "\e608";
+}
+.icon-gradient-editor-increment-after:after {
+    content: "\e609";
+}
+.icon-gradient-editor-decrement-after:after {
+    content: "\e60a";
+}
+.icon-gradient-editor-arrow-left-after:after {
+    content: "\e60b";
+}
+.icon-gradient-editor-arrow-right-after:after {
+    content: "\e60c";
+}
+.icon-gradient-editor-arrow-up-after:after {
+    content: "\e60d";
+}
+.icon-gradient-editor-arrow-down-after:after {
+    content: "\e60e";
+}
+.icon-gradient-editor-cross-after:after {
+    content: "\e60f";
+}
+.icon-gradient-editor-simple-arrow-left-after:after {
+    content: "\e610";
+}
+.icon-gradient-editor-simple-arrow-down-after:after {
+    content: "\e611";
+}
+.icon-gradient-editor-simple-arrow-up-after:after {
+    content: "\e612";
+}
+.icon-gradient-editor-simple-arrow-right-after:after {
+    content: "\e613";
+}
+.icon-gradient-editor-paint-brush-after:after {
+    content: "\e614";
+}
+.icon-gradient-editor-question-after:after {
+    content: "\e615";
+}
