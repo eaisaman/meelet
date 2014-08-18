@@ -1,0 +1,23 @@
+@import "bootstrap-variables";
+@import "bootstrap/variables";
+
+@mixin all-grid-columns($i:1, $colPatterns: (".col-xs-", ".col-sm-", ".col-md-", ".col-lg-")) {
+    @for $i from 1 through $grid-columns {
+        @each $pattern in $colPatterns {
+            .col-as-#{$i} {
+                @extend #{$pattern}#{$i} !optional;
+            }
+            .col-as-offset-#{$i} {
+                @extend #{$pattern}offset-#{$i} !optional;
+            }
+            .col-as-pull-#{$i} {
+                @extend #{$pattern}pull-#{$i} !optional;
+            }
+            .col-as-push-#{$i} {
+                @extend #{$pattern}push-#{$i} !optional;
+            }
+        }
+    }
+}
+
+@include all-grid-columns();

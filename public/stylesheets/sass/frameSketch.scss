@@ -1,0 +1,67 @@
+@import "compass/css3";
+@import "compass/css3/border-radius";
+@import "compass/css3/transition";
+@import "flexbox";
+@import "color_picker";
+@import "gradient_editor";
+
+@include color-picker(color-control);
+@include gradient-editor(fill-control);
+
+#sketchContainer {
+    height: calc(100% - 100px);
+    margin: 50px;
+
+    #canvasHolder {
+        height: 100%;
+        border:1px solid #ccc;
+
+        > canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    #canvasControls {
+        height: 100%;
+        overflow: visible;
+
+        > .controlRow {
+            > span {
+                position: relative;
+                float: left;
+                width: calc(40% - 20px);
+                padding-right: 20px;
+                height: 120px;
+                line-height: 120px;
+            }
+
+            > input {
+                position: relative;
+                float: left;
+                width: 60%;
+                margin: 0;
+                height: 120px;
+                line-height: 120px;
+            }
+
+            #color-control {
+                z-index: 2;
+            }
+
+            #fill-control {
+                z-index: 1;
+            }
+
+            #color-control, #fill-control {
+                position: relative;
+                float: left;
+                width: 60%;
+                height: 120px;
+            }
+        }
+    }
+}
