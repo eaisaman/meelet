@@ -1,0 +1,21 @@
+<div class="ui-control-title fs-x-small">
+    <p ng-transclude></p>
+
+    <div class="ui-control-enable-button icon-dock-after icon-dock-cross-after" ng-click="toggleColorControl()"></div>
+</div>
+<div class="pickerContent ui-control-wrapper">
+    <div class="pickerBar ui-control-bar fs-x-large"
+         ng-click="togglePalette($event)"
+         ng-style="{'background-color':'{{pickerBarBackgroundColor}}'}"
+         ng-if="pickerPaneColor">
+        <div class="pickerPane fs-x-smaller"
+             ng-style="{'color':'{{pickerPaneColor}}', 'background-color':'{{pickerPaneBackgroundColor}}'}"
+                >{{pickedColor}}
+        </div>
+    </div>
+    <div class="pickerPalette ui-control-panel">
+        <div class="colorPane squarePane" ng-repeat="pane in colors" ng-click="pickColor(pane)"
+             ng-style="{'background-color':'{{pane}}'}">
+        </div>
+    </div>
+</div>

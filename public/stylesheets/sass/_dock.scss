@@ -1,0 +1,558 @@
+@import "compass/css3";
+@import "compass/css3/transform";
+@import "compass/css3/user-interface";
+@import "global";
+@import "animation/directive_animation";
+
+$color: rgba(0, 0, 0, 0.4);
+$borderColor: rgba(0, 0, 0, 0.4);
+$splitColor: #CACDC0;
+$activeBorderShadow: rgba(192, 192, 192, 0.8);
+$displayMoveButtonsDelay: 0.5s;
+$hideMoveButtonsDelay: 0.1s;
+$disableBackgroundColor: rgba(0, 0, 0, 0.2);
+
+$tabHeaderWidth: 6em;
+$numOfControlGroups: 2;
+$controlGroupTitleWidth: 10em;
+$numOfStructureControls: 10;
+$dockWidth: 8em;
+$expandedDockWidth: 12em;
+
+@mixin dock($dockId) {
+    ##{$dockId} {
+        position: absolute;
+        width: $dockWidth;
+        color: $color;
+
+        &:before, &:after {
+            content: "";
+            position: absolute;
+            z-index: -2;
+        }
+
+        &.show {
+            .ui-control-group-titles {
+                .showButton {
+                    display: none;
+                }
+                .hideButton {
+                    display: block;
+                }
+            }
+        }
+
+        &:not(.show) {
+            .ui-control-group-titles {
+                .showButton {
+                    display: block;
+                }
+                .hideButton {
+                    display: none;
+                }
+            }
+        }
+
+        &.align-right {
+            height: 100%;
+            right: -$dockWidth;
+
+            @include box-shadow(0 1px 4px rgba(0, 0, 0, 0.3));
+
+            &.show {
+                @extend %slideLeft;
+            }
+            &.hiding {
+                @extend %slideRightBack;
+            }
+        }
+
+        &.align-left {
+            height: 100%;
+            left: -$dockWidth;
+
+            @include box-shadow(0 1px 4px rgba(0, 0, 0, 0.3));
+
+            &.show {
+                @extend %slideRight;
+            }
+            &.hiding {
+                @extend %slideLeftBack;
+            }
+        }
+
+        > .dockContent {
+            position: relative;
+            float: left;
+            width: 100%;
+            height: 100%;
+
+            @include box-shadow(0 1px 4px rgba(0, 0, 0, 0.3));
+        }
+
+        &.align-right, &.align-left {
+            > .dockContent {
+                > .dockHead {
+                    position: relative;
+                    width: 100%;
+                    height: 2em;
+                    overflow: hidden;
+                    margin-bottom: 1em;
+                    @include transition(height $displayMoveButtonsDelay);
+
+                    &:after {
+                        position: absolute;
+                        bottom: 0px;
+                        left: 0px;
+                        width: 100%;
+                        height: 0px;
+                        content: '';
+                        border-top: 1px solid $splitColor;
+                        border-bottom: 1px solid #FFF;
+                    }
+                }
+
+                .dockDetail {
+                    position: relative;
+                    float: left;
+                    width: 100%;
+
+                    .ui-control-group-titles {
+                        height: 2em;
+
+                        @include display-flex;
+                        @include justify-content(center);
+                        @include align-items(flex-start);
+
+                        .ui-control-group-title {
+                            @include flex(1);
+
+                            min-width: 10em;
+                            max-width: 10em;
+                            line-height: 2;
+                            text-align: center;
+                            border-top: 1px solid $borderColor;
+                            border-left: 1px solid $borderColor;
+                            border-right: 1px solid $borderColor;
+                            background: $color;
+
+                            @include transition(all 0.7s);
+                            @include toggle-emboss-title("select");
+
+                            &.select {
+                                background: #fff;
+                                margin-top: -1em;
+                                line-height: 3;
+                                @include box-shadow(0px -3px 6px $activeBorderShadow);
+                            }
+
+                        }
+                    }
+
+                    .ui-control-groups {
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        width: 100%;
+                        height: 100%;
+
+                        .ui-control-group {
+                            width: 100%;
+                            height: 100%;
+
+                            .ui-control {
+                                position: relative;
+                                width: calc(100% - 0.4em);
+                                height: 3em;
+                                margin: 0.2em;
+
+                                $i: $numOfStructureControls;
+                                @while $i > 0 {
+                                    &:nth-child(#{$i}) {
+                                        z-index: $numOfStructureControls - $i + 1;
+                                    }
+                                    $i: $i - 1;
+                                }
+
+                                &:not(.enable) {
+                                    .ui-control-title {
+                                        .ui-control-enable-button {
+                                            &:after {
+                                                content: "";
+                                            }
+                                        }
+                                    }
+
+                                    .ui-control-wrapper {
+                                        pointer-events: none;
+                                        opacity: 0;
+                                    }
+                                }
+
+                                .ui-control-title {
+                                    position: relative;
+                                    width: 100%;
+                                    height: 1em;
+
+                                    p {
+                                        position: relative;
+                                        float: left;
+                                        width: calc(100% - 1em);
+                                        line-height: 1;
+                                        text-align: left;
+                                    }
+
+                                    .ui-control-enable-button {
+                                        position: relative;
+                                        float: left;
+                                        width: 1em;
+                                        height: 1em;
+
+                                        &:after {
+                                            position: absolute;
+                                            width: 100%;
+                                            height: 100%;
+                                            line-height: 1;
+                                            text-align: center;
+                                            outline: 1px solid;
+                                        }
+                                    }
+                                }
+
+                                .ui-control-wrapper {
+                                    height: 2em;
+                                    background: #fff;
+
+                                    @include transition(opacity 0.3s);
+                                }
+                            }
+
+                            .structureContent {
+                                position: relative;
+                                width: calc(100% - 0.2em);
+                                margin: 0 0.2em;
+                                top: 1em;
+
+                                .tabs {
+                                    position: relative;
+                                    float: left;
+                                    width: 100%;
+                                    height: 100%;
+
+                                    > input {
+                                        position: absolute;
+                                        z-index: 100;
+                                        width: $tabHeaderWidth;
+                                        height: 2em;
+                                        opacity: 0;
+                                        cursor: pointer;
+                                    }
+                                    > input#tab-2 {
+                                        left: $tabHeaderWidth;
+                                    }
+                                    > label {
+                                        position: relative;
+                                        float: left;
+                                        display: block;
+                                        text-align: center;
+                                        font-weight: 600;
+                                        line-height: 2;
+                                        height: 2em;
+                                        width: $tabHeaderWidth;
+                                        cursor: pointer;
+                                        text-shadow: 1px 0px 0px ghostwhite, -1px 0px 0px ghostwhite, 0px 1px 0px ghostwhite, 0px -1px 0px ghostwhite, 1px 1px 0px ghostwhite, -1px -1px 0px ghostwhite, -1px 1px 0px ghostwhite, 1px -1px 0px ghostwhite;
+
+                                        &:before {
+                                            position: absolute;
+                                            left: 0;
+                                            width: 100%;
+                                            height: 100%;
+                                            content: '';
+                                            background: rgba(0, 0, 0, 0.3);
+                                        }
+                                    }
+                                    .tab-label-2 {
+                                        z-index: 3;
+                                    }
+                                    > input:checked + label {
+                                        z-index: 6;
+                                        text-shadow: 1px 0px 0px ghostwhite, -1px 0px 0px ghostwhite, 0px 1px 0px ghostwhite, 0px -1px 0px ghostwhite, 1px 1px 0px ghostwhite, -1px -1px 0px ghostwhite, -1px 1px 0px ghostwhite, 1px -1px 0px ghostwhite, 0px 6px 1px silver;
+
+                                        &:before {
+                                            background: transparent;
+                                        }
+                                    }
+                                    .content {
+                                        position: relative;
+                                        float: left;
+                                        top: 0;
+                                        left: 0;
+                                        width: 100%;
+                                        height: calc(100% - 40px);
+                                        z-index: 5;
+
+                                        > div {
+                                            position: absolute;
+                                            width: 100%;
+                                            height: 100%;
+                                            z-index: 6;
+                                            opacity: 0;
+
+                                            @include transition(opacity linear 0.3s);
+
+                                            &.content-1 {
+                                            }
+
+                                            &.content-2 {
+                                            }
+                                        }
+                                    }
+                                    > input.tab-selector-1:checked ~ .content .content-1,
+                                    > input.tab-selector-2:checked ~ .content .content-2 {
+                                        z-index: 10;
+                                        opacity: 1;
+                                        @include transition(opacity ease-out 0.3s 0.2s);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        &.align-right {
+            > .dockContent {
+                > .dockDetail {
+                    .ui-control-group-titles {
+                        position: absolute;
+                        left: calc(-#{$controlGroupTitleWidth * $numOfControlGroups / 2} - 1em - 5px);
+                        top: $controlGroupTitleWidth * $numOfControlGroups / 2 + 2em;
+
+                        @include flex-direction(row-reverse);
+                        @include transform(rotateZ(-90deg));
+
+                        .ui-control-group-title {
+                        }
+
+                        .showButton, .hideButton {
+                            position: absolute;
+                            right: -1.5em;
+                            width: 1.5em;
+                            height: 1.5em;
+                            border: 1px solid;
+                            margin-right: 2px;
+                            bottom: 0;
+
+                            &:before {
+                                position: absolute;
+                                width: 100%;
+                                height: 100%;
+                                line-height: 1.5;
+                                text-align: center;
+                            }
+                        }
+                    }
+
+                    .ui-control-group {
+                        &[tab-sel^='tab-content'] {
+                            position: absolute;
+                            right: -100%;
+                            top: 0;
+
+                            &.select {
+                                @extend %slideLeft;
+                            }
+                        }
+
+                        .ui-control {
+                            float: left;
+
+                            &:not(.ui-control-inline) {
+                                .ui-control-wrapper {
+                                    &.expanded {
+                                        width: $dockWidth * 1.5;
+                                        @extend %pxDockSlideLeft;
+                                    }
+
+                                    &.collapsing {
+                                        width: $dockWidth * 1.5;
+                                        @extend %pxDockSlideRight;
+                                    }
+                                }
+                            }
+
+                            &.ui-control-bordered {
+                                .ui-control-bar {
+                                    border: 1px solid $borderColor;
+                                }
+                            }
+
+                            .ui-control-wrapper {
+                                position: relative;
+                                float: left;
+                                width: 100%;
+
+                                .ui-control-bar {
+                                    position: relative;
+                                    float: left;
+                                    width: 100%;
+                                    height: 2em;
+                                }
+
+                                .ui-control-panel {
+                                    position: relative;
+                                    float: left;
+                                    width: 100%;
+                                    margin-top: 5px;
+                                    @include flipDownOrigin();
+
+                                    &.show {
+                                        @extend %flipDown;
+                                    }
+
+                                    &.hiding {
+                                        @extend %flipUp;
+                                    }
+                                }
+
+                                &.expanded {
+                                    .ui-control-bar {
+                                        @include box-shadow(0 8px 6px -6px black);
+                                    }
+                                }
+
+                                &.collapsing {
+                                    .ui-control-bar {
+                                        @include box-shadow(0 8px 6px -6px black);
+                                    }
+                                }
+                            }
+                        }
+
+                        .structureContent {
+                            float: left;
+                        }
+                    }
+                }
+            }
+        }
+
+        &.align-left {
+            > .dockContent {
+                > .dockDetail {
+                    .ui-control-group-titles {
+                        position: absolute;
+                        right: calc(-#{$controlGroupTitleWidth * $numOfControlGroups / 2} - 1em - 5px);
+                        top: $controlGroupTitleWidth * $numOfControlGroups / 2 + 2em;
+
+                        @include flex-direction(row);
+                        @include transform(rotateZ(90deg));
+
+                        .ui-control-group-title {
+                        }
+
+                        .showButton, .hideButton {
+                            position: absolute;
+                            left: -1.5em;
+                            width: 1.5em;
+                            height: 1.5em;
+                            border: 1px solid;
+                            margin-left: 2px;
+                            bottom: 0;
+
+                            &:before {
+                                position: absolute;
+                                width: 100%;
+                                height: 100%;
+                                line-height: 1.5;
+                                text-align: center;
+                            }
+                        }
+                    }
+
+                    .ui-control-group {
+                        position: absolute;
+                        left: -100%;
+                        top: 0;
+
+                        &[tab-sel^='tab-content'] {
+                            &.select {
+                                @extend %slideRight;
+                            }
+                        }
+
+                        .ui-control {
+                            float: right;
+
+                            &:not(.ui-control-inline) {
+                                .ui-control-wrapper {
+                                    &.expanded {
+                                        width: $dockWidth * 1.5;
+                                        @extend %pxOffsetDockSlideRight;
+                                    }
+
+                                    &.collapsing {
+                                        width: $dockWidth * 1.5;
+                                        @extend %pxOffsetDockSlideLeft;
+                                    }
+                                }
+                            }
+
+                            &.ui-control-bordered {
+                                .ui-control-bar {
+                                    border: 1px solid $borderColor;
+                                }
+                            }
+
+                            .ui-control-wrapper {
+                                position: relative;
+                                float: right;
+                                width: 100%;
+
+                                .ui-control-bar {
+                                    position: relative;
+                                    float: right;
+                                    width: 100%;
+                                    height: 100%;
+                                }
+
+                                .ui-control-panel {
+                                    position: relative;
+                                    float: right;
+                                    width: 100%;
+                                    margin-top: 5px;
+                                    @include flipDownOrigin();
+
+                                    &.show {
+                                        @extend %flipDown;
+                                    }
+
+                                    &.hiding {
+                                        @extend %flipUp;
+                                    }
+                                }
+
+                                &.expanded {
+                                    .ui-control-bar {
+                                        @include box-shadow(0 8px 6px -6px black);
+                                    }
+                                }
+
+                                &.collapsing {
+                                    .ui-control-bar {
+                                        @include box-shadow(0 8px 6px -6px black);
+                                    }
+                                }
+                            }
+                        }
+
+                        .structureContent {
+                            float: right;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,15 @@
+<div class="shapeContent ui-control-wrapper" ng-class="dockAlign">
+    <div class="shapeBar ui-control-bar fs-x-large">
+        <div class="pickerPane icon-shape-before" ng-class="pickerPaneShape && 'icon-shape-' + pickerPaneShape + '-before' || ''"></div>
+    </div>
+    <div class="shapePalette ui-control-panel">
+        <div class="accordianGroup" ng-repeat="shapeGroup in shapes" ng-click="toggleSelect($event.currentTarget, $event)">
+            <div class="accordianTitle col-as-12 icon-shape-before icon-shape-angle-double-up-before">{{shapeGroup.group}}</div>
+            <div class="accordianBody col-as-12">
+                <div class="shapePane squarePane icon-shape-before col-as-3" ng-repeat="pane in shapeGroup.list" ng-click="pickShape(pane) && $event.stopPropagation()"
+                     ng-class="'icon-shape-' + pane + '-before'">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

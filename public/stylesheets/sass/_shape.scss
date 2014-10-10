@@ -1,0 +1,212 @@
+@import "compass/css3/transform";
+@import "compass/css3/transition";
+@import "global";
+@import "animation/directive_animation";
+
+$color: rgba(0, 0, 0, 0.4);
+$underlineLinearGradient: (rgb(235, 235, 235) 0%, rgb(235, 235, 235) 50%, #fff 100%);
+
+.pickerPaneShape {
+    position: absolute;
+    pointer-events: none;
+
+    @extend %sonarEffect;
+    @include animation-duration(2s);
+    @include animation-timing-function(ease-out);
+    @include animation-iteration-count(infinite);
+
+    &:before {
+        position: absolute;
+        top: calc(50% - 0.5em);
+        width: 100%;
+        text-align: center;
+        line-height: 1;
+    }
+}
+
+.pseudoShape:before {
+    position: absolute;
+    top: calc(50% - 0.5em);
+    width: 100%;
+    text-align: center;
+    line-height: 1;
+}
+
+@mixin shape($shapeEditorId) {
+    ##{$shapeEditorId} {
+
+        .shapeContent.expanded {}
+
+        .shapeContent:not(.expanded) {}
+
+        .shapeContent {
+            color: $color;
+            background: #fff;
+
+            > .shapeBar {
+                > .pickerPane {
+                    width: 100%;
+                    height: 100%;
+
+                    &:before {
+                        position: absolute;
+                        left: 0;
+                        top: calc(50% - 0.5em);
+                        width: 100%;
+                        line-height: 1;
+                        text-align: center;
+                    }
+                }
+            }
+
+            > .shapePalette {
+                background: inherit;
+
+                .accordianGroup {
+                    width: 100%;
+                    overflow: hidden;
+
+                    .accordianTitle {
+                        z-index: 1;
+                        width: 100%;
+                        line-height: 2;
+                        background: #fff;
+
+                        &:before {
+                            @include transform(rotateZ(0deg));
+                            @include transition(transform 0.3s);
+                        }
+                    }
+
+                    .accordianBody {
+                        width: 100%;
+                        margin-top: 0.5em;
+                        margin-bottom: 0.5em;
+
+                        @include transform(translateY(-100%));
+                        @include transition(transform 0.3s);
+
+                        .shapePane {
+                            height: 0px;
+                            margin-top: 0.2em;
+                            overflow: hidden;
+
+                            @include emboss-title(':before');
+                        }
+                    }
+
+                    &.select {
+                        .accordianTitle:before {
+                            @extend %rotateUpSideDown;
+                            @include animation-duration(0.3s);
+                        }
+
+                        .accordianBody {
+                            @extend %slideDownFromAbove;
+
+                            .shapePane {
+                                height: auto;
+                                overflow: visible;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .shapeContent.align-left {
+            > .shapeBar {
+                > .pickerPane {
+                    position: relative;
+                    float: right;
+                }
+            }
+
+            > .shapePalette {
+                .accordianGroup {
+                    position: relative;
+                    float: right;
+
+                    .accordianTitle {
+                        position: relative;
+                        float: right;
+                        text-align: right;
+
+                        &:after {
+                            position: absolute;
+                            right: 0;
+                            bottom: 0;
+                            content: '';
+                            width: 100%;
+                            height: 2px;
+                            @include background(linear-gradient(right, $underlineLinearGradient));
+                        }
+
+                        &:before {
+                            position: absolute;
+                            left: 0;
+                            top: 0;
+                            line-height: 2;
+                            text-align: center;
+                            width: 2em;
+                            height: 2em;
+                        }
+                    }
+
+                    .accordianBody {
+                        position: relative;
+                        float: right;
+                    }
+                }
+            }
+        }
+
+        .shapeContent.align-right {
+            > .shapeBar {
+                > .pickerPane {
+                    position: relative;
+                    float: left;
+                }
+            }
+
+            > .shapePalette {
+                .accordianGroup {
+                    position: relative;
+                    float: left;
+
+                    .accordianTitle {
+                        position: relative;
+                        float: left;
+                        text-align: left;
+
+                        &:after {
+                            position: absolute;
+                            left: 0;
+                            bottom: 0;
+                            content: '';
+                            width: 100%;
+                            height: 2px;
+                            @include background(linear-gradient(left, $underlineLinearGradient));
+                        }
+
+                        &:before {
+                            position: absolute;
+                            right: 0;
+                            top: 0;
+                            line-height: 2;
+                            text-align: center;
+                            width: 2em;
+                            height: 2em;
+                        }
+                    }
+
+                    .accordianBody {
+                        position: relative;
+                        float: left;
+                    }
+                }
+            }
+        }
+
+    }
+}

@@ -1,0 +1,49 @@
+@import "compass/css3/transform";
+@import "compass/css3/transition";
+@import "compass/css3/flexbox";
+@import "global";
+
+@mixin toolbar($toolbarContainerId) {
+    ##{$toolbarContainerId} {
+        .ui-toolbar {
+            z-index: 1000;
+            position: absolute;
+            width: auto;
+            height: 2.4em;
+            background: #fff;
+
+            @include box-shadow(0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset);
+            &:before {
+                content: "";
+                position: absolute;
+                z-index: -2;
+                @include box-shadow(0 0 15px rgba(0, 0, 0, 0.6));
+            }
+
+            > div {
+                position: relative;
+                float: left;
+                width: 2em;
+                height: 2em;
+                margin-left: 0.2em;
+
+                &:last-child {
+                    margin-right: 0.2em;
+                }
+
+                &:before {
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    line-height: 2;
+                    text-align: center;
+                    border-radius: 0.2em;
+                }
+
+                &:active:before {
+                    margin-top: 0.1em;
+                }
+            }
+        }
+    }
+}

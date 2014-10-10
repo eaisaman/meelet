@@ -1,0 +1,42 @@
+<script type="text/ng-template" id="_pageWidgets.html">
+    <div ui-tree-handle>{{item.name}}</div>
+    <ol ui-tree-nodes ng-model="item.childWidgets">
+        <li ng-repeat="item in item.childWidgets" ui-tree-node ng-attr-id="{{treeNodeIdPrefix + item.id}}"
+            ng-include="'_pageWidgets.html'"></li>
+    </ol>
+</script>
+<div class="pageContent ui-control-wrapper" ng-class="dockAlign">
+    <div class="pageBar ui-control-bar">
+        <div class="currentPage col-as-5 no-padding">
+            <div class="fs-x-medium vt-align-center">Page</div>
+        </div>
+
+        <div class="pageList col-as-7" ng-click="$event.stopPropagation()">
+            <select class="form-control fs-x-medium vt-align-center">
+                <option value="{{$index}}" selected="{{p.id == pickedPage.id}}" ng-repeat="p in sketchWorks.pages">
+                    {{$index+1}}
+                </option>
+            </select>
+        </div>
+
+        <div class="pageMenu fs-x-medium">
+            <div class="togglePageButton icon-page-before icon-page-angle-double-right-before"
+                 ng-click="togglePage($event)"></div>
+            <div class="icon-page-before icon-page-copy-before"
+                 ng-click="copyPage($event)"></div>
+            <div class="icon-page-before icon-page-insert-before"
+                 ng-click="insertPage($event)"></div>
+            <div class="icon-page-before icon-page-remove-before"
+                 ng-click="removePage($event)"></div>
+        </div>
+    </div>
+    <div class="pageDetails ui-control-panel">
+        <ui-tree id="pageDetailsTree" class="fs-x-small" drag-enabled="false" spacing="20" coverage="50"
+                 collapseAll="true">
+            <ol ui-tree-nodes ng-model="pickedPage.childWidgets">
+                <li ng-repeat="item in pickedPage.childWidgets" ui-tree-node
+                    ng-attr-id="{{treeNodeIdPrefix + item.id}}" ng-include="'_pageWidgets.html'"></li>
+            </ol>
+        </ui-tree>
+    </div>
+</div>

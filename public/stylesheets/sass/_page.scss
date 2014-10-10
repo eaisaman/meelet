@@ -1,0 +1,151 @@
+@import "compass/css3/transform";
+@import "compass/css3/transition";
+@import "compass/css3/flexbox";
+@import "global";
+@import "animation/directive_animation";
+@import "angular-ui-tree";
+
+$color: rgba(0, 0, 0, 0.4);
+$borderColor: rgba(0, 0, 0, 0.4);
+
+@include angular-ui-tree(pageDetailsTree);
+
+@mixin page($pageEditorId) {
+    ##{$pageEditorId} {
+        top: 1em;
+        height: auto !important;
+
+        .pageContent.expanded {
+            > .pageDetails {
+                display: block;
+            }
+        }
+
+        .pageContent:not(.expanded) {
+            > .pageDetails {
+                display: none;
+            }
+        }
+
+        .pageContent {
+            color: $color;
+            background: #fff;
+            height: auto !important;
+
+            > .pageBar {
+                height: auto !important;
+
+                > div {
+                    height: 2em;
+
+                    > div {
+                        position: relative;
+                        float: left;
+                    }
+                }
+
+                .currentPage {
+                    > div {
+                        height: 1em;
+                        width: calc(100% - 0.5em);
+                        text-align: right;
+                    }
+                }
+
+                .pageList {
+                    > select {
+                        position: relative;
+                        float: left;
+                        height: 1.5em;
+                        line-height: 1.5;
+                    }
+                }
+            }
+
+            > .pageDetails {
+                height: auto;
+                background: inherit;
+                overflow: auto;
+
+                > ui-tree {
+                    position: relative;
+                    float: left;
+                    min-width: 40em;
+                }
+            }
+        }
+
+        .pageContent.align-left {
+            > .pageBar {
+                .pageMenu {
+                    position: absolute;
+                    top: -1.5em;
+                    width: 100%;
+                    height: 1.5em;
+
+                    div {
+                        position: relative;
+                        float: right;
+                        width: 1.5em;
+                        height: 100%;
+
+                        &:before {
+                            position: absolute;
+                            left: 0;
+                            width: 100%;
+                            height: 100%;
+                            text-align: center;
+                            line-height: 1.5;
+                        }
+
+                        &:active:before {
+                            margin-top: 2px;
+                        }
+
+                        &.togglePageButton.select:before {
+                            @include transition(transform 0.3s);
+                            @include transform(rotateZ(90deg));
+                        }
+                    }
+                }
+            }
+
+            > .pageDetails {
+            }
+        }
+
+        .pageContent.align-right {
+            > .pageBar {
+                .pageMenu {
+                    position: absolute;
+                    top: -1.5em;
+                    width: 100%;
+                    height: 1.5em;
+
+                    div {
+                        position: relative;
+                        float: left;
+                        width: 1.5em;
+                        height: 100%;
+
+                        &:before {
+                            position: absolute;
+                            left: 0;
+                            width: 100%;
+                            height: 100%;
+                            text-align: center;
+                            line-height: 1.5;
+                        }
+
+                        &:active:before {
+                            margin-top: 2px;
+                        }
+                    }
+                }
+            }
+
+            > .pageDetails {
+            }
+        }
+    }
+}
