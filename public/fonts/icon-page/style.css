@@ -1,0 +1,96 @@
+@font-face {
+    font-family: 'icon-page';
+    src: url('icon-page.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.icon-page:before {
+    font-family: 'icon-page';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-page-before:before {
+    font-family: 'icon-page';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-page-after:after {
+    font-family: 'icon-page';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-page-copy:before {
+    content: "\e600";
+}
+.icon-page-angle-double-right:before {
+    content: "\e601";
+}
+.icon-page-insert:before {
+    content: "\e602";
+}
+.icon-page-remove:before {
+    content: "\e603";
+}
+.icon-page-simple-arrow-down:before {
+    content: "\e60a";
+}
+
+.icon-page-copy-before:before {
+    content: "\e600";
+}
+.icon-page-angle-double-right-before:before {
+    content: "\e601";
+}
+.icon-page-insert-before:before {
+    content: "\e602";
+}
+.icon-page-remove-before:before {
+    content: "\e603";
+}
+.icon-page-simple-arrow-down-before:before {
+    content: "\e60a";
+}
+
+.icon-page-copy-after:after {
+    content: "\e600";
+}
+.icon-page-angle-double-right-after:after {
+    content: "\e601";
+}
+.icon-page-insert-after:after {
+    content: "\e602";
+}
+.icon-page-remove-after:after {
+    content: "\e603";
+}
+.icon-page-simple-arrow-down-after:after {
+    content: "\e60a";
+}

@@ -1,0 +1,141 @@
+@font-face {
+    font-family: 'icon-sketch-widget';
+    src: url('icon-sketch-widget.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.icon-sketch-widget {
+    font-family: 'icon-sketch-widget';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-sketch-widget-before:before {
+    font-family: 'icon-sketch-widget';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-sketch-widget-after:after {
+    font-family: 'icon-sketch-widget';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-sketch-widget-align-left:before {
+    content: "\e600";
+}
+.icon-sketch-widget-align-center:before {
+    content: "\e601";
+}
+.icon-sketch-widget-align-right:before {
+    content: "\e602";
+}
+.icon-sketch-widget-expand:before {
+    content: "\e603";
+}
+.icon-sketch-widget-collapse:before {
+    content: "\e604";
+}
+.icon-sketch-widget-locate:before {
+    content: "\e605";
+}
+.icon-sketch-widget-ellipsis:before {
+    content: "\e606";
+}
+.icon-sketch-widget-duplicate:before {
+    content: "\e607";
+}
+.icon-sketch-widget-group:before {
+    content: "\e608";
+}
+.icon-sketch-widget-ungroup:before {
+    content: "\e609";
+}
+
+.icon-sketch-widget-align-left-before:before {
+    content: "\e600";
+}
+.icon-sketch-widget-align-center-before:before {
+    content: "\e601";
+}
+.icon-sketch-widget-align-right-before:before {
+    content: "\e602";
+}
+.icon-sketch-widget-expand-before:before {
+    content: "\e603";
+}
+.icon-sketch-widget-collapse-before:before {
+    content: "\e604";
+}
+.icon-sketch-widget-locate-before:before {
+    content: "\e605";
+}
+.icon-sketch-widget-ellipsis-before:before {
+    content: "\e606";
+}
+.icon-sketch-widget-duplicate-before:before {
+    content: "\e607";
+}
+.icon-sketch-widget-group-before:before {
+    content: "\e608";
+}
+.icon-sketch-widget-ungroup-before:before {
+    content: "\e609";
+}
+
+.icon-sketch-widget-align-left-after:after {
+    content: "\e600";
+}
+.icon-sketch-widget-align-center-after:after {
+    content: "\e601";
+}
+.icon-sketch-widget-align-right-after:after {
+    content: "\e602";
+}
+.icon-sketch-widget-expand-after:after {
+    content: "\e603";
+}
+.icon-sketch-widget-collapse-after:after {
+    content: "\e604";
+}
+.icon-sketch-widget-locate-after:after {
+    content: "\e605";
+}
+.icon-sketch-widget-ellipsis-after:after {
+    content: "\e606";
+}
+.icon-sketch-widget-duplicate-after:after {
+    content: "\e607";
+}
+.icon-sketch-widget-group-after:after {
+    content: "\e608";
+}
+.icon-sketch-widget-ungroup-after:after {
+    content: "\e609";
+}

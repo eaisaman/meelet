@@ -1,0 +1,196 @@
+@font-face {
+    font-family: 'icon-dock';
+    src: url('icon-dock.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.icon-dock:before {
+    font-family: 'icon-dock';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-dock-before:before {
+    font-family: 'icon-dock';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-dock-after:after {
+    font-family: 'icon-dock';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-dock-arrow-left:before {
+    content: "\e600";
+}
+.icon-dock-arrow-right:before {
+    content: "\e601";
+}
+.icon-dock-arrow-up:before {
+    content: "\e602";
+}
+.icon-dock-arrow-down:before {
+    content: "\e603";
+}
+.icon-dock-move:before {
+    content: "\e604";
+}
+.icon-dock-align-left:before {
+    content: "\e605";
+}
+.icon-dock-align-center:before {
+    content: "\e606";
+}
+.icon-dock-align-right:before {
+    content: "\e607";
+}
+.icon-dock-cross:before {
+    content: "\e608";
+}
+.icon-dock-simple-arrow-left:before {
+    content: "\e609";
+}
+.icon-dock-simple-arrow-down:before {
+    content: "\e60a";
+}
+.icon-dock-simple-arrow-up:before {
+    content: "\e60b";
+}
+.icon-dock-simple-arrow-right:before {
+    content: "\e60c";
+}
+.icon-dock-settings:before {
+    content: "\e60d";
+}
+.icon-dock-eye:before {
+    content: "\e60e";
+}
+.icon-dock-eye-slash:before {
+    content: "\e60f";
+}
+
+.icon-dock-arrow-left-before:before {
+    content: "\e600";
+}
+.icon-dock-arrow-right-before:before {
+    content: "\e601";
+}
+.icon-dock-arrow-up-before:before {
+    content: "\e602";
+}
+.icon-dock-arrow-down-before:before {
+    content: "\e603";
+}
+.icon-dock-move-before:before {
+    content: "\e604";
+}
+.icon-dock-align-left-before:before {
+    content: "\e605";
+}
+.icon-dock-align-center-before:before {
+    content: "\e606";
+}
+.icon-dock-align-right-before:before {
+    content: "\e607";
+}
+.icon-dock-cross-before:before {
+    content: "\e608";
+}
+.icon-dock-simple-arrow-left-before:before {
+    content: "\e609";
+}
+.icon-dock-simple-arrow-down-before:before {
+    content: "\e60a";
+}
+.icon-dock-simple-arrow-up-before:before {
+    content: "\e60b";
+}
+.icon-dock-simple-arrow-right-before:before {
+    content: "\e60c";
+}
+.icon-dock-settings-before:before {
+    content: "\e60d";
+}
+.icon-dock-eye-before:before {
+    content: "\e60e";
+}
+.icon-dock-eye-slash-before:before {
+    content: "\e60f";
+}
+
+.icon-dock-arrow-left-after:after {
+    content: "\e600";
+}
+.icon-dock-arrow-right-after:after {
+    content: "\e601";
+}
+.icon-dock-arrow-up-after:after {
+    content: "\e602";
+}
+.icon-dock-arrow-down-after:after {
+    content: "\e603";
+}
+.icon-dock-move-after:after {
+    content: "\e604";
+}
+.icon-dock-align-left-after:after {
+    content: "\e605";
+}
+.icon-dock-align-center-after:after {
+    content: "\e606";
+}
+.icon-dock-align-right-after:after {
+    content: "\e607";
+}
+.icon-dock-cross-after:after {
+    content: "\e608";
+}
+.icon-dock-simple-arrow-left-after:after {
+    content: "\e609";
+}
+.icon-dock-simple-arrow-down-after:after {
+    content: "\e60a";
+}
+.icon-dock-simple-arrow-up-after:after {
+    content: "\e60b";
+}
+.icon-dock-simple-arrow-right-after:after {
+    content: "\e60c";
+}
+.icon-dock-settings-after:after {
+    content: "\e60d";
+}
+.icon-dock-eye-after:after {
+    content: "\e60e";
+}
+.icon-dock-eye-slash-after:after {
+    content: "\e60f";
+}
+
