@@ -1,4 +1,5 @@
 define(
+    ["angular"],
     function () {
         var appService = function ($rootScope, $http, $timeout, $q, $cookies, $cookieStore) {
             this.$rootScope = $rootScope;

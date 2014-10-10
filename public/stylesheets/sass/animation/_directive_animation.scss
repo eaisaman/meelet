@@ -1,297 +1,154 @@
 @import "base";
 @import "magic_animation";
+@import "../global";
 
-@-moz-keyframes flipUp {
-    0% {
-        -moz-transform-origin: 0 0;
-        -moz-transform: perspective(800px) rotateX(-90deg);
-    }
-    100% {
-        -moz-transform-origin: 0 0;
-        -moz-transform: perspective(800px) rotateX(0deg);
-    }
+@mixin flipDownOrigin {
+    @include transform-origin(50% 0);
+    @include perspective(800px);
+    @include transform(rotateX(-90deg));
 }
 
-@-webkit-keyframes flipUp {
-    0% {
-        -webkit-transform-origin: 0 0;
-        -webkit-transform: perspective(800px) rotateX(-90deg);
-    }
-    100% {
-        -webkit-transform-origin: 0 0;
-        -webkit-transform: perspective(800px) rotateX(0deg);
-    }
+@mixin flipLeftOrigin {
+    width: 0px;
+    opacity: 0;
+    @include perspective(800px);
+    @include transform-style(preserver-3d);
 }
 
-@-o-keyframes flipUp {
-    0% {
-        -o-transform-origin: 0 0;
-        -o-transform: perspective(800px) rotateX(-90deg);
-    }
-    100% {
-        -o-transform-origin: 0 0;
-        -o-transform: perspective(800px) rotateX(0deg);
-    }
-}
+/* Slide 100% height from current position to the one near top
+ * Used by directive ng.ui.dock
+ * Found in _dock.html
+ */
+@include baseAnimation(slideUp);
 
-@-ms-keyframes flipUp {
-    0% {
-        -ms-transform-origin: 0 0;
-        -ms-transform: perspective(800px) rotateX(-90deg);
-    }
-    100% {
-        -ms-transform-origin: 0 0;
-        -ms-transform: perspective(800px) rotateX(0deg);
-    }
-}
+/* Slide 100% height from current position to the one near bottom
+ * Used by directive ng.ui.dock
+ * Found in _dock.html
+ */
+@include baseAnimation(slideDown);
 
-@keyframes flipUp {
-    0% {
-        transform-origin: 0 0;
-        transform: perspective(800px) rotateX(-90deg);
-    }
-    100% {
-        transform-origin: 0 0;
-        transform: perspective(800px) rotateX(0deg);
-    }
-}
+/* Slide 100% width from current position to right
+ * Used by directive ng.ui.dock
+ * Found in _dock.html
+ */
+@include baseAnimation(slideRight);
 
-@mixin partialSlideUpKeyframes($percent:100%){
-    @-moz-keyframes partialSlideUp {
-        0% {
-            -moz-transform-origin: 0 0;
-            -moz-transform: translateY(0%);
-        }
-        100% {
-            -moz-transform-origin: 0 0;
-            -moz-transform: translateY(-$percent);
-        }
-    }
+/* Slide from the position 100% width right to original one back
+ * Used by directive ng.ui.gradient-editor
+ * Found in _gradient_editor.html
+ */
+@include baseAnimation(slideRightRetourn);
 
-    @-webkit-keyframes partialSlideUp {
-        0% {
-            -webkit-transform-origin: 0 0;
-            -webkit-transform: translateY(0%);
-        }
-        100% {
-            -webkit-transform-origin: 0 0;
-            -webkit-transform: translateY(-$percent);
-        }
-    }
+/* Slide 100% width from current position to left
+ * Used by directive ng.ui.dock
+ * Found in _dock.html
+ */
+@include baseAnimation(slideLeft);
 
-    @-o-keyframes partialSlideUp {
-        0% {
-            -o-transform-origin: 0 0;
-            -o-transform: translateY(0%);
-        }
-        100% {
-            -o-transform-origin: 0 0;
-            -o-transform: translateY(-$percent);
-        }
-    }
+/* Slide from the position 100% width left to original one back
+ * Used by directive ng.ui.gradient-editor
+ * Found in _gradient_editor.html
+ */
+@include baseAnimation(slideLeftRetourn);
 
-    @-ms-keyframes partialSlideUp {
-        0% {
-            -ms-transform-origin: 0 0;
-            -ms-transform: translateY(0%);
-        }
-        100% {
-            -ms-transform-origin: 0 0;
-            -ms-transform: translateY(-$percent);
-        }
-    }
-
-    @keyframes partialSlideUp {
-        0% {
-            transform-origin: 0 0;
-            transform: translateY(0%);
-        }
-        100% {
-            transform-origin: 0 0;
-            transform: translateY(-$percent);
-        }
-    }
-}
-
-@mixin partialSlideDownKeyframes($percent:100%) {
-    @-moz-keyframes partialSlideDown {
-        0% {
-            -moz-transform-origin: 0 0;
-            -moz-transform: translateY(0%);
-        }
-        100% {
-            -moz-transform-origin: 0 0;
-            -moz-transform: translateY($percent);
-        }
-    }
-
-    @-webkit-keyframes partialSlideDown {
-        0% {
-            -webkit-transform-origin: 0 0;
-            -webkit-transform: translateY(0%);
-        }
-        100% {
-            -webkit-transform-origin: 0 0;
-            -webkit-transform: translateY($percent);
-        }
-    }
-
-    @-o-keyframes partialSlideDown {
-        0% {
-            -o-transform-origin: 0 0;
-            -o-transform: translateY(0%);
-        }
-        100% {
-            -o-transform-origin: 0 0;
-            -o-transform: translateY($percent);
-        }
-    }
-
-    @-ms-keyframes partialSlideDown {
-        0% {
-            -ms-transform-origin: 0 0;
-            -ms-transform: translateY(0%);
-        }
-        100% {
-            -ms-transform-origin: 0 0;
-            -ms-transform: translateY($percent);
-        }
-    }
-
-    @keyframes partialSlideDown {
-        0% {
-            transform-origin: 0 0;
-            transform: translateY(0%);
-        }
-        100% {
-            transform-origin: 0 0;
-            transform: translateY($percent);
-        }
-    }
-}
-
-@mixin partialSlideLeftKeyframes($percent:100%){
-    @-moz-keyframes partialSlideLeft {
-        0% {
-            -moz-transform-origin: 0 0;
-            -moz-transform: translateX(0%);
-        }
-        100% {
-            -moz-transform-origin: 0 0;
-            -moz-transform: translateX(-$percent);
-        }
-    }
-
-    @-webkit-keyframes partialSlideLeft {
-        0% {
-            -webkit-transform-origin: 0 0;
-            -webkit-transform: translateX(0%);
-        }
-        100% {
-            -webkit-transform-origin: 0 0;
-            -webkit-transform: translateX(-$percent);
-        }
-    }
-
-    @-o-keyframes partialSlideLeft {
-        0% {
-            -o-transform-origin: 0 0;
-            -o-transform: translateX(0%);
-        }
-        100% {
-            -o-transform-origin: 0 0;
-            -o-transform: translateX(-$percent);
-        }
-    }
-
-    @-ms-keyframes partialSlideLeft {
-        0% {
-            -ms-transform-origin: 0 0;
-            -ms-transform: translateX(0%);
-        }
-        100% {
-            -ms-transform-origin: 0 0;
-            -ms-transform: translateX(-$percent);
-        }
-    }
-
-    @keyframes partialSlideLeft {
-        0% {
-            transform-origin: 0 0;
-            transform: translateX(0%);
-        }
-        100% {
-            transform-origin: 0 0;
-            transform: translateX(-$percent);
-        }
-    }
-}
-
-@mixin partialSlideRightKeyframes($percent:100%) {
-    @-moz-keyframes partialSlideRight {
-        0% {
-            -moz-transform-origin: 0 0;
-            -moz-transform: translateX(0%);
-        }
-        100% {
-            -moz-transform-origin: 0 0;
-            -moz-transform: translateX($percent);
-        }
-    }
-
-    @-webkit-keyframes partialSlideRight {
-        0% {
-            -webkit-transform-origin: 0 0;
-            -webkit-transform: translateX(0%);
-        }
-        100% {
-            -webkit-transform-origin: 0 0;
-            -webkit-transform: translateX($percent);
-        }
-    }
-
-    @-o-keyframes partialSlideRight {
-        0% {
-            -o-transform-origin: 0 0;
-            -o-transform: translateX(0%);
-        }
-        100% {
-            -o-transform-origin: 0 0;
-            -o-transform: translateX($percent);
-        }
-    }
-
-    @-ms-keyframes partialSlideRight {
-        0% {
-            -ms-transform-origin: 0 0;
-            -ms-transform: translateX(0%);
-        }
-        100% {
-            -ms-transform-origin: 0 0;
-            -ms-transform: translateX($percent);
-        }
-    }
-
-    @keyframes partialSlideRight {
-        0% {
-            transform-origin: 0 0;
-            transform: translateX(0%);
-        }
-        100% {
-            transform-origin: 0 0;
-            transform: translateX($percent);
-        }
-    }
-}
-
-@include baseAnimation(slideRightRetourn, 0.5s);
-@include baseAnimation(slideLeftRetourn, 0.5s);
-@include baseAnimation(partialSlideUp);
-@include baseAnimation(partialSlideDown);
-@include baseAnimation(partialSlideLeft);
-@include baseAnimation(partialSlideRight);
+/* Scale from to 100% size
+ * Used by directive ng.ui.color-picker, ng.ui.gradient-editor
+ * Found in _color_picker.html, _gradient_editor.html
+ */
 @include baseAnimation(swashIn);
+
+/* Flip 90deg counter clockwise on x-axis
+ * Used by directive ng.ui.dock
+ * Found in _dock.html
+ */
 @include baseAnimation(flipUp);
 
-@include partialSlideUpKeyframes(80%);
-@include partialSlideDownKeyframes(80%);
+/* Flip 90deg clockwise on x-axis, with mixin flipDownOrigin to simulate paper flipping to visible
+ * Used by directive ng.ui.dock, ng.ui.gradient-editor
+ * Found in _dock.html, _gradient_editor.html
+ */
+@include baseAnimation(flipDown);
+
+/* Slide up by distance of percent or px.
+ * Used by directive ng.ui.gradient-editor
+ * Found in _gradient_editor.html
+ */
+@include baseAnimation(partialSlideUp);
+
+/* Slide down by distance of percent or px.
+ * Used by directive ng.ui.gradient-editor
+ * Found in _gradient_editor.html
+ */
+@include baseAnimation(partialSlideDown);
+
+/* Slide up by distance of percent or px.
+ * Used by directive ng.ui.dock
+ * Found in _dock.html
+ */
+@include baseAnimation(pxDockHeadSlideUp);
+
+/* Slide down by distance of percent or px.
+ * Used by directive ng.ui.dock
+ * Found in _dock.html
+ */
+@include baseAnimation(pxDockHeadSlideDown);
+
+/* Slide right by distance of percent or px.
+ * Used by directive ng.ui.dock
+ * Found in _dock.html
+ */
+@include baseAnimation(pxDockSlideRight);
+
+/* Slide left by distance of percent or px.
+ * Used by directive ng.ui.dock
+ * Found in _dock.html
+ */
+@include baseAnimation(pxDockSlideLeft);
+
+/* Slide right by distance of percent or px.
+ * Used by directive ng.ui.dock
+ * Found in _dock.html
+ */
+@include baseAnimation(pxOffsetDockSlideRight);
+
+/* Slide left by distance of percent or px.
+ * Used by directive ng.ui.dock
+ * Found in _dock.html
+ */
+@include baseAnimation(pxOffsetDockSlideLeft);
+
+/* Rotate item up side down.
+ * Used by directive ng.ui.shape
+ * Found in _shape.html
+ */
+@include baseAnimation(rotateUpSideDown);
+
+/* Slide down by distance of height from above.
+ * Used by directive ng.ui.shape
+ * Found in _shape.html
+ */
+@include baseAnimation(slideDownFromAbove);
+
+/* Add sonar ring-out effect.
+ * Used by directive ng.ui.shape
+ * Found in _shape.html
+ */
+@include baseAnimation(sonarEffect);
+
+/* Add tin shaking effect.
+ * Used by directive ng.ui.dock
+ * Found in _dock.html
+ */
+@include baseAnimation(tinEffect);
+
+/* Slide left by distance of width to original 0%.
+ * Used by directive ng.ui.dock
+ * Found in _dock.html
+ */
+@include baseAnimation(slideLeftBack);
+
+/* Slide right by distance of width to original 0%.
+ * Used by directive ng.ui.dock
+ * Found in _dock.html
+ */
+@include baseAnimation(slideRightBack);

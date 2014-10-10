@@ -1,70 +1,20 @@
-@import "animation/magic_animation";
 @import "animation/directive_animation";
 
-@mixin color-picker($colorPickerId, $minWidth: 300px, $panWidth: 40px, $panHeight: 40px, $barHeight: 100px) {
+$borderColor: rgba(0, 0, 0, 0.4);
+$activeBorderShadow: rgba(192, 192, 192, 0.8);
+
+@mixin color-picker($colorPickerId) {
     ##{$colorPickerId} {
-        &.expanded {
-            > .pickerContent {
-                > .pickerBar {
-                    @include box-shadow(0 8px 6px -6px black);
-
-                    > .pickerPane {
-                        margin: 15px;
-                        width: calc(100% - 30px);
-                        height: calc(100% - 30px);
-                        line-height: $barHeight - 30px;
-                        border-radius: 5px;
-                    }
-                }
-
-                > .pickerPalette {
-                    position: relative;
-                    float: left;
-                    width: 100%;
-                    top: 5px;
-                    background: #fff;
-
-                    @extend %flipUp;
-
-                    > .colorPane {
-                        position: relative;
-                        float: left;
-                        width: $panWidth;
-                        height: $panHeight;
-                        margin: 5px;
-                        border-radius: 5px;
-                        border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-
-                        &:active {
-                            @include box-shadow(0 0 15px rgba(192, 192, 192, 0.8));
-                        }
-                    }
-
-                }
-            }
-        }
-
-        &:not(.expanded) {
-            > .pickerContent {
-                > .pickerPalette {
-                    @include transform-origin(0 0);
-                    @include perspective(800px);
-                    @include transform(rotateX(-90deg));
-                }
-            }
-        }
-
         > .pickerContent {
             position: absolute;
             left: 0;
             top: 0;
-            min-width: $minWidth;
 
             > .pickerBar {
                 position: relative;
                 float: left;
                 width: 100%;
-                height: $barHeight;
+                height: 2em;
 
                 > .pickerPane {
                     position: absolute;
@@ -72,12 +22,37 @@
                     left: 0;
                     width: 100%;
                     height: 100%;
-                    line-height: $barHeight;
                     text-align: center;
-                    font-size: 20px;
                     text-transform: uppercase;
                     letter-spacing: 2px;
-                    @extend %swashIn;
+                }
+            }
+
+            > .pickerPalette {
+                > .colorPane {
+                    position: relative;
+                    float: left;
+                    margin: 5px;
+                    border-radius: 5px;
+                    border-bottom: 1px solid $borderColor;
+
+                    &:active {
+                        @include box-shadow(0 0 15px $activeBorderShadow);
+                    }
+                }
+
+            }
+
+            &.expanded {
+                > .pickerBar {
+                    > .pickerPane {
+                        top: 0.5em;
+                        left: 0.5em;
+                        width: calc(100% - 1em);
+                        height: calc(100% - 1em);
+                        border-radius: 5px;
+                        @extend %swashIn;
+                    }
                 }
             }
         }

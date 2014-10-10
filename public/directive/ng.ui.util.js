@@ -1,8 +1,12 @@
 define(
+    ["angular", "jquery"],
     function () {
-        var Util = function () {
-            },
-            u = new Util();
+        var Util = function ($timeout, $q) {
+            this.$timeout = $timeout;
+            this.$q = $q;
+        };
+
+        Util.$inject = ["$timeout", "$q"];
 
         Util.prototype.rgbToHsl = function (r, g, b) {
             r /= 255, g /= 255, b /= 255;
@@ -64,13 +68,13 @@ define(
             return code;
         }
 
-        Util.prototype.contrastColor = function (rgb) {
-            var rgbval = parseInt(rgb.replace(/#/, ''), 16),
+        Util.prototype.contrastColor = function (hex) {
+            var rgbval = parseInt(this.formalizeHex(hex).replace(/#/, ''), 16),
                 r = rgbval >> 16,
                 g = (rgbval & 65280) >> 8,
                 b = rgbval & 255,
                 brightness = r * 0.299 + g * 0.587 + b * 0.114;
-            return (brightness > 160) ? "#000" : "#fff"
+            return (brightness > 160) ? "#000000" : "#ffffff"
         }
 
         Util.prototype.lighterColor = function (rgb, percent) {
@@ -96,7 +100,10 @@ define(
         }
 
         Util.prototype.hexTorgb = function (hex) {
-            var rgbval = parseInt(hex.replace(/#/, ''), 16),
+            hex = hex.replace(/#/, '');
+            if (hex.length == 3)
+                hex = hex + hex;
+            var rgbval = parseInt(hex, 16),
                 r = rgbval >> 16,
                 g = (rgbval & 65280) >> 8,
                 b = rgbval & 255;
@@ -109,8 +116,34 @@ define(
             return self.rgbToHsl.apply(self, self.hexTorgb(hex));
         }
 
+        Util.prototype.formalizeHex = function (hex) {
+            hex = hex.replace(/#/, '');
+            if (hex.length == 3)
+                hex = hex + hex;
+
+            return "#" + hex;
+        }
+
         Util.prototype.rgbToHex = function (r, g, b) {
             var self = this;
+
+            if (typeof r === "string" && g == undefined && b == undefined) {
+                var arr = (/(\d+)[^\d]+(\d+)[^\d]+(\d+)/g).exec(r);
+                if (arr && arr.length == 4) {
+                    r = parseInt(arr[1]);
+                    g = parseInt(arr[2]);
+                    b = parseInt(arr[3]);
+                }
+            }
+
+            if (r === undefined || r === null)
+                r = 0;
+
+            if (g === undefined || g === null)
+                g = 0;
+
+            if (b === undefined || b === null)
+                b = 0;
 
             return '#'
                 + self.toHex(r)
@@ -126,7 +159,7 @@ define(
 
         Util.prototype.prefixedStyleValue = function (styleValueFormat, val) {
             //styleValueFormat {0}linear-gradient(top, #888888 0%, rgba(132, 132, 132, 0.8) 100%);
-            var prefixes = ["-webkit-", "-moz-", "-ms-", "-o-", ""],
+            var prefixes = ["-webkit-", "-moz-", "-ms-", "-o-"],
                 styleValues = [],
                 values = Array.prototype.slice.call(arguments, 1) || [];
 
@@ -160,21 +193,125 @@ define(
             return args;
         }
 
-        Util.prototype.onAnimationEnd = function (target, callback) {
+        //Some control may need additional initialization process after scope variable is updated,
+        //initMap contains this kind of init function
+        Util.prototype.createDirectiveBoundMap = function (boundProperties, attrs, initMap) {
+            var boundMap = {}, initMap = initMap || {};
+            for (var key in boundProperties) {
+                var prop = attrs[key];
+                boundMap[key] = {prop: prop, initFn: initMap[key]};
+            }
+
+            return boundMap;
+        }
+
+        Util.prototype.whilst = function (test, iterator, callback, timeout) {
+            var self = this,
+                defer = self.$q.defer();
+
+            self.$timeout(function () {
+                if (test()) {
+                    iterator(function (err) {
+                        if (err) {
+                            callback && callback(err);
+                            defer.reject(err);
+                        }
+                        self.whilst(test, iterator, callback, timeout);
+                    });
+                }
+                else {
+                    callback && callback();
+                    defer.resolve("DONE");
+                }
+            }, timeout);
+
+            return defer.promise;
+        }
+
+        Util.prototype.once = function (fn, callback, interval) {
+            var self = this,
+                onceId = fn.onceId;
+
+            if (!onceId)
+                return angular.noop;
+
+            self.onceArray = self.onceArray || [];
+            if (!self.onceArray.every(
+                function (f, index) {
+                    return f.onceId != onceId;
+                }
+            ))
+                return angular.noop;
+
+            self.onceArray.push(fn);
+
+            return function () {
+                var args = Array.prototype.slice.call(arguments);
+
+                fn.apply(null, args).then(
+                    self.$timeout(
+                        function () {
+                            var indexes = [];
+
+                            self.onceArray.forEach(function (f, index) {
+                                f.onceId == onceId && indexes.push(index);
+                            });
+                            indexes.reverse();
+                            indexes.forEach(function (index) {
+                                self.onceArray.splice(index, 1);
+                            })
+
+                            callback && callback();
+                        },
+                        interval
+                    )
+                );
+            }
+        }
+
+        Util.prototype.onAnimationEnd = function (target) {
             var animEndEventNames = {
                     'WebkitAnimation': 'webkitAnimationEnd',
                     'OAnimation': 'oAnimationEnd',
                     'msAnimation': 'MSAnimationEnd',
                     'animation': 'animationend'
                 },
-                animEndEventName = animEndEventNames[Modernizr.prefixed('animation')];
+                animEndEventName = animEndEventNames[Modernizr.prefixed('animation')],
+                self = this,
+                defer = self.$q.defer();
 
             target.on(animEndEventName, function () {
                 $(this).off(animEndEventName);
-                callback.apply(this, Array.prototype.slice.call(arguments));
+                defer.resolve();
             });
+
+            return defer.promise;
         }
 
-        return u;
+        Util.prototype.onTransitionEnd = function (target) {
+            var tranEndEventNames = {
+                    'WebkitTransition': 'webkitTransitionEnd',
+                    'OTransition': 'oTransitionEnd',
+                    'msTransition': 'MSTransitionEnd',
+                    'transition': 'transitionend'
+                },
+                tranEndEventName = tranEndEventNames[Modernizr.prefixed('transition')],
+                self = this,
+                defer = self.$q.defer();
+
+            target.on(tranEndEventName, function () {
+                $(this).off(tranEndEventName);
+                defer.resolve();
+            });
+
+            return defer.promise;
+        }
+
+        return function (appModule) {
+            appModule.
+                config(["$provide", function ($provide) {
+                    $provide.service('uiUtilService', Util);
+                }]);
+        };
     }
 );

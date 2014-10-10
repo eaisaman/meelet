@@ -1,81 +1,94 @@
-define(function () {
-    function RootController(urlService) {
-        urlService.frameSketch();
-    }
-
-    function FrameSketchController($scope, $timeout, $q) {
-        //TODO 填充 背景图片 阴影 视角 旋转 缩放 位移 出现/消失/装载/其它事件动画 对齐 按网格移动/改变大小 width/height/border-radius 手势
-        $scope.canvasSetting = {}
-
-        function initSketch() {
-            return $timeout(function () {
-                $scope.canvas = new fabric.Canvas('c');
-                fabric.Object.prototype.transparentCorners = false;
-
-                var rect = new fabric.Rect({
-                    width: 100,
-                    height: 100,
-                    top: 100,
-                    left: 100,
-                    fill: 'rgba(255,0,0,0.5)'
-                });
-
-                $scope.canvas.add(rect);
-
-            }).then($timeout(function () {
-                $scope.canvas.setWidth($("#canvasHolder").width());
-                $scope.canvas.setHeight($("#canvasHolder").height());
-
-                $scope.$on(angularEventTypes.resizeEvent, function () {
-                    $scope.canvas.setWidth($("#canvasHolder").width());
-                    $scope.canvas.setHeight($("#canvasHolder").height());
-                });
-
-                $scope.$watch("canvasSetting.strokeColor", function (value) {
-                });
-
-                $scope.$watch("canvasSetting.angle", function (value) {
-                    $scope.canvas.forEachObject(function (childObject) {
-                        childObject.setAngle(parseFloat(value)).setCoords();
-                    });
-                    $scope.canvas.renderAll();
-                });
-
-                $scope.$watch("canvasSetting.scale", function (value) {
-                    $scope.canvas.forEachObject(function (childObject) {
-                        childObject.scale(parseFloat(value)).setCoords();
-                    });
-                    $scope.canvas.renderAll();
-                });
-
-                $scope.$watch("canvasSetting.top", function (value) {
-                    $scope.canvas.forEachObject(function (childObject) {
-                        childObject.setTop(parseInt(value, 10)).setCoords();
-                    });
-                    $scope.canvas.renderAll();
-                });
-
-                $scope.$watch("canvasSetting.left", function (value) {
-                    $scope.canvas.forEachObject(function (childObject) {
-                        childObject.setLeft(parseInt(value, 10)).setCoords();
-                    });
-                    $scope.canvas.renderAll();
-                });
-            }));
+define(
+    ["angular", "jquery", "jquery-ui", "app-util", "app-route", "app-filter", "app-service"],
+    function () {
+        function RootController(urlService) {
+            urlService.frameSketch();
         }
 
-        $scope.$on("$routeChangeSuccess", function (scope, next, current) {
-            $timeout(function () {
-                $q.all([initSketch()]).then(function () {
-                    //Render complete
-                });
-            }, 50);
-        });
-    }
+        function FrameSketchController($scope, $timeout, $q, angularEventTypes, uiService) {
+            //TODO 背景图片 阴影 视角 旋转 出现/消失/装载/其它事件动画 对齐 按网格移动/改变大小 width/height/border-radius 手势
+            var widgetSettingList = [];
 
-    return function (appModule) {
-        appModule.
-            controller('RootController', ["urlService", RootController]).
-            controller('FrameSketchController', ["$scope", "$timeout", "$q", "utilService", FrameSketchController]);
-    }
-});
+            $scope.sketchWidgetSetting = {};
+            $scope.sketchPageSetting = {};
+            $scope.sketchObject = {sketchWorks: {pages: []}};
+            $scope.sketchDevice = {type: "desktop", width: 1024, height: 768, img: "device_ipad_horizontal.svg"};
+            $scope.dockAlign = "align-left";
+
+            function setterFactory(obj, name) {
+                return function (to) {
+                    var setterName = "set" + name.charAt(0).toUpperCase() + name.substr(1);
+                    var setter = obj[setterName];
+                    setter && setter.apply(obj, [to]);
+                }
+            }
+
+            $scope.$watch("sketchObject.pickedWidget", function (to) {
+                if (to) {
+                    widgetSettingList.forEach(function (setting) {
+                        setting.deregisterWatch && setting.deregisterWatch();
+
+                        var name = setting.name,
+                            getterName = "get" + name.charAt(0).toUpperCase() + name.substr(1);
+
+                        var getter = to[getterName];
+                        if (getter) {
+                            $scope.sketchWidgetSetting[name] = getter.apply(to);
+                            setting.initFn && setting.initFn(getter.apply(to));
+                        }
+
+                        setting.deregisterWatch = $scope.$watch("sketchWidgetSetting" + "." + name, setterFactory(to, name));
+                    });
+                } else {
+                    $timeout(function () {
+                        $scope.sketchObject.pickedWidget = $scope.sketchObject.currentPage;
+                    });
+                }
+            });
+
+            $scope.$watch("sketchObject.currentPage", function (to) {
+                if (to) {
+                    $scope.sketchObject.pickedWidget = to;
+                    $scope.sketchObject.sketchWorks.pages.forEach(function (p) {
+                        p.id != to.id && p.showHide(false);
+                    });
+                    to.showHide(true);
+                }
+            });
+
+            //Receive control directive settings of bound properties
+            $scope.$on(angularEventTypes.boundPropertiesEvent, function (event, data) {
+                for (var key in data) {
+                    var prop = data[key].prop;
+                    if (typeof prop === "string") {
+                        var m = prop.match(/^sketchWidgetSetting\.(\w+)/);
+                        if (m && m.length == 2) {
+                            var name = m[1];
+
+                            widgetSettingList.push({name: name, initFn: data[key].initFn});
+                        }
+                    }
+                }
+            });
+
+            function initSketch() {
+            }
+
+            $scope.$on("$routeChangeSuccess", function (scope, next, current) {
+                $timeout(function () {
+                    $q.all([initSketch()]).then(function () {
+                        var pageObj = uiService.createPage($(".deviceHolder"));
+                        pageObj.addClass("pageHolder");
+                        $scope.sketchObject.currentPage = pageObj;
+                        $scope.sketchObject.sketchWorks.pages.push(pageObj);
+                    });
+                }, 50);
+            });
+        }
+
+        return function (appModule) {
+            appModule.
+                controller('RootController', ["urlService", RootController]).
+                controller('FrameSketchController', ["$scope", "$timeout", "$q", "angularEventTypes", "uiService", FrameSketchController]);
+        }
+    });

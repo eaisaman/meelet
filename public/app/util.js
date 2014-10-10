@@ -1,4 +1,5 @@
 define(
+    ["angular"],
     function () {
         var utilService = function ($rootScope, $timeout, $q) {
             this.$rootScope = $rootScope;

@@ -1,4 +1,5 @@
-@import 'companimation';
+@import "compass/css3/deprecated-support";
+@import 'companimation/main';
 
 %defaultBaseAnimation {
     @include animation-duration;

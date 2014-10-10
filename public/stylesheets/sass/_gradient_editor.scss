@@ -1,725 +1,721 @@
 @import "compass/css3/transform";
 @import "compass/css3/transition";
-@import "flexbox";
+@import "compass/css3/flexbox";
+@import "global";
 @import "animation/directive_animation";
 @import "circular-navigation";
 
-$borderColor: rgb(137, 134, 126);
 $color: rgba(0, 0, 0, 0.4);
+$borderColor: rgba(0, 0, 0, 0.4);
 $activeBackgroundColor: rgba(0, 0, 0, 0.3);
-$toolButtonHeight: 60px;
-$colurValueItemWidth: 40px;
-$spinInputHeight: 40px;
-$colurValueScrollHeight: 300px;
-$rowsOfDisplablePresetColors: 3;
+$deepShadow: #555;
+$activeBorderShadow: rgba(192, 192, 192, 0.8);
+$dockWidth: 8em;
+$expandedDockWidth: 12em;
 
-@mixin emboss-title($pseudo: "") {
-    &#{$pseudo} {
-        margin: 0;
-        text-shadow: 1px 0px 0px ghostwhite, -1px 0px 0px ghostwhite, 0px 1px 0px ghostwhite, 0px -1px 0px ghostwhite, 1px 1px 0px ghostwhite, -1px -1px 0px ghostwhite, -1px 1px 0px ghostwhite, 1px -1px 0px ghostwhite, 0px 6px 1px silver, 2px 6px 1px gray, -2px 6px 1px gray, 0px 6px 7px black;
-    }
-
-    &:active#{$pseudo} {
-        margin-top: 2px;
-        text-shadow: 1px 0px 0px ghostwhite, -1px 0px 0px ghostwhite, 0px 1px 0px ghostwhite, 0px -1px 0px ghostwhite, 1px 1px 0px ghostwhite, -1px -1px 0px ghostwhite, -1px 1px 0px ghostwhite, 1px -1px 0px ghostwhite, 0px 6px 1px silver;
-    }
-}
-
-@mixin gradient-editor($gradientEditorId, $minWidth: 300px, $barHeight: 100px, $panHeight: 120px, $paletttePanWidth: 40px) {
+@mixin gradient-editor($gradientEditorId) {
     ##{$gradientEditorId} {
 
-        &.expanded {
-            .editorContent {
-                .editorBar {
-                    @include box-shadow(0 8px 6px -6px black);
-                }
+        .editorContent.expanded {
+            .editorBar {
+                @include box-shadow(0 8px 6px -6px $activeBorderShadow);
+            }
 
-                .editorColorStopList {
-                    position: relative;
-                    float: left;
-                    width: 100%;
-                    top: 5px;
+            .editorColorStopList {
+                width: 100%;
+                top: 5px;
+                background: #fff;
+
+                .editorPalette {
+                    position: absolute;
+                    width: $expandedDockWidth;
                     background: #fff;
+                    border-top: 1px solid $borderColor;
+                    border-left: 1px solid $borderColor;
 
-                    @extend %flipUp;
-
-                    .editorPalette {
+                    &:after {
                         position: absolute;
+                        bottom: -2px;
+                        left: 0px;
                         width: 100%;
-                        left: -100%;
-                        background: #fff;
-                        display: none;
-
-                        &.show {
-                            display: block;
-                            border-top: 1px solid $borderColor;
-                            border-left: 1px solid $borderColor;
-                            @extend %slideRightRetourn;
-
-                            &:after {
-                                position: absolute;
-                                bottom: -2px;
-                                left: 0px;
-                                width: 100%;
-                                height: 0px;
-                                content: '';
-                                border-top: 1px solid $borderColor;
-                                border-bottom: 1px solid #FFF;
-                            }
-
-                            > .topBar {
-                                position: relative;
-                                float: left;
-                                width: 100%;
-                                height: $toolButtonHeight + $paletttePanWidth * 2 + 50px;
-
-                                > .paneToolBar {
-                                    position: relative;
-                                    width: 100%;
-                                    height: $toolButtonHeight;
-                                    margin: 5px;
-                                    background: $borderColor;
-                                    color: #fff;
-
-                                    .toolButton {
-                                        position: relative;
-                                        float: left;
-                                        width: $toolButtonHeight * 1.5;
-                                        height: 100%;
-                                        margin-left: -1px;
-
-                                        &:before {
-                                            position: absolute;
-                                            text-align: center;
-                                            width: 100%;
-                                            height: 100%;
-                                            top: 0px;
-                                            line-height: $toolButtonHeight;
-                                            border-right: 1px solid #fff;
-                                            font-size: 32px;
-                                            color: #fff;
-                                            overflow: hidden;
-                                            @include transition(all 0.5s);
-                                        }
-
-                                        &.select:before {
-                                            top: 100%;
-                                            height: 0px;
-                                        }
-
-                                        &:after {
-                                            position: absolute;
-                                            text-align: center;
-                                            width: 100%;
-                                            height: 0px;
-                                            font-size: 32px;
-                                            color: $borderColor;
-                                            background: $borderColor;
-                                            overflow: hidden;
-                                            @include transition(all 0.5s);
-                                        }
-
-                                        &.select:after {
-                                            height: 100%;
-                                            line-height: $toolButtonHeight;
-                                            border-right: 1px solid $borderColor;
-                                            background: #fff;
-                                        }
-                                    }
-
-                                    .closeToolButton {
-                                        position: absolute;
-                                        right: 10px;
-                                        width: $toolButtonHeight / 2;
-                                        height: $toolButtonHeight / 2;
-                                        top: $toolButtonHeight / 4;
-
-                                        &:before {
-                                            position: absolute;
-                                            text-align: center;
-                                            text-indent: 2px;
-                                            width: 100%;
-                                            height: 100%;
-                                            line-height: $toolButtonHeight / 2 - 4px;
-                                            font-size: 20px;
-                                            font-weight: 600;
-                                            border: 3px solid #fff;
-                                            border-radius: $toolButtonHeight;
-                                        }
-
-                                        &:active:before {
-                                            color: $borderColor;
-                                            background: #fff;
-                                        }
-                                    }
-                                }
-
-                                > .pickedColorList {
-                                    position: relative;
-                                    width: 100%;
-                                    height: $paletttePanWidth * 2 + 30px;
-                                    margin: 5px;
-
-                                    > .pickedColorPanes {
-                                        position: relative;
-                                        float: left;
-                                        left: 40px;
-                                        height: 100%;
-                                        width: calc(100% - #{ $paletttePanWidth * 2});
-                                        overflow: hidden;
-
-                                        > .pickedColorPane {
-                                            position: relative;
-                                            float: left;
-                                            width: $paletttePanWidth;
-                                            height: $paletttePanWidth;
-                                            margin: 5px;
-                                            background: #fff;
-                                            border-radius: 5px;
-                                            border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-
-                                            @include box-shadow(0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset);
-
-                                            &:before {
-                                                position: absolute;
-                                                width: 100%;
-                                                height: 100%;
-                                                line-height: $paletttePanWidth;
-                                                font-size: 24px;
-                                                text-align: center;
-                                                color: $color;
-                                            }
-
-                                            &[picked-color^='#'] {
-                                                &:before {
-                                                    content: "";
-                                                }
-
-                                                &.select {
-                                                    outline: 5px solid $activeBackgroundColor;
-                                                    box-shadow: none;
-                                                    border-radius: 0;
-                                                }
-                                            }
-                                        }
-                                    }
-
-                                    > .colorSticker {
-                                        position: relative;
-                                        float: left;
-                                        left: 20px;
-                                        top: 20px;
-                                        width: $paletttePanWidth * 2;
-                                        height: $paletttePanWidth * 2;
-                                        color: $color;
-                                        border: 5px solid hsl(0, 0%, 40%);
-                                        outline: 5px solid hsl(0, 0%, 60%);
-                                        text-shadow: 1px 0px 0px ghostwhite, -1px 0px 0px ghostwhite, 0px 1px 0px ghostwhite, 0px -1px 0px ghostwhite, 1px 1px 0px ghostwhite, -1px -1px 0px ghostwhite, -1px 1px 0px ghostwhite, 1px -1px 0px ghostwhite, 0px 6px 7px black;
-
-                                        @include box-shadow(0 0 0 10px #cccccc, 0 0 0 15px #e6e6e6);
-
-                                        &:before {
-                                            position: absolute;
-                                            width: 100%;
-                                            height: 100%;
-                                            left: -2px;
-                                            top: -2px;
-                                            line-height: $paletttePanWidth * 2;
-                                            font-size: 40px;
-                                            text-align: center;
-                                        }
-
-                                        &.select:before {
-                                            margin-top: 2px;
-                                            text-shadow: 1px 0px 0px ghostwhite, -1px 0px 0px ghostwhite, 0px 1px 0px ghostwhite, 0px -1px 0px ghostwhite, 1px 1px 0px ghostwhite, -1px -1px 0px ghostwhite, -1px 1px 0px ghostwhite, 1px -1px 0px ghostwhite;
-                                        }
-
-                                    }
-                                }
-                            }
-
-                            > div[tab-sel^='tab-content'] {
-                                position: absolute;
-                                top: $toolButtonHeight + $paletttePanWidth * 2 + 50px;
-                                width: 100%;
-                                height: 400px;
-                                @include transform-origin(50% 0);
-                                @include perspective(800px);
-                                @include transform(rotateX(-90deg));
-
-                                &.select {
-                                    @extend %flipUp;
-                                }
-                            }
-
-                            > .presetColors {
-                                height: $rowsOfDisplablePresetColors * ($paletttePanWidth + 10px);
-                                overflow-y: auto;
-                                background: #fff;
-
-                                > .colorPane {
-                                    position: relative;
-                                    float: left;
-                                    width: $paletttePanWidth;
-                                    height: $paletttePanWidth;
-                                    margin: 5px;
-                                    border-radius: 5px;
-                                    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-
-                                    &:active {
-                                        @include box-shadow(0 0 15px rgba(192, 192, 192, 0.8));
-                                    }
-                                }
-                            }
-
-                            > .colorValuePanes {
-                                background: #fff;
-                                color: $color;
-                                overflow-x: hidden;
-
-                                .paneNavRight {
-                                    z-index: 1;
-                                    position: absolute;
-                                    right: 5px;
-                                    height: $colurValueItemWidth;
-                                    line-height: $colurValueItemWidth;
-                                    font-size: 24px;
-
-                                    @include emboss-title();
-                                }
-
-                                .paneNavLeft {
-                                    z-index: 1;
-                                    position: absolute;
-                                    left: 5px;
-                                    height: $colurValueItemWidth;
-                                    line-height: $colurValueItemWidth;
-                                    font-size: 24px;
-
-                                    @include emboss-title();
-                                }
-
-                                .valuePane {
-                                    position: relative;
-                                    float: left;
-                                    width: 33.3%;
-                                    text-align: center;
-
-                                    > div {
-                                        position: relative;
-                                        float: left;
-                                        width: 100%;
-                                    }
-
-                                    .valueTitle {
-                                        height: $colurValueItemWidth;
-                                        line-height: $colurValueItemWidth;
-                                        font-size: 32px;
-                                        font-weight: 600;
-                                    }
-                                    .valueDisplay {
-                                        height: $colurValueItemWidth;
-                                        line-height: $colurValueItemWidth;
-                                        font-size: 24px;
-                                        font-weight: 400;
-                                    }
-                                    .valueScroll {
-                                        width: calc(100% - 10px);
-                                        margin: 5px;
-                                        height: $colurValueScrollHeight;
-                                        border: 1px solid $borderColor;
-
-                                        .scrollUpButton {
-                                            position: relative;
-                                            float: left;
-                                            width: 100%;
-                                            height: $colurValueItemWidth;
-
-                                            &:before {
-                                                position: absolute;
-                                                top: 0;
-                                                left: 0;
-                                                width: 100%;
-                                                height: $colurValueItemWidth;
-                                                line-height: $colurValueItemWidth;
-                                                font-size: 20px;
-                                                font-weight: 900;
-                                                text-align: center;
-                                                background: $borderColor;
-                                                color: #fff;
-                                            }
-
-                                            &:active:before {
-                                                background: $activeBackgroundColor;
-                                            }
-                                        }
-
-                                        .scrollBar {
-                                            position: relative;
-                                            float: left;
-                                            width: 100%;
-                                            height: calc(100% - #{$colurValueItemWidth * 2});
-
-                                            .scrollMeter {
-                                                position: absolute;
-                                                width: 100%;
-                                                @include box-shadow(0 5px 5px #555);
-
-                                                .scrollPin {
-                                                    position: absolute;
-                                                    left: calc(50% - 12px);
-                                                    top: -6px;
-                                                    width: 24px;
-                                                    height: 24px;
-                                                    line-height: 24px;
-                                                    border-radius: 24px;
-                                                    background: inherit;
-                                                }
-
-                                                &:before {
-                                                    position: absolute;
-                                                    content: '';
-                                                    left: calc(50% - 10px);
-                                                    top: 0px;
-                                                    width: 20px;
-                                                    height: 20px;
-                                                    line-height: 20px;
-                                                    border-radius: 20px;
-                                                    background: transparent;
-                                                    @include box-shadow(0 5px 5px #555);
-                                                }
-
-                                                &:active {
-                                                    @include box-shadow(0 1px 1px #555);
-
-                                                    &:before {
-                                                        position: absolute;
-                                                        content: '';
-                                                        left: calc(50% - 10px);
-                                                        top: 0px;
-                                                        width: 20px;
-                                                        height: 20px;
-                                                        line-height: 20px;
-                                                        border-radius: 20px;
-                                                        background: transparent;
-                                                        @include box-shadow(0 1px 1px #555);
-                                                    }
-                                                }
-                                            }
-                                        }
-
-                                        .scrollDownButton {
-                                            position: relative;
-                                            float: left;
-                                            width: 100%;
-                                            height: $colurValueItemWidth;
-
-                                            &:before {
-                                                position: absolute;
-                                                bottom: 0;
-                                                left: 0;
-                                                width: 100%;
-                                                height: $colurValueItemWidth;
-                                                line-height: $colurValueItemWidth;
-                                                font-size: 20px;
-                                                font-weight: 900;
-                                                text-align: center;
-                                                background: $borderColor;
-                                                color: #fff;
-                                            }
-
-                                            &:active:before {
-                                                background: $activeBackgroundColor;
-                                            }
-                                        }
-                                    }
-                                }
-
-                                > .rgbValuePane {
-                                    z-index: 1;
-                                    position: absolute;
-                                    top: 0;
-                                    width: 100%;
-                                    background: #fff;
-
-                                    .rValuePane {
-
-                                    }
-
-                                    .gValuePane {
-
-                                    }
-
-                                    .bValuePane {
-
-                                    }
-                                }
-
-                                > .hsbValuePane {
-                                    z-index: 2;
-                                    position: absolute;
-                                    top: 0;
-                                    width: 100%;
-                                    background: #fff;
-
-                                    @include transition(opacity 0.5s);
-
-                                    &:not(.select) {
-                                        left: 100%;
-                                        opacity: 0;
-                                        @extend %slideLeftRetourn;
-                                    }
-
-                                    &.select {
-                                        opacity: 1;
-                                        @extend %slideRightRetourn;
-                                    }
-
-                                    .hueValuePane {
-
-                                    }
-
-                                    .saturationValuePane {
-
-                                    }
-
-                                    .lightValuePane {
-
-                                    }
-                                }
-                            }
-                        }
-
+                        height: 0px;
+                        content: '';
+                        border-top: 1px solid $borderColor;
+                        border-bottom: 1px solid #FFF;
                     }
 
-                    .colorStop {
+                    > .topBar {
+                        display: none;
                         position: relative;
                         float: left;
                         width: 100%;
-                        height: $panHeight;
 
-                        &.animate {
-                            @extend %swashIn;
-                        }
-
-                        .colorStopLabel {
+                        > .paneToolBar {
                             position: relative;
-                            float: left;
-                            width: 25%;
-                            height: 100%;
-                            line-height: $panHeight;
-                            text-align: center;
-                            font-size: 24px;
-                            font-weight: 600;
-                            color: $color;
-                            background: inherit;
-                            overflow: hidden;
+                            width: calc(100% - 0.4em);
+                            height: 2em;
+                            margin: 0.2em;
+                            background: $borderColor;
+                            color: #fff;
 
-                            > .percentContent {
-                                position: absolute;
-                                width: 100%;
+                            .toolButton {
+                                position: relative;
+                                float: left;
+                                width: 2em;
                                 height: 100%;
-                                background: inherit;
-                                @include box-shadow(0 8px 6px -6px black);
-                            }
+                                margin-left: -1px;
 
-                            > .percentSpinner {
-                                position: absolute;
-                                width: 100%;
-                                height: 100%;
-                                background: inherit;
-                                @include transition(background 1s);
+                                &:before {
+                                    position: absolute;
+                                    text-align: center;
+                                    width: 100%;
+                                    height: 100%;
+                                    top: 0px;
+                                    line-height: 2;
+                                    border-right: 1px solid #fff;
+                                    color: #fff;
+                                    overflow: hidden;
+                                    @include transition(all 0.5s);
+                                }
 
-                                @include box-shadow(inset 0 0 6px black);
+                                &.select:before {
+                                    top: 100%;
+                                    height: 0px;
+                                }
 
                                 &:after {
-                                    content: "%";
                                     position: absolute;
-                                    width: 30px;
-                                    height: 30px;
-                                    top: 0;
-                                    right: 0;
+                                    text-align: center;
+                                    width: 100%;
+                                    height: 0px;
+                                    color: $borderColor;
+                                    background: $borderColor;
+                                    overflow: hidden;
+                                    @include transition(all 0.5s);
                                 }
 
-                                .spinValue {
+                                &.select:after {
+                                    height: 100%;
+                                    line-height: 2;
+                                    border-right: 1px solid $borderColor;
+                                    background: #fff;
+                                }
+                            }
+
+                            .closeToolButton {
+                                position: absolute;
+                                right: 10px;
+                                top: calc(50% - 1em);
+                                width: 2em;
+                                height: 2em;
+
+                                &:before {
+                                    position: absolute;
+                                    text-align: center;
+                                    text-indent: 2px;
+                                    width: 100%;
+                                    height: 100%;
+                                    line-height: 2em;
+                                    font-weight: 600;
+                                    border: 3px solid #fff;
+                                    border-radius: 2em;
+                                }
+
+                                &:active:before {
+                                    color: $borderColor;
+                                    background: #fff;
+                                }
+                            }
+                        }
+
+                        > .pickedColorList {
+                            position: relative;
+                            width: 100%;
+                            height: 3em;
+                            margin: 5px;
+
+                            > .pickedColorPanes {
+                                position: relative;
+                                float: left;
+                                left: 1em;
+                                top: 0.5em;
+                                height: 100%;
+                                width: calc(100% - 3em);
+                                overflow: hidden;
+
+                                > .pickedColorPane {
                                     position: relative;
                                     float: left;
-                                    top: calc(50% - #{$spinInputHeight * 0.75});
-                                    width: calc(100% - 15px);
-                                    height: $spinInputHeight * 1.5;
-                                    line-height: $spinInputHeight * 1.5;
-                                    margin: 0 5px;
-                                    border-width: 0;
-                                    outline: none;
+                                    margin: 5px;
+                                    background: #fff;
+                                    border-radius: 5px;
+                                    border-bottom: 1px solid $borderColor;
+
+                                    @include box-shadow(0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset);
+
+                                    &:before {
+                                        position: absolute;
+                                        width: 100%;
+                                        line-height: 1;
+                                        text-align: center;
+                                        color: $color;
+                                    }
+
+                                    &[picked-color^='#']:before {
+                                        content: "";
+                                    }
+                                }
+                            }
+
+                            > .colorSticker {
+                                position: relative;
+                                float: left;
+                                left: 0.5em;
+                                top: 0.5em;
+                                width: 2em;
+                                height: 2em;
+                                color: $color;
+                                text-shadow: 1px 0px 0px ghostwhite, -1px 0px 0px ghostwhite, 0px 1px 0px ghostwhite, 0px -1px 0px ghostwhite, 1px 1px 0px ghostwhite, -1px -1px 0px ghostwhite, -1px 1px 0px ghostwhite, 1px -1px 0px ghostwhite, 0px 6px 7px black;
+
+                                &:before {
+                                    position: absolute;
+                                    width: 100%;
+                                    left: -2px;
+                                    top: -2px;
+                                    line-height: 2;
                                     text-align: center;
-                                    background: transparent;
                                 }
                             }
+                        }
+                    }
 
-                            &:not(.select):active {
-                                > .percentContent.slideUp {
-                                    @extend %partialSlideUp;
+                    > .tabContents {
+                        display: none;
+                        opacity: 0;
+                        position: relative;
+                        float: left;
+                        top: 10px;
+                        width: 100%;
 
-                                    @include animation-duration(1s);
-                                }
+                        @include transition(opacity 0.3s);
 
-                                > .percentSpinner {
-                                    background: inherit;
-                                    background: rgba(0, 0, 0, 0.15);
-                                }
+                        > div[tab-sel^='tab-content'] {
+                            position: absolute;
+                            width: 100%;
+
+                            @include flipDownOrigin();
+
+                            &.select {
+                                @extend %flipDown;
+                            }
+                        }
+                    }
+
+                    .presetColors {
+                        overflow-y: auto;
+                        background: #fff;
+
+                        > .colorPane {
+                            position: relative;
+                            float: left;
+                            margin: 5px;
+                            border-radius: 5px;
+                            border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+
+                            &:active {
+                                @include box-shadow(0 0 15px rgba(192, 192, 192, 0.8));
+                            }
+                        }
+                    }
+
+                    .colorValuePanes {
+                        background: #fff;
+                        color: $color;
+                        overflow-x: hidden;
+
+                        .valuePane {
+                            position: relative;
+                            float: left;
+                            width: 33.3%;
+                            height: 100%;
+                            text-align: center;
+                            overflow: hidden;
+
+                            > div {
+                                position: relative;
+                                float: left;
+                                width: 100%;
                             }
 
-                            &.select:active {
-                                > .percentContent.slideDown {
-                                    @extend %partialSlideDown;
+                            .valueTitle {
+                                line-height: 1.5;
+                                font-weight: 600;
+                            }
+                            .valueDisplay {
+                                line-height: 1.5;
+                                font-weight: 400;
+                            }
+                            .valueScroll {
+                                width: calc(100% - 10px);
+                                margin: 5px;
+                                border: 1px solid $borderColor;
 
-                                    @include animation-duration(1s);
-                                    @include box-shadow(0 8px 6px -6px black);
+                                .scrollUpButton {
+                                    position: relative;
+                                    float: left;
+                                    left: 1.5em;
+                                    width: calc(100% - 1.5em);
+                                    height: 1em;
+
+                                    &:before {
+                                        position: absolute;
+                                        top: 0;
+                                        left: 0;
+                                        width: 100%;
+                                        line-height: 1;
+                                        font-weight: 900;
+                                        text-align: center;
+                                        background: $borderColor;
+                                        color: #fff;
+                                    }
+
+                                    &:active:before {
+                                        background: $activeBackgroundColor;
+                                    }
                                 }
+
+                                .scrollBar {
+                                    position: relative;
+                                    float: left;
+                                    left: 1.5em;
+                                    width: calc(100% - 1.5em);
+                                    height: calc(100% - 2em);
+
+                                    .scrollMeter {
+                                        position: absolute;
+                                        left: -1.5em;
+                                        width: 1.5em;
+                                        height: 1em;
+                                        background: transparent;
+                                        @include transition(transform 0.3s);
+
+                                        &:after {
+                                            position: absolute;
+                                            content: '';
+                                            left: 1em;
+                                            top: 50%;
+                                            height: 2px;
+                                            width: 0.5em;
+                                            background: $borderColor;
+                                        }
+
+                                        &:before {
+                                            position: absolute;
+                                            content: '';
+                                            left: 0;
+                                            top: 0;
+                                            width: 1em;
+                                            height: 1em;
+                                            line-height: 1;
+                                            border-radius: 100%;
+                                            background: $borderColor;
+                                        }
+                                    }
+                                }
+
+                                .scrollDownButton {
+                                    position: relative;
+                                    float: left;
+                                    left: 1.5em;
+                                    width: calc(100% - 1.5em);
+                                    height: 1em;
+
+                                    &:before {
+                                        position: absolute;
+                                        bottom: 0;
+                                        left: 0;
+                                        width: 100%;
+                                        line-height: 1;
+                                        font-weight: 900;
+                                        text-align: center;
+                                        background: $borderColor;
+                                        color: #fff;
+                                    }
+
+                                    &:active:before {
+                                        background: $activeBackgroundColor;
+                                    }
+                                }
+                            }
+                        }
+
+                        > .rgbValuePane {
+                            z-index: 1;
+                            position: absolute;
+                            top: 0;
+                            width: 100%;
+                            height: 100%;
+                            background: #fff;
+                        }
+
+                        > .hsbValuePane {
+                            z-index: 2;
+                            position: absolute;
+                            top: 0;
+                            width: 100%;
+                            height: 100%;
+                            background: #fff;
+
+                            @include transition(opacity 0.5s);
+                        }
+                    }
+                }
+
+                .colorStop {
+                    position: relative;
+                    float: left;
+                    width: 100%;
+                    height: 2em;
+
+                    &.animate {
+                        @extend %swashIn;
+                    }
+
+                    .colorStopLabel {
+                        position: relative;
+                        float: left;
+                        width: 25%;
+                        height: 100%;
+                        font-weight: 600;
+                        color: $color;
+                        background: inherit;
+
+                        &:after {
+                            position: absolute;
+                            content: "%";
+                            right: -0.25em;
+                            top: calc(50% - 0.5em);
+                            height: 1em;
+                            width: 1em;
+                            text-align: center;
+                        }
+
+                        .spinValue {
+                            position: absolute;
+                            left: 0;
+                            top: calc(50% - 1em);
+                            width: calc(100% - 0.4em);
+                            padding: 0 0.2em;
+                            height: 2em;
+                            border-width: 0;
+                            outline: none;
+                            text-align: left;
+                            background: transparent;
+
+                            &::-webkit-inner-spin-button,
+                            &::-webkit-outer-spin-button {
+                                -webkit-appearance: none;
+                                margin: 0;
+                            }
+                        }
+                    }
+
+                    .colorPane {
+                        position: relative;
+                        float: left;
+                        left: 10px;
+                        width: calc(75% - 10px);
+                        height: 1em;
+                        margin: 0.5em 0;
+                        border-radius: 20px;
+                        @include box-shadow(0 2px 2px rgba(0, 0, 0, 0.3));
+
+                        &:active {
+                            @include box-shadow(none);
+                        }
+                    }
+                }
+            }
+        }
+
+        .editorContent.expanded.align-left {
+            .editorColorStopList {
+                position: relative;
+                float: left;
+
+                .editorPalette {
+                    left: $dockWidth - $expandedDockWidth - 0.4em;
+
+                    &.show {
+                        @extend %slideRight;
+
+                        > .topBar {
+                            display: block;
+                        }
+                        > .tabContents {
+                            display: block;
+                            opacity: 1;
+                        }
+                    }
+
+                    &.hiding {
+                        @extend %slideRightRetourn;
+
+                        > .topBar {
+                            display: block;
+                        }
+
+                        > .tabContents {
+                            display: block;
+                            opacity: 0.2;
+                        }
+                    }
+
+                    @include animation-duration(0.3s);
+
+                    &:after {
+                        position: absolute;
+                        bottom: -2px;
+                        left: 0px;
+                        width: 100%;
+                        height: 0px;
+                        content: '';
+                        border-top: 1px solid $borderColor;
+                        border-bottom: 1px solid #FFF;
+                    }
+
+                    .colorValuePanes {
+                        background: #fff;
+                        color: $color;
+                        overflow-x: hidden;
+
+                        .paneNavForward {
+                            z-index: 1;
+                            position: absolute;
+                            left: 5px;
+                            line-height: 1;
+
+                            @include transform(rotateZ(-180deg));
+                            @include emboss-title();
+                        }
+
+                        .paneNavBackward {
+                            z-index: 1;
+                            position: absolute;
+                            right: 5px;
+                            line-height: 1;
+
+                            @include transform(rotateZ(-180deg));
+                            @include emboss-title();
+                        }
+
+                        > .hsbValuePane {
+                            &:not(.select) {
+                                left: 100%;
+                                opacity: 0;
+                                @extend %slideLeftRetourn;
                             }
 
                             &.select {
-                                > .percentContent {
-                                    top: -80%;
-                                }
-
-                                > .percentSpinner {
-                                    background: inherit;
-                                    background: rgba(0, 0, 0, 0.1);
-                                }
-                            }
-                        }
-
-                        .colorPane {
-                            position: relative;
-                            float: left;
-                            left: 10px;
-                            width: calc(75% - 10px);
-                            height: $panHeight / 2;
-                            margin: $panHeight / 4 0;
-                            border-radius: 20px;
-                            @include box-shadow(0 2px 2px rgba(0, 0, 0, 0.3));
-
-                            &:active {
-                                @include box-shadow(none);
-                            }
-                        }
-
-                        @include circular-navigation(circular-menu, 5, 100, -25, 50, 60px, 0.5, 1.2);
-
-                        .circular-menu {
-                            position: absolute;
-                            left: 0;
-                            top: 0;
-                            width: 1px;
-                            z-index: 1;
-
-                            .circle {
-                                position: relative;
-                                float: left;
-                                width: 1px;
-
-                                a {
-                                    color: $borderColor;
-                                    border: solid 1px $borderColor;
-                                    background: #fff;
-
-                                    &:before {
-                                        font-size: 32px;
-                                    }
-                                }
+                                opacity: 1;
+                                @extend %slideRightRetourn;
                             }
                         }
                     }
                 }
 
+                .colorStop {
+                    @include circular-navigation(circular-menu, 5, 100px, -25px, 50px, 60px, 60px, -0.5, 1.2);
+
+                    .circular-menu {
+                        position: absolute;
+                        right: 0;
+                        top: 0;
+                        width: 1px;
+                        z-index: 1;
+
+                        .circle {
+                            position: relative;
+                            float: right;
+                            width: 1px;
+
+                            div {
+                                color: $borderColor;
+                                border: solid 1px $borderColor;
+                                background: #fff;
+
+                                &:before {
+                                    font-size: 32px;
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
 
-        &:not(.expanded) {
-            .editorContent {
+        .editorContent.expanded.align-right {
+            .editorColorStopList {
+                position: relative;
+                float: left;
 
-                .editorColorStopList {
-                    @include transform-origin(50% 0);
-                    @include perspective(800px);
-                    @include transform(rotateX(-90deg));
+                .editorPalette {
+                    right: $dockWidth - $expandedDockWidth - 0.4em;
+
+                    &.show {
+                        @extend %slideLeft;
+
+                        > .topBar {
+                            display: block;
+                        }
+                        > .tabContents {
+                            display: block;
+                            opacity: 1;
+                        }
+                    }
+
+                    &.hiding {
+                        @extend %slideLeftRetourn;
+
+                        > .topBar {
+                            display: block;
+                        }
+
+                        > .tabContents {
+                            display: block;
+                            opacity: 0.2;
+                        }
+                    }
+
+                    @include animation-duration(0.3s);
+
+                    &:after {
+                        position: absolute;
+                        bottom: -2px;
+                        left: 0px;
+                        width: 100%;
+                        height: 0px;
+                        content: '';
+                        border-top: 1px solid $borderColor;
+                        border-bottom: 1px solid #FFF;
+                    }
+
+                    .colorValuePanes {
+                        background: #fff;
+                        color: $color;
+                        overflow-x: hidden;
+
+                        .paneNavForward {
+                            z-index: 1;
+                            position: absolute;
+                            right: 5px;
+                            line-height: 1;
+
+                            @include emboss-title();
+                        }
+
+                        .paneNavBackward {
+                            z-index: 1;
+                            position: absolute;
+                            left: 5px;
+                            line-height: 1;
+
+                            @include emboss-title();
+                        }
+
+                        > .hsbValuePane {
+                            &:not(.select) {
+                                left: 100%;
+                                opacity: 0;
+                                @extend %slideLeftRetourn;
+                            }
+
+                            &.select {
+                                opacity: 1;
+                                @extend %slideRightRetourn;
+                            }
+                        }
+                    }
                 }
+
+                .colorStop {
+                    @include circular-navigation(circular-menu, 5, 100px, -25px, 50px, 60px, 60px, 0.5, 1.2);
+
+                    .circular-menu {
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        width: 1px;
+                        z-index: 1;
+
+                        .circle {
+                            position: relative;
+                            float: left;
+                            width: 1px;
+
+                            div {
+                                color: $borderColor;
+                                border: solid 1px $borderColor;
+                                background: #fff;
+
+                                &:before {
+                                    font-size: 32px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .editorContent:not(.expanded) {
+            .editorColorStopList {
+                @include flipDownOrigin();
             }
         }
 
         .editorContent {
-            position: absolute;
-            left: 0;
-            top: 0;
-            min-width: $minWidth;
-
             .editorBar {
-                position: relative;
-                float: left;
                 width: 100%;
-                height: $barHeight;
-                min-height: $barHeight;
-                border: 1px solid $borderColor;
+                height: 2em;
 
-                .angleStep {
-                    position: relative;
-                    float: left;
-                    width: $barHeight / 2;
-                    height: $barHeight - 20px;
-                    top: 6px;
+                .angleDisplay {
+                    width: 2em;
+                    height: 2em;
+                    @include transform-origin(50% 50%);
+                    @include transform(rotate(0deg));
 
-                    > div {
-                        position: relative;
-                        float: left;
+                    svg {
                         width: 100%;
-                        height: 50%;
+                        height: 100%;
 
-                        &:before {
-                            position: absolute;
-                            width: ($barHeight - 20px) / 2 - 2px;
-                            heigth: ($barHeight - 20px) / 2 - 8px;
-                            margin: 4px;
-                            font-size: 24px;
-                            font-weight: 600;
-                            line-height: ($barHeight - 20px) / 2 - 8px;
-                            text-align: center;
-                            color: $color;
-                            border: 4px solid $borderColor;
-                            border-radius: 4px;
-                        }
-
-                        &:active {
-                            &:before {
-                                background: $activeBackgroundColor;
-                            }
+                        g {
+                            fill: $borderColor;
                         }
                     }
                 }
 
                 .gradientSummary {
-                    position: relative;
-                    float: left;
-                    width: 45%;
-                    min-width: $barHeight;
+                    width: calc(100% - 3.4em);
+                    min-width: 2em;
+                    max-width: 4em;
                     height: 100%;
+                    margin: 0 0.2em;
+                    overflow: hidden;
+
+                    @include transition(width 0.3s);
 
                     .angleLabel {
-                        position: relative;
-                        float: left;
                         width: 100%;
-                        height: $barHeight - 25px;
-                        line-height: $barHeight - 25px;
+                        height: 50%;
                         text-align: center;
-                        font-size: 24px;
                         font-weight: 600;
                         color: $color;
                     }
 
                     .colorSummary {
-                        position: relative;
-                        float: left;
                         width: 100%;
-                        height: 20px;
+                        height: 50%;
 
                         @include display-flex;
                         @include flex-direction(row);
@@ -728,30 +724,116 @@ $rowsOfDisplablePresetColors: 3;
 
                         > div {
                             @include flex(1);
-
-                            min-width: 20px;
-                            max-width: 20px;
-                            min-height: 20px;
-                            max-height: 20px;
                         }
                     }
                 }
 
+                .angleStep {
+                    width: 1em;
+                    height: 100%;
+
+                    > div {
+                        width: 100%;
+                        height: calc(50% - 4px);
+                        margin: 2px 0;
+                        border: 2px solid $borderColor;
+                        border-radius: 4px;
+
+                        &:before {
+                            position: absolute;
+                            width: 100%;
+                            height: 1em;
+                            top: calc(50% - 0.5em);
+                            font-weight: 600;
+                            text-align: center;
+                            color: $color;
+                        }
+
+                        &:active {
+                            background: $activeBackgroundColor;
+                        }
+                    }
+                }
+            }
+        }
+
+        .editorContent.align-left {
+            position: absolute;
+            left: 0;
+            top: 0;
+
+            .editorBar {
+                position: relative;
+                float: right;
+
+                .angleDisplay {
+                    position: relative;
+                    float: right;
+                }
+
+                .gradientSummary {
+                    position: relative;
+                    float: right;
+
+                    .angleLabel {
+                        position: relative;
+                        float: right;
+                    }
+
+                    .colorSummary {
+                        position: relative;
+                        float: right;
+                    }
+                }
+
+                .angleStep {
+                    position: relative;
+                    float: right;
+
+                    > div {
+                        position: relative;
+                        float: right;
+                    }
+                }
+            }
+        }
+
+        .editorContent.align-right {
+            position: absolute;
+            left: 0;
+            top: 0;
+
+            .editorBar {
+                position: relative;
+                float: left;
+
                 .angleDisplay {
                     position: relative;
                     float: left;
-                    width: $barHeight;
-                    height: $barHeight;
-                    @include transform-origin(50% 50%);
-                    @include transform(rotate(0deg));
+                }
 
-                    svg {
-                        width: $barHeight;
-                        height: $barHeight;
+                .gradientSummary {
+                    position: relative;
+                    float: left;
 
-                        g {
-                            fill: $borderColor;
-                        }
+                    .angleLabel {
+                        position: relative;
+                        float: left;
+                    }
+
+                    .colorSummary {
+                        position: relative;
+                        float: left;
+                    }
+                }
+
+                .angleStep {
+                    position: relative;
+                    float: left;
+
+                    > div {
+                        position: relative;
+                        float: left;
                     }
                 }
             }
