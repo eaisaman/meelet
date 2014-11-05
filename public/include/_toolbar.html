@@ -1,10 +1,14 @@
-<div class="ui-toolbar fs-x-medium" ui-draggable ui-draggable-opts="{threshold: 5, pointers: 0}">
-    <div ng-click="expandWidget($event)" class="icon-sketch-widget-before icon-sketch-widget-expand-before"></div>
-    <div ng-click="locateWidget($event)" class="icon-sketch-widget-before icon-sketch-widget-locate-before"></div>
-    <div ng-click="duplicateWidget($event)" class="icon-sketch-widget-before icon-sketch-widget-duplicate-before"></div>
-    <div ng-click="alignLeft($event)" class="icon-sketch-widget-before icon-sketch-widget-align-left-before"></div>
-    <div ng-click="alignCenter($event)" class="icon-sketch-widget-before icon-sketch-widget-align-center-before"></div>
-    <div ng-click="alignRight($event)" class="icon-sketch-widget-before icon-sketch-widget-align-right-before"></div>
-    <div ng-click="groupWidget($event)" class="icon-sketch-widget-before icon-sketch-widget-group-before"></div>
-    <div ng-click="ungroupWidget($event)" class="icon-sketch-widget-before icon-sketch-widget-ungroup-before"></div>
+<div id="sketchToolbar" class="ui-toolbar fs-x-medium" ui-draggable ui-draggable-opts="{threshold: 5, pointers: 0}">
+    <div ng-click="zoomWidget($event)" class="icon-toolbar-before"
+         ng-class="{'icon-toolbar-expand-before':!zoomId, 'icon-toolbar-collapse-before':zoomId}"></div>
+    <div ng-click="locateWidget($event)" class="icon-toolbar-before icon-toolbar-locate-before"></div>
+    <div ng-click="duplicateWidget($event)" class="icon-toolbar-before icon-toolbar-duplicate-before"></div>
+    <div ng-click="alignLeft($event)" class="icon-toolbar-before icon-toolbar-align-left-before"></div>
+    <div ng-click="alignCenter($event)" class="icon-toolbar-before icon-toolbar-align-center-before"></div>
+    <div ng-click="alignRight($event)" class="icon-toolbar-before icon-toolbar-align-right-before"></div>
+    <div ng-click="groupWidget($event)" class="icon-toolbar-before icon-toolbar-group-before"></div>
+    <div ng-click="ungroupWidget($event)" class="icon-toolbar-before icon-toolbar-ungroup-before"></div>
+    <div ng-click="togglePlayWidget($event)" class="icon-toolbar-before"
+         ng-class="{'icon-toolbar-play-before':!isPlaying, 'icon-toolbar-pause-before':isPlaying}"></div>
+    <div ng-click="saveSketch($event)" class="icon-toolbar-before icon-toolbar-save-before"></div>
 </div>

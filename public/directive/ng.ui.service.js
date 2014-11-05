@@ -1,14 +1,18 @@
 define(
     ["angular", "jquery", "underscore", "ng.ui.util"],
     function () {
-        var Service = function ($timeout, $q, $compile, uiUtilService) {
+        var Service = function ($parse, $timeout, $q, $compile, uiUtilService) {
+            this.$parse = $parse;
             this.$timeout = $timeout;
             this.$q = $q;
             this.$compile = $compile;
             this.uiUtilService = uiUtilService;
+
+            _.extend($inject, _.pick(this, Service.$inject));
         };
 
-        Service.$inject = ["$timeout", "$q", "$compile", "uiUtilService"];
+        Service.$inject = ["$parse", "$timeout", "$q", "$compile", "uiUtilService"];
+        var $inject = {};
 
         //Define sketch widget class
         var Class = function () {
@@ -42,23 +46,577 @@ define(
                 }
                 return C;
             },
+            State = Class({
+                CLASS_NAME: "State",
+                MEMBERS: {
+                    id: "",
+                    context: null,
+                    node: null,
+                    stateInfo: null,
+                    name: null,
+                    transitions: []
+                },
+                initialize: function (node, stateInfo, context, id) {
+                    for (var member in this.MEMBERS)
+                        this[member] = _.clone(this.MEMBERS[member]);
+                    this.node = node;
+                    this.stateInfo = stateInfo;
+                    this.context = context;
+
+                    this.name = stateInfo && stateInfo.name || "";
+                    this.id = id || "State_" + new Date().getTime();
+                },
+                setContext: function (value) {
+                    this.context = value;
+                },
+                toString: function () {
+                    return this.id;
+                },
+                addTransition: function (toState) {
+                    var self = this;
+
+                    if (toState && toState.context === self.context) {
+                        self.transitions.every(function (t) {
+                            return t.toState.name !== toState.name;
+                        }) && self.transitions.push(new Transition(self, toState));
+                    }
+                },
+                removeToState: function (toState) {
+                    var self = this;
+
+                    self.transitions = _.reject(self.transitions, function (t) {
+                        return t.toState == toState;
+                    });
+                },
+                removeToStateOption: function (stateOption) {
+                    var self = this;
+
+                    self.transitions = _.reject(self.transitions, function (t) {
+                        return t.toState.name == stateOption.name;
+                    });
+                },
+                clone: function () {
+                    var cloneObj = new State(this.node, this.stateInfo, this.context);
+
+                    return cloneObj;
+                }
+            }),
+            Transition = Class({
+                CLASS_NAME: "Transition",
+                MEMBERS: {
+                    id: "",
+                    state: null,
+                    toState: null,
+                    trigger: null,
+                    actionObj: null,
+                    eventName: ""
+                },
+                initialize: function (state, toState, id) {
+                    var self = this;
+
+                    for (var member in this.MEMBERS)
+                        self[member] = _.clone(self.MEMBERS[member]);
+
+                    self.state = state;
+                    self.toState = toState;
+                    self.id = id || "Transition_" + new Date().getTime();
+                },
+                createTriggerSetter: function (triggerType) {
+                    var self = this,
+                        fn = $inject.$parse("transition." + triggerType.charAt(0).toLowerCase() + triggerType.substr(1) + "EventName"),
+                        assign = fn.assign;
+
+                    if (!fn.assign.customizedForTrigger) {
+                        fn.assign = function (scope, eventId) {
+                            function triggerSetterHandler(transition, triggerType, eventName, options) {
+                                var defer = $inject.$q.defer();
+
+                                $inject.$timeout(function () {
+                                    transition.setTrigger(triggerType, eventName, options);
+                                });
+
+                                return defer.promise;
+                            }
+
+                            triggerSetterHandler.onceId = "Transition.createTriggerSetter.triggerSetterHandler";
+
+                            if (eventId) {
+                                var args = Array.prototype.slice.apply(arguments),
+                                    result = assign.apply(fn, args),
+                                    triggerInfo = _.where(scope.triggers[triggerType], {id: eventId}),
+                                    transition = scope.transition;
+
+                                if (triggerInfo.length) {
+                                    var options = triggerInfo[0].options,
+                                        eventName = triggerInfo[0].eventName;
+
+                                    $inject.uiUtilService.once(triggerSetterHandler, null, 20)(transition, triggerType, eventName, options);
+                                }
+
+                                return result;
+                            }
+                        }
+
+                        fn.assign.customizedForTrigger = true;
+                    }
+                    return fn;
+                },
+                setAction: function (actionObj) {
+                    this.actionObj = actionObj;
+                },
+                setAnimationAction: function (animation) {
+                    this.setAction(new AnimationTransitionAction(animation));
+                },
+                setTrigger: function (triggerType, eventName, options) {
+                    var self = this,
+                        trigger;
+
+                    function triggerCallback(event, widgetObj) {
+                        var $q = $inject.$q,
+                            defer = $q.defer();
+
+                        self.actionObj && $q.all([self.actionObj.doAction(widgetObj)]).then(
+                            function (actionObjs) {
+                                actionObjs.forEach(function (obj) {
+                                    obj && obj.restoreWidget(widgetObj);
+                                });
+                                widgetObj.setState(self.toState);
+                            }
+                        );
+                    }
+
+                    if (triggerType === "Gesture") {
+                        var gestureEvent = eventName;
+                        if (gestureEvent) {
+                            trigger = new GestureTrigger(gestureEvent, options, triggerCallback);
+                        }
+                    }
+
+                    if (trigger) {
+                        var widgetObj;
+                        if (this.trigger) {
+                            widgetObj = this.trigger.widgetObj;
+                            this.unregisterTrigger();
+                        }
+                        this.trigger = trigger;
+                        widgetObj && this.trigger.on(widgetObj);
+                    }
+                },
+                registerTrigger: function (widgetObj) {
+                    this.trigger && widgetObj.isPlaying && this.trigger.on(widgetObj);
+                },
+                unregisterTrigger: function (restoreWidget) {
+                    if (this.trigger) {
+                        var widgetObj = this.trigger.widgetObj;
+
+                        this.trigger.off();
+                        if (widgetObj && restoreWidget && this.actionObj) {
+                            this.actionObj.restoreWidget(widgetObj);
+                        }
+                    }
+                }
+            }),
+            BaseTransitionAction = Class({
+                CLASS_NAME: "BaseTransitionAction",
+                MEMBERS: {
+                    actionType: "",
+                    name: ""
+                },
+                initialize: function (actionType, id) {
+                    for (var member in this.MEMBERS)
+                        this[member] = _.clone(this.MEMBERS[member]);
+
+                    this.actionType = actionType;
+                    this.id = id || "TransitionAction_" + new Date().getTime();
+                },
+                doAction: function (widgetObj) {
+                },
+                restoreWidget: function (widgetObj) {
+                }
+            }),
+            AnimationTransitionAction = Class(BaseTransitionAction, {
+                CLASS_NAME: "AnimationTransitionAction",
+                initialize: function (animation, id) {
+                    this.initialize.prototype.__proto__.initialize.apply(this, ["Animation", id]);
+                    this.name = this.animation = animation;
+                },
+                doAction: function (widgetObj) {
+                    var self = this,
+                        defer = $inject.$q.defer();
+
+                    if (widgetObj.$element && widgetObj.$element.parent().length) {
+                        self.cssAnimation = _.extend(
+                            $inject.uiUtilService.prefixedStyle("animation", "{0} {1}s {2}", self.animation, 1, "both")
+                        );
+
+                        widgetObj.$element.css(self.cssAnimation);
+
+                        var animationName = widgetObj.$element.css("animation-name");
+                        if (animationName && animationName !== "none") {
+                            $inject.uiUtilService.onAnimationEnd(widgetObj.$element).then(function () {
+                                defer.resolve(self);
+                            });
+
+                            return defer.promise;
+                        }
+                    }
+
+                    $inject.$timeout(function () {
+                        defer.resolve(self);
+                    });
+
+                    return defer.promise;
+                },
+                restoreWidget: function (widgetObj) {
+                    var self = this;
+
+                    if (widgetObj && self.cssAnimation) {
+                        for (var key in self.cssAnimation) {
+                            widgetObj.$element.css(key, "");
+                        }
+                    }
+                }
+            }),
+            BaseTrigger = Class({
+                CLASS_NAME: "BaseTrigger",
+                MEMBERS: {
+                    triggerType: ""
+                },
+                initialize: function (triggerType) {
+                    for (var member in this.MEMBERS)
+                        this[member] = _.clone(this.MEMBERS[member]);
+
+                    this.triggerType = triggerType;
+                },
+                on: function (widgetObj) {
+                    this.widgetObj = widgetObj;
+                },
+                off: function () {
+                }
+            }),
+            GestureTrigger = Class(BaseTrigger, {
+                CLASS_NAME: "GestureTrigger",
+                MEMBERS: {},
+                initialize: function (gestureEvent, options, callback) {
+                    this.initialize.prototype.__proto__.initialize.apply(this, ["Gesture"]);
+
+                    for (var member in this.MEMBERS)
+                        this[member] = _.clone(this.MEMBERS[member]);
+
+                    this.gestureEvent = gestureEvent;
+                    this.options = _.clone(options);
+                    this.callback = callback;
+                },
+                on: function (widgetObj) {
+                    var self = this;
+
+                    if (widgetObj && widgetObj.$element && widgetObj.$element.parent().length && self.gestureEvent) {
+                        self.initialize.prototype.__proto__.on.apply(self, [widgetObj]);
+
+                        self.hammer = new Hammer(widgetObj.$element.get(0), _.clone(self.options));
+                        self.hammer.on(self.gestureEvent, function (event) {
+                            self.callback && self.callback(event, widgetObj);
+                            $inject.$timeout(function () {
+                                self.off();
+                            });
+                        });
+                    }
+                },
+                off: function () {
+                    this.initialize.prototype.__proto__.off.apply(this, []);
+
+                    if (this.hammer) {
+                        this.hammer.off(this.gestureEvent);
+                        this.hammer = null;
+                    }
+                }
+            }),
+            StyleManager = Class({
+                CLASS_NAME: "StyleManager",
+                MEMBERS: {
+                    widgetObj: null,
+                    stateMaps: {}
+                },
+                initialize: function (widgetObj) {
+                    for (var member in this.MEMBERS)
+                        this[member] = _.clone(this.MEMBERS[member]);
+                    this.widgetObj = widgetObj;
+                },
+                addClass: function (classes, state, stateContext) {
+                    var self = this;
+
+                    state = state || self.widgetObj.state;
+                    stateContext = stateContext || state.context;
+
+                    var stateMap = self.stateMaps[stateContext] || {},
+                        stateValue = stateMap[state.name] || {style: {}, classList: []},
+                        classList = stateValue.classList;
+
+                    if (stateMap !== self.stateMaps[stateContext]) self.stateMaps[stateContext] = stateMap;
+                    if (stateValue !== stateMap[state.name]) stateMap[state.name] = stateValue;
+
+                    if (classes) {
+                        var newClassList = _.difference(_.uniq(classes.split(" ")), classList);
+
+                        if (newClassList.length) {
+                            newClassList.forEach(function (c) {
+                                classList.splice(classList.length, 0, c);
+                            });
+
+                            if (state == self.widgetObj.state) {
+                                self.widgetObj.$element && self.widgetObj.$element.addClass(classList.join(" "));
+                            }
+                        }
+                    }
+
+                    return self;
+                },
+                removeClass: function (classes, state, stateContext) {
+                    var self = this;
+
+                    state = state || self.widgetObj.state;
+                    stateContext = stateContext || state.context;
+
+                    var stateMap = self.stateMaps[stateContext] || {},
+                        stateValue = stateMap[state.name] || {style: {}, classList: []};
+
+                    if (stateMap === self.stateMaps[stateContext] && stateValue === stateMap[state.name]) {
+                        var classList = stateValue.classList;
+
+                        if (classes && classList.length) {
+                            var removeClassList = _.uniq(classes.split(" "));
+
+                            if (removeClassList.length) {
+                                removeClassList.forEach(function (removeClazz) {
+                                    var index;
+                                    if (!classList.every(function (c, i) {
+                                            if (c == removeClazz) {
+                                                index = i;
+                                                return false;
+                                            }
+                                            return true;
+                                        })) {
+                                        classList.splice(index, 1);
+                                    }
+                                });
+
+                                if (state == self.widgetObj.state) {
+                                    self.widgetObj.$element && self.widgetObj.$element.removeClass(removeClassList.join(" "));
+                                }
+                            }
+                        }
+                    }
+
+                    return self;
+                },
+                hasClass: function (clazz, state, stateContext) {
+                    var self = this;
+
+                    state = state || self.widgetObj.state;
+                    stateContext = stateContext || state.context;
+
+                    var stateMap = self.stateMaps[stateContext] || {},
+                        stateValue = stateMap[state.name] || {style: {}, classList: []};
+
+                    if (stateMap === self.stateMaps[stateContext] && stateValue === stateMap[state.name]) {
+                        var classList = stateValue.classList;
+
+                        return !classList.every(function (c) {
+                            return c != clazz;
+                        });
+                    }
+
+                    return false;
+                },
+                classList: function (state, stateContext) {
+                    var self = this;
+
+                    state = state || self.widgetObj.state;
+                    stateContext = stateContext || state.context;
+
+                    var stateMap = self.stateMaps[stateContext] || {},
+                        stateValue = stateMap[state.name] || {style: {}, classList: []};
+
+                    if (stateMap !== self.stateMaps[stateContext]) self.stateMaps[stateContext] = stateMap;
+                    if (stateValue !== stateMap[state.name]) stateMap[state.name] = stateValue;
+
+                    return stateValue.classList;
+                },
+                css: function (state, stateContext) {
+                    var self = this;
+
+                    state = state || self.widgetObj.state;
+                    stateContext = stateContext || state.context;
+
+                    var stateMap = self.stateMaps[stateContext] || {},
+                        stateValue = stateMap[state.name] || {style: {}, classList: []},
+                        style = stateValue.style,
+                        args = Array.prototype.slice.call(arguments, 2),
+                        ret = self;
+
+                    if (stateMap !== self.stateMaps[stateContext]) self.stateMaps[stateContext] = stateMap;
+                    if (stateValue !== stateMap[state.name]) stateMap[state.name] = stateValue;
+
+                    switch (args.length) {
+                        case 1 :
+                            if (typeof args[0] === "string")
+                                ret = style[args[0]];
+                            else if (typeof args[0] === "object") {
+                                for (var key in args[0]) {
+                                    self.css(state, stateContext, key, args[0][key]);
+                                }
+                            } else if (!args[0]) {
+                                _.keys(style).forEach(function (key) {
+                                    delete style[key];
+                                });
+                            }
+                            break;
+                        case 2 :
+                            if (typeof args[0] === "string") {
+                                if (args[1]) {
+                                    style[args[0]] = args[1];
+                                } else {
+                                    delete style[args[0]];
+                                }
+                                if (self.widgetObj.$element) {
+                                    if (state == self.widgetObj.state) {
+                                        if (toString.call(args[1]) === '[object Array]') {
+                                            args[1].forEach(function (styleValue) {
+                                                self.widgetObj.$element.css(args[0], styleValue);
+                                            });
+                                        } else {
+                                            self.widgetObj.$element.css(args[0], args[1]);
+                                        }
+                                    }
+                                }
+                            }
+                            break;
+
+                        default:
+                            break;
+                    }
+
+                    return ret;
+                },
+                draw: function (state, stateContext) {
+                    var self = this;
+
+                    state = state || self.widgetObj.state;
+                    stateContext = stateContext || state.context;
+
+                    var stateMap = self.stateMaps[stateContext] || {},
+                        stateValue = stateMap[state.name] || {style: {}, classList: []},
+                        style = stateValue.style,
+                        classList = stateValue.classList;
+
+                    if (self.widgetObj.$element) {
+                        self.widgetObj.$element.addClass(classList.join(" "));
+
+                        if (state == self.widgetObj.state) {
+                            for (var styleName in style) {
+                                var styleValue = style[styleName];
+
+                                if (styleValue === '[object Array]') {
+                                    styleValue.forEach(function (value) {
+                                        self.widgetObj.$element.css(styleName, value);
+                                    });
+                                } else {
+                                    self.widgetObj.$element.css(styleName, styleValue);
+                                }
+                            }
+                        }
+                    }
+                },
+                clone: function () {
+                    var self = this,
+                        cloneObj = new self.initialize(),
+                        cloneMembers = _.difference(_.keys(self.MEMBERS), ["widgetObj", "stateMaps"]);
+
+                    cloneMembers.forEach(function (member) {
+                        cloneObj[member] = _.clone(self[member]);
+                    });
+
+                    //style may contains property with array value
+                    for (var stateContext in self.stateMaps) {
+                        var stateMap = self.stateMaps[stateContext];
+                        cloneObj.stateMaps[stateContext] = {};
+                        for (var stateName in stateMap) {
+                            var stateValue = stateMap[stateName];
+                            cloneObj.stateMaps[stateContext][stateName] = {
+                                style: {},
+                                classList: _.clone(stateValue.classList)
+                            };
+
+                            var style = stateValue.style,
+                                cloneStyle = cloneObj.stateMaps[stateContext][stateName].style;
+
+                            for (var styleName in style) {
+                                cloneStyle[styleName] = _.clone(style[styleName]);
+                            }
+                        }
+                    }
+
+                    return cloneObj;
+                },
+                removeState: function (state, stateContext) {
+                    if (state) {
+                        var self = this,
+                            stateName = typeof state === "string" && state || state.name;
+
+                        if (stateName) {
+                            if (stateContext) {
+                                var stateMap = self.stateMaps[stateContext];
+
+                                stateMap && delete stateMap[stateName];
+                            } else {
+                                for (var key in self.stateMaps) {
+                                    delete  self.stateMaps[key][stateName];
+                                }
+                            }
+                        }
+                    }
+                },
+                removeStateContext: function (stateContext) {
+                    var self = this,
+                        stateMap = self.stateMaps[stateContext];
+
+                    if (stateMap) {
+                        delete self.stateMaps[stateContext];
+                    }
+                },
+                changeStateContext: function (oldContext, newContext) {
+                    var self = this,
+                        stateMap = self.stateMaps[oldContext];
+
+                    if (stateMap) {
+                        self.stateMaps[newContext] = stateMap;
+                        delete self.stateMaps[oldContext];
+                    }
+                }
+            }),
             BaseSketchWidgetClass = Class({
                     CLASS_NAME: "BaseSketchWidget",
-                    STYLE_DEFAULTS: {},
+                    STATE_CONTEXT: new State("?", {name: "*"}),
                     MEMBERS: {
                         id: "",
                         name: "NO NAME",
                         childWidgets: [],
-                        style: {},
+                        initialStateOption: {name: "*"},
                         attr: {},
-                        classList: [],
+                        styleManager: null,
+                        states: [],
+                        stateOptions: [],
                         $element: null,
                         resizable: true
                     },
                     initialize: function (id) {
                         for (var member in this.MEMBERS)
                             this[member] = _.clone(this.MEMBERS[member]);
-                        this.id = id || ("" + new Date().getTime());
+                        this.id = id || ("Widget-" + new Date().getTime());
+                        this.stateContext = this.STATE_CONTEXT;
+                        this.state = new State(this.id, this.initialStateOption, this.STATE_CONTEXT);
+                        this.states.push(this.state);
+                        this.styleManager = new StyleManager(this);
                     },
                     isKindOf: function (className) {
                         var self = this;
@@ -68,16 +626,19 @@ define(
                     clone: function () {
                         var self = this,
                             cloneObj = new self.initialize(),
-                            cloneMembers = _.difference(_.keys(self.MEMBERS), ["id", "childWidgets", "style", "$element"]);
+                            cloneMembers = _.difference(_.keys(self.MEMBERS), ["id", "childWidgets", "styleManager", "states", "$element"]);
 
                         cloneMembers.forEach(function (member) {
                             cloneObj[member] = _.clone(self[member]);
                         });
 
-                        //style may contains property with array value
-                        for (var styleName in self.style) {
-                            cloneObj.style[styleName] = _.clone(self.style[styleName]);
-                        }
+                        self.states.forEach(function (s) {
+                            cloneObj.states.push(s.clone && s.clone() || _.clone(s));
+                        });
+                        cloneObj.setState(self.state);
+
+                        cloneObj.styleManager = self.styleManager.clone();
+                        cloneObj.styleManager.widgetObj = cloneObj;
 
                         self.childWidgets.forEach(function (obj) {
                             cloneObj.childWidgets.push(obj.clone());
@@ -89,19 +650,7 @@ define(
                         var self = this;
 
                         if (childWidget && childWidget.isKindOf && childWidget.isKindOf("BaseSketchWidget")) {
-                            var notFound = self.childWidgets.every(function (obj) {
-                                return obj.id != childWidget.id;
-                            });
-
-                            notFound && self.childWidgets.push(childWidget);
-
-                            if (self.$element) {
-                                if (childWidget.$element) {
-                                    self.$element.append(childWidget.$element);
-                                } else {
-                                    childWidget.draw(self.$element);
-                                }
-                            }
+                            childWidget.draw(self);
                         }
 
                         return self;
@@ -117,16 +666,16 @@ define(
 
                                 if (parentWidgetObj) {
                                     var wIndex;
-                                    parentWidgetObj.childWidgets.every(function (obj, index) {
-                                        if (obj.id == self.id) {
-                                            wIndex = index;
-                                            return false;
-                                        }
+                                    if (!parentWidgetObj.childWidgets.every(function (obj, index) {
+                                            if (obj.id == self.id) {
+                                                wIndex = index;
+                                                return false;
+                                            }
 
-                                        return true;
-                                    });
-
-                                    wIndex != undefined && parentWidgetObj.childWidgets.splice(wIndex, 1);
+                                            return true;
+                                        })) {
+                                        parentWidgetObj.childWidgets.splice(wIndex, 1);
+                                    }
                                 }
 
                                 self.$element.remove();
@@ -137,116 +686,340 @@ define(
                     },
                     draw: function (container) {
                         if (container) {
-                            var self = this;
+                            var self = this,
+                                widgetObj,
+                                parentId = self.$element && self.$element.parent().attr("id") || "";
+
+                            if (container.isKindOf && container.isKindOf("BaseSketchWidget")) {
+                                widgetObj = container;
+                            } else if (typeof container === "string" || angular.isElement(container)) {
+                                widgetObj = $(container).data("widgetObject");
+                            } else if (container.jquery) {
+                                widgetObj = container.data("widgetObject");
+                            }
 
                             self.$element = self.$element || $("<div />").data("widgetObject", self).attr("id", self.id);
                             self.$element.attr(self.attr);
-                            self.$element.addClass(self.classList.join(" "));
-                            self.css(_.extend(_.clone(self.STYLE_DEFAULTS), self.style));
-
-                            self.childWidgets.forEach(function (child) {
-                                child.draw(self.$element);
-                            });
-
-                            container = (typeof container == "string" || angular.isElement(container) && $(container)) || container;
-                            var widgetObj = container.data("widgetObject");
 
                             if (widgetObj && widgetObj.isKindOf && widgetObj.isKindOf("BaseSketchWidget")) {
-                                widgetObj.append(self);
+                                widgetObj.childWidgets.every(function (obj) {
+                                    return obj.id != self.id;
+                                }) && widgetObj.childWidgets.push(self);
+
+                                self.setStateContext(widgetObj.state);
+
+                                if (parentId && parentId !== widgetObj.id) {
+                                    self.$element.detach();
+                                }
+                                widgetObj.$element && widgetObj.$element.append(self.$element);
                             } else {
-                                container.append(self.$element);
+                                self.setStateContext(self.STATE_CONTEXT);
+                                if (!container.find("#" + self.id).length) {
+                                    var containerId = container.attr("id");
+                                    if (!containerId || !parentId || (parentId !== containerId)) {
+                                        self.$element.detach();
+                                    }
+                                    container.append(self.$element);
+                                }
                             }
+
+                            self.childWidgets.forEach(function (child) {
+                                child.draw(self);
+                            })
+                            self.styleManager.draw();
                         }
 
                         return self;
                     },
                     addClass: function (classes) {
-                        var self = this;
+                        this.styleManager.addClass.apply(this.styleManager, [classes, this.state, this.stateContext]);
 
-                        if (classes) {
-                            var classList = _.difference(_.uniq(classes.split(" ")), self.classList);
-
-                            if (classList.length) {
-                                self.classList = _.union(self.classList, classList);
-
-                                if (self.$element) {
-                                    self.$element.addClass(classList.join(" "));
-                                }
-                            }
-                        }
-
-                        return self;
+                        return this;
                     },
                     removeClass: function (classes) {
-                        var self = this;
+                        this.styleManager.removeClass.apply(this.styleManager, [classes, this.state, this.stateContext]);
 
-                        if (classes) {
-                            var classList = _.uniq(classes.split(" "));
+                        return this;
+                    },
+                    hasClass: function (clazz) {
+                        return this.styleManager.hasClass.apply(this.styleManager, [clazz, this.state, this.stateContext]);
+                    },
+                    css: function () {
+                        var args = Array.prototype.slice.call(arguments);
+                        args.splice(0, 0, this.state, this.stateContext);
 
-                            if (classList.length) {
-                                self.classList = _.difference(self.classList, _.uniq(classes.split(" ")));
+                        return this.styleManager.css.apply(this.styleManager, args);
+                    },
+                    showHide: function (showState) {
+                        this.$element && this.$element.toggle(showState);
 
-                                if (self.$element) {
-                                    self.$element.removeClass(classes);
+                        return showState;
+                    },
+                    setState: function (value) {
+                        if (value) {
+                            var self = this,
+                                stateName = typeof value === "string" && value || value.name,
+                                stateFound = false;
+
+                            if (stateName) {
+                                if (self.states.every(function (s) {
+                                        if (s.context == self.stateContext && s.name == stateName) {
+                                            value = s;
+                                            stateFound = true;
+                                            return false;
+                                        }
+
+                                        return true;
+                                    })) {
+                                    if (self.stateOptions.every(function (stateInfo) {
+                                            if (stateInfo.name == stateName) {
+                                                value = new State(self.id, stateInfo, self.stateContext);
+                                                return false;
+                                            }
+
+                                            return true;
+                                        })) {
+                                        if (self.initialStateOption.name == stateName)
+                                            value = new State(self.id, self.initialStateOption, self.stateContext);
+                                        else
+                                            value = null;
+                                    }
+                                }
+
+                                if (value && self.state != value) {
+                                    !stateFound && self.states.push(value);
+                                    self.unregisterTrigger();
+
+                                    self.state = value;
+                                    self.childWidgets.forEach(function (child) {
+                                        child.setStateContext(self.state);
+                                    });
+                                    self.styleManager.draw();
+
+                                    self.isPlaying && self.registerTrigger();
                                 }
                             }
                         }
+                    },
+                    getState: function (stateName) {
+                        var self = this,
+                            state;
+
+                        if (stateName) {
+                            self.states.every(function (s) {
+                                if (s.context = self.stateContext && s.name == stateName) {
+                                    state = s;
+                                    return false;
+                                }
+
+                                return true;
+                            });
+                        } else {
+                            state = self.state;
+                        }
+
+                        return state;
+                    },
+                    addState: function (stateName) {
+                        if (stateName) {
+                            var self = this,
+                                newState;
+
+                            self.states.every(function (s) {
+                                return s.context != self.stateContext || s.name != stateName;
+                            }) && self.stateOptions.every(function (stateInfo) {
+                                if (stateInfo.name == stateName) {
+                                    newState = new State(self.id, stateInfo, self.stateContext);
+                                    self.states.push(newState);
+                                    return false;
+                                }
+
+                                return true;
+                            });
+                        }
+
+                        return newState;
+                    },
+                    removeState: function (value) {
+                        if (value) {
+                            var self = this,
+                                stateName = typeof value === "string" && value || value.name;
+
+                            if (stateName && stateName !== self.initialStateOption.name) {
+                                if (!self.stateOptions.every(function (s, i) {
+                                        if (s.name == stateName) {
+                                            return false;
+                                        }
+                                        return true;
+                                    })) {
+                                    self.styleManager.removeState(stateName);
+
+                                    var index;
+                                    if (!self.states.every(function (state, i) {
+                                            if (state.context = self.stateContext && state.name === stateName) {
+                                                index = i;
+                                                self.childWidgets.forEach(function (child) {
+                                                    child.removeStateContext(state);
+                                                });
+
+                                                return false;
+                                            }
+
+                                            return true;
+                                        })) {
+                                        self.states.splice(index, 1);
+                                    }
+
+                                    if (self.state.name == stateName) {
+                                        self.setState(self.initialStateOption);
+                                    } else {
+                                        //Trigger state update on child widgets
+                                        self.setState(self.state);
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    addStateOption: function (value) {
+                        var self = this;
+
+                        if (value && value.name) {
+                            if (self.stateOptions.every(function (s) {
+                                    return s.name != value.name;
+                                })) {
+                                self.stateOptions.push(value);
+                            }
+                        }
+                    },
+                    removeStateOption: function (value) {
+                        if (value) {
+                            var self = this,
+                                stateName = typeof value === "string" && value || value.name;
+
+                            if (stateName && stateName !== self.initialStateOption.name) {
+                                var index;
+                                if (!self.stateOptions.every(function (s, i) {
+                                        if (s.name == stateName) {
+                                            index = i;
+                                            return false;
+                                        }
+                                        return true;
+                                    })) {
+                                    self.styleManager.removeState(stateName);
+                                    self.stateOptions.splice(index, 1);
+
+                                    var states = [];
+                                    self.states.forEach(function (state) {
+                                        if (state.name === stateName) {
+                                            self.childWidgets.forEach(function (child) {
+                                                child.removeStateContext(state);
+                                            });
+                                        } else {
+                                            states.push(state);
+                                        }
+                                    });
+                                    self.states = states;
+                                    if (self.state.name == stateName) {
+                                        self.setState(self.initialStateOption);
+                                    } else {
+                                        //Trigger state update on child widgets
+                                        self.setState(self.state);
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    setStateContext: function (value) {
+                        var self = this;
+
+                        if (value) {
+                            if (self.states.every(function (state) {
+                                    if (state.context === value && state.name == self.initialStateOption.name) {
+                                        if (self.state !== state) {
+                                            self.stateContext = value;
+                                            self.setState(state);
+                                        }
+                                        return false;
+                                    }
+
+                                    return true;
+                                })) {
+                                if (self.state.context.node !== value.node) {
+                                    var states = {};
+                                    self.states.forEach(function (state) {
+                                        if (state.context.name === value.name && !states[state.name]) {
+                                            states[state.name] = state;
+                                        } else {
+                                            self.childWidgets.forEach(function (child) {
+                                                child.removeStateContext(state);
+                                            });
+                                        }
+                                    });
+                                    self.states = _.values(states);
+                                    self.states.forEach(function (state) {
+                                        self.styleManager.changeStateContext(state.context, value);
+                                        state.setContext(value);
+                                    });
+                                }
+
+                                self.stateContext = value;
+                                self.setState(self.initialStateOption);
+                            }
+                        }
+                    },
+                    getStateContext: function () {
+                        return this.stateContext;
+                    },
+                    removeStateContext: function (stateContext) {
+                        var self = this,
+                            states = [];
+
+                        self.states.forEach(function (state) {
+                            if (state.context !== stateContext) {
+                                states.push(state);
+                            } else {
+                                self.styleManager.removeStateContext(stateContext);
+                                self.childWidgets.forEach(function (child) {
+                                    child.removeStateContext(state);
+                                });
+                            }
+                        });
+                        self.states = states;
+                        if (self.stateContext === stateContext) {
+                            self.stateContext = null;
+                        }
+                    },
+                    registerTrigger: function () {
+                        var self = this;
+
+                        self.state.transitions.forEach(function (transition) {
+                            transition.registerTrigger(self);
+                        });
 
                         return self;
                     },
-                    hasClass: function (clazz) {
-                        return !self.classList.every(function (c) {
-                            return c != clazz;
+                    unregisterTrigger: function (restoreWidget) {
+                        var self = this;
+
+                        //TODO Need function to undo modification on widget element
+                        self.state.transitions.forEach(function (transition) {
+                            transition.unregisterTrigger(restoreWidget);
                         });
+
+                        return self;
                     },
-                    css: function () {
+                    playAnimation: function (animation) {
                         var self = this,
-                            args = Array.prototype.slice.call(arguments),
-                            ret = null;
+                            defer = $inject.$q.defer();
 
-                        switch (args.length) {
-                            case 1 :
-                                if (typeof args[0] === "string")
-                                    ret = self.style[args[0]];
-                                else if (typeof args[0] === "object") {
-                                    _.extend(self.style, args[0]);
-                                    if (self.$element) {
-                                        for (var key in args[0]) {
-                                            self.css(key, args[0][key]);
-                                        }
-                                    }
-                                }
-                                break;
-                            case 2 :
-                                if (typeof args[0] === "string") {
-                                    if (args[1]) {
-                                        self.style[args[0]] = args[1];
-                                    } else {
-                                        delete self.style[args[0]];
-                                    }
-                                    if (self.$element) {
-                                        if (toString.call(args[1]) === '[object Array]') {
-                                            args[1].forEach(function (styleValue) {
-                                                self.$element.css(args[0], styleValue);
-                                            });
-                                        } else {
-                                            self.$element.css(args[0], args[1]);
-                                        }
-                                    }
-                                    ret = self;
-                                }
-                                break;
+                        self.css(animation);
+                        self.$element && self.$element.parent().length && $inject.uiUtilService.onAnimationEnd(self.$element).then(function () {
+                            defer.resolve();
+                        }) || $inject.$timeout(function () {
+                            defer.resolve();
+                        });
 
-                            default:
-                                break;
-                        }
-
-                        return ret;
-                    },
-                    showHide: function (state) {
-                        this.$element && this.$element.toggle(state);
-
-                        return state;
+                        return defer.promise;
                     },
                     setColor: function (value) {
                         value && this.css("color", value) || this.css("color", "");
@@ -318,7 +1091,7 @@ define(
 
                                 var styles = [];
                                 styles.push("-webkit-gradient(linear, {0}% {1}%, {2}% {3}%, {4})".format(x1, y1, x2, y2, webkitStops.join(",")));
-                                self.uiUtilService.prefixedStyleValue("{0}linear-gradient({1}deg, {2})", value.angle, stops.join(",")).forEach(
+                                $inject.uiUtilService.prefixedStyleValue("{0}linear-gradient({1}deg, {2})", value.angle, stops.join(",")).forEach(
                                     function (gradientStyleValue) {
                                         styles.push(gradientStyleValue);
                                     }
@@ -351,7 +1124,11 @@ define(
                                             var s = stopValue.match(/(#\w+) (\d+)%/);
                                             if (s && s.length == 3) {
                                                 var color = s[1];
-                                                colorStopList.push({percent: parseInt(s[2]), color: color, backgroundColor: self.uiUtilService.contrastColor(color) === "#ffffff" ? self.uiUtilService.lighterColor(color, 0.5) : self.uiUtilService.lighterColor(color, -0.5)});
+                                                colorStopList.push({
+                                                    percent: parseInt(s[2]),
+                                                    color: color,
+                                                    backgroundColor: $inject.uiUtilService.contrastColor(color) === "#ffffff" ? $inject.uiUtilService.lighterColor(color, 0.5) : $inject.uiUtilService.lighterColor(color, -0.5)
+                                                });
                                             }
                                         });
 
@@ -378,12 +1155,25 @@ define(
                             colorObj = {
                                 angle: 0,
                                 colorStopList: [
-                                    {percent: 0, color: value, minPercent: 0, maxPercent: 100, backgroundColor: self.uiUtilService.contrastColor(value) === "#ffffff" ? self.uiUtilService.lighterColor(value, 0.5) : self.uiUtilService.lighterColor(value, -0.5)}
+                                    {
+                                        percent: 0,
+                                        color: value,
+                                        minPercent: 0,
+                                        maxPercent: 100,
+                                        backgroundColor: $inject.uiUtilService.contrastColor(value) === "#ffffff" ? $inject.uiUtilService.lighterColor(value, 0.5) : $inject.uiUtilService.lighterColor(value, -0.5)
+                                    }
                                 ]
                             };
                         }
 
                         return colorObj;
+                    },
+                    setIsPlaying: function (value) {
+                        if (!!this.isPlaying != !!value) {
+                            this.unregisterTrigger(true);
+                            this.isPlaying = value;
+                            this.isPlaying && this.registerTrigger();
+                        }
                     },
                     setShape: function () {
                     },
@@ -394,7 +1184,6 @@ define(
             ),
             ElementSketchWidgetClass = Class(BaseSketchWidgetClass, {
                 CLASS_NAME: "ElementSketchWidget",
-                STYLE_DEFAULTS: {"width": "100px", "height": "100px", "color": "#000000", "border-color": "#000000", "background": "#ffffff", "border-width": "1px", "border-style": "solid"},
                 initialize: function () {
                     this.initialize.prototype.__proto__.initialize.apply(this);
                     this.isElement = true;
@@ -420,14 +1209,24 @@ define(
                     var self = this;
 
                     if (container) {
-                        var $container = (typeof container == "string" || angular.isElement(container) && $(container)) || container,
-                            containerLeft = $container.offset().left,
-                            containerTop = $container.offset().top;
+                        var $container;
+                        if (container.isKindOf && container.isKindOf("BaseSketchWidget")) {
+                            $container = container.$element;
+                        } else if (typeof container === "string" || angular.isElement(container)) {
+                            $container = $(container);
+                        } else if (container.jquery) {
+                            $container = container;
+                        }
 
-                        containerLeft = Math.floor(containerLeft * 100) / 100, containerTop = Math.floor(containerTop * 100) / 100;
+                        if ($container) {
+                            var containerLeft = $container.offset().left,
+                                containerTop = $container.offset().top;
 
-                        self.offsetLeft != undefined && self.css("left", (self.offsetLeft - containerLeft) + "px") && delete self.offsetLeft;
-                        self.offsetTop != undefined && self.css("top", (self.offsetTop - containerTop) + "px") && delete self.offsetTop;
+                            containerLeft = Math.floor(containerLeft * 100) / 100, containerTop = Math.floor(containerTop * 100) / 100;
+
+                            self.offsetLeft != undefined && self.css("left", (self.offsetLeft - containerLeft) + "px") && delete self.offsetLeft;
+                            self.offsetTop != undefined && self.css("top", (self.offsetTop - containerTop) + "px") && delete self.offsetTop;
+                        }
 
                         self.initialize.prototype.__proto__.draw.apply(self, [container]);
                     }
@@ -456,9 +1255,9 @@ define(
                         } else {
                             left = self.offsetLeft, top = self.offsetTop;
 
-                            var m = (self.css("width") || "").match(/([\d\.]+)px$/);
+                            var m = (self.css("width") || "").match(/([-\d\.]+)px$/);
                             if (m && m.length == 2) width = Math.floor(parseFloat(m[1]) * 100) / 100;
-                            m = (self.css("height") || "").match(/([\d\.]+)px$/);
+                            m = (self.css("height") || "").match(/([-\d\.]+)px$/);
                             if (m && m.length == 2) height = Math.floor(parseFloat(m[1]) * 100) / 100;
 
                             if (left == undefined || top == undefined || width == undefined || height == undefined) {
@@ -485,13 +1284,13 @@ define(
                             if (offsetLeft == undefined) {
                                 offsetLeft = self.offsetLeft;
                             } else {
-                                m = (self.css("left") || "").match(/([\d\.]+)px$/);
+                                m = (self.css("left") || "").match(/([-\d\.]+)px$/);
                                 if (m && m.length == 2) {
                                     self.css("left", (Math.floor(parseFloat(m[1]) * 100) / 100 + left - offsetLeft) + "px");
                                 }
                             }
                             self.childWidgets.forEach(function (w) {
-                                var cm = (w.css("left") || "").match(/([\d\.]+)px$/),
+                                var cm = (w.css("left") || "").match(/([-\d\.]+)px$/),
                                     cLeft = parseFloat(cm[1]);
                                 w.css("left", (cLeft - (left - offsetLeft) + "px"));
                             });
@@ -500,13 +1299,13 @@ define(
                             if (offsetTop == undefined) {
                                 offsetTop = self.offsetTop;
                             } else {
-                                m = (self.css("top") || "").match(/([\d\.]+)px$/);
+                                m = (self.css("top") || "").match(/([-\d\.]+)px$/);
                                 if (m && m.length == 2) {
                                     self.css("top", (Math.floor(parseFloat(m[1]) * 100) / 100 + top - offsetTop) + "px");
                                 }
                             }
                             self.childWidgets.forEach(function (w) {
-                                var cm = (w.css("top") || "").match(/([\d\.]+)px$/),
+                                var cm = (w.css("top") || "").match(/([-\d\.]+)px$/),
                                     cTop = parseFloat(cm[1]);
                                 w.css("top", (cTop - (top - offsetTop) + "px"));
                             });
@@ -552,13 +1351,13 @@ define(
                         self.childWidgets.forEach(function (childWidget, index) {
                             var childLeft = 0, childTop = 0, childWidth = 0, childHeight = 0;
 
-                            var m = childWidget.css("left").match(/([\d\.]+)px$/);
+                            var m = childWidget.css("left").match(/([-\d\.]+)px$/);
                             if (m && m.length == 2) childLeft = Math.floor(parseFloat(m[1]) * 100) / 100;
-                            m = childWidget.css("top").match(/([\d\.]+)px$/);
+                            m = childWidget.css("top").match(/([-\d\.]+)px$/);
                             if (m && m.length == 2) childTop = Math.floor(parseFloat(m[1]) * 100) / 100;
-                            m = childWidget.css("width").match(/([\d\.]+)px$/);
+                            m = childWidget.css("width").match(/([-\d\.]+)px$/);
                             if (m && m.length == 2) childWidth = Math.floor(parseFloat(m[1]) * 100) / 100;
-                            m = childWidget.css("height").match(/([\d\.]+)px$/);
+                            m = childWidget.css("height").match(/([-\d\.]+)px$/);
                             if (m && m.length == 2) childHeight = Math.floor(parseFloat(m[1]) * 100) / 100;
 
                             if (childWidget.id == widgetObj.id) {
@@ -583,7 +1382,7 @@ define(
 
                             if (doCompile) {
                                 var scope = angular.element(self.$element.parent()).scope();
-                                self.$compile(self.$element.parent())(scope);
+                                $inject.$compile(self.$element.parent())(scope);
                             }
 
                             if (self.childWidgets.length == 1) {
@@ -603,7 +1402,7 @@ define(
                     var self = this;
 
                     if (self.$element && self.$element.parent().length && self.childWidgets.length) {
-                        for (;self.childWidgets.length;) {
+                        for (; self.childWidgets.length;) {
                             var childWidget = self.childWidgets[0];
                             self.levelUp(childWidget, false, true);
                         }
@@ -613,7 +1412,7 @@ define(
                         self.remove();
 
                         var scope = angular.element($parent).scope();
-                        self.$compile($parent)(scope);
+                        $inject.$compile($parent)(scope);
                     }
                 },
                 directContains: function (widgetObj) {
@@ -626,18 +1425,18 @@ define(
 
                     if (self.$element && self.$element.parent().length) {
                         var maxChildWidth = 0,
-                            m = (self.css("left") || "").match(/([\d\.]+)px$/),
+                            m = (self.css("left") || "").match(/([-\d\.]+)px$/),
                             firstChildLeft,
                             left;
                         if (m && m.length == 2) left = Math.floor(parseFloat(m[1]) * 100) / 100;
 
-                        m = (self.childWidgets[0].css("left") || "").match(/([\d\.]+)px$/);
+                        m = (self.childWidgets[0].css("left") || "").match(/([-\d\.]+)px$/);
                         if (m && m.length == 2) firstChildLeft = Math.floor(parseFloat(m[1]) * 100) / 100;
 
                         if (firstChildLeft != undefined) {
                             self.childWidgets.forEach(function (w) {
                                 var childWidth,
-                                    m = (w.css("width") || "").match(/([\d\.]+)px$/);
+                                    m = (w.css("width") || "").match(/([-\d\.]+)px$/);
                                 if (m && m.length == 2) childWidth = Math.floor(parseFloat(m[1]) * 100) / 100;
                                 if (childWidth > maxChildWidth) maxChildWidth = childWidth;
 
@@ -657,25 +1456,25 @@ define(
                     if (self.$element && self.$element.parent().length) {
                         var width,
                             maxChildWidth = 0,
-                            m = (self.css("left") || "").match(/([\d\.]+)px$/),
+                            m = (self.css("left") || "").match(/([-\d\.]+)px$/),
                             firstChildLeft,
                             firstChildWidth,
                             left;
                         if (m && m.length == 2) left = Math.floor(parseFloat(m[1]) * 100) / 100;
 
-                        m = (self.css("width") || "").match(/([\d\.]+)px$/);
+                        m = (self.css("width") || "").match(/([-\d\.]+)px$/);
                         if (m && m.length == 2) width = Math.floor(parseFloat(m[1]) * 100) / 100;
 
-                        m = (self.childWidgets[0].css("left") || "").match(/([\d\.]+)px$/);
+                        m = (self.childWidgets[0].css("left") || "").match(/([-\d\.]+)px$/);
                         if (m && m.length == 2) firstChildLeft = Math.floor(parseFloat(m[1]) * 100) / 100;
 
-                        m = (self.childWidgets[0].css("width") || "").match(/([\d\.]+)px$/);
+                        m = (self.childWidgets[0].css("width") || "").match(/([-\d\.]+)px$/);
                         if (m && m.length == 2) firstChildWidth = Math.floor(parseFloat(m[1]) * 100) / 100;
 
                         if (firstChildLeft != undefined && firstChildWidth) {
                             self.childWidgets.forEach(function (w) {
                                 var childWidth,
-                                    m = (w.css("width") || "").match(/([\d\.]+)px$/);
+                                    m = (w.css("width") || "").match(/([-\d\.]+)px$/);
                                 if (m && m.length == 2) childWidth = Math.floor(parseFloat(m[1]) * 100) / 100;
                                 if (childWidth > maxChildWidth) maxChildWidth = childWidth;
                             });
@@ -686,7 +1485,7 @@ define(
 
                                 self.childWidgets.forEach(function (w) {
                                     var childWidth,
-                                        m = (w.css("width") || "").match(/([\d\.]+)px$/);
+                                        m = (w.css("width") || "").match(/([-\d\.]+)px$/);
                                     if (m && m.length == 2) childWidth = Math.floor(parseFloat(m[1]) * 100) / 100;
 
                                     if (childWidth) {
@@ -703,25 +1502,25 @@ define(
                     if (self.$element && self.$element.parent().length) {
                         var width,
                             maxChildWidth = 0,
-                            m = (self.css("left") || "").match(/([\d\.]+)px$/),
+                            m = (self.css("left") || "").match(/([-\d\.]+)px$/),
                             firstChildLeft,
                             firstChildWidth,
                             left;
                         if (m && m.length == 2) left = Math.floor(parseFloat(m[1]) * 100) / 100;
 
-                        m = (self.css("width") || "").match(/([\d\.]+)px$/);
+                        m = (self.css("width") || "").match(/([-\d\.]+)px$/);
                         if (m && m.length == 2) width = Math.floor(parseFloat(m[1]) * 100) / 100;
 
-                        m = (self.childWidgets[0].css("left") || "").match(/([\d\.]+)px$/);
+                        m = (self.childWidgets[0].css("left") || "").match(/([-\d\.]+)px$/);
                         if (m && m.length == 2) firstChildLeft = Math.floor(parseFloat(m[1]) * 100) / 100;
 
-                        m = (self.childWidgets[0].css("width") || "").match(/([\d\.]+)px$/);
+                        m = (self.childWidgets[0].css("width") || "").match(/([-\d\.]+)px$/);
                         if (m && m.length == 2) firstChildWidth = Math.floor(parseFloat(m[1]) * 100) / 100;
 
                         if (firstChildLeft != undefined && firstChildWidth) {
                             self.childWidgets.forEach(function (w) {
                                 var childWidth,
-                                    m = (w.css("width") || "").match(/([\d\.]+)px$/);
+                                    m = (w.css("width") || "").match(/([-\d\.]+)px$/);
                                 if (m && m.length == 2) childWidth = Math.floor(parseFloat(m[1]) * 100) / 100;
                                 if (childWidth > maxChildWidth) maxChildWidth = childWidth;
                             });
@@ -732,7 +1531,7 @@ define(
 
                                 self.childWidgets.forEach(function (w) {
                                     var childWidth,
-                                        m = (w.css("width") || "").match(/([\d\.]+)px$/);
+                                        m = (w.css("width") || "").match(/([-\d\.]+)px$/);
                                     if (m && m.length == 2) childWidth = Math.floor(parseFloat(m[1]) * 100) / 100;
 
                                     if (childWidth) {
@@ -744,19 +1543,52 @@ define(
                     }
                 },
                 setTemporary: function (value) {
-                    if (this.isTemporary != value) {
+                    if (this.isTemporary != value && this.$element) {
                         if (value) {
-                            this.addClass("tempElement");
+                            this.$element.addClass("tempElement");
                         } else {
-                            this.removeClass("tempElement");
+                            this.$element.removeClass("tempElement");
                         }
                         this.isTemporary = value;
+                    }
+                },
+                zoomIn: function ($page) {
+                    var self = this;
+
+                    if ($page && self.$element && self.$element.parent().length) {
+                        var scaleX = $page.width() / self.$element.width(),
+                            scaleY = $page.height() / self.$element.height(),
+                            scale = Math.max(scaleX, scaleY);
+                        scale = Math.floor(scale * 100) / 100;
+
+                        var scaleStyleObj = $inject.uiUtilService.prefixedStyle("transform", "scale({0}, {1})", scale, scale);
+                        self.$element.css(scaleStyleObj);
+
+                        var pageLeft = $page.offset().left, pageTop = $page.offset().top;
+                        pageLeft = Math.floor(pageLeft * 100) / 100, pageTop = Math.floor(pageTop * 100) / 100;
+                        self.$element.offset({left: pageLeft, top: pageTop});
+
+                        self.addClass("zoom");
+                        self.zoomed = true;
+
+                        return scale;
+                    }
+                },
+                zoomOut: function () {
+                    var self = this;
+
+                    if (self.zoomed) {
+                        var scaleStyleObj = $inject.uiUtilService.prefixedStyle("transform", "scale(1, 1)");
+                        self.$element.css(scaleStyleObj);
+
+                        self.$element.css({left: self.css("left"), top: self.css("top")});
+                        self.removeClass("zoom");
+                        self.zoomed = false;
                     }
                 }
             }),
             PageSketchWidgetClass = Class(BaseSketchWidgetClass, {
                 CLASS_NAME: "PageSketchWidget",
-                STYLE_DEFAULTS: {"color": "#000000"},
                 initialize: function () {
                     this.initialize.prototype.__proto__.initialize.apply(this);
                     this.resizable = false;
@@ -770,28 +1602,29 @@ define(
 
         Service.prototype.createWidget = function (containerElement) {
             var self = this,
-                widgetObj = _.extend(new ElementSketchWidgetClass(), _.pick(self, Service.$inject));
+                widgetObj = new ElementSketchWidgetClass();
             widgetObj.attr["ui-draggable"] = "";
             widgetObj.attr["ui-draggable-opts"] = "{threshold: 5, pointers: 0}";
             widgetObj.attr["ui-sketch-widget"] = "";
-            widgetObj.attr["picked-widget"] = "sketchObject.pickedWidget";
+            widgetObj.attr["is-playing"] = "sketchWidgetSetting.isPlaying";
+            widgetObj.attr["sketch-object"] = "sketchObject";
             widgetObj.draw(containerElement);
 
             var scope = angular.element(widgetObj.$element.parent()).scope();
-            self.$compile(widgetObj.$element.parent())(scope);
+            $inject.$compile(widgetObj.$element.parent())(scope);
 
             return widgetObj;
         }
 
         Service.prototype.copyWidget = function (widgetObj, holderElement) {
             var self = this,
-                cloneObj = _.extend(widgetObj.clone(), _.pick(self, Service.$inject));
+                cloneObj = widgetObj.clone();
 
             cloneObj.removeClass("pickedWidget");
             cloneObj.draw(holderElement);
 
             var scope = angular.element(cloneObj.$element.parent()).scope();
-            self.$compile(cloneObj.$element.parent())(scope);
+            $inject.$compile(cloneObj.$element.parent())(scope);
 
             return cloneObj;
         }
@@ -820,15 +1653,16 @@ define(
 
                 if (widgetArr.length && containerElement) {
                     var self = this,
-                        compositeObj = _.extend(new ElementSketchWidgetClass(widgetArr), _.pick(self, Service.$inject));
+                        compositeObj = new ElementSketchWidgetClass(widgetArr);
                     compositeObj.attr["ui-draggable"] = "";
                     compositeObj.attr["ui-draggable-opts"] = "{threshold: 5, pointers: 0}";
                     compositeObj.attr["ui-sketch-widget"] = "";
-                    compositeObj.attr["picked-widget"] = "sketchObject.pickedWidget";
+                    compositeObj.attr["is-playing"] = "sketchWidgetSetting.isPlaying";
+                    compositeObj.attr["sketch-object"] = "sketchObject";
                     compositeObj.draw(containerElement);
 
                     var scope = angular.element(compositeObj.$element.parent()).scope();
-                    self.$compile(compositeObj.$element.parent())(scope);
+                    $inject.$compile(compositeObj.$element.parent())(scope);
 
                     return compositeObj;
                 }
@@ -839,27 +1673,28 @@ define(
 
         Service.prototype.createPage = function (holderElement) {
             var self = this,
-                pageObj = _.extend(new PageSketchWidgetClass(), _.pick(self, Service.$inject));
+                pageObj = new PageSketchWidgetClass();
 
             pageObj.attr["ui-sketch-widget"] = "";
-            pageObj.attr["picked-widget"] = "sketchObject.pickedWidget";
+            pageObj.attr["is-playing"] = "sketchWidgetSetting.isPlaying";
+            pageObj.attr["sketch-object"] = "sketchObject";
             pageObj.draw(holderElement);
 
             var scope = angular.element(pageObj.$element.parent()).scope();
-            self.$compile(pageObj.$element.parent())(scope);
+            $inject.$compile(pageObj.$element.parent())(scope);
 
             return pageObj;
         }
 
         Service.prototype.copyPage = function (pageObj, holderElement) {
             var self = this,
-                cloneObj = _.extend(pageObj.clone(), _.pick(self, Service.$inject));
+                cloneObj = pageObj.clone();
 
             cloneObj.removeClass("pickedWidget");
             cloneObj.draw(holderElement);
 
             var scope = angular.element(cloneObj.$element.parent()).scope();
-            self.$compile(cloneObj.$element.parent())(scope);
+            $inject.$compile(cloneObj.$element.parent())(scope);
 
             return cloneObj;
         }

@@ -47,11 +47,14 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-page-copy:before {
-    content: "\e600";
+.icon-page-flag:before {
+    content: "\e604";
 }
 .icon-page-angle-double-right:before {
     content: "\e601";
+}
+.icon-page-copy:before {
+    content: "\e600";
 }
 .icon-page-insert:before {
     content: "\e602";
@@ -63,11 +66,14 @@
     content: "\e60a";
 }
 
-.icon-page-copy-before:before {
-    content: "\e600";
+.icon-page-flag-before:before {
+    content: "\e604";
 }
 .icon-page-angle-double-right-before:before {
     content: "\e601";
+}
+.icon-page-copy-before:before {
+    content: "\e600";
 }
 .icon-page-insert-before:before {
     content: "\e602";
@@ -79,11 +85,14 @@
     content: "\e60a";
 }
 
-.icon-page-copy-after:after {
-    content: "\e600";
+.icon-page-flag-after:after {
+    content: "\e604";
 }
 .icon-page-angle-double-right-after:after {
     content: "\e601";
+}
+.icon-page-copy-after:after {
+    content: "\e600";
 }
 .icon-page-insert-after:after {
     content: "\e602";

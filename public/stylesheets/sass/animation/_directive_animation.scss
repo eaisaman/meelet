@@ -118,8 +118,8 @@
 @include baseAnimation(pxOffsetDockSlideLeft);
 
 /* Rotate item up side down.
- * Used by directive ng.ui.shape
- * Found in _shape.html
+ * Used by directive ng.ui.shape, ng.ui.state-transition
+ * Found in _shape.html, _state_transition.html
  */
 @include baseAnimation(rotateUpSideDown);
 
@@ -129,17 +129,17 @@
  */
 @include baseAnimation(slideDownFromAbove);
 
+/* Rotate item by 90deg clockwise.
+ * Used by directive ng.ui.state-transitoin
+ * Found in _state_transition.html
+ */
+@include baseAnimation(rotateQuarterArc);
+
 /* Add sonar ring-out effect.
  * Used by directive ng.ui.shape
  * Found in _shape.html
  */
 @include baseAnimation(sonarEffect);
-
-/* Add tin shaking effect.
- * Used by directive ng.ui.dock
- * Found in _dock.html
- */
-@include baseAnimation(tinEffect);
 
 /* Slide left by distance of width to original 0%.
  * Used by directive ng.ui.dock

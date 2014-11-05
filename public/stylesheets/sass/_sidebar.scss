@@ -1,9 +1,8 @@
-@import "companimation";
 @import "compass/css3/transform";
 @import "compass/css3/transition";
 @import "compass/css3/box-shadow";
 @import "compass/css3/box-sizing";
-@import "flexbox";
+@import "compass/css3/flexbox";
 
 @mixin sidebar($sideBarClass, $contentWidth: 300px) {
 

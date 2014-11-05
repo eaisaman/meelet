@@ -1,0 +1,70 @@
+@import "keyframes";
+
+//Bling
+@include puffInKeyframes();
+@include puffOutKeyframes();
+@include vanishInKeyframes();
+@include vanishOutKeyframes();
+
+//Static Effects
+@include openDownLeftKeyframes();
+@include openDownRightKeyframes();
+@include openUpLeftKeyframes();
+@include openUpRightKeyframes();
+@include openDownLeftRetournKeyframes();
+@include openDownRightRetournKeyframes();
+@include openUpLeftRetournKeyframes();
+@include openUpRightRetournKeyframes();
+
+//Static Effects Out
+@include openDownLeftOutKeyframes();
+@include openDownRightOutKeyframes();
+@include openUpLeftOutKeyframes();
+@include openUpRightOutKeyframes();
+
+//Perspective
+@include perspectiveDownKeyframes();
+@include perspectiveUpKeyframes();
+@include perspectiveLeftKeyframes();
+@include perspectiveRightKeyframes();
+@include perspectiveDownRetournKeyframes();
+@include perspectiveUpRetournKeyframes();
+@include perspectiveLeftRetournKeyframes();
+@include perspectiveRightRetournKeyframes();
+
+//Rotate
+@include rotateDownKeyframes();
+@include rotateUpKeyframes();
+@include rotateLeftKeyframes();
+@include rotateRightKeyframes();
+
+//Slide
+@include slideDownKeyframes();
+@include slideUpKeyframes();
+@include slideLeftKeyframes();
+@include slideRightKeyframes();
+@include slideDownRetournKeyframes();
+@include slideUpRetournKeyframes();
+@include slideLeftRetournKeyframes();
+@include slideRightRetournKeyframes();
+
+//Math
+@include swashOutKeyframes();
+@include swashInKeyframes();
+@include foolishOutKeyframes();
+@include foolishInKeyframes();
+@include holeOutKeyframes();
+
+//Tin
+@include tinRightOutKeyframes();
+@include tinLeftOutKeyframes();
+@include tinUpOutKeyframes();
+@include tinDownOutKeyframes();
+@include tinRightInKeyframes();
+@include tinLeftInKeyframes();
+@include tinUpInKeyframes();
+@include tinDownInKeyframes();
+
+//Bomb
+@include bombRightOutKeyframes();
+@include bombLeftOutKeyframes();

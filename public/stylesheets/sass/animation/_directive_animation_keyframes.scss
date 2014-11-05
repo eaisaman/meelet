@@ -58,6 +58,125 @@
     }
 }
 
+@mixin vanishInKeyframes($keyframe: vanishIn, $useScale: true, $useBlur: true) {
+    @-moz-keyframes #{$keyframe} {
+        0% {
+            opacity: 0;
+            -moz-transform-origin: 50% 50%;
+            @if $useScale {
+                -moz-transform: scale(2, 2);
+            }
+            @if $useBlur {
+                -moz-filter: blur(90px);
+            }
+        }
+        100% {
+            opacity: 1;
+            -moz-transform-origin: 50% 50%;
+            @if $useScale {
+                -moz-transform: scale(1, 1);
+            }
+            @if $useBlur {
+                -moz-filter: blur(0px);
+            }
+        }
+    }
+
+    @-webkit-keyframes #{$keyframe} {
+        0% {
+            opacity: 0;
+            -webkit-transform-origin: 50% 50%;
+            @if $useScale {
+                -webkit-transform: scale(2, 2);
+            }
+            @if $useBlur {
+                -webkit-filter: blur(90px);
+            }
+        }
+        100% {
+            opacity: 1;
+            -webkit-transform-origin: 50% 50%;
+            @if $useScale {
+                -webkit-transform: scale(1, 1);
+            }
+            @if $useBlur {
+                -webkit-filter: blur(0px);
+            }
+        }
+    }
+
+    @-o-keyframes #{$keyframe} {
+        0% {
+            opacity: 0;
+            -o-transform-origin: 50% 50%;
+            @if $useScale {
+                -o-transform: scale(2, 2);
+            }
+            @if $useBlur {
+                -o-filter: blur(90px);
+            }
+        }
+        100% {
+            opacity: 1;
+            -o-transform-origin: 50% 50%;
+            @if $useScale {
+                -o-transform: scale(1, 1);
+            }
+            @if $useBlur {
+                -o-filter: blur(0px);
+            }
+        }
+    }
+
+    @-ms-keyframes vanishIn {
+        0% {
+            opacity: 0;
+            filter: alpha(opacity=0);
+            -ms-transform-origin: 50% 50%;
+            @if $useScale {
+                -ms-transform: scale(2, 2);
+            }
+            @if $useBlur {
+                -ms-filter: blur(90px);
+            }
+        }
+        100% {
+            opacity: 1;
+            filter: alpha(opacity=100);
+            -ms-transform-origin: 50% 50%;
+            @if $useScale {
+                -ms-transform: scale(1, 1);
+            }
+            @if $useBlur {
+                -ms-filter: blur(0px);
+            }
+        }
+    }
+
+    @keyframes #{$keyframe} {
+        0% {
+            opacity: 0;
+            transform-origin: 50% 50%;
+            @if $useScale {
+                transform: scale(2, 2);
+            }
+            @if $useBlur {
+                filter: blur(90px);
+            }
+        }
+        100% {
+            opacity: 1;
+            transform-origin: 50% 50%;
+            @if $useScale {
+                transform: scale(1, 1);
+            }
+            @if $useBlur {
+                filter: blur(0px);
+            }
+        }
+    }
+}
+
 @mixin flipLeftKeyframes($keyframe: flipLeft) {
     @-moz-keyframes #{$keyframe} {
         0% {
@@ -491,13 +610,13 @@
     }
 }
 
-@mixin rotateUpSideDownKeyframes($keyframe: rotateUpSideDown) {
+@mixin rotateKeyframes($keyframe: rotateUpSideDown, $deg:180deg) {
     @-moz-keyframes #{$keyframe} {
         0% {
             -moz-transform: rotateZ(0deg);
         }
         100% {
-            -moz-transform: rotateZ(180deg);
+            -moz-transform: rotateZ($deg);
         }
     }
 
@@ -506,7 +625,7 @@
             -webkit-transform: rotateZ(0deg);
         }
         100% {
-            -webkit-transform: rotateZ(180deg);
+            -webkit-transform: rotateZ($deg);
         }
     }
 
@@ -515,7 +634,7 @@
             -o-transform: rotateZ(0deg);
         }
         100% {
-            -o-transform: rotateZ(180deg);
+            -o-transform: rotateZ($deg);
         }
     }
 
@@ -524,7 +643,7 @@
             -ms-transform: rotateZ(0deg);
         }
         100% {
-            -ms-transform: rotateZ(180deg);
+            -ms-transform: rotateZ($deg);
         }
     }
 
@@ -533,7 +652,7 @@
             transform: rotateZ(0deg);
         }
         100% {
-            transform: rotateZ(180deg);
+            transform: rotateZ($deg);
         }
     }
 }
@@ -691,7 +810,13 @@
  * Used by directive ng.ui.shape
  * Found in _shape.html
  */
-@include rotateUpSideDownKeyframes(rotateUpSideDown);
+@include rotateKeyframes(rotateUpSideDown);
+
+/* Rotate item by 90deg clockwise.
+ * Used by directive ng.ui.state-transitoin
+ * Found in _state_transition.html
+ */
+@include rotateKeyframes(rotateQuarterArc, 90deg);
 
 /* Slide down by distance of height from above.
  * Used by directive ng.ui.shape
@@ -704,12 +829,6 @@
  * Found in _shape.html
  */
 @include sonarEffectKeyframes(sonarEffect, 1);
-
-/* Add tin shaking effect.
- * Used by directive ng.ui.dock
- * Found in _dock.html
- */
-@include tinEffectKeyframes(tinEffect);
 
 /* Slide left by distance of width to original 0%.
  * Used by directive ng.ui.dock

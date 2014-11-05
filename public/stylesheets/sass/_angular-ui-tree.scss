@@ -4,19 +4,16 @@
 @import "global";
 
 $color: rgba(0, 0, 0, 0.4);
-$activeBackgroundColor: rgba(192, 192, 192, 0.5);
 
-@mixin angular-ui-tree($treeId) {
+@mixin angular-ui-tree($treeId, $activeColor: #99ccff, $activeBackgroundColor: #ccc) {
     ##{$treeId} {
         .angular-ui-tree-empty {
             border: 1px dashed #bbb;
             min-height: 100px;
-            background-color: #e5e5e5;
-            background-image: -webkit-linear-gradient(45deg, #fff 25%, transparent 25%, transparent 75%, #fff 75%, #fff), -webkit-linear-gradient(45deg, #fff 25%, transparent 25%, transparent 75%, #fff 75%, #fff);
-            background-image: -moz-linear-gradient(45deg, #fff 25%, transparent 25%, transparent 75%, #fff 75%, #fff), -moz-linear-gradient(45deg, #fff 25%, transparent 25%, transparent 75%, #fff 75%, #fff);
-            background-image: linear-gradient(45deg, #fff 25%, transparent 25%, transparent 75%, #fff 75%, #fff), linear-gradient(45deg, #fff 25%, transparent 25%, transparent 75%, #fff 75%, #fff);
             background-size: 60px 60px;
             background-position: 0 0, 30px 30px;
+
+            @include background(linear-gradient(45deg, #fff 25%, transparent 25%, transparent 75%, #fff 75%, #fff), -webkit-linear-gradient(45deg, #fff 25%, transparent 25%, transparent 75%, #fff 75%, #fff));
         }
 
         .angular-ui-tree-nodes {
@@ -35,6 +32,99 @@ $activeBackgroundColor: rgba(192, 192, 192, 0.5);
             position: relative;
             margin: 0px;
             padding: 0px;
+            color: $color;
+        }
+
+        .angular-ui-tree-node {
+            &.selected {
+                > .angular-ui-tree-handle {
+                    span {
+                        color: $activeColor;
+                    }
+                }
+            }
+
+            .angular-ui-tree-handle {
+                display: block;
+                cursor: pointer;
+                height: 1.5em;
+
+                > a {
+                    position: relative;
+                    float: left;
+                    width: 1.5em;
+                    height: 1.5em;
+                    text-align: center;
+                    color: $color;
+                }
+
+                .treeNodeName {
+                    position: relative;
+                    float: left;
+                    text-decoration: none;
+                    font-weight: bold;
+                    height: 100%;
+                    line-height: 1.5;
+                }
+
+                .editState {
+                    position: relative;
+                    float: left;
+                    height: 1em;
+                    margin: 0.25em 0;
+                    padding: 0 0.5em;
+                    border-radius: 0.25em;
+                    line-height: 1;
+                    text-align: center;
+                    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.4);
+                    background: rgba(102, 153, 51, 0.5);
+                    color: $color;
+                    border: 1px solid #669933;
+                }
+
+                .stateButton {
+                    position: relative;
+                    float: left;
+                    height: 1em;
+                    margin: 0.25em;
+                    line-height: 1;
+                    cursor: pointer;
+                    @include opacity(0.15);
+
+                    &.activeState {
+                        @include opacity(1);
+
+                        div {
+                            color: $color;
+                            text-shadow: 0px 2px 3px darken($color, $activeDarkenPercent);
+
+                            &.select + ul {
+                                display: block;
+                            }
+                        }
+                    }
+
+                    div {
+                        position: relative;
+                        float: left;
+                        width: 1.5em;
+                        height: 1.5em;
+                        color: $color;
+
+                        &:before {
+                            position: relative;
+                            float: left;
+                            width: 100%;
+                            height: 100%;
+                            line-height: 1.5;
+                            text-align: center;
+                        }
+                    }
+
+                }
+
+                @include box-sizing(border-box);
+            }
         }
 
         .angular-ui-tree-hidden {
@@ -48,23 +138,6 @@ $activeBackgroundColor: rgba(192, 192, 192, 0.5);
             border: 2px dashed $color;
             @include box-sizing(border-box);
         }
-
-        .angular-ui-tree-handle {
-            display: block;
-            cursor: pointer;
-            text-decoration: none;
-            font-weight: bold;
-            height: 1.5em;
-            line-height: 1.5;
-            color: $color;
-
-            @include box-sizing(border-box);
-
-            &:hover {
-                background: $activeBackgroundColor;
-            }
-        }
-
 
         .angular-ui-tree-drag {
             position: absolute;

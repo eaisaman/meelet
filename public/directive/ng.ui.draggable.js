@@ -15,9 +15,14 @@ define(
             var DIRECTION_VERTICAL = DIRECTION_UP | DIRECTION_DOWN;
             var DIRECTION_ALL = DIRECTION_HORIZONTAL | DIRECTION_VERTICAL;
 
-            var directionOpt = {'horizontal': DIRECTION_HORIZONTAL, 'vertical': DIRECTION_VERTICAL, 'all': DIRECTION_ALL},
+            var directionOpt = {
+                    'horizontal': DIRECTION_HORIZONTAL,
+                    'vertical': DIRECTION_VERTICAL,
+                    'all': DIRECTION_ALL
+                },
                 defaults = {
-                    onceId: "draggable.dragHandler.handler"
+                    onceId: "draggable.dragHandler.handler",
+                    scaleSetting: "sketchWidgetSetting.scale"
                 },
                 options = angular.extend(defaults, opts);
 
@@ -32,6 +37,10 @@ define(
                                 opts = $parse(attr[DIRECTIVE + 'Opts'])(scope, {});
 
                             opts.direction = directionOpt[opts.direction || 'all'] || DIRECTION_ALL;
+                            options = angular.extend(options, opts)
+                            scope.$watch(options.scaleSetting, function (value) {
+                                scope.scale = value;
+                            });
                             mc = new Hammer.Manager(element[0]);
                             mc.add(new Hammer.Pan(_.extend({}, opts)));
                             dragHandler = function (event) {
@@ -47,61 +56,125 @@ define(
                                             event.currentTarget = element[0];
 
                                         var $u = $(element[0]),
+                                            target = event.srcEvent.target;
+
+                                        if (target.id && $u.has("#" + target.id)) {
+                                            $u = $(target);
+                                        }
+
+                                        var widget = $u.data("widgetObject"),
                                             touchX = $u.data("touchX"),
                                             touchY = $u.data("touchY");
-
-                                        if (event.type === "panstart") {
-                                            touchX = event.srcEvent.pageX - $u.parent().offset().left;
-                                            touchY = event.srcEvent.pageY - $u.parent().offset().top;
-                                            $u.data("touchX", touchX);
-                                            $u.data("touchY", touchY);
-                                        } else if (event.type === "panmove" || event.type === "panend") {
-                                            if (touchX != undefined && touchY != undefined) {
-                                                if (opts.direction & DIRECTION_VERTICAL) {
-                                                    var moveY = event.srcEvent.pageY - ($u.parent().offset().top + touchY),
-                                                        maxHeight = $u.parent().height(),
-                                                        height = $u.height(),
-                                                        ftTop = $u.offset().top - $u.parent().offset().top,
-                                                        top = Math.floor((ftTop + moveY) * 100) / 100;
-
-                                                    if (top + height / 2 < 0)
-                                                        top = -height / 2;
-                                                    else if (top + height / 2 > maxHeight)
-                                                        top = maxHeight - height / 2;
-
-                                                    touchY += moveY;
-                                                    event.moveY = top - ftTop;
-                                                    $u.css("top", top);
-                                                }
-
-                                                if (opts.direction & DIRECTION_HORIZONTAL) {
-                                                    var moveX = event.srcEvent.pageX - ($u.parent().offset().left + touchX),
-                                                        maxWidth = $u.parent().width(),
-                                                        width = $u.width(),
-                                                        ftLeft = $u.offset().left - $u.parent().offset().left,
-                                                        left = Math.floor((ftLeft + moveX) * 100) / 100;
-
-                                                    if (left + width / 2 < 0)
-                                                        left = -width / 2;
-                                                    else if (left + width / 2 > maxWidth)
-                                                        left = maxWidth - width / 2;
-
-                                                    touchX += moveX;
-                                                    event.moveX = left - ftLeft;
-                                                    $u.css("left", left);
-                                                }
-
+                                        if (!widget || !widget.zoomed) {
+                                            if (event.type === "panstart") {
+                                                touchX = event.srcEvent.clientX - $u.parent().offset().left;
+                                                touchY = event.srcEvent.clientY - $u.parent().offset().top;
                                                 $u.data("touchX", touchX);
                                                 $u.data("touchY", touchY);
-                                            }
+                                            } else if (event.type === "panmove") {
+                                                if (touchX != undefined && touchY != undefined) {
+                                                    if (opts.direction & DIRECTION_VERTICAL) {
+                                                        var moveY = event.srcEvent.clientY - ($u.parent().offset().top + touchY),
+                                                            maxHeight = $u.parent().height(),
+                                                            height = $u.height(),
+                                                            ftTop,
+                                                            top;
 
-                                            if (event.type === "panend") {
+                                                        var m = ($u.css("top") || "").match(/([-\d\.]+)px$/);
+                                                        if (m && m.length == 2)
+                                                            ftTop = Math.floor(parseFloat(m[1]) * 100) / 100;
+                                                        else
+                                                            ftTop = $u.offset().top - $u.parent().offset().top;
+                                                        top = ftTop + moveY;
+
+                                                        if (widget && scope.scale) {
+                                                            ftTop = $u.offset().top - $u.parent().offset().top;
+                                                            top = ftTop + moveY;
+                                                            maxHeight *= scope.scale ;
+                                                            height *= scope.scale;
+                                                        }
+
+                                                        if (top + height / 2 < 0)
+                                                            top = -height / 2;
+                                                        else if (top + height / 2 > maxHeight)
+                                                            top = maxHeight - height / 2;
+
+                                                        if (widget && scope.scale)
+                                                            top = Math.floor(top / scope.scale * 100) / 100;
+                                                        else
+                                                            top = Math.floor(top * 100) / 100;
+
+                                                        touchY += moveY;
+                                                        event.moveY = top - ftTop;
+
+                                                        if (widget) {
+                                                            widget.css("top", top + "px");
+                                                        } else {
+                                                            $u.css("top", top + "px");
+                                                        }
+
+                                                        if (VERBOSE) {
+                                                            $log.debug("top:" + top);
+                                                            $log.debug("touchY:" + touchY);
+                                                        }
+                                                    }
+
+                                                    if (opts.direction & DIRECTION_HORIZONTAL) {
+                                                        var moveX = event.srcEvent.clientX - ($u.parent().offset().left + touchX),
+                                                            maxWidth = $u.parent().width(),
+                                                            width = $u.width(),
+                                                            ftLeft,
+                                                            left;
+
+                                                        var m = ($u.css("left") || "").match(/([-\d\.]+)px$/);
+                                                        if (m && m.length == 2)
+                                                            ftLeft = Math.floor(parseFloat(m[1]) * 100) / 100;
+                                                        else
+                                                            ftLeft = $u.offset().left - $u.parent().offset().left;
+                                                        left = ftLeft + moveX;
+
+                                                        if (widget && scope.scale) {
+                                                            ftLeft = $u.offset().left - $u.parent().offset().left;
+                                                            left = ftLeft + moveX;
+                                                            maxWidth *= scope.scale;
+                                                            width *= scope.scale;
+                                                        }
+
+                                                        if (left + width / 2 < 0)
+                                                            left = -width / 2;
+                                                        else if (left + width / 2 > maxWidth)
+                                                            left = maxWidth - width / 2;
+
+                                                        if (widget && scope.scale)
+                                                            left = Math.floor(left / scope.scale * 100) / 100;
+                                                        else
+                                                            left = Math.floor(left * 100) / 100;
+
+                                                        touchX += moveX;
+                                                        event.moveX = left - ftLeft;
+
+                                                        if (widget) {
+                                                            widget.css("left", left + "px");
+                                                        } else {
+                                                            $u.css("left", left + "px");
+                                                        }
+
+                                                        if (VERBOSE) {
+                                                            $log.debug("left:" + left);
+                                                            $log.debug("touchX:" + touchX);
+                                                        }
+                                                    }
+
+                                                    $u.data("touchX", touchX);
+                                                    $u.data("touchY", touchY);
+                                                }
+                                            } else {
                                                 $u.removeData("touchX");
                                                 $u.removeData("touchY");
                                             }
-                                        }
 
-                                        touchX != undefined && touchY != undefined && fn(scope, { $event: event });
+                                            touchX != undefined && touchY != undefined && fn(scope, {$event: event});
+                                        }
 
                                         defer.resolve();
                                     });

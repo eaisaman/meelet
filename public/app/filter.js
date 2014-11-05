@@ -1,7 +1,18 @@
 define(
-    ["angular"],
+    ["angular", "underscore"],
     function () {
         return function (appModule) {
+            whereFilter.$inject = ['$parse'];
+            function whereFilter($parse) {
+                return function (list, condition) {
+                    return _.where(list, condition);
+                };
+            }
+
+            appModule.config(["$provide", function ($provide) {
+                $provide.factory('whereFilter', whereFilter);
+            }]);
+
             appModule.filter("timeFilter", function () {
                 return function (timestamp) {
                     return timestamp == null ? "" : timestamp.toString("HH:mm");

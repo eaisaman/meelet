@@ -23,30 +23,40 @@ define(
                 }
             }
 
+            function initWidgetSettingWatch(setting) {
+                if ($scope.sketchObject.pickedWidget) {
+                    setting.deregisterWatch && setting.deregisterWatch();
+
+                    var name = setting.name,
+                        getterName = "get" + name.charAt(0).toUpperCase() + name.substr(1);
+
+                    var getter = $scope.sketchObject.pickedWidget[getterName];
+                    if (getter) {
+                        var value = getter.apply($scope.sketchObject.pickedWidget);
+                        $scope.sketchWidgetSetting[name] = value;
+                        setting.initFn && setting.initFn(value);
+                    }
+
+                    setting.deregisterWatch = $scope.$watch("sketchWidgetSetting" + "." + name, setterFactory($scope.sketchObject.pickedWidget, name));
+                }
+            }
+
             $scope.$watch("sketchObject.pickedWidget", function (to) {
+                if (!to) {
+                    $scope.sketchObject.pickedWidget = $scope.sketchObject.pickedPage;
+                }
+            });
+
+            $scope.$watch("sketchObject.pickedWidget.state", function (to) {
                 if (to) {
                     widgetSettingList.forEach(function (setting) {
-                        setting.deregisterWatch && setting.deregisterWatch();
-
-                        var name = setting.name,
-                            getterName = "get" + name.charAt(0).toUpperCase() + name.substr(1);
-
-                        var getter = to[getterName];
-                        if (getter) {
-                            $scope.sketchWidgetSetting[name] = getter.apply(to);
-                            setting.initFn && setting.initFn(getter.apply(to));
-                        }
-
-                        setting.deregisterWatch = $scope.$watch("sketchWidgetSetting" + "." + name, setterFactory(to, name));
-                    });
-                } else {
-                    $timeout(function () {
-                        $scope.sketchObject.pickedWidget = $scope.sketchObject.currentPage;
+                        initWidgetSettingWatch(setting);
                     });
                 }
             });
 
-            $scope.$watch("sketchObject.currentPage", function (to) {
+
+            $scope.$watch("sketchObject.pickedPage", function (to) {
                 if (to) {
                     $scope.sketchObject.pickedWidget = to;
                     $scope.sketchObject.sketchWorks.pages.forEach(function (p) {
@@ -63,26 +73,32 @@ define(
                     if (typeof prop === "string") {
                         var m = prop.match(/^sketchWidgetSetting\.(\w+)/);
                         if (m && m.length == 2) {
-                            var name = m[1];
+                            var name = m[1],
+                                setting = {name: name, initFn: data[key].initFn};
 
-                            widgetSettingList.push({name: name, initFn: data[key].initFn});
+                            widgetSettingList.push(setting);
+                            initWidgetSettingWatch(setting);
                         }
                     }
                 }
             });
 
             function initSketch() {
+                var defer = $q.defer();
+
+                $timeout(function () {
+                    var pageObj = uiService.createPage($(".deviceHolder"));
+                    pageObj.addClass("pageHolder");
+                    $scope.sketchObject.pickedPage = pageObj;
+                    $scope.sketchObject.sketchWorks.pages.push(pageObj);
+                    defer.resolve();
+                });
+
+                return defer.promise;
             }
 
             $scope.$on("$routeChangeSuccess", function (scope, next, current) {
-                $timeout(function () {
-                    $q.all([initSketch()]).then(function () {
-                        var pageObj = uiService.createPage($(".deviceHolder"));
-                        pageObj.addClass("pageHolder");
-                        $scope.sketchObject.currentPage = pageObj;
-                        $scope.sketchObject.sketchWorks.pages.push(pageObj);
-                    });
-                }, 50);
+                $q.all([initSketch()]);
             });
         }
 

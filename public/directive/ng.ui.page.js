@@ -1,15 +1,16 @@
 define(
-    ["angular", "jquery", "hammer"],
+    ["angular", "jquery"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$http", "$timeout", "$q", "$parse", "$compile", "angularEventTypes", "uiUtilService", "uiService"];
+            var inject = ["$timeout", "$q", "$parse", "angularEventTypes", "uiUtilService", "uiService"];
 
-            appModule.directive("uiPage", _.union(inject, [function ($http, $timeout, $q, $parse, $compile, angularEventTypes, uiUtilService, uiService) {
+            appModule.directive("uiPage", _.union(inject, [function ($timeout, $q, $parse, angularEventTypes, uiUtilService, uiService) {
                 'use strict';
 
-                var boundProperties = {pickedPage: "=", sketchWorks: "="},
+                var boundProperties = {sketchObject: "=", sketchWorks: "="},
                     defaults = {
-                        pageHolderClass: "deviceHolder"
+                        pageHolderClass: "deviceHolder",
+                        pageClass: "pageHolder"
                     },
                     options = angular.extend(defaults, opts),
                     injectObj = _.object(inject, Array.prototype.slice.call(arguments));
@@ -22,9 +23,9 @@ define(
                     compile: function (element, attrs) {
                         return {
                             pre: function (scope, element, attrs) {
-                                scope.$root.$broadcast(angularEventTypes.boundPropertiesEvent, uiUtilService.createDirectiveBoundMap(boundProperties, attrs));
-
                                 extension && extension.attach && extension.attach(scope, _.extend(injectObj, {element: element, scope: scope}));
+
+                                scope.$root.$broadcast(angularEventTypes.boundPropertiesEvent, uiUtilService.createDirectiveBoundMap(boundProperties, attrs));
 
                                 options = angular.extend(options, $parse(attrs['uiPageOpts'])(scope, {}));
                             },
@@ -46,9 +47,9 @@ define(
 
                                     var pageObj = uiService.createPage($("." + options.pageHolderClass));
                                     pageObj.addClass("pickedWidget");
-                                    pageObj.addClass("pageHolder");
-                                    scope.pickedPage && scope.pickedPage.removeClass("pickedWidget");
-                                    scope.pickedPage = pageObj;
+                                    pageObj.addClass(options.pageClass);
+                                    scope.sketchObject.pickedPage && scope.sketchObject.pickedPage.removeClass("pickedWidget");
+                                    scope.sketchObject.pickedPage = pageObj;
                                     scope.sketchWorks.pages.push(pageObj);
                                 }
 
@@ -61,8 +62,8 @@ define(
                                             j = (i + 1) == scope.sketchWorks.pages.length ? 0 : i;
 
                                         scope.sketchWorks.pages.splice(i, 1);
-                                        if (pageObj == scope.pickedPage) {
-                                            scope.pickedPage = scope.sketchWorks.pages[j];
+                                        if (pageObj == scope.sketchObject.pickedPage) {
+                                            scope.sketchObject.pickedPage = scope.sketchWorks.pages[j];
                                         }
                                     }
                                 }
@@ -75,10 +76,39 @@ define(
                                         cloneObj = uiService.copyPage(pageObj, $("." + options.pageHolderClass));
 
                                     cloneObj.addClass("pickedWidget");
-                                    cloneObj.addClass("pageHolder");
-                                    scope.pickedPage && scope.pickedPage.removeClass("pickedWidget");
-                                    scope.pickedPage = cloneObj;
+                                    cloneObj.addClass(options.pageClass);
+                                    scope.sketchObject.pickedPage && scope.sketchObject.pickedPage.removeClass("pickedWidget");
+                                    scope.sketchObject.pickedPage = cloneObj;
                                     scope.sketchWorks.pages.splice(i + 1, 0, cloneObj);
+                                }
+
+                                scope.toggleSelectState = function (item, event) {
+                                    event && event.stopPropagation && event.stopPropagation();
+
+                                    var $dropdown = element.find("#widgetStateDropdown");
+
+                                    if (event) {
+                                        var $el = $(event.target),
+                                            offset = $el.offset();
+
+                                        $dropdown.offset(offset);
+                                    }
+
+                                    if (item) {
+                                        scope.stateTreeNodeItem = item;
+                                    }
+
+                                    if (scope.stateTreeNodeItem.stateOptions.length) {
+                                        scope.toggleSelect($dropdown).then(
+                                            function ($dropdown) {
+                                                if ($dropdown.hasClass("select")) {
+                                                    angular.element($dropdown.find("> div")).scope().open();
+                                                }
+                                            }
+                                        );
+                                    }
+
+                                    return true;
                                 }
 
                                 $timeout(function () {
@@ -86,8 +116,8 @@ define(
                                         var i = $(this).val(),
                                             pageObj = scope.sketchWorks.pages[i];
 
-                                        if (pageObj.id != scope.pickedPage.id) {
-                                            scope.pickedPage = pageObj;
+                                        if (pageObj.id != scope.sketchObject.pickedPage.id) {
+                                            scope.sketchObject.pickedPage = pageObj;
                                             scope.$apply();
                                         }
                                     });

@@ -1,0 +1,296 @@
+@import "compass/css3/transform";
+@import "compass/css3/transition";
+@import "compass/css3/user-interface";
+
+@mixin simple-dropdown($simpleDropdownId, $activeColor) {
+
+    ##{$simpleDropdownId} {
+        .cd-dropdown {
+            position: relative;
+            width: 100%;
+            display: block;
+
+            > span {
+                position: relative;
+                width: 100%;
+                height: 2em;
+                line-height: 2;
+                color: #999;
+                font-weight: 700;
+                background: #fff;
+                display: block;
+                padding-left: 1em;
+                cursor: pointer;
+
+                @include backface-visibility(hidden);
+                @include user-select(none);
+                -webkit-touch-callout: none;
+
+                &:after {
+                    content: '\25BC';
+                    position: absolute;
+                    right: 0px;
+                    width: 2em;
+                    line-height: 2;
+                    text-align: center;
+                    border-left: 1px solid #ddd;
+                }
+            }
+
+            &.cd-active > span:after {
+                content: '\25B2';
+            }
+
+            ul {
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+                display: block;
+                position: relative;
+
+                li {
+                    display: block;
+
+                    span {
+                        display: block;
+                        width: 100%;
+                        height: 2em;
+                        line-height: 2;
+                        padding-left: 2em;
+                        color: #bcbcbc;
+                        background: #eee;
+                        cursor: pointer;
+                        font-weight: 700;
+
+                        @include backface-visibility(hidden);
+                        @include user-select(none);
+                        -webkit-touch-callout: none;
+                    }
+                }
+            }
+        }
+
+        /* Stack the items with a slight offset */
+        &.stackWithOffset {
+            .cd-dropdown {
+                > span,
+                ul li:nth-last-child(-n+3) span {
+                    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+                }
+
+                ul {
+                    position: absolute;
+                    top: 0px;
+                    width: 100%;
+                }
+
+                ul li {
+                    position: absolute;
+                    width: 100%;
+                }
+
+                &.cd-active {
+                    > span {
+                        color: $activeColor;
+                    }
+
+                    > span,
+                    ul li span {
+                        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+                    }
+
+                    ul li span {
+                        @include transition(all 0.2s linear 0s)
+                    }
+
+                    ul li span:hover {
+                        background: $activeColor;
+                        color: #fff;
+                    }
+                }
+            }
+        }
+
+        /* Stack the items with a slight offset, and expand them with a slight random angle/left values.
+           Each item will have a different animation delay. */
+        &.stackAndExpand {
+            .cd-dropdown {
+                > span,
+                ul li:nth-last-child(-n+3) span {
+                    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+                }
+
+                ul {
+                    position: absolute;
+                    top: 0px;
+                    width: 100%;
+                }
+
+                ul li {
+                    position: absolute;
+                    width: 100%;
+                }
+
+                &.cd-active {
+                    > span {
+                        color: $activeColor;
+                    }
+
+                    > span,
+                    ul li span {
+                        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+                    }
+
+                    ul li span {
+                        @include transition(all 0.2s linear 0s);
+                    }
+
+                    ul li span:hover {
+                        background: $activeColor;
+                        color: #fff;
+                    }
+                }
+            }
+        }
+
+        /* Stack the items with a slight offset, and spread them as a fan.
+           Each item will have a different animation delay. */
+        &.stackAndExpandFan {
+            .cd-dropdown {
+                > span,
+                ul li:nth-last-child(-n+3) span {
+                    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+                }
+
+                ul {
+                    position: absolute;
+                    top: 0px;
+                    width: 100%;
+                }
+
+                ul li {
+                    position: absolute;
+                    width: 100%;
+                }
+
+                &.cd-active {
+                    > span {
+                        color: $activeColor;
+                    }
+
+                    > span,
+                    ul li span {
+                        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+                    }
+
+                    ul li {
+                        @include transform-origin(-200% 50%);
+                    }
+
+                    ul li span {
+                        @include transition(all 0.2s linear 0s);
+                    }
+
+                    ul li span:hover {
+                        background: $activeColor;
+                        color: #fff;
+                    }
+                }
+            }
+        }
+
+        /* Stack the items with a slight offset, and rotate the select label while clicking it. */
+        &.stackAndRotateSelect {
+            .cd-dropdown {
+                @include perspective(800px);
+
+                > span {
+                    @include transform-style(preserve-3d);
+                    @include transform-origin(50% 0%);
+                    @include transition(transform 0.3s);
+                }
+
+                > span:active {
+                    @include transform(rotateX(60deg));
+                }
+
+                > span,
+                ul li:nth-last-child(-n+3) span {
+                    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+                }
+
+                ul {
+                    position: absolute;
+                    top: 0px;
+                    width: 100%;
+                }
+
+                ul li {
+                    position: absolute;
+                    width: 100%;
+                }
+
+                &.cd-active {
+                    > span {
+                        color: $activeColor;
+                    }
+
+                    > span,
+                    ul li span {
+                        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+                    }
+
+                    ul li span {
+                        @include transition(all 0.2s linear 0s);
+                    }
+
+                    ul li span:hover {
+                        background: $activeColor;
+                        color: #fff;
+                    }
+                }
+            }
+        }
+
+        /*  Show the items by sliding them from the sides. */
+        &.slide {
+            .cd-dropdown {
+                ul {
+                    position: absolute;
+                    top: 0px;
+                    width: 100%;
+                }
+
+                > span,
+                ul li {
+                    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+                }
+
+                ul li {
+                    position: absolute;
+                    width: 100%;
+                    pointer-events: none;
+                }
+
+                &.cd-active {
+                    > span {
+                        color: $activeColor;
+                    }
+
+                    ul li {
+                        pointer-events: auto;
+                    }
+
+                    ul li span {
+                        @include transition(all 0.2s linear 0s);
+                    }
+
+                    ul li span:hover {
+                        background: $activeColor;
+                        color: #fff;
+                    }
+                }
+            }
+        }
+    }
+}

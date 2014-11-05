@@ -29,6 +29,8 @@ define(
                     compile: function (element, attrs) {
                         return {
                             pre: function (scope, element, attrs) {
+                                extension && extension.attach && extension.attach(scope, _.extend(injectObj, {element: element, scope: scope}));
+
                                 scope.$root.$broadcast(
                                     angularEventTypes.boundPropertiesEvent,
                                     uiUtilService.createDirectiveBoundMap(
@@ -38,18 +40,19 @@ define(
                                             pickedColor: function (value) {
                                                 if (value) {
                                                     var value = uiUtilService.formalizeHex(value);
-                                                    if (value != scope.pickedColor)
-                                                        scope.pickedColor = value;
 
                                                     scope.colors && scope.colors.every(function (c) {
                                                         return c != value;
                                                     }) && scope.colors.splice(0, 0, value);
 
+                                                    scope.pickedColor = value;
                                                     scope.pickerPaneColor = "";
                                                     $timeout(function () {
                                                         scope.pickerPaneBackgroundColor = value;
                                                         scope.pickerPaneColor = uiUtilService.contrastColor(value);
                                                         scope.pickerBarBackgroundColor = scope.pickerPaneColor === "#ffffff" ? uiUtilService.lighterColor(value, 0.5) : uiUtilService.lighterColor(value, -0.5);
+
+                                                        scope.enableControl();
                                                     });
                                                 } else {
                                                     scope.disableControl();
@@ -57,8 +60,6 @@ define(
                                             }
                                         })
                                 );
-
-                                extension && extension.attach && extension.attach(scope, _.extend(injectObj, {element: element, scope: scope}));
 
                                 scope.pickColor = function (value) {
                                     if (value) {
@@ -83,13 +84,6 @@ define(
                                                 return c != value;
                                             }) && scope.colors.splice(0, 0, value);
                                         }
-
-                                        if (scope.colors && scope.colors.length) {
-                                            if (!scope.pickedColor)
-                                                scope.pickColor(scope.colors && scope.colors.length && scope.colors[0] || "");
-                                        } else {
-                                            scope.disableControl();
-                                        }
                                     });
                                 } else {
                                     scope.colors = options.colors || [];
@@ -100,13 +94,6 @@ define(
                                         scope.colors.every(function (c) {
                                             return c != value;
                                         }) && scope.colors.splice(0, 0, value);
-                                    }
-
-                                    if (scope.colors && scope.colors.length) {
-                                        if (!scope.pickedColor)
-                                            scope.pickColor(scope.colors && scope.colors.length && scope.colors[0] || "");
-                                    } else {
-                                        scope.disableControl();
                                     }
                                 }
                             },

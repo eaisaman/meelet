@@ -26,7 +26,7 @@ define(
             }
         }
 
-        Extension.prototype.toggleExpandService = function (element, $q, uiUtilService) {
+        Extension.prototype.toggleExpandService = function (element, $q, $timeout, uiUtilService) {
             return function (selector, event) {
                 event && event.stopPropagation && event.stopPropagation();
 
@@ -35,26 +35,40 @@ define(
                 if (typeof selector == "string")
                     $el = element.find(selector);
                 else if (typeof selector === "object")
-                    $el = $(selector);
+                    $el = selector.jquery && selector || $(selector);
                 else
                     $el = element;
 
                 if ($el.hasClass("expanded")) {
                     $el.removeClass("expanded");
                     $el.addClass("collapsing");
-                    uiUtilService.onAnimationEnd($el).then(
-                        function () {
+                    if (!$el.css("animation-name") || $el.css("animation-name") === "none") {
+                        $timeout(function () {
                             $el.removeClass("collapsing");
-                            defer.resolve();
-                        }
-                    );
+                            defer.resolve(selector);
+                        });
+                    } else {
+                        uiUtilService.onAnimationEnd($el).then(
+                            function () {
+                                $el.removeClass("collapsing");
+                                defer.resolve(selector);
+                            }
+                        );
+                    }
                 } else {
                     $el.addClass("expanded");
-                    uiUtilService.onAnimationEnd($el).then(
-                        function () {
-                            defer.resolve();
-                        }
-                    );
+
+                    if (!$el.css("animation-name") || $el.css("animation-name") === "none") {
+                        $timeout(function () {
+                            defer.resolve(selector);
+                        });
+                    } else {
+                        uiUtilService.onAnimationEnd($el).then(
+                            function () {
+                                defer.resolve(selector);
+                            }
+                        );
+                    }
                 }
 
                 return defer.promise;
@@ -70,7 +84,7 @@ define(
                 if (typeof selector == "string")
                     $el = element.find(selector);
                 else if (typeof selector === "object")
-                    $el = $(selector);
+                    $el = selector.jquery && selector || $(selector);
                 else
                     $el = element;
 
@@ -98,27 +112,58 @@ define(
 
         Extension.prototype.toggleEnableControlService = function (element, $q, $timeout, uiUtilService) {
             return function (selector, event) {
-                event && event.stopPropagation&& event.stopPropagation();
+                event && event.stopPropagation && event.stopPropagation();
 
                 var $el, defer = $q.defer();
 
                 if (typeof selector == "string")
                     $el = element.find(selector);
                 else if (typeof selector === "object")
-                    $el = $(selector);
+                    $el = selector.jquery && selector || $(selector);
                 else
                     $el = element;
 
-                uiUtilService.onAnimationEnd($el).then(
-                    function () {
-                        defer.resolve($el.hasClass("enable"));
-                    }
-                );
                 $el.toggleClass("enable");
                 if (!$el.css("animation-name") || $el.css("animation-name") === "none") {
                     $timeout(function () {
                         defer.resolve($el.hasClass("enable"));
                     });
+                } else {
+                    uiUtilService.onAnimationEnd($el).then(
+                        function () {
+                            defer.resolve($el.hasClass("enable"));
+                        }
+                    );
+                }
+
+                return defer.promise;
+            };
+        }
+
+        Extension.prototype.enableControlService = function (element, $q, $timeout, uiUtilService) {
+            return function (selector, event) {
+                event && event.stopPropagation && event.stopPropagation();
+
+                var $el, defer = $q.defer();
+
+                if (typeof selector == "string")
+                    $el = element.find(selector);
+                else if (typeof selector === "object")
+                    $el = selector.jquery && selector || $(selector);
+                else
+                    $el = element;
+
+                $el.addClass("enable");
+                if (!$el.css("animation-name") || $el.css("animation-name") === "none") {
+                    $timeout(function () {
+                        defer.resolve();
+                    });
+                } else {
+                    uiUtilService.onAnimationEnd($el).then(
+                        function () {
+                            defer.resolve();
+                        }
+                    );
                 }
 
                 return defer.promise;
@@ -127,27 +172,28 @@ define(
 
         Extension.prototype.disableControlService = function (element, $q, $timeout, uiUtilService) {
             return function (selector, event) {
-                event && event.stopPropagation&& event.stopPropagation();
+                event && event.stopPropagation && event.stopPropagation();
 
                 var $el, defer = $q.defer();
 
                 if (typeof selector == "string")
                     $el = element.find(selector);
                 else if (typeof selector === "object")
-                    $el = $(selector);
+                    $el = selector.jquery && selector || $(selector);
                 else
                     $el = element;
 
-                uiUtilService.onAnimationEnd($el).then(
-                    function () {
-                        defer.resolve();
-                    }
-                );
                 $el.removeClass("enable");
                 if (!$el.css("animation-name") || $el.css("animation-name") === "none") {
                     $timeout(function () {
                         defer.resolve();
                     });
+                } else {
+                    uiUtilService.onAnimationEnd($el).then(
+                        function () {
+                            defer.resolve();
+                        }
+                    );
                 }
 
                 return defer.promise;
@@ -156,27 +202,28 @@ define(
 
         Extension.prototype.toggleSelectService = function (element, $q, $timeout, uiUtilService) {
             return function (selector, event) {
-                event && event.stopPropagation&& event.stopPropagation();
+                event && event.stopPropagation && event.stopPropagation();
 
                 var $el, defer = $q.defer();
 
                 if (typeof selector == "string")
                     $el = element.find(selector);
                 else if (typeof selector === "object")
-                    $el = $(selector);
+                    $el = selector.jquery && selector || $(selector);
                 else
                     $el = element;
 
-                uiUtilService.onAnimationEnd($el).then(
-                    function () {
-                        defer.resolve();
-                    }
-                );
                 $el.toggleClass("select");
                 if (!$el.css("animation-name") || $el.css("animation-name") === "none") {
                     $timeout(function () {
-                        defer.resolve();
+                        defer.resolve(selector);
                     });
+                } else {
+                    uiUtilService.onAnimationEnd($el).then(
+                        function () {
+                            defer.resolve(selector);
+                        }
+                    );
                 }
 
                 return defer.promise;
@@ -185,30 +232,30 @@ define(
 
         Extension.prototype.toggleExclusiveSelectService = function (element, $q, $timeout, uiUtilService) {
             return function (selector, event) {
-                event && event.stopPropagation&& event.stopPropagation();
+                event && event.stopPropagation && event.stopPropagation();
 
                 var $el, defer = $q.defer();
 
                 if (typeof selector === "string")
                     $el = element.find(selector);
                 else if (typeof selector === "object")
-                    $el = $(selector);
-
+                    $el = selector.jquery && selector || $(selector);
                 else
                     $el = element;
 
-                uiUtilService.onAnimationEnd($el).then(
-                    function () {
-                        $el.siblings().removeClass("select");
-                        defer.resolve();
-                    }
-                );
                 $el.toggleClass("select");
                 if (!$el.css("animation-name") || $el.css("animation-name") === "none") {
                     $timeout(function () {
                         $el.siblings().removeClass("select");
                         defer.resolve();
                     });
+                } else {
+                    uiUtilService.onAnimationEnd($el).then(
+                        function () {
+                            $el.siblings().removeClass("select");
+                            defer.resolve();
+                        }
+                    );
                 }
 
                 return defer.promise;

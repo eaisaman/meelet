@@ -1,0 +1,13 @@
+<div class="cd-dropdown" ng-if="selectionList && selectionList.length">
+    <span ng-style="{'z-index':'{{options.zIndex + selectionList.length}}'}" ng-if="options.showTitle"
+          ng-click="toggleOpen($event)">{{selectItem && selectItem[options.labelField] || options.title}}</span>
+    <input type="hidden" class="cd-dropdown-input" ng-model="selectItem[options.labelField]">
+    <ul ng-click="onSelect($event)">
+        <li ng-if="options.displayUnsetOption">
+            <span data-value="{{unsetOptionValue[options.dataField]}}"></span>
+        </li>
+        <li ng-repeat="selection in selectionList">
+            <span data-value="{{selection[options.dataField]}}">{{selection[options.labelField]}}</span>
+        </li>
+    </ul>
+</div>

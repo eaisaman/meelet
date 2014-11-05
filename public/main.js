@@ -3,6 +3,7 @@ var ANGULAR_LIB_PATH = "javascripts/angular/1.3.0-beta.8/",
     ANGULAR_PLUGINS_LIB_PATH = "javascripts/angular-plugins/",
     HAMMER_LIB_PATH = "javascripts/hammer/2.0.2/",
     JQUERY_LIB_PATH = "javascripts/jquery/2.1.1/",
+    JQUERY_PLUGINS_LIB_PATH = "javascripts/jquery-plugins/",
     JQUERY_UI_LIB_PATH = "javascripts/jquery-ui/1.11.0/",
     UNDERSCORE_LIB_PATH = "javascripts/underscore/1.6.0/",
     APP_LIB_PATH = "app/",
@@ -19,6 +20,7 @@ require.config({
         "angular-plugins-lib": ANGULAR_PLUGINS_LIB_PATH + "main",
         "hammer-lib": HAMMER_LIB_PATH + "main",
         "jquery-lib": JQUERY_LIB_PATH + "main",
+        "jquery-plugins-lib": JQUERY_PLUGINS_LIB_PATH + "main",
         "jquery-ui-lib": JQUERY_UI_LIB_PATH + "main",
         "underscore-lib": UNDERSCORE_LIB_PATH + "main",
         "app-lib": APP_LIB_PATH + "main",
@@ -32,7 +34,7 @@ require.config({
     }
 });
 
-require(["jquery-lib", "hammer-lib", "jquery-ui-lib", "angular-lib", "underscore-lib"], function () {
+require(["jquery-lib", "jquery-plugins-lib", "hammer-lib", "jquery-ui-lib", "angular-lib", "underscore-lib"], function () {
     window.appModule = angular.module(APP_MODULE_NAME, APP_MODULE_DEPS);
     window.appModule.value("angularEventTypes", {boundPropertiesEvent: "boundPropertiesEvent"});
 

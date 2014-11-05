@@ -1,0 +1,134 @@
+<div class="stateContent ui-control-wrapper" ng-class="dockAlign">
+    <div class="stateBar ui-control-bar">
+    </div>
+    <div class="stateDetails ui-control-panel fs-x-medium">
+        <div class="accordianGroup" ng-attr-id="{{state.id}}"
+             ng-repeat="state in pickedWidget.states|where:{context:pickedWidget.state.context}"
+             ng-click="toggleSelect($event.currentTarget, $event)">
+            <div class="accordianTitle col-as-12 icon-state-transition-before icon-state-transition-angle-double-up-before">
+                <div class="deleteButton fs-x-tiny icon-state-transition-before icon-state-transition-cross-before"
+                     ng-click="deleteState(state, $event)"></div>
+                {{state.name}}
+            </div>
+            <div class="accordianBody col-as-12 no-padding">
+                <div ng-attr-id="{{transition.id}}"
+                     class="transition fs-x-small"
+                     ng-repeat="transition in state.transitions" ng-click="$event.stopPropagation()">
+                    <div class="transitionBar">
+                        <div class="toggleTransitionButton fs-x-small icon-state-transition-before icon-state-transition-arrow-right-before"
+                             ng-click="toggleTransitionDetails('#' + transition.id, $event)"></div>
+                        <div class="deleteButton fs-x-tiny icon-state-transition-before icon-state-transition-cross-before"
+                             ng-click="deleteTransition(state, transition, $event)"></div>
+                        <span>{{transition.toState.name}}</span>
+                    </div>
+                    <div class="transitionDetails" ng-click="selectTab($event.currentTarget, $event.target, $event)">
+                        <div class="transition-details-titles fs-x-smaller">
+                            <div class="transition-details-title fs-x-small-before icon-state-transition-before icon-state-transition-fire-before"
+                                 tab-sel="tab-head-transition-details-1"
+                                 tab-content="transition-details">
+                                Trigger
+                            </div>
+                            <div class="transition-details-title fs-x-small-before icon-state-transition-before icon-state-transition-running-man-before"
+                                 tab-sel="tab-head-transition-details-2"
+                                 tab-content="transition-details">
+                                Action
+                            </div>
+                        </div>
+                        <div class="transition-details-tabs">
+                            <div class="tab-content-transition-details" tab-sel="tab-content-transition-details-1">
+                                <ul id="triggerContent" class="fs-x-smaller">
+                                    <li>
+                                        <input type="radio" id="input-gesture-radio" name="trigger-content-radio"
+                                               checked>
+                                        <label for="input-gesture-radio">Gesture</label>
+
+                                        <div class="triggerInput input-group" ng-init="transition.createTriggerSetter('Gesture', triggers)">
+                                            <select ng-model="transition.gestureEventName" class="form-control">
+                                                <option value="{{t.id}}" ng-repeat="t in triggers['Gesture']">
+                                                    {{t.name}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <input type="radio" id="input-bind-expression-radio"
+                                               name="trigger-content-radio">
+                                        <label for="input-bind-expression-radio">Bind Expression</label>
+
+                                        <div class="triggerInput">Input2</div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="tab-content-transition-details" tab-sel="tab-content-transition-details-2">
+                                <div class="transition-action-wrapper"
+                                     ng-click="toggleActionPanel($event.currentTarget, $event)">
+                                    <div class="transition-action-bar fs-x-smaller fs-x-medium-before icon-state-transition-before icon-state-transition-animation-before">
+                                        <span class="col-as-4 no-padding">Animation</span>
+
+                                        <div class="animationPane col-as-6">{{transition.actionObj && transition.actionObj.name || ''}}</div>
+                                    </div>
+                                    <div class="transition-action-panel fs-x-smaller">
+                                        <div class="accordianGroup" ng-repeat="animationGroup in animations"
+                                             ng-click="toggleSelect($event.currentTarget, $event)">
+                                            <div class="accordianTitle col-as-12 icon-state-transition-before icon-state-transition-angle-double-up-before">
+                                                <span class="fs-x-small-before icon-state-transition-before"
+                                                      ng-class="'icon-state-transition-' + animationGroup.icon + '-before'">{{animationGroup.group}}</span>
+                                            </div>
+                                            <div class="accordianBody col-as-12 no-padding">
+                                                <div class="animationPane col-as-12 no-padding"
+                                                     ng-repeat="anim in animationGroup.list"
+                                                     ng-click="transition.setAnimationAction(anim) && $event.stopPropagation()">
+                                                    {{anim}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="emptyTransition fs-x-small"
+                     ng-click="toggleSelect('#' + state.id + ' .emptyTransition', $event)">
+                    <span>New Transition</span>
+
+                    <div class="transitionInput input-group" ng-click="$event.stopPropagation()">
+                        <div class="fs-x-small icon-state-transition-before icon-state-transition-arrow-right-plus-before"
+                             ng-click="createTransition(state, $event);toggleSelect('#' + state.id + ' .emptyTransition', $event)"></div>
+
+                        <select class="form-control fs-x-small">
+                            <option value="{{s.name}}"
+                                    ng-repeat="s in pickedWidget.states|where:{context:pickedWidget.state.context}"
+                                    ng-if="s.name != state.name">{{s.name}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="stateOptions fs-x-small" ng-if="pickedWidget.stateOptions.length">
+            <div class="stateOption" ng-repeat="opt in pickedWidget.stateOptions"
+                 ng-attr-name="{{opt.name}}"
+                 ng-click="toggleExclusiveSelect($event.currentTarget, $event)">
+                <span>{{opt.name}}</span>
+
+                <div class="deleteButton fs-x-tiny icon-state-transition-before icon-state-transition-cross-before"
+                     ng-click="deleteStateOption(opt, $event)"/>
+            </div>
+            <div class="createStateButton" ng-click="createState($event)">
+                <div class="fs-x-small btn">New State</div>
+            </div>
+        </div>
+        <div class="emptyStateOption fs-x-small" ng-click="toggleSelect('.emptyStateOption', $event)">
+            <span>New State Option</span>
+
+            <div class="stateOptionInput input-group" ng-click="$event.stopPropagation()">
+                <input autocorrect="off" class="form-control fs-x-medium" autocapitalize="off" placeholder=""
+                       id="stateOptionInput"
+                       required="required"/>
+                <span class="input-group-addon fs-x-medium-before icon-state-transition-before icon-state-transition-plus-before"
+                      ng-click="createStateOption($event);toggleSelect('.emptyStateOption', $event)"></span>
+            </div>
+        </div>
+    </div>
+</div>

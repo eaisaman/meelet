@@ -1,0 +1,86 @@
+{
+    "routes": [
+        {
+            "/": {
+                "module": "static-favicon"
+            }
+        },
+        {
+            "/": {
+                "module": "morgan",
+                "parameters": ["dev"]
+            }
+        },
+        {
+            "/": {
+                "module": "body-parser",
+                "function": "json"
+            }
+        },
+        {
+            "/": {
+                "module": "body-parser",
+                "function": "urlencoded",
+                "parameters": [
+                    {
+                        "limit": 20480000
+                    }
+                ]
+            }
+        },
+        {
+            "/": {
+                "module": "./commons",
+                "function": "multipart"
+            }
+        },
+        {
+            "/": {
+                "module": "cookie-parser"
+            }
+        },
+        {
+            "/": {
+                "module": "./commons",
+                "function": "filter",
+                "parameters": [
+                    {
+                        "paths": ["/api/"]
+                    }
+                ]
+            }
+        },
+        {
+            "/api/public/": {
+                "module": "./routes/api/public"
+            }
+        }
+    ],
+    "staticResources": [
+        {
+            "/": "public"
+        }
+    ],
+    "applicationResources": [],
+    "settings": {
+        "views": "views",
+        "view engine": "jade",
+        "download": {
+            "folder": "download"
+        },
+        "upload": {
+            "folder": "upload"
+        },
+        "userFile": {
+            "sketchFolder": "sketches"
+        },
+        "logging": {
+            "appenders": [
+                {
+                    "type": "console"
+                }
+            ],
+            "replaceConsole": true
+        }
+    }
+}

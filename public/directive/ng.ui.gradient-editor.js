@@ -38,6 +38,8 @@ define(
                                     }
                                 }
 
+                                extension && extension.attach && extension.attach(scope, _.extend(injectObj, {element: element, scope: scope}));
+
                                 scope.$root.$broadcast(
                                     angularEventTypes.boundPropertiesEvent,
                                     uiUtilService.createDirectiveBoundMap(boundProperties, attrs,
@@ -54,6 +56,7 @@ define(
 
                                                     scope.angle = value.angle;
                                                     completeColors(colorArr);
+                                                    scope.enableControl();
                                                 } else {
                                                     scope.disableControl();
                                                 }
@@ -61,8 +64,6 @@ define(
                                         }
                                     )
                                 );
-
-                                extension && extension.attach && extension.attach(scope, _.extend(injectObj, {element: element, scope: scope}));
 
                                 if (options.colorJson) {
                                     $http.get(options.colorJson).then(function (result) {

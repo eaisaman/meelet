@@ -780,6 +780,25 @@ define(
                                 }
                             };
 
+                            $scope.exclusiveSelect = function () {
+                                for (; $scope.$treeScope.$selecteds.length;) {
+                                    var $element = $scope.$treeScope.$selecteds[0],
+                                        nodeScope = angular.element($element).scope();
+                                    nodeScope && nodeScope.unselect && nodeScope.unselect();
+                                }
+
+                                $scope.select();
+                            }
+
+                            $scope.expandVisible = function () {
+                                var parentNode = $scope.$parentNodeScope;
+
+                                if (parentNode) {
+                                    parentNode.expand();
+                                    parentNode.expandVisible && parentNode.expandVisible();
+                                }
+                            }
+
                             $scope.unselect = function () {
                                 if ($scope.selected && $scope.$treeScope.$callbacks.unselect($scope)) {
                                     $scope.selected = false;

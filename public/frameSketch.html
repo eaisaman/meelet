@@ -1,14 +1,16 @@
 <link rel="stylesheet" type="text/css" href="stylesheets/frameSketch.css"/>
+<link rel="stylesheet" type="text/css" href="stylesheets/animation.css"/>
 <link rel="stylesheet" type="text/css" href="fonts/icon-gradient-editor/style.css"/>
 <link rel="stylesheet" type="text/css" href="fonts/icon-dock/style.css"/>
 <link rel="stylesheet" type="text/css" href="fonts/icon-shape/style.css"/>
 <link rel="stylesheet" type="text/css" href="fonts/icon-page/style.css"/>
-<link rel="stylesheet" type="text/css" href="fonts/icon-sketch-widget/style.css"/>
+<link rel="stylesheet" type="text/css" href="fonts/icon-toolbar/style.css"/>
+<link rel="stylesheet" type="text/css" href="fonts/icon-state-transition/style.css"/>
 
 <div id="sketchContainer" ng-controller="FrameSketchController">
     <div id="sketchHolder" class="sketchHolder">
-        <div ui-toolbar dock-align="dockAlign" tree-node-id-prefix="'tree-node-'"
-             picked-widget="sketchObject.pickedWidget"/>
+        <div ui-toolbar dock-align="dockAlign" tree-node-id-prefix="'tree-node-'" sketch-object="sketchObject"
+             scale="sketchWidgetSetting.scale" is-playing="sketchWidgetSetting.isPlaying"/>
         <div class="deviceBackground" ng-style="{'background-image':'url(images/{{sketchDevice.img}})', 'min-width': '{{sketchDevice.width * 1.5}}', 'max-width': '{{sketchDevice.width * 1.5}}',
              'min-height': '{{sketchDevice.height * 1.5}}', 'max-height': '{{sketchDevice.height * 1.5}}'}">
             <div class="deviceScreenBackground"
@@ -35,33 +37,33 @@
                 <div id="page-control" class="ui-control ui-control-inline enable" ui-page
                      ui-page-opts="{'pageHolderClass':'deviceHolder'}"
                      tree-node-id-prefix="'tree-node-'"
-                     picked-page="sketchObject.currentPage" sketch-works="sketchObject.sketchWorks"
+                     sketch-object="sketchObject" sketch-works="sketchObject.sketchWorks"
                      dock-align="dockAlign">
                 </div>
                 <div class="structureContent">
                     <section class="tabs">
                         <input id="tab-1" type="radio" name="tabRadio" class="tab-selector-1 fs-x-smaller"
                                checked="checked"/>
-                        <label class="tab-label1 fs-x-smaller">Properties</label>
+                        <label class="tab-label-1 fs-x-smaller">Properties</label>
                         <input id="tab-2" type="radio" name="tabRadio" class="tab-selector-2 fs-x-smaller"/>
-                        <label class="tab-label2 fs-x-smaller" for="tab-2">Interaction</label>
+                        <label class="tab-label-2 fs-x-smaller" for="tab-2">States</label>
 
                         <div class="content">
                             <div class="content-1">
-                                <div id="color-control" class="ui-control ui-control-bordered enable" ui-color-picker
+                                <div id="color-control" class="ui-control ui-control-bordered" ui-color-picker
                                      picked-color="sketchWidgetSetting.color"
                                      dock-align="dockAlign">
                                     Color
                                 </div>
 
-                                <div id="border-color-control" class="ui-control ui-control-bordered enable"
+                                <div id="border-color-control" class="ui-control ui-control-bordered"
                                      ui-color-picker
                                      picked-color="sketchWidgetSetting.borderColor"
                                      dock-align="dockAlign">
                                     Border Color
                                 </div>
 
-                                <div id="fill-control" class="ui-control ui-control-inline ui-control-bordered enable"
+                                <div id="fill-control" class="ui-control ui-control-inline ui-control-bordered"
                                      ui-gradient-editor
                                      gradient-color="sketchWidgetSetting.linearGradientColor"
                                      dock-align="dockAlign">
@@ -69,6 +71,9 @@
                                 </div>
                             </div>
                             <div class="content-2">
+                                <div id="state-transition-control" class="ui-control ui-control-inline enable"
+                                     ui-state-transition picked-Widget="sketchObject.pickedWidget"
+                                     picked-Page="sketchObject.pickedPage" dock-align="dockAlign"></div>
                             </div>
                         </div>
                     </section>
@@ -77,7 +82,8 @@
             <div tab-sel="tab-content-control-group-2" class="ui-control-group">
                 <div id="shape-control" class="ui-control ui-control-inline enable" ui-shape
                      ui-shape-opts="{containerClass: 'sketchHolder', holderClass: 'pageHolder', widgetClass:'sketchWidget', hoverClass:'widgetHover', elementZIndex: 99}"
-                     picked-Shape="sketchSetting.shape" dock-align="dockAlign">
+                     picked-Shape="sketchSetting.shape" is-playing="sketchWidgetSetting.isPlaying"
+                     dock-align="dockAlign">
                 </div>
             </div>
         </div>

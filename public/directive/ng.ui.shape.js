@@ -7,38 +7,10 @@ define(
             appModule.directive("uiShape", _.union(inject, [function ($http, $timeout, $q, $parse, $compile, angularEventTypes, uiUtilService, uiService) {
                 'use strict';
 
-                var boundProperties = {pickedShape: "="},
+                var boundProperties = {},
                     defaults = {
                         shapeJson: "",
-                        shapes: [
-                            {group: "Regular", list: ["circle-shape", "square-shape"]},
-                            {group: "Arrows", list: [
-                                "arrow-left",
-                                "arrow-right",
-                                "arrow-up",
-                                "arrow-down",
-                                "simple-arrow-left",
-                                "simple-arrow-right",
-                                "simple-arrow-up",
-                                "simple-arrow-down",
-                                "thick-arrow-left",
-                                "thick-arrow-right",
-                                "thick-arrow-up",
-                                "thick-arrow-down",
-                                "inner-arrow-left",
-                                "inner-arrow-right",
-                                "inner-arrow-up",
-                                "inner-arrow-down",
-                                "nav-arrow-nw",
-                                "nav-arrow-ne",
-                                "nav-arrow-se",
-                                "nav-arrow-sw",
-                                "angle-double-left",
-                                "angle-double-right",
-                                "angle-double-up",
-                                "angle-double-down"
-                            ]}
-                        ],
+                        shapes: [],
                         containerClass: "sketchHolder",
                         holderClass: "deviceHolder",
                         widgetClass: "sketchWidget",
@@ -50,15 +22,18 @@ define(
 
                 return {
                     restrict: "A",
-                    scope: angular.extend({dockAlign: "="}, boundProperties),
+                    scope: angular.extend({dockAlign: "=", pickedShape: "=", isPlaying: "="}, boundProperties),
                     replace: false,
                     templateUrl: "include/_shape.html",
                     compile: function (element, attrs) {
                         return {
                             pre: function (scope, element, attrs) {
-                                scope.$root.$broadcast(angularEventTypes.boundPropertiesEvent, uiUtilService.createDirectiveBoundMap(boundProperties, attrs));
+                                extension && extension.attach && extension.attach(scope, _.extend(injectObj, {
+                                    element: element,
+                                    scope: scope
+                                }));
 
-                                extension && extension.attach && extension.attach(scope, _.extend(injectObj, {element: element, scope: scope}));
+                                scope.$root.$broadcast(angularEventTypes.boundPropertiesEvent, uiUtilService.createDirectiveBoundMap(boundProperties, attrs));
 
                                 options = angular.extend(options, $parse(attrs['uiShapeOpts'])(scope, {}));
                             },
@@ -73,7 +48,7 @@ define(
 
                                             $shapeElement = $("<div />");
 
-                                            $shapeElement.addClass("pickerPaneShape fs-x-medium-before squarePane icon-shape-before").addClass("icon-shape-" + scope.pickerPaneShape + "-before").css("z-index", options.elementZIndex);
+                                            $shapeElement.addClass("pickerPaneShape fs-x-medium-before squarePane").addClass(scope.pickerPaneShape.shapeStyle.classList.join(" ")).css(scope.pickerPaneShape.shapeStyle.style).css("z-index", options.elementZIndex);
                                             $shapeElement.css("left", event.srcEvent.pageX);
                                             $shapeElement.css("top", event.srcEvent.pageY);
                                             $shapeElement.appendTo($("." + options.containerClass));
@@ -96,11 +71,13 @@ define(
                                                 x = event.srcEvent.pageX - $to.offset().left,
                                                 y = event.srcEvent.pageY - $to.offset().top;
 
-                                            if ($to.hasClass(options.holderClass) || $to.hasClass(options.widgetClass)) {
+                                            x = Math.floor(x * 100) / 100, y = Math.floor(y * 100) / 100;
+
+                                            if (!scope.isPlaying && ($to.hasClass(options.holderClass) || $to.hasClass(options.widgetClass))) {
                                                 var widgetObj = createWidget($to);
 
-                                                widgetObj.css("left", x);
-                                                widgetObj.css("top", y);
+                                                widgetObj.css("left", x + "px");
+                                                widgetObj.css("top", y + "px");
                                             }
 
                                             $shapeElement.remove();
@@ -112,19 +89,15 @@ define(
                                 function createWidget(containerElement) {
                                     var widgetObj = uiService.createWidget(containerElement);
 
-                                    if (scope.pickerPaneShape === "circle-shape") {
-                                        widgetObj.css({"border-radius": "100%"});
-                                    } else if (scope.pickerPaneShape === "square-shape") {
-                                    } else {
-                                        widgetObj.addClass("fs-x-medium-before squarePane icon-shape-before").addClass("icon-shape-" + scope.pickerPaneShape + "-before").addClass("pseudoShape");
-                                    }
+                                    widgetObj.addClass(scope.pickerPaneShape.shapeStyle.classList.join(" "));
+                                    widgetObj.css(scope.pickerPaneShape.shapeStyle.style);
                                     widgetObj.addClass(options.widgetClass);
 
                                     return widgetObj;
                                 }
 
                                 scope.pickShape = function (value) {
-                                    scope.pickerPaneShape = "";
+                                    scope.pickerPaneShape = null;
                                     scope.pickedPane = value;
                                     $timeout(function () {
                                         scope.pickerPaneShape = scope.pickedPane;
@@ -154,13 +127,13 @@ define(
                                     $http.get(options.shapeJson).then(function (result) {
                                         scope.shapes = result.data;
                                         if (scope.shapes && scope.shapes.length) {
-                                            scope.pickShape(scope.shapes[0] && scope.shapes[0].list.length && scope.shapes[0].list[0] || "");
+                                            scope.pickShape(scope.shapes[0] && scope.shapes[0].list.length && scope.shapes[0].list[0] || null);
                                         }
                                     });
                                 } else {
                                     scope.shapes = options.shapes || [];
                                     if (scope.shapes && scope.shapes.length) {
-                                        scope.pickShape(scope.shapes[0] && scope.shapes[0].list.length && scope.shapes[0].list[0] || "");
+                                        scope.pickShape(scope.shapes[0] && scope.shapes[0].list.length && scope.shapes[0].list[0] || null);
                                     }
                                 }
 

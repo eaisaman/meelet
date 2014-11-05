@@ -1,0 +1,365 @@
+[
+  {
+    "group": "Bling",
+    "thumbnailStyle": {
+      "classList": [
+        "fs-x-small-before",
+        "icon-state-transition-before",
+        "icon-state-transition-bling-before"
+      ]
+    },
+    "list": [
+      {
+        "name": "puffIn",
+        "mixin": "puffInKeyframes",
+        "args": []
+      },
+      {
+        "name": "puffOut",
+        "mixin": "puffOutKeyframes",
+        "args": []
+      },
+      {
+        "name": "vanishIn",
+        "mixin": "vanishInKeyframes",
+        "args": []
+      },
+      {
+        "name": "vanishOut",
+        "mixin": "vanishOutKeyframes",
+        "args": []
+      }
+    ]
+  },
+  {
+    "group": "Static Effects",
+    "thumbnailStyle": {
+      "classList": [
+        "fs-x-small-before",
+        "icon-state-transition-before",
+        "icon-state-transition-static-effects-before"
+      ]
+    },
+    "list": [
+      {
+        "name": "openDownLeft",
+        "mixin": "openDownLeftKeyframes",
+        "args": []
+      },
+      {
+        "name": "openDownRight",
+        "mixin": "openDownRightKeyframes",
+        "args": []
+      },
+      {
+        "name": "openUpLeft",
+        "mixin": "openUpLeftKeyframes",
+        "args": []
+      },
+      {
+        "name": "openUpRight",
+        "mixin": "openUpRightKeyframes",
+        "args": []
+      },
+      {
+        "name": "openDownLeftRetourn",
+        "mixin": "openDownLeftRetournKeyframes",
+        "args": []
+      },
+      {
+        "name": "openDownRightRetourn",
+        "mixin": "openDownRightRetournKeyframes",
+        "args": []
+      },
+      {
+        "name": "openUpLeftRetourn",
+        "mixin": "openUpLeftRetournKeyframes",
+        "args": []
+      },
+      {
+        "name": "openUpRightRetourn",
+        "mixin": "openUpRightRetournKeyframes",
+        "args": []
+      }
+    ]
+  },
+  {
+    "group": "Static Effects Out",
+    "thumbnailStyle": {
+      "classList": [
+        "fs-x-small-before",
+        "icon-state-transition-before",
+        "icon-state-transition-static-effects-out-before"
+      ]
+    },
+    "list": [
+      {
+        "name": "openDownLeftOut",
+        "mixin": "openDownLeftOutKeyframes",
+        "args": []
+      },
+      {
+        "name": "openDownRightOut",
+        "mixin": "openDownRightOutKeyframes",
+        "args": []
+      },
+      {
+        "name": "openUpLeftOut",
+        "mixin": "openUpLeftOutKeyframes",
+        "args": []
+      },
+      {
+        "name": "openUpRightOut",
+        "mixin": "openUpRightOutKeyframes",
+        "args": []
+      }
+    ]
+  },
+  {
+    "group": "Perspective",
+    "thumbnailStyle": {
+      "classList": [
+        "fs-x-small-before",
+        "icon-state-transition-before",
+        "icon-state-transition-perspective-before"
+      ]
+    },
+    "list": [
+      {
+        "name": "perspectiveDown",
+        "mixin": "perspectiveDownKeyframes",
+        "args": []
+      },
+      {
+        "name": "perspectiveUp",
+        "mixin": "perspectiveUpKeyframes",
+        "args": []
+      },
+      {
+        "name": "perspectiveLeft",
+        "mixin": "perspectiveLeftKeyframes",
+        "args": []
+      },
+      {
+        "name": "perspectiveRight",
+        "mixin": "perspectiveRightKeyframes",
+        "args": []
+      },
+      {
+        "name": "perspectiveDownRetourn",
+        "mixin": "perspectiveDownRetournKeyframes",
+        "args": []
+      },
+      {
+        "name": "perspectiveUpRetourn",
+        "mixin": "perspectiveUpRetournKeyframes",
+        "args": []
+      },
+      {
+        "name": "perspectiveLeftRetourn",
+        "mixin": "perspectiveLeftRetournKeyframes",
+        "args": []
+      },
+      {
+        "name": "perspectiveRightRetourn",
+        "mixin": "perspectiveRightRetournKeyframes",
+        "args": []
+      }
+    ]
+  },
+  {
+    "group": "Rotate",
+    "thumbnailStyle": {
+      "classList": [
+        "fs-x-small-before",
+        "icon-state-transition-before",
+        "icon-state-transition-rotate-before"
+      ]
+    },
+    "list": [
+      {
+        "name": "rotateDown",
+        "mixin": "rotateDownKeyframes",
+        "args": []
+      },
+      {
+        "name": "rotateUp",
+        "mixin": "rotateUpKeyframes",
+        "args": []
+      },
+      {
+        "name": "rotateLeft",
+        "mixin": "rotateLeftKeyframes",
+        "args": []
+      },
+      {
+        "name": "rotateRight",
+        "mixin": "rotateRightKeyframes",
+        "args": []
+      }
+    ]
+  },
+  {
+    "group": "Slide",
+    "thumbnailStyle": {
+      "classList": [
+        "fs-x-small-before",
+        "icon-state-transition-before",
+        "icon-state-transition-slide-before"
+      ]
+    },
+    "list": [
+      {
+        "name": "slideDown",
+        "mixin": "slideDownKeyframes",
+        "args": []
+      },
+      {
+        "name": "slideUp",
+        "mixin": "slideUpKeyframes",
+        "args": []
+      },
+      {
+        "name": "slideLeft",
+        "mixin": "slideLeftKeyframes",
+        "args": []
+      },
+      {
+        "name": "slideRight",
+        "mixin": "slideRightKeyframes",
+        "args": []
+      },
+      {
+        "name": "slideDownRetourn",
+        "mixin": "slideDownRetournKeyframes",
+        "args": []
+      },
+      {
+        "name": "slideUpRetourn",
+        "mixin": "slideUpRetournKeyframes",
+        "args": []
+      },
+      {
+        "name": "slideLeftRetourn",
+        "mixin": "slideLeftRetournKeyframes",
+        "args": []
+      },
+      {
+        "name": "slideRightRetourn",
+        "mixin": "slideRightRetournKeyframes",
+        "args": []
+      }
+    ]
+  },
+  {
+    "group": "Math",
+    "thumbnailStyle": {
+      "classList": [
+        "fs-x-small-before",
+        "icon-state-transition-before",
+        "icon-state-transition-math-before"
+      ]
+    },
+    "list": [
+      {
+        "name": "swashOut",
+        "mixin": "swashOutKeyframes",
+        "args": []
+      },
+      {
+        "name": "swashIn",
+        "mixin": "swashInKeyframes",
+        "args": []
+      },
+      {
+        "name": "foolishOut",
+        "mixin": "foolishOutKeyframes",
+        "args": []
+      },
+      {
+        "name": "foolishIn",
+        "mixin": "foolishInKeyframes",
+        "args": []
+      },
+      {
+        "name": "holeOut",
+        "mixin": "holeOutKeyframes",
+        "args": []
+      }
+    ]
+  },
+  {
+    "group": "Tin",
+    "thumbnailStyle": {
+      "classList": [
+        "fs-x-small-before",
+        "icon-state-transition-before",
+        "icon-state-transition-tin-before"
+      ]
+    },
+    "list": [
+      {
+        "name": "tinRightOut",
+        "mixin": "tinRightOutKeyframes",
+        "args": []
+      },
+      {
+        "name": "tinLeftOut",
+        "mixin": "tinLeftOutKeyframes",
+        "args": []
+      },
+      {
+        "name": "tinUpOut",
+        "mixin": "tinUpOutKeyframes",
+        "args": []
+      },
+      {
+        "name": "tinDownOut",
+        "mixin": "tinDownOutKeyframes",
+        "args": []
+      },
+      {
+        "name": "tinRightIn",
+        "mixin": "tinRightInKeyframes",
+        "args": []
+      },
+      {
+        "name": "tinLeftIn",
+        "mixin": "tinLeftInKeyframes",
+        "args": []
+      },
+      {
+        "name": "tinUpIn",
+        "mixin": "tinUpInKeyframes",
+        "args": []
+      },
+      {
+        "name": "tinDownIn",
+        "mixin": "tinDownInKeyframes",
+        "args": []
+      }
+    ]
+  },
+  {
+    "group": "Bomb",
+    "thumbnailStyle": {
+      "classList": [
+        "fs-x-small-before",
+        "icon-state-transition-before",
+        "icon-state-transition-bomb-before"
+      ]
+    },
+    "list": [
+      {
+        "name": "bombRightOut",
+        "mixin": "bombRightOutKeyframes",
+        "args": []
+      },
+      {
+        "name": "bombLeftOut",
+        "mixin": "bombLeftOutKeyframes",
+        "args": []
+      }
+    ]
+  }
+]

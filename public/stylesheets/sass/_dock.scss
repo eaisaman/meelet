@@ -2,7 +2,6 @@
 @import "compass/css3/transform";
 @import "compass/css3/user-interface";
 @import "global";
-@import "animation/directive_animation";
 
 $color: rgba(0, 0, 0, 0.4);
 $borderColor: rgba(0, 0, 0, 0.4);
@@ -233,7 +232,7 @@ $expandedDockWidth: 12em;
                                 margin: 0 0.2em;
                                 top: 1em;
 
-                                .tabs {
+                                > .tabs {
                                     position: relative;
                                     float: left;
                                     width: 100%;
@@ -241,7 +240,7 @@ $expandedDockWidth: 12em;
 
                                     > input {
                                         position: absolute;
-                                        z-index: 100;
+                                        z-index: 1;
                                         width: $tabHeaderWidth;
                                         height: 2em;
                                         opacity: 0;
@@ -271,7 +270,7 @@ $expandedDockWidth: 12em;
                                             background: rgba(0, 0, 0, 0.3);
                                         }
                                     }
-                                    .tab-label-2 {
+                                    > .tab-label-2 {
                                         z-index: 3;
                                     }
                                     > input:checked + label {
@@ -282,7 +281,7 @@ $expandedDockWidth: 12em;
                                             background: transparent;
                                         }
                                     }
-                                    .content {
+                                    > .content {
                                         position: relative;
                                         float: left;
                                         top: 0;
@@ -307,8 +306,8 @@ $expandedDockWidth: 12em;
                                             }
                                         }
                                     }
-                                    > input.tab-selector-1:checked ~ .content .content-1,
-                                    > input.tab-selector-2:checked ~ .content .content-2 {
+                                    > input.tab-selector-1:checked ~ .content > .content-1,
+                                    > input.tab-selector-2:checked ~ .content > .content-2 {
                                         z-index: 10;
                                         opacity: 1;
                                         @include transition(opacity ease-out 0.3s 0.2s);

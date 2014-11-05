@@ -1,19 +1,53 @@
 <script type="text/ng-template" id="_pageWidgets.html">
-    <div ui-tree-handle>{{item.name}}</div>
-    <ol ui-tree-nodes ng-model="item.childWidgets">
+    <div ui-tree-handle ng-click="exclusiveSelect($event)">
+        <div class="stateButton icon-page-before icon-page-flag-before"
+             ng-class="{'activeState':item.state.name != item.initialStateOption.name}"
+             ng-click="toggleSelectState(item, $event)"
+             ng-if="item.stateOptions.length"
+                >
+        </div>
+
+        <div class="editState" ng-if="item.stateOptions.length && item.state.name != item.initialStateOption.name">
+            {{item.state.name}}
+        </div>
+
+        <a class="fs-x-small btn btn-xs" nodrag ng-click="toggle();$event.stopPropagation()">
+            <span class="glyphicon"
+                  ng-class="{ 'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed }"></span>
+        </a>
+
+        <span class="treeNodeName">
+            {{item.name}}
+        </span>
+    </div>
+    <ol ui-tree-nodes ng-model="item.childWidgets" ng-class="{ 'hidden': collapsed }">
         <li ng-repeat="item in item.childWidgets" ui-tree-node ng-attr-id="{{treeNodeIdPrefix + item.id}}"
-            ng-include="'_pageWidgets.html'"></li>
+            ng-include="'_pageWidgets.html'" ng-class="{ 'selected': selected }"></li>
     </ol>
 </script>
 <div class="pageContent ui-control-wrapper" ng-class="dockAlign">
     <div class="pageBar ui-control-bar">
         <div class="currentPage col-as-5 no-padding">
-            <div class="fs-x-medium vt-align-center">Page</div>
+            <div class="pageState fs-x-smaller" ng-if="sketchObject.pickedPage.stateOptions.length">
+                <div class="stateButton icon-page-before icon-page-flag-before"
+                     ng-class="{'activeState':sketchObject.pickedPage.state.name != sketchObject.pickedPage.initialStateOption.name}"
+                     ng-click="toggleSelectState(sketchObject.pickedPage, $event)"
+                        >
+                </div>
+
+                <div class="editState"
+                     ng-if="sketchObject.pickedPage.state.name != sketchObject.pickedPage.initialStateOption.name">
+                    {{sketchObject.pickedPage.state.name}}
+                </div>
+            </div>
+
+            <div class="pageLabel fs-x-medium vt-align-center">Page</div>
         </div>
 
         <div class="pageList col-as-7" ng-click="$event.stopPropagation()">
             <select class="form-control fs-x-medium vt-align-center">
-                <option value="{{$index}}" selected="{{p.id == pickedPage.id}}" ng-repeat="p in sketchWorks.pages">
+                <option value="{{$index}}" selected="{{p.id == sketchObject.pickedPage.id}}"
+                        ng-repeat="p in sketchWorks.pages">
                     {{$index+1}}
                 </option>
             </select>
@@ -33,10 +67,17 @@
     <div class="pageDetails ui-control-panel">
         <ui-tree id="pageDetailsTree" class="fs-x-small" drag-enabled="false" spacing="20" coverage="50"
                  collapseAll="true">
-            <ol ui-tree-nodes ng-model="pickedPage.childWidgets">
-                <li ng-repeat="item in pickedPage.childWidgets" ui-tree-node
-                    ng-attr-id="{{treeNodeIdPrefix + item.id}}" ng-include="'_pageWidgets.html'"></li>
+            <ol ui-tree-nodes ng-model="sketchObject.pickedPage.childWidgets">
+                <li ng-repeat="item in sketchObject.pickedPage.childWidgets" ui-tree-node
+                    ng-attr-id="{{treeNodeIdPrefix + item.id}}" ng-include="'_pageWidgets.html'"
+                    ng-class="{ 'selected': selected }"></li>
             </ol>
         </ui-tree>
+    </div>
+    <div id="widgetStateDropdown" class="fs-x-smaller stackAndRotateSelect" ui-simple-dropdown
+         ui-simple-dropdown-opts="{dataField:'name', labelField:'name', zIndex:1000, gutter: 5, showTitle: false, displayUnsetOption: true}"
+         selection-list="stateTreeNodeItem.stateOptions" select-item="pickedStateOption"
+         unset-option-value="stateTreeNodeItem.initialStateOption"
+         on-option-select="toggleSelectState() && stateTreeNodeItem.setState(pickedStateOption)">
     </div>
 </div>

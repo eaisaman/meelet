@@ -172,6 +172,21 @@ define(
             return styleValues;
         }
 
+        Util.prototype.prefixedStyle = function (style, format) {
+            var styleObj = {};
+
+            if (style && format) {
+                var prefixes = ["-webkit-", "-moz-", "-ms-", "-o-", ""],
+                    values = Array.prototype.slice.call(arguments, 2);
+
+                prefixes.forEach(function (prefix) {
+                    styleObj[prefix + style] = String.prototype.format.apply(format, values);
+                });
+            }
+
+            return styleObj;
+        }
+
         Util.prototype.formalParameterList = function (fn) {
             var FN_ARGS = /^function\s*[^\(]*\(\s*([^\)]*)\)/m;
             var FN_ARG_SPLIT = /,/;
@@ -237,10 +252,10 @@ define(
 
             self.onceArray = self.onceArray || [];
             if (!self.onceArray.every(
-                function (f, index) {
-                    return f.onceId != onceId;
-                }
-            ))
+                    function (f, index) {
+                        return f.onceId != onceId;
+                    }
+                ))
                 return angular.noop;
 
             self.onceArray.push(fn);

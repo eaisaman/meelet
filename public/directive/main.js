@@ -12,7 +12,9 @@ require.config(
             "ng.ui.shape": DIRECTIVE_LIB_PATH + "ng.ui.shape",
             "ng.ui.page": DIRECTIVE_LIB_PATH + "ng.ui.page",
             "ng.ui.dock": DIRECTIVE_LIB_PATH + "ng.ui.dock",
-            "ng.ui.toolbar": DIRECTIVE_LIB_PATH + "ng.ui.toolbar"
+            "ng.ui.toolbar": DIRECTIVE_LIB_PATH + "ng.ui.toolbar",
+            "ng.ui.simple-dropdown": DIRECTIVE_LIB_PATH + "ng.ui.simple-dropdown",
+            "ng.ui.state-transition": DIRECTIVE_LIB_PATH + "ng.ui.state-transition"
         }
     }
 );
@@ -30,7 +32,9 @@ define([
         "ng.ui.shape",
         "ng.ui.page",
         "ng.ui.dock",
-        "ng.ui.toolbar"
+        "ng.ui.toolbar",
+        "ng.ui.simple-dropdown",
+        "ng.ui.state-transition"
     ],
     function () {
         var utilConfig = arguments[0],
@@ -63,7 +67,9 @@ define([
             });
 
             //Shape
-            directiveConfigs[5](appModule, extension);
+            directiveConfigs[5](appModule, extension, {
+                shapeJson: "directive/shape.json"
+            });
 
             //Page
             directiveConfigs[6](appModule, extension);
@@ -73,6 +79,15 @@ define([
 
             //Toolbar
             directiveConfigs[8](appModule, extension);
+
+            //Simple Dropdown
+            directiveConfigs[9](appModule, extension);
+
+            //State transition
+            directiveConfigs[10](appModule, extension, {
+                triggerJson: "directive/trigger.json",
+                animationJson: "directive/animation.json"
+            });
         }
     }
 );

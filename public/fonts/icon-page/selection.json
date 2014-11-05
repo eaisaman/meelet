@@ -4,26 +4,31 @@
 		{
 			"icon": {
 				"paths": [
-					"M832 256h-192v-64l-192-192h-448v768h384v256h640v-576l-192-192zM832 346.51l101.49 101.49h-101.49v-101.49zM448 90.51l101.49 101.49h-101.49v-101.49zM64 64h320v192h192v448h-512v-640zM960 960h-512v-192h192v-448h128v192h192v448z"
+					"M36.571 146.286q0-30.286 21.429-51.714t51.714-21.429 51.714 21.429 21.429 51.714q0 41.143-36.571 62.857v723.429q0 7.429-5.429 12.857t-12.857 5.429h-36.571q-7.429 0-12.857-5.429t-5.429-12.857v-723.429q-36.571-21.714-36.571-62.857zM182.857 694.857v-424q0-18.286 17.714-31.429 12-8 45.143-24.571 134.857-68.571 240.571-68.571 61.143 0 114.286 16.571t125.143 50.286q21.714 10.857 50.286 10.857 30.857 0 67.143-12t62.857-26.857 50.286-26.857 31.143-12q14.857 0 25.714 10.857t10.857 25.714v436q0 14.286-7.143 22t-22.571 15.714q-122.857 66.286-210.857 66.286-34.857 0-70.571-12.571t-62-27.429-66-27.429-81.429-12.571q-109.714 0-265.143 83.429-9.714 5.143-18.857 5.143-14.857 0-25.714-10.857t-10.857-25.714z"
 				],
-				"attrs": [],
+				"attrs": [
+					{
+						"opacity": 1,
+						"visibility": false
+					}
+				],
 				"tags": [
-					"copy",
-					"duplicate",
-					"files",
-					"pages",
-					"papers",
-					"documents"
+					"flag"
 				],
-				"grid": 16
+				"grid": 14
 			},
-			"attrs": [],
+			"attrs": [
+				{
+					"opacity": 1,
+					"visibility": false
+				}
+			],
 			"properties": {
-				"id": 39,
-				"order": 13,
-				"prevSize": 32,
-				"code": 58880,
-				"name": "copy",
+				"order": 57,
+				"id": 0,
+				"prevSize": 28,
+				"code": 58884,
+				"name": "flag",
 				"ligatures": ""
 			},
 			"setIdx": 0,
@@ -45,10 +50,38 @@
 			"attrs": [],
 			"properties": {
 				"id": 229,
-				"order": 12,
+				"order": 55,
 				"prevSize": 28,
 				"code": 58881,
 				"name": "angle-double-right",
+				"ligatures": ""
+			},
+			"setIdx": 0,
+			"iconIdx": 2
+		},
+		{
+			"icon": {
+				"paths": [
+					"M832 256h-192v-64l-192-192h-448v768h384v256h640v-576l-192-192zM832 346.51l101.49 101.49h-101.49v-101.49zM448 90.51l101.49 101.49h-101.49v-101.49zM64 64h320v192h192v448h-512v-640zM960 960h-512v-192h192v-448h128v192h192v448z"
+				],
+				"attrs": [],
+				"tags": [
+					"copy",
+					"duplicate",
+					"files",
+					"pages",
+					"papers",
+					"documents"
+				],
+				"grid": 16
+			},
+			"attrs": [],
+			"properties": {
+				"id": 39,
+				"order": 56,
+				"prevSize": 32,
+				"code": 58880,
+				"name": "copy",
 				"ligatures": ""
 			},
 			"setIdx": 0,
@@ -69,14 +102,14 @@
 			"attrs": [],
 			"properties": {
 				"id": 125,
-				"order": 14,
+				"order": 54,
 				"prevSize": 24,
 				"code": 58882,
 				"name": "insert",
 				"ligatures": ""
 			},
 			"setIdx": 0,
-			"iconIdx": 2
+			"iconIdx": 3
 		},
 		{
 			"icon": {
@@ -93,14 +126,14 @@
 			"attrs": [],
 			"properties": {
 				"id": 126,
-				"order": 11,
+				"order": 53,
 				"prevSize": 24,
 				"code": 58883,
 				"name": "remove",
 				"ligatures": ""
 			},
 			"setIdx": 0,
-			"iconIdx": 3
+			"iconIdx": 4
 		},
 		{
 			"icon": {
@@ -118,14 +151,14 @@
 			"attrs": [],
 			"properties": {
 				"id": 214,
-				"order": 15,
+				"order": 52,
 				"prevSize": 20,
 				"code": 58890,
 				"name": "simple-arrow-down",
 				"ligatures": ""
 			},
 			"setIdx": 0,
-			"iconIdx": 4
+			"iconIdx": 5
 		}
 	],
 	"height": 1024,
@@ -161,7 +194,8 @@
 			"columns": 16,
 			"margin": 16,
 			"png": false,
-			"sprites": true
+			"sprites": true,
+			"prefix": "icon-"
 		},
 		"historySize": 100,
 		"showCodes": true,
@@ -170,6 +204,7 @@
 		"showGrid": true,
 		"showGlyphs": true,
 		"showQuickUse": true,
-		"search": ""
+		"search": "",
+		"showSVGs": true
 	}
 }

@@ -12,6 +12,21 @@ define(
 
         appService.$inject = ["$rootScope", "$http", "$timeout", "$q", "$cookies", "$cookieStore"];
 
+        appService.prototype.NOOP = function () {
+            var self = this,
+                defer = self.$q.defer();
+
+            self.$timeout(function () {
+                defer.resolve();
+            });
+
+            return defer.promise;
+        };
+
+        appService.prototype.saveSketch = appService.prototype.NOOP;
+
+        appService.prototype.loadSketch = appService.prototype.NOOP;
+
         return function (appModule) {
             appModule.
                 config(['$httpProvider',

@@ -1,0 +1,57 @@
+[
+  {
+    "group": "Gesture",
+    "list": [
+      {
+        "id": "D54B8BC4-4655-4D34-82F1-0B94BBDC5C90",
+        "name": "Tap",
+        "eventName": "tap",
+        "options": {}
+      },
+      {
+        "id": "E923CF20-923F-4F7A-8B2E-C06EFD76D25C",
+        "name": "Swipe Left",
+        "eventName": "swipe",
+        "options": {
+          "threshold": 10,
+          "velocity": 0.65,
+          "direction": 2,
+          "pointers": 1
+        }
+      },
+      {
+        "id": "EECBD313-385C-47C5-A545-1DBB8B093EDA",
+        "name": "Swipe Right",
+        "eventName": "swipe",
+        "options": {
+          "threshold": 10,
+          "velocity": 0.65,
+          "direction": 4,
+          "pointers": 1
+        }
+      },
+      {
+        "id": "5F8A9E8E-3072-4CD1-9F83-B619BB6E86C4",
+        "name": "Swipe Up",
+        "eventName": "swipe",
+        "options": {
+          "threshold": 10,
+          "velocity": 0.65,
+          "direction": 8,
+          "pointers": 1
+        }
+      },
+      {
+        "id": "03B91F6A-F0CB-4878-B1B2-60AFA6AE0590",
+        "name": "Swipe Down",
+        "eventName": "swipe",
+        "options": {
+          "threshold": 10,
+          "velocity": 0.65,
+          "direction": 16,
+          "pointers": 1
+        }
+      }
+    ]
+  }
+]
