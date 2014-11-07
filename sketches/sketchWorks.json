@@ -1,0 +1,67 @@
+{
+  "pages": [
+    {
+      "id": "Widget_1415264798676",
+      "name": "NO NAME",
+      "childWidgets": [],
+      "attr": {
+        "ui-sketch-widget": "",
+        "is-playing": "sketchWidgetSetting.isPlaying",
+        "sketch-object": "sketchObject"
+      },
+      "styleManager": {
+        "stateMaps": {
+          "?": {
+            "*": {
+              "style": {},
+              "classList": ["pageHolder"]
+            }
+          }
+        },
+        "CLASS_NAME": "StyleManager"
+      },
+      "states": [
+        {
+          "id": "State_1415264798676",
+          "node": "Widget_1415264798676",
+          "name": "*",
+          "transitions": [
+            {
+              "id": "Transition_1415264814689",
+              "trigger": {
+                "triggerType": "Gesture",
+                "eventName": "tap",
+                "options": {},
+                "CLASS_NAME": "GestureTrigger"
+              },
+              "actionObj": null,
+              "CLASS_NAME": "Transition",
+              "state": "State_1415264798676",
+              "toState": "State_1415264813153"
+            }
+          ],
+          "CLASS_NAME": "State",
+          "context": ""
+        },
+        {
+          "id": "State_1415264813153",
+          "node": "Widget_1415264798676",
+          "name": "s1",
+          "transitions": [],
+          "CLASS_NAME": "State",
+          "context": ""
+        }
+      ],
+      "stateOptions": [
+        {
+          "name": "s1",
+          "$$hashKey": "05Z"
+        }
+      ],
+      "resizable": true,
+      "CLASS_NAME": "PageSketchWidget",
+      "state": "State_1415264798676",
+      "stateContext": ""
+    }
+  ]
+}
