@@ -20,6 +20,7 @@
     "log4js": "~0.6.13",
     "mongoose": "~3.8.8",
     "async": "~0.7.0",
+    "memorystream": "~0.2.0",
     "mime": "~1.2.11",
     "multiparty": "~3.2.4",
     "fluent-ffmpeg": "~1.7.1",

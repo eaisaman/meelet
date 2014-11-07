@@ -3,11 +3,11 @@
         <div class="stateButton icon-page-before icon-page-flag-before"
              ng-class="{'activeState':item.state.name != item.initialStateOption.name}"
              ng-click="toggleSelectState(item, $event)"
-             ng-if="item.stateOptions.length"
+             ng-if="item.states.length > 1"
                 >
         </div>
 
-        <div class="editState" ng-if="item.stateOptions.length && item.state.name != item.initialStateOption.name">
+        <div class="editState" ng-if="item.states.length && item.state.name != item.initialStateOption.name">
             {{item.state.name}}
         </div>
 
@@ -28,10 +28,11 @@
 <div class="pageContent ui-control-wrapper" ng-class="dockAlign">
     <div class="pageBar ui-control-bar">
         <div class="currentPage col-as-5 no-padding">
-            <div class="pageState fs-x-smaller" ng-if="sketchObject.pickedPage.stateOptions.length">
+            <div class="pageState fs-x-smaller" ng-if="sketchObject.pickedPage.states.length">
                 <div class="stateButton icon-page-before icon-page-flag-before"
                      ng-class="{'activeState':sketchObject.pickedPage.state.name != sketchObject.pickedPage.initialStateOption.name}"
                      ng-click="toggleSelectState(sketchObject.pickedPage, $event)"
+                     ng-if="sketchObject.pickedPage.states.length > 1"
                         >
                 </div>
 
@@ -75,9 +76,8 @@
         </ui-tree>
     </div>
     <div id="widgetStateDropdown" class="fs-x-smaller stackAndRotateSelect" ui-simple-dropdown
-         ui-simple-dropdown-opts="{dataField:'name', labelField:'name', zIndex:1000, gutter: 5, showTitle: false, displayUnsetOption: true}"
-         selection-list="stateTreeNodeItem.stateOptions" select-item="pickedStateOption"
-         unset-option-value="stateTreeNodeItem.initialStateOption"
-         on-option-select="toggleSelectState() && stateTreeNodeItem.setState(pickedStateOption)">
+         ui-simple-dropdown-opts="{dataField:'name', labelField:'name', zIndex:1000, gutter: 5, showTitle: false, displayUnsetOption: false}"
+         selection-list="stateTreeNodeItem.states" select-item="pickedState"
+         on-option-select="toggleSelectState() && stateTreeNodeItem.setState(pickedState)">
     </div>
 </div>

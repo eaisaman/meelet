@@ -86,6 +86,9 @@
 .icon-toolbar-save:before {
     content: "\e60c";
 }
+.icon-toolbar-load:before {
+    content: "\e60d";
+}
 
 .icon-toolbar-play-before:before {
     content: "\e600";
@@ -126,6 +129,9 @@
 .icon-toolbar-save-before:before {
     content: "\e60c";
 }
+.icon-toolbar-load-before:before {
+    content: "\e60d";
+}
 
 .icon-toolbar-play-after:after {
     content: "\e600";
@@ -165,4 +171,7 @@
 }
 .icon-toolbar-save-after:after {
     content: "\e60c";
+}
+.icon-toolbar-load-after:after {
+    content: "\e60d";
 }

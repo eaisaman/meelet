@@ -55,7 +55,6 @@ define(
                 }
             });
 
-
             $scope.$watch("sketchObject.pickedPage", function (to) {
                 if (to) {
                     $scope.sketchObject.pickedWidget = to;
@@ -63,6 +62,23 @@ define(
                         p.id != to.id && p.showHide(false);
                     });
                     to.showHide(true);
+                }
+            });
+
+            $scope.$watch("sketchObject.sketchWorks.pages", function (to, from) {
+                if (from !== to) {
+                    from && from.forEach(function (oldPageObj) {
+                        oldPageObj.remove();
+                    });
+
+                    if (to && to.length) {
+                        var $deviceHolder = $(".deviceHolder");
+                        to.forEach(function (pageObj) {
+                            uiService.createPage($deviceHolder, pageObj);
+                        });
+
+                        $scope.sketchObject.pickedPage = to[0];
+                    }
                 }
             });
 

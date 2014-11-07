@@ -6,7 +6,8 @@
         "fs-x-small-before",
         "icon-state-transition-before",
         "icon-state-transition-bling-before"
-      ]
+      ],
+      "style": {}
     },
     "list": [
       {
@@ -38,7 +39,8 @@
         "fs-x-small-before",
         "icon-state-transition-before",
         "icon-state-transition-static-effects-before"
-      ]
+      ],
+      "style": {}
     },
     "list": [
       {
@@ -90,7 +92,8 @@
         "fs-x-small-before",
         "icon-state-transition-before",
         "icon-state-transition-static-effects-out-before"
-      ]
+      ],
+      "style": {}
     },
     "list": [
       {
@@ -122,7 +125,8 @@
         "fs-x-small-before",
         "icon-state-transition-before",
         "icon-state-transition-perspective-before"
-      ]
+      ],
+      "style": {}
     },
     "list": [
       {
@@ -174,7 +178,8 @@
         "fs-x-small-before",
         "icon-state-transition-before",
         "icon-state-transition-rotate-before"
-      ]
+      ],
+      "style": {}
     },
     "list": [
       {
@@ -206,7 +211,8 @@
         "fs-x-small-before",
         "icon-state-transition-before",
         "icon-state-transition-slide-before"
-      ]
+      ],
+      "style": {}
     },
     "list": [
       {
@@ -258,7 +264,8 @@
         "fs-x-small-before",
         "icon-state-transition-before",
         "icon-state-transition-math-before"
-      ]
+      ],
+      "style": {}
     },
     "list": [
       {
@@ -295,7 +302,8 @@
         "fs-x-small-before",
         "icon-state-transition-before",
         "icon-state-transition-tin-before"
-      ]
+      ],
+      "style": {}
     },
     "list": [
       {
@@ -347,7 +355,8 @@
         "fs-x-small-before",
         "icon-state-transition-before",
         "icon-state-transition-bomb-before"
-      ]
+      ],
+      "style": {}
     },
     "list": [
       {

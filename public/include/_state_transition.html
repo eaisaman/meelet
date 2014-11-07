@@ -42,7 +42,8 @@
                                                checked>
                                         <label for="input-gesture-radio">Gesture</label>
 
-                                        <div class="triggerInput input-group" ng-init="transition.createTriggerSetter('Gesture', triggers)">
+                                        <div class="triggerInput input-group"
+                                             ng-init="transition.createTriggerSetter('Gesture', triggers)">
                                             <select ng-model="transition.gestureEventName" class="form-control">
                                                 <option value="{{t.id}}" ng-repeat="t in triggers['Gesture']">
                                                     {{t.name}}
@@ -65,20 +66,23 @@
                                     <div class="transition-action-bar fs-x-smaller fs-x-medium-before icon-state-transition-before icon-state-transition-animation-before">
                                         <span class="col-as-4 no-padding">Animation</span>
 
-                                        <div class="animationPane col-as-6">{{transition.actionObj && transition.actionObj.name || ''}}</div>
+                                        <div class="animationPane col-as-6">{{transition.actionObj &&
+                                            transition.actionObj.name || ''}}
+                                        </div>
                                     </div>
                                     <div class="transition-action-panel fs-x-smaller">
                                         <div class="accordianGroup" ng-repeat="animationGroup in animations"
                                              ng-click="toggleSelect($event.currentTarget, $event)">
                                             <div class="accordianTitle col-as-12 icon-state-transition-before icon-state-transition-angle-double-up-before">
                                                 <span class="fs-x-small-before icon-state-transition-before"
-                                                      ng-class="'icon-state-transition-' + animationGroup.icon + '-before'">{{animationGroup.group}}</span>
+                                                      ng-class="animationGroup.thumbnailStyle.classList"
+                                                      ng-style="animationGroup.thumbnailStyle.style">{{animationGroup.group}}</span>
                                             </div>
                                             <div class="accordianBody col-as-12 no-padding">
                                                 <div class="animationPane col-as-12 no-padding"
                                                      ng-repeat="anim in animationGroup.list"
-                                                     ng-click="transition.setAnimationAction(anim) && $event.stopPropagation()">
-                                                    {{anim}}
+                                                     ng-click="transition.setAnimationAction(anim.name) && $event.stopPropagation()">
+                                                    {{anim.name}}
                                                 </div>
                                             </div>
                                         </div>

@@ -30,49 +30,7 @@ define(
 
                                 scope.triggers = {};
 
-                                scope.animations = [
-                                    {
-                                        group: "Bling",
-                                        icon: "bling",
-                                        list: ["puffIn", "puffOut", "vanishIn", "vanishOut"]
-                                    },
-                                    {
-                                        group: "Static Effects",
-                                        icon: "static-effects",
-                                        list: ["openDownLeft", "openDownRight", "openUpLeft", "openUpRight", "openDownLeftRetourn", "openDownRightRetourn", "openUpLeftRetourn", "openUpRightRetourn"]
-                                    },
-                                    {
-                                        group: "Static Effects Out",
-                                        icon: "static-effects-out",
-                                        list: ["openDownLeftOut", "openDownRightOut", "openUpLeftOut", "openUpRightOut"]
-                                    },
-                                    {
-                                        group: "Perspective",
-                                        icon: "perspective",
-                                        list: ["perspectiveDown", "perspectiveUp", "perspectiveLeft", "perspectiveRight", "perspectiveDownRetourn", "perspectiveUpRetourn", "perspectiveLeftRetourn", "perspectiveRightRetourn"]
-                                    },
-                                    {
-                                        group: "Rotate",
-                                        icon: "rotate",
-                                        list: ["rotateDown", "rotateUp", "rotateLeft", "rotateRight"]
-                                    },
-                                    {
-                                        group: "Slide",
-                                        icon: "slide",
-                                        list: ["slideDown", "slideUp", "slideLeft", "slideRight", "slideDownRetourn", "slideUpRetourn", "slideLeftRetourn", "slideRightRetourn"]
-                                    },
-                                    {
-                                        group: "Math",
-                                        icon: "math",
-                                        list: ["swashOut", "swashIn", "foolishOut", "foolishIn", "holeOut"]
-                                    },
-                                    {
-                                        group: "Tin",
-                                        icon: "tin",
-                                        list: ["tinRightOut", "tinLeftOut", "tinUpOut", "tinDownOut", "tinRightIn", "tinLeftIn", "tinUpIn", "tinDownIn"]
-                                    },
-                                    {group: "Bomb", icon: "bomb", list: ["bombRightOut", "bombLeftOut"]}
-                                ];
+                                scope.animations = [];
                             },
                             post: function (scope, element, attrs) {
                                 scope.toggleTransitionDetails = function (selector, event) {
@@ -178,6 +136,15 @@ define(
                                     $http.get(options.triggerJson).then(function (result) {
                                         result.data.forEach(function (triggerGroup) {
                                             scope.triggers[triggerGroup.group] = triggerGroup.list;
+                                        });
+                                    });
+                                }
+
+                                if (options.animationJson) {
+                                    $http.get(options.animationJson).then(function (result) {
+                                        scope.animations = [];
+                                        result.data.forEach(function (animationGroup) {
+                                            scope.animations.push(animationGroup);
                                         });
                                     });
                                 }

@@ -14,7 +14,12 @@ define(
 
                 return {
                     restrict: "A",
-                    scope: angular.extend({dockAlign: "=", sketchObject: "=", treeNodeIdPrefix: "=", isPlaying: "="}, boundProperties),
+                    scope: angular.extend({
+                        dockAlign: "=",
+                        sketchObject: "=",
+                        treeNodeIdPrefix: "=",
+                        isPlaying: "="
+                    }, boundProperties),
                     replace: true,
                     templateUrl: "include/_toolbar.html",
                     compile: function (element, attrs) {
@@ -157,13 +162,13 @@ define(
                                 scope.saveSketch = function (event) {
                                     event && event.stopPropagation && event.stopPropagation();
 
-                                    appService.saveSketch();
+                                    return appService.saveSketch(scope.sketchObject.sketchWorks);
                                 }
 
                                 scope.loadSketch = function (event) {
                                     event && event.stopPropagation && event.stopPropagation();
 
-                                    appService.loadSketch();
+                                    return appService.loadSketch(scope.sketchObject.sketchWorks);
                                 }
                             }
                         }
