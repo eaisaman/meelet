@@ -1,0 +1,23 @@
+<div class="verticalRulerContainer">
+    <div class="verticalMarker"
+         ng-style="{'top':'{{Math.floor(deviceHeight * i / markerCount * constants.precision) / constants.precision}}px', 'height':'{{Math.floor(deviceHeight / markerCount * constants.percentPrecision) / constants.percentPrecision}}px'}"
+         ng-class="{'nearByMarker':i+1==nearByMarkerIndex}"
+         ng-repeat="i in [0,markerCount]|makeRange">
+        <span>{{i+1}}/{{markerCount}}</span>
+    </div>
+    <span class="verticalDividers">
+        <span class="verticalDivider"
+              ng-style="{'height':'{{Math.floor(100 / markerCount * constants.percentPrecision) / constants.percentPrecision}}%', 'right':'-{{deviceWidth}}', 'width':'{{deviceWidth}}'}"
+              ng-class="{'nearByDivider':i+1==nearByMarkerIndex}"
+              ng-repeat="i in [0,markerCount-1]|makeRange"></span>
+        <div class="fs-x-small verticalLocator"
+             ng-style='widgetVerticalLocation(pickedWidget)'
+             ng-show="pickedWidget.isElement && !pickedWidget.isTemporary">
+            <div id="topResizeControl" class="icon-vertical-ruler-before icon-vertical-ruler-arrow-up-before"></div>
+            <div id="verticalMoveControl" class="icon-vertical-ruler-before"
+                 ng-class="{'icon-vertical-ruler-move-align-center-before':alignCenter, 'icon-vertical-ruler-move-before':!alignCenter}"></div>
+            <div id="bottomResizeControl"
+                 class="icon-vertical-ruler-before icon-vertical-ruler-arrow-down-before"></div>
+        </div>
+</span>
+</div>

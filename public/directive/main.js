@@ -7,6 +7,8 @@ require.config(
             "ng.ui.hammer-gestures": DIRECTIVE_LIB_PATH + "ng.ui.hammer-gestures",
             "ng.ui.draggable": DIRECTIVE_LIB_PATH + "ng.ui.draggable",
             "ng.ui.sketch-widget": DIRECTIVE_LIB_PATH + "ng.ui.sketch-widget",
+            "ng.ui.horizontal-ruler": DIRECTIVE_LIB_PATH + "ng.ui.horizontal-ruler",
+            "ng.ui.vertical-ruler": DIRECTIVE_LIB_PATH + "ng.ui.vertical-ruler",
             "ng.ui.color-picker": DIRECTIVE_LIB_PATH + "ng.ui.color-picker",
             "ng.ui.gradient-editor": DIRECTIVE_LIB_PATH + "ng.ui.gradient-editor",
             "ng.ui.shape": DIRECTIVE_LIB_PATH + "ng.ui.shape",
@@ -27,6 +29,8 @@ define([
         "ng.ui.hammer-gestures",
         "ng.ui.draggable",
         "ng.ui.sketch-widget",
+        "ng.ui.horizontal-ruler",
+        "ng.ui.vertical-ruler",
         "ng.ui.color-picker",
         "ng.ui.gradient-editor",
         "ng.ui.shape",
@@ -56,35 +60,41 @@ define([
             //Sketch widget directive
             directiveConfigs[2](appModule, extension);
 
+            //Horizontal ruler directive
+            directiveConfigs[3](appModule, extension);
+
+            //Vertical ruler directive
+            directiveConfigs[4](appModule, extension);
+
             //Color Picker
-            directiveConfigs[3](appModule, extension, {
+            directiveConfigs[5](appModule, extension, {
                 colorJson: "directive/color-picker.json"
             });
 
             //Gradient Editor
-            directiveConfigs[4](appModule, extension, {
+            directiveConfigs[6](appModule, extension, {
                 colorJson: "directive/gradient-editor-color.json"
             });
 
             //Shape
-            directiveConfigs[5](appModule, extension, {
+            directiveConfigs[7](appModule, extension, {
                 shapeJson: "directive/shape.json"
             });
 
             //Page
-            directiveConfigs[6](appModule, extension);
-
-            //Dock
-            directiveConfigs[7](appModule, extension);
-
-            //Toolbar
             directiveConfigs[8](appModule, extension);
 
-            //Simple Dropdown
+            //Dock
             directiveConfigs[9](appModule, extension);
 
+            //Toolbar
+            directiveConfigs[10](appModule, extension);
+
+            //Simple Dropdown
+            directiveConfigs[11](appModule, extension);
+
             //State transition
-            directiveConfigs[10](appModule, extension, {
+            directiveConfigs[12](appModule, extension, {
                 triggerJson: "directive/trigger.json",
                 animationJson: "directive/animation.json"
             });

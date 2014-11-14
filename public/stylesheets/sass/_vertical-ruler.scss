@@ -1,0 +1,122 @@
+$rulerColor: rgb(186, 186, 186);
+$rulerActiveLineColor: rgb(221, 125, 0);
+
+@mixin vertical-ruler($rulerId) {
+    ##{$rulerId} {
+        .verticalRulerContainer {
+            position: relative;
+            float: left;
+            width: 100%;
+            height: 100%;
+            color: $rulerColor;
+            background: #000;
+            overflow: visible;
+
+            .verticalMarker {
+                position: absolute;
+                width: 100%;
+
+                span {
+                    display: none;
+                }
+
+                &:not(:last-of-type) {
+                    border-bottom: 1px solid;
+
+                    span {
+                        display: block;
+                        position: absolute;
+                        bottom: -2.2em;
+                        right: -0.75em;
+                        width: 3em;
+                        height: 1.5em;
+                        line-height: 1.5;
+                        text-align: center;
+
+                        @include transform(rotateZ(-90deg));
+                    }
+                }
+
+                &.nearByMarker {
+                    color: $rulerActiveLineColor;
+                }
+            }
+
+            .verticalDividers {
+                position: absolute;
+                right: 0;
+                width: 0;
+                height: 100%;
+                overflow: visible;
+
+                .verticalDivider {
+                    position: relative;
+                    float: right;
+                    pointer-events: none;
+
+                    &:after {
+                        content: "";
+                        position: absolute;
+                        left: 0;
+                        bottom: 0;
+                        height: 0;
+                        width: 100%;
+                        border-bottom: 1px solid $rulerActiveLineColor;
+                    }
+                    &.nearByDivider:after {
+                        @include box-shadow(0 0 10px #555);
+                    }
+                }
+
+                .verticalLocator {
+                    position: absolute;
+                    width: 1.5em;
+                    right: 0.5em;
+
+                    div {
+                        position: relative;
+                        float: left;
+                        width: 100%;
+                        height: 33.33%;
+
+                        &:active {
+                            color: $rulerActiveLineColor;
+                        }
+
+                        &:before {
+                            position: absolute;
+                            left: 0;
+                            top: calc(50% - 0.75em);
+                            width: 100%;
+                            height: 1.5em;
+                            line-height: 1.5;
+                            text-align: center;
+                        }
+
+                        &:first-child:before {
+                            position: absolute;
+                            left: 0;
+                            top: 0;
+                            width: 100%;
+                            height: 1.5em;
+                            line-height: 1.5;
+                            text-align: center;
+                            border-top: 1px solid;
+                        }
+
+                        &:last-child:before {
+                            position: absolute;
+                            left: 0;
+                            top: calc(100% - 1.5em);
+                            width: 100%;
+                            height: 1.5em;
+                            line-height: 1.5;
+                            text-align: center;
+                            border-bottom: 1px solid;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

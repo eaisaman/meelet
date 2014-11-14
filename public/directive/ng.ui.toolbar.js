@@ -18,7 +18,8 @@ define(
                         dockAlign: "=",
                         sketchObject: "=",
                         treeNodeIdPrefix: "=",
-                        isPlaying: "="
+                        isPlaying: "=",
+                        showRuler: "="
                     }, boundProperties),
                     replace: true,
                     templateUrl: "include/_toolbar.html",
@@ -151,6 +152,12 @@ define(
                                     if (widgetObj && widgetObj.isElement) {
                                         widgetObj.disassemble();
                                     }
+                                }
+
+                                scope.toggleRuler = function (event) {
+                                    event && event.stopPropagation && event.stopPropagation();
+
+                                    scope.showRuler = !scope.showRuler;
                                 }
 
                                 scope.togglePlayWidget = function (event) {

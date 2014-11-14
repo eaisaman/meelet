@@ -9701,6 +9701,216 @@
   border-style: none none solid solid;
 }
 
+#horizontalRuler .horizontalRulerContainer {
+  position: relative;
+  float: left;
+  width: 100%;
+  height: 100%;
+  color: #bababa;
+  background: #000;
+  overflow: visible;
+}
+#horizontalRuler .horizontalRulerContainer .horizontalMarker {
+  position: absolute;
+  height: 100%;
+}
+#horizontalRuler .horizontalRulerContainer .horizontalMarker span {
+  display: none;
+}
+#horizontalRuler .horizontalRulerContainer .horizontalMarker:not(:last-of-type) {
+  border-right: 1px solid;
+}
+#horizontalRuler .horizontalRulerContainer .horizontalMarker:not(:last-of-type) span {
+  display: block;
+  position: absolute;
+  right: -3em;
+  bottom: 0;
+  width: 3em;
+  height: 1.5em;
+  line-height: 1.5;
+  text-align: center;
+}
+#horizontalRuler .horizontalRulerContainer .horizontalMarker.nearByMarker {
+  color: #dd7d00;
+}
+#horizontalRuler .horizontalRulerContainer .horizontalDividers {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  overflow: visible;
+}
+#horizontalRuler .horizontalRulerContainer .horizontalDividers .horizontalDivider {
+  position: relative;
+  float: left;
+  bottom: 0;
+  pointer-events: none;
+}
+#horizontalRuler .horizontalRulerContainer .horizontalDividers .horizontalDivider:after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 1px;
+  height: 100%;
+  border-right: 1px solid #dd7d00;
+}
+#horizontalRuler .horizontalRulerContainer .horizontalDividers .horizontalDivider.nearByDivider:after {
+  -moz-box-shadow: 0 0 10px #555;
+  -webkit-box-shadow: 0 0 10px #555;
+  box-shadow: 0 0 10px #555;
+}
+#horizontalRuler .horizontalRulerContainer .horizontalDividers .horizontalLocator {
+  position: absolute;
+  height: 1.5em;
+  bottom: 0.5em;
+}
+#horizontalRuler .horizontalRulerContainer .horizontalDividers .horizontalLocator div {
+  position: relative;
+  float: left;
+  width: 33.33%;
+  height: 100%;
+}
+#horizontalRuler .horizontalRulerContainer .horizontalDividers .horizontalLocator div:active {
+  color: #dd7d00;
+}
+#horizontalRuler .horizontalRulerContainer .horizontalDividers .horizontalLocator div:before {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  line-height: 1.5;
+  text-align: center;
+}
+#horizontalRuler .horizontalRulerContainer .horizontalDividers .horizontalLocator div:first-child:before {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1.5em;
+  height: 100%;
+  line-height: 1.5;
+  text-align: center;
+  border-left: 1px solid;
+}
+#horizontalRuler .horizontalRulerContainer .horizontalDividers .horizontalLocator div:last-child:before {
+  position: absolute;
+  left: calc(100% - 1.5em);
+  top: 0;
+  width: 1.5em;
+  height: 100%;
+  line-height: 1.5;
+  text-align: center;
+  border-right: 1px solid;
+}
+
+#verticalRuler .verticalRulerContainer {
+  position: relative;
+  float: left;
+  width: 100%;
+  height: 100%;
+  color: #bababa;
+  background: #000;
+  overflow: visible;
+}
+#verticalRuler .verticalRulerContainer .verticalMarker {
+  position: absolute;
+  width: 100%;
+}
+#verticalRuler .verticalRulerContainer .verticalMarker span {
+  display: none;
+}
+#verticalRuler .verticalRulerContainer .verticalMarker:not(:last-of-type) {
+  border-bottom: 1px solid;
+}
+#verticalRuler .verticalRulerContainer .verticalMarker:not(:last-of-type) span {
+  display: block;
+  position: absolute;
+  bottom: -2.2em;
+  right: -0.75em;
+  width: 3em;
+  height: 1.5em;
+  line-height: 1.5;
+  text-align: center;
+  -moz-transform: rotateZ(-90deg);
+  -ms-transform: rotateZ(-90deg);
+  -webkit-transform: rotateZ(-90deg);
+  transform: rotateZ(-90deg);
+}
+#verticalRuler .verticalRulerContainer .verticalMarker.nearByMarker {
+  color: #dd7d00;
+}
+#verticalRuler .verticalRulerContainer .verticalDividers {
+  position: absolute;
+  right: 0;
+  width: 0;
+  height: 100%;
+  overflow: visible;
+}
+#verticalRuler .verticalRulerContainer .verticalDividers .verticalDivider {
+  position: relative;
+  float: right;
+  pointer-events: none;
+}
+#verticalRuler .verticalRulerContainer .verticalDividers .verticalDivider:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 0;
+  width: 100%;
+  border-bottom: 1px solid #dd7d00;
+}
+#verticalRuler .verticalRulerContainer .verticalDividers .verticalDivider.nearByDivider:after {
+  -moz-box-shadow: 0 0 10px #555;
+  -webkit-box-shadow: 0 0 10px #555;
+  box-shadow: 0 0 10px #555;
+}
+#verticalRuler .verticalRulerContainer .verticalDividers .verticalLocator {
+  position: absolute;
+  width: 1.5em;
+  right: 0.5em;
+}
+#verticalRuler .verticalRulerContainer .verticalDividers .verticalLocator div {
+  position: relative;
+  float: left;
+  width: 100%;
+  height: 33.33%;
+}
+#verticalRuler .verticalRulerContainer .verticalDividers .verticalLocator div:active {
+  color: #dd7d00;
+}
+#verticalRuler .verticalRulerContainer .verticalDividers .verticalLocator div:before {
+  position: absolute;
+  left: 0;
+  top: calc(50% - 0.75em);
+  width: 100%;
+  height: 1.5em;
+  line-height: 1.5;
+  text-align: center;
+}
+#verticalRuler .verticalRulerContainer .verticalDividers .verticalLocator div:first-child:before {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 1.5em;
+  line-height: 1.5;
+  text-align: center;
+  border-top: 1px solid;
+}
+#verticalRuler .verticalRulerContainer .verticalDividers .verticalLocator div:last-child:before {
+  position: absolute;
+  left: 0;
+  top: calc(100% - 1.5em);
+  width: 100%;
+  height: 1.5em;
+  line-height: 1.5;
+  text-align: center;
+  border-bottom: 1px solid;
+}
+
 #sketchControls {
   position: absolute;
   width: 8em;
@@ -10423,6 +10633,18 @@
   -webkit-transform: rotateX(-90deg);
   transform: rotateX(-90deg);
 }
+#state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > .transition-action-wrapper > .transition-action-panel > .animationOptions {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+#state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > .transition-action-wrapper > .transition-action-panel > .animationOptions > .input-group {
+  width: 100%;
+}
+#state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > .transition-action-wrapper > .transition-action-panel > .animationOptions > .input-group .animationDurationInput::-webkit-inner-spin-button, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > .transition-action-wrapper > .transition-action-panel > .animationOptions > .input-group .animationDurationInput::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > .transition-action-wrapper > .transition-action-panel > .accordianGroup {
   position: relative;
   width: 100%;
@@ -10799,26 +11021,33 @@
   -webkit-flex: 1;
   flex: 1;
 }
-#sketchContainer #sketchHolder .deviceBackground .deviceScreenBackground .deviceHolder {
+#sketchContainer #sketchHolder .deviceBackground .deviceScreenBackground .deviceScreen {
+  position: relative;
+  float: left;
+}
+#sketchContainer #sketchHolder .deviceBackground .deviceScreenBackground .deviceScreen .deviceHolder {
   position: relative;
   float: left;
   overflow: hidden;
 }
-#sketchContainer #sketchHolder .deviceBackground .deviceScreenBackground .deviceHolder .pageHolder {
+#sketchContainer #sketchHolder .deviceBackground .deviceScreenBackground .deviceScreen .deviceHolder .pageHolder {
   position: absolute;
   width: 100%;
   height: 100%;
   overflow: hidden;
   color: #000;
 }
-#sketchContainer #sketchHolder .deviceBackground .deviceScreenBackground .deviceHolder .pageHolder .sketchWidget {
+#sketchContainer #sketchHolder .deviceBackground .deviceScreenBackground .deviceScreen .deviceHolder .pageHolder .sketchWidget {
   position: absolute;
 }
-#sketchContainer #sketchHolder .deviceBackground .deviceScreenBackground .deviceHolder .pageHolder .sketchWidget.widgetHover {
+#sketchContainer #sketchHolder .deviceBackground .deviceScreenBackground .deviceScreen .deviceHolder .pageHolder .sketchWidget.widgetHover {
   -moz-box-shadow: 3px 3px 5px 6px rgba(0, 0, 0, 0.4);
   -webkit-box-shadow: 3px 3px 5px 6px rgba(0, 0, 0, 0.4);
   box-shadow: 3px 3px 5px 6px rgba(0, 0, 0, 0.4);
 }
-#sketchContainer #sketchHolder .deviceBackground .deviceScreenBackground .deviceHolder .pageHolder .resize {
+#sketchContainer #sketchHolder .deviceBackground .deviceScreenBackground .deviceScreen .deviceHolder .pageHolder .resize {
+  position: absolute;
+}
+#sketchContainer #sketchHolder .deviceBackground .deviceScreenBackground .deviceScreen .ruler {
   position: absolute;
 }

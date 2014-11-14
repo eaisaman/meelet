@@ -28,7 +28,7 @@ define(
 
             appModule.directive(
                 DIRECTIVE,
-                ['$parse', '$log', '$timeout', '$q', 'uiUtilService', function ($parse, $log, $timeout, $q, uiUtilService) {
+                ['$parse', '$log', '$timeout', '$q', 'angularConstants', 'uiUtilService', function ($parse, $log, $timeout, $q, angularConstants, uiUtilService) {
                     return function (scope, element, attr) {
                         var mc, dragHandler;
 
@@ -82,15 +82,15 @@ define(
 
                                                         var m = ($u.css("top") || "").match(/([-\d\.]+)px$/);
                                                         if (m && m.length == 2)
-                                                            ftTop = Math.floor(parseFloat(m[1]) * 100) / 100;
+                                                            ftTop = Math.floor(parseFloat(m[1]) * angularConstants.precision) / angularConstants.precision;
                                                         else
-                                                            ftTop = $u.offset().top - $u.parent().offset().top;
+                                                            ftTop = Math.floor(($u.offset().top - $u.parent().offset().top) * angularConstants.precision) / angularConstants.precision;
                                                         top = ftTop + moveY;
 
                                                         if (widget && scope.scale) {
                                                             ftTop = $u.offset().top - $u.parent().offset().top;
                                                             top = ftTop + moveY;
-                                                            maxHeight *= scope.scale ;
+                                                            maxHeight *= scope.scale;
                                                             height *= scope.scale;
                                                         }
 
@@ -100,9 +100,9 @@ define(
                                                             top = maxHeight - height / 2;
 
                                                         if (widget && scope.scale)
-                                                            top = Math.floor(top / scope.scale * 100) / 100;
+                                                            top = Math.floor(top / scope.scale * angularConstants.precision) / angularConstants.precision;
                                                         else
-                                                            top = Math.floor(top * 100) / 100;
+                                                            top = Math.floor(top * angularConstants.precision) / angularConstants.precision;
 
                                                         touchY += moveY;
                                                         event.moveY = top - ftTop;
@@ -128,9 +128,9 @@ define(
 
                                                         var m = ($u.css("left") || "").match(/([-\d\.]+)px$/);
                                                         if (m && m.length == 2)
-                                                            ftLeft = Math.floor(parseFloat(m[1]) * 100) / 100;
+                                                            ftLeft = Math.floor(parseFloat(m[1]) * angularConstants.precision) / angularConstants.precision;
                                                         else
-                                                            ftLeft = $u.offset().left - $u.parent().offset().left;
+                                                            ftLeft = Math.floor(($u.offset().left - $u.parent().offset().left) * angularConstants.precision) / angularConstants.precision;
                                                         left = ftLeft + moveX;
 
                                                         if (widget && scope.scale) {
@@ -146,9 +146,9 @@ define(
                                                             left = maxWidth - width / 2;
 
                                                         if (widget && scope.scale)
-                                                            left = Math.floor(left / scope.scale * 100) / 100;
+                                                            left = Math.floor(left / scope.scale * angularConstants.precision) / angularConstants.precision;
                                                         else
-                                                            left = Math.floor(left * 100) / 100;
+                                                            left = Math.floor(left * angularConstants.precision) / angularConstants.precision;
 
                                                         touchX += moveX;
                                                         event.moveX = left - ftLeft;

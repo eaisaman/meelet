@@ -1,0 +1,123 @@
+$rulerColor: rgb(186, 186, 186);
+$rulerActiveLineColor: rgb(221, 125, 0);
+
+@mixin horizontal-ruler($rulerId) {
+    ##{$rulerId} {
+        .horizontalRulerContainer {
+            position: relative;
+            float: left;
+            width: 100%;
+            height: 100%;
+            color: $rulerColor;
+            background: #000;
+            overflow: visible;
+
+            .horizontalMarker {
+                position: absolute;
+                height: 100%;
+
+                span {
+                    display: none;
+                }
+
+                &:not(:last-of-type) {
+                    border-right: 1px solid;
+
+                    span {
+                        display: block;
+                        position: absolute;
+                        right: -3em;
+                        bottom: 0;
+                        width: 3em;
+                        height: 1.5em;
+                        line-height: 1.5;
+                        text-align: center;
+                    }
+                }
+
+                &.nearByMarker {
+                    color: $rulerActiveLineColor;
+                }
+            }
+
+            .horizontalDividers {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 0;
+                overflow: visible;
+
+                .horizontalDivider {
+                    position: relative;
+                    float: left;
+                    bottom: 0;
+                    pointer-events: none;
+
+                    &:after {
+                        content: "";
+                        position: absolute;
+                        right: 0;
+                        top: 0;
+                        width: 1px;
+                        height: 100%;
+                        border-right: 1px solid $rulerActiveLineColor;
+                    }
+
+                    &.nearByDivider:after {
+                        @include box-shadow(0 0 10px #555);
+                    }
+                }
+
+                .horizontalLocator {
+                    position: absolute;
+                    height: 1.5em;
+                    bottom: 0.5em;
+
+                    div {
+                        position: relative;
+                        float: left;
+                        width: 33.33%;
+                        height: 100%;
+
+                        &:active {
+                            color: $rulerActiveLineColor;
+                        }
+
+                        &:before {
+                            position: absolute;
+                            left: 0;
+                            top: 0;
+                            width: 100%;
+                            height: 100%;
+                            line-height: 1.5;
+                            text-align: center;
+                        }
+
+                        &:first-child:before {
+                            position: absolute;
+                            left: 0;
+                            top: 0;
+                            width: 1.5em;
+                            height: 100%;
+                            line-height: 1.5;
+                            text-align: center;
+                            border-left: 1px solid;
+                        }
+
+                        &:last-child:before {
+                            position: absolute;
+                            left: calc(100% - 1.5em);
+                            top: 0;
+                            width: 1.5em;
+                            height: 100%;
+                            line-height: 1.5;
+                            text-align: center;
+                            border-right: 1px solid;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

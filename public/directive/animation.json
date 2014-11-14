@@ -12,21 +12,25 @@
     "list": [
       {
         "name": "puffIn",
+        "options": {},
         "mixin": "puffInKeyframes",
         "args": []
       },
       {
         "name": "puffOut",
+        "options": {},
         "mixin": "puffOutKeyframes",
         "args": []
       },
       {
         "name": "vanishIn",
+        "options": {},
         "mixin": "vanishInKeyframes",
         "args": []
       },
       {
         "name": "vanishOut",
+        "options": {},
         "mixin": "vanishOutKeyframes",
         "args": []
       }
@@ -45,41 +49,49 @@
     "list": [
       {
         "name": "openDownLeft",
+        "options": {},
         "mixin": "openDownLeftKeyframes",
         "args": []
       },
       {
         "name": "openDownRight",
+        "options": {},
         "mixin": "openDownRightKeyframes",
         "args": []
       },
       {
         "name": "openUpLeft",
+        "options": {},
         "mixin": "openUpLeftKeyframes",
         "args": []
       },
       {
         "name": "openUpRight",
+        "options": {},
         "mixin": "openUpRightKeyframes",
         "args": []
       },
       {
         "name": "openDownLeftRetourn",
+        "options": {},
         "mixin": "openDownLeftRetournKeyframes",
         "args": []
       },
       {
         "name": "openDownRightRetourn",
+        "options": {},
         "mixin": "openDownRightRetournKeyframes",
         "args": []
       },
       {
         "name": "openUpLeftRetourn",
+        "options": {},
         "mixin": "openUpLeftRetournKeyframes",
         "args": []
       },
       {
         "name": "openUpRightRetourn",
+        "options": {},
         "mixin": "openUpRightRetournKeyframes",
         "args": []
       }
@@ -98,21 +110,25 @@
     "list": [
       {
         "name": "openDownLeftOut",
+        "options": {},
         "mixin": "openDownLeftOutKeyframes",
         "args": []
       },
       {
         "name": "openDownRightOut",
+        "options": {},
         "mixin": "openDownRightOutKeyframes",
         "args": []
       },
       {
         "name": "openUpLeftOut",
+        "options": {},
         "mixin": "openUpLeftOutKeyframes",
         "args": []
       },
       {
         "name": "openUpRightOut",
+        "options": {},
         "mixin": "openUpRightOutKeyframes",
         "args": []
       }
@@ -131,41 +147,49 @@
     "list": [
       {
         "name": "perspectiveDown",
+        "options": {},
         "mixin": "perspectiveDownKeyframes",
         "args": []
       },
       {
         "name": "perspectiveUp",
+        "options": {},
         "mixin": "perspectiveUpKeyframes",
         "args": []
       },
       {
         "name": "perspectiveLeft",
+        "options": {},
         "mixin": "perspectiveLeftKeyframes",
         "args": []
       },
       {
         "name": "perspectiveRight",
+        "options": {},
         "mixin": "perspectiveRightKeyframes",
         "args": []
       },
       {
         "name": "perspectiveDownRetourn",
+        "options": {},
         "mixin": "perspectiveDownRetournKeyframes",
         "args": []
       },
       {
         "name": "perspectiveUpRetourn",
+        "options": {},
         "mixin": "perspectiveUpRetournKeyframes",
         "args": []
       },
       {
         "name": "perspectiveLeftRetourn",
+        "options": {},
         "mixin": "perspectiveLeftRetournKeyframes",
         "args": []
       },
       {
         "name": "perspectiveRightRetourn",
+        "options": {},
         "mixin": "perspectiveRightRetournKeyframes",
         "args": []
       }
@@ -184,21 +208,25 @@
     "list": [
       {
         "name": "rotateDown",
+        "options": {},
         "mixin": "rotateDownKeyframes",
         "args": []
       },
       {
         "name": "rotateUp",
+        "options": {},
         "mixin": "rotateUpKeyframes",
         "args": []
       },
       {
         "name": "rotateLeft",
+        "options": {},
         "mixin": "rotateLeftKeyframes",
         "args": []
       },
       {
         "name": "rotateRight",
+        "options": {},
         "mixin": "rotateRightKeyframes",
         "args": []
       }
@@ -217,41 +245,49 @@
     "list": [
       {
         "name": "slideDown",
+        "options": {},
         "mixin": "slideDownKeyframes",
         "args": []
       },
       {
         "name": "slideUp",
+        "options": {},
         "mixin": "slideUpKeyframes",
         "args": []
       },
       {
         "name": "slideLeft",
+        "options": {},
         "mixin": "slideLeftKeyframes",
         "args": []
       },
       {
         "name": "slideRight",
+        "options": {},
         "mixin": "slideRightKeyframes",
         "args": []
       },
       {
         "name": "slideDownRetourn",
+        "options": {},
         "mixin": "slideDownRetournKeyframes",
         "args": []
       },
       {
         "name": "slideUpRetourn",
+        "options": {},
         "mixin": "slideUpRetournKeyframes",
         "args": []
       },
       {
         "name": "slideLeftRetourn",
+        "options": {},
         "mixin": "slideLeftRetournKeyframes",
         "args": []
       },
       {
         "name": "slideRightRetourn",
+        "options": {},
         "mixin": "slideRightRetournKeyframes",
         "args": []
       }
@@ -270,26 +306,31 @@
     "list": [
       {
         "name": "swashOut",
+        "options": {},
         "mixin": "swashOutKeyframes",
         "args": []
       },
       {
         "name": "swashIn",
+        "options": {},
         "mixin": "swashInKeyframes",
         "args": []
       },
       {
         "name": "foolishOut",
+        "options": {},
         "mixin": "foolishOutKeyframes",
         "args": []
       },
       {
         "name": "foolishIn",
+        "options": {},
         "mixin": "foolishInKeyframes",
         "args": []
       },
       {
         "name": "holeOut",
+        "options": {},
         "mixin": "holeOutKeyframes",
         "args": []
       }
@@ -308,41 +349,49 @@
     "list": [
       {
         "name": "tinRightOut",
+        "options": {},
         "mixin": "tinRightOutKeyframes",
         "args": []
       },
       {
         "name": "tinLeftOut",
+        "options": {},
         "mixin": "tinLeftOutKeyframes",
         "args": []
       },
       {
         "name": "tinUpOut",
+        "options": {},
         "mixin": "tinUpOutKeyframes",
         "args": []
       },
       {
         "name": "tinDownOut",
+        "options": {},
         "mixin": "tinDownOutKeyframes",
         "args": []
       },
       {
         "name": "tinRightIn",
+        "options": {},
         "mixin": "tinRightInKeyframes",
         "args": []
       },
       {
         "name": "tinLeftIn",
+        "options": {},
         "mixin": "tinLeftInKeyframes",
         "args": []
       },
       {
         "name": "tinUpIn",
+        "options": {},
         "mixin": "tinUpInKeyframes",
         "args": []
       },
       {
         "name": "tinDownIn",
+        "options": {},
         "mixin": "tinDownInKeyframes",
         "args": []
       }
@@ -361,11 +410,13 @@
     "list": [
       {
         "name": "bombRightOut",
+        "options": {},
         "mixin": "bombRightOutKeyframes",
         "args": []
       },
       {
         "name": "bombLeftOut",
+        "options": {},
         "mixin": "bombLeftOutKeyframes",
         "args": []
       }

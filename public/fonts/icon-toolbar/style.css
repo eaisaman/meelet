@@ -47,131 +47,140 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-toolbar-play:before {
+.icon-toolbar-ruler:before {
     content: "\e600";
+}
+.icon-toolbar-play:before {
+    content: "\e601";
 }
 .icon-toolbar-pause:before {
-    content: "\e601";
+    content: "\e602";
 }
 .icon-toolbar-stop:before {
-    content: "\e602";
+    content: "\e603";
 }
 .icon-toolbar-align-left:before {
-    content: "\e603";
+    content: "\e604";
 }
 .icon-toolbar-align-center:before {
-    content: "\e604";
+    content: "\e605";
 }
 .icon-toolbar-align-right:before {
-    content: "\e605";
+    content: "\e606";
 }
 .icon-toolbar-expand:before {
-    content: "\e606";
+    content: "\e607";
 }
 .icon-toolbar-collapse:before {
-    content: "\e607";
+    content: "\e608";
 }
 .icon-toolbar-locate:before {
-    content: "\e608";
+    content: "\e609";
 }
 .icon-toolbar-duplicate:before {
-    content: "\e609";
+    content: "\e60a";
 }
 .icon-toolbar-group:before {
-    content: "\e60a";
+    content: "\e60b";
 }
 .icon-toolbar-ungroup:before {
-    content: "\e60b";
+    content: "\e60c";
 }
 .icon-toolbar-save:before {
-    content: "\e60c";
+    content: "\e60d";
 }
 .icon-toolbar-load:before {
-    content: "\e60d";
+    content: "\e60e";
 }
 
-.icon-toolbar-play-before:before {
+.icon-toolbar-ruler-before:before {
     content: "\e600";
+}
+.icon-toolbar-play-before:before {
+    content: "\e601";
 }
 .icon-toolbar-pause-before:before {
-    content: "\e601";
+    content: "\e602";
 }
 .icon-toolbar-stop-before:before {
-    content: "\e602";
+    content: "\e603";
 }
 .icon-toolbar-align-left-before:before {
-    content: "\e603";
+    content: "\e604";
 }
 .icon-toolbar-align-center-before:before {
-    content: "\e604";
+    content: "\e605";
 }
 .icon-toolbar-align-right-before:before {
-    content: "\e605";
+    content: "\e606";
 }
 .icon-toolbar-expand-before:before {
-    content: "\e606";
+    content: "\e607";
 }
 .icon-toolbar-collapse-before:before {
-    content: "\e607";
+    content: "\e608";
 }
 .icon-toolbar-locate-before:before {
-    content: "\e608";
+    content: "\e609";
 }
 .icon-toolbar-duplicate-before:before {
-    content: "\e609";
+    content: "\e60a";
 }
 .icon-toolbar-group-before:before {
-    content: "\e60a";
+    content: "\e60b";
 }
 .icon-toolbar-ungroup-before:before {
-    content: "\e60b";
+    content: "\e60c";
 }
 .icon-toolbar-save-before:before {
-    content: "\e60c";
+    content: "\e60d";
 }
 .icon-toolbar-load-before:before {
-    content: "\e60d";
+    content: "\e60e";
 }
 
-.icon-toolbar-play-after:after {
+.icon-toolbar-ruler-after:after {
     content: "\e600";
 }
-.icon-toolbar-pause-after:after {
+.icon-toolbar-play-after:after {
     content: "\e601";
 }
-.icon-toolbar-stop-after:after {
+.icon-toolbar-pause-after:after {
     content: "\e602";
 }
-.icon-toolbar-align-left-after:after {
+.icon-toolbar-stop-after:after {
     content: "\e603";
 }
-.icon-toolbar-align-center-after:after {
+.icon-toolbar-align-left-after:after {
     content: "\e604";
 }
-.icon-toolbar-align-right-after:after {
+.icon-toolbar-align-center-after:after {
     content: "\e605";
 }
-.icon-toolbar-expand-after:after {
+.icon-toolbar-align-right-after:after {
     content: "\e606";
 }
-.icon-toolbar-collapse-after:after {
+.icon-toolbar-expand-after:after {
     content: "\e607";
 }
-.icon-toolbar-locate-after:after {
+.icon-toolbar-collapse-after:after {
     content: "\e608";
 }
-.icon-toolbar-duplicate-after:after {
+.icon-toolbar-locate-after:after {
     content: "\e609";
 }
-.icon-toolbar-group-after:after {
+.icon-toolbar-duplicate-after:after {
     content: "\e60a";
 }
-.icon-toolbar-ungroup-after:after {
+.icon-toolbar-group-after:after {
     content: "\e60b";
 }
-.icon-toolbar-save-after:after {
+.icon-toolbar-ungroup-after:after {
     content: "\e60c";
 }
-.icon-toolbar-load-after:after {
+.icon-toolbar-save-after:after {
     content: "\e60d";
+}
+.icon-toolbar-load-after:after {
+    content: "\e60e";
 }

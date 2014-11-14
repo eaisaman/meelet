@@ -67,10 +67,35 @@
                                         <span class="col-as-4 no-padding">Animation</span>
 
                                         <div class="animationPane col-as-6">{{transition.actionObj &&
-                                            transition.actionObj.name || ''}}
+                                            transition.actionObj.animation && transition.actionObj.animation.name ||
+                                            ''}}
                                         </div>
                                     </div>
                                     <div class="transition-action-panel fs-x-smaller">
+                                        <div class="animationOptions" ng-if="transition.actionObj.animation" ng-click="$event.stopPropagation()">
+                                            <div class="input-group">
+                                                <label class="col-as-5 no-padding-right control-label fs-x-smaller">Duration</label>
+
+                                                <div class="col-as-7 no-padding-left">
+                                                    <input type="number" class="form-control fs-x-smaller animationDurationInput"
+                                                           ng-model="transition.actionObj.animation.options.duration"/>
+                                                </div>
+                                            </div>
+                                            <div class="input-group">
+                                                <label class="col-as-5 no-padding-right control-label fs-x-smaller">Timing</label>
+
+                                                <div class="col-as-7 no-padding-left">
+                                                    <select class="form-control fs-x-smaller"
+                                                            ng-model="transition.actionObj.animation.options.timing">
+                                                        <option value="linear">linear</option>
+                                                        <option value="ease">ease</option>
+                                                        <option value="ease-in">ease-in</option>
+                                                        <option value="ease-out">ease-out</option>
+                                                        <option value="ease-in-out">ease-in-out</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="accordianGroup" ng-repeat="animationGroup in animations"
                                              ng-click="toggleSelect($event.currentTarget, $event)">
                                             <div class="accordianTitle col-as-12 icon-state-transition-before icon-state-transition-angle-double-up-before">
@@ -81,7 +106,7 @@
                                             <div class="accordianBody col-as-12 no-padding">
                                                 <div class="animationPane col-as-12 no-padding"
                                                      ng-repeat="anim in animationGroup.list"
-                                                     ng-click="transition.setAnimationAction(anim.name) && $event.stopPropagation()">
+                                                     ng-click="transition.setAnimationAction(anim) && $event.stopPropagation()">
                                                     {{anim.name}}
                                                 </div>
                                             </div>

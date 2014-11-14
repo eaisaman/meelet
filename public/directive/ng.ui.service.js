@@ -1,17 +1,18 @@
 define(
     ["angular", "jquery", "underscore", "ng.ui.util"],
     function () {
-        var Service = function ($parse, $timeout, $q, $compile, uiUtilService) {
+        var Service = function ($parse, $timeout, $q, $compile, angularConstants, uiUtilService) {
             this.$parse = $parse;
             this.$timeout = $timeout;
             this.$q = $q;
             this.$compile = $compile;
+            this.angularConstants = angularConstants;
             this.uiUtilService = uiUtilService;
 
             _.extend($inject, _.pick(this, Service.$inject));
         };
 
-        Service.$inject = ["$parse", "$timeout", "$q", "$compile", "uiUtilService"];
+        Service.$inject = ["$parse", "$timeout", "$q", "$compile", "angularConstants", "uiUtilService"];
         var $inject = {};
 
         //Define sketch widget class
@@ -205,7 +206,7 @@ define(
                     this.actionObj = actionObj;
                 },
                 setAnimationAction: function (animation) {
-                    this.setAction(new AnimationTransitionAction(animation));
+                    this.setAction(new AnimationTransitionAction(_.clone(animation)));
                 },
                 setTrigger: function (triggerType, eventName, options) {
                     var self = this,
@@ -285,23 +286,26 @@ define(
             }),
             AnimationTransitionAction = Class(BaseTransitionAction, {
                 CLASS_NAME: "AnimationTransitionAction",
-                MEMBERS:{},
+                MEMBERS: {
+                    animation: null
+                },
                 initialize: function (animation, id) {
-                    this.initialize.prototype.__proto__.initialize.apply(this, ["Animation", animation, id]);
+                    this.initialize.prototype.__proto__.initialize.apply(this, ["Animation", animation.name, id]);
                     var MEMBERS = arguments.callee.prototype.MEMBERS;
 
                     for (var member in MEMBERS) {
                         this[member] = _.clone(MEMBERS[member]);
                     }
+                    this.animation = animation;
                 },
                 toJSON: function () {
                     var jsonObj = this.initialize.prototype.__proto__.toJSON.apply(this);
-                    _.extend(jsonObj, _.pick(this, ["CLASS_NAME"]));
+                    _.extend(jsonObj, _.pick(this, ["animation", "CLASS_NAME"]));
 
                     return jsonObj;
                 },
                 fromObject: function (obj) {
-                    var ret = new AnimationTransitionAction(obj.name, obj.id);
+                    var ret = new AnimationTransitionAction(obj.animation, obj.id);
 
                     AnimationTransitionAction.prototype.__proto__.fromObject.apply(ret, [obj]);
 
@@ -313,7 +317,7 @@ define(
 
                     if (widgetObj.$element && widgetObj.$element.parent().length) {
                         self.cssAnimation = _.extend(
-                            $inject.uiUtilService.prefixedStyle("animation", "{0} {1}s {2}", self.name, 1, "both")
+                            $inject.uiUtilService.prefixedStyle("animation", "{0} {1}s {2}", self.animation.name, self.animation.options.duration || 1, self.animation.options.timing || "")
                         );
 
                         widgetObj.$element.css(self.cssAnimation);
@@ -377,7 +381,7 @@ define(
             }),
             GestureTrigger = Class(BaseTrigger, {
                 CLASS_NAME: "GestureTrigger",
-                MEMBERS:{},
+                MEMBERS: {},
                 initialize: function (eventName, options, callback) {
                     this.initialize.prototype.__proto__.initialize.apply(this, ["Gesture", eventName, _.clone(options)]);
                     var MEMBERS = arguments.callee.prototype.MEMBERS;
@@ -1376,7 +1380,7 @@ define(
             ),
             ElementSketchWidgetClass = Class(BaseSketchWidgetClass, {
                 CLASS_NAME: "ElementSketchWidget",
-                MEMBERS:{},
+                MEMBERS: {},
                 initialize: function (id) {
                     this.initialize.prototype.__proto__.initialize.apply(this, [id]);
                     var MEMBERS = arguments.callee.prototype.MEMBERS;
@@ -1434,7 +1438,7 @@ define(
                             var containerLeft = $container.offset().left,
                                 containerTop = $container.offset().top;
 
-                            containerLeft = Math.floor(containerLeft * 100) / 100, containerTop = Math.floor(containerTop * 100) / 100;
+                            containerLeft = Math.floor(containerLeft * $inject.angularConstants.precision) / $inject.angularConstants.precision, containerTop = Math.floor(containerTop * $inject.angularConstants.precision) / $inject.angularConstants.precision;
 
                             self.offsetLeft != undefined && self.css("left", (self.offsetLeft - containerLeft) + "px") && delete self.offsetLeft;
                             self.offsetTop != undefined && self.css("top", (self.offsetTop - containerTop) + "px") && delete self.offsetTop;
@@ -1458,7 +1462,7 @@ define(
                             width,
                             height;
 
-                        childLeft = Math.floor(childLeft * 100) / 100, childTop = Math.floor(childTop * 100) / 100, childWidth = Math.floor(childWidth * 100) / 100, childHeight = Math.floor(childHeight * 100) / 100;
+                        childLeft = Math.floor(childLeft * $inject.angularConstants.precision) / $inject.angularConstants.precision, childTop = Math.floor(childTop * $inject.angularConstants.precision) / $inject.angularConstants.precision, childWidth = Math.floor(childWidth * $inject.angularConstants.precision) / $inject.angularConstants.precision, childHeight = Math.floor(childHeight * $inject.angularConstants.precision) / $inject.angularConstants.precision;
 
                         childWidget.remove();
 
@@ -1468,9 +1472,9 @@ define(
                             left = self.offsetLeft, top = self.offsetTop;
 
                             var m = (self.css("width") || "").match(/([-\d\.]+)px$/);
-                            if (m && m.length == 2) width = Math.floor(parseFloat(m[1]) * 100) / 100;
+                            if (m && m.length == 2) width = Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision;
                             m = (self.css("height") || "").match(/([-\d\.]+)px$/);
-                            if (m && m.length == 2) height = Math.floor(parseFloat(m[1]) * 100) / 100;
+                            if (m && m.length == 2) height = Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision;
 
                             if (left == undefined || top == undefined || width == undefined || height == undefined) {
                                 left = childLeft, top = childTop, width = childWidth, height = childHeight;
@@ -1498,7 +1502,7 @@ define(
                             } else {
                                 m = (self.css("left") || "").match(/([-\d\.]+)px$/);
                                 if (m && m.length == 2) {
-                                    self.css("left", (Math.floor(parseFloat(m[1]) * 100) / 100 + left - offsetLeft) + "px");
+                                    self.css("left", (Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision + left - offsetLeft) + "px");
                                 }
                             }
                             self.childWidgets.forEach(function (w) {
@@ -1513,7 +1517,7 @@ define(
                             } else {
                                 m = (self.css("top") || "").match(/([-\d\.]+)px$/);
                                 if (m && m.length == 2) {
-                                    self.css("top", (Math.floor(parseFloat(m[1]) * 100) / 100 + top - offsetTop) + "px");
+                                    self.css("top", (Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision + top - offsetTop) + "px");
                                 }
                             }
                             self.childWidgets.forEach(function (w) {
@@ -1558,19 +1562,19 @@ define(
                             maxChildBottom = 0,
                             wIndex;
 
-                        left = Math.floor(left * 100) / 100, top = Math.floor(top * 100) / 100, parentLeft = Math.floor(parentLeft * 100) / 100, parentTop = Math.floor(parentTop * 100) / 100, width = Math.floor(width * 100) / 100, height = Math.floor(height * 100) / 100;
+                        left = Math.floor(left * $inject.angularConstants.precision) / $inject.angularConstants.precision, top = Math.floor(top * $inject.angularConstants.precision) / $inject.angularConstants.precision, parentLeft = Math.floor(parentLeft * $inject.angularConstants.precision) / $inject.angularConstants.precision, parentTop = Math.floor(parentTop * $inject.angularConstants.precision) / $inject.angularConstants.precision, width = Math.floor(width * $inject.angularConstants.precision) / $inject.angularConstants.precision, height = Math.floor(height * $inject.angularConstants.precision) / $inject.angularConstants.precision;
 
                         self.childWidgets.forEach(function (childWidget, index) {
                             var childLeft = 0, childTop = 0, childWidth = 0, childHeight = 0;
 
                             var m = childWidget.css("left").match(/([-\d\.]+)px$/);
-                            if (m && m.length == 2) childLeft = Math.floor(parseFloat(m[1]) * 100) / 100;
+                            if (m && m.length == 2) childLeft = Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision;
                             m = childWidget.css("top").match(/([-\d\.]+)px$/);
-                            if (m && m.length == 2) childTop = Math.floor(parseFloat(m[1]) * 100) / 100;
+                            if (m && m.length == 2) childTop = Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision;
                             m = childWidget.css("width").match(/([-\d\.]+)px$/);
-                            if (m && m.length == 2) childWidth = Math.floor(parseFloat(m[1]) * 100) / 100;
+                            if (m && m.length == 2) childWidth = Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision;
                             m = childWidget.css("height").match(/([-\d\.]+)px$/);
-                            if (m && m.length == 2) childHeight = Math.floor(parseFloat(m[1]) * 100) / 100;
+                            if (m && m.length == 2) childHeight = Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision;
 
                             if (childWidget.id == widgetObj.id) {
                                 wChildLeft = (left - parentLeft) + childLeft;
@@ -1640,16 +1644,16 @@ define(
                             m = (self.css("left") || "").match(/([-\d\.]+)px$/),
                             firstChildLeft,
                             left;
-                        if (m && m.length == 2) left = Math.floor(parseFloat(m[1]) * 100) / 100;
+                        if (m && m.length == 2) left = Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision;
 
                         m = (self.childWidgets[0].css("left") || "").match(/([-\d\.]+)px$/);
-                        if (m && m.length == 2) firstChildLeft = Math.floor(parseFloat(m[1]) * 100) / 100;
+                        if (m && m.length == 2) firstChildLeft = Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision;
 
                         if (firstChildLeft != undefined) {
                             self.childWidgets.forEach(function (w) {
                                 var childWidth,
                                     m = (w.css("width") || "").match(/([-\d\.]+)px$/);
-                                if (m && m.length == 2) childWidth = Math.floor(parseFloat(m[1]) * 100) / 100;
+                                if (m && m.length == 2) childWidth = Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision;
                                 if (childWidth > maxChildWidth) maxChildWidth = childWidth;
 
                                 w.css("left", "0px");
@@ -1672,22 +1676,22 @@ define(
                             firstChildLeft,
                             firstChildWidth,
                             left;
-                        if (m && m.length == 2) left = Math.floor(parseFloat(m[1]) * 100) / 100;
+                        if (m && m.length == 2) left = Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision;
 
                         m = (self.css("width") || "").match(/([-\d\.]+)px$/);
-                        if (m && m.length == 2) width = Math.floor(parseFloat(m[1]) * 100) / 100;
+                        if (m && m.length == 2) width = Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision;
 
                         m = (self.childWidgets[0].css("left") || "").match(/([-\d\.]+)px$/);
-                        if (m && m.length == 2) firstChildLeft = Math.floor(parseFloat(m[1]) * 100) / 100;
+                        if (m && m.length == 2) firstChildLeft = Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision;
 
                         m = (self.childWidgets[0].css("width") || "").match(/([-\d\.]+)px$/);
-                        if (m && m.length == 2) firstChildWidth = Math.floor(parseFloat(m[1]) * 100) / 100;
+                        if (m && m.length == 2) firstChildWidth = Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision;
 
                         if (firstChildLeft != undefined && firstChildWidth) {
                             self.childWidgets.forEach(function (w) {
                                 var childWidth,
                                     m = (w.css("width") || "").match(/([-\d\.]+)px$/);
-                                if (m && m.length == 2) childWidth = Math.floor(parseFloat(m[1]) * 100) / 100;
+                                if (m && m.length == 2) childWidth = Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision;
                                 if (childWidth > maxChildWidth) maxChildWidth = childWidth;
                             });
 
@@ -1698,7 +1702,7 @@ define(
                                 self.childWidgets.forEach(function (w) {
                                     var childWidth,
                                         m = (w.css("width") || "").match(/([-\d\.]+)px$/);
-                                    if (m && m.length == 2) childWidth = Math.floor(parseFloat(m[1]) * 100) / 100;
+                                    if (m && m.length == 2) childWidth = Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision;
 
                                     if (childWidth) {
                                         w.css("left", ((maxChildWidth - childWidth) / 2) + "px");
@@ -1718,22 +1722,22 @@ define(
                             firstChildLeft,
                             firstChildWidth,
                             left;
-                        if (m && m.length == 2) left = Math.floor(parseFloat(m[1]) * 100) / 100;
+                        if (m && m.length == 2) left = Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision;
 
                         m = (self.css("width") || "").match(/([-\d\.]+)px$/);
-                        if (m && m.length == 2) width = Math.floor(parseFloat(m[1]) * 100) / 100;
+                        if (m && m.length == 2) width = Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision;
 
                         m = (self.childWidgets[0].css("left") || "").match(/([-\d\.]+)px$/);
-                        if (m && m.length == 2) firstChildLeft = Math.floor(parseFloat(m[1]) * 100) / 100;
+                        if (m && m.length == 2) firstChildLeft = Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision;
 
                         m = (self.childWidgets[0].css("width") || "").match(/([-\d\.]+)px$/);
-                        if (m && m.length == 2) firstChildWidth = Math.floor(parseFloat(m[1]) * 100) / 100;
+                        if (m && m.length == 2) firstChildWidth = Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision;
 
                         if (firstChildLeft != undefined && firstChildWidth) {
                             self.childWidgets.forEach(function (w) {
                                 var childWidth,
                                     m = (w.css("width") || "").match(/([-\d\.]+)px$/);
-                                if (m && m.length == 2) childWidth = Math.floor(parseFloat(m[1]) * 100) / 100;
+                                if (m && m.length == 2) childWidth = Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision;
                                 if (childWidth > maxChildWidth) maxChildWidth = childWidth;
                             });
 
@@ -1744,7 +1748,7 @@ define(
                                 self.childWidgets.forEach(function (w) {
                                     var childWidth,
                                         m = (w.css("width") || "").match(/([-\d\.]+)px$/);
-                                    if (m && m.length == 2) childWidth = Math.floor(parseFloat(m[1]) * 100) / 100;
+                                    if (m && m.length == 2) childWidth = Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision;
 
                                     if (childWidth) {
                                         w.css("left", (maxChildWidth - childWidth) + "px");
@@ -1771,13 +1775,13 @@ define(
                         var scaleX = $page.width() / self.$element.width(),
                             scaleY = $page.height() / self.$element.height(),
                             scale = Math.max(scaleX, scaleY);
-                        scale = Math.floor(scale * 100) / 100;
+                        scale = Math.floor(scale * $inject.angularConstants.precision) / $inject.angularConstants.precision;
 
                         var scaleStyleObj = $inject.uiUtilService.prefixedStyle("transform", "scale({0}, {1})", scale, scale);
                         self.$element.css(scaleStyleObj);
 
                         var pageLeft = $page.offset().left, pageTop = $page.offset().top;
-                        pageLeft = Math.floor(pageLeft * 100) / 100, pageTop = Math.floor(pageTop * 100) / 100;
+                        pageLeft = Math.floor(pageLeft * $inject.angularConstants.precision) / $inject.angularConstants.precision, pageTop = Math.floor(pageTop * $inject.angularConstants.precision) / $inject.angularConstants.precision;
                         self.$element.offset({left: pageLeft, top: pageTop});
 
                         self.addClass("zoom");

@@ -6,13 +6,21 @@ define(
         }
 
         function FrameSketchController($scope, $timeout, $q, angularEventTypes, uiService) {
-            //TODO 背景图片 阴影 视角 旋转 出现/消失/装载/其它事件动画 对齐 按网格移动/改变大小 width/height/border-radius 手势
+            $scope.Math = Math;
+
+            //TODO 背景图片 阴影 视角 旋转 按网格移动/改变大小 border-radius
             var widgetSettingList = [];
 
             $scope.sketchWidgetSetting = {};
             $scope.sketchPageSetting = {};
             $scope.sketchObject = {sketchWorks: {pages: []}};
-            $scope.sketchDevice = {type: "desktop", width: 1024, height: 768, img: "device_ipad_horizontal.svg"};
+            $scope.sketchDevice = {
+                type: "desktop",
+                width: 1024,
+                height: 768,
+                img: "device_ipad_horizontal.svg",
+                rulerMarkerCount: 12
+            };
             $scope.dockAlign = "align-left";
 
             function setterFactory(obj, name) {

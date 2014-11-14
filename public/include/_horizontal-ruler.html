@@ -1,0 +1,25 @@
+<div class="horizontalRulerContainer">
+    <div class="horizontalMarker"
+         ng-style="{'left':'{{Math.floor(deviceWidth * i / markerCount * constants.precision) / constants.precision}}px', 'width':'{{Math.floor(deviceWidth / markerCount * constants.precision) / constants.precision}}px'}"
+         ng-class="{'nearByMarker':i+1==nearByMarkerIndex}"
+         ng-repeat="i in [0,markerCount]|makeRange">
+        <span>{{i+1}}/{{markerCount}}</span>
+    </div>
+    <span class="horizontalDividers">
+        <span class="horizontalDivider"
+              ng-style="{'width':'{{Math.floor(100 / markerCount * constants.percentPrecision) / constants.percentPrecision}}%', 'height':'{{deviceHeight}}'}"
+              ng-class="{'nearByDivider':i+1==nearByMarkerIndex}"
+              ng-repeat="i in [0,markerCount-1]|makeRange"></span>
+        <div class="fs-x-small horizontalLocator"
+             ng-style='widgetHorizontalLocation(pickedWidget)'
+             ng-show="pickedWidget.isElement && !pickedWidget.isTemporary">
+            <div id="leftResizeControl"
+                 class="icon-horizontal-ruler-before icon-horizontal-ruler-arrow-left-before"></div>
+            <div id="horizontalMoveControl"
+                 class="icon-horizontal-ruler-before"
+                 ng-class="{'icon-horizontal-ruler-move-align-center-before':alignCenter, 'icon-horizontal-ruler-move-before':!alignCenter}"></div>
+            <div id="rightResizeControl"
+                 class="icon-horizontal-ruler-before icon-horizontal-ruler-arrow-right-before"></div>
+        </div>
+    </span>
+</div>

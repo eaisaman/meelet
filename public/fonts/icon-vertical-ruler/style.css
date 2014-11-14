@@ -1,0 +1,87 @@
+@font-face {
+	font-family: 'icon-vertical-ruler';
+	src: url('icon-vertical-ruler.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+.icon-vertical-ruler {
+	font-family: 'icon-vertical-ruler';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon-vertical-ruler-before:before {
+	font-family: 'icon-vertical-ruler';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon-vertical-ruler-after:after {
+	font-family: 'icon-vertical-ruler';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon-vertical-ruler-arrow-up:before {
+	content: "\e600";
+}
+.icon-vertical-ruler-arrow-down:before {
+	content: "\e601";
+}
+.icon-vertical-ruler-move:before {
+	content: "\e602";
+}
+.icon-vertical-ruler-move-align-center:before {
+	content: "\e603";
+}
+
+.icon-vertical-ruler-arrow-up-before:before {
+	content: "\e600";
+}
+.icon-vertical-ruler-arrow-down-before:before {
+	content: "\e601";
+}
+.icon-vertical-ruler-move-before:before {
+	content: "\e602";
+}
+.icon-vertical-ruler-move-align-center-before:before {
+	content: "\e603";
+}
+
+.icon-vertical-ruler-arrow-up-after:after {
+	content: "\e600";
+}
+.icon-vertical-ruler-arrow-down-after:after {
+	content: "\e601";
+}
+.icon-vertical-ruler-move-after:after {
+	content: "\e602";
+}
+.icon-vertical-ruler-move-align-center-after:after {
+	content: "\e603";
+}

@@ -37,6 +37,7 @@ require.config({
 require(["jquery-lib", "jquery-plugins-lib", "hammer-lib", "jquery-ui-lib", "angular-lib", "underscore-lib"], function () {
     window.appModule = angular.module(APP_MODULE_NAME, APP_MODULE_DEPS);
     window.appModule.value("angularEventTypes", {boundPropertiesEvent: "boundPropertiesEvent"});
+    window.appModule.value("angularConstants", {precision: 1000, percentPrecision: 1000});
 
     require(["angular-plugins-lib", "directive-lib", "app-lib"], function () {
         var configs = Array.prototype.slice.call(arguments);

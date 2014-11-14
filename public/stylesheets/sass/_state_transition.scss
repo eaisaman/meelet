@@ -246,6 +246,24 @@ $tabHeaderWidth: 6em;
                                                             @extend %flipUp;
                                                         }
 
+                                                        > .animationOptions {
+                                                            position: relative;
+                                                            width: 100%;
+                                                            overflow: hidden;
+
+                                                            > .input-group {
+                                                                width: 100%;
+
+                                                                .animationDurationInput {
+                                                                    &::-webkit-inner-spin-button,
+                                                                    &::-webkit-outer-spin-button {
+                                                                        -webkit-appearance: none;
+                                                                        margin: 0;
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+
                                                         > .accordianGroup {
                                                             position: relative;
                                                             width: 100%;
