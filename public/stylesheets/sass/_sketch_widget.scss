@@ -85,5 +85,11 @@ $deepShadow: #555;
                 }
             }
         }
+
+        .widgetText {
+            position: absolute;
+            background: transparent;
+            overflow: visible;
+        }
     }
 }

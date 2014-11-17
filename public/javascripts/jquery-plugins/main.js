@@ -15,7 +15,7 @@ define(
     ],
     function () {
         [
-                JQUERY_PLUGINS_LIB_PATH + "icheck/1.0.2/skins/" + "all.css",
+                JQUERY_PLUGINS_LIB_PATH + "icheck/1.0.2/skins/" + "all.css"
         ].forEach(function (href) {
                 var link = document.createElement("link");
                 link.type = "text/css";

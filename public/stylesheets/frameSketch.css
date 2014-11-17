@@ -9700,6 +9700,11 @@
   bottom: -4px;
   border-style: none none solid solid;
 }
+#sketchHolder .widgetText {
+  position: absolute;
+  background: transparent;
+  overflow: visible;
+}
 
 #horizontalRuler .horizontalRulerContainer {
   position: relative;

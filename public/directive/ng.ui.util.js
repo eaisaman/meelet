@@ -187,6 +187,55 @@ define(
             return styleObj;
         }
 
+        Util.prototype.getTextMetrics = function (element, size) {
+            var $el = element.jquery && element || $(element),
+                fontStyle = {},
+                width = size.width,
+                height = size.height;
+
+            ['font-size', 'font-style', 'font-weight', 'font-family', 'line-height', 'text-transform', 'letter-spacing'].forEach(function (style) {
+                var styleValue = $el.css(style);
+                if (styleValue) fontStyle[style] = styleValue;
+            });
+
+            var temp = document.createElement('span'),
+                $temp = $(temp);
+            $temp.css({
+                position: "absolute",
+                left: -1000,
+                top: -1000,
+                opacity: 0,
+                "white-space": "nowrap",
+                "margin": 0,
+                "padding": 0
+            });
+            document.body.appendChild(temp);
+            $temp.css(fontStyle);
+
+            var ch = "游",
+                str, oldStr,
+                text,
+                cols,
+                maxCols = 0,
+                rows = 0;
+
+            for (; $temp.outerHeight() <= height; rows++) {
+                str = "", oldStr = "", cols = 0, text = document.createTextNode(str);
+                $temp.append(text);
+                for (; $temp.outerWidth() <= width; cols++) {
+                    oldStr = str;
+                    str += ch;
+                    text.textContent = str;
+                }
+                text.textContent = oldStr;
+                $temp.append("<br/>");
+                if (cols > maxCols) maxCols = cols;
+            }
+            $temp.remove();
+
+            return {rows: rows, cols: maxCols};
+        }
+
         Util.prototype.formalParameterList = function (fn) {
             var FN_ARGS = /^function\s*[^\(]*\(\s*([^\)]*)\)/m;
             var FN_ARG_SPLIT = /,/;

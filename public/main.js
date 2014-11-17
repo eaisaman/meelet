@@ -6,6 +6,7 @@ var ANGULAR_LIB_PATH = "javascripts/angular/1.3.0-beta.8/",
     JQUERY_PLUGINS_LIB_PATH = "javascripts/jquery-plugins/",
     JQUERY_UI_LIB_PATH = "javascripts/jquery-ui/1.11.0/",
     UNDERSCORE_LIB_PATH = "javascripts/underscore/1.6.0/",
+    CKEDITOR_LIB_PATH = "javascripts/ckeditor/4.4.5/",
     APP_LIB_PATH = "app/",
     DIRECTIVE_LIB_PATH = "directive/";
 
@@ -23,18 +24,13 @@ require.config({
         "jquery-plugins-lib": JQUERY_PLUGINS_LIB_PATH + "main",
         "jquery-ui-lib": JQUERY_UI_LIB_PATH + "main",
         "underscore-lib": UNDERSCORE_LIB_PATH + "main",
+        "ckeditor-lib": CKEDITOR_LIB_PATH + "main",
         "app-lib": APP_LIB_PATH + "main",
         "directive-lib": DIRECTIVE_LIB_PATH + "main"
-    },
-
-    shim: {
-        "jquery-ui-lib": {deps: ["jquery-lib"]},
-        "directive-lib": {deps: ["angular-lib", "jquery-lib"]},
-        "app-lib": {deps: ["angular-lib", "jquery-lib", "angular-plugins-lib", "directive-lib"]}
     }
 });
 
-require(["jquery-lib", "jquery-plugins-lib", "hammer-lib", "jquery-ui-lib", "angular-lib", "underscore-lib"], function () {
+require(["jquery-lib", "jquery-plugins-lib", "hammer-lib", "jquery-ui-lib", "angular-lib", "underscore-lib", "ckeditor-lib"], function () {
     window.appModule = angular.module(APP_MODULE_NAME, APP_MODULE_DEPS);
     window.appModule.value("angularEventTypes", {boundPropertiesEvent: "boundPropertiesEvent"});
     window.appModule.value("angularConstants", {precision: 1000, percentPrecision: 1000});
