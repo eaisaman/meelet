@@ -1,0 +1,106 @@
+{
+	"IcoMoonType": "selection",
+	"icons": [
+		{
+			"icon": {
+				"width": 658,
+				"paths": [
+					"M44 749.714q0-7.429 5.714-13.143l266.286-266.286q5.714-5.714 13.143-5.714t13.143 5.714l266.286 266.286q5.714 5.714 5.714 13.143t-5.714 13.143l-28.571 28.571q-5.714 5.714-13.143 5.714t-13.143-5.714l-224.571-224.571-224.571 224.571q-5.714 5.714-13.143 5.714t-13.143-5.714l-28.571-28.571q-5.714-5.714-5.714-13.143zM44 530.286q0-7.429 5.714-13.143l266.286-266.286q5.714-5.714 13.143-5.714t13.143 5.714l266.286 266.286q5.714 5.714 5.714 13.143t-5.714 13.143l-28.571 28.571q-5.714 5.714-13.143 5.714t-13.143-5.714l-224.571-224.571-224.571 224.571q-5.714 5.714-13.143 5.714t-13.143-5.714l-28.571-28.571q-5.714-5.714-5.714-13.143z"
+				],
+				"attrs": [],
+				"tags": [
+					"angle-double-up"
+				],
+				"defaultCode": 61698,
+				"grid": 14
+			},
+			"attrs": [],
+			"properties": {
+				"id": 230,
+				"order": 4,
+				"prevSize": 28,
+				"code": 58880,
+				"name": "angle-double-up",
+				"ligatures": ""
+			},
+			"setIdx": 1,
+			"iconIdx": 0
+		},
+		{
+			"icon": {
+				"paths": [
+					"M929.813 189.867l-417.813-189.867-469.333 213.333v597.333l469.333 213.333 469.333-213.333v-597.333l-51.52-23.467zM512 93.76l314.667 143.040-314.667 143.040-314.773-143.040 314.773-143.040zM128 755.733v-456.747l341.333 155.093v456.747l-341.333-155.093zM896 755.733l-341.333 155.093v-456.747l341.333-155.093v456.747z"
+				],
+				"attrs": [
+					{
+						"visibility": false
+					}
+				],
+				"tags": [
+					"box"
+				],
+				"grid": 24
+			},
+			"attrs": [
+				{
+					"visibility": false
+				}
+			],
+			"properties": {
+				"order": 3,
+				"id": 0,
+				"prevSize": 24,
+				"code": 58881,
+				"name": "box"
+			},
+			"setIdx": 1,
+			"iconIdx": 1
+		}
+	],
+	"height": 1024,
+	"metadata": {
+		"name": "icon-box-shadow"
+	},
+	"preferences": {
+		"fontPref": {
+			"prefix": "icon-box-shadow-",
+			"metadata": {
+				"fontFamily": "icon-box-shadow",
+				"majorVersion": 1,
+				"minorVersion": 0
+			},
+			"showGlyphs": true,
+			"metrics": {
+				"emSize": 1024,
+				"baseline": 6.25,
+				"whitespace": 50
+			},
+			"resetPoint": 58880,
+			"showQuickUse": true,
+			"quickUsageToken": false,
+			"showMetrics": true,
+			"showMetadata": false,
+			"showSelector": true,
+			"selector": "class",
+			"classSelector": ".icon-box-shadow"
+		},
+		"imagePref": {
+			"color": 0,
+			"height": 32,
+			"columns": 16,
+			"margin": 16,
+			"png": false,
+			"sprites": true
+		},
+		"historySize": 100,
+		"showCodes": true,
+		"gridSize": 16,
+		"showLiga": false,
+		"showGrid": true,
+		"showGlyphs": true,
+		"showQuickUse": true,
+		"showQuickUse2": true,
+		"showSVGs": true,
+		"search": ""
+	}
+}

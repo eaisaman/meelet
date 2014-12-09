@@ -1,0 +1,58 @@
+$borderColor: rgba(0, 0, 0, 0.4);
+$activeBorderShadow: rgba(192, 192, 192, 0.8);
+
+@mixin color-picker($colorPickerId) {
+    ##{$colorPickerId} {
+        > .pickerContent {
+            position: absolute;
+            left: 0;
+            top: 0;
+
+            > .pickerBar {
+                position: relative;
+                float: left;
+                width: 100%;
+                height: 2em;
+
+                > .pickerPane {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    text-align: center;
+                    text-transform: uppercase;
+                    letter-spacing: 2px;
+                }
+            }
+
+            > .pickerPalette {
+                > .colorPane {
+                    position: relative;
+                    float: left;
+                    margin: 5px;
+                    border-radius: 5px;
+                    border-bottom: 1px solid $borderColor;
+
+                    &:active {
+                        @include box-shadow(0 0 15px $activeBorderShadow);
+                    }
+                }
+
+            }
+
+            &.expanded {
+                > .pickerBar {
+                    > .pickerPane {
+                        top: 0.5em;
+                        left: 0.5em;
+                        width: calc(100% - 1em);
+                        height: calc(100% - 1em);
+                        border-radius: 5px;
+                        @extend %swashIn;
+                    }
+                }
+            }
+        }
+    }
+}

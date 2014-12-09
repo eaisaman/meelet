@@ -1,0 +1,21 @@
+[
+  {
+    "group": "Standard",
+    "thumbnailStyle": {
+      "classList": [
+        "fs-x-small-before",
+        "icon-state-transition-before",
+        "icon-state-transition-bling-before"
+      ],
+      "style": {}
+    },
+    "list": [
+      {
+        "name": "puffIn",
+        "options": {},
+        "mixin": "puffInKeyframes",
+        "args": []
+      }
+    ]
+  }
+]
