@@ -70,6 +70,8 @@ define(
                                                 $timeout(function () {
                                                     //Trigger watcher on sketchWidgetSetting.textShadow to apply style to widget
                                                     scope.setTextShadow(scope.pickedTextShadow);
+
+                                                    defer.resolve();
                                                 });
 
                                                 return defer.promise;
@@ -140,26 +142,18 @@ define(
                                         paletteScope = angular.element($palette.find("> :first-child")).scope();
 
                                     if (scope.hasClass(".shadowStopColorPalette", "show")) {
-                                        paletteScope.showInitialTab().then(
-                                            function () {
-                                                scope.watchSelectedShadowStopColor(false);
-
-                                                return scope.toggleDisplay(".shadowStopColorPalette");
-                                            }
-                                        );
+                                        paletteScope.closePalette().then(function () {
+                                            scope.watchSelectedShadowStopColor(false);
+                                        });
                                     } else {
                                         var top = element.find(".shadowStop[shadow-order=" + scope.selectedShadowStopIndex + "]").offset().top,
                                             paletteOffset = $palette.offset();
                                         paletteOffset.top = top;
                                         $palette.offset(paletteOffset);
 
-                                        scope.toggleDisplay(".shadowStopColorPalette").then(
-                                            function () {
-                                                scope.watchSelectedShadowStopColor(true);
-
-                                                paletteScope.showInitialTab();
-                                            }
-                                        );
+                                        paletteScope.openPalette().then(function () {
+                                            scope.watchSelectedShadowStopColor(true);
+                                        });
                                     }
                                 }
 

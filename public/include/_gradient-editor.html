@@ -32,14 +32,14 @@
              ui-color-editor-palette-opts="{enableClose:true}" selected-color="selectedStopColor"></div>
         <div class="colorStop" ng-repeat="colorStop in pickedGradientColor.colorStopList"
              ng-style="{'background-color':'{{colorStop.backgroundColor}}'}"
-             ng-if="colorStop.color" ng-attr-color-order="{{$index}}">
+             ng-attr-color-order="{{$index}}">
             <div class="colorStopLabel fs-x-small" ng-style="{'color':'{{colorStop.color}}'}">
                 <input class="spinValue" required type="number" ng-model="colorStop.percent"
                        ng-keyup="onPercentChange($event)"
                        ng-attr-min="{{colorStop.minPercent}}" ng-attr-max="{{colorStop.maxPercent}}"/>
             </div>
             <div class="colorPane fs-x-large" ng-style="{'background-color':'{{colorStop.color}}'}"
-                 ng-click="toggleColorStopMenu($index, $event)">
+                 ng-click="toggleColorStopMenu($index, $event)" ng-if="colorStop.color">
             </div>
             <div class="circular-menu">
                 <div class="circle">

@@ -187,26 +187,18 @@ define(
                                         paletteScope = angular.element($palette.find("> :first-child")).scope();
 
                                     if (scope.hasClass(".editorPalette", "show")) {
-                                        paletteScope.showInitialTab().then(
-                                            function () {
-                                                scope.watchSelectedStopColor(false);
-
-                                                return scope.toggleDisplay(".editorPalette");
-                                            }
-                                        );
+                                        paletteScope.closePalette().then(function () {
+                                            scope.watchSelectedStopColor(false);
+                                        });
                                     } else {
                                         var top = element.find(".colorStop[color-order=" + scope.selectedColorStopIndex + "]").offset().top,
                                             paletteOffset = $palette.offset();
                                         paletteOffset.top = top;
                                         $palette.offset(paletteOffset);
 
-                                        scope.toggleDisplay(".editorPalette").then(
-                                            function () {
-                                                scope.watchSelectedStopColor(true);
-
-                                                paletteScope.showInitialTab();
-                                            }
-                                        );
+                                        paletteScope.openPalette().then(function () {
+                                            scope.watchSelectedStopColor(true);
+                                        });
                                     }
                                 }
 

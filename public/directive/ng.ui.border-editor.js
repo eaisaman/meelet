@@ -101,6 +101,8 @@ define(
                                                     var setterName = "set" + boundName.charAt(0).toUpperCase() + boundName.substr(1);
                                                     var setter = scope[setterName];
                                                     setter && setter.apply(scope, [value]);
+
+                                                    defer.resolve();
                                                 });
 
                                                 return defer.promise;
@@ -165,18 +167,16 @@ define(
                                         paletteScope = angular.element($palette.find("> :first-child")).scope();
 
                                     if ($borderColorPane.hasClass("select")) {
-                                        paletteScope.showInitialTab().then(function () {
-                                            return scope.toggleDisplay($palette);
+                                        paletteScope.closePalette().then(function () {
+                                            return scope.toggleSelect($borderColorPane);
                                         }).then(function () {
                                             scope.watchBorderColor(false);
-                                            scope.toggleSelect($borderColorPane);
                                         });
                                     } else {
                                         scope.toggleSelect($borderColorPane).then(function () {
-                                            return scope.toggleDisplay($palette);
+                                            return paletteScope.openPalette();
                                         }).then(function () {
                                             scope.watchBorderColor(true);
-                                            paletteScope.showInitialTab();
                                         });
                                     }
                                 }
@@ -196,88 +196,96 @@ define(
 
                                 scope.setBorderColor = function (value) {
                                     if (value) {
-                                        scope.pickedBorderColor = value;
-                                        scope.borderColorPaneBackgroundColor = "";
-                                        scope.borderColorPaneColor = uiUtilService.contrastColor(value);
-                                        scope.borderIsSet = false;
-
                                         var pseudoStylePrefix = (scope.pseudo || "") + "Style";
                                         pseudoStylePrefix = pseudoStylePrefix.charAt(0).toLowerCase() + pseudoStylePrefix.substr(1);
 
                                         scope.border[pseudoStylePrefix] = scope.border[pseudoStylePrefix] || {};
                                         var pseudoBorderStyle = scope.border[pseudoStylePrefix];
-                                        pseudoBorderStyle['border-color'] = value;
 
-                                        //Trigger watcher on sketchWidgetSetting.borderColor to apply style to widget
-                                        scope.border = angular.copy(scope.border);
+                                        if (pseudoBorderStyle['border-color'] != value) {
+                                            pseudoBorderStyle['border-color'] = value;
 
-                                        $timeout(function () {
-                                            scope.borderColorPaneBackgroundColor = value;
-                                            scope.borderIsSet = true;
-                                        });
+                                            //Trigger watcher on sketchWidgetSetting.borderColor to apply style to widget
+                                            scope.border = angular.copy(scope.border);
+
+                                            scope.borderIsSet = false;
+                                            scope.pickedBorderColor = value;
+                                            scope.borderColorPaneBackgroundColor = "";
+                                            scope.borderColorPaneColor = uiUtilService.contrastColor(value);
+                                            $timeout(function () {
+                                                scope.borderColorPaneBackgroundColor = value;
+                                                scope.borderIsSet = true;
+                                            });
+                                        }
                                     }
                                 }
 
                                 scope.setBorderWidth = function (value) {
                                     if (value) {
-                                        scope.pickedBorderWidth = value;
-
                                         var pseudoStylePrefix = (scope.pseudo || "") + "Style";
                                         pseudoStylePrefix = pseudoStylePrefix.charAt(0).toLowerCase() + pseudoStylePrefix.substr(1);
 
                                         scope.border[pseudoStylePrefix] = scope.border[pseudoStylePrefix] || {};
                                         var pseudoBorderStyle = scope.border[pseudoStylePrefix];
-                                        pseudoBorderStyle['border-width'] = value;
 
-                                        //Trigger watcher on sketchWidgetSetting.borderWidth to apply style to widget
-                                        scope.border = angular.copy(scope.border);
+                                        if (pseudoBorderStyle['border-width'] != value) {
+                                            pseudoBorderStyle['border-width'] = value;
 
-                                        scope.borderIsSet = false;
-                                        $timeout(function () {
-                                            scope.borderIsSet = true;
-                                        });
+                                            //Trigger watcher on sketchWidgetSetting.borderWidth to apply style to widget
+                                            scope.border = angular.copy(scope.border);
+
+                                            scope.borderIsSet = false;
+                                            scope.pickedBorderWidth = value;
+                                            $timeout(function () {
+                                                scope.borderIsSet = true;
+                                            });
+                                        }
                                     }
                                 }
 
                                 scope.setBorderStyle = function (value) {
                                     if (value) {
-                                        scope.pickedBorderStyle = value;
-
                                         var pseudoStylePrefix = (scope.pseudo || "") + "Style";
                                         pseudoStylePrefix = pseudoStylePrefix.charAt(0).toLowerCase() + pseudoStylePrefix.substr(1);
 
                                         scope.border[pseudoStylePrefix] = scope.border[pseudoStylePrefix] || {};
                                         var pseudoBorderStyle = scope.border[pseudoStylePrefix];
-                                        pseudoBorderStyle['border-style'] = value;
 
-                                        //Trigger watcher on sketchWidgetSetting.borderStyle to apply style to widget
-                                        scope.border = angular.copy(scope.border);
+                                        if (pseudoBorderStyle['border-style'] != value) {
+                                            pseudoBorderStyle['border-style'] = value;
 
-                                        scope.borderIsSet = false;
-                                        $timeout(function () {
-                                            scope.borderIsSet = true;
-                                        });
+                                            //Trigger watcher on sketchWidgetSetting.borderStyle to apply style to widget
+                                            scope.border = angular.copy(scope.border);
+
+                                            scope.borderIsSet = false;
+                                            scope.pickedBorderStyle = value;
+                                            $timeout(function () {
+                                                scope.borderIsSet = true;
+                                            });
+                                        }
                                     }
                                 }
 
                                 scope.setBorderRadius = function (value) {
                                     if (value) {
-                                        scope.pickedBorderRadius = value;
-
                                         var pseudoStylePrefix = (scope.pseudo || "") + "Style";
                                         pseudoStylePrefix = pseudoStylePrefix.charAt(0).toLowerCase() + pseudoStylePrefix.substr(1);
 
                                         scope.border[pseudoStylePrefix] = scope.border[pseudoStylePrefix] || {};
                                         var pseudoBorderStyle = scope.border[pseudoStylePrefix];
-                                        pseudoBorderStyle['border-radius'] = value;
 
-                                        //Trigger watcher on sketchWidgetSetting.borderRadius to apply style to widget
-                                        scope.border = angular.copy(scope.border);
+                                        if (pseudoBorderStyle['border-radius'] != value) {
+                                            pseudoBorderStyle['border-radius'] = value;
 
-                                        scope.borderIsSet = false;
-                                        $timeout(function () {
-                                            scope.borderIsSet = true;
-                                        });
+                                            //Trigger watcher on sketchWidgetSetting.borderRadius to apply style to widget
+                                            scope.border = angular.copy(scope.border);
+
+                                            scope.borderIsSet = false;
+                                            scope.pickedBorderRadius = value;
+                                            $timeout(function () {
+                                                scope.borderIsSet = true;
+                                            });
+                                        }
                                     }
                                 }
                             }

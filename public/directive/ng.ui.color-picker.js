@@ -35,10 +35,12 @@ define(
                                             color: function (value) {
                                                 if (value && scope.hasStyle(value)) {
                                                     scope.pickedColor = uiUtilService.formalizeHex(scope.pickColorValue(value));
+                                                    scope.colorIsSet = false;
                                                     $timeout(function () {
                                                         scope.pickerPaneBackgroundColor = scope.pickedColor;
                                                         scope.pickerPaneColor = uiUtilService.contrastColor(scope.pickedColor);
                                                         scope.pickerBarBackgroundColor = scope.pickerPaneColor === "#ffffff" ? uiUtilService.lighterColor(scope.pickedColor, 0.5) : uiUtilService.lighterColor(scope.pickedColor, -0.5);
+                                                        scope.colorIsSet = true;
                                                     });
                                                     $timeout(function () {
                                                         scope.enableControl();
@@ -67,15 +69,16 @@ define(
 
                                         //Trigger watcher on sketchWidgetSetting.color to apply style to widget
                                         scope.color = angular.copy(scope.color);
-                                    }
 
-                                    scope.pickerPaneColor = "";
-                                    scope.pickedColor = value;
-                                    $timeout(function () {
+                                        scope.colorIsSet = false;
+                                        scope.pickedColor = value;
                                         scope.pickerPaneBackgroundColor = value;
                                         scope.pickerPaneColor = uiUtilService.contrastColor(value);
                                         scope.pickerBarBackgroundColor = scope.pickerPaneColor === "#ffffff" ? uiUtilService.lighterColor(value, 0.5) : uiUtilService.lighterColor(value, -0.5);
-                                    });
+                                        $timeout(function () {
+                                            scope.colorIsSet = true;
+                                        });
+                                    }
                                 };
 
                                 scope.toggleColorControl = function () {
@@ -114,7 +117,7 @@ define(
                                         paletteScope = angular.element($palette).scope();
 
                                     if ($wrapper.hasClass("expanded")) {
-                                        paletteScope.showInitialTab().then(function () {
+                                        paletteScope.closePalette().then(function () {
                                             return scope.toggleDisplay($panel);
                                         }).then(function () {
                                             scope.watchColor(false);
@@ -126,7 +129,8 @@ define(
                                             return scope.toggleDisplay($panel);
                                         }).then(function () {
                                             scope.watchColor(true);
-                                            return paletteScope.showInitialTab();
+
+                                            return paletteScope.openPalette();
                                         });
                                     }
                                 }

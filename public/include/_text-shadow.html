@@ -40,7 +40,7 @@
                 <div id="shadowStopColorPalette" class="shadowStopColorPalette" ui-color-editor-palette
                      ui-color-editor-palette-opts="{enableClose:true}" selected-color="selectedShadowStopColor"></div>
                 <div class="shadowStop fs-x-tiny" ng-repeat="shadowStop in pickedTextShadow"
-                     ng-if="shadowStop.color" ng-attr-shadow-order="{{$index}}">
+                      ng-attr-shadow-order="{{$index}}">
                     <div class="shadowStopNumber col-as-10 no-padding fs-x-tiny">
                         <div class="input-group col-as-6 no-padding fs-x-tiny">
                             <label class="col-as-6 no-padding">H</label>
@@ -71,7 +71,7 @@
                         </div>
                     </div>
                     <div class="shadowStopColor col-as-2 no-padding-right fs-x-tiny"
-                         ng-click="toggleShadowStopMenu($index, $event)">
+                         ng-click="toggleShadowStopMenu($index, $event)" ng-if="shadowStop.color">
                         <span ng-style="{'background-color':'{{shadowStop.color}}'}"></span>
                     </div>
                     <div class="circular-menu">

@@ -7,7 +7,7 @@
     <div class="pickerBar ui-control-bar fs-x-large"
          ng-click="togglePalette($event)"
          ng-style="{'background-color':'{{pickerBarBackgroundColor}}'}"
-         ng-if="pickerPaneColor">
+         ng-if="colorIsSet">
         <div class="pickerPane fs-x-smaller"
              ng-style="{'background-color':'{{pickerPaneBackgroundColor}}'}">
             <span ng-style="{'color':'{{pickerPaneColor}}'}">{{pickedColor}}</span>

@@ -175,6 +175,8 @@ define(
 
                                 $inject.$timeout(function () {
                                     transition.setTrigger(triggerType, eventName, options);
+
+                                    defer.resolve();
                                 });
 
                                 return defer.promise;
@@ -799,6 +801,7 @@ define(
 
                         $inject.$timeout(function () {
                             $inject.$rootScope.visiblePseudoEnabledWidgets = pseudoWidgets;
+                            defer.resolve();
                         });
 
                         return defer.promise;
@@ -842,20 +845,16 @@ define(
                     var self = this;
 
                     if (self.widgetObj.$element) {
-                        if (styleValue == null) {
-                            self.widgetObj.$element.css(styleName, "");
-                        } else {
-                            var styleObj = $inject.uiUtilService.composeCssStyle(styleName, styleValue);
-                            styleObj && _.each(styleObj, function (value, key) {
-                                if (toString.call(value) === '[object Array]') {
-                                    value.forEach(function (v) {
-                                        self.widgetObj.$element.css(key, v);
-                                    });
-                                } else {
-                                    self.widgetObj.$element.css(key, value);
-                                }
-                            })
-                        }
+                        var styleObj = $inject.uiUtilService.composeCssStyle(styleName, styleValue);
+                        styleObj && _.each(styleObj, function (value, key) {
+                            if (toString.call(value) === '[object Array]') {
+                                value.forEach(function (v) {
+                                    self.widgetObj.$element.css(key, v);
+                                });
+                            } else {
+                                self.widgetObj.$element.css(key, value);
+                            }
+                        })
                     }
                 },
                 draw: function (state, stateContext) {

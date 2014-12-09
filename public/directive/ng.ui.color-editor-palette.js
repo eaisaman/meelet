@@ -47,15 +47,6 @@ define(
                                     scope.colors = scope.options.colors || [];
                                 }
 
-                                scope.selectedColorObj = {
-                                    color: "#000000",
-                                    rValue: 0,
-                                    gValue: 0,
-                                    bValue: 0,
-                                    hueValue: 0,
-                                    saturationValue: 0,
-                                    lightValue: 0
-                                };
                                 scope.Math = Math;
                             },
                             post: function (scope, element, attrs) {
@@ -221,43 +212,57 @@ define(
                                         hslLinearGradient(scope.selectedColorObj.hueValue, scope.selectedColorObj.saturationValue, scope.selectedColorObj.lightValue, "Saturation");
                                     }
                                 });
-                                scope.$watch("selectedColorObj.color", function (to) {
-                                    function changeSelectedColor(value) {
-                                        var defer = $q.defer();
 
-                                        $timeout(function () {
-                                            scope.selectedColor = value;
-                                        });
+                                scope.watchSelectedColorObj = function (state) {
+                                    if (state) {
+                                        if (!scope.deregisterColorObjWatch) {
+                                            scope.deregisterColorObjWatch = scope.$watch("selectedColorObj.color", function (to) {
+                                                function changeSelectedColor(value) {
+                                                    var defer = $q.defer();
 
-                                        return defer.promise;
+                                                    $timeout(function () {
+                                                        scope.selectedColor = value;
+                                                        defer.resolve();
+                                                    });
+
+                                                    return defer.promise;
+                                                }
+
+                                                changeSelectedColor.onceId = "color-editor-palette.changeSelectedColor";
+
+                                                if (to && scope.selectedColor !== to)
+                                                    uiUtilService.latestOnce(changeSelectedColor, null, 500)(to);
+                                            });
+                                        }
+                                    } else {
+                                        scope.deregisterColorObjWatch && scope.deregisterColorObjWatch();
+                                        scope.deregisterColorObjWatch = null;
                                     }
-
-                                    changeSelectedColor.onceId = "color-editor-palette.changeSelectedColor";
-
-                                    if (to && scope.selectedColor !== to)
-                                        uiUtilService.latestOnce(changeSelectedColor, null, 500)(to);
-                                });
+                                }
 
                                 scope.watchSelectedColor = function (state) {
                                     if (state) {
                                         if (!scope.deregisterWatch) {
                                             scope.deregisterWatch = scope.$watch("selectedColor", function (to) {
-                                                if (to) {
-                                                    scope.colors && scope.colors.every(function (c) {
-                                                        return c != to;
-                                                    }) && scope.colors.splice(0, 0, to);
+                                                if (to != undefined) {
+                                                    if (to) {
+                                                        scope.colors && scope.colors.every(function (c) {
+                                                            return c != to;
+                                                        }) && scope.colors.splice(0, 0, to);
 
-                                                    scope.selectedColorObj.color !== to && scope.pickColor({color: to});
+                                                        (!scope.selectedColorObj || scope.selectedColorObj.color !== to) && scope.pickColor({color: to});
+                                                    } else {
+                                                        if (scope.colors && scope.colors.length) {
+                                                            to = scope.colors[0];
+                                                            scope.pickColor({color: to});
+                                                        }
+                                                    }
 
                                                     scope.deregisterWatch();
                                                     scope.deregisterWatch = null;
-                                                } else {
-                                                    if (scope.colors && scope.colors.length) {
-                                                        to = scope.colors[0];
-                                                        scope.pickColor({color: to});
-                                                    }
                                                 }
-                                            });                                        }
+                                            });
+                                        }
                                     } else {
                                         scope.deregisterWatch && scope.deregisterWatch();
                                         scope.deregisterWatch = null;
@@ -418,21 +423,37 @@ define(
                                     event && event.stopPropagation && event.stopPropagation();
 
                                     if (element.hasClass("show")) {
-                                        scope.showInitialTab().then(
+                                        return scope.showInitialTab().then(
                                             function () {
-                                                scope.watchSelectedColor(true);
+                                                scope.watchSelectedColor(false);
+                                                scope.watchSelectedColorObj(false);
 
                                                 return scope.toggleDisplay(element);
                                             }
                                         );
+                                    } else {
+                                        return angular.noop;
+                                    }
+                                }
+
+                                scope.openPalette = function () {
+                                    if (!element.hasClass("show")) {
+                                        return scope.toggleDisplay(element).then(
+                                            function () {
+                                                scope.watchSelectedColor(true);
+                                                scope.watchSelectedColorObj(true);
+
+                                                return scope.showInitialTab();
+                                            }
+                                        );
+                                    } else {
+                                        return angular.noop;
                                     }
                                 }
 
                                 scope.showInitialTab = function () {
                                     return scope.selectTab(element, element.find("div[tab-sel^='tab-head']:nth-child(1)"));
                                 }
-
-                                scope.watchSelectedColor(true);
                             }
                         }
                     }

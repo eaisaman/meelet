@@ -86,6 +86,9 @@ define(
                 hsl = self.rgbToHsl(r, g, b),
                 newBrightness = hsl[2] + hsl[2] * percent;
 
+            if (hsl[2] == 0 || hsl[2] == 1) {
+                newBrightness = hsl[2] + percent;
+            }
             if (newBrightness < 0) {
                 newBrightness = 0;
             } else if (newBrightness > 1) {
@@ -313,36 +316,27 @@ define(
             if (!onceId)
                 return angular.noop;
 
-            self.onceArray = self.onceArray || [];
-            if (!self.onceArray.every(
-                    function (f, index) {
-                        return f.onceId != onceId;
-                    }
-                ))
+            self.onceMap = self.onceMap || {};
+            self.onceMap[onceId] = self.onceMap[onceId] || {isExecuted: false};
+            if (self.onceMap[onceId].isExecuted)
                 return angular.noop;
-
-            self.onceArray.push(fn);
+            self.onceMap[onceId].isExecuted = true;
 
             return function () {
                 var args = Array.prototype.slice.call(arguments);
 
-                fn.apply(null, args).then(
-                    self.$timeout(
-                        function () {
-                            var indexes = [];
+                fn.apply(null, args).then(function () {
+                        var callbackArgs = Array.prototype.slice.call(arguments);
 
-                            self.onceArray.forEach(function (f, index) {
-                                f.onceId == onceId && indexes.push(index);
-                            });
-                            indexes.reverse();
-                            indexes.forEach(function (index) {
-                                self.onceArray.splice(index, 1);
-                            })
+                        self.$timeout(
+                            function () {
+                                callback && callback.apply(null, callbackArgs);
 
-                            callback && callback();
-                        },
-                        interval
-                    )
+                                delete self.onceMap[onceId];
+                            },
+                            interval
+                        )
+                    }
                 );
             }
         }
@@ -354,32 +348,49 @@ define(
             if (!onceId)
                 return angular.noop;
 
-            self.onceArray = self.onceArray || [];
-            self.onceArray.push(fn);
+            function latestOnceHandler(id) {
+                self.$timeout(
+                    function () {
+                        var fn = self.latestOnceMap[id].fn,
+                            callback = self.latestOnceMap[id].callback,
+                            args = self.latestOnceMap[id].args,
+                            timestamp = self.latestOnceMap[id].timestamp;
+
+                        function block() {
+                            callback && callback.apply(null, Array.prototype.slice.call(arguments));
+
+                            if (timestamp == self.latestOnceMap[id].timestamp) {
+                                self.latestOnceMap[id].isExecuted = false;
+
+                                delete self.latestOnceMap[id].fn;
+                                delete self.latestOnceMap[id].callback;
+                                delete self.latestOnceMap[id].timestamp;
+                                delete self.latestOnceMap[id].args;
+                            } else {
+                                latestOnceHandler(id);
+                            }
+                        }
+
+                        fn.apply(null, args).then(block, block);
+                    }, interval
+                );
+            }
 
             return function () {
                 var args = Array.prototype.slice.call(arguments);
 
-                self.$timeout(
-                    function () {
-                        var indexes = [];
+                self.latestOnceMap = self.latestOnceMap || {};
+                self.latestOnceMap[onceId] = self.latestOnceMap[onceId] || {isExecuted: false};
+                self.latestOnceMap[onceId].fn = fn;
+                self.latestOnceMap[onceId].callback = callback;
+                self.latestOnceMap[onceId].timestamp = new Date().getTime();
+                self.latestOnceMap[onceId].args = args;
 
-                        self.onceArray.forEach(function (f, index) {
-                            f.onceId == onceId && indexes.push(index);
-                        });
+                if (!self.latestOnceMap[onceId].isExecuted) {
+                    self.latestOnceMap[onceId].isExecuted = true;
 
-                        if (indexes.length) {
-                            indexes.reverse();
-                            indexes.forEach(function (index) {
-                                self.onceArray.splice(index, 1);
-                            })
-
-                            fn.apply(null, args).then(function () {
-                                callback && callback();
-                            });
-                        }
-                    }, interval
-                );
+                    latestOnceHandler(onceId);
+                }
             };
         }
 
@@ -551,10 +562,12 @@ define(
                 var transformStyle = {},
                     arr;
 
-                if (toString.call(styleValue) === '[object Object]')
-                    arr = [styleValue]
-                else if (toString.call(styleValue) === '[object Array]')
-                    arr = styleValue;
+                if (styleValue != null) {
+                    if (toString.call(styleValue) === '[object Object]')
+                        arr = [styleValue]
+                    else if (toString.call(styleValue) === '[object Array]')
+                        arr = styleValue;
+                }
 
                 var transformArr = [];
                 arr && arr.forEach(function (t) {
@@ -568,31 +581,36 @@ define(
 
                 styleObj = transformStyle;
             } else if (styleName === "transform-origin") {
-                styleObj = self.prefixedStyle("transform-origin", "{0}", styleValue);
+                if (styleValue != null) {
+                    styleObj = self.prefixedStyle("transform-origin", "{0}", styleValue);
+                } else {
+                    styleObj = self.prefixedStyle("transform-origin", "{0}", "");
+                }
             } else if (styleName === "box-shadow") {
                 var arr = [];
-                if (styleValue && toString.call(styleValue) === '[object Array]') {
-                    styleValue.forEach(function (item) {
-                        var str = "{0} {1} {2} {3} {4} {5}".format(item.color || "", item["h-shadow"] || "", item["v-shadow"] || "", item["blur"] || "", item["spread"] || "", item["inset"] || "").trim();
-                        str && arr.push(str);
-                    });
+                if (styleValue != null) {
+                    if (toString.call(styleValue) === '[object Array]') {
+                        styleValue.forEach(function (item) {
+                            var str = "{0} {1} {2} {3} {4} {5}".format(item.color || "", item["h-shadow"] || "", item["v-shadow"] || "", item["blur"] || "", item["spread"] || "", item["inset"] || "").trim();
+                            str && arr.push(str);
+                        });
+                    }
                 }
 
-                if (arr.length)
-                    styleObj = {"box-shadow": arr.join(",")};
+                styleObj = {"box-shadow": arr.join(",")};
             } else if (styleName === "text-shadow") {
                 var arr = [];
-                if (styleValue && toString.call(styleValue) === '[object Array]') {
-                    styleValue.forEach(function (item) {
-                        var str = "{0} {1} {2} {3}".format(item.color || "", item["h-shadow"] || "", item["v-shadow"] || "", item["blur"] || "").trim();
-                        str && arr.push(str);
-                    });
-
-                    if (arr.length)
-                        styleObj = {"text-shadow": arr.join(",")};
+                if (styleValue != null) {
+                    if (toString.call(styleValue) === '[object Array]') {
+                        styleValue.forEach(function (item) {
+                            var str = "{0} {1} {2} {3}".format(item.color || "", item["h-shadow"] || "", item["v-shadow"] || "", item["blur"] || "").trim();
+                            str && arr.push(str);
+                        });
+                    }
                 }
+                styleObj = {"text-shadow": arr.join(",")};
             } else if (styleName === "linearGradientColor") {
-                if (styleValue && styleValue.colorStopList) {
+                if (styleValue && styleValue.colorStopList && styleValue.colorStopList.length) {
                     if (styleValue.colorStopList.length > 1) {
                         var x1, y1, x2, y2;
                         if (styleValue.angle == 90) {
@@ -653,18 +671,15 @@ define(
                             }
                         );
 
-                        if (styles.length)
-                            styleObj = {"background": styles};
-                    } else if (styleValue.colorStopList.length == 1) {
-                        var color = styleValue.colorStopList[0].color;
-                        if (color) {
-                            styleObj = {"background": color};
-                        }
+                        styleObj = {"background": styles};
+                    } else {
+                        styleObj = {"background": styleValue.colorStopList[0].color || ""};
                     }
+                } else {
+                    styleObj = {"background": ""};
                 }
             } else {
-                if (styleValue != null)
-                    styleObj[styleName] = styleValue;
+                styleObj[styleName] = styleValue || "";
             }
 
             return styleObj;
