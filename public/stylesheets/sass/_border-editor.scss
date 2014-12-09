@@ -1,55 +1,167 @@
+@import "compass/css3/transform";
+@import "compass/css3/transition";
+@import "compass/css3/flexbox";
+@import "color_editor_palette";
+@import "simple-dropdown";
+
 $borderColor: rgba(0, 0, 0, 0.4);
 $activeBorderShadow: rgba(192, 192, 192, 0.8);
+$underlineLinearGradient: (rgb(235, 235, 235) 0%, rgb(235, 235, 235) 50%, #fff 100%);
+$activeColor: #669933;
 
-@mixin color-picker($colorPickerId) {
-    ##{$colorPickerId} {
-        > .pickerContent {
+@include simple-dropdown(borderWidthDropdown, $activeColor);
+@include simple-dropdown(borderStyleDropdown, $activeColor);
+@include color-editor-palette(borderColorPalette);
+
+@mixin border-editor($borderEditorId) {
+    ##{$borderEditorId} {
+        > .borderContent {
             position: absolute;
             left: 0;
             top: 0;
 
-            > .pickerBar {
+            > .borderBar {
                 position: relative;
                 float: left;
                 width: 100%;
                 height: 2em;
 
-                > .pickerPane {
+                > .borderSample {
                     position: absolute;
                     top: 0;
                     left: 0;
-                    width: 100%;
-                    height: 100%;
-                    text-align: center;
+                    width: calc(100% - 1em);
+                    height: calc(100% - 1em);
+                    line-height: 1;
+                    margin: 0.5em;
                     text-transform: uppercase;
-                    letter-spacing: 2px;
+                    text-align: center;
                 }
             }
 
-            > .pickerPalette {
-                > .colorPane {
+            > .borderPalette {
+                background: #fff;
+                border: 1px solid $borderColor;
+
+                @include box-shadow(0 4px 3px #555);
+
+                > .borderPane {
                     position: relative;
                     float: left;
-                    margin: 5px;
-                    border-radius: 5px;
-                    border-bottom: 1px solid $borderColor;
+                    width: calc(100% - 0.2em);
+                    height: 2em;
+                    background: #fff;
 
-                    &:active {
-                        @include box-shadow(0 0 15px $activeBorderShadow);
+                    &:after {
+                        position: absolute;
+                        right: 0;
+                        bottom: 0;
+                        content: '';
+                        width: 100%;
+                        height: 2px;
+
+                        @include background(linear-gradient(left, $underlineLinearGradient));
                     }
-                }
 
-            }
+                    > .input-group {
+                        top: calc(50% - 0.75em);
+                    }
 
-            &.expanded {
-                > .pickerBar {
-                    > .pickerPane {
-                        top: 0.5em;
-                        left: 0.5em;
-                        width: calc(100% - 1em);
-                        height: calc(100% - 1em);
-                        border-radius: 5px;
-                        @extend %swashIn;
+                    .borderValueInput {
+                        &::-webkit-inner-spin-button,
+                        &::-webkit-outer-spin-button {
+                            -webkit-appearance: none;
+                            margin: 0;
+                        }
+
+                        &#borderWidthInput {
+                            position: absolute;
+                            left: 0;
+                            top: 0;
+                            width: calc(100% - 2em);
+                            height: 2em;
+                            z-index: 210;
+                        }
+                    }
+
+                    #borderWidthDropdown {
+                        z-index: 4;
+                    }
+
+                    #borderStyleDropdown {
+                        z-index: 3;
+                    }
+
+                    &.borderColorPane {
+
+                        .borderColorBar {
+                            position: relative;
+                            width: 100%;
+                            height: 2em;
+                            line-height: 2;
+                            color: #999;
+                            font-weight: 700;
+                            background: #fff;
+                            display: block;
+                            cursor: pointer;
+
+                            @include box-shadow(0 5px 5px rgba(0, 0, 0, 0.1));
+                            @include transform-style(preserve-3d);
+                            @include transform-origin(50% 0%);
+                            @include transition(transform 0.3s);
+
+                            @include backface-visibility(hidden);
+                            @include user-select(none);
+                            -webkit-touch-callout: none;
+
+                            &:after {
+                                content: '\25BC';
+                                position: absolute;
+                                right: 0px;
+                                width: 2em;
+                                line-height: 2;
+                                text-align: center;
+                                border-left: 1px solid #ddd;
+                            }
+
+                            &:active {
+                                @include transform(rotateX(60deg));
+                            }
+
+                            .borderColorPickerPane {
+                                position: absolute;
+                                left: 0;
+                                top: 0;
+                                width: calc(100% - 2em);
+                                height: 100%;
+                                line-height: 2;
+                                text-align: center;
+                            }
+                        }
+
+                        .borderColorPalette {
+                            z-index: 4;
+                            position: absolute;
+                            top: 100%;
+                            left: 0;
+                            width: 100%;
+                            padding-top: 15px;
+                            opacity: 0;
+                            pointer-events: none;
+
+                            &.show {
+                                pointer-events: auto;
+                                opacity: 1;
+
+                                @extend %twisterInDown;
+                            }
+                        }
+
+                        &.select {
+                            .borderColorBar:after {
+                                content: '\25B2';
+                            }
+                        }
                     }
                 }
             }

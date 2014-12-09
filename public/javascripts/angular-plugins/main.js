@@ -2,7 +2,8 @@ require.config(
     {
         paths: {
             "angular-ui-tree": ANGULAR_PLUGINS_LIB_PATH + "angular-ui-tree"
-        }
+        },
+        waitSeconds: 0
     }
 );
 

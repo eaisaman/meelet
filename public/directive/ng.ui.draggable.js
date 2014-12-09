@@ -24,7 +24,7 @@ define(
                     onceId: "draggable.dragHandler.handler",
                     scaleSetting: "sketchWidgetSetting.scale"
                 },
-                options = angular.extend(defaults, opts);
+                options = _.extend(defaults, opts);
 
             appModule.directive(
                 DIRECTIVE,
@@ -37,7 +37,7 @@ define(
                                 opts = $parse(attr[DIRECTIVE + 'Opts'])(scope, {});
 
                             opts.direction = directionOpt[opts.direction || 'all'] || DIRECTION_ALL;
-                            options = angular.extend(options, opts)
+                            options = _.extend(_.clone(options), opts)
                             scope.$watch(options.scaleSetting, function (value) {
                                 scope.scale = value;
                             });

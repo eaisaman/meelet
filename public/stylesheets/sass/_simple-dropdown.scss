@@ -41,6 +41,39 @@
                 content: '\25B2';
             }
 
+            > div {
+                position: relative;
+                width: 100%;
+                color: #999;
+                font-weight: 700;
+                background: #fff;
+                display: block;
+                cursor: pointer;
+                overflow: hidden;
+
+                @include backface-visibility(hidden);
+                @include user-select(none);
+                -webkit-touch-callout: none;
+
+                > * {
+                    width: calc(100% - 2em);
+                }
+
+                &:after {
+                    content: '\25BC';
+                    position: absolute;
+                    right: 0px;
+                    width: 2em;
+                    line-height: 2;
+                    text-align: center;
+                    border-left: 1px solid #ddd;
+                }
+            }
+
+            &.cd-active > div:after {
+                content: '\25B2';
+            }
+
             ul {
                 list-style-type: none;
                 margin: 0;

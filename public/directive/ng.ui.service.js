@@ -1,18 +1,19 @@
 define(
     ["angular", "jquery", "underscore", "ng.ui.util"],
     function () {
-        var Service = function ($parse, $timeout, $q, $compile, angularConstants, uiUtilService) {
+        var Service = function ($parse, $timeout, $q, $compile, $rootScope, angularConstants, uiUtilService) {
             this.$parse = $parse;
             this.$timeout = $timeout;
             this.$q = $q;
             this.$compile = $compile;
+            this.$rootScope = $rootScope;
             this.angularConstants = angularConstants;
             this.uiUtilService = uiUtilService;
 
             _.extend($inject, _.pick(this, Service.$inject));
         };
 
-        Service.$inject = ["$parse", "$timeout", "$q", "$compile", "angularConstants", "uiUtilService"];
+        Service.$inject = ["$parse", "$timeout", "$q", "$compile", "$rootScope", "angularConstants", "uiUtilService"];
         var $inject = {};
 
         //Define sketch widget class
@@ -60,7 +61,7 @@ define(
                     var MEMBERS = arguments.callee.prototype.MEMBERS;
 
                     for (var member in MEMBERS) {
-                        this[member] = _.clone(MEMBERS[member]);
+                        this[member] = angular.copy(MEMBERS[member]);
                     }
                     this.node = node;
                     this.context = context;
@@ -126,7 +127,7 @@ define(
                     var MEMBERS = arguments.callee.prototype.MEMBERS;
 
                     for (var member in MEMBERS) {
-                        this[member] = _.clone(MEMBERS[member]);
+                        this[member] = angular.copy(MEMBERS[member]);
                     }
 
                     this.state = state;
@@ -182,7 +183,7 @@ define(
                             triggerSetterHandler.onceId = "Transition.createTriggerSetter.triggerSetterHandler";
 
                             if (eventId) {
-                                var args = Array.prototype.slice.apply(arguments),
+                                var args = Array.prototype.slice.call(arguments),
                                     result = assign.apply(fn, args),
                                     triggerInfo = _.where(scope.triggers[triggerType], {id: eventId}),
                                     transition = scope.transition;
@@ -206,7 +207,7 @@ define(
                     this.actionObj = actionObj;
                 },
                 setAnimationAction: function (animation) {
-                    this.setAction(new AnimationTransitionAction(_.clone(animation)));
+                    this.setAction(new AnimationTransitionAction(angular.copy(animation)));
                 },
                 setTrigger: function (triggerType, eventName, options) {
                     var self = this,
@@ -267,7 +268,7 @@ define(
                     var MEMBERS = arguments.callee.prototype.MEMBERS;
 
                     for (var member in MEMBERS) {
-                        this[member] = _.clone(MEMBERS[member]);
+                        this[member] = angular.copy(MEMBERS[member]);
                     }
 
                     this.actionType = actionType;
@@ -294,7 +295,7 @@ define(
                     var MEMBERS = arguments.callee.prototype.MEMBERS;
 
                     for (var member in MEMBERS) {
-                        this[member] = _.clone(MEMBERS[member]);
+                        this[member] = angular.copy(MEMBERS[member]);
                     }
                     this.animation = animation;
                 },
@@ -361,7 +362,7 @@ define(
                     var MEMBERS = arguments.callee.prototype.MEMBERS;
 
                     for (var member in MEMBERS) {
-                        this[member] = _.clone(MEMBERS[member]);
+                        this[member] = angular.copy(MEMBERS[member]);
                     }
 
                     this.triggerType = triggerType;
@@ -387,7 +388,7 @@ define(
                     var MEMBERS = arguments.callee.prototype.MEMBERS;
 
                     for (var member in MEMBERS) {
-                        this[member] = _.clone(MEMBERS[member]);
+                        this[member] = angular.copy(MEMBERS[member]);
                     }
 
                     this.callback = callback;
@@ -436,10 +437,12 @@ define(
                     stateMaps: {}
                 },
                 initialize: function (widgetObj) {
+                    //TODO How to group each element's style into a css class
+
                     var MEMBERS = arguments.callee.prototype.MEMBERS;
 
                     for (var member in MEMBERS) {
-                        this[member] = _.clone(MEMBERS[member]);
+                        this[member] = angular.copy(MEMBERS[member]);
                     }
 
                     this.widgetObj = widgetObj;
@@ -460,7 +463,13 @@ define(
                     stateContext = stateContext || state.context;
 
                     var stateMap = self.stateMaps[stateContext] || {},
-                        stateValue = stateMap[state.name] || {style: {}, classList: []},
+                        stateValue = stateMap[state.name] || {
+                                style: {},
+                                beforeStyle: {},
+                                afterStyle: {},
+                                styleSource: [],
+                                classList: []
+                            },
                         classList = stateValue.classList;
 
                     if (stateMap !== self.stateMaps[stateContext]) self.stateMaps[stateContext] = stateMap;
@@ -489,7 +498,13 @@ define(
                     stateContext = stateContext || state.context;
 
                     var stateMap = self.stateMaps[stateContext] || {},
-                        stateValue = stateMap[state.name] || {style: {}, classList: []};
+                        stateValue = stateMap[state.name] || {
+                                style: {},
+                                beforeStyle: {},
+                                afterStyle: {},
+                                styleSource: [],
+                                classList: []
+                            };
 
                     if (stateMap === self.stateMaps[stateContext] && stateValue === stateMap[state.name]) {
                         var classList = stateValue.classList;
@@ -527,7 +542,13 @@ define(
                     stateContext = stateContext || state.context;
 
                     var stateMap = self.stateMaps[stateContext] || {},
-                        stateValue = stateMap[state.name] || {style: {}, classList: []};
+                        stateValue = stateMap[state.name] || {
+                                style: {},
+                                beforeStyle: {},
+                                afterStyle: {},
+                                styleSource: [],
+                                classList: []
+                            };
 
                     if (stateMap === self.stateMaps[stateContext] && stateValue === stateMap[state.name]) {
                         var classList = stateValue.classList;
@@ -546,7 +567,13 @@ define(
                     stateContext = stateContext || state.context;
 
                     var stateMap = self.stateMaps[stateContext] || {},
-                        stateValue = stateMap[state.name] || {style: {}, classList: []};
+                        stateValue = stateMap[state.name] || {
+                                style: {},
+                                beforeStyle: {},
+                                afterStyle: {},
+                                styleSource: [],
+                                classList: []
+                            };
 
                     if (stateMap !== self.stateMaps[stateContext]) self.stateMaps[stateContext] = stateMap;
                     if (stateValue !== stateMap[state.name]) stateMap[state.name] = stateValue;
@@ -554,49 +581,69 @@ define(
                     return stateValue.classList;
                 },
                 css: function (state, stateContext) {
+                    var args = Array.prototype.slice.call(arguments);
+                    args.splice(2, 0, "");
+                    return this.pseudoCss.apply(this, args);
+                },
+                pseudoCss: function (state, stateContext, pseudo) {
                     var self = this;
 
                     state = state || self.widgetObj.state;
                     stateContext = stateContext || state.context;
 
                     var stateMap = self.stateMaps[stateContext] || {},
-                        stateValue = stateMap[state.name] || {style: {}, classList: []},
-                        style = stateValue.style,
+                        stateValue = stateMap[state.name] || {
+                                style: {},
+                                beforeStyle: {},
+                                afterStyle: {},
+                                styleSource: [],
+                                classList: []
+                            },
                         args = Array.prototype.slice.call(arguments, 2),
-                        ret = self;
+                        ret = self,
+                        stylePseudoPrefix = ((pseudo || "") + "Style").replace(/^:(.+)/, "$1");
+                    stylePseudoPrefix = stylePseudoPrefix.charAt(0).toLowerCase() + stylePseudoPrefix.substr(1);
+
+                    var style = stateValue[stylePseudoPrefix];
 
                     if (stateMap !== self.stateMaps[stateContext]) self.stateMaps[stateContext] = stateMap;
                     if (stateValue !== stateMap[state.name]) stateMap[state.name] = stateValue;
 
                     switch (args.length) {
-                        case 1 :
-                            if (typeof args[0] === "string")
-                                ret = style[args[0]];
-                            else if (typeof args[0] === "object") {
-                                for (var key in args[0]) {
-                                    self.css(state, stateContext, key, args[0][key]);
-                                }
-                            } else if (!args[0]) {
-                                _.keys(style).forEach(function (key) {
-                                    delete style[key];
-                                });
-                            }
+                        case 0:
+                            ret = _.pick(stateValue, ["style", "beforeStyle", "afterStyle"]);
+                            break;
+                        case 1:
+                            ret = _.pick(stateValue, [stylePseudoPrefix]);
                             break;
                         case 2 :
-                            if (typeof args[0] === "string") {
+                            if (typeof args[1] === "string")
+                                ret = style[args[1]];
+                            else if (typeof args[1] === "object") {
                                 if (args[1]) {
-                                    style[args[0]] = args[1];
+                                    for (var key in args[1]) {
+                                        self.pseudoCss(state, stateContext, pseudo, key, args[1][key]);
+                                    }
+                                }  else {
+                                    _.keys(style).forEach(function (key) {
+                                        delete style[key];
+                                    });
+                                }
+                            }
+                            break;
+                        case 3 :
+                            if (typeof args[1] === "string") {
+                                if (args[2] != null) {
+                                    style[args[1]] = args[2];
                                 } else {
-                                    delete style[args[0]];
+                                    delete style[args[1]];
                                 }
                                 if (self.widgetObj.$element) {
                                     if (state == self.widgetObj.state) {
-                                        if (toString.call(args[1]) === '[object Array]') {
-                                            args[1].forEach(function (styleValue) {
-                                                self.widgetObj.$element.css(args[0], styleValue);
-                                            });
+                                        if (stylePseudoPrefix === "style") {
+                                            self.applyStyle(args[1], args[2]);
                                         } else {
-                                            self.widgetObj.$element.css(args[0], args[1]);
+                                            self.updatePseudoStyle(state, stateContext);
                                         }
                                     }
                                 }
@@ -609,6 +656,208 @@ define(
 
                     return ret;
                 },
+                trackablePseudoCss: function (state, stateContext, source, pseudo) {
+                    var self = this;
+
+                    state = state || self.widgetObj.state;
+                    stateContext = stateContext || state.context;
+
+                    var stateMap = self.stateMaps[stateContext] || {},
+                        stateValue = stateMap[state.name] || {
+                                style: {},
+                                beforeStyle: {},
+                                afterStyle: {},
+                                styleSource: [],
+                                classList: []
+                            },
+                        args = Array.prototype.slice.call(arguments, 3),
+                        ret = self,
+                        stylePseudoPrefix = ((pseudo || "") + "Style").replace(/^:(.+)/, "$1");
+                    stylePseudoPrefix = stylePseudoPrefix.charAt(0).toLowerCase() + stylePseudoPrefix.substr(1);
+
+                    var styleSourceArr = _.where(stateValue.styleSource, {source: source}),
+                        styleSource;
+                    if (styleSourceArr.length) {
+                        styleSource = styleSourceArr[0];
+                    } else {
+                        styleSource = {
+                            source: source,
+                            style: {},
+                            beforeStyle: {},
+                            afterStyle: {}
+                        };
+                        stateValue.styleSource.push(styleSource);
+                    }
+                    var sourceStyle = styleSource[stylePseudoPrefix];
+
+                    if (stateMap !== self.stateMaps[stateContext]) self.stateMaps[stateContext] = stateMap;
+                    if (stateValue !== stateMap[state.name]) stateMap[state.name] = stateValue;
+
+                    switch (args.length) {
+                        case 0:
+                            ret = styleSource;
+                            break;
+                        case 1:
+                            ret = sourceStyle;
+                            break;
+                        case 2 :
+                            if (typeof args[1] === "string") {
+                                ret = sourceStyle[args[1]];
+                            } else if (typeof args[1] === "object") {
+                                if (args[1]) {
+                                    for (var key in args[1]) {
+                                        self.trackablePseudoCss(state, stateContext, source, pseudo, key, args[1][key]);
+                                    }
+                                } else {
+                                    var keys = _.keys(sourceStyle);
+
+                                    if (keys.length) {
+                                        keys.forEach(function (key) {
+                                            delete sourceStyle[key];
+                                        });
+
+                                        //FIXME Use latestOnce
+                                        var styleProps = {};
+                                        styleProps[stylePseudoPrefix] = keys;
+                                        self.uniteSourceStyle(state, stateContext, styleProps);
+                                    }
+                                }
+                            }
+                            break;
+                        case 3 :
+                            if (typeof args[1] === "string") {
+                                if (args[2] != null) {
+                                    sourceStyle[args[1]] = args[2];
+                                } else {
+                                    delete sourceStyle[args[1]];
+                                }
+                                //FIXME Use latestOnce
+                                var styleProps = {};
+                                styleProps[stylePseudoPrefix] = [args[1]];
+                                self.uniteSourceStyle(state, stateContext, styleProps);
+                            }
+                            break;
+
+                        default:
+                            break;
+                    }
+
+                    return ret;
+                },
+                uniteSourceStyle: function (state, stateContext, styleProps) {
+                    var self = this;
+
+                    state = state || self.widgetObj.state;
+                    stateContext = stateContext || state.context;
+
+                    var stateMap = self.stateMaps[stateContext] || {},
+                        stateValue = stateMap[state.name] || {
+                                style: {},
+                                beforeStyle: {},
+                                afterStyle: {},
+                                styleSource: [],
+                                classList: []
+                            };
+
+                    if (stateMap !== self.stateMaps[stateContext]) self.stateMaps[stateContext] = stateMap;
+                    if (stateValue !== stateMap[state.name]) stateMap[state.name] = stateValue;
+
+                    _.each(styleProps, function (props, stylePseudoPrefix) {
+                        var pseudoStyle = {},
+                            pseudo = stylePseudoPrefix.replace(/style/i, "");
+                        if (props && props.length) {
+                            props.forEach(function (prop) {
+                                var propValues = [];
+                                _.pluck(stateValue.styleSource, stylePseudoPrefix).forEach(function (value) {
+                                    if (value[prop] !== undefined) {
+                                        propValues.push(value[prop]);
+                                    }
+                                });
+
+                                pseudoStyle[prop] = propValues.length ? propValues[propValues.length - 1] : null;
+                            });
+                        } else {
+                            _.pluck(stateValue.styleSource, stylePseudoPrefix).forEach(function (sourceStyle) {
+                                _.extend(pseudoStyle, sourceStyle);
+                            });
+                        }
+                        self.pseudoCss(state, stateContext, pseudo, pseudoStyle);
+                    });
+                },
+                updatePseudoStyle: function (state, stateContext) {
+                    var self = this;
+
+                    function appendToPseudoEnabledWidgets() {
+                        var defer = $inject.$q.defer();
+
+                        var pseudoWidgets = _.clone($inject.$rootScope.visiblePseudoEnabledWidgets);
+                        if ($inject.$rootScope.visiblePseudoEnabledWidgets.every(function (w) {
+                            return w.id != self.widgetObj.id;
+                        })) {
+                            pseudoWidgets.push(self.widgetObj);
+                        }
+
+                        $inject.$timeout(function () {
+                            $inject.$rootScope.visiblePseudoEnabledWidgets = pseudoWidgets;
+                        });
+
+                        return defer.promise;
+                    }
+
+                    appendToPseudoEnabledWidgets.onceId = "StyleManager.pseudoCss.appendToPseudoEnabledWidgets";
+
+                    state = state || self.widgetObj.state;
+                    stateContext = stateContext || state.context;
+
+                    var stateMap = self.stateMaps[stateContext] || {},
+                        stateValue = stateMap[state.name] || {
+                                style: {},
+                                beforeStyle: {},
+                                afterStyle: {},
+                                styleSource: [],
+                                classList: []
+                            };
+
+                    if (stateMap !== self.stateMaps[stateContext]) self.stateMaps[stateContext] = stateMap;
+                    if (stateValue !== stateMap[state.name]) stateMap[state.name] = stateValue;
+
+                    if (!_.isEmpty(stateValue.beforeStyle) || !_.isEmpty(stateValue.afterStyle)) {
+                        $inject.uiUtilService.latestOnce(appendToPseudoEnabledWidgets, null, 100)();
+                    }
+                },
+                removePseudoStyle: function () {
+                    var index;
+                    $inject.$rootScope.visiblePseudoEnabledWidgets.every(function (w, i) {
+                        if (w.id === self.id) {
+                            index = i;
+                            return false;
+                        }
+
+                        return true;
+                    });
+
+                    index != null && $inject.$rootScope.visiblePseudoEnabledWidgets.splice(index, 1);
+                },
+                applyStyle: function (styleName, styleValue) {
+                    var self = this;
+
+                    if (self.widgetObj.$element) {
+                        if (styleValue == null) {
+                            self.widgetObj.$element.css(styleName, "");
+                        } else {
+                            var styleObj = $inject.uiUtilService.composeCssStyle(styleName, styleValue);
+                            styleObj && _.each(styleObj, function (value, key) {
+                                if (toString.call(value) === '[object Array]') {
+                                    value.forEach(function (v) {
+                                        self.widgetObj.$element.css(key, v);
+                                    });
+                                } else {
+                                    self.widgetObj.$element.css(key, value);
+                                }
+                            })
+                        }
+                    }
+                },
                 draw: function (state, stateContext) {
                     var self = this;
 
@@ -616,7 +865,13 @@ define(
                     stateContext = stateContext || state.context;
 
                     var stateMap = self.stateMaps[stateContext] || {},
-                        stateValue = stateMap[state.name] || {style: {}, classList: []},
+                        stateValue = stateMap[state.name] || {
+                                style: {},
+                                beforeStyle: {},
+                                afterStyle: {},
+                                styleSource: [],
+                                classList: []
+                            },
                         style = stateValue.style,
                         classList = stateValue.classList;
 
@@ -627,14 +882,16 @@ define(
                             for (var styleName in style) {
                                 var styleValue = style[styleName];
 
-                                if (styleValue === '[object Array]') {
+                                if (toString.call(styleValue) === '[object Array]') {
                                     styleValue.forEach(function (value) {
-                                        self.widgetObj.$element.css(styleName, value);
+                                        self.applyStyle(styleName, value);
                                     });
                                 } else {
-                                    self.widgetObj.$element.css(styleName, styleValue);
+                                    self.applyStyle(styleName, styleValue);
                                 }
                             }
+
+                            self.updatePseudoStyle(state, stateContext);
                         }
                     }
                 },
@@ -644,7 +901,7 @@ define(
                         cloneMembers = _.difference(_.keys(self.MEMBERS), ["widgetObj", "stateMaps"]);
 
                     cloneMembers.forEach(function (member) {
-                        cloneObj[member] = _.clone(self[member]);
+                        cloneObj[member] = angular.copy(self[member]);
                     });
 
                     //style may contains property with array value
@@ -655,6 +912,9 @@ define(
                             var stateValue = stateMap[stateName];
                             cloneObj.stateMaps[stateContext][stateName] = {
                                 style: {},
+                                beforeStyle: {},
+                                afterStyle: {},
+                                styleSource: [],
                                 classList: _.clone(stateValue.classList)
                             };
 
@@ -662,7 +922,21 @@ define(
                                 cloneStyle = cloneObj.stateMaps[stateContext][stateName].style;
 
                             for (var styleName in style) {
-                                cloneStyle[styleName] = _.clone(style[styleName]);
+                                cloneStyle[styleName] = angular.copy(style[styleName]);
+                            }
+
+                            var beforeStyle = stateValue.beforeStyle,
+                                cloneBeforeStyle = cloneObj.stateMaps[stateContext][stateName].beforeStyle;
+
+                            for (var styleName in beforeStyle) {
+                                cloneBeforeStyle[styleName] = angular.copy(beforeStyle[styleName]);
+                            }
+
+                            var afterStyle = stateValue.afterStyle,
+                                cloneAfterStyle = cloneObj.stateMaps[stateContext][stateName].afterStyle;
+
+                            for (var styleName in beforeStyle) {
+                                cloneAfterStyle[styleName] = angular.copy(afterStyle[styleName]);
                             }
                         }
                     }
@@ -740,7 +1014,7 @@ define(
                         var MEMBERS = arguments.callee.prototype.MEMBERS;
 
                         for (var member in MEMBERS) {
-                            this[member] = _.clone(MEMBERS[member]);
+                            this[member] = angular.copy(MEMBERS[member]);
                         }
                         this.id = id || ("Widget_" + new Date().getTime());
                         this.stateContext = this.STATE_CONTEXT;
@@ -823,11 +1097,11 @@ define(
                             cloneMembers = _.difference(_.keys(self.MEMBERS), ["id", "childWidgets", "styleManager", "states", "$element"]);
 
                         cloneMembers.forEach(function (member) {
-                            cloneObj[member] = _.clone(self[member]);
+                            cloneObj[member] = angular.copy(self[member]);
                         });
 
                         self.states.forEach(function (s) {
-                            cloneObj.states.push(s.clone && s.clone() || _.clone(s));
+                            cloneObj.states.push(s.clone && s.clone() || angular.copy(s));
                         });
                         cloneObj.setState(self.state);
 
@@ -873,6 +1147,7 @@ define(
                                 }
 
                                 self.$element.remove();
+                                self.styleManager.removePseudoStyle();
 
                             }
                             self.$element = null;
@@ -944,8 +1219,26 @@ define(
 
                         return this.styleManager.css.apply(this.styleManager, args);
                     },
+                    pseudoCss: function () {
+                        var args = Array.prototype.slice.call(arguments);
+                        args.splice(0, 0, this.state, this.stateContext);
+
+                        return this.styleManager.pseudoCss.apply(this.styleManager, args);
+                    },
+                    trackablePseudoCss: function () {
+                        var args = Array.prototype.slice.call(arguments);
+                        args.splice(0, 0, this.state, this.stateContext);
+
+                        return this.styleManager.trackablePseudoCss.apply(this.styleManager, args);
+                    },
                     showHide: function (showState) {
-                        this.$element && this.$element.toggle(showState);
+                        if (this.$element) {
+                            this.$element.toggle(showState);
+
+                            var isHidden = this.$element.css("display") === "none";
+                            showState && isHidden && this.styleManager.updatePseudoStyle();
+                            !showState && !isHidden && this.styleManager.removePseudoStyle();
+                        }
 
                         return showState;
                     },
@@ -1217,17 +1510,74 @@ define(
 
                         return defer.promise;
                     },
+                    setBorderColor: function (value) {
+                        value && this.css("border-color", value) || this.css("border-color", "");
+                    },
+                    getBorderColor: function () {
+                        return this.css("border-color");
+                    },
+                    setBorderWidth: function (value) {
+                        value && this.css("border-width", $inject.uiUtilService.formalizePixelLength(value)) || this.css("border-width", "");
+                    },
+                    getBorderWidth: function () {
+                        return this.css("border-width");
+                    },
+                    setBorderStyle: function (value) {
+                        value && this.css("border-style", value) || this.css("border-style", "");
+                    },
+                    getBorderStyle: function () {
+                        return this.css("border-style");
+                    },
+                    setBorderRadius: function (value) {
+                        value && this.css("border-radius", $inject.uiUtilService.formalizePixelLength(value)) || this.css("border-radius", "");
+                    },
+                    getBorderRadius: function () {
+                        return this.css("border-radius");
+                    },
                     setColor: function (value) {
                         value && this.css("color", value) || this.css("color", "");
                     },
                     getColor: function () {
                         return this.css("color");
                     },
-                    setBorderColor: function (value) {
-                        value && this.css("border-color", value) || this.css("border-color", "");
+                    setTextShadow: function (value) {
+                        value && this.css("text-shadow", value) || this.css("text-shadow", "");
                     },
-                    getBorderColor: function () {
-                        return this.css("border-color");
+                    getTextShadow: function () {
+                        return this.css("text-shadow");
+                    },
+                    setBoxShadow: function (value) {
+                        value && this.css("box-shadow", value) || this.css("box-shadow", "");
+                    },
+                    getBoxShadow: function () {
+                        return this.css("box-shadow");
+                    },
+                    getTrackablePseudoStyle: function () {
+                        var args = Array.prototype.slice.call(arguments);
+                        return this.trackablePseudoCss.apply(this, args);
+                    },
+                    setTrackablePseudoStyle: function (source) {
+                        var self = this,
+                            args = Array.prototype.slice.call(arguments);
+
+                        if (args.length > 1 && args[1]) {
+                            if (typeof args[1] === "string") {
+                                if (args.length > 2) {
+                                    self.trackablePseudoCss.apply(self, args);
+                                }
+                            } else if (typeof args[1] === "object") {
+                                var styleSource = self.getTrackablePseudoStyle(source);
+                                if (args[1] != styleSource) {
+                                    ["style", "beforeStyle", "afterStyle"].forEach(function (pseudoStylePrefix) {
+                                        var value = args[1][pseudoStylePrefix],
+                                            pseudo = pseudoStylePrefix.replace(/style/i, "");
+
+                                        self.trackablePseudoCss(source, pseudo, null);
+                                        value && self.trackablePseudoCss(source, pseudo, value);
+                                    });
+                                }
+                            }
+                        }
                     },
                     setLinearGradientColor: function (value) {
                         var self = this;
@@ -1386,7 +1736,7 @@ define(
                     var MEMBERS = arguments.callee.prototype.MEMBERS;
 
                     for (var member in MEMBERS) {
-                        this[member] = _.clone(MEMBERS[member]);
+                        this[member] = angular.copy(MEMBERS[member]);
                     }
 
                     this.isElement = true;
@@ -1405,7 +1755,7 @@ define(
                 },
                 toJSON: function () {
                     var jsonObj = this.initialize.prototype.__proto__.toJSON.apply(this);
-                    _.extend(jsonObj, _.pick(this, ["CLASS_NAME"]));
+                    _.extend(jsonObj, _.pick(this, ["CLASS_NAME", "html"]));
 
                     return jsonObj;
                 },
@@ -1413,6 +1763,7 @@ define(
                     var ret = new ElementSketchWidgetClass(obj.id);
 
                     ElementSketchWidgetClass.prototype.__proto__.fromObject.apply(ret, [obj]);
+                    ret.html = obj.html;
 
                     return ret;
                 },
@@ -1801,6 +2152,9 @@ define(
                         self.removeClass("zoom");
                         self.zoomed = false;
                     }
+                },
+                setHtml: function (value) {
+                    this.html = value;
                 }
             }),
             PageSketchWidgetClass = Class(BaseSketchWidgetClass, {
@@ -1811,7 +2165,7 @@ define(
                     var MEMBERS = arguments.callee.prototype.MEMBERS;
 
                     for (var member in MEMBERS) {
-                        this[member] = _.clone(MEMBERS[member]);
+                        this[member] = angular.copy(MEMBERS[member]);
                     }
 
                     this.resizable = false;

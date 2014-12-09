@@ -1,15 +1,39 @@
 @font-face {
 	font-family: 'icon-text-shadow';
-	src:url('fonts/icon-text-shadow.eot?-qxxr8e');
-	src:url('fonts/icon-text-shadow.eot?#iefix-qxxr8e') format('embedded-opentype'),
-		url('fonts/icon-text-shadow.woff?-qxxr8e') format('woff'),
-		url('fonts/icon-text-shadow.ttf?-qxxr8e') format('truetype'),
-		url('fonts/icon-text-shadow.svg?-qxxr8e#icon-text-shadow') format('svg');
+	src: url('icon-text-shadow.ttf') format('truetype');
 	font-weight: normal;
 	font-style: normal;
 }
 
-.icon-text-shadow {
+.icon-text-shadow:before {
+	font-family: 'icon-text-shadow';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon-text-shadow-before:before {
+	font-family: 'icon-text-shadow';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon-text-shadow-after:after {
 	font-family: 'icon-text-shadow';
 	speak: none;
 	font-style: normal;
@@ -28,4 +52,81 @@
 }
 .icon-text-shadow-alphabet:before {
 	content: "\e601";
+}
+.icon-text-shadow-format-list-bulleted:before {
+	content: "\e602";
+}
+.icon-text-shadow-cross:before {
+	content: "\e603";
+}
+.icon-text-shadow-insert:before {
+	content: "\e604";
+}
+.icon-text-shadow-remove:before {
+	content: "\e605";
+}
+.icon-text-shadow-paste:before {
+	content: "\e606";
+}
+.icon-text-shadow-brush:before {
+	content: "\e607";
+}
+.icon-text-shadow-copy:before {
+	content: "\e608";
+}
+
+.icon-text-shadow-angle-double-up-before:before {
+	content: "\e600";
+}
+.icon-text-shadow-alphabet-before:before {
+	content: "\e601";
+}
+.icon-text-shadow-format-list-bulleted-before:before {
+	content: "\e602";
+}
+.icon-text-shadow-cross-before:before {
+	content: "\e603";
+}
+.icon-text-shadow-insert-before:before {
+	content: "\e604";
+}
+.icon-text-shadow-remove-before:before {
+	content: "\e605";
+}
+.icon-text-shadow-paste-before:before {
+	content: "\e606";
+}
+.icon-text-shadow-brush-before:before {
+	content: "\e607";
+}
+.icon-text-shadow-copy-before:before {
+	content: "\e608";
+}
+
+.icon-text-shadow-angle-double-up-after:after {
+	content: "\e600";
+}
+.icon-text-shadow-alphabet-after:after {
+	content: "\e601";
+}
+.icon-text-shadow-format-list-bulleted-after:after {
+	content: "\e602";
+}
+.icon-text-shadow-cross-after:after {
+	content: "\e603";
+}
+.icon-text-shadow-insert-after:after {
+	content: "\e604";
+}
+.icon-text-shadow-remove-after:after {
+	content: "\e605";
+}
+.icon-text-shadow-paste-after:after {
+	content: "\e606";
+}
+.icon-text-shadow-brush-after:after {
+	content: "\e607";
+}
+.icon-text-shadow-copy-after:after {
+	content: "\e608";
 }

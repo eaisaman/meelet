@@ -2,7 +2,8 @@ require.config(
     {
         paths: {
             "hammer": HAMMER_LIB_PATH + "hammer.min"
-        }
+        },
+        waitSeconds: 0
     }
 );
 

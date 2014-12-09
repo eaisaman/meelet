@@ -1,561 +1,65 @@
 [
-    {
-        "group": "Regular",
-        "list": [
-            {
-                "name": "circle-shape",
-                "thumbnailStyle": {
-                    "style": {
-                        "width": "1em",
-                        "height": "1em",
-                        "background": "transparent",
-                        "border-color": "transparent"
-                    },
-                    "classList": ["fs-x-small", "pseudoShape", "icon-shape-before", "icon-shape-circle-shape-before"]
-                },
-                "shapeStyle": {
-                    "style": {
-                        "width": "100px",
-                        "height": "100px",
-                        "background": "transparent",
-                        "border-radius": "100%",
-                        "border-style": "solid",
-                        "border-width": "1px"
-                    },
-                    "classList": []
-                }
-            },
-            {
-                "name": "square-shape",
-                "thumbnailStyle": {
-                    "style": {
-                        "width": "1em",
-                        "height": "1em",
-                        "background": "transparent",
-                        "border-color": "transparent"
-                    },
-                    "classList": ["fs-x-small", "pseudoShape", "icon-shape-before", "icon-shape-square-shape-before"]
-                },
-                "shapeStyle": {
-                    "style": {
-                        "width": "100px",
-                        "height": "100px",
-                        "background": "transparent",
-                        "border-style": "solid",
-                        "border-width": "1px"
-                    },
-                    "classList": []
-                }
-            }
-        ]
-    },
-    {
-        "group": "Arrows",
-        "list": [
-            {
-                "name": "arrow-left",
-                "thumbnailStyle": {
-                    "style": {
-                        "width": "1em",
-                        "height": "1em",
-                        "background": "transparent",
-                        "border-color": "transparent"
-                    },
-                    "classList": ["fs-x-small", "pseudoShape", "icon-shape-before", "icon-shape-arrow-left-before"]
-                },
-                "shapeStyle": {
-                    "style": {
-                        "width": "1em",
-                        "height": "1em",
-                        "background": "transparent",
-                        "border-color": "transparent"
-                    },
-                    "classList": ["fs-x-small", "pseudoShape", "icon-shape-before", "icon-shape-arrow-left-before"]
-                }
-            },
-            {
-                "name": "arrow-right",
-                "thumbnailStyle": {
-                    "style": {
-                        "width": "1em",
-                        "height": "1em",
-                        "background": "transparent",
-                        "border-color": "transparent"
-                    },
-                    "classList": ["fs-x-small", "pseudoShape", "icon-shape-before", "icon-shape-arrow-right-before"]
-                },
-                "shapeStyle": {
-                    "style": {
-                        "width": "1em",
-                        "height": "1em",
-                        "background": "transparent",
-                        "border-color": "transparent"
-                    },
-                    "classList": ["fs-x-small", "pseudoShape", "icon-shape-before", "icon-shape-arrow-right-before"]
-                }
-            },
-            {
-                "name": "arrow-up",
-                "thumbnailStyle": {
-                    "style": {
-                        "width": "1em",
-                        "height": "1em",
-                        "background": "transparent",
-                        "border-color": "transparent"
-                    },
-                    "classList": ["fs-x-small", "pseudoShape", "icon-shape-before", "icon-shape-arrow-up-before"]
-                },
-                "shapeStyle": {
-                    "style": {
-                        "width": "1em",
-                        "height": "1em",
-                        "background": "transparent",
-                        "border-color": "transparent"
-                    },
-                    "classList": ["fs-x-small", "pseudoShape", "icon-shape-before", "icon-shape-arrow-up-before"]
-                }
-            },
-            {
-                "name": "arrow-down",
-                "thumbnailStyle": {
-                    "style": {
-                        "width": "1em",
-                        "height": "1em",
-                        "background": "transparent",
-                        "border-color": "transparent"
-                    },
-                    "classList": ["fs-x-small", "pseudoShape", "icon-shape-before", "icon-shape-arrow-down-before"]
-                },
-                "shapeStyle": {
-                    "style": {
-                        "width": "1em",
-                        "height": "1em",
-                        "background": "transparent",
-                        "border-color": "transparent"
-                    },
-                    "classList": ["fs-x-small", "pseudoShape", "icon-shape-before", "icon-shape-arrow-down-before"]
-                }
-            },
-            {
-                "name": "simple-arrow-left",
-                "thumbnailStyle": {
-                    "style": {
-                        "width": "1em",
-                        "height": "1em",
-                        "background": "transparent",
-                        "border-color": "transparent"
-                    },
-                    "classList": ["fs-x-small", "pseudoShape", "icon-shape-before", "icon-shape-simple-arrow-left-before"]
-                },
-                "shapeStyle": {
-                    "style": {
-                        "width": "1em",
-                        "height": "1em",
-                        "background": "transparent",
-                        "border-color": "transparent"
-                    },
-                    "classList": ["fs-x-small", "pseudoShape", "icon-shape-before", "icon-shape-simple-arrow-left-before"]
-                }
-            },
-            {
-                "name": "simple-arrow-right",
-                "thumbnailStyle": {
-                    "style": {
-                        "width": "1em",
-                        "height": "1em",
-                        "background": "transparent",
-                        "border-color": "transparent"
-                    },
-                    "classList": ["fs-x-small", "pseudoShape", "icon-shape-before", "icon-shape-simple-arrow-right-before"]
-                },
-                "shapeStyle": {
-                    "style": {
-                        "width": "1em",
-                        "height": "1em",
-                        "background": "transparent",
-                        "border-color": "transparent"
-                    },
-                    "classList": ["fs-x-small", "pseudoShape", "icon-shape-before", "icon-shape-simple-arrow-right-before"]
-                }
-            },
-            {
-                "name": "simple-arrow-up",
-                "thumbnailStyle": {
-                    "style": {
-                        "width": "1em",
-                        "height": "1em",
-                        "background": "transparent",
-                        "border-color": "transparent"
-                    },
-                    "classList": ["fs-x-small", "pseudoShape", "icon-shape-before", "icon-shape-simple-arrow-up-before"]
-                },
-                "shapeStyle": {
-                    "style": {
-                        "width": "1em",
-                        "height": "1em",
-                        "background": "transparent",
-                        "border-color": "transparent"
-                    },
-                    "classList": ["fs-x-small", "pseudoShape", "icon-shape-before", "icon-shape-simple-arrow-up-before"]
-                }
-            },
-            {
-                "name": "simple-arrow-down",
-                "thumbnailStyle": {
-                    "style": {
-                        "width": "1em",
-                        "height": "1em",
-                        "background": "transparent",
-                        "border-color": "transparent"
-                    },
-                    "classList": ["fs-x-small", "pseudoShape", "icon-shape-before", "icon-shape-simple-arrow-down-before"]
-                },
-                "shapeStyle": {
-                    "style": {
-                        "width": "1em",
-                        "height": "1em",
-                        "background": "transparent",
-                        "border-color": "transparent"
-                    },
-                    "classList": ["fs-x-small", "pseudoShape", "icon-shape-before", "icon-shape-simple-arrow-down-before"]
-                }
-            },
-            {
-                "name": "thick-arrow-left",
-                "thumbnailStyle": {
-                    "style": {
-                        "width": "1em",
-                        "height": "1em",
-                        "background": "transparent",
-                        "border-color": "transparent"
-                    },
-                    "classList": ["fs-x-small", "pseudoShape", "icon-shape-before", "icon-shape-thick-arrow-left-before"]
-                },
-                "shapeStyle": {
-                    "style": {
-                        "width": "1em",
-                        "height": "1em",
-                        "background": "transparent",
-                        "border-color": "transparent"
-                    },
-                    "classList": ["fs-x-small", "pseudoShape", "icon-shape-before", "icon-shape-thick-arrow-left-before"]
-                }
-            },
-            {
-                "name": "thick-arrow-right",
-                "thumbnailStyle": {
-                    "style": {
-                        "width": "1em",
-                        "height": "1em",
-                        "background": "transparent",
-                        "border-color": "transparent"
-                    },
-                    "classList": ["fs-x-small", "pseudoShape", "icon-shape-before", "icon-shape-thick-arrow-right-before"]
-                },
-                "shapeStyle": {
-                    "style": {
-                        "width": "1em",
-                        "height": "1em",
-                        "background": "transparent",
-                        "border-color": "transparent"
-                    },
-                    "classList": ["fs-x-small", "pseudoShape", "icon-shape-before", "icon-shape-thick-arrow-right-before"]
-                }
-            },
-            {
-                "name": "thick-arrow-up",
-                "thumbnailStyle": {
-                    "style": {
-                        "width": "1em",
-                        "height": "1em",
-                        "background": "transparent",
-                        "border-color": "transparent"
-                    },
-                    "classList": ["fs-x-small", "pseudoShape", "icon-shape-before", "icon-shape-thick-arrow-up-before"]
-                },
-                "shapeStyle": {
-                    "style": {
-                        "width": "1em",
-                        "height": "1em",
-                        "background": "transparent",
-                        "border-color": "transparent"
-                    },
-                    "classList": ["fs-x-small", "pseudoShape", "icon-shape-before", "icon-shape-thick-arrow-up-before"]
-                }
-            },
-            {
-                "name": "thick-arrow-down",
-                "thumbnailStyle": {
-                    "style": {
-                        "width": "1em",
-                        "height": "1em",
-                        "background": "transparent",
-                        "border-color": "transparent"
-                    },
-                    "classList": ["fs-x-small", "pseudoShape", "icon-shape-before", "icon-shape-thick-arrow-down-before"]
-                },
-                "shapeStyle": {
-                    "style": {
-                        "width": "1em",
-                        "height": "1em",
-                        "background": "transparent",
-                        "border-color": "transparent"
-                    },
-                    "classList": ["fs-x-small", "pseudoShape", "icon-shape-before", "icon-shape-thick-arrow-down-before"]
-                }
-            },
-            {
-                "name": "inner-arrow-left",
-                "thumbnailStyle": {
-                    "style": {
-                        "width": "1em",
-                        "height": "1em",
-                        "background": "transparent",
-                        "border-color": "transparent"
-                    },
-                    "classList": ["fs-x-small", "pseudoShape", "icon-shape-before", "icon-shape-inner-arrow-left-before"]
-                },
-                "shapeStyle": {
-                    "style": {
-                        "width": "1em",
-                        "height": "1em",
-                        "background": "transparent",
-                        "border-color": "transparent"
-                    },
-                    "classList": ["fs-x-small", "pseudoShape", "icon-shape-before", "icon-shape-inner-arrow-left-before"]
-                }
-            },
-            {
-                "name": "inner-arrow-right",
-                "thumbnailStyle": {
-                    "style": {
-                        "width": "1em",
-                        "height": "1em",
-                        "background": "transparent",
-                        "border-color": "transparent"
-                    },
-                    "classList": ["fs-x-small", "pseudoShape", "icon-shape-before", "icon-shape-inner-arrow-right-before"]
-                },
-                "shapeStyle": {
-                    "style": {
-                        "width": "1em",
-                        "height": "1em",
-                        "background": "transparent",
-                        "border-color": "transparent"
-                    },
-                    "classList": ["fs-x-small", "pseudoShape", "icon-shape-before", "icon-shape-inner-arrow-right-before"]
-                }
-            },
-            {
-                "name": "inner-arrow-up",
-                "thumbnailStyle": {
-                    "style": {
-                        "width": "1em",
-                        "height": "1em",
-                        "background": "transparent",
-                        "border-color": "transparent"
-                    },
-                    "classList": ["fs-x-small", "pseudoShape", "icon-shape-before", "icon-shape-inner-arrow-up-before"]
-                },
-                "shapeStyle": {
-                    "style": {
-                        "width": "1em",
-                        "height": "1em",
-                        "background": "transparent",
-                        "border-color": "transparent"
-                    },
-                    "classList": ["fs-x-small", "pseudoShape", "icon-shape-before", "icon-shape-inner-arrow-up-before"]
-                }
-            },
-            {
-                "name": "inner-arrow-down",
-                "thumbnailStyle": {
-                    "style": {
-                        "width": "1em",
-                        "height": "1em",
-                        "background": "transparent",
-                        "border-color": "transparent"
-                    },
-                    "classList": ["fs-x-small", "pseudoShape", "icon-shape-before", "icon-shape-inner-arrow-down-before"]
-                },
-                "shapeStyle": {
-                    "style": {
-                        "width": "1em",
-                        "height": "1em",
-                        "background": "transparent",
-                        "border-color": "transparent"
-                    },
-                    "classList": ["fs-x-small", "pseudoShape", "icon-shape-before", "icon-shape-inner-arrow-down-before"]
-                }
-            },
-            {
-                "name": "nav-arrow-nw",
-                "thumbnailStyle": {
-                    "style": {
-                        "width": "1em",
-                        "height": "1em",
-                        "background": "transparent",
-                        "border-color": "transparent"
-                    },
-                    "classList": ["fs-x-small", "pseudoShape", "icon-shape-before", "icon-shape-nav-arrow-nw-before"]
-                },
-                "shapeStyle": {
-                    "style": {
-                        "width": "1em",
-                        "height": "1em",
-                        "background": "transparent",
-                        "border-color": "transparent"
-                    },
-                    "classList": ["fs-x-small", "pseudoShape", "icon-shape-before", "icon-shape-nav-arrow-nw-before"]
-                }
-            },
-            {
-                "name": "nav-arrow-ne",
-                "thumbnailStyle": {
-                    "style": {
-                        "width": "1em",
-                        "height": "1em",
-                        "background": "transparent",
-                        "border-color": "transparent"
-                    },
-                    "classList": ["fs-x-small", "pseudoShape", "icon-shape-before", "icon-shape-nav-arrow-ne-before"]
-                },
-                "shapeStyle": {
-                    "style": {
-                        "width": "1em",
-                        "height": "1em",
-                        "background": "transparent",
-                        "border-color": "transparent"
-                    },
-                    "classList": ["fs-x-small", "pseudoShape", "icon-shape-before", "icon-shape-nav-arrow-ne-before"]
-                }
-            },
-            {
-                "name": "nav-arrow-se",
-                "thumbnailStyle": {
-                    "style": {
-                        "width": "1em",
-                        "height": "1em",
-                        "background": "transparent",
-                        "border-color": "transparent"
-                    },
-                    "classList": ["fs-x-small", "pseudoShape", "icon-shape-before", "icon-shape-nav-arrow-se-before"]
-                },
-                "shapeStyle": {
-                    "style": {
-                        "width": "1em",
-                        "height": "1em",
-                        "background": "transparent",
-                        "border-color": "transparent"
-                    },
-                    "classList": ["fs-x-small", "pseudoShape", "icon-shape-before", "icon-shape-nav-arrow-se-before"]
-                }
-            },
-            {
-                "name": "nav-arrow-sw",
-                "thumbnailStyle": {
-                    "style": {
-                        "width": "1em",
-                        "height": "1em",
-                        "background": "transparent",
-                        "border-color": "transparent"
-                    },
-                    "classList": ["fs-x-small", "pseudoShape", "icon-shape-before", "icon-shape-nav-arrow-sw-before"]
-                },
-                "shapeStyle": {
-                    "style": {
-                        "width": "1em",
-                        "height": "1em",
-                        "background": "transparent",
-                        "border-color": "transparent"
-                    },
-                    "classList": ["fs-x-small", "pseudoShape", "icon-shape-before", "icon-shape-nav-arrow-sw-before"]
-                }
-            },
-            {
-                "name": "angle-double-left",
-                "thumbnailStyle": {
-                    "style": {
-                        "width": "1em",
-                        "height": "1em",
-                        "background": "transparent",
-                        "border-color": "transparent"
-                    },
-                    "classList": ["fs-x-small", "pseudoShape", "icon-shape-before", "icon-shape-angle-double-left-before"]
-                },
-                "shapeStyle": {
-                    "style": {
-                        "width": "1em",
-                        "height": "1em",
-                        "background": "transparent",
-                        "border-color": "transparent"
-                    },
-                    "classList": ["fs-x-small", "pseudoShape", "icon-shape-before", "icon-shape-angle-double-left-before"]
-                }
-            },
-            {
-                "name": "angle-double-right",
-                "thumbnailStyle": {
-                    "style": {
-                        "width": "1em",
-                        "height": "1em",
-                        "background": "transparent",
-                        "border-color": "transparent"
-                    },
-                    "classList": ["fs-x-small", "pseudoShape", "icon-shape-before", "icon-shape-angle-double-right-before"]
-                },
-                "shapeStyle": {
-                    "style": {
-                        "width": "1em",
-                        "height": "1em",
-                        "background": "transparent",
-                        "border-color": "transparent"
-                    },
-                    "classList": ["fs-x-small", "pseudoShape", "icon-shape-before", "icon-shape-angle-double-right-before"]
-                }
-            },
-            {
-                "name": "angle-double-up",
-                "thumbnailStyle": {
-                    "style": {
-                        "width": "1em",
-                        "height": "1em",
-                        "background": "transparent",
-                        "border-color": "transparent"
-                    },
-                    "classList": ["fs-x-small", "pseudoShape", "icon-shape-before", "icon-shape-angle-double-up-before"]
-                },
-                "shapeStyle": {
-                    "style": {
-                        "width": "1em",
-                        "height": "1em",
-                        "background": "transparent",
-                        "border-color": "transparent"
-                    },
-                    "classList": ["fs-x-small", "pseudoShape", "icon-shape-before", "icon-shape-angle-double-up-before"]
-                }
-            },
-            {
-                "name": "angle-double-down",
-                "thumbnailStyle": {
-                    "style": {
-                        "width": "1em",
-                        "height": "1em",
-                        "background": "transparent",
-                        "border-color": "transparent"
-                    },
-                    "classList": ["fs-x-small", "pseudoShape", "icon-shape-before", "icon-shape-angle-double-down-before"]
-                },
-                "shapeStyle": {
-                    "style": {
-                        "width": "1em",
-                        "height": "1em",
-                        "background": "transparent",
-                        "border-color": "transparent"
-                    },
-                    "classList": ["fs-x-small", "pseudoShape", "icon-shape-before", "icon-shape-angle-double-down-before"]
-                }
-            }
-        ]
-    }
+  {
+    "group": "Default",
+    "borderWidthList": [
+      {
+        "name": "1px",
+        "value": "1px"
+      },
+      {
+        "name": "2px",
+        "value": "2px"
+      },
+      {
+        "name": "3px",
+        "value": "3px"
+      },
+      {
+        "name": "4px",
+        "value": "4px"
+      },
+      {
+        "name": "5px",
+        "value": "5px"
+      },
+      {
+        "name": "6px",
+        "value": "6px"
+      }
+    ],
+    "borderStyleList": [
+      {
+        "name": "solid",
+        "value": "solid"
+      },
+      {
+        "name": "dotted",
+        "value": "dotted"
+      },
+      {
+        "name": "dashed",
+        "value": "dashed"
+      },
+      {
+        "name": "double",
+        "value": "double"
+      },
+      {
+        "name": "groove",
+        "value": "groove"
+      },
+      {
+        "name": "ridge",
+        "value": "ridge"
+      },
+      {
+        "name": "inset",
+        "value": "inset"
+      },
+      {
+        "name": "outset",
+        "value": "outset"
+      }
+    ]
+  }
 ]

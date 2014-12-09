@@ -1,0 +1,96 @@
+<div class="ui-control-title fs-x-small">
+    <p ng-transclude></p>
+
+    <div class="ui-control-enable-button icon-dock-after icon-dock-cross-after" ng-click="toggleTextShadowControl()"></div>
+</div>
+<div class="textShadowContent ui-control-wrapper" ng-class="dockAlign">
+    <div class="textShadowBar ui-control-bar fs-x-large" ng-click="togglePalette($event)">
+        <div class="textShadowPickerPane fs-x-large fs-x-large-before"
+             ng-style="composeTextShadowCss(pickedTextShadow)">
+            {{pickedTextShadow && pickedTextShadow.length && (pickedTextShadowName || 'Text Shadow') || 'None'}}
+        </div>
+    </div>
+    <div class="textShadowPalette ui-control-panel" ng-click="selectTab($event.currentTarget, $event.target, $event)">
+        <div class="topBar">
+            <div class="textShadowToolBar fs-x-toolButton-normal">
+                <div tab-sel="tab-head-text-shadow-value-1" tab-content="text-shadow-value"
+                     class="toolButton icon-text-shadow-before icon-text-shadow-after icon-text-shadow-alphabet-before icon-text-shadow-alphabet-after"></div>
+                <div tab-sel="tab-head-text-shadow-value-2" tab-content="text-shadow-value"
+                     class="toolButton icon-text-shadow-before icon-text-shadow-after icon-text-shadow-format-list-bulleted-before  icon-text-shadow-format-list-bulleted-after"></div>
+            </div>
+        </div>
+        <div class="tabContents">
+            <div tab-sel="tab-content-text-shadow-value-1" class="presetTextShadow">
+                <div class="accordianGroup" ng-repeat="shadowGroup in textShadowList"
+                     ng-click="toggleSelect($event.currentTarget, $event)">
+                    <div class="accordianTitle col-as-12 icon-text-shadow-before icon-text-shadow-angle-double-up-before">
+                        {{shadowGroup.group}}
+                    </div>
+                    <div class="accordianBody col-as-12 no-padding">
+                        <div class="shadowPane fs-x-small col-as-6 no-padding"
+                             ng-repeat="pane in shadowGroup.list"
+                             ng-click="pickTextShadow(pane, $event)"
+                             ng-style="composeTextShadowCss(pane.style['text-shadow'])">
+                            {{pane.name}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div tab-sel="tab-content-text-shadow-value-2" class="textShadowValuePanes vt-scroll-pane">
+                <div id="shadowStopColorPalette" class="shadowStopColorPalette" ui-color-editor-palette
+                     ui-color-editor-palette-opts="{enableClose:true}" selected-color="selectedShadowStopColor"></div>
+                <div class="shadowStop fs-x-tiny" ng-repeat="shadowStop in pickedTextShadow"
+                     ng-if="shadowStop.color" ng-attr-shadow-order="{{$index}}">
+                    <div class="shadowStopNumber col-as-10 no-padding fs-x-tiny">
+                        <div class="input-group col-as-6 no-padding fs-x-tiny">
+                            <label class="col-as-6 no-padding">H</label>
+
+                            <div class="col-as-6 input-group no-padding">
+                                <input type="text" class="form-control shadowValueInput"
+                                       ng-click="$event.stopPropagation()"
+                                       ng-model="shadowStop['h-shadow']"/>
+                            </div>
+                        </div>
+                        <div class="input-group col-as-6 no-padding fs-x-tiny">
+                            <label class="col-as-6 no-padding">V</label>
+
+                            <div class="col-as-6 input-group no-padding">
+                                <input type="text" class="form-control shadowValueInput"
+                                       ng-click="$event.stopPropagation()"
+                                       ng-model="shadowStop['v-shadow']"/>
+                            </div>
+                        </div>
+                        <div class="input-group col-as-6 no-padding fs-x-tiny">
+                            <label class="col-as-6 no-padding">Blur</label>
+
+                            <div class="col-as-6 input-group no-padding">
+                                <input type="text" class="form-control shadowValueInput"
+                                       ng-click="$event.stopPropagation()"
+                                       ng-model="shadowStop['blur']"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="shadowStopColor col-as-2 no-padding-right fs-x-tiny"
+                         ng-click="toggleShadowStopMenu($index, $event)">
+                        <span ng-style="{'background-color':'{{shadowStop.color}}'}"></span>
+                    </div>
+                    <div class="circular-menu">
+                        <div class="circle">
+                            <div class="icon-text-shadow icon-text-shadow-insert-before"
+                                 ng-click="insertShadowStop($index, $event)"></div>
+                            <div class="icon-text-shadow icon-text-shadow-remove-before"
+                                 ng-click="removeShadowStop($index, $event)"></div>
+                            <div class="icon-text-shadow icon-text-shadow-brush-before"
+                                 ng-click="setShadowStopColor($index, $event)"></div>
+                            <div class="icon-text-shadow icon-text-shadow-copy-before"
+                                 ng-click="copyShadowStop($index, $event)"></div>
+                            <div class="icon-text-shadow icon-text-shadow-paste-before"
+                                 ng-click="pasteShadowStop($index, $event)"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

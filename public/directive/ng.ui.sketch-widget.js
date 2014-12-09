@@ -103,7 +103,7 @@ define(
                                                 prevWidget.removeClass("pickedWidget");
                                                 if (scope.sketchObject.pickedWidget == prevWidget)
                                                     scope.sketchObject.pickedWidget = null;
-                                                prevWidget.resizable && !prevWidget.isTemporary && toggleResize(prevWidget.$element, false);
+                                                !prevWidget.isTemporary && prevWidget.isElement && toggleTextMode(prevWidget.$element, false);
                                             }
                                         }
 
@@ -173,8 +173,8 @@ define(
                                             top = event.srcEvent.pageY - $u.offset().top,
                                             left = event.srcEvent.pageX - $u.offset().left;
 
-                                        top = Math.ceil(top * angularConstants.precision) / angularConstants.precision;
-                                        left = Math.ceil(left * angularConstants.precision) / angularConstants.precision;
+                                        top = Math.floor(top * angularConstants.precision) / angularConstants.precision;
+                                        left = Math.floor(left * angularConstants.precision) / angularConstants.precision;
 
                                         if (VERBOSE) {
                                             $log.debug(event.type);
@@ -242,10 +242,10 @@ define(
 
                                         if (zIndex === "auto")
                                             zIndex = 0;
-                                        left = Math.ceil(left * angularConstants.precision) / angularConstants.precision;
-                                        top = Math.ceil(top * angularConstants.precision) / angularConstants.precision;
-                                        width = Math.ceil(width * angularConstants.precision) / angularConstants.precision;
-                                        height = Math.ceil(height * angularConstants.precision) / angularConstants.precision;
+                                        left = Math.floor(left * angularConstants.precision) / angularConstants.precision;
+                                        top = Math.floor(top * angularConstants.precision) / angularConstants.precision;
+                                        width = Math.floor(width * angularConstants.precision) / angularConstants.precision;
+                                        height = Math.floor(height * angularConstants.precision) / angularConstants.precision;
 
                                         $resize.width(width);
                                         $resize.height(height);
@@ -291,23 +291,17 @@ define(
                                     $timeout(function () {
                                         var prevWidget = scope.sketchObject.pickedWidget;
 
-                                        if (!scope.sketchObject.pickedWidget || scope.sketchObject.pickedWidget.id != widget.id) {
-                                            scope.sketchObject.pickedWidget = widget;
-                                            scope.sketchObject.pickedWidget.addClass("pickedWidget");
-                                            !widget.isTemporary && toggleTextMode(widget.$element);
-                                        }
+                                        prevWidget && !prevWidget.isTemporary && prevWidget.isElement && toggleTextMode(prevWidget.$element, false);
 
-                                        if (prevWidget) {
-                                            if (scope.sketchObject.pickedWidget == prevWidget) {
-                                                var textModeToggled = !prevWidget.isTemporary && toggleTextMode(prevWidget.$element);
-                                                if (!textModeToggled) {
-                                                    scope.sketchObject.pickedWidget = null;
-                                                    prevWidget.removeClass("pickedWidget");
-                                                }
-                                            } else {
-                                                !prevWidget.isTemporary && toggleTextMode(prevWidget.$element, false);
-                                                prevWidget.removeClass("pickedWidget");
+                                        if (!prevWidget || prevWidget.id != widget.id) {
+                                            prevWidget && prevWidget.removeClass("pickedWidget");
+                                            scope.sketchObject.pickedWidget = widget;
+                                            !widget.isTemporary && widget.isElement && toggleTextMode(widget.$element);
+                                        } else {
+                                            if (!toggleTextMode(widget.$element)) {
+                                                scope.sketchObject.pickedWidget = null;
                                             }
+                                            widget.removeClass("pickedWidget");
                                         }
 
                                         defer.resolve();
@@ -326,57 +320,51 @@ define(
                             }
 
                             function toggleTextMode($el, state) {
-                                var $text = $el.prev();
+                                var widgetObj = $el.data("widgetObject"),
+                                    $text = $("#widgetText"),
+                                    editingWidget = $text.data("widgetObject"),
+                                    left = $el.offset().left,
+                                    top = $el.offset().top,
+                                    width = $el.width(),
+                                    height = $el.height();
 
-                                if (!$text.hasClass("widgetText")) {
-                                    if (state == undefined || state) {
-                                        $text = $("<div class='widgetText' contenteditable='true'></div>")
-                                            .insertBefore($el);
-                                        var left = $el.position().left,
-                                            top = $el.position().top,
-                                            width = $el.width(),
-                                            height = $el.height(),
-                                            zIndex = $el.css("z-index") || 0;
+                                if (state == null)
+                                    state = !editingWidget || editingWidget.id !== widgetObj.id;
 
-                                        if (zIndex === "auto")
-                                            zIndex = 0;
-                                        left = Math.ceil(left * angularConstants.precision) / angularConstants.precision;
-                                        top = Math.ceil(top * angularConstants.precision) / angularConstants.precision;
-                                        width = Math.ceil(width * angularConstants.precision) / angularConstants.precision;
-                                        height = Math.ceil(height * angularConstants.precision) / angularConstants.precision;
+                                $text.toggle(state);
 
-                                        $text.width(width);
-                                        $text.height(height);
-                                        $text.css("left", left + "px");
-                                        $text.css("top", top + "px");
-                                        $text.css("z-index", zIndex + 1);
+                                if (state) {
+                                    left = Math.floor(left * angularConstants.precision) / angularConstants.precision;
+                                    top = Math.floor(top * angularConstants.precision) / angularConstants.precision;
+                                    width = Math.floor(width * angularConstants.precision) / angularConstants.precision;
+                                    height = Math.floor(height * angularConstants.precision) / angularConstants.precision;
 
-                                        var backgroundColor = $el.css("background-color"),
-                                            borderColor = backgroundColor;
-                                        if (backgroundColor) {
-                                            backgroundColor = uiUtilService.rgbToHex(backgroundColor);
-                                            borderColor = uiUtilService.contrastColor(backgroundColor) === "#ffffff" ? uiUtilService.lighterColor(backgroundColor, 0.5) : uiUtilService.lighterColor(backgroundColor, -0.5);
-                                        } else {
-                                            borderColor = "#000000";
-                                        }
-                                        $text.css("color", borderColor);
+                                    $text.width(width);
+                                    $text.height(height);
+                                    $text.offset({left: left, top: top});
 
-                                        var rmc = new Hammer.Manager($text.get(0));
-                                        rmc.add(new Hammer.Tap());
-                                        rmc.on("tap", function (event) {
-                                            rmc.off("tap");
-
-                                            $timeout(function () {
-                                                toggleHandler($(event.target).next());
-                                            });
-                                        });
+                                    var backgroundColor = $el.css("background-color"),
+                                        borderColor = backgroundColor;
+                                    if (backgroundColor) {
+                                        backgroundColor = uiUtilService.rgbToHex(backgroundColor);
+                                        borderColor = uiUtilService.contrastColor(backgroundColor) === "#ffffff" ? uiUtilService.lighterColor(backgroundColor, 0.5) : uiUtilService.lighterColor(backgroundColor, -0.5);
+                                    } else {
+                                        borderColor = "#000000";
                                     }
+                                    $text.css("color", borderColor);
+                                    $text.data("widgetObject", widgetObj);
+                                    $text.focus();
                                 } else {
-                                    if (state == undefined || !state)
-                                        $text.remove();
+                                    if (editingWidget) {
+                                        $text.css("width", "auto");
+                                        if ($text.width()) {
+                                            editingWidget.setHtml($text.html());
+                                        }
+                                    }
+                                    $text.removeData("widgetObject");
                                 }
 
-                                return $text.parent().length && $text.hasClass("widgetText");
+                                return state;
                             }
 
                             mc.on("tap", toggleHandler);
@@ -417,6 +405,7 @@ define(
 
                                     options = angular.extend(options, $parse(attrs['uiSketchWidgetOpts'])(scope, {}));
 
+                                    //Since widget setting gesture may collide with actual playing gesture, we disable it for play.
                                     scope.$watch("isPlaying", function (value) {
                                         var widgetObj = element.data("widgetObject");
                                         widgetObj && widgetObj.setIsPlaying && widgetObj.setIsPlaying(value);
@@ -427,7 +416,6 @@ define(
                                             registerHandlers(scope, element);
                                         }
                                     });
-
                                 },
                                 post: function (scope, element, attrs) {
                                     attrs.$observe(DIRECTIVE, function (value) {

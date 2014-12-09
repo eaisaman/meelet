@@ -90,7 +90,6 @@ $underlineLinearGradient: (rgb(235, 235, 235) 0%, rgb(235, 235, 235) 50%, #fff 1
                         margin-top: 0.5em;
                         margin-bottom: 0.5em;
 
-                        @include transform(translateY(-100%));
                         @include transition(transform 0.3s);
 
                         .shapePane {
@@ -108,7 +107,6 @@ $underlineLinearGradient: (rgb(235, 235, 235) 0%, rgb(235, 235, 235) 50%, #fff 1
                         }
 
                         > .accordianBody {
-                            @extend %slideDownFromAbove;
 
                             .shapePane {
                                 opacity: 1;

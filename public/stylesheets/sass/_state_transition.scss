@@ -56,7 +56,6 @@ $tabHeaderWidth: 6em;
                         margin-top: 0.5em;
                         margin-bottom: 0.5em;
 
-                        @include transform(translateY(-100%));
                         @include transition(transform 0.3s);
 
                         .transition {
@@ -76,7 +75,6 @@ $tabHeaderWidth: 6em;
                         }
 
                         > .accordianBody {
-                            @extend %slideDownFromAbove;
 
                             .transition {
                                 display: block;
@@ -276,7 +274,6 @@ $tabHeaderWidth: 6em;
                                                                 }
 
                                                                 > .accordianBody {
-                                                                    @extend %slideDownFromAbove;
 
                                                                     .animationPane {
                                                                         height: 2em;
@@ -309,7 +306,6 @@ $tabHeaderWidth: 6em;
                                                                 margin-top: 0.5em;
                                                                 margin-bottom: 0.5em;
 
-                                                                @include transform(translateY(-100%));
                                                                 @include transition(transform 0.3s);
 
                                                                 .animationPane {

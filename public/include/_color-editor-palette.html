@@ -1,21 +1,140 @@
-<div class="ui-control-title fs-x-small">
-    <p ng-transclude></p>
+<div class="topBar" ng-click="selectTab($event.currentTarget.parentNode, $event.target, $event)">
+    <div class="paneToolBar fs-x-toolButton-normal">
+        <div tab-sel="tab-head-color-value-1" tab-content="color-value"
+             class="toolButton icon-color-editor-palette-before icon-color-editor-palette-after icon-color-editor-palette-grid-before icon-color-editor-palette-grid-after"></div>
+        <div tab-sel="tab-head-color-value-2" tab-content="color-value"
+             class="toolButton icon-color-editor-palette-before icon-color-editor-palette-after icon-color-editor-palette-vertical-scroll-before  icon-color-editor-palette-vertical-scroll-after"></div>
 
-    <div class="ui-control-enable-button icon-dock-after icon-dock-cross-after" ng-click="toggleColorControl()"></div>
-</div>
-<div class="pickerContent ui-control-wrapper">
-    <div class="pickerBar ui-control-bar fs-x-large"
-         ng-click="togglePalette($event)"
-         ng-style="{'background-color':'{{pickerBarBackgroundColor}}'}"
-         ng-if="pickerPaneColor">
-        <div class="pickerPane fs-x-smaller"
-             ng-style="{'color':'{{pickerPaneColor}}', 'background-color':'{{pickerPaneBackgroundColor}}'}"
-                >{{pickedColor}}
+        <div class="closeToolButton fs-x-toolButton-small icon-color-editor-palette-before icon-color-editor-palette-cross-before"
+             ng-click="closePalette($event)" ng-if="options.enableClose"></div>
+    </div>
+    <div class="pickedColorList fs-x-squarePane">
+        <div class="colorSticker haloPane icon-color-editor-palette-before icon-color-editor-palette-paint-brush-before"
+             hm-pan-end="copyPickedColor($event.target, $event)"
+             ng-style="{'background-color':'{{selectedColorObj.color}}'}" ></div>
+        <div class="pickedColorPanes">
+            <div ng-repeat="n in [0, 6] | makeRange"
+                 class="pickedColorPane squarePane icon-color-editor-palette-before icon-color-editor-palette-question-before"
+                 hm-pan-end="copyPickedColor($event.target, $event)">
+            </div>
         </div>
     </div>
-    <div class="pickerPalette ui-control-panel">
-        <div class="colorPane squarePane" ng-repeat="pane in colors" ng-click="pickColor(pane)"
+</div>
+<div class="tabContents">
+    <div tab-sel="tab-content-color-value-1" class="presetColors">
+        <div class="colorPane squarePane" ng-repeat="pane in colors" ng-click="pickColor({'color':pane})"
              ng-style="{'background-color':'{{pane}}'}">
+        </div>
+    </div>
+    <div tab-sel="tab-content-color-value-2" class="colorValuePanes vt-scroll-pane">
+        <div class="hsbValuePane">
+            <div class="paneNavBackward fs-x-toolButton-normal icon-color-editor-palette-before icon-color-editor-palette-simple-arrow-left-before"
+                 ng-click="toggleSelect('.hsbValuePane', $event)"></div>
+            <div class="valuePane hueValuePane">
+                <div class="valueTitle fs-x-medium">H</div>
+                <div class="valueDisplay fs-x-small">{{Math.floor(selectedColorObj.hueValue * 359)}}</div>
+                <div class="valueScroll vt-scroll-normal">
+                    <div class="scrollUpButton fs-x-toolButton-normal icon-color-editor-palette-before icon-color-editor-palette-arrow-up-before"
+                         ng-click="decrementColor($event)"></div>
+                    <div class="scrollBar fs-x-toolButton-normal">
+                        <div class="scrollMeter fs-x-small" ng-attr-color-range="{{1}}"
+                             color-value-name="hueValue" ui-draggable="observeColorValueScrollMeter($event)"
+                             ui-draggable-opts="{threshold: 5, pointers: 0, direction:'vertical'}">
+                        </div>
+                    </div>
+                    <div class="scrollDownButton fs-x-toolButton-normal icon-color-editor-palette-before icon-color-editor-palette-arrow-down-before"
+                         ng-click="incrementColor($event)"></div>
+                </div>
+            </div>
+            <div class="valuePane saturationValuePane">
+                <div class="valueTitle fs-x-medium">S</div>
+                <div class="valueDisplay fs-x-small">{{Math.round(selectedColorObj.saturationValue * 100) /
+                    100}}
+                </div>
+                <div class="valueScroll vt-scroll-normal">
+                    <div class="scrollUpButton fs-x-toolButton-normal icon-color-editor-palette-before icon-color-editor-palette-arrow-up-before"
+                         ng-click="decrementColor($event)"></div>
+                    <div class="scrollBar fs-x-toolButton-normal">
+                        <div class="scrollMeter fs-x-small" ng-attr-color-range="{{1}}"
+                             color-value-name="saturationValue"
+                             ui-draggable="observeColorValueScrollMeter($event)"
+                             ui-draggable-opts="{threshold: 5, pointers: 0, direction:'vertical'}">
+                        </div>
+                    </div>
+                    <div class="scrollDownButton fs-x-toolButton-normal icon-color-editor-palette-before icon-color-editor-palette-arrow-down-before"
+                         ng-click="incrementColor($event)"></div>
+                </div>
+            </div>
+            <div class="valuePane lightValuePane">
+                <div class="valueTitle fs-x-medium">L</div>
+                <div class="valueDisplay fs-x-small">{{Math.round(selectedColorObj.lightValue * 100) / 100}}
+                </div>
+                <div class="valueScroll vt-scroll-normal">
+                    <div class="scrollUpButton fs-x-toolButton-normal icon-color-editor-palette-before icon-color-editor-palette-arrow-up-before"
+                         ng-click="decrementColor($event)"></div>
+                    <div class="scrollBar fs-x-toolButton-normal">
+                        <div class="scrollMeter fs-x-small" ng-attr-color-range="{{1}}"
+                             color-value-name="lightValue"
+                             ui-draggable="observeColorValueScrollMeter($event)"
+                             ui-draggable-opts="{threshold: 5, pointers: 0, direction:'vertical'}">
+                        </div>
+                    </div>
+                    <div class="scrollDownButton fs-x-toolButton-normal icon-color-editor-palette-before icon-color-editor-palette-arrow-down-before"
+                         ng-click="incrementColor($event)"></div>
+                </div>
+            </div>
+        </div>
+        <div class="rgbValuePane">
+            <div class="paneNavForward fs-x-toolButton-normal icon-color-editor-palette-before icon-color-editor-palette-simple-arrow-right-before"
+                 ng-click="toggleSelect('.hsbValuePane', $event)"></div>
+            <div class="valuePane rValuePane">
+                <div class="valueTitle fs-x-medium">R</div>
+                <div class="valueDisplay fs-x-small">{{selectedColorObj.rValue}}</div>
+                <div class="valueScroll vt-scroll-normal">
+                    <div class="scrollUpButton fs-x-toolButton-normal icon-color-editor-palette-before icon-color-editor-palette-arrow-up-before"
+                         ng-click="decrementColor($event)"></div>
+                    <div class="scrollBar fs-x-toolButton-normal">
+                        <div class="scrollMeter fs-x-small" ng-attr-color-range="{{255}}"
+                             color-value-name="rValue" ui-draggable="observeColorValueScrollMeter($event)"
+                             ui-draggable-opts="{threshold: 5, pointers: 0, direction:'vertical'}">
+                        </div>
+                    </div>
+                    <div class="scrollDownButton fs-x-toolButton-normal icon-color-editor-palette-before icon-color-editor-palette-arrow-down-before"
+                         ng-click="incrementColor($event)"></div>
+                </div>
+            </div>
+            <div class="valuePane gValuePane">
+                <div class="valueTitle fs-x-medium">G</div>
+                <div class="valueDisplay fs-x-small">{{selectedColorObj.gValue}}</div>
+                <div class="valueScroll vt-scroll-normal">
+                    <div class="scrollUpButton fs-x-toolButton-normal icon-color-editor-palette-before icon-color-editor-palette-arrow-up-before"
+                         ng-click="decrementColor($event)"></div>
+                    <div class="scrollBar fs-x-toolButton-normal">
+                        <div class="scrollMeter fs-x-small" ng-attr-color-range="{{255}}"
+                             color-value-name="gValue" ui-draggable="observeColorValueScrollMeter($event)"
+                             ui-draggable-opts="{threshold: 5, pointers: 0, direction:'vertical'}">
+                        </div>
+                    </div>
+                    <div class="scrollDownButton fs-x-toolButton-normal icon-color-editor-palette-before icon-color-editor-palette-arrow-down-before"
+                         ng-click="incrementColor($event)"></div>
+                </div>
+            </div>
+            <div class="valuePane bValuePane">
+                <div class="valueTitle fs-x-medium">B</div>
+                <div class="valueDisplay fs-x-small">{{selectedColorObj.bValue}}</div>
+                <div class="valueScroll vt-scroll-normal">
+                    <div class="scrollUpButton fs-x-toolButton-normal icon-color-editor-palette-before icon-color-editor-palette-arrow-up-before"
+                         ng-click="decrementColor($event)"></div>
+                    <div class="scrollBar fs-x-toolButton-normal">
+                        <div class="scrollMeter fs-x-small" ng-attr-color-range="{{255}}"
+                             color-value-name="bValue" ui-draggable="observeColorValueScrollMeter($event)"
+                             ui-draggable-opts="{threshold: 5, pointers: 0, direction:'vertical'}">
+                        </div>
+                    </div>
+                    <div class="scrollDownButton fs-x-toolButton-normal icon-color-editor-palette-before icon-color-editor-palette-arrow-down-before"
+                         ng-click="incrementColor($event)"></div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

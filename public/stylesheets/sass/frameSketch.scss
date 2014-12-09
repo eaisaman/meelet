@@ -4,8 +4,11 @@
 @import "compass/css3/flexbox";
 @import "animation/directive_animation_keyframes";
 @import "animation/directive_animation";
+@import "border-editor";
 @import "color_picker";
 @import "gradient_editor";
+@import "text-shadow-editor";
+@import "box-shadow-editor";
 @import "shape";
 @import "sketch_widget";
 @import "horizontal-ruler";
@@ -15,9 +18,12 @@
 @import "toolbar";
 @import "state_transition";
 
+@include border-editor(border-control);
 @include color-picker(color-control);
 @include color-picker(border-color-control);
 @include gradient-editor(fill-control);
+@include text-shadow-editor(text-shadow-control);
+@include box-shadow-editor(box-shadow-control);
 @include shape(shape-control);
 @include page(page-control);
 @include sketch-widget(sketchHolder);
@@ -28,6 +34,7 @@
 @include state-transition(state-transition-control);
 
 $activeBackgroundColor: rgba(0, 0, 0, 0.3);
+$zIndexWidgetText: 100;
 
 #sketchContainer {
     position: relative;
@@ -71,6 +78,7 @@ $activeBackgroundColor: rgba(0, 0, 0, 0.3);
                         overflow: hidden;
 
                         .pageHolder {
+                            z-index: 0;
                             position: absolute;
                             width: 100%;
                             height: 100%;
@@ -92,6 +100,11 @@ $activeBackgroundColor: rgba(0, 0, 0, 0.3);
                     }
 
                     .ruler {
+                        position: absolute;
+                    }
+
+                    #widgetText {
+                        z-index: $zIndexWidgetText;
                         position: absolute;
                     }
                 }

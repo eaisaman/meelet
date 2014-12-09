@@ -1,56 +1,391 @@
+@import "compass/css3/transform";
+@import "compass/css3/transition";
+
+$color: rgba(0, 0, 0, 0.4);
+$activeBackgroundColor: rgba(0, 0, 0, 0.3);
 $borderColor: rgba(0, 0, 0, 0.4);
-$activeBorderShadow: rgba(192, 192, 192, 0.8);
 
-@mixin color-picker($colorPickerId) {
-    ##{$colorPickerId} {
-        > .pickerContent {
+@mixin color-editor-palette($colorEditorPaletteId) {
+    ##{$colorEditorPaletteId} {
+        position: absolute;
+        top: 5px;
+        width: 100%;
+        min-width: 12em;
+        background: #fff;
+        border: 1px solid $borderColor;
+
+        @include animation-duration(0.3s);
+
+        &:after {
             position: absolute;
-            left: 0;
-            top: 0;
+            bottom: -2px;
+            left: 0px;
+            width: 100%;
+            height: 0px;
+            content: '';
+            border-top: 1px solid $borderColor;
+            border-bottom: 1px solid #FFF;
+        }
 
-            > .pickerBar {
+        > .topBar {
+            position: relative;
+            float: left;
+            width: 100%;
+
+            @include box-shadow(0 8px 6px -6px black);
+
+            > .paneToolBar {
                 position: relative;
-                float: left;
-                width: 100%;
+                width: calc(100% - 0.4em);
                 height: 2em;
+                margin: 0.2em;
+                background: $borderColor;
+                color: #fff;
 
-                > .pickerPane {
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    text-align: center;
-                    text-transform: uppercase;
-                    letter-spacing: 2px;
-                }
-            }
-
-            > .pickerPalette {
-                > .colorPane {
+                .toolButton {
                     position: relative;
                     float: left;
-                    margin: 5px;
-                    border-radius: 5px;
-                    border-bottom: 1px solid $borderColor;
+                    width: 2em;
+                    height: 100%;
+                    margin-left: -1px;
 
-                    &:active {
-                        @include box-shadow(0 0 15px $activeBorderShadow);
+                    &:before {
+                        position: absolute;
+                        text-align: center;
+                        width: 100%;
+                        height: 100%;
+                        top: 0px;
+                        line-height: 2;
+                        border-right: 1px solid #fff;
+                        color: #fff;
+                        overflow: hidden;
+                        @include transition(all 0.5s);
+                    }
+
+                    &.select:before {
+                        top: 100%;
+                        height: 0px;
+                    }
+
+                    &:after {
+                        position: absolute;
+                        text-align: center;
+                        width: 100%;
+                        height: 0px;
+                        color: $borderColor;
+                        background: $borderColor;
+                        overflow: hidden;
+                        @include transition(all 0.5s);
+                    }
+
+                    &.select:after {
+                        height: 100%;
+                        line-height: 2;
+                        border-right: 1px solid $borderColor;
+                        background: #fff;
                     }
                 }
 
+                .closeToolButton {
+                    position: absolute;
+                    right: 10px;
+                    top: calc(50% - 1em);
+                    width: 2em;
+                    height: 2em;
+
+                    &:before {
+                        position: absolute;
+                        text-align: center;
+                        text-indent: 2px;
+                        width: 100%;
+                        height: 100%;
+                        line-height: 2em;
+                        font-weight: 600;
+                        border: 3px solid #fff;
+                        border-radius: 2em;
+                    }
+
+                    &:active:before {
+                        color: $borderColor;
+                        background: #fff;
+                    }
+                }
             }
 
-            &.expanded {
-                > .pickerBar {
-                    > .pickerPane {
-                        top: 0.5em;
-                        left: 0.5em;
-                        width: calc(100% - 1em);
-                        height: calc(100% - 1em);
+            > .pickedColorList {
+                position: relative;
+                width: 100%;
+                height: 3em;
+                margin: 5px;
+
+                > .pickedColorPanes {
+                    position: relative;
+                    float: left;
+                    left: 1em;
+                    top: 0.5em;
+                    height: 100%;
+                    width: calc(100% - 3em);
+                    overflow: hidden;
+
+                    > .pickedColorPane {
+                        position: relative;
+                        float: left;
+                        margin: 5px;
+                        background: #fff;
                         border-radius: 5px;
-                        @extend %swashIn;
+                        border-bottom: 1px solid $borderColor;
+
+                        @include box-shadow(0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset);
+
+                        &:before {
+                            position: absolute;
+                            width: 100%;
+                            line-height: 1;
+                            text-align: center;
+                            color: $color;
+                        }
+
+                        &[picked-color^='#']:before {
+                            content: "";
+                        }
                     }
+                }
+
+                > .colorSticker {
+                    position: relative;
+                    float: left;
+                    left: 0.5em;
+                    top: 0.5em;
+                    width: 2em;
+                    height: 2em;
+                    color: $color;
+                    text-shadow: 1px 0px 0px ghostwhite, -1px 0px 0px ghostwhite, 0px 1px 0px ghostwhite, 0px -1px 0px ghostwhite, 1px 1px 0px ghostwhite, -1px -1px 0px ghostwhite, -1px 1px 0px ghostwhite, 1px -1px 0px ghostwhite, 0px 6px 7px black;
+
+                    &:before {
+                        position: absolute;
+                        width: 100%;
+                        left: -2px;
+                        top: -2px;
+                        line-height: 2;
+                        text-align: center;
+                    }
+                }
+            }
+        }
+
+        > .tabContents {
+            position: relative;
+            float: left;
+            top: 5px;
+            width: 100%;
+
+            @include transition(opacity 0.3s);
+
+            > div[tab-sel^='tab-content'] {
+                position: absolute;
+                width: 100%;
+                opacity: 0;
+                pointer-events: none;
+                border: 1px solid $borderColor;
+
+                @include box-shadow(0 4px 3px #555);
+                @include flipDownOrigin();
+                @include animation-duration(0.3s);
+
+                &.select {
+                    pointer-events: auto;
+                    opacity: 1;
+                    @extend %flipDown;
+                }
+            }
+        }
+
+        .presetColors {
+            overflow-y: auto;
+            background: #fff;
+
+            > .colorPane {
+                position: relative;
+                float: left;
+                margin: 5px;
+                border-radius: 5px;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+
+                &:active {
+                    @include box-shadow(0 0 15px rgba(192, 192, 192, 0.8));
+                }
+            }
+        }
+
+        .colorValuePanes {
+            background: #fff;
+            color: $color;
+            overflow-x: hidden;
+
+            .paneNavForward {
+                z-index: 1;
+                position: absolute;
+                left: 5px;
+                line-height: 1;
+
+                @include transform(rotateZ(-180deg));
+                @include emboss-title();
+            }
+
+            .paneNavBackward {
+                z-index: 1;
+                position: absolute;
+                right: 5px;
+                line-height: 1;
+
+                @include transform(rotateZ(-180deg));
+                @include emboss-title();
+            }
+
+            .valuePane {
+                position: relative;
+                float: left;
+                width: 33.3%;
+                height: 100%;
+                text-align: center;
+                overflow: hidden;
+
+                > div {
+                    position: relative;
+                    float: left;
+                    width: 100%;
+                }
+
+                .valueTitle {
+                    line-height: 1.5;
+                    font-weight: 600;
+                }
+                .valueDisplay {
+                    line-height: 1.5;
+                    font-weight: 400;
+                }
+                .valueScroll {
+                    width: calc(100% - 10px);
+                    margin: 5px;
+                    border: 1px solid $borderColor;
+
+                    .scrollUpButton {
+                        position: relative;
+                        float: left;
+                        left: 1.5em;
+                        width: calc(100% - 1.5em);
+                        height: 1em;
+
+                        &:before {
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            width: 100%;
+                            line-height: 1;
+                            font-weight: 900;
+                            text-align: center;
+                            background: $borderColor;
+                            color: #fff;
+                        }
+
+                        &:active:before {
+                            background: $activeBackgroundColor;
+                        }
+                    }
+
+                    .scrollBar {
+                        position: relative;
+                        float: left;
+                        left: 1.5em;
+                        width: calc(100% - 1.5em);
+                        height: calc(100% - 2em);
+
+                        .scrollMeter {
+                            position: absolute;
+                            left: -1.5em;
+                            width: 1.5em;
+                            height: 1em;
+                            background: transparent;
+                            @include transition(transform 0.3s);
+
+                            &:after {
+                                position: absolute;
+                                content: '';
+                                left: 1em;
+                                top: 50%;
+                                height: 2px;
+                                width: 0.5em;
+                                background: $borderColor;
+                            }
+
+                            &:before {
+                                position: absolute;
+                                content: '';
+                                left: 0;
+                                top: 0;
+                                width: 1em;
+                                height: 1em;
+                                line-height: 1;
+                                border-radius: 100%;
+                                background: $borderColor;
+                            }
+                        }
+                    }
+
+                    .scrollDownButton {
+                        position: relative;
+                        float: left;
+                        left: 1.5em;
+                        width: calc(100% - 1.5em);
+                        height: 1em;
+
+                        &:before {
+                            position: absolute;
+                            bottom: 0;
+                            left: 0;
+                            width: 100%;
+                            line-height: 1;
+                            font-weight: 900;
+                            text-align: center;
+                            background: $borderColor;
+                            color: #fff;
+                        }
+
+                        &:active:before {
+                            background: $activeBackgroundColor;
+                        }
+                    }
+                }
+            }
+
+            > .rgbValuePane {
+                z-index: 1;
+                position: absolute;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                background: #fff;
+            }
+
+            > .hsbValuePane {
+                z-index: 2;
+                position: absolute;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                background: #fff;
+
+                @include transition(opacity 0.5s);
+
+                &:not(.select) {
+                    left: 100%;
+                    opacity: 0;
+                    @extend %slideLeftRetourn;
+                }
+
+                &.select {
+                    opacity: 1;
+                    @extend %slideRightRetourn;
                 }
             }
         }

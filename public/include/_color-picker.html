@@ -9,13 +9,11 @@
          ng-style="{'background-color':'{{pickerBarBackgroundColor}}'}"
          ng-if="pickerPaneColor">
         <div class="pickerPane fs-x-smaller"
-             ng-style="{'color':'{{pickerPaneColor}}', 'background-color':'{{pickerPaneBackgroundColor}}'}"
-                >{{pickedColor}}
+             ng-style="{'background-color':'{{pickerPaneBackgroundColor}}'}">
+            <span ng-style="{'color':'{{pickerPaneColor}}'}">{{pickedColor}}</span>
         </div>
     </div>
-    <div class="pickerPalette ui-control-panel">
-        <div class="colorPane squarePane" ng-repeat="pane in colors" ng-click="pickColor(pane)"
-             ng-style="{'background-color':'{{pane}}'}">
-        </div>
+    <div class="ui-control-panel">
+        <div id="colorPickerPalette" ui-color-editor-palette selected-color="pickedColor"></div>
     </div>
 </div>

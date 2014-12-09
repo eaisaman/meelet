@@ -5,7 +5,7 @@ define(
             urlService.frameSketch();
         }
 
-        function FrameSketchController($scope, $timeout, $q, angularEventTypes, uiService) {
+        function FrameSketchController($scope, $rootScope, $timeout, $q, angularEventTypes, uiService) {
             $scope.Math = Math;
 
             //TODO 背景图片 阴影 视角 旋转 按网格移动/改变大小 border-radius
@@ -23,11 +23,18 @@ define(
             };
             $scope.dockAlign = "align-left";
 
-            function setterFactory(obj, name) {
+            $rootScope.visiblePseudoEnabledWidgets = [];
+
+            function setterFactory(obj, name, source) {
                 return function (to) {
-                    var setterName = "set" + name.charAt(0).toUpperCase() + name.substr(1);
-                    var setter = obj[setterName];
-                    setter && setter.apply(obj, [to]);
+                    var setterName = source && "setTrackablePseudoStyle" || ("set" + name.charAt(0).toUpperCase() + name.substr(1)),
+                        setter = obj[setterName];
+                    if (setter) {
+                        if (source)
+                            setter.apply(obj, [source, to]);
+                        else
+                            setter.apply(obj, [to]);
+                    }
                 }
             }
 
@@ -36,16 +43,23 @@ define(
                     setting.deregisterWatch && setting.deregisterWatch();
 
                     var name = setting.name,
-                        getterName = "get" + name.charAt(0).toUpperCase() + name.substr(1);
+                        source = setting.source,
+                        getterName = source && "getTrackablePseudoStyle" || ("get" + name.charAt(0).toUpperCase() + name.substr(1));
 
                     var getter = $scope.sketchObject.pickedWidget[getterName];
                     if (getter) {
-                        var value = getter.apply($scope.sketchObject.pickedWidget);
+                        var value;
+                        if (source)
+                            value = getter.apply($scope.sketchObject.pickedWidget, [source]);
+                        else
+                            value = getter.apply($scope.sketchObject.pickedWidget);
                         $scope.sketchWidgetSetting[name] = value;
                         setting.initFn && setting.initFn(value);
                     }
 
-                    setting.deregisterWatch = $scope.$watch("sketchWidgetSetting" + "." + name, setterFactory($scope.sketchObject.pickedWidget, name));
+                    $timeout(function () {
+                        setting.deregisterWatch = $scope.$watch("sketchWidgetSetting" + "." + name, setterFactory($scope.sketchObject.pickedWidget, name, source));
+                    });
                 }
             }
 
@@ -98,7 +112,7 @@ define(
                         var m = prop.match(/^sketchWidgetSetting\.(\w+)/);
                         if (m && m.length == 2) {
                             var name = m[1],
-                                setting = {name: name, initFn: data[key].initFn};
+                                setting = {name: name, initFn: data[key].initFn, source: data[key].source};
 
                             widgetSettingList.push(setting);
                             initWidgetSettingWatch(setting);
@@ -115,6 +129,9 @@ define(
                     pageObj.addClass("pageHolder");
                     $scope.sketchObject.pickedPage = pageObj;
                     $scope.sketchObject.sketchWorks.pages.push(pageObj);
+
+                    CKEDITOR.inline('widgetText');
+
                     defer.resolve();
                 });
 
@@ -129,6 +146,6 @@ define(
         return function (appModule) {
             appModule.
                 controller('RootController', ["urlService", RootController]).
-                controller('FrameSketchController', ["$scope", "$timeout", "$q", "angularEventTypes", "uiService", FrameSketchController]);
+                controller('FrameSketchController', ["$scope", "$rootScope", "$timeout", "$q", "angularEventTypes", "uiService", FrameSketchController]);
         }
     });

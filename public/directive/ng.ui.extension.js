@@ -91,19 +91,34 @@ define(
                 if ($el.hasClass("show")) {
                     $el.removeClass("show");
                     $el.addClass("hiding");
-                    uiUtilService.onAnimationEnd($el).then(
-                        function () {
+
+                    if (!$el.css("animation-name") || $el.css("animation-name") === "none") {
+                        $timeout(function () {
                             $el.removeClass("hiding");
-                            defer.resolve();
-                        }
-                    );
+                            defer.resolve(selector);
+                        });
+                    } else {
+                        uiUtilService.onAnimationEnd($el).then(
+                            function () {
+                                $el.removeClass("hiding");
+                                defer.resolve(selector);
+                            }
+                        );
+                    }
                 } else {
                     $el.addClass("show");
-                    uiUtilService.onAnimationEnd($el).then(
-                        function () {
-                            defer.resolve();
-                        }
-                    );
+
+                    if (!$el.css("animation-name") || $el.css("animation-name") === "none") {
+                        $timeout(function () {
+                            defer.resolve(selector);
+                        });
+                    } else {
+                        uiUtilService.onAnimationEnd($el).then(
+                            function () {
+                                defer.resolve(selector);
+                            }
+                        );
+                    }
                 }
 
                 return defer.promise;
@@ -280,13 +295,21 @@ define(
                     $tabContainer.find("div[tab-sel^=tab-head" + content + "].select").removeClass("select");
                     $tabContainer.find("div[tab-sel^=tab-content" + content + "].select").removeClass("select");
 
-                    uiUtilService.onAnimationEnd($el).then(
-                        function () {
+                    $el.addClass("select");
+
+                    if (!$el.css("animation-name") || $el.css("animation-name") === "none") {
+                        $timeout(function () {
                             $tabHead.addClass("select");
                             defer.resolve();
-                        }
-                    );
-                    $el.addClass("select");
+                        });
+                    } else {
+                        uiUtilService.onAnimationEnd($el).then(
+                            function () {
+                                $tabHead.addClass("select");
+                                defer.resolve();
+                            }
+                        );
+                    }
                 } else {
                     $timeout(function () {
                         defer.resolve();
@@ -315,6 +338,32 @@ define(
             };
         }
 
+        Extension.prototype.isLengthyService = function () {
+            return function (value) {
+                if (typeof value === "string") {
+                    var m = value.match(/([-\d\.]+)(px)?$/);
+                    if (m && m.length == 3) value = parseFloat(m[1]);
+
+                    return value > 0;
+                } else if (typeof value === "number") {
+                    return value > 0;
+                } else return false;
+            }
+        }
+
+        Extension.prototype.parseLengthService = function () {
+            return function (value) {
+                if (typeof value === "string") {
+                    var m = value.match(/([-\d\.]+)(px)?$/);
+                    if (m && m.length == 3) value = parseFloat(m[1]);
+
+                    return value;
+                } else if (typeof value === "number") {
+                    return value;
+                } else return 0;
+            }
+        }
+
         Extension.prototype.prefixedStyleService = function () {
             return function (style, format) {
                 var styleObj = {};
@@ -329,6 +378,151 @@ define(
                 }
 
                 return styleObj;
+            }
+        }
+
+        Extension.prototype.composeTextShadowCssService = function () {
+            return function (value) {
+                var arr = [];
+
+                if (value && toString.call(value) === '[object Array]') {
+                    value.forEach(function (item) {
+                        var str = "{0} {1} {2} {3}".format(item.color || "", item["h-shadow"] || "", item["v-shadow"] || "", item["blur"] || "").trim();
+                        str && arr.push(str);
+                    });
+                }
+
+                return arr.length && {"text-shadow": arr.join(",")} || {};
+            }
+        }
+
+        Extension.prototype.composeBoxShadowCssService = function (uiUtilService) {
+            return function (styles, id) {
+                if (styles && id) {
+                    var styleBlockArr = [];
+
+                    ["style", "beforeStyle", "afterStyle"].forEach(function (pseudoStylePrefix) {
+                        var pseudo = pseudoStylePrefix.replace(/style/i, "");
+                        if (pseudo)
+                            pseudo = ":" + pseudo;
+
+                        var s = styles[pseudoStylePrefix];
+
+                        if (s) {
+                            var styleArr = [];
+                            _.each(s, function (styleValue, styleName) {
+                                var styleObj = uiUtilService.composeCssStyle(styleName, styleValue);
+
+                                _.each(styleObj, function (value, key) {
+                                    styleArr.push("{0}:{1}".format(key, value || '\"\"'));
+                                });
+                            });
+
+                            styleArr.length && styleBlockArr.push("#{0}{1} { {2}; }".format(id, pseudo || "", styleArr.join(";")));
+                        }
+                    });
+
+                    return styleBlockArr.join(" ");
+                }
+
+                return "";
+            }
+        }
+
+        Extension.prototype.generateBoxShadowStyleService = function (uiUtilService) {
+            return function (groups) {
+                var ret = [];
+
+                if (groups && toString.call(groups) === '[object Array]') {
+                    groups.forEach(function (group) {
+                        group.list && toString.call(group.list) === '[object Array]' && group.list.forEach(function (styles) {
+                            var styleBlockArr = [],
+                                id = "boxShadow-" + styles.id;
+
+                            ["style", "beforeStyle", "afterStyle"].forEach(function (pseudoStylePrefix) {
+                                var pseudo = pseudoStylePrefix.replace(/style/i, "");
+                                if (pseudo)
+                                    pseudo = ":" + pseudo;
+
+                                var s = styles[pseudoStylePrefix];
+
+                                if (s) {
+                                    var styleArr = [];
+                                    _.each(s, function (styleValue, styleName) {
+                                        var styleObj = uiUtilService.composeCssStyle(styleName, styleValue);
+
+                                        _.each(styleObj, function (value, key) {
+                                            styleArr.push("{0}:{1}".format(key, value || '\"\"'));
+                                        });
+                                    });
+
+                                    styleArr.length && styleBlockArr.push("#{0}{1} { {2}; }".format(id, pseudo || "", styleArr.join(";")));
+                                }
+                            });
+
+                            styleBlockArr.length && ret.push(styleBlockArr.join(" "));
+                        });
+                    });
+                }
+
+                return ret.join(" ");
+            }
+        }
+
+        Extension.prototype.composePseudoElementCssService = function (uiUtilService) {
+            return function (widgets) {
+                var ret = [];
+
+                if (widgets && toString.call(widgets) === '[object Array]') {
+                    widgets.forEach(function (widget) {
+                        var id = widget.id;
+                        if (id && widget.pseudoCss) {
+                            var beforeStyle = widget.pseudoCss("before").beforeStyle,
+                                afterStyle = widget.pseudoCss("after").afterStyle;
+
+                            if (beforeStyle) {
+                                var beforeStyleArr = [];
+                                _.each(beforeStyle, function (styleValue, styleName) {
+                                    var styleObj = uiUtilService.composeCssStyle(styleName, styleValue);
+
+                                    _.each(styleObj, function (value, key) {
+                                        beforeStyleArr.push("{0}:{1}".format(key, value || '\"\"'));
+                                    });
+                                });
+                                beforeStyleArr.length && ret.push("#{0}:before { {1}; }".format(id, beforeStyleArr.join(";")));
+                            }
+
+                            if (afterStyle) {
+                                var afterStyleArr = [];
+                                _.each(afterStyle, function (styleValue, styleName) {
+                                    var styleObj = uiUtilService.composeCssStyle(styleName, styleValue);
+
+                                    _.each(styleObj, function (value, key) {
+                                        afterStyleArr.push("{0}:{1}".format(key, value || '\"\"'));
+                                    });
+                                });
+                                afterStyleArr.length && ret.push("#{0}:after { {1}; }".format(id, afterStyleArr.join(";")));
+                            }
+                        }
+                    });
+                }
+
+                return ret.join(" ");
+            }
+        }
+
+        Extension.prototype.hasStyleService = function () {
+            return function (styles) {
+                return !(_.isEmpty(styles) || (_.isEmpty(styles.style) && _.isEmpty(styles.beforeStyle) && _.isEmpty(styles.afterStyle)));
+            }
+        }
+
+        Extension.prototype.pickStyleService = function () {
+            return function (styles, pseudo) {
+                var pseudoStylePrefix = (pseudo || "") + "Style";
+                pseudoStylePrefix = pseudoStylePrefix.charAt(0).toLowerCase() + pseudoStylePrefix.substr(1);
+
+                return styles && styles[pseudoStylePrefix] || {};
             }
         }
 

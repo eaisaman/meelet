@@ -12,7 +12,7 @@ define(
                         pageHolderClass: "deviceHolder",
                         pageClass: "pageHolder"
                     },
-                    options = angular.extend(defaults, opts),
+                    options = _.extend(defaults, opts),
                     injectObj = _.object(inject, Array.prototype.slice.call(arguments));
 
                 return {
@@ -27,7 +27,7 @@ define(
 
                                 scope.$root.$broadcast(angularEventTypes.boundPropertiesEvent, uiUtilService.createDirectiveBoundMap(boundProperties, attrs));
 
-                                options = angular.extend(options, $parse(attrs['uiPageOpts'])(scope, {}));
+                                options = _.extend(_.clone(options), $parse(attrs['uiPageOpts'])(scope, {}));
                             },
                             post: function (scope, element, attrs) {
                                 scope.togglePage = function (event) {

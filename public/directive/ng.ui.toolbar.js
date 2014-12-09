@@ -8,8 +8,6 @@ define(
                 'use strict';
 
                 var boundProperties = {scale: "="},
-                    defaults = {},
-                    options = angular.extend(defaults, opts),
                     injectObj = _.object(inject, Array.prototype.slice.call(arguments));
 
                 return {

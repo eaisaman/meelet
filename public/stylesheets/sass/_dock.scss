@@ -115,6 +115,7 @@ $expandedDockWidth: 12em;
                     position: relative;
                     float: left;
                     width: 100%;
+                    height: 100%;
 
                     .ui-control-group-titles {
                         height: 2em;
@@ -230,7 +231,12 @@ $expandedDockWidth: 12em;
                                 position: relative;
                                 width: calc(100% - 0.2em);
                                 margin: 0 0.2em;
-                                top: 1em;
+                                top: 0.8em;
+                                height: calc(100% - 4em);
+
+                                &::-webkit-scrollbar {
+                                    display: none !important;
+                                }
 
                                 > .tabs {
                                     position: relative;
@@ -241,15 +247,16 @@ $expandedDockWidth: 12em;
                                     > input {
                                         position: absolute;
                                         z-index: 1;
-                                        width: $tabHeaderWidth;
+                                        width: 50%;
                                         height: 2em;
                                         opacity: 0;
                                         cursor: pointer;
                                     }
                                     > input#tab-2 {
-                                        left: $tabHeaderWidth;
+                                        left: 50%;
                                     }
                                     > label {
+                                        z-index: 6;
                                         position: relative;
                                         float: left;
                                         display: block;
@@ -257,8 +264,9 @@ $expandedDockWidth: 12em;
                                         font-weight: 600;
                                         line-height: 2;
                                         height: 2em;
-                                        width: $tabHeaderWidth;
+                                        width: 50%;
                                         cursor: pointer;
+                                        background: #fff;
                                         text-shadow: 1px 0px 0px ghostwhite, -1px 0px 0px ghostwhite, 0px 1px 0px ghostwhite, 0px -1px 0px ghostwhite, 1px 1px 0px ghostwhite, -1px -1px 0px ghostwhite, -1px 1px 0px ghostwhite, 1px -1px 0px ghostwhite;
 
                                         &:before {
@@ -270,11 +278,8 @@ $expandedDockWidth: 12em;
                                             background: rgba(0, 0, 0, 0.3);
                                         }
                                     }
-                                    > .tab-label-2 {
-                                        z-index: 3;
-                                    }
                                     > input:checked + label {
-                                        z-index: 6;
+                                        z-index: 7;
                                         text-shadow: 1px 0px 0px ghostwhite, -1px 0px 0px ghostwhite, 0px 1px 0px ghostwhite, 0px -1px 0px ghostwhite, 1px 1px 0px ghostwhite, -1px -1px 0px ghostwhite, -1px 1px 0px ghostwhite, 1px -1px 0px ghostwhite, 0px 6px 1px silver;
 
                                         &:before {
@@ -293,16 +298,17 @@ $expandedDockWidth: 12em;
                                         > div {
                                             position: absolute;
                                             width: 100%;
-                                            height: 100%;
                                             z-index: 6;
                                             opacity: 0;
 
                                             @include transition(opacity linear 0.3s);
 
                                             &.content-1 {
+                                                height: 300%;
                                             }
 
                                             &.content-2 {
+                                                height: 100%;
                                             }
                                         }
                                     }
@@ -400,8 +406,8 @@ $expandedDockWidth: 12em;
                                 }
 
                                 .ui-control-panel {
-                                    position: relative;
-                                    float: left;
+                                    position: absolute;
+                                    top: 100%;
                                     width: 100%;
                                     margin-top: 5px;
                                     @include flipDownOrigin();
@@ -517,8 +523,8 @@ $expandedDockWidth: 12em;
                                 }
 
                                 .ui-control-panel {
-                                    position: relative;
-                                    float: right;
+                                    position: absolute;
+                                    top: 100%;
                                     width: 100%;
                                     margin-top: 5px;
                                     @include flipDownOrigin();

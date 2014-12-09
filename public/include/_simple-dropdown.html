@@ -1,6 +1,7 @@
-<div class="cd-dropdown" ng-if="selectionList && selectionList.length">
+<div class="cd-dropdown" ng-if="selectionList && selectionList.length" ng-style="{'z-index':'{{options.zIndex + selectionList.length + 1}}'}">
     <span ng-style="{'z-index':'{{options.zIndex + selectionList.length}}'}" ng-if="options.showTitle"
-          ng-click="toggleOpen($event)">{{selectItem && selectItem[options.labelField] || options.title}}</span>
+          ng-click="toggleOpen($event)">{{selectItem && selectItem[options.labelField] || selectItem || options.title}}</span>
+    <div ng-style="{'z-index':'{{options.zIndex + selectionList.length}}'}" ng-click="toggleOpen($event)" ng-transclude></div>
     <input type="hidden" class="cd-dropdown-input" ng-model="selectItem[options.labelField]">
     <ul ng-click="onSelect($event)">
         <li ng-if="options.displayUnsetOption">

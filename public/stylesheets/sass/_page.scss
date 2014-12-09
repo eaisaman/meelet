@@ -15,7 +15,7 @@ $activeColor: #669933;
 @mixin page($pageEditorId) {
     ##{$pageEditorId} {
         top: 1em;
-        height: auto !important;
+        height: 2.5em !important;
 
         .pageContent.expanded {
             > .pageDetails {
@@ -165,6 +165,7 @@ $activeColor: #669933;
                     top: -1.5em;
                     width: 100%;
                     height: 1.5em;
+                    background: #fff;
 
                     div {
                         position: relative;

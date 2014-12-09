@@ -1,31 +1,168 @@
 @font-face {
-	font-family: 'icon-box-shadow';
-	src:url('fonts/icon-box-shadow.eot?-iiptwg');
-	src:url('fonts/icon-box-shadow.eot?#iefix-iiptwg') format('embedded-opentype'),
-		url('fonts/icon-box-shadow.woff?-iiptwg') format('woff'),
-		url('fonts/icon-box-shadow.ttf?-iiptwg') format('truetype'),
-		url('fonts/icon-box-shadow.svg?-iiptwg#icon-box-shadow') format('svg');
-	font-weight: normal;
-	font-style: normal;
+    font-family: 'icon-box-shadow';
+    src: url('icon-box-shadow.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
 }
 
-.icon-box-shadow {
-	font-family: 'icon-box-shadow';
-	speak: none;
-	font-style: normal;
-	font-weight: normal;
-	font-variant: normal;
-	text-transform: none;
-	line-height: 1;
+.icon-box-shadow:before {
+    font-family: 'icon-box-shadow';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
 
-	/* Better Font Rendering =========== */
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-box-shadow-angle-double-up:before {
-	content: "\e600";
+.icon-box-shadow-before:before {
+    font-family: 'icon-box-shadow';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-box-shadow-after:after {
+    font-family: 'icon-box-shadow';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-box-shadow-brackets:before {
+    content: "\e600";
+}
+.icon-box-shadow-pseudo-noop:before {
+    content: "\e601";
+}
+.icon-box-shadow-pseudo-after:before {
+    content: "\e602";
 }
 .icon-box-shadow-box:before {
-	content: "\e601";
+    content: "\e603";
+}
+.icon-box-shadow-format-list-bulleted:before {
+    content: "\e604";
+}
+.icon-box-shadow-cross:before {
+    content: "\e605";
+}
+.icon-box-shadow-pseudo-before:before {
+    content: "\e606";
+}
+.icon-box-shadow-brush:before {
+    content: "\e607";
+}
+.icon-box-shadow-paste:before {
+    content: "\e608";
+}
+.icon-box-shadow-insert:before {
+    content: "\e609";
+}
+.icon-box-shadow-remove:before {
+    content: "\e60a";
+}
+.icon-box-shadow-copy:before {
+    content: "\e60b";
+}
+.icon-box-shadow-angle-double-up:before {
+    content: "\e60c";
+}
+
+.icon-box-shadow-brackets-before:before {
+    content: "\e600";
+}
+.icon-box-shadow-pseudo-noop-before:before {
+    content: "\e601";
+}
+.icon-box-shadow-pseudo-after-before:before {
+    content: "\e602";
+}
+.icon-box-shadow-box-before:before {
+    content: "\e603";
+}
+.icon-box-shadow-format-list-bulleted-before:before {
+    content: "\e604";
+}
+.icon-box-shadow-cross-before:before {
+    content: "\e605";
+}
+.icon-box-shadow-pseudo-before-before:before {
+    content: "\e606";
+}
+.icon-box-shadow-brush-before:before {
+    content: "\e607";
+}
+.icon-box-shadow-paste-before:before {
+    content: "\e608";
+}
+.icon-box-shadow-insert-before:before {
+    content: "\e609";
+}
+.icon-box-shadow-remove-before:before {
+    content: "\e60a";
+}
+.icon-box-shadow-copy-before:before {
+    content: "\e60b";
+}
+.icon-box-shadow-angle-double-up-before:before {
+    content: "\e60c";
+}
+
+.icon-box-shadow-brackets-after:after {
+    content: "\e600";
+}
+.icon-box-shadow-pseudo-noop-after:after {
+    content: "\e601";
+}
+.icon-box-shadow-pseudo-after-after:after {
+    content: "\e602";
+}
+.icon-box-shadow-box-after:after {
+    content: "\e603";
+}
+.icon-box-shadow-format-list-bulleted-after:after {
+    content: "\e604";
+}
+.icon-box-shadow-cross-after:after {
+    content: "\e605";
+}
+.icon-box-shadow-pseudo-before-after:after {
+    content: "\e606";
+}
+.icon-box-shadow-brush-after:after {
+    content: "\e607";
+}
+.icon-box-shadow-paste-after:after {
+    content: "\e608";
+}
+.icon-box-shadow-insert-after:after {
+    content: "\e609";
+}
+.icon-box-shadow-remove-after:after {
+    content: "\e60a";
+}
+.icon-box-shadow-copy-after:after {
+    content: "\e60b";
+}
+.icon-box-shadow-angle-double-up-after:after {
+    content: "\e60c";
 }

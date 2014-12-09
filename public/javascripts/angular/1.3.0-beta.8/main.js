@@ -13,7 +13,8 @@ require.config(
             "angular-cookies": {deps: ["angular"]},
             "angular-route": {deps: ["angular"]},
             "angular-touch": {deps: ["angular"]}
-        }
+        },
+        waitSeconds: 0
     }
 );
 

@@ -1,20 +1,578 @@
 [
   {
     "group": "Standard",
-    "thumbnailStyle": {
-      "classList": [
-        "fs-x-small-before",
-        "icon-state-transition-before",
-        "icon-state-transition-bling-before"
-      ],
-      "style": {}
-    },
     "list": [
       {
-        "name": "puffIn",
-        "options": {},
-        "mixin": "puffInKeyframes",
-        "args": []
+        "name": "Elevated",
+        "id": "1C9F6454-DD6D-4147-BAB8-761DE51FAB9",
+        "style": {
+          "box-shadow": [
+            {
+              "color": "#A4A4A4",
+              "h-shadow": "0px",
+              "v-shadow": "1px",
+              "blur": "4px",
+              "spread": "1px"
+            },
+            {
+              "color": "#E0E0E0",
+              "h-shadow": "0px",
+              "v-shadow": "0px",
+              "blur": "40px",
+              "inset": "inset"
+            },
+            {
+              "color": "#DDDDDD",
+              "h-shadow": "0px",
+              "v-shadow": "1px",
+              "blur": "1px"
+            },
+            {
+              "color": "#D6D6D6",
+              "h-shadow": "0px",
+              "v-shadow": "2px",
+              "blur": "1px"
+            },
+            {
+              "color": "#CCC",
+              "h-shadow": "0px",
+              "v-shadow": "3px",
+              "blur": "1px"
+            },
+            {
+              "color": "#C5C5C5",
+              "h-shadow": "0px",
+              "v-shadow": "4px",
+              "blur": "1px"
+            },
+            {
+              "color": "#C1C1C1",
+              "h-shadow": "0px",
+              "v-shadow": "5px",
+              "blur": "1px"
+            },
+            {
+              "color": "#BBBBBB",
+              "h-shadow": "0px",
+              "v-shadow": "6px",
+              "blur": "1px"
+            },
+            {
+              "color": "#777777",
+              "h-shadow": "0px",
+              "v-shadow": "7px",
+              "blur": "1px"
+            },
+            {
+              "color": "#535353",
+              "h-shadow": "0px",
+              "v-shadow": "8px",
+              "blur": "3px",
+              "spread": "1px"
+            },
+            {
+              "color": "#A4A4A4",
+              "h-shadow": "0px",
+              "v-shadow": "9px",
+              "blur": "5px",
+              "spread": "1px"
+            },
+            {
+              "color": "#C1C1C1",
+              "h-shadow": "0px",
+              "v-shadow": "10px",
+              "blur": "7px",
+              "spread": "1px"
+            },
+            {
+              "color": "#C1C1C1",
+              "h-shadow": "0px",
+              "v-shadow": "11px",
+              "blur": "17px",
+              "spread": "0px"
+            },
+            {
+              "color": "#E0E0E0",
+              "h-shadow": "0px",
+              "v-shadow": "12px",
+              "blur": "21px",
+              "spread": "0px"
+            },
+            {
+              "color": "#E0E0E0",
+              "h-shadow": "0px",
+              "v-shadow": "13px",
+              "blur": "25px",
+              "spread": "0px"
+            }
+          ]
+        }
+      },
+      {
+        "name": "Sunken",
+        "id": "D9D0C28A-39FE-4B01-A237-B2EF18968831",
+        "style": {
+          "box-shadow": [
+            {
+              "color": "#A4A4A4",
+              "h-shadow": "0px",
+              "v-shadow": "1px",
+              "blur": "4px",
+              "spread": "1px"
+            },
+            {
+              "color": "#E0E0E0",
+              "h-shadow": "0px",
+              "v-shadow": "0px",
+              "blur": "40px",
+              "inset": "inset"
+            },
+            {
+              "color": "#DDDDDD",
+              "h-shadow": "0px",
+              "v-shadow": "1px",
+              "blur": "1px",
+              "inset": "inset"
+            },
+            {
+              "color": "#D6D6D6",
+              "h-shadow": "0px",
+              "v-shadow": "2px",
+              "blur": "1px",
+              "inset": "inset"
+            },
+            {
+              "color": "#CCC",
+              "h-shadow": "0px",
+              "v-shadow": "3px",
+              "blur": "1px",
+              "inset": "inset"
+            },
+            {
+              "color": "#C5C5C5",
+              "h-shadow": "0px",
+              "v-shadow": "4px",
+              "blur": "1px",
+              "inset": "inset"
+            },
+            {
+              "color": "#C1C1C1",
+              "h-shadow": "0px",
+              "v-shadow": "5px",
+              "blur": "1px",
+              "inset": "inset"
+            },
+            {
+              "color": "#BBBBBB",
+              "h-shadow": "0px",
+              "v-shadow": "6px",
+              "blur": "1px",
+              "inset": "inset"
+            },
+            {
+              "color": "#777777",
+              "h-shadow": "0px",
+              "v-shadow": "7px",
+              "blur": "1px",
+              "inset": "inset"
+            },
+            {
+              "color": "#535353",
+              "h-shadow": "0px",
+              "v-shadow": "8px",
+              "blur": "3px",
+              "spread": "1px",
+              "inset": "inset"
+            },
+            {
+              "color": "#A4A4A4",
+              "h-shadow": "0px",
+              "v-shadow": "9px",
+              "blur": "5px",
+              "spread": "1px",
+              "inset": "inset"
+            },
+            {
+              "color": "#C1C1C1",
+              "h-shadow": "0px",
+              "v-shadow": "10px",
+              "blur": "7px",
+              "spread": "0px",
+              "inset": "inset"
+            },
+            {
+              "color": "#C1C1C1",
+              "h-shadow": "0px",
+              "v-shadow": "11px",
+              "blur": "17px",
+              "spread": "0px",
+              "inset": "inset"
+            },
+            {
+              "color": "#E0E0E0",
+              "h-shadow": "0px",
+              "v-shadow": "12px",
+              "blur": "21px",
+              "spread": "0px",
+              "inset": "inset"
+            },
+            {
+              "color": "#E0E0E0",
+              "h-shadow": "0px",
+              "v-shadow": "13px",
+              "blur": "25px",
+              "spread": "0px",
+              "inset": "inset"
+            },
+            {
+              "color": "#CCCCCC",
+              "h-shadow": "0px",
+              "v-shadow": "15px",
+              "blur": "28px",
+              "spread": "0px"
+            },
+            {
+              "color": "#CCCCCC",
+              "h-shadow": "0px",
+              "v-shadow": "7px",
+              "blur": "5px",
+              "spread": "5px"
+            },
+            {
+              "color": "#EEEEEE",
+              "h-shadow": "0px",
+              "v-shadow": "9px",
+              "blur": "15px",
+              "spread": "0px"
+            }
+          ]
+        }
+      },
+      {
+        "name": "Pressed",
+        "id": "3687E4CC-E501-4EC9-9F49-05F5F15FD669",
+        "style": {
+          "box-shadow": [
+            {
+              "color": "#555555",
+              "h-shadow": "2px",
+              "v-shadow": "2px",
+              "blur": "3px"
+            }
+          ]
+        }
+      },
+      {
+        "name": "Outer Shadow",
+        "id": "254CA5E4-7257-4AD8-AB4E-BF7BE35F265E",
+        "style": {
+          "box-shadow": [
+            {
+              "color": "#878787",
+              "h-shadow": "3px",
+              "v-shadow": "3px",
+              "blur": "5px",
+              "spread": "6px"
+            }
+          ]
+        }
+      },
+      {
+        "name": "Inner Shadow",
+        "id": "F3726C25-8871-483C-A094-B76DF714BB1A",
+        "style": {
+          "box-shadow": [
+            {
+              "color": "#000000",
+              "h-shadow": "0px",
+              "v-shadow": "0px",
+              "blur": "10px",
+              "inset": "inset"
+            }
+          ]
+        }
+      },
+      {
+        "name": "One Edge Shadow",
+        "id": "8B144651-A88B-40B5-9CA5-F2691F42B9FD",
+        "style": {
+          "box-shadow": [
+            {
+              "color": "#000000",
+              "h-shadow": "0px",
+              "v-shadow": "8px",
+              "blur": "6px",
+              "spread": "-6px"
+            }
+          ]
+        }
+      },
+      {
+        "name": "Drop Shadow",
+        "id": "906A4F3B-DC57-4EA6-ABA6-CEB74044649B",
+        "style": {
+          "box-shadow": [
+            {
+              "color": "#A4A4A4",
+              "h-shadow": "0px",
+              "v-shadow": "1px",
+              "blur": "4px"
+            },
+            {
+              "color": "#E0E0E0",
+              "h-shadow": "0px",
+              "v-shadow": "0px",
+              "blur": "40px",
+              "inset": "inset"
+            }
+          ]
+        }
+      },
+      {
+        "name": "Lifted",
+        "id": "AC5CCD83-9A6F-45E0-AF1B-D2DEDF7E1AEB",
+        "style": {
+          "background": "#FFFFFF"
+        },
+        "beforeStyle": {
+          "position": "absolute",
+          "content": "",
+          "z-index": "-2",
+          "left": "10px",
+          "bottom": "15px",
+          "width": "50%",
+          "height": "20%",
+          "max-width": "300px",
+          "max-height": "100px",
+          "transform": [
+            {
+              "name": "rotate",
+              "value": "-3deg"
+            }
+          ],
+          "box-shadow": [
+            {
+              "color": "#3C3C3C",
+              "h-shadow": "0px",
+              "v-shadow": "15px",
+              "blur": "10px"
+            }
+          ]
+        },
+        "afterStyle": {
+          "position": "absolute",
+          "content": "",
+          "z-index": "-2",
+          "right": "10px",
+          "bottom": "15px",
+          "width": "50%",
+          "height": "20%",
+          "max-width": "300px",
+          "max-height": "100px",
+          "transform": [
+            {
+              "name": "rotate",
+              "value": "3deg"
+            }
+          ],
+          "box-shadow": [
+            {
+              "color": "#3C3C3C",
+              "h-shadow": "0px",
+              "v-shadow": "15px",
+              "blur": "10px"
+            }
+          ]
+        }
+      },
+      {
+        "name": "Curled",
+        "id": "C0EF4B4E-4BF3-48E5-946E-69C6A7F0328D",
+        "style": {
+          "background": "#FFFFFF"
+        },
+        "beforeStyle": {
+          "position": "absolute",
+          "content": "",
+          "z-index": "-2",
+          "left": "12px",
+          "bottom": "10px",
+          "width": "50%",
+          "height": "55%",
+          "max-width": "200px",
+          "max-height": "100px",
+          "transform": [
+            {
+              "name": "skew",
+              "value": "-8deg"
+            },
+            {
+              "name": "rotate",
+              "value": "-3deg"
+            }
+          ],
+          "box-shadow": [
+            {
+              "color": "#6D6D6D",
+              "h-shadow": "0px",
+              "v-shadow": "8px",
+              "blur": "12px"
+            }
+          ]
+        },
+        "afterStyle": {
+          "position": "absolute",
+          "content": "",
+          "z-index": "-2",
+          "right": "12px",
+          "bottom": "10px",
+          "width": "50%",
+          "height": "55%",
+          "max-width": "200px",
+          "max-height": "100px",
+          "transform": [
+            {
+              "name": "skew",
+              "value": "8deg"
+            },
+            {
+              "name": "rotate",
+              "value": "3deg"
+            }
+          ],
+          "box-shadow": [
+            {
+              "color": "#6D6D6D",
+              "h-shadow": "0px",
+              "v-shadow": "8px",
+              "blur": "12px"
+            }
+          ]
+        }
+      },
+      {
+        "name": "Raised",
+        "id": "71F2FB06-9F7F-4A4C-A7AF-209D12291B16",
+        "style": {
+          "box-shadow": [
+            {
+              "color": "#6D6D6D",
+              "h-shadow": "0px",
+              "v-shadow": "15px",
+              "blur": "10px",
+              "spread": "-10px"
+            },
+            {
+              "color": "#A4A4A4",
+              "h-shadow": "0px",
+              "v-shadow": "1px",
+              "blur": "4px"
+            },
+            {
+              "color": "#E0E0E0",
+              "h-shadow": "0px",
+              "v-shadow": "0px",
+              "blur": "40px",
+              "inset": "inset"
+            }
+          ]
+        }
+      },
+      {
+        "name": "Single Vertical Curve",
+        "id": "9ADA3BFA-E71B-4C8F-B9B3-1762D1D4DDE2",
+        "style": {
+          "background": "#FFFFFF"
+        },
+        "beforeStyle": {
+          "position": "absolute",
+          "content": "",
+          "z-index": "-2",
+          "top": "10px",
+          "bottom": "10px",
+          "left": "0px",
+          "right": "50%",
+          "box-shadow": [
+            {
+              "color": "#535353",
+              "h-shadow": "0px",
+              "v-shadow": "0px",
+              "blur": "15px"
+            }
+          ]
+        }
+      },
+      {
+        "name": "Double Vertical Curve",
+        "id": "ECA74270-D6F9-415D-979E-94A07EE44584",
+        "style": {
+          "background": "#FFFFFF"
+        },
+        "beforeStyle": {
+          "position": "absolute",
+          "content": "",
+          "z-index": "-2",
+          "top": "10px",
+          "bottom": "10px",
+          "left": "0px",
+          "right": "0px",
+          "box-shadow": [
+            {
+              "color": "#535353",
+              "h-shadow": "0px",
+              "v-shadow": "0px",
+              "blur": "15px"
+            }
+          ]
+        }
+      },
+      {
+        "name": "Single Horizontal Curve",
+        "id": "15FD1923-AC1B-4BFA-9AE8-33ABFB438A24",
+        "style": {
+          "background": "#FFFFFF"
+        },
+        "beforeStyle": {
+          "position": "absolute",
+          "content": "",
+          "z-index": "-2",
+          "top": "50%",
+          "bottom": "0px",
+          "left": "10px",
+          "right": "10px",
+          "box-shadow": [
+            {
+              "color": "#535353",
+              "h-shadow": "0px",
+              "v-shadow": "0px",
+              "blur": "15px"
+            }
+          ]
+        }
+      },
+      {
+        "name": "Double Horizontal Curve",
+        "id": "8FB44FD2-450D-4032-BA40-1184CA0939C9",
+        "style": {
+          "background": "#FFFFFF"
+        },
+        "beforeStyle": {
+          "position": "absolute",
+          "content": "",
+          "z-index": "-2",
+          "top": "0px",
+          "bottom": "0px",
+          "left": "10px",
+          "right": "10px",
+          "box-shadow": [
+            {
+              "color": "#535353",
+              "h-shadow": "0px",
+              "v-shadow": "0px",
+              "blur": "15px"
+            }
+          ]
+        }
       }
     ]
   }

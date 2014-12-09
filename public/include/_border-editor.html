@@ -1,21 +1,74 @@
 <div class="ui-control-title fs-x-small">
     <p ng-transclude></p>
 
-    <div class="ui-control-enable-button icon-dock-after icon-dock-cross-after" ng-click="toggleColorControl()"></div>
+    <div class="ui-control-enable-button icon-dock-after icon-dock-cross-after" ng-click="toggleBorderControl()"></div>
 </div>
-<div class="pickerContent ui-control-wrapper">
-    <div class="pickerBar ui-control-bar fs-x-large"
-         ng-click="togglePalette($event)"
-         ng-style="{'background-color':'{{pickerBarBackgroundColor}}'}"
-         ng-if="pickerPaneColor">
-        <div class="pickerPane fs-x-smaller"
-             ng-style="{'color':'{{pickerPaneColor}}', 'background-color':'{{pickerPaneBackgroundColor}}'}"
-                >{{pickedColor}}
+<div class="borderContent ui-control-wrapper">
+    <div class="borderBar ui-control-bar fs-x-large"
+         ng-click="togglePalette($event)">
+        <div class="borderSample"
+             ng-style="{'border-width':'{{Math.min(parseLength(pickedBorderWidth), 20)}}px', 'border-style':'{{pickedBorderStyle}}', 'border-color':'{{pickedBorderColor}}', 'border-radius':'{{Math.min(parseLength(pickedBorderRadius), 20)}}px'}"
+             ng-if="borderIsSet">
+            {{isLengthy(pickedBorderWidth)?"":"None"}}
         </div>
     </div>
-    <div class="pickerPalette ui-control-panel">
-        <div class="colorPane squarePane" ng-repeat="pane in colors" ng-click="pickColor(pane)"
-             ng-style="{'background-color':'{{pane}}'}">
+    <div class="borderPalette ui-control-panel">
+        <div class="borderPane borderWidthPane">
+            <div class="input-group col-as-12 fs-x-smaller">
+                <label class="col-as-5 no-padding-right control-label">Width</label>
+
+                <div class="col-as-7 input-group no-padding">
+                    <input id="borderWidthInput" type="text" class="form-control borderValueInput"
+                           ng-click="$event.stopPropagation()"
+                           ng-model="pickedBorderWidth"/>
+
+                    <div id="borderWidthDropdown" class="borderDropdown stackAndRotateSelect" ui-simple-dropdown
+                         ui-simple-dropdown-opts="{dataField:'value', labelField:'name', zIndex:1000, gutter: 5, showTitle: true, displayUnsetOption: false, zIndex: 200}"
+                         selection-list="borderWidthList" select-item="pickedBorderWidth"
+                         on-option-select="setBorderWidth(pickedBorderWidth)">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="borderPane borderStylePane">
+            <div class="input-group col-as-12 fs-x-smaller">
+                <label class="col-as-5 no-padding-right control-label">Style</label>
+
+                <div id="borderStyleDropdown" class="col-as-7 no-padding stackAndRotateSelect"
+                     ui-simple-dropdown
+                     ui-simple-dropdown-opts="{dataField:'value', labelField:'name', zIndex:1000, gutter: 5, showTitle: true, displayUnsetOption: false, zIndex: 100}"
+                     selection-list="borderStyleList" select-item="pickedBorderStyle"
+                     on-option-select="setBorderStyle(pickedBorderStyle)">
+                </div>
+            </div>
+        </div>
+        <div class="borderPane borderColorPane">
+            <div class="input-group col-as-12 fs-x-smaller">
+                <label class="col-as-5 no-padding-right control-label">Color</label>
+
+                <div class="col-as-7 no-padding">
+                    <div class="borderColorBar fs-x-smaller"
+                         ng-click="toggleSelectBorderColorPane($event)">
+                        <div class="borderColorPickerPane"
+                             ng-style="{'color':'{{borderColorPaneColor}}', 'background-color':'{{borderColorPaneBackgroundColor}}'}"
+                             ng-if="borderColorPaneBackgroundColor">
+                            {{pickedBorderColor}}
+                        </div>
+                    </div>
+                    <div id="borderColorPalette" class="borderColorPalette fs-x-large" ui-color-editor-palette
+                         selected-color="pickedBorderColor">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="borderPane borderRadiusPane">
+            <div class="input-group fs-x-smaller">
+                <label class="col-as-5 no-padding-right control-label">Radius</label>
+
+                <div class="col-as-7 no-padding-left">
+                    <input type="text" class="form-control borderValueInput" ng-model="pickedBorderRadius"/>
+                </div>
+            </div>
         </div>
     </div>
 </div>

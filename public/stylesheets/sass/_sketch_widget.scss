@@ -40,7 +40,6 @@ $deepShadow: #555;
 @mixin sketch-widget($widgetContainerId) {
     ##{$widgetContainerId} {
         .widget {
-
         }
 
         .resize {
@@ -84,12 +83,6 @@ $deepShadow: #555;
                     border-style: none none solid solid;
                 }
             }
-        }
-
-        .widgetText {
-            position: absolute;
-            background: transparent;
-            overflow: visible;
         }
     }
 }

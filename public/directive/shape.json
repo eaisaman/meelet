@@ -4,6 +4,7 @@
         "list": [
             {
                 "name": "circle-shape",
+                "id": "76DD974F-3F33-458E-B568-A4B8877654D9",
                 "thumbnailStyle": {
                     "style": {
                         "width": "1em",
@@ -27,6 +28,7 @@
             },
             {
                 "name": "square-shape",
+                "id": "A9A5DCE3-E7AC-4A84-BC58-AE1AB6E72315",
                 "thumbnailStyle": {
                     "style": {
                         "width": "1em",
@@ -54,6 +56,7 @@
         "list": [
             {
                 "name": "arrow-left",
+                "id": "65F332C8-8119-4B6F-AD29-038E4B4F0B04",
                 "thumbnailStyle": {
                     "style": {
                         "width": "1em",
@@ -75,6 +78,7 @@
             },
             {
                 "name": "arrow-right",
+                "id": "85F82867-E8A3-410D-8178-64F7D9A5A106",
                 "thumbnailStyle": {
                     "style": {
                         "width": "1em",
@@ -96,6 +100,7 @@
             },
             {
                 "name": "arrow-up",
+                "id": "D4107227-BAA4-4A21-8DA9-B745D60B4431",
                 "thumbnailStyle": {
                     "style": {
                         "width": "1em",
@@ -117,6 +122,7 @@
             },
             {
                 "name": "arrow-down",
+                "id": "C6145F18-9C6D-4D0F-9541-96135A32C9EC",
                 "thumbnailStyle": {
                     "style": {
                         "width": "1em",
@@ -138,6 +144,7 @@
             },
             {
                 "name": "simple-arrow-left",
+                "id": "58949A58-752B-402C-AB72-B26361306E0D",
                 "thumbnailStyle": {
                     "style": {
                         "width": "1em",
@@ -159,6 +166,7 @@
             },
             {
                 "name": "simple-arrow-right",
+                "id": "89E35BEC-1959-4E7C-8A7B-1DC9623EAAD1",
                 "thumbnailStyle": {
                     "style": {
                         "width": "1em",
@@ -180,6 +188,7 @@
             },
             {
                 "name": "simple-arrow-up",
+                "id": "4F470459-CCC6-4546-9D00-619547E155D5",
                 "thumbnailStyle": {
                     "style": {
                         "width": "1em",
@@ -201,6 +210,7 @@
             },
             {
                 "name": "simple-arrow-down",
+                "id": "321874FE-AE75-4079-A9E7-75D3F278068B",
                 "thumbnailStyle": {
                     "style": {
                         "width": "1em",
@@ -222,6 +232,7 @@
             },
             {
                 "name": "thick-arrow-left",
+                "id": "EC99814F-C688-4B0B-8E3E-32E36D64DA20",
                 "thumbnailStyle": {
                     "style": {
                         "width": "1em",
@@ -243,6 +254,7 @@
             },
             {
                 "name": "thick-arrow-right",
+                "id": "5C19E026-9C56-478C-86CE-D8BF7E045B80",
                 "thumbnailStyle": {
                     "style": {
                         "width": "1em",
@@ -264,6 +276,7 @@
             },
             {
                 "name": "thick-arrow-up",
+                "id": "7CD03108-BAEC-46A2-B63F-9DB731C820D9",
                 "thumbnailStyle": {
                     "style": {
                         "width": "1em",
@@ -285,6 +298,7 @@
             },
             {
                 "name": "thick-arrow-down",
+                "id": "3ADF9692-271D-4227-9861-8D79FE67D725",
                 "thumbnailStyle": {
                     "style": {
                         "width": "1em",
@@ -306,6 +320,7 @@
             },
             {
                 "name": "inner-arrow-left",
+                "id": "2FB08071-4C27-49CB-9C95-32E1B4A15087",
                 "thumbnailStyle": {
                     "style": {
                         "width": "1em",
@@ -327,6 +342,7 @@
             },
             {
                 "name": "inner-arrow-right",
+                "id": "E9ED33E3-16AA-4918-B86D-73AEDD7DD11F",
                 "thumbnailStyle": {
                     "style": {
                         "width": "1em",
@@ -348,6 +364,7 @@
             },
             {
                 "name": "inner-arrow-up",
+                "id": "83525C67-0EB1-4BA9-A355-FF83948BB1CF",
                 "thumbnailStyle": {
                     "style": {
                         "width": "1em",
@@ -369,6 +386,7 @@
             },
             {
                 "name": "inner-arrow-down",
+                "id": "581828BB-5366-41B3-8C24-E18E57185C0D",
                 "thumbnailStyle": {
                     "style": {
                         "width": "1em",
@@ -390,6 +408,7 @@
             },
             {
                 "name": "nav-arrow-nw",
+                "id": "62B61B7E-07AA-43FE-A046-4C705B425F47",
                 "thumbnailStyle": {
                     "style": {
                         "width": "1em",
@@ -411,6 +430,7 @@
             },
             {
                 "name": "nav-arrow-ne",
+                "id": "AD74AC6A-B6AB-4406-B10B-BC39EBB14FD4",
                 "thumbnailStyle": {
                     "style": {
                         "width": "1em",
@@ -432,6 +452,7 @@
             },
             {
                 "name": "nav-arrow-se",
+                "id": "8BBA52EE-AC55-4875-A143-993F574C303D",
                 "thumbnailStyle": {
                     "style": {
                         "width": "1em",
@@ -453,6 +474,7 @@
             },
             {
                 "name": "nav-arrow-sw",
+                "id": "CFA36860-4278-4AA9-BF99-392AD98B51EC",
                 "thumbnailStyle": {
                     "style": {
                         "width": "1em",
@@ -474,6 +496,7 @@
             },
             {
                 "name": "angle-double-left",
+                "id": "35AA18E6-F67F-42A7-B8A8-302DFB7011D7",
                 "thumbnailStyle": {
                     "style": {
                         "width": "1em",
@@ -495,6 +518,7 @@
             },
             {
                 "name": "angle-double-right",
+                "id": "B81912BB-AC3F-4C42-8A6C-C5AC66E4F4FA",
                 "thumbnailStyle": {
                     "style": {
                         "width": "1em",
@@ -516,6 +540,7 @@
             },
             {
                 "name": "angle-double-up",
+                "id": "FE5F0339-D088-44E1-A7A1-EBB4EDD087C5",
                 "thumbnailStyle": {
                     "style": {
                         "width": "1em",
@@ -537,6 +562,7 @@
             },
             {
                 "name": "angle-double-down",
+                "id": "7760BC29-D023-4F70-9AF7-3C263CB1C0B5",
                 "thumbnailStyle": {
                     "style": {
                         "width": "1em",

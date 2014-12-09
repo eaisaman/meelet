@@ -17,7 +17,7 @@ define(
                         hoverClass: "widgetHover",
                         elementZIndex: 99
                     },
-                    options = angular.extend(defaults, opts),
+                    options = _.extend(defaults, opts),
                     injectObj = _.object(inject, Array.prototype.slice.call(arguments));
 
                 return {
@@ -35,7 +35,7 @@ define(
 
                                 scope.$root.$broadcast(angularEventTypes.boundPropertiesEvent, uiUtilService.createDirectiveBoundMap(boundProperties, attrs));
 
-                                options = angular.extend(options, $parse(attrs['uiShapeOpts'])(scope, {}));
+                                options = _.extend(_.clone(options), $parse(attrs['uiShapeOpts'])(scope, {}));
                             },
                             post: function (scope, element, attrs) {
                                 var $shapeElement;

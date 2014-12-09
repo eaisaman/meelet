@@ -15,39 +15,27 @@
     @include transform-style(preserver-3d);
 }
 
-/* Slide 100% height from current position to the one near top
- * Used by directive ng.ui.dock
- * Found in _dock.html
- */
-@include baseAnimation(slideUp);
-
-/* Slide 100% height from current position to the one near bottom
- * Used by directive ng.ui.dock
- * Found in _dock.html
- */
-@include baseAnimation(slideDown);
-
 /* Slide 100% width from current position to right
- * Used by directive ng.ui.dock
- * Found in _dock.html
+ * Used by directive ng.ui.dock, ng.ui-color-editor-palette, ng.ui.state-transition
+ * Found in _dock.html, _color-editor-palette.html, _state_transition.html
  */
 @include baseAnimation(slideRight);
 
 /* Slide from the position 100% width right to original one back
- * Used by directive ng.ui.gradient-editor
- * Found in _gradient_editor.html
+ * Used by directive ng.ui-color-editor-palette
+ * Found in _color-editor-palette.html
  */
 @include baseAnimation(slideRightRetourn);
 
 /* Slide 100% width from current position to left
- * Used by directive ng.ui.dock
- * Found in _dock.html
+ * Used by directive ng.ui.dock, ng.ui.state-transition
+ * Found in _dock.html, _state_transition.html
  */
 @include baseAnimation(slideLeft);
 
 /* Slide from the position 100% width left to original one back
- * Used by directive ng.ui.gradient-editor
- * Found in _gradient_editor.html
+ * Used by directive ng.ui-color-editor-palette
+ * Found in _color-editor-palette.html
  */
 @include baseAnimation(slideLeftRetourn);
 
@@ -58,40 +46,16 @@
 @include baseAnimation(swashIn);
 
 /* Flip 90deg counter clockwise on x-axis
- * Used by directive ng.ui.dock
- * Found in _dock.html
+ * Used by directive ng.ui.dock, ng.ui.state-transition
+ * Found in _dock.html, _state_transition.html
  */
 @include baseAnimation(flipUp);
 
 /* Flip 90deg clockwise on x-axis, with mixin flipDownOrigin to simulate paper flipping to visible
- * Used by directive ng.ui.dock, ng.ui.gradient-editor
- * Found in _dock.html, _gradient_editor.html
+ * Used by directive ng.ui.dock, ng.ui-color-editor-palette, ng.ui-box-shadow-editor, ng.ui-text-shadow-editor
+ * Found in _dock.html, _color-editor-palette.html, _border-editor.html, _text-shadow.html
  */
 @include baseAnimation(flipDown);
-
-/* Slide up by distance of percent or px.
- * Used by directive ng.ui.gradient-editor
- * Found in _gradient_editor.html
- */
-@include baseAnimation(partialSlideUp);
-
-/* Slide down by distance of percent or px.
- * Used by directive ng.ui.gradient-editor
- * Found in _gradient_editor.html
- */
-@include baseAnimation(partialSlideDown);
-
-/* Slide up by distance of percent or px.
- * Used by directive ng.ui.dock
- * Found in _dock.html
- */
-@include baseAnimation(pxDockHeadSlideUp);
-
-/* Slide down by distance of percent or px.
- * Used by directive ng.ui.dock
- * Found in _dock.html
- */
-@include baseAnimation(pxDockHeadSlideDown);
 
 /* Slide right by distance of percent or px.
  * Used by directive ng.ui.dock
@@ -118,16 +82,10 @@
 @include baseAnimation(pxOffsetDockSlideLeft);
 
 /* Rotate item up side down.
- * Used by directive ng.ui.shape, ng.ui.state-transition
- * Found in _shape.html, _state_transition.html
+ * Used by directive ng.ui.shape, ng.ui.state-transition, ng.ui-box-shadow-editor, ng.ui-text-shadow-editor
+ * Found in _shape.html, _state_transition.html, _border-editor.html, _text-shadow.html
  */
 @include baseAnimation(rotateUpSideDown);
-
-/* Slide down by distance of height from above.
- * Used by directive ng.ui.shape
- * Found in _shape.html
- */
-@include baseAnimation(slideDownFromAbove);
 
 /* Rotate item by 90deg clockwise.
  * Used by directive ng.ui.state-transitoin
@@ -152,3 +110,9 @@
  * Found in _dock.html
  */
 @include baseAnimation(slideRightBack);
+
+/*
+ * Used by directive ng.ui.border-editor, ng.ui.gradient-editor, ng.ui-box-shadow-editor, ng.ui-text-shadow-editor
+ * Found in _border-eidtor.html, _gradient-editor.html, _border-editor.html, _text-shadow.html
+ */
+@include baseAnimation(twisterInDown);

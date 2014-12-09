@@ -7,25 +7,26 @@ define(
             appModule.directive("uiDock", _.union(inject, [function ($timeout, $q, uiUtilService) {
                 'use strict';
 
-                var defaults = {
-                    },
+                var defaults = {},
                     options = angular.extend(defaults, opts),
                     injectObj = _.object(inject, Array.prototype.slice.call(arguments));
 
                 return {
                     restrict: "A",
-                    scope: {
-                    },
+                    scope: {visiblePseudoEnabledWidgets: "="},
                     replace: false,
                     transclude: true,
                     templateUrl: "include/_dock.html",
                     compile: function (element, attrs) {
                         return {
                             pre: function (scope, element, attrs) {
-                                extension && extension.attach && extension.attach(scope, _.extend(injectObj, {element: element, scope: scope}));
+                                extension && extension.attach && extension.attach(scope, _.extend(injectObj, {
+                                    element: element,
+                                    scope: scope
+                                }));
                             },
                             post: function (scope, element, attrs) {
-                                element.find(".showButton, .hideButton").on("click", function(event) {
+                                element.find(".showButton, .hideButton").on("click", function (event) {
                                     scope.toggleDisplay(element);
                                 });
 
@@ -36,6 +37,38 @@ define(
                                         null,
                                         "control-group"
                                     );
+
+                                    var $content = $(".structureContent .content");
+                                    $content.sly({
+                                        smart: 1,
+                                        activateOn: 'click',
+                                        mouseDragging: 0,
+                                        touchDragging: 0,
+                                        releaseSwing: 1,
+                                        scrollBar: null,
+                                        scrollBy: 10,
+                                        pagesBar: null,
+                                        activatePageOn: 'click',
+                                        speed: 300,
+                                        elasticBounds: 1,
+                                        easing: 'easeOutExpo',
+                                        dragHandle: 1,
+                                        dynamicHandle: 1,
+                                        clickBar: 1
+                                    });
+
+                                    //The sly plugin makes $content overflow:hidden which hides the circular menu
+                                    //We make it visible and set the tab title's z-index no smaller than the content
+                                    $content.css("overflow", "visible");
+
+                                    /* FIXME Adjust Slidee Height When Sketch Control Expands.
+                                     *  div.content-1 is used as slidee for sly plugin, whose height is 200% of its parent.
+                                     *  Slidee height is used to determine when the elastic bounce occurs. It is difficult
+                                     *  to get the actual scroll height since every sketch control supports expand action
+                                     *  which may enlarge the value. We can check it by adding the top position and scroll
+                                     *  height of the sketch control, and compare to slidee height. If exceed, adjust slidee
+                                     *  height to new bigger one, and reload sly control.
+                                     * */
                                 });
                             }
                         }

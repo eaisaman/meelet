@@ -1,12 +1,10 @@
 require.config(
     {
         paths: {
-            "icheck": JQUERY_PLUGINS_LIB_PATH + "icheck/1.0.2/icheck.min",
-            "sly": JQUERY_PLUGINS_LIB_PATH + "sly/1.2.7/sly"
+            "jquery.easing": JQUERY_UI_PLUGINS_LIB_PATH + "jquery.easing/1.3/jquery.easing.min"
         },
         shim: {
-            "icheck": {deps: ["jquery"]},
-            "sly": {deps: ["jquery"]}
+            "jquery.easing": {deps: ["jquery-ui"]}
         },
         waitSeconds: 0
     }
@@ -14,19 +12,9 @@ require.config(
 
 define(
     [
-        "icheck", "sly"
+        "jquery.easing"
     ],
     function () {
-        [
-            JQUERY_PLUGINS_LIB_PATH + "icheck/1.0.2/skins/" + "all.css"
-        ].forEach(function (href) {
-                var link = document.createElement("link");
-                link.type = "text/css";
-                link.rel = "stylesheet";
-                link.href = href;
-                document.getElementsByTagName("head")[0].appendChild(link);
-            }
-        );
 
         return function () {
         }
