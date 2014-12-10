@@ -1730,9 +1730,10 @@ define(
             ElementSketchWidgetClass = Class(BaseSketchWidgetClass, {
                 CLASS_NAME: "ElementSketchWidget",
                 MEMBERS: {},
-                initialize: function (id) {
+                initialize: function (id, widgetsArr) {
                     this.initialize.prototype.__proto__.initialize.apply(this, [id]);
-                    var MEMBERS = arguments.callee.prototype.MEMBERS;
+                    var self = this,
+                        MEMBERS = arguments.callee.prototype.MEMBERS;
 
                     for (var member in MEMBERS) {
                         this[member] = angular.copy(MEMBERS[member]);
@@ -1741,15 +1742,10 @@ define(
                     this.isElement = true;
                     this.isTemporary = false;
 
-                    if (arguments.length >= 1) {
-                        var self = this,
-                            widgetsArr = arguments[0];
-
-                        if (toString.apply(widgetsArr) == "[object Array]" && widgetsArr.length) {
-                            widgetsArr.forEach(function (childWidget) {
-                                self.append(childWidget);
-                            });
-                        }
+                    if (widgetsArr && toString.apply(widgetsArr) == "[object Array]") {
+                        widgetsArr.forEach(function (childWidget) {
+                            self.append(childWidget);
+                        });
                     }
                 },
                 toJSON: function () {
@@ -2243,7 +2239,7 @@ define(
 
                 if (widgetArr.length && containerElement) {
                     var self = this,
-                        compositeObj = new ElementSketchWidgetClass(widgetArr);
+                        compositeObj = new ElementSketchWidgetClass(null, widgetArr);
                     compositeObj.attr["ui-draggable"] = "";
                     compositeObj.attr["ui-draggable-opts"] = "{threshold: 5, pointers: 0}";
                     compositeObj.attr["ui-sketch-widget"] = "";

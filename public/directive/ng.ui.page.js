@@ -2,12 +2,12 @@ define(
     ["angular", "jquery"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$timeout", "$q", "$parse", "angularEventTypes", "uiUtilService", "uiService"];
+            var inject = ["$timeout", "$q", "$parse", "angularEventTypes", "angularConstants", "uiUtilService", "uiService"];
 
-            appModule.directive("uiPage", _.union(inject, [function ($timeout, $q, $parse, angularEventTypes, uiUtilService, uiService) {
+            appModule.directive("uiPage", _.union(inject, [function ($timeout, $q, $parse, angularEventTypes, angularConstants, uiUtilService, uiService) {
                 'use strict';
 
-                var boundProperties = {sketchObject: "=", sketchWorks: "="},
+                var boundProperties = {},
                     defaults = {
                         pageHolderClass: "deviceHolder",
                         pageClass: "pageHolder"
@@ -17,7 +17,7 @@ define(
 
                 return {
                     restrict: "A",
-                    scope: angular.extend({dockAlign: "=", treeNodeIdPrefix: "="}, boundProperties),
+                    scope: angular.extend({sketchObject: "=", sketchWorks: "=", dockAlign: "=", treeNodeIdPrefix: "="}, boundProperties),
                     replace: false,
                     templateUrl: "include/_page.html",
                     compile: function (element, attrs) {
@@ -90,6 +90,12 @@ define(
                                     if (event) {
                                         var $el = $(event.target),
                                             offset = $el.offset();
+
+                                        var m = ($el.css("height") || "").match(/([-\d\.]+)px$/);
+                                        if (m && m.length == 2)
+                                            offset.top += parseFloat(m[1]) * 1.5;
+                                        offset.left = Math.floor(offset.left * angularConstants.precision) / angularConstants.precision;
+                                        offset.top = Math.floor(offset.top * angularConstants.precision) / angularConstants.precision;
 
                                         $dropdown.offset(offset);
                                     }

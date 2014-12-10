@@ -1,11 +1,13 @@
 <div class="stateContent ui-control-wrapper" ng-class="dockAlign">
     <div class="stateBar ui-control-bar">
+        <span class="stateTitle fs-x-small icon-state-transition-before icon-state-transition-current-state-before">Current State</span>
+        <span class="stateName fs-x-medium">{{pickedWidget.state.name}}</span>
     </div>
     <div class="stateDetails ui-control-panel fs-x-medium">
-        <div class="accordianGroup" ng-attr-id="{{state.id}}"
+        <div class="accordianGroup stateDefinition" ng-attr-id="{{state.id}}"
              ng-repeat="state in pickedWidget.states|where:{context:pickedWidget.state.context}"
              ng-click="toggleSelect($event.currentTarget, $event)">
-            <div class="accordianTitle col-as-12 icon-state-transition-before icon-state-transition-angle-double-up-before">
+            <div class="accordianTitle col-as-12 icon-state-transition-before icon-state-transition-current-state-before">
                 <div class="deleteButton fs-x-tiny icon-state-transition-before icon-state-transition-cross-before"
                      ng-click="deleteState(state, $event)"></div>
                 {{state.name}}
@@ -72,12 +74,14 @@
                                         </div>
                                     </div>
                                     <div class="transition-action-panel fs-x-smaller">
-                                        <div class="animationOptions" ng-if="transition.actionObj.animation" ng-click="$event.stopPropagation()">
+                                        <div class="animationOptions" ng-if="transition.actionObj.animation"
+                                             ng-click="$event.stopPropagation()">
                                             <div class="input-group">
                                                 <label class="col-as-5 no-padding-right control-label fs-x-smaller">Duration</label>
 
                                                 <div class="col-as-7 no-padding-left">
-                                                    <input type="number" class="form-control fs-x-smaller animationDurationInput"
+                                                    <input type="number"
+                                                           class="form-control fs-x-smaller animationDurationInput"
                                                            ng-model="transition.actionObj.animation.options.duration"/>
                                                 </div>
                                             </div>
@@ -139,7 +143,7 @@
             <div class="stateOption" ng-repeat="opt in pickedWidget.stateOptions"
                  ng-attr-name="{{opt.name}}"
                  ng-click="toggleExclusiveSelect($event.currentTarget, $event)">
-                <span>{{opt.name}}</span>
+                <span class="icon-state-transition-before icon-state-transition-option-before">{{opt.name}}</span>
 
                 <div class="deleteButton fs-x-tiny icon-state-transition-before icon-state-transition-cross-before"
                      ng-click="deleteStateOption(opt, $event)"/>

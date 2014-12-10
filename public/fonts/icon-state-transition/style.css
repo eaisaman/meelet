@@ -47,214 +47,230 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-state-transition-flag:before {
+.icon-state-transition-option:before {
     content: "\e600";
 }
-.icon-state-transition-one-finger-swipe-left:before {
+.icon-state-transition-current-state:before {
     content: "\e601";
-}
-.icon-state-transition-one-finger-swipe-right:before {
-    content: "\e602";
-}
-.icon-state-transition-one-finger-swipe-down:before {
-    content: "\e603";
-}
-.icon-state-transition-one-finger-swipe-up:before {
-    content: "\e604";
-}
-.icon-state-transition-one-finger-tap:before {
-    content: "\e605";
-}
-.icon-state-transition-static-effects-out:before {
-    content: "\e606";
-}
-.icon-state-transition-tin:before {
-    content: "\e607";
-}
-.icon-state-transition-bomb:before {
-    content: "\e608";
-}
-.icon-state-transition-angle-double-up:before {
-    content: "\e609";
-}
-.icon-state-transition-static-effects:before {
-    content: "\e60a";
-}
-.icon-state-transition-math:before {
-    content: "\e60b";
-}
-.icon-state-transition-running-man:before {
-    content: "\e60c";
-}
-.icon-state-transition-fire:before {
-    content: "\e60d";
 }
 .icon-state-transition-slide:before {
-    content: "\e60e";
+    content: "\e602";
 }
 .icon-state-transition-rotate:before {
-    content: "\e60f";
+    content: "\e603";
 }
 .icon-state-transition-bling:before {
-    content: "\e610";
+    content: "\e604";
 }
 .icon-state-transition-animation:before {
-    content: "\e611";
+    content: "\e605";
 }
 .icon-state-transition-arrow-right-plus:before {
-    content: "\e612";
+    content: "\e606";
 }
 .icon-state-transition-cross:before {
-    content: "\e613";
+    content: "\e607";
 }
 .icon-state-transition-arrow-right:before {
-    content: "\e614";
+    content: "\e608";
 }
 .icon-state-transition-plus:before {
+    content: "\e609";
+}
+.icon-state-transition-flag:before {
+    content: "\e60a";
+}
+.icon-state-transition-one-finger-swipe-left:before {
+    content: "\e60b";
+}
+.icon-state-transition-one-finger-swipe-right:before {
+    content: "\e60c";
+}
+.icon-state-transition-one-finger-swipe-down:before {
+    content: "\e60d";
+}
+.icon-state-transition-one-finger-swipe-up:before {
+    content: "\e60e";
+}
+.icon-state-transition-one-finger-tap:before {
+    content: "\e60f";
+}
+.icon-state-transition-static-effects-out:before {
+    content: "\e610";
+}
+.icon-state-transition-tin:before {
+    content: "\e611";
+}
+.icon-state-transition-bomb:before {
+    content: "\e612";
+}
+.icon-state-transition-angle-double-up:before {
+    content: "\e613";
+}
+.icon-state-transition-static-effects:before {
+    content: "\e614";
+}
+.icon-state-transition-math:before {
     content: "\e615";
+}
+.icon-state-transition-running-man:before {
+    content: "\e616";
+}
+.icon-state-transition-fire:before {
+    content: "\e617";
 }
 .icon-state-transition-perspective:before {
-    content: "\e616";
+    content: "\e618";
 }
 
-.icon-state-transition-flag-before:before {
+.icon-state-transition-option-before:before {
     content: "\e600";
 }
-.icon-state-transition-one-finger-swipe-left-before:before {
+.icon-state-transition-current-state-before:before {
     content: "\e601";
-}
-.icon-state-transition-one-finger-swipe-right-before:before {
-    content: "\e602";
-}
-.icon-state-transition-one-finger-swipe-down-before:before {
-    content: "\e603";
-}
-.icon-state-transition-one-finger-swipe-up-before:before {
-    content: "\e604";
-}
-.icon-state-transition-one-finger-tap-before:before {
-    content: "\e605";
-}
-.icon-state-transition-static-effects-out-before:before {
-    content: "\e606";
-}
-.icon-state-transition-tin-before:before {
-    content: "\e607";
-}
-.icon-state-transition-bomb-before:before {
-    content: "\e608";
-}
-.icon-state-transition-angle-double-up-before:before {
-    content: "\e609";
-}
-.icon-state-transition-static-effects-before:before {
-    content: "\e60a";
-}
-.icon-state-transition-math-before:before {
-    content: "\e60b";
-}
-.icon-state-transition-running-man-before:before {
-    content: "\e60c";
-}
-.icon-state-transition-fire-before:before {
-    content: "\e60d";
 }
 .icon-state-transition-slide-before:before {
-    content: "\e60e";
-}
-.icon-state-transition-rotate-before:before {
-    content: "\e60f";
-}
-.icon-state-transition-bling-before:before {
-    content: "\e610";
-}
-.icon-state-transition-animation-before:before {
-    content: "\e611";
-}
-.icon-state-transition-arrow-right-plus-before:before {
-    content: "\e612";
-}
-.icon-state-transition-cross-before:before {
-    content: "\e613";
-}
-.icon-state-transition-arrow-right-before:before {
-    content: "\e614";
-}
-.icon-state-transition-plus-before:before {
-    content: "\e615";
-}
-.icon-state-transition-perspective-before:before {
-    content: "\e616";
-}
-
-.icon-state-transition-flag-after:after {
-    content: "\e600";
-}
-.icon-state-transition-one-finger-swipe-left-after:after {
-    content: "\e601";
-}
-.icon-state-transition-one-finger-swipe-right-after:after {
     content: "\e602";
 }
-.icon-state-transition-one-finger-swipe-down-after:after {
+.icon-state-transition-rotate-before:before {
     content: "\e603";
 }
-.icon-state-transition-one-finger-swipe-up-after:after {
+.icon-state-transition-bling-before:before {
     content: "\e604";
 }
-.icon-state-transition-one-finger-tap-after:after {
+.icon-state-transition-animation-before:before {
     content: "\e605";
 }
-.icon-state-transition-static-effects-out-after:after {
+.icon-state-transition-arrow-right-plus-before:before {
     content: "\e606";
 }
-.icon-state-transition-tin-after:after {
+.icon-state-transition-cross-before:before {
     content: "\e607";
 }
-.icon-state-transition-bomb-after:after {
+.icon-state-transition-arrow-right-before:before {
     content: "\e608";
 }
-.icon-state-transition-angle-double-up-after:after {
+.icon-state-transition-plus-before:before {
     content: "\e609";
 }
-.icon-state-transition-static-effects-after:after {
+.icon-state-transition-flag-before:before {
     content: "\e60a";
 }
-.icon-state-transition-math-after:after {
+.icon-state-transition-one-finger-swipe-left-before:before {
     content: "\e60b";
 }
-.icon-state-transition-running-man-after:after {
+.icon-state-transition-one-finger-swipe-right-before:before {
     content: "\e60c";
 }
-.icon-state-transition-fire-after:after {
+.icon-state-transition-one-finger-swipe-down-before:before {
     content: "\e60d";
 }
-.icon-state-transition-slide-after:after {
+.icon-state-transition-one-finger-swipe-up-before:before {
     content: "\e60e";
 }
-.icon-state-transition-rotate-after:after {
+.icon-state-transition-one-finger-tap-before:before {
     content: "\e60f";
 }
-.icon-state-transition-bling-after:after {
+.icon-state-transition-static-effects-out-before:before {
     content: "\e610";
 }
-.icon-state-transition-animation-after:after {
+.icon-state-transition-tin-before:before {
     content: "\e611";
 }
-.icon-state-transition-arrow-right-plus-after:after {
+.icon-state-transition-bomb-before:before {
     content: "\e612";
 }
-.icon-state-transition-cross-after:after {
+.icon-state-transition-angle-double-up-before:before {
     content: "\e613";
 }
-.icon-state-transition-arrow-right-after:after {
+.icon-state-transition-static-effects-before:before {
     content: "\e614";
 }
-.icon-state-transition-plus-after:after {
+.icon-state-transition-math-before:before {
     content: "\e615";
 }
-.icon-state-transition-perspective-after:after {
+.icon-state-transition-running-man-before:before {
     content: "\e616";
 }
+.icon-state-transition-fire-before:before {
+    content: "\e617";
+}
+.icon-state-transition-perspective-before:before {
+    content: "\e618";
+}
 
-
+.icon-state-transition-option-after:after {
+    content: "\e600";
+}
+.icon-state-transition-current-state-after:after {
+    content: "\e601";
+}
+.icon-state-transition-slide-after:after {
+    content: "\e602";
+}
+.icon-state-transition-rotate-after:after {
+    content: "\e603";
+}
+.icon-state-transition-bling-after:after {
+    content: "\e604";
+}
+.icon-state-transition-animation-after:after {
+    content: "\e605";
+}
+.icon-state-transition-arrow-right-plus-after:after {
+    content: "\e606";
+}
+.icon-state-transition-cross-after:after {
+    content: "\e607";
+}
+.icon-state-transition-arrow-right-after:after {
+    content: "\e608";
+}
+.icon-state-transition-plus-after:after {
+    content: "\e609";
+}
+.icon-state-transition-flag-after:after {
+    content: "\e60a";
+}
+.icon-state-transition-one-finger-swipe-left-after:after {
+    content: "\e60b";
+}
+.icon-state-transition-one-finger-swipe-right-after:after {
+    content: "\e60c";
+}
+.icon-state-transition-one-finger-swipe-down-after:after {
+    content: "\e60d";
+}
+.icon-state-transition-one-finger-swipe-up-after:after {
+    content: "\e60e";
+}
+.icon-state-transition-one-finger-tap-after:after {
+    content: "\e60f";
+}
+.icon-state-transition-static-effects-out-after:after {
+    content: "\e610";
+}
+.icon-state-transition-tin-after:after {
+    content: "\e611";
+}
+.icon-state-transition-bomb-after:after {
+    content: "\e612";
+}
+.icon-state-transition-angle-double-up-after:after {
+    content: "\e613";
+}
+.icon-state-transition-static-effects-after:after {
+    content: "\e614";
+}
+.icon-state-transition-math-after:after {
+    content: "\e615";
+}
+.icon-state-transition-running-man-after:after {
+    content: "\e616";
+}
+.icon-state-transition-fire-after:after {
+    content: "\e617";
+}
+.icon-state-transition-perspective-after:after {
+    content: "\e618";
+}
