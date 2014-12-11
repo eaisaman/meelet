@@ -381,6 +381,23 @@ define(
             }
         }
 
+        Extension.prototype.composePrefixedCssService = function () {
+            return function (style, format) {
+                var arr = []
+
+                if (style && format) {
+                    var prefixes = ["-webkit-", "-moz-", "-ms-", "-o-", ""],
+                        values = Array.prototype.slice.call(arguments, 2);
+
+                    prefixes.forEach(function (prefix) {
+                        arr.push(String.prototype.format.apply("{0}: {1}", [prefix + style, String.prototype.format.apply(format, values)]));
+                    });
+                }
+
+                return arr.length && arr.join(";") || "";
+            }
+        }
+
         Extension.prototype.composeTextShadowCssService = function () {
             return function (value) {
                 var arr = [];

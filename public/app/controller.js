@@ -2,7 +2,7 @@ define(
     ["angular", "jquery", "jquery-ui", "app-util", "app-route", "app-filter", "app-service"],
     function () {
         function RootController(urlService) {
-            urlService.frameSketch();
+            urlService.sidebar();
         }
 
         function FrameSketchController($scope, $rootScope, $timeout, $q, angularEventTypes, uiService) {

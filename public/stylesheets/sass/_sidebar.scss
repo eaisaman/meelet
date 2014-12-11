@@ -1,13 +1,35 @@
-@import "compass/css3/transform";
-@import "compass/css3/transition";
-@import "compass/css3/box-shadow";
-@import "compass/css3/box-sizing";
-@import "compass/css3/flexbox";
+$borderColor: rgba(0, 0, 0, 0.4);
+$activeBorderShadow: rgba(192, 192, 192, 0.8);
 
-@mixin sidebar($sideBarClass, $contentWidth: 300px) {
+@mixin sidebar($sideBarClass) {
 
     .#{$sideBarClass}.rightSide {
-        .st-pusher {
+        &.overlay {
+            > .mainContent {
+                &:after {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 0;
+                    height: 0;
+                    background: rgba(0,0,0,0.2);
+                    content: '';
+                    opacity: 1;
+                }
+            }
+
+            &.select {
+                > .mainContent:after {
+                    width: 100%;
+                    height: 100%;
+                    opacity: 1;
+
+                    @include transition(opacity 0.5s);
+                }
+            }
+        }
+
+        > .mainContent {
             position: relative;
             right: 0;
             z-index: 99;
@@ -15,78 +37,46 @@
 
             @include transition(transform 0.5s);
 
-            &:after {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 0;
-                height: 0;
-                background: rgba(0,0,0,0.2);
-                content: '';
-                opacity: 1;
-
+            > [name=mainContent] {
+                position: relative;
+                float: left;
+                width: 100%;
+                height: 100%;
             }
         }
 
-        > .st-content, > .st-pusher > .st-content {
+        > .barContent, > .mainContent > .barContent {
             position: absolute;
             top: 0;
             right: 0;
             z-index: 100;
             visibility: hidden;
-            width: #{$contentWidth};
             height: 100%;
             display: none;
 
             @include transition(all 0.5s);
 
-            &:after {
-                position: absolute;
-                top: 0;
-                left: 0;
+            > [name=barContent] {
+                position: relative;
+                float: left;
                 width: 100%;
                 height: 100%;
-                background: rgba(0,0,0,0.2);
-                content: '';
-                opacity: 1;
-
-                @include transition(opacity 0.5s);
             }
         }
 
-        &.st-sidebar-open {
-            .st-pusher::after {
-                width: 100%;
-                height: 100%;
-                opacity: 1;
-
-                @include transition(opacity 0.5s);
-            }
-
-            .st-content {
+        &.select {
+            > .barContent {
                 display: block;
-            }
-
-            .st-content::after {
-                width: 0;
-                height: 0;
-                opacity: 0;
-
-                @include transition(opacity 0.5s, width 0.1s 0.5s, height 0.1s 0.5s);
             }
         }
 
         /* Effect 1: Slide in on top */
         &.slideInOnTop {
-            .st-content {
+            > .barContent {
                 @include translate3d(100%, 0, 0);
             }
 
-            .st-content::after {
-                display: none;
-            }
-
-            &.st-sidebar-open .st-content {
+            &.select > .barContent {
                 visibility: visible;
                 @include translate3d(0, 0, 0);
             }
@@ -94,23 +84,15 @@
 
         /* Effect 2: Reveal */
         &.reveal {
-            .st-content {
+            > .barContent {
                 z-index: 1;
             }
 
-            .st-content::after {
-                display: none;
-            }
-
-            &.st-sidebar-open {
-                >.st-content {
+            &.select {
+                >.barContent {
                     visibility: visible;
 
                     @include transition(transform 0.5s);
-                }
-
-                .st-pusher {
-                    @include translate3d(-#{$contentWidth}, 0, 0);
                 }
             }
         }
@@ -118,21 +100,13 @@
 
         /* Effect 4: Slide along */
         &.slideAlong {
-            .st-content {
+            > .barContent {
                 z-index: 1;
                 @include translate3d(50%, 0, 0);
             }
 
-            .st-content::after {
-                display: none;
-            }
-
-            &.st-sidebar-open {
-                .st-pusher {
-                    @include translate3d(-#{$contentWidth}, 0, 0);
-                }
-
-                > .st-content {
+            &.select {
+                > .barContent {
                     visibility: visible;
 
                     @include transition(transform 0.5s);
@@ -143,17 +117,13 @@
 
         /* Effect 5: Reverse slide out */
         &.reverseSlideOut {
-            .st-content {
+            > .barContent {
                 z-index: 1;
                 @include translate3d(-50%, 0, 0);
             }
 
-            &.st-sidebar-open {
-                .st-pusher {
-                    @include translate3d(-#{$contentWidth}, 0, 0);
-                }
-
-                > .st-content {
+            &.select {
+                > .barContent {
                     visibility: visible;
 
                     @include transition(transform 0.5s);
@@ -166,26 +136,20 @@
         &.rotatePusher {
             @include perspective(1500px);
 
-            .st-pusher {
+            > .mainContent {
                 @include transform-origin(100%, 50%);
                 @include transform-style(preserve-3d);
 
-                .st-content {
+                > .barContent {
                     @include translate3d(100%, 0, 0);
                     @include transform-origin(0%, 50%);
                     @include transform-style(preserve-3d);
                 }
-
-                .st-content::after {
-                    display: none;
-                }
             }
 
-            &.st-sidebar-open {
-                .st-pusher {
-                    @include transform(translate3d(-#{$contentWidth}, 0, 0) rotateY(15deg));
-
-                    .st-content {
+            &.select {
+                > .mainContent {
+                    > .barContent {
                         visibility: visible;
 
                         @include transition(transform 0.5s);
@@ -200,21 +164,19 @@
             @include perspective(1500px);
             @include perspective-origin(0% 50%);
 
-            .st-pusher {
+            > .mainContent {
                 @include transform-style(preserve-3d);
 
-                .st-content {
+                > .barContent {
                     @include transform(translate3d(100%, 0, 0) rotateY(90deg));
                     @include transform-origin(100%, 50%);
                     @include transform-style(preserve-3d);
                 }
             }
 
-            &.st-sidebar-open {
-                .st-pusher {
-                    @include translate3d(-#{$contentWidth}, 0, 0);
-
-                    .st-content {
+            &.select {
+                > .mainContent {
+                    > .barContent {
                         visibility: visible;
 
                         @include transition(transform 0.5s);
@@ -229,25 +191,19 @@
             @include perspective(1500px);
             @include perspective-origin(0% 50%);
 
-            .st-pusher {
+            > .mainContent {
                 @include transform-style(preserve-3d);
 
-                .st-content {
+                > .barContent {
                     @include transform-origin(0%, 50%);
                     @include transform(translate3d(100%, 0, 0) rotateY(-90deg));
                     @include transform-style(preserve-3d);
                 }
-
-                .st-content::after {
-                    display: none;
-                }
             }
 
-            &.st-sidebar-open {
-                .st-pusher {
-                    @include translate3d(-#{$contentWidth}, 0, 0);
-
-                    .st-content {
+            &.select {
+                > .mainContent {
+                    > .barContent {
                         visibility: visible;
 
                         @include transition(transform 0.5s);
@@ -261,25 +217,17 @@
         &.scaleDownPusher {
             @include perspective(1500px);
 
-            .st-pusher {
+            > .mainContent {
                 @include transform-style(preserve-3d);
             }
 
-            .st-content {
+            > .barContent {
                 opacity: 1;
                 @include translate3d(100%, 0, 0);
             }
 
-            .st-content::after {
-                display: none;
-            }
-
-            &.st-sidebar-open {
-                .st-pusher {
-                    @include translate3d(0, 0, -#{$contentWidth});
-                }
-
-                > .st-content {
+            &.select {
+                > .barContent {
                     visibility: visible;
 
                     @include transition(transform 0.5s);
@@ -293,18 +241,13 @@
             @include perspective(1500px);
             @include perspective-origin(0% 50%);
 
-            .st-content {
+            > .barContent {
                 z-index: 1;
                 opacity: 1;
-                @include translate3d(0, 0, -#{$contentWidth});
             }
 
-            &.st-sidebar-open {
-                .st-pusher {
-                    @include translate3d(-#{$contentWidth}, 0, 0);
-                }
-
-                > .st-content {
+            &.select {
+                > .barContent {
                     visibility: visible;
 
                     @include transition(transform 0.5s);
@@ -317,25 +260,21 @@
         &.scaleRotatePusher {
             @include perspective(1500px);
 
-            .st-pusher {
+            > .mainContent {
                 @include transform-style(preserve-3d);
             }
 
-            .st-content {
+            > .barContent {
                 opacity: 1;
                 @include translate3d(100%, 0, 0);
             }
 
-            .st-content::after {
-                display: none;
-            }
-
-            &.st-sidebar-open {
-                .st-pusher {
+            &.select {
+                > .mainContent {
                     @include transform(translate3d(-100px, 0, -600px) rotateY(20deg));
                 }
 
-                > .st-content {
+                > .barContent {
                     visibility: visible;
 
                     @include transition(transform 0.5s);
@@ -348,26 +287,22 @@
         &.openDoor {
             @include perspective(1500px);
 
-            .st-pusher {
+            > .mainContent {
                 @include transform-origin(0%, 50%);
                 @include transform-style(preserve-3d);
             }
 
-            .st-content {
+            > .barContent {
                 opacity: 1;
                 @include translate3d(100%, 0, 0);
             }
 
-            .st-content::after {
-                display: none;
-            }
-
-            &.st-sidebar-open {
-                .st-pusher {
+            &.select {
+                > .mainContent {
                     @include rotateY(10deg);
                 }
 
-                > .st-content {
+                > .barContent {
                     visibility: visible;
 
                     @include transition(transform 0.5s);
@@ -381,18 +316,14 @@
             @include perspective(1500px);
             @include perspective-origin(0% 50%);
 
-            .st-content {
+            > .barContent {
                 z-index: 1;
                 opacity: 1;
                 @include translate3d(0, -100%, 0);
             }
 
-            &.st-sidebar-open {
-                .st-pusher {
-                    @include translate3d(-#{$contentWidth}, 0, 0);
-                }
-
-                > .st-content {
+            &.select {
+                > .barContent {
                     visibility: visible;
 
                     @include transition(transform 0.2s ease-in-out);
@@ -406,21 +337,19 @@
             @include perspective(1500px);
             @include perspective-origin(0% 50%);
 
-            .st-pusher {
+            > .mainContent {
                 @include transform-style(preserve-3d);
 
-                .st-content {
+                > .barContent {
                     @include transform-origin(100%, 50%);
                     @include transform(rotateY(90deg));
                     @include transform-style(preserve-3d);
                 }
             }
 
-            &.st-sidebar-open {
-                .st-pusher {
-                    @include translate3d(-#{$contentWidth}, 0, 0);
-
-                    .st-content {
+            &.select {
+                > .mainContent {
+                    > .barContent {
                         visibility: visible;
 
                         @include transform(translate3d(100%, 0, 0) rotateY(0deg));
@@ -431,7 +360,32 @@
     }
 
     .#{$sideBarClass}.leftSide {
-        .st-pusher {
+        &.overlay {
+            > .mainContent {
+                &:after {
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    width: 0;
+                    height: 0;
+                    background: rgba(0,0,0,0.2);
+                    content: '';
+                    opacity: 1;
+                }
+            }
+
+            &.select {
+                > .mainContent:after {
+                    width: 100%;
+                    height: 100%;
+                    opacity: 1;
+
+                    @include transition(opacity 0.5s);
+                }
+            }
+        }
+
+        > .mainContent {
             position: relative;
             left: 0;
             z-index: 99;
@@ -439,74 +393,43 @@
 
             @include transition(transform 0.5s);
 
-            &:after {
-                position: absolute;
-                top: 0;
-                right: 0;
-                width: 0;
-                height: 0;
-                background: rgba(0,0,0,0.2);
-                content: '';
-                opacity: 1;
-
+            > [name=mainContent] {
+                position: relative;
+                float: left;
+                width: 100%;
+                height: 100%;
             }
         }
 
-        > .st-content, > .st-pusher > .st-content {
+        > .barContent, > .mainContent > .barContent {
             position: absolute;
             top: 0;
             left: 0;
             z-index: 100;
             visibility: hidden;
-            width: #{$contentWidth};
             height: 100%;
 
             @include transition(all 0.5s);
 
-            &:after {
-                position: absolute;
-                top: 0;
-                right: 0;
+            > [name=barContent] {
+                position: relative;
+                float: left;
                 width: 100%;
                 height: 100%;
-                background: rgba(0,0,0,0.2);
-                content: '';
-                opacity: 1;
-
-                @include transition(opacity 0.5s);
             }
         }
 
-        &.st-sidebar-open {
-            > .st-pusher::after {
-                width: 100%;
-                height: 100%;
-                opacity: 1;
-
-                @include transition(opacity 0.5s);
-            }
-
-            > .st-content::after, > .st-pusher > .st-content::after {
-                width: 0;
-                height: 0;
-                opacity: 0;
-
-                @include transition(opacity 0.5s, width 0.1s 0.5s, height 0.1s 0.5s);
-            }
+        &.select {
         }
 
         /* Effect 1: Slide in on top */
         &.slideInOnTop {
-            > .st-content, > .st-pusher > .st-content {
+            > .barContent, > .mainContent > .barContent {
                 @include translate3d(-100%, 0, 0);
             }
 
-            > .st-content::after, > .st-pusher > .st-content::after {
-                display: none;
-            }
-
-            &.st-sidebar-open {
-                > .st-content, > .st-pusher > .st-content {
+            &.select {
+                > .barContent, > .mainContent > .barContent {
                     visibility: visible;
                     @include translate3d(0, 0, 0);
                 }
@@ -515,44 +438,28 @@
 
         /* Effect 2: Reveal */
         &.reveal {
-            .st-content {
+            > .barContent {
                 z-index: 1;
             }
 
-            .st-content::after {
-                display: none;
-            }
-
-            &.st-sidebar-open {
-                >.st-content {
+            &.select {
+                >.barContent {
                     visibility: visible;
 
                     @include transition(transform 0.5s);
-                }
-
-                .st-pusher {
-                    @include translate3d(#{$contentWidth}, 0, 0);
                 }
             }
         }
 
         /* Effect 4: Slide along */
         &.slideAlong {
-            .st-content {
+            > .barContent {
                 z-index: 1;
                 @include translate3d(-50%, 0, 0);
             }
 
-            .st-content::after {
-                display: none;
-            }
-
-            &.st-sidebar-open {
-                .st-pusher {
-                    @include translate3d(#{$contentWidth}, 0, 0);
-                }
-
-                > .st-content {
+            &.select {
+                > .barContent {
                     visibility: visible;
 
                     @include transition(transform 0.5s);
@@ -563,17 +470,13 @@
 
         /* Effect 5: Reverse slide out */
         &.reverseSlideOut {
-            .st-content {
+            > .barContent {
                 z-index: 1;
                 @include translate3d(50%, 0, 0);
             }
 
-            &.st-sidebar-open {
-                .st-pusher {
-                    @include translate3d(#{$contentWidth}, 0, 0);
-                }
-
-                > .st-content {
+            &.select {
+                > .barContent {
                     visibility: visible;
 
                     @include transition(transform 0.5s);
@@ -586,26 +489,20 @@
         &.rotatePusher {
             @include perspective(1500px);
 
-            .st-pusher {
+            > .mainContent {
                 @include transform-origin(0%, 50%);
                 @include transform-style(preserve-3d);
 
-                .st-content {
+                > .barContent {
                     @include translate3d(-100%, 0, 0);
                     @include transform-origin(100%, 50%);
                     @include transform-style(preserve-3d);
                 }
-
-                .st-content::after {
-                    display: none;
-                }
             }
 
-            &.st-sidebar-open {
-                .st-pusher {
-                    @include transform(translate3d(#{$contentWidth}, 0, 0) rotateY(-15deg));
-
-                    .st-content {
+            &.select {
+                > .mainContent {
+                    > .barContent {
                         visibility: visible;
 
                         @include transition(transform 0.5s);
@@ -620,21 +517,19 @@
             @include perspective(1500px);
             @include perspective-origin(0% 50%);
 
-            .st-pusher {
+            > .mainContent {
                 @include transform-style(preserve-3d);
 
-                .st-content {
+                > .barContent {
                     @include transform(translate3d(-100%, 0, 0) rotateY(-90deg));
                     @include transform-origin(100%, 50%);
                     @include transform-style(preserve-3d);
                 }
             }
 
-            &.st-sidebar-open {
-                .st-pusher {
-                    @include translate3d(#{$contentWidth}, 0, 0);
-
-                    .st-content {
+            &.select {
+                > .mainContent {
+                    > .barContent {
                         visibility: visible;
 
                         @include transition(transform 0.5s);
@@ -649,25 +544,19 @@
             @include perspective(1500px);
             @include perspective-origin(0% 50%);
 
-            .st-pusher {
+            > .mainContent {
                 @include transform-style(preserve-3d);
 
-                .st-content {
+                > .barContent {
                     @include transform(translate3d(-100%, 0, 0) rotateY(90deg));
                     @include transform-origin(100%, 50%);
                     @include transform-style(preserve-3d);
                 }
-
-                .st-content::after {
-                    display: none;
-                }
             }
 
-            &.st-sidebar-open {
-                .st-pusher {
-                    @include translate3d(#{$contentWidth}, 0, 0);
-
-                    .st-content {
+            &.select {
+                > .mainContent {
+                    > .barContent {
                         visibility: visible;
 
                         @include transition(transform 0.5s);
@@ -681,25 +570,17 @@
         &.scaleDownPusher {
             @include perspective(1500px);
 
-            .st-pusher {
+            > .mainContent {
                 @include transform-style(preserve-3d);
             }
 
-            .st-content {
+            > .barContent {
                 opacity: 1;
                 @include translate3d(-100%, 0, 0);
             }
 
-            .st-content::after {
-                display: none;
-            }
-
-            &.st-sidebar-open {
-                .st-pusher {
-                    @include translate3d(0, 0, -#{$contentWidth});
-                }
-
-                > .st-content {
+            &.select {
+                > .barContent {
                     visibility: visible;
 
                     @include transition(transform 0.5s);
@@ -713,18 +594,13 @@
             @include perspective(1500px);
             @include perspective-origin(0% 50%);
 
-            .st-content {
+            > .barContent {
                 z-index: 1;
                 opacity: 1;
-                @include translate3d(0, 0, -#{$contentWidth});
             }
 
-            &.st-sidebar-open {
-                .st-pusher {
-                    @include translate3d(#{$contentWidth}, 0, 0);
-                }
-
-                > .st-content {
+            &.select {
+                > .barContent {
                     visibility: visible;
 
                     @include transition(transform 0.5s);
@@ -737,25 +613,21 @@
         &.scaleRotatePusher {
             @include perspective(1500px);
 
-            .st-pusher {
+            > .mainContent {
                 @include transform-style(preserve-3d);
             }
 
-            .st-content {
+            > .barContent {
                 opacity: 1;
                 @include translate3d(-100%, 0, 0);
             }
 
-            .st-content::after {
-                display: none;
-            }
-
-            &.st-sidebar-open {
-                .st-pusher {
+            &.select {
+                > .mainContent {
                     @include transform(translate3d(100px, 0, -600px) rotateY(-20deg));
                 }
 
-                > .st-content {
+                > .barContent {
                     visibility: visible;
 
                     @include transition(transform 0.5s);
@@ -768,26 +640,22 @@
         &.openDoor {
             @include perspective(1500px);
 
-            .st-pusher {
+            > .mainContent {
                 @include transform-origin(100%, 50%);
                 @include transform-style(preserve-3d);
             }
 
-            .st-content {
+            > .barContent {
                 opacity: 1;
                 @include translate3d(-100%, 0, 0);
             }
 
-            .st-content::after {
-                display: none;
-            }
-
-            &.st-sidebar-open {
-                .st-pusher {
+            &.select {
+                > .mainContent {
                     @include rotateY(-10deg);
                 }
 
-                > .st-content {
+                > .barContent {
                     visibility: visible;
 
                     @include transition(transform 0.5s);
@@ -801,18 +669,14 @@
             @include perspective(1500px);
             @include perspective-origin(0% 50%);
 
-            .st-content {
+            > .barContent {
                 z-index: 1;
                 opacity: 1;
                 @include translate3d(0, -100%, 0);
             }
 
-            &.st-sidebar-open {
-                .st-pusher {
-                    @include translate3d(#{$contentWidth}, 0, 0);
-                }
-
-                > .st-content {
+            &.select {
+                > .barContent {
                     visibility: visible;
 
                     @include transition(transform 0.2s ease-in-out);
@@ -826,242 +690,19 @@
             @include perspective(1500px);
             @include perspective-origin(0% 50%);
 
-            .st-pusher {
+            > .mainContent {
                 @include transform-style(preserve-3d);
 
-                .st-content {
+                > .barContent {
                     @include transform(translate3d(-100%, 0, 0) rotateY(90deg));
                     @include transform-origin(0%, 50%);
                     @include transform-style(preserve-3d);
                 }
             }
 
-            &.st-sidebar-open {
-                .st-pusher {
-                    @include translate3d(#{$contentWidth}, 0, 0);
-
-                    .st-content {
-                        visibility: visible;
-
-                        @include transform(translate3d(-100%, 0, 0) rotateY(0deg));
-                    }
-                }
-            }
-        }
-    }
-
-    .#{$sideBarClass}.bottomSide {
-        .st-pusher {
-            z-index: 99;
-
-            @include flex(1);
-            @include order(1);
-            @include transition(transform 0.5s);
-        }
-
-        > .st-content, > .st-pusher > .st-content {
-            z-index: 100;
-            visibility: hidden;
-            display:none;
-
-            min-height: 0;
-            @include flex(1);
-            @include order(2);
-            @include transition(all 0.5s);
-        }
-
-        &.st-sidebar-open {
-        }
-
-        /* Effect 1: Slide in on top */
-        &.slideInOnTop {
-            > .st-content {
-                position: absolute;
-                bottom: 0;
-                width: 100%;
-
-                @include translate3d(0, 100%, 0);
-            }
-
-            &.st-sidebar-open {
-                > .st-content {
-                    visibility: visible;
-                    display:block;
-                    @include translate3d(0, 0, 0);
-                }
-            }
-        }
-
-        /* Effect 2: Reveal */
-        &.reveal {
-            .st-content {
-                @include translate3d(0, 100%, 0);
-            }
-
-            &.st-sidebar-open {
-                > .st-content {
-                    visibility: visible;
-                    display:block;
-
-                    @include translate3d(0, 0, 0);
-                }
-
-                .st-pusher {
-                    @include translate3d(0, -#{$contentWidth}, 0);
-                }
-            }
-        }
-
-        /* Effect 5: Reverse slide out */
-        &.reverseSlideOut {
-            .st-content {
-                z-index: 1;
-                @include translate3d(0, -50%, 0);
-            }
-
-            &.st-sidebar-open {
-                .st-pusher {
-                    @include translate3d(0, -#{$contentWidth}, 0);
-                }
-
-                > .st-content {
-                    visibility: visible;
-                    display:block;
-
-                    @include transition(transform 0.5s);
-                    @include translate3d(0, 0, 0);
-                }
-            }
-        }
-
-        /* Effect 7: 3D rotate in */
-        &.rotateIn3D {
-            @include perspective(1500px);
-            @include perspective-origin(50% 100%);
-
-            .st-content {
-                @include transform(translate3d(0, 100%, 0) rotateX(-90deg));
-                @include transform-origin(50%, 0%);
-                @include transform-style(preserve-3d);
-            }
-
-            &.st-sidebar-open {
-                .st-pusher {
-                    @include translate3d(0, -#{$contentWidth}, 0);
-                }
-
-                .st-content {
-                    visibility: visible;
-                    display:block;
-
-                    @include transition(transform 0.5s);
-                    @include transform(translate3d(0, 0, 0) rotateX(0deg));
-                }
-            }
-        }
-
-        /* Effect 8: 3D rotate out */
-        &.rotateOut3D {
-            @include perspective(1500px);
-            @include perspective-origin(50% 100%);
-
-            .st-content {
-                @include transform(translate3d(0, 100%, 0) rotateX(90deg));
-                @include transform-origin(50%, 0%);
-                @include transform-style(preserve-3d);
-            }
-
-            &.st-sidebar-open {
-                .st-pusher {
-                    @include translate3d(0, -#{$contentWidth}, 0);
-                }
-
-                .st-content {
-                    visibility: visible;
-                    display:block;
-
-                    @include transition(transform 0.5s);
-                    @include transform(translate3d(0, 0, 0) rotateX(0deg));
-                }
-            }
-        }
-
-        /* Effect 9: Scale down pusher */
-        &.scaleDownPusher {
-            @include perspective(1500px);
-
-            .st-pusher {
-                @include transform-style(preserve-3d);
-            }
-
-            .st-content {
-                opacity: 1;
-                @include translate3d(-100%, 0, 0);
-            }
-
-            .st-content::after {
-                display: none;
-            }
-
-            &.st-sidebar-open {
-                .st-pusher {
-                    @include translate3d(0, 0, -#{$contentWidth});
-                }
-
-                > .st-content {
-                    visibility: visible;
-
-                    @include transition(transform 0.5s);
-                    @include translate3d(0, 0, 0);
-                }
-            }
-        }
-
-        /* Effect 10: Scale up */
-        &.scaleUp {
-            @include perspective(1500px);
-            @include perspective-origin(0% 50%);
-
-            .st-content {
-                z-index: 1;
-                opacity: 1;
-                @include translate3d(0, 0, -#{$contentWidth});
-            }
-
-            &.st-sidebar-open {
-                .st-pusher {
-                    @include translate3d(#{$contentWidth}, 0, 0);
-                }
-
-                > .st-content {
-                    visibility: visible;
-
-                    @include transition(transform 0.5s);
-                    @include translate3d(0, 0, 0);
-                }
-            }
-        }
-
-        /* Effect 14: Delayed 3D rotate */
-        &.delayed3DRotate {
-            @include perspective(1500px);
-            @include perspective-origin(0% 50%);
-
-            .st-pusher {
-                @include transform-style(preserve-3d);
-
-                .st-content {
-                    @include transform(translate3d(-100%, 0, 0) rotateY(90deg));
-                    @include transform-origin(0%, 50%);
-                    @include transform-style(preserve-3d);
-                }
-            }
-
-            &.st-sidebar-open {
-                .st-pusher {
-                    @include translate3d(#{$contentWidth}, 0, 0);
-
-                    .st-content {
+            &.select {
+                > .mainContent {
+                    > .barContent {
                         visibility: visible;
 
                         @include transform(translate3d(-100%, 0, 0) rotateY(0deg));

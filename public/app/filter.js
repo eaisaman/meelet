@@ -21,6 +21,16 @@ define(
                 return function (timestamp) {
                     return timestamp == null ? "" : timestamp.toString("yyyy-MM-dd");
                 };
+            }).filter("in", function () {
+                return function (item, arr) {
+                    if (arr && toString.call(arr) === '[object Array]') {
+                        return !arr.every(function (a) {
+                            return a !== item;
+                        });
+                    }
+
+                    return false;
+                };
             }).filter('makeRange', function () {
                 return function (input) {
                     var lowBound, highBound;

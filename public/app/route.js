@@ -55,6 +55,9 @@ define(
         urlService.prototype.arrow = function (skipUrlTrack, urlParams, appTitle) {
             this.route('arrow', skipUrlTrack, urlParams, appTitle);
         }
+        urlService.prototype.sidebar = function (skipUrlTrack, urlParams, appTitle) {
+            this.route('sidebar', skipUrlTrack, urlParams, appTitle);
+        }
 
         return function (appModule) {
             appModule.
@@ -67,6 +70,7 @@ define(
                         .when("/boxShadow", {templateUrl: "boxShadow.html"})
                         .when("/textShadow", {templateUrl: "textShadow.html"})
                         .when("/arrow", {templateUrl: "arrow.html"})
+                        .when("/sidebar", {templateUrl: "sidebarDemo.html"})
                         .otherwise({redirectTo: "/"});
                 }]);
         }
