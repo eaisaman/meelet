@@ -1,58 +1,58 @@
-#demoArea .widgetContainer {
+.widgetDemoContainer {
   position: relative;
   float: left;
   width: 100%;
   height: 100%;
 }
-#demoArea .widgetContainer .clearfix:before, #demoArea .widgetContainer .clearfix:after {
+.widgetDemoContainer .clearfix:before, .widgetDemoContainer .clearfix:after {
   content: " ";
   display: table;
 }
-#demoArea .widgetContainer .clearfix:after {
+.widgetDemoContainer .clearfix:after {
   clear: both;
 }
-#demoArea .widgetContainer [ui-widget-modal-window] {
+.widgetDemoContainer [ui-widget-modal-window-1-0-0] {
   position: absolute;
   width: 100%;
   height: 100%;
 }
-#demoArea .widgetContainer [ui-widget-modal-window] [name='mainContent'] {
+.widgetDemoContainer [ui-widget-modal-window-1-0-0] [name='mainContent'] {
   position: absolute;
   width: 100%;
   height: 100%;
   background: #d94839;
   color: #fff;
 }
-#demoArea .widgetContainer [ui-widget-modal-window] [name='mainContent'] > header {
+.widgetDemoContainer [ui-widget-modal-window-1-0-0] [name='mainContent'] > header {
   text-align: center;
   padding: 3em;
   margin: 0 auto;
 }
-#demoArea .widgetContainer [ui-widget-modal-window] [name='mainContent'] > header h1 {
+.widgetDemoContainer [ui-widget-modal-window-1-0-0] [name='mainContent'] > header h1 {
   font-size: 2.625em;
   line-height: 1.3;
   margin: 0;
   font-weight: 300;
 }
-#demoArea .widgetContainer [ui-widget-modal-window] [name='mainContent'] > header h1 span {
+.widgetDemoContainer [ui-widget-modal-window-1-0-0] [name='mainContent'] > header h1 span {
   display: block;
   font-size: 60%;
   opacity: 0.7;
   padding: 0 0 0.6em 0.1em;
 }
-#demoArea .widgetContainer [ui-widget-modal-window] [name='mainContent'] > .main {
+.widgetDemoContainer [ui-widget-modal-window-1-0-0] [name='mainContent'] > .main {
   margin: 0 auto;
   padding: 2em;
   max-width: 69em;
 }
-#demoArea .widgetContainer [ui-widget-modal-window] [name='mainContent'] > .main .column {
+.widgetDemoContainer [ui-widget-modal-window-1-0-0] [name='mainContent'] > .main .column {
   float: left;
   width: 50%;
   padding: 0 2em;
   min-height: 300px;
   position: relative;
 }
-#demoArea .widgetContainer [ui-widget-modal-window] [name='mainContent'] > .main .column p {
+.widgetDemoContainer [ui-widget-modal-window-1-0-0] [name='mainContent'] > .main .column p {
   font-weight: 300;
   font-size: 2em;
   padding: 0;
@@ -60,7 +60,7 @@
   text-align: right;
   line-height: 1.5;
 }
-#demoArea .widgetContainer [ui-widget-modal-window] [name='mainContent'] > .main .column button {
+.widgetDemoContainer [ui-widget-modal-window-1-0-0] [name='mainContent'] > .main .column button {
   border: none;
   padding: 0.6em 1.2em;
   background: #c0392b;
@@ -74,10 +74,10 @@
   margin: 3px 2px;
   border-radius: 2px;
 }
-#demoArea .widgetContainer [ui-widget-modal-window] [name='mainContent'] > .main .column button:hover {
+.widgetDemoContainer [ui-widget-modal-window-1-0-0] [name='mainContent'] > .main .column button:hover {
   background: #A5281B;
 }
-#demoArea .widgetContainer [ui-widget-modal-window] [name='modalContent'] {
+.widgetDemoContainer [ui-widget-modal-window-1-0-0] [name='modalContent'] {
   position: relative;
   width: 100%;
   color: #fff;
@@ -85,7 +85,7 @@
   border-radius: 3px;
   margin: 0 auto;
 }
-#demoArea .widgetContainer [ui-widget-modal-window] [name='modalContent'] h3 {
+.widgetDemoContainer [ui-widget-modal-window-1-0-0] [name='modalContent'] h3 {
   margin: 0;
   padding: 0.4em;
   text-align: center;
@@ -95,24 +95,24 @@
   background: rgba(0, 0, 0, 0.1);
   border-radius: 3px 3px 0 0;
 }
-#demoArea .widgetContainer [ui-widget-modal-window] [name='modalContent'] > div {
+.widgetDemoContainer [ui-widget-modal-window-1-0-0] [name='modalContent'] > div {
   padding: 15px 40px 30px;
   margin: 0;
   font-weight: 300;
   font-size: 1.15em;
 }
-#demoArea .widgetContainer [ui-widget-modal-window] [name='modalContent'] > div p {
+.widgetDemoContainer [ui-widget-modal-window-1-0-0] [name='modalContent'] > div p {
   margin: 0;
   padding: 10px 0;
 }
-#demoArea .widgetContainer [ui-widget-modal-window] [name='modalContent'] > div ul {
+.widgetDemoContainer [ui-widget-modal-window-1-0-0] [name='modalContent'] > div ul {
   margin: 0;
   padding: 0 0 30px 20px;
 }
-#demoArea .widgetContainer [ui-widget-modal-window] [name='modalContent'] > div ul li {
+.widgetDemoContainer [ui-widget-modal-window-1-0-0] [name='modalContent'] > div ul li {
   padding: 5px 0;
 }
-#demoArea .widgetContainer [ui-widget-modal-window] [name='modalContent'] > div button {
+.widgetDemoContainer [ui-widget-modal-window-1-0-0] [name='modalContent'] > div button {
   display: block;
   margin: 0 auto;
   border: none;
@@ -126,7 +126,7 @@
   cursor: pointer;
   border-radius: 2px;
 }
-#demoArea .widgetContainer [ui-widget-modal-window] .modalOverlay {
+.widgetDemoContainer [ui-widget-modal-window-1-0-0] .modalOverlay {
   position: absolute;
   width: 100%;
   height: 100%;

@@ -1,60 +1,60 @@
-#demoArea .widgetContainer {
+.widgetDemoContainer {
   position: relative;
   float: left;
   width: 100%;
   height: 100%;
 }
-#demoArea .widgetContainer .clearfix:before, #demoArea .widgetContainer .clearfix:after {
+.widgetDemoContainer .clearfix:before, .widgetDemoContainer .clearfix:after {
   content: " ";
   display: table;
 }
-#demoArea .widgetContainer .clearfix:after {
+.widgetDemoContainer .clearfix:after {
   clear: both;
 }
-#demoArea .widgetContainer [ui-widget-side-bar] {
+.widgetDemoContainer [ui-widget-side-bar-1-0-0] {
   position: relative;
   width: 100%;
   height: 100%;
   overflow: hidden;
 }
-#demoArea .widgetContainer [ui-widget-side-bar] [name='mainContent'] {
+.widgetDemoContainer [ui-widget-side-bar-1-0-0] [name='mainContent'] {
   position: absolute;
   width: 100%;
   height: 100%;
   background: #f3efe0;
   color: #48a770;
 }
-#demoArea .widgetContainer [ui-widget-side-bar] [name='mainContent'] > header {
+.widgetDemoContainer [ui-widget-side-bar-1-0-0] [name='mainContent'] > header {
   text-align: center;
   padding: 3em;
   margin: 0 auto;
 }
-#demoArea .widgetContainer [ui-widget-side-bar] [name='mainContent'] > header h1 {
+.widgetDemoContainer [ui-widget-side-bar-1-0-0] [name='mainContent'] > header h1 {
   font-size: 2.625em;
   line-height: 1.3;
   margin: 0;
   font-weight: 300;
 }
-#demoArea .widgetContainer [ui-widget-side-bar] [name='mainContent'] > header h1 span {
+.widgetDemoContainer [ui-widget-side-bar-1-0-0] [name='mainContent'] > header h1 span {
   display: block;
   font-size: 60%;
   opacity: 0.7;
   padding: 0 0 0.6em 0.1em;
   color: #aca89a;
 }
-#demoArea .widgetContainer [ui-widget-side-bar] [name='mainContent'] > .main {
+.widgetDemoContainer [ui-widget-side-bar-1-0-0] [name='mainContent'] > .main {
   margin: 0 auto;
   padding: 2em;
   max-width: 69em;
 }
-#demoArea .widgetContainer [ui-widget-side-bar] [name='mainContent'] > .main .column {
+.widgetDemoContainer [ui-widget-side-bar-1-0-0] [name='mainContent'] > .main .column {
   float: left;
   width: 50%;
   padding: 0 2em;
   min-height: 300px;
   position: relative;
 }
-#demoArea .widgetContainer [ui-widget-side-bar] [name='mainContent'] > .main .column p {
+.widgetDemoContainer [ui-widget-side-bar-1-0-0] [name='mainContent'] > .main .column p {
   font-weight: 300;
   font-size: 2em;
   padding: 0;
@@ -62,7 +62,7 @@
   text-align: right;
   line-height: 1.5;
 }
-#demoArea .widgetContainer [ui-widget-side-bar] [name='mainContent'] > .main .column button {
+.widgetDemoContainer [ui-widget-side-bar-1-0-0] [name='mainContent'] > .main .column button {
   border: none;
   padding: 0.6em 1.2em;
   background: #388a5a;
@@ -76,10 +76,10 @@
   margin: 3px 2px;
   border-radius: 2px;
 }
-#demoArea .widgetContainer [ui-widget-side-bar] [name='mainContent'] > .main .column button:hover {
+.widgetDemoContainer [ui-widget-side-bar-1-0-0] [name='mainContent'] > .main .column button:hover {
   background: #2c774b;
 }
-#demoArea .widgetContainer [ui-widget-side-bar] [name='barContent'] {
+.widgetDemoContainer [ui-widget-side-bar-1-0-0] [name='barContent'] {
   position: absolute;
   top: 0;
   left: 0;
@@ -92,7 +92,7 @@
   -webkit-transition: all 0.5s;
   transition: all 0.5s;
 }
-#demoArea .widgetContainer [ui-widget-side-bar] [name='barContent']:after {
+.widgetDemoContainer [ui-widget-side-bar-1-0-0] [name='barContent']:after {
   position: absolute;
   top: 0;
   right: 0;
@@ -106,7 +106,7 @@
   -webkit-transition: opacity 0.5s;
   transition: opacity 0.5s;
 }
-#demoArea .widgetContainer [ui-widget-side-bar] [name='barContent'] h2 {
+.widgetDemoContainer [ui-widget-side-bar-1-0-0] [name='barContent'] h2 {
   margin: 0;
   padding: 1em;
   color: rgba(0, 0, 0, 0.4);
@@ -114,17 +114,17 @@
   font-weight: 300;
   font-size: 2em;
 }
-#demoArea .widgetContainer [ui-widget-side-bar] [name='barContent'] ul {
+.widgetDemoContainer [ui-widget-side-bar-1-0-0] [name='barContent'] ul {
   margin: 0;
   padding: 0;
   list-style: none;
 }
-#demoArea .widgetContainer [ui-widget-side-bar] [name='barContent'] ul li:first-child a {
+.widgetDemoContainer [ui-widget-side-bar-1-0-0] [name='barContent'] ul li:first-child a {
   -moz-box-shadow: inset 0 -1px rgba(0, 0, 0, 0.2), inset 0 1px rgba(0, 0, 0, 0.2);
   -webkit-box-shadow: inset 0 -1px rgba(0, 0, 0, 0.2), inset 0 1px rgba(0, 0, 0, 0.2);
   box-shadow: inset 0 -1px rgba(0, 0, 0, 0.2), inset 0 1px rgba(0, 0, 0, 0.2);
 }
-#demoArea .widgetContainer [ui-widget-side-bar] [name='barContent'] ul li a {
+.widgetDemoContainer [ui-widget-side-bar-1-0-0] [name='barContent'] ul li a {
   display: block;
   padding: 1em 1em 1em 1.2em;
   outline: none;

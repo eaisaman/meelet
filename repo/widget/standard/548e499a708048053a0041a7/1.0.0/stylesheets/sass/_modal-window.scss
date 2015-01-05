@@ -3,9 +3,9 @@
 @import "compass/css3/filter";
 @import "animation/modal-window";
 
-@mixin modal-window($modalWindowClass: _widget_modalWindowContainer) {
+@mixin modal-window($modalWindowClass, $version) {
 
-    .#{$modalWindowClass} {
+    .#{$modalWindowClass}[version='#{$version}'] {
         &.md-perspective {
             @include perspective(600px);
         }

@@ -1,3 +1,3 @@
 @import "modal-window";
 
-@include modal-window();
+@include modal-window(_widget_modalWindowContainer, "1.0.0");

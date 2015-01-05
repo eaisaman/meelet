@@ -1,9 +1,9 @@
 $borderColor: rgba(0, 0, 0, 0.4);
 $activeBorderShadow: rgba(192, 192, 192, 0.8);
 
-@mixin sidebar($sideBarClass:_widget_sideBarContainer) {
+@mixin sidebar($sideBarClass, $version) {
 
-    .#{$sideBarClass}.rightSide {
+    .#{$sideBarClass}[version='#{$version}'].rightSide {
         &.overlay {
             > .mainContent {
                 &:after {
@@ -359,7 +359,7 @@ $activeBorderShadow: rgba(192, 192, 192, 0.8);
         }
     }
 
-    .#{$sideBarClass}.leftSide {
+    .#{$sideBarClass}[version='#{$version}'].leftSide {
         &.overlay {
             > .mainContent {
                 &:after {
