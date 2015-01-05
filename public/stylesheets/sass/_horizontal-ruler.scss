@@ -49,9 +49,7 @@ $rulerActiveLineColor: rgb(221, 125, 0);
                 overflow: visible;
 
                 .horizontalDivider {
-                    position: relative;
-                    float: left;
-                    bottom: 0;
+                    position: absolute;
                     pointer-events: none;
 
                     &:after {

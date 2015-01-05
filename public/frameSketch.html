@@ -20,7 +20,7 @@
         <div id="sketchContainer" class="fs-x-medium" name="mainContent">
             <div ui-topbar picked-project="project" load-project="loadProject()">
                 <div name="extraButtons">
-                    <div ng-click="zoomWidget($event)" class="topbarButton icon-toolbar-before"
+                    <div ng-hide="true" ng-click="zoomWidget($event)" class="topbarButton icon-toolbar-before"
                          ng-class="{'icon-toolbar-expand-before':!zoomId, 'icon-toolbar-collapse-before':zoomId}"></div>
                     <div ng-click="locateWidget($event)"
                          class="topbarButton icon-toolbar-before icon-toolbar-locate-before"></div>

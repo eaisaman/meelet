@@ -1230,16 +1230,17 @@ define(
 
                             if (!self.$element) {
                                 self.$element = $("<div />").data("widgetObject", self).attr("id", self.id);
-                                self.$element.attr(self.attr);
                                 self.childWidgets.forEach(function (child) {
                                     if (child.$element) {
                                         child.$element.detach();
                                     } else {
                                         child.$element = $("<div />").data("widgetObject", child).attr("id", child.id);
                                     }
+                                    child.$element.attr(child.attr);
                                     self.$element.append(child.$element);
                                 })
                             }
+                            self.$element.attr(self.attr);
 
                             var $container;
                             if (container.isKindOf && container.isKindOf("BaseSketchWidget")) {

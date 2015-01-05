@@ -49,10 +49,19 @@ define(
                                 );
 
                                 scope.widgetHorizontalLocation = function (widget) {
-                                    return widget && widget.isElement && !widget.isTemporary && {
-                                            left: widget.css("left"),
+                                    if (widget && widget.isElement && !widget.isTemporary) {
+                                        var $parent = widget.$element.parent(),
+                                            parentLeft = $parent.offset().left - element.offset().left;
+
+                                        parentLeft = Math.floor(parentLeft * angularConstants.precision) / angularConstants.precision;
+                                        parentLeft = parentLeft + "px";
+
+                                        return {
+                                            left: "calc({0} + {1})".format(widget.css("left"), parentLeft),
                                             width: widget.css("width")
-                                        } || {};
+                                        };
+                                    } else
+                                        return {};
                                 }
                             },
                             post: function (scope, element, attrs) {
@@ -73,7 +82,11 @@ define(
                                 function registerHandlers() {
                                     leftResizeHandler = function (event) {
                                         var $u = $(event.target).parent(),
-                                            touchX = $u.data("touchX");
+                                            touchX = $u.data("touchX"),
+                                            $parent = scope.pickedWidget.$element.parent(),
+                                            parentLeft = $parent.offset().left - element.offset().left;
+
+                                        parentLeft = Math.floor(parentLeft * angularConstants.precision) / angularConstants.precision;
 
                                         if (event.type === "panstart") {
                                             touchX = event.srcEvent.clientX - $u.offset().left;
@@ -102,7 +115,7 @@ define(
                                                 if (width > scope.minWidth) {
                                                     $u.css("left", left + "px");
                                                     $u.css("width", width + "px");
-                                                    scope.pickedWidget.css("left", left + "px");
+                                                    scope.pickedWidget.css("left", (left - parentLeft) + "px");
                                                     scope.pickedWidget.css("width", width + "px");
 
                                                     var nearByMarkerIndex = Math.round((left / scope.markerWidth) * 10) / 10;
@@ -133,7 +146,7 @@ define(
 
                                                     $u.css("left", left + "px");
                                                     $u.css("width", width + "px");
-                                                    scope.pickedWidget.css("left", left + "px");
+                                                    scope.pickedWidget.css("left", (left - parentLeft) + "px");
                                                     scope.pickedWidget.css("width", width + "px");
                                                 }
 
@@ -145,7 +158,9 @@ define(
                                     }
                                     moveHandler = function (event) {
                                         var $u = $(event.target).parent(),
-                                            touchX = $u.data("touchX");
+                                            touchX = $u.data("touchX"),
+                                            $parent = scope.pickedWidget.$element.parent(),
+                                            parentLeft = $parent.offset().left - element.offset().left;
 
                                         if (event.type === "panstart") {
                                             touchX = event.srcEvent.clientX - $u.parent().offset().left;
@@ -169,7 +184,7 @@ define(
                                                     touchX += moveX;
 
                                                     $u.css("left", left + "px");
-                                                    scope.pickedWidget.css("left", left + "px");
+                                                    scope.pickedWidget.css("left", (left - parentLeft) + "px");
 
                                                     $u.data("touchX", touchX);
                                                     $u.data("moveDirection", moveX > 0 ? "right" : "left");
@@ -219,7 +234,7 @@ define(
                                                             left = right - width / 2;
 
                                                         $u.css("left", left + "px");
-                                                        scope.pickedWidget.css("left", left + "px");
+                                                        scope.pickedWidget.css("left", (left - parentLeft) + "px");
                                                     }
                                                 } else {
                                                     var moveDirection = $u.data("moveDirection");
@@ -231,14 +246,14 @@ define(
                                                                 left = right - width;
 
                                                             $u.css("left", left + "px");
-                                                            scope.pickedWidget.css("left", left + "px");
+                                                            scope.pickedWidget.css("left", (left - parentLeft) + "px");
                                                         }
                                                     } else if (moveDirection === "left") {
                                                         if (scope.nearByMarkerIndex != null) {
                                                             var left = Math.floor((scope.nearByMarkerIndex * scope.markerWidth) * angularConstants.precision) / angularConstants.precision;
 
                                                             $u.css("left", left + "px");
-                                                            scope.pickedWidget.css("left", left + "px");
+                                                            scope.pickedWidget.css("left", (left - parentLeft) + "px");
                                                         }
                                                     }
                                                 }

@@ -7,7 +7,7 @@
     </div>
     <span class="horizontalDividers">
         <span class="horizontalDivider"
-              ng-style="{'width':'{{Math.floor(100 / markerCount * constants.percentPrecision) / constants.percentPrecision}}%', 'height':'{{deviceHeight}}'}"
+              ng-style="{'left':'{{Math.floor(deviceWidth * i / markerCount * constants.precision) / constants.precision}}px', 'width':'{{Math.floor(deviceWidth / markerCount * constants.precision) / constants.precision}}px', 'height':'{{deviceHeight}}'}"
               ng-class="{'nearByDivider':i+1==nearByMarkerIndex}"
               ng-repeat="i in [0,markerCount-1]|makeRange"></span>
         <div class="fs-x-small horizontalLocator"

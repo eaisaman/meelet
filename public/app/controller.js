@@ -58,7 +58,7 @@ define(
             };
         }
 
-        function FrameSketchController($scope, $rootScope, $timeout, $q, angularEventTypes, appService, uiService) {
+        function FrameSketchController($scope, $rootScope, $timeout, $q, angularEventTypes, angularConstants, appService, uiService) {
             $scope.zoomWidget = function (event) {
                 event && event.stopPropagation && event.stopPropagation();
 
@@ -662,7 +662,7 @@ define(
         return function (appModule) {
             appModule.
                 controller('RootController', ["$scope", "$rootScope", "$q", "appService", "urlService", RootController]).
-                controller('FrameSketchController', ["$scope", "$rootScope", "$timeout", "$q", "angularEventTypes", "appService", "uiService", FrameSketchController]).
+                controller('FrameSketchController', ["$scope", "$rootScope", "$timeout", "$q", "angularEventTypes", "angularConstants", "appService", "uiService", FrameSketchController]).
                 controller('ProjectController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "urlService", ProjectController]).
                 controller('RepoController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "urlService", RepoController]).
                 controller('RepoLibController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "urlService", RepoLibController]);

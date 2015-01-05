@@ -9674,7 +9674,7 @@
   left: 0;
   top: calc(50% - 0.5em);
   width: 100%;
-  width: 100%;
+  height: 100%;
   text-align: center;
 }
 
@@ -12214,9 +12214,7 @@
   overflow: visible;
 }
 #horizontalRuler .horizontalRulerContainer .horizontalDividers .horizontalDivider {
-  position: relative;
-  float: left;
-  bottom: 0;
+  position: absolute;
   pointer-events: none;
 }
 #horizontalRuler .horizontalRulerContainer .horizontalDividers .horizontalDivider:after {
@@ -12321,8 +12319,7 @@
   overflow: visible;
 }
 #verticalRuler .verticalRulerContainer .verticalDividers .verticalDivider {
-  position: relative;
-  float: right;
+  position: absolute;
   pointer-events: none;
 }
 #verticalRuler .verticalRulerContainer .verticalDividers .verticalDivider:after {

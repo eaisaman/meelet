@@ -50,8 +50,7 @@ $rulerActiveLineColor: rgb(221, 125, 0);
                 overflow: visible;
 
                 .verticalDivider {
-                    position: relative;
-                    float: right;
+                    position: absolute;
                     pointer-events: none;
 
                     &:after {

@@ -49,10 +49,19 @@ define(
                                 );
 
                                 scope.widgetVerticalLocation = function (widget) {
-                                    return widget && widget.isElement && !widget.isTemporary && {
-                                            top: widget.css("top"),
+                                    if (widget && widget.isElement && !widget.isTemporary) {
+                                        var $parent = widget.$element.parent(),
+                                            parentTop = $parent.offset().top - element.offset().top;
+
+                                        parentTop = Math.floor(parentTop * angularConstants.precision) / angularConstants.precision;
+                                        parentTop = parentTop + "px";
+
+                                        return {
+                                            top: "calc({0} + {1})".format(widget.css("top"), parentTop),
                                             height: widget.css("height")
-                                        } || {};
+                                        };
+                                    } else
+                                        return {};
                                 }
                             },
                             post: function (scope, element, attrs) {
@@ -73,7 +82,9 @@ define(
                                 function registerHandlers() {
                                     topResizeHandler = function (event) {
                                         var $u = $(event.target).parent(),
-                                            touchY = $u.data("touchY");
+                                            touchY = $u.data("touchY"),
+                                            $parent = scope.pickedWidget.$element.parent(),
+                                            parentTop = $parent.offset().top - element.offset().top;
 
                                         if (event.type === "panstart") {
                                             touchY = event.srcEvent.clientY - $u.offset().top;
@@ -102,7 +113,7 @@ define(
                                                 if (height > scope.minHeight) {
                                                     $u.css("top", top + "px");
                                                     $u.css("height", height + "px");
-                                                    scope.pickedWidget.css("top", top + "px");
+                                                    scope.pickedWidget.css("top", (top - parentTop) + "px");
                                                     scope.pickedWidget.css("height", height + "px");
 
                                                     var nearByMarkerIndex = Math.round((top / scope.markerHeight) * 10) / 10;
@@ -133,7 +144,7 @@ define(
 
                                                     $u.css("top", top + "px");
                                                     $u.css("height", height + "px");
-                                                    scope.pickedWidget.css("top", top + "px");
+                                                    scope.pickedWidget.css("top", (top - parentTop) + "px");
                                                     scope.pickedWidget.css("height", height + "px");
                                                 }
 
@@ -145,7 +156,9 @@ define(
                                     }
                                     moveHandler = function (event) {
                                         var $u = $(event.target).parent(),
-                                            touchY = $u.data("touchY");
+                                            touchY = $u.data("touchY"),
+                                            $parent = scope.pickedWidget.$element.parent(),
+                                            parentTop = $parent.offset().top - element.offset().top;
 
                                         if (event.type === "panstart") {
                                             touchY = event.srcEvent.clientY - $u.parent().offset().top;
@@ -169,7 +182,7 @@ define(
                                                     touchY += moveY;
 
                                                     $u.css("top", top + "px");
-                                                    scope.pickedWidget.css("top", top + "px");
+                                                    scope.pickedWidget.css("top", (top - parentTop) + "px");
 
                                                     $u.data("touchY", touchY);
                                                     $u.data("moveDirection", moveY > 0 ? "down" : "up");
@@ -218,7 +231,7 @@ define(
                                                             top = bottom - height / 2;
 
                                                         $u.css("top", top + "px");
-                                                        scope.pickedWidget.css("top", top + "px");
+                                                        scope.pickedWidget.css("top", (top - parentTop) + "px");
                                                     }
                                                 } else {
                                                     var moveDirection = $u.data("moveDirection");
@@ -230,14 +243,14 @@ define(
                                                                 top = bottom - height;
 
                                                             $u.css("top", top + "px");
-                                                            scope.pickedWidget.css("top", top + "px");
+                                                            scope.pickedWidget.css("top", (top - parentTop) + "px");
                                                         }
                                                     } else if (moveDirection === "up") {
                                                         if (scope.nearByMarkerIndex != null) {
                                                             var top = Math.floor((scope.nearByMarkerIndex * scope.markerHeight) * angularConstants.precision) / angularConstants.precision;
 
                                                             $u.css("top", top + "px");
-                                                            scope.pickedWidget.css("top", top + "px");
+                                                            scope.pickedWidget.css("top", (top - parentTop) + "px");
                                                         }
                                                     }
                                                 }
