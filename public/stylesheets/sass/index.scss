@@ -1,8 +1,16 @@
 @import "bootstrap-compass";
 @import "bootstrap-variables";
 @import "bootstrap";
-@import "compass/css3/user-interface";
+@import "compass/css3";
+@import "compass/css3/border-radius";
+@import "compass/css3/transition";
+@import "compass/css3/flexbox";
 @import "global";
+@import "modal-window";
+@import "topbar";
+
+@include modal-window();
+@include topbar();
 
 * {
 	-webkit-touch-callout: none;

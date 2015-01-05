@@ -1,0 +1,159 @@
+@font-face {
+	font-family: 'icon-project';
+	src: url('icon-project.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+.icon-project:before {
+	font-family: 'icon-project';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon-project-before:before {
+	font-family: 'icon-project';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon-project-after:after {
+	font-family: 'icon-project';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon-project-edit:before {
+	content: "\e600";
+}
+.icon-project-gif:before {
+	content: "\e601";
+}
+.icon-project-delete:before {
+	content: "\e602";
+}
+.icon-project-back:before {
+	content: "\e603";
+}
+.icon-project-home:before {
+	content: "\e604";
+}
+.icon-project-menu:before {
+	content: "\e605";
+}
+.icon-project-download:before {
+	content: "\e606";
+}
+.icon-project-check:before {
+	content: "\e607";
+}
+.icon-project-uncheck:before {
+	content: "\e608";
+}
+.icon-project-confirm:before {
+	content: "\e609";
+}
+.icon-project-cancel:before {
+	content: "\e60a";
+}
+.icon-project-add:before {
+	content: "\e60b";
+}
+
+.icon-project-edit-before:before {
+	content: "\e600";
+}
+.icon-project-gif-before:before {
+	content: "\e601";
+}
+.icon-project-delete-before:before {
+	content: "\e602";
+}
+.icon-project-back-before:before {
+	content: "\e603";
+}
+.icon-project-home-before:before {
+	content: "\e604";
+}
+.icon-project-menu-before:before {
+	content: "\e605";
+}
+.icon-project-download-before:before {
+	content: "\e606";
+}
+.icon-project-check-before:before {
+	content: "\e607";
+}
+.icon-project-uncheck-before:before {
+	content: "\e608";
+}
+.icon-project-confirm-before:before {
+	content: "\e609";
+}
+.icon-project-cancel-before:before {
+	content: "\e60a";
+}
+.icon-project-add-before:before {
+	content: "\e60b";
+}
+
+.icon-project-edit-after:after {
+	content: "\e600";
+}
+.icon-project-gif-after:after {
+	content: "\e601";
+}
+.icon-project-delete-after:after {
+	content: "\e602";
+}
+.icon-project-back-after:after {
+	content: "\e603";
+}
+.icon-project-home-after:after {
+	content: "\e604";
+}
+.icon-project-menu-after:after {
+	content: "\e605";
+}
+.icon-project-download-after:after {
+	content: "\e606";
+}
+.icon-project-check-after:after {
+	content: "\e607";
+}
+.icon-project-uncheck-after:after {
+	content: "\e608";
+}
+.icon-project-confirm-after:after {
+	content: "\e609";
+}
+.icon-project-cancel-after:after {
+	content: "\e60a";
+}
+.icon-project-add-after:after {
+	content: "\e60b";
+}

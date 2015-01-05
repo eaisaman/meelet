@@ -1,0 +1,624 @@
+#demoArea * {
+  font-family: sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+#demoArea article,
+#demoArea aside,
+#demoArea details,
+#demoArea figcaption,
+#demoArea figure,
+#demoArea footer,
+#demoArea header,
+#demoArea hgroup,
+#demoArea main,
+#demoArea nav,
+#demoArea section,
+#demoArea summary {
+  display: block;
+}
+#demoArea audio,
+#demoArea canvas,
+#demoArea progress,
+#demoArea video {
+  display: inline-block;
+  vertical-align: baseline;
+}
+#demoArea audio:not([controls]) {
+  display: none;
+  height: 0;
+}
+#demoArea [hidden],
+#demoArea template {
+  display: none;
+}
+#demoArea a {
+  background: transparent;
+}
+#demoArea a:active,
+#demoArea a:hover {
+  outline: 0;
+}
+#demoArea abbr[title] {
+  border-bottom: 1px dotted;
+}
+#demoArea b,
+#demoArea strong {
+  font-weight: bold;
+}
+#demoArea dfn {
+  font-style: italic;
+}
+#demoArea h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+#demoArea mark {
+  background: #ff0;
+  color: #000;
+}
+#demoArea small {
+  font-size: 80%;
+}
+#demoArea sub,
+#demoArea sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+#demoArea sup {
+  top: -0.5em;
+}
+#demoArea sub {
+  bottom: -0.25em;
+}
+#demoArea img {
+  border: 0;
+}
+#demoArea svg:not(:root) {
+  overflow: hidden;
+}
+#demoArea figure {
+  margin: 1em 40px;
+}
+#demoArea hr {
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  height: 0;
+}
+#demoArea pre {
+  overflow: auto;
+}
+#demoArea code,
+#demoArea kbd,
+#demoArea pre,
+#demoArea samp {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+#demoArea button,
+#demoArea input,
+#demoArea optgroup,
+#demoArea select,
+#demoArea textarea {
+  color: inherit;
+  font: inherit;
+  margin: 0;
+}
+#demoArea button {
+  overflow: visible;
+}
+#demoArea button,
+#demoArea select {
+  text-transform: none;
+}
+#demoArea button,
+#demoArea input[type="button"],
+#demoArea input[type="reset"],
+#demoArea input[type="submit"] {
+  -webkit-appearance: button;
+  cursor: pointer;
+}
+#demoArea button[disabled],
+#demoArea input[disabled] {
+  cursor: default;
+}
+#demoArea button::-moz-focus-inner,
+#demoArea input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+#demoArea input {
+  line-height: normal;
+}
+#demoArea input[type="checkbox"],
+#demoArea input[type="radio"] {
+  box-sizing: border-box;
+  padding: 0;
+}
+#demoArea input[type="number"]::-webkit-inner-spin-button,
+#demoArea input[type="number"]::-webkit-outer-spin-button {
+  height: auto;
+}
+#demoArea input[type="search"] {
+  -webkit-appearance: textfield;
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+  box-sizing: content-box;
+}
+#demoArea input[type="search"]::-webkit-search-cancel-button,
+#demoArea input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+#demoArea fieldset {
+  border: 1px solid #c0c0c0;
+  margin: 0 2px;
+  padding: 0.35em 0.625em 0.75em;
+}
+#demoArea legend {
+  border: 0;
+  padding: 0;
+}
+#demoArea textarea {
+  overflow: auto;
+}
+#demoArea optgroup {
+  font-weight: bold;
+}
+#demoArea table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+#demoArea td,
+#demoArea th {
+  padding: 0;
+}
+
+.artifactVersionDropdown {
+  /* Stack the items with a slight offset */
+  /* Stack the items with a slight offset, and expand them with a slight random angle/left values.
+     Each item will have a different animation delay. */
+  /* Stack the items with a slight offset, and spread them as a fan.
+     Each item will have a different animation delay. */
+  /* Stack the items with a slight offset, and rotate the select label while clicking it. */
+  /*  Show the items by sliding them from the sides. */
+}
+.artifactVersionDropdown .cd-dropdown {
+  position: relative;
+  width: 100%;
+  display: block;
+}
+.artifactVersionDropdown .cd-dropdown > span {
+  position: relative;
+  width: 100%;
+  height: 2em;
+  line-height: 2;
+  color: #999;
+  font-weight: 700;
+  background: #fff;
+  display: block;
+  padding-left: 1em;
+  cursor: pointer;
+  -moz-backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -moz-user-select: -moz-none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+.artifactVersionDropdown .cd-dropdown > span:after {
+  content: '\25BC';
+  position: absolute;
+  right: 0px;
+  width: 2em;
+  line-height: 2;
+  text-align: center;
+  border-left: 1px solid #ddd;
+}
+.artifactVersionDropdown .cd-dropdown.cd-active > span:after {
+  content: '\25B2';
+}
+.artifactVersionDropdown .cd-dropdown > div {
+  position: relative;
+  width: 100%;
+  height: 2em;
+  color: #999;
+  font-weight: 700;
+  background: #fff;
+  display: block;
+  cursor: pointer;
+  overflow: hidden;
+  -moz-backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -moz-user-select: -moz-none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+.artifactVersionDropdown .cd-dropdown > div > * {
+  width: calc(100% - 2em);
+  line-height: 2;
+}
+.artifactVersionDropdown .cd-dropdown > div:after {
+  content: '\25BC';
+  position: absolute;
+  right: 0px;
+  width: 2em;
+  line-height: 2;
+  text-align: center;
+  border-left: 1px solid #ddd;
+}
+.artifactVersionDropdown .cd-dropdown.cd-active > div:after {
+  content: '\25B2';
+}
+.artifactVersionDropdown .cd-dropdown ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: block;
+  position: relative;
+  pointer-events: none;
+}
+.artifactVersionDropdown .cd-dropdown ul li {
+  display: block;
+}
+.artifactVersionDropdown .cd-dropdown ul li span {
+  display: block;
+  width: 100%;
+  height: 2em;
+  line-height: 2;
+  padding-left: 2em;
+  color: #bcbcbc;
+  background: #eee;
+  cursor: pointer;
+  font-weight: 700;
+  -moz-backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -moz-user-select: -moz-none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+.artifactVersionDropdown .cd-dropdown.cd-active ul {
+  pointer-events: auto;
+}
+.artifactVersionDropdown.stackWithOffset .cd-dropdown > span,
+.artifactVersionDropdown.stackWithOffset .cd-dropdown ul li:nth-last-child(-n+3) span {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+.artifactVersionDropdown.stackWithOffset .cd-dropdown ul {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+}
+.artifactVersionDropdown.stackWithOffset .cd-dropdown ul li {
+  position: absolute;
+  width: 100%;
+}
+.artifactVersionDropdown.stackWithOffset .cd-dropdown.cd-active > span {
+  color: #669933;
+}
+.artifactVersionDropdown.stackWithOffset .cd-dropdown.cd-active > span,
+.artifactVersionDropdown.stackWithOffset .cd-dropdown.cd-active ul li span {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+.artifactVersionDropdown.stackWithOffset .cd-dropdown.cd-active ul li span {
+  -moz-transition: all 0.2s linear 0s;
+  -o-transition: all 0.2s linear 0s;
+  -webkit-transition: all 0.2s linear;
+  -webkit-transition-delay: 0s;
+  transition: all 0.2s linear 0s;
+}
+.artifactVersionDropdown.stackWithOffset .cd-dropdown.cd-active ul li span:hover {
+  background: #669933;
+  color: #fff;
+}
+.artifactVersionDropdown.stackAndExpand .cd-dropdown > span,
+.artifactVersionDropdown.stackAndExpand .cd-dropdown ul li:nth-last-child(-n+3) span {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+.artifactVersionDropdown.stackAndExpand .cd-dropdown ul {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+}
+.artifactVersionDropdown.stackAndExpand .cd-dropdown ul li {
+  position: absolute;
+  width: 100%;
+}
+.artifactVersionDropdown.stackAndExpand .cd-dropdown.cd-active > span {
+  color: #669933;
+}
+.artifactVersionDropdown.stackAndExpand .cd-dropdown.cd-active > span,
+.artifactVersionDropdown.stackAndExpand .cd-dropdown.cd-active ul li span {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+.artifactVersionDropdown.stackAndExpand .cd-dropdown.cd-active ul li span {
+  -moz-transition: all 0.2s linear 0s;
+  -o-transition: all 0.2s linear 0s;
+  -webkit-transition: all 0.2s linear;
+  -webkit-transition-delay: 0s;
+  transition: all 0.2s linear 0s;
+}
+.artifactVersionDropdown.stackAndExpand .cd-dropdown.cd-active ul li span:hover {
+  background: #669933;
+  color: #fff;
+}
+.artifactVersionDropdown.stackAndExpandFan .cd-dropdown > span,
+.artifactVersionDropdown.stackAndExpandFan .cd-dropdown ul li:nth-last-child(-n+3) span {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+.artifactVersionDropdown.stackAndExpandFan .cd-dropdown ul {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+}
+.artifactVersionDropdown.stackAndExpandFan .cd-dropdown ul li {
+  position: absolute;
+  width: 100%;
+}
+.artifactVersionDropdown.stackAndExpandFan .cd-dropdown.cd-active > span {
+  color: #669933;
+}
+.artifactVersionDropdown.stackAndExpandFan .cd-dropdown.cd-active > span,
+.artifactVersionDropdown.stackAndExpandFan .cd-dropdown.cd-active ul li span {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+.artifactVersionDropdown.stackAndExpandFan .cd-dropdown.cd-active ul li {
+  -moz-transform-origin: -200% 50% 50%;
+  -ms-transform-origin: -200% 50% 50%;
+  -webkit-transform-origin: -200% 50% 50%;
+  transform-origin: -200% 50% 50%;
+}
+.artifactVersionDropdown.stackAndExpandFan .cd-dropdown.cd-active ul li span {
+  -moz-transition: all 0.2s linear 0s;
+  -o-transition: all 0.2s linear 0s;
+  -webkit-transition: all 0.2s linear;
+  -webkit-transition-delay: 0s;
+  transition: all 0.2s linear 0s;
+}
+.artifactVersionDropdown.stackAndExpandFan .cd-dropdown.cd-active ul li span:hover {
+  background: #669933;
+  color: #fff;
+}
+.artifactVersionDropdown.stackAndRotateSelect .cd-dropdown {
+  -moz-perspective: 800px;
+  -webkit-perspective: 800px;
+  perspective: 800px;
+}
+.artifactVersionDropdown.stackAndRotateSelect .cd-dropdown > span {
+  -moz-transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -moz-transform-origin: 50% 0% 50%;
+  -ms-transform-origin: 50% 0% 50%;
+  -webkit-transform-origin: 50% 0% 50%;
+  transform-origin: 50% 0% 50%;
+  -moz-transition: -moz-transform 0.3s;
+  -o-transition: -o-transform 0.3s;
+  -webkit-transition: -webkit-transform 0.3s;
+  transition: transform 0.3s;
+}
+.artifactVersionDropdown.stackAndRotateSelect .cd-dropdown > span:active {
+  -moz-transform: rotateX(60deg);
+  -ms-transform: rotateX(60deg);
+  -webkit-transform: rotateX(60deg);
+  transform: rotateX(60deg);
+}
+.artifactVersionDropdown.stackAndRotateSelect .cd-dropdown > span,
+.artifactVersionDropdown.stackAndRotateSelect .cd-dropdown ul li:nth-last-child(-n+3) span {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+.artifactVersionDropdown.stackAndRotateSelect .cd-dropdown ul {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+}
+.artifactVersionDropdown.stackAndRotateSelect .cd-dropdown ul li {
+  position: absolute;
+  width: 100%;
+}
+.artifactVersionDropdown.stackAndRotateSelect .cd-dropdown.cd-active > span {
+  color: #669933;
+}
+.artifactVersionDropdown.stackAndRotateSelect .cd-dropdown.cd-active > span,
+.artifactVersionDropdown.stackAndRotateSelect .cd-dropdown.cd-active ul li span {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+.artifactVersionDropdown.stackAndRotateSelect .cd-dropdown.cd-active ul li span {
+  -moz-transition: all 0.2s linear 0s;
+  -o-transition: all 0.2s linear 0s;
+  -webkit-transition: all 0.2s linear;
+  -webkit-transition-delay: 0s;
+  transition: all 0.2s linear 0s;
+}
+.artifactVersionDropdown.stackAndRotateSelect .cd-dropdown.cd-active ul li span:hover {
+  background: #669933;
+  color: #fff;
+}
+.artifactVersionDropdown.slide .cd-dropdown ul {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+}
+.artifactVersionDropdown.slide .cd-dropdown > span,
+.artifactVersionDropdown.slide .cd-dropdown ul li {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+.artifactVersionDropdown.slide .cd-dropdown ul li {
+  position: absolute;
+  width: 100%;
+  pointer-events: none;
+}
+.artifactVersionDropdown.slide .cd-dropdown.cd-active > span {
+  color: #669933;
+}
+.artifactVersionDropdown.slide .cd-dropdown.cd-active ul li {
+  pointer-events: auto;
+}
+.artifactVersionDropdown.slide .cd-dropdown.cd-active ul li span {
+  -moz-transition: all 0.2s linear 0s;
+  -o-transition: all 0.2s linear 0s;
+  -webkit-transition: all 0.2s linear;
+  -webkit-transition-delay: 0s;
+  transition: all 0.2s linear 0s;
+}
+.artifactVersionDropdown.slide .cd-dropdown.cd-active ul li span:hover {
+  background: #669933;
+  color: #fff;
+}
+
+.repoLibContainer {
+  position: relative;
+  float: left;
+  width: 100%;
+  height: 100%;
+  color: rgba(0, 0, 0, 0.4);
+}
+.repoLibContainer .modalWindowContainer {
+  position: relative;
+  float: left;
+  width: 100%;
+  height: 100%;
+}
+.repoLibContainer .modalWindowContainer > div {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  top: 0px;
+  left: 0px;
+}
+.repoLibContainer .modalWindowContainer > div.md-modal {
+  -moz-transform: translateX(0%) translateY(0%);
+  -ms-transform: translateX(0%) translateY(0%);
+  -webkit-transform: translateX(0%) translateY(0%);
+  transform: translateX(0%) translateY(0%);
+}
+.repoLibContainer .modalWindowContainer .repoLibMainContent {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+.repoLibContainer .modalWindowContainer .repoLibMainContent .repoLibContent {
+  height: calc(100% - 4em);
+  margin: 0.5em 0;
+  overflow: auto;
+}
+.repoLibContainer .modalWindowContainer .repoLibMainContent .repoLibContent .repoArtifact {
+  position: relative;
+  float: left;
+  width: 400px;
+  margin-right: 1em;
+  padding: 15px;
+  box-shadow: 0 15px 10px -10px #6D6D6D, 0 1px 4px #A4A4A4, 0 0 40px #E0E0E0 inset;
+}
+.repoLibContainer .modalWindowContainer .repoLibMainContent .repoLibContent .repoArtifact .repoArtifactInfo {
+  height: 2em;
+}
+.repoLibContainer .modalWindowContainer .repoLibMainContent .repoLibContent .repoArtifact .repoArtifactInfo > label {
+  height: 100%;
+}
+.repoLibContainer .modalWindowContainer .repoLibMainContent .repoLibContent .repoArtifact .repoArtifactInfo > div {
+  height: 100%;
+}
+.repoLibContainer .modalWindowContainer .repoLibMainContent .repoLibContent .repoArtifact .repoArtifactInfo > div > span {
+  position: relative;
+  float: left;
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  text-align: right;
+}
+.repoLibContainer .modalWindowContainer .repoLibMainContent .repoLibContent .repoArtifact .repoArtifactInfo > div .artifactVersionDropdown {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.4);
+}
+.repoLibContainer .modalWindowContainer .repoLibMainContent .repoLibContent .repoArtifact .repoArtifactDesc {
+  height: 4em;
+  margin-bottom: 1em;
+}
+.repoLibContainer .modalWindowContainer .repoLibMainContent .repoLibContent .repoArtifact .repoArtifactDesc span {
+  position: relative;
+  float: left;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.repoLibContainer .modalWindowContainer .repoLibMainContent .repoLibContent .repoArtifact .repoArtifactButton {
+  height: 2em;
+  line-height: 2;
+  background-color: #ddd;
+  box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.135);
+  border-radius: 0.2em;
+  display: inline-block;
+  margin: 0.5em 0;
+  text-align: center;
+}
+.repoLibContainer .modalWindowContainer .repoLibMainContent .repoLibContent .repoArtifact .repoArtifactButton:active {
+  background-color: #555;
+  color: #669933;
+  box-shadow: none;
+}
+.repoLibContainer .modalWindowContainer .repoLibModalContent {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+}
+.repoLibContainer .modalWindowContainer .repoLibModalContent .hideButton {
+  position: absolute;
+  top: 0.5em;
+  width: 2em;
+  height: 2em;
+  background-color: #ddd;
+  box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.135);
+  border-radius: 0.2em;
+  display: inline-block;
+  margin: 0 0.5em;
+}
+.repoLibContainer .modalWindowContainer .repoLibModalContent .hideButton:active {
+  background-color: #555;
+  color: #669933;
+  box-shadow: none;
+}
+.repoLibContainer .modalWindowContainer .repoLibModalContent .hideButton:before {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  line-height: 2;
+}
+.repoLibContainer .modalWindowContainer .repoLibModalContent .demoContainer {
+  position: absolute;
+  top: 2em;
+  width: calc(100% - 2em);
+  height: calc(100% - 4em);
+  margin: 1em;
+}
+.repoLibContainer .modalWindowContainer .repoLibModalContent .demoContainer #demoArea {
+  position: relative;
+  float: left;
+  width: 100%;
+  height: 100%;
+}

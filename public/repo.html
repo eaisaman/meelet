@@ -1,0 +1,52 @@
+<link rel="stylesheet" type="text/css" href="stylesheets/repo.css"/>
+<link rel="stylesheet" type="text/css" href="fonts/icon-repo/style.css"/>
+
+<div class="repoContainer fs-x-medium" ng-controller="RepoController">
+    <div ui-topbar>
+        <div name="extraButtons">
+            <div id="repoTypes" class="col-as-3">
+                <div id="repoTypeDropdown"
+                     class="stackAndRotateSelect"
+                     ui-simple-dropdown
+                     ui-simple-dropdown-opts="{dataField:'value', labelField:'name', zIndex:1000, gutter: 5, showTitle: true, displayUnsetOption: true}"
+                     selection-list="repoTypes" select-item="pickedRepoType"
+                     on-option-select="setRepoType(pickedRepoType)">Choose Library Type
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="repoContent col-as-12">
+        <div class="fs-x-small repoLib" ng-repeat="repoLib in markSelection(repoLibraryList, myRepoList, ['_id'])"
+             ng-click="urlService.repoLib(false, {repoLib:repoLib, project:project})">
+            <div class="repoImg fs-x-huge">
+                <img onerror="classie.addClass(this.parentNode, 'imgLoadError')"
+                     onload="classie.removeClass(this.parentNode, 'imgLoadError')"
+                     ng-src="repo/{{repoLib.type}}/{{repoLib.name}}/.meta/{{repoLib.thumbnailImg}}"/>
+
+                <div class="icon-repo-before icon-repo-broken-before"></div>
+            </div>
+
+            <div class="repoLibInfo col-as-12 input-group">
+                <label class="col-as-6 no-padding-right control-label">Name</label>
+
+                <div class="col-as-6 no-padding-left"><span>{{repoLib.name}}</span>
+                </div>
+            </div>
+            <div class="repoLibInfo col-as-12 input-group">
+                <label class="col-as-6 no-padding-right control-label">Artifacts Count</label>
+
+                <div class="col-as-6 no-padding-left"><span>{{repoLib.count}}</span>
+                </div>
+            </div>
+            <div class="repoLibInfo col-as-12 input-group">
+                <label class="col-as-6 no-padding-right control-label">Creator</label>
+
+                <div class="col-as-6 no-padding-left"><span>{{repoLib.creator}}</span>
+                </div>
+            </div>
+            <div class="repoLibButton col-as-12" ng-click="toggleRepoLibSelection(repoLib, $event)">
+                {{repoLib._selected?'Remove':'Add'}}
+            </div>
+        </div>
+    </div>
+</div>

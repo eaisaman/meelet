@@ -9,8 +9,8 @@ $activeBorderShadow: rgba(192, 192, 192, 0.8);
 $underlineLinearGradient: (rgb(235, 235, 235) 0%, rgb(235, 235, 235) 50%, #fff 100%);
 $activeColor: #669933;
 
-@include simple-dropdown(borderWidthDropdown, $activeColor);
-@include simple-dropdown(borderStyleDropdown, $activeColor);
+@include simple-dropdown(borderWidthDropdown, null, $activeColor);
+@include simple-dropdown(borderStyleDropdown, null, $activeColor);
 @include color-editor-palette(borderColorPalette);
 
 @mixin border-editor($borderEditorId) {

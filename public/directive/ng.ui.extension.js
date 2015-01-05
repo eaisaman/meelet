@@ -27,131 +27,148 @@ define(
         }
 
         Extension.prototype.toggleExpandService = function (element, $q, $timeout, uiUtilService) {
-            return function (selector, event) {
+            return function (selector, event, state) {
                 event && event.stopPropagation && event.stopPropagation();
 
-                var $el, defer = $q.defer();
+                var $el;
 
                 if (typeof selector == "string")
                     $el = element.find(selector);
-                else if (typeof selector === "object")
+                else if (selector && typeof selector === "object")
                     $el = selector.jquery && selector || $(selector);
                 else
                     $el = element;
 
-                if ($el.hasClass("expanded")) {
-                    $el.removeClass("expanded");
-                    $el.addClass("collapsing");
-                    if (!$el.css("animation-name") || $el.css("animation-name") === "none") {
-                        $timeout(function () {
-                            $el.removeClass("collapsing");
-                            defer.resolve(selector);
-                        });
-                    } else {
-                        uiUtilService.onAnimationEnd($el).then(
-                            function () {
+                if (state == null || $el.hasClass("expanded") ^ state) {
+                    var defer = $q.defer();
+
+                    if ($el.hasClass("expanded")) {
+                        $el.removeClass("expanded");
+                        $el.addClass("collapsing");
+                        if (!$el.css("animation-name") || $el.css("animation-name") === "none") {
+                            $timeout(function () {
                                 $el.removeClass("collapsing");
                                 defer.resolve(selector);
-                            }
-                        );
-                    }
-                } else {
-                    $el.addClass("expanded");
-
-                    if (!$el.css("animation-name") || $el.css("animation-name") === "none") {
-                        $timeout(function () {
-                            defer.resolve(selector);
-                        });
+                            });
+                        } else {
+                            uiUtilService.onAnimationEnd($el).then(
+                                function () {
+                                    $el.removeClass("collapsing");
+                                    defer.resolve(selector);
+                                }
+                            );
+                        }
                     } else {
-                        uiUtilService.onAnimationEnd($el).then(
-                            function () {
-                                defer.resolve(selector);
-                            }
-                        );
-                    }
-                }
+                        $el.addClass("expanded");
 
-                return defer.promise;
+                        if (!$el.css("animation-name") || $el.css("animation-name") === "none") {
+                            $timeout(function () {
+                                defer.resolve(selector);
+                            });
+                        } else {
+                            uiUtilService.onAnimationEnd($el).then(
+                                function () {
+                                    defer.resolve(selector);
+                                }
+                            );
+                        }
+                    }
+
+                    return defer.promise;
+                } else {
+                    return angular.noop;
+                }
             };
         }
 
         Extension.prototype.toggleDisplayService = function (element, $q, $timeout, uiUtilService) {
-            return function (selector, event) {
+            return function (selector, event, state) {
                 event && event.stopPropagation && event.stopPropagation();
 
-                var $el, defer = $q.defer();
+                var $el;
 
                 if (typeof selector == "string")
                     $el = element.find(selector);
-                else if (typeof selector === "object")
+                else if (selector && typeof selector === "object")
                     $el = selector.jquery && selector || $(selector);
                 else
                     $el = element;
 
-                if ($el.hasClass("show")) {
-                    $el.removeClass("show");
-                    $el.addClass("hiding");
+                if (state == null || $el.hasClass("show") ^ state) {
+                    var defer = $q.defer();
+                    if ($el.hasClass("show")) {
+                        $el.removeClass("show");
+                        $el.addClass("hiding");
 
-                    if (!$el.css("animation-name") || $el.css("animation-name") === "none") {
-                        $timeout(function () {
-                            $el.removeClass("hiding");
-                            defer.resolve(selector);
-                        });
-                    } else {
-                        uiUtilService.onAnimationEnd($el).then(
-                            function () {
+                        if (!$el.css("animation-name") || $el.css("animation-name") === "none") {
+                            $timeout(function () {
                                 $el.removeClass("hiding");
                                 defer.resolve(selector);
-                            }
-                        );
-                    }
-                } else {
-                    $el.addClass("show");
-
-                    if (!$el.css("animation-name") || $el.css("animation-name") === "none") {
-                        $timeout(function () {
-                            defer.resolve(selector);
-                        });
+                            });
+                        } else {
+                            uiUtilService.onAnimationEnd($el).then(
+                                function () {
+                                    $el.removeClass("hiding");
+                                    defer.resolve(selector);
+                                }
+                            );
+                        }
                     } else {
-                        uiUtilService.onAnimationEnd($el).then(
-                            function () {
-                                defer.resolve(selector);
-                            }
-                        );
-                    }
-                }
+                        $el.addClass("show");
 
-                return defer.promise;
+                        if (!$el.css("animation-name") || $el.css("animation-name") === "none") {
+                            $timeout(function () {
+                                defer.resolve(selector);
+                            });
+                        } else {
+                            uiUtilService.onAnimationEnd($el).then(
+                                function () {
+                                    defer.resolve(selector);
+                                }
+                            );
+                        }
+                    }
+
+                    return defer.promise;
+                } else {
+                    return angular.noop;
+                }
             };
         }
 
         Extension.prototype.toggleEnableControlService = function (element, $q, $timeout, uiUtilService) {
-            return function (selector, event) {
+            return function (selector, event, state) {
                 event && event.stopPropagation && event.stopPropagation();
 
-                var $el, defer = $q.defer();
+                var $el;
 
                 if (typeof selector == "string")
                     $el = element.find(selector);
-                else if (typeof selector === "object")
+                else if (selector && typeof selector === "object")
                     $el = selector.jquery && selector || $(selector);
                 else
                     $el = element;
 
-                $el.toggleClass("enable");
-                if (!$el.css("animation-name") || $el.css("animation-name") === "none") {
-                    $timeout(function () {
-                        defer.resolve($el.hasClass("enable"));
-                    });
-                } else {
-                    uiUtilService.onAnimationEnd($el).then(
-                        function () {
-                            defer.resolve($el.hasClass("enable"));
-                        }
-                    );
-                }
+                if (state == null || $el.hasClass("enable") ^ state) {
+                    var defer = $q.defer();
 
-                return defer.promise;
+                    $el.toggleClass("enable");
+                    if (!$el.css("animation-name") || $el.css("animation-name") === "none") {
+                        $timeout(function () {
+                            defer.resolve($el.hasClass("enable"));
+                        });
+                    } else {
+                        uiUtilService.onAnimationEnd($el).then(
+                            function () {
+                                defer.resolve($el.hasClass("enable"));
+                            }
+                        );
+                    }
+
+                    return defer.promise;
+                } else {
+                    return angular.noop;
+                }
             };
         }
 
@@ -163,7 +180,7 @@ define(
 
                 if (typeof selector == "string")
                     $el = element.find(selector);
-                else if (typeof selector === "object")
+                else if (selector && typeof selector === "object")
                     $el = selector.jquery && selector || $(selector);
                 else
                     $el = element;
@@ -193,7 +210,7 @@ define(
 
                 if (typeof selector == "string")
                     $el = element.find(selector);
-                else if (typeof selector === "object")
+                else if (selector && typeof selector === "object")
                     $el = selector.jquery && selector || $(selector);
                 else
                     $el = element;
@@ -216,32 +233,38 @@ define(
         }
 
         Extension.prototype.toggleSelectService = function (element, $q, $timeout, uiUtilService) {
-            return function (selector, event) {
+            return function (selector, event, state) {
                 event && event.stopPropagation && event.stopPropagation();
 
-                var $el, defer = $q.defer();
+                var $el;
 
                 if (typeof selector == "string")
                     $el = element.find(selector);
-                else if (typeof selector === "object")
+                else if (selector && typeof selector === "object")
                     $el = selector.jquery && selector || $(selector);
                 else
                     $el = element;
 
-                $el.toggleClass("select");
-                if (!$el.css("animation-name") || $el.css("animation-name") === "none") {
-                    $timeout(function () {
-                        defer.resolve(selector);
-                    });
-                } else {
-                    uiUtilService.onAnimationEnd($el).then(
-                        function () {
-                            defer.resolve(selector);
-                        }
-                    );
-                }
+                if (state == null || $el.hasClass("select") ^ state) {
+                    var defer = $q.defer();
 
-                return defer.promise;
+                    $el.toggleClass("select");
+                    if (!$el.css("animation-name") || $el.css("animation-name") === "none") {
+                        $timeout(function () {
+                            defer.resolve(selector);
+                        });
+                    } else {
+                        uiUtilService.onAnimationEnd($el).then(
+                            function () {
+                                defer.resolve(selector);
+                            }
+                        );
+                    }
+
+                    return defer.promise;
+                } else {
+                    return angular.noop;
+                }
             };
         }
 
@@ -253,7 +276,7 @@ define(
 
                 if (typeof selector === "string")
                     $el = element.find(selector);
-                else if (typeof selector === "object")
+                else if (selector && typeof selector === "object")
                     $el = selector.jquery && selector || $(selector);
                 else
                     $el = element;
@@ -325,7 +348,16 @@ define(
                 if (typeof selector == "string")
                     return clazz && element.find(selector).hasClass(clazz);
                 else if (typeof selector === "object")
-                    return clazz && $(selector).hasClass(clazz);
+                    return clazz && (selector.jquery && selector || $(selector)).hasClass(clazz);
+            };
+        }
+
+        Extension.prototype.toggleClassService = function (element) {
+            return function (selector, clazz) {
+                if (typeof selector == "string")
+                    return clazz && element.find(selector).toggleClass(clazz);
+                else if (typeof selector === "object")
+                    return clazz && (selector.jquery && selector || $(selector)).toggleClass(clazz);
             };
         }
 
@@ -334,7 +366,7 @@ define(
                 if (typeof selector == "string")
                     return attr && element.find(selector).attr(attr);
                 else if (typeof selector === "object")
-                    return attr && $(selector).attr(attr);
+                    return attr && (selector.jquery && selector || $(selector)).attr(attr);
             };
         }
 

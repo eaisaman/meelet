@@ -1,0 +1,142 @@
+#demoArea .widgetContainer {
+  position: relative;
+  float: left;
+  width: 100%;
+  height: 100%;
+}
+#demoArea .widgetContainer .clearfix:before, #demoArea .widgetContainer .clearfix:after {
+  content: " ";
+  display: table;
+}
+#demoArea .widgetContainer .clearfix:after {
+  clear: both;
+}
+#demoArea .widgetContainer [ui-widget-side-bar] {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+#demoArea .widgetContainer [ui-widget-side-bar] [name='mainContent'] {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #f3efe0;
+  color: #48a770;
+}
+#demoArea .widgetContainer [ui-widget-side-bar] [name='mainContent'] > header {
+  text-align: center;
+  padding: 3em;
+  margin: 0 auto;
+}
+#demoArea .widgetContainer [ui-widget-side-bar] [name='mainContent'] > header h1 {
+  font-size: 2.625em;
+  line-height: 1.3;
+  margin: 0;
+  font-weight: 300;
+}
+#demoArea .widgetContainer [ui-widget-side-bar] [name='mainContent'] > header h1 span {
+  display: block;
+  font-size: 60%;
+  opacity: 0.7;
+  padding: 0 0 0.6em 0.1em;
+  color: #aca89a;
+}
+#demoArea .widgetContainer [ui-widget-side-bar] [name='mainContent'] > .main {
+  margin: 0 auto;
+  padding: 2em;
+  max-width: 69em;
+}
+#demoArea .widgetContainer [ui-widget-side-bar] [name='mainContent'] > .main .column {
+  float: left;
+  width: 50%;
+  padding: 0 2em;
+  min-height: 300px;
+  position: relative;
+}
+#demoArea .widgetContainer [ui-widget-side-bar] [name='mainContent'] > .main .column p {
+  font-weight: 300;
+  font-size: 2em;
+  padding: 0;
+  margin: 0;
+  text-align: right;
+  line-height: 1.5;
+}
+#demoArea .widgetContainer [ui-widget-side-bar] [name='mainContent'] > .main .column button {
+  border: none;
+  padding: 0.6em 1.2em;
+  background: #388a5a;
+  color: #fff;
+  font-family: 'Lato', Calibri, Arial, sans-serif;
+  font-size: 1em;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: inline-block;
+  margin: 3px 2px;
+  border-radius: 2px;
+}
+#demoArea .widgetContainer [ui-widget-side-bar] [name='mainContent'] > .main .column button:hover {
+  background: #2c774b;
+}
+#demoArea .widgetContainer [ui-widget-side-bar] [name='barContent'] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 300px;
+  height: 100%;
+  background: #48a770;
+  -moz-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+#demoArea .widgetContainer [ui-widget-side-bar] [name='barContent']:after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.2);
+  content: '';
+  opacity: 1;
+  -moz-transition: opacity 0.5s;
+  -o-transition: opacity 0.5s;
+  -webkit-transition: opacity 0.5s;
+  transition: opacity 0.5s;
+}
+#demoArea .widgetContainer [ui-widget-side-bar] [name='barContent'] h2 {
+  margin: 0;
+  padding: 1em;
+  color: rgba(0, 0, 0, 0.4);
+  text-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
+  font-weight: 300;
+  font-size: 2em;
+}
+#demoArea .widgetContainer [ui-widget-side-bar] [name='barContent'] ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+#demoArea .widgetContainer [ui-widget-side-bar] [name='barContent'] ul li:first-child a {
+  -moz-box-shadow: inset 0 -1px rgba(0, 0, 0, 0.2), inset 0 1px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: inset 0 -1px rgba(0, 0, 0, 0.2), inset 0 1px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 -1px rgba(0, 0, 0, 0.2), inset 0 1px rgba(0, 0, 0, 0.2);
+}
+#demoArea .widgetContainer [ui-widget-side-bar] [name='barContent'] ul li a {
+  display: block;
+  padding: 1em 1em 1em 1.2em;
+  outline: none;
+  box-shadow: inset 0 -1px rgba(0, 0, 0, 0.2);
+  color: #f3efe0;
+  text-transform: uppercase;
+  text-shadow: 0 0 1px rgba(255, 255, 255, 0.1);
+  letter-spacing: 1px;
+  font-weight: 400;
+  text-decoration: none;
+  -moz-transition: background 0.3s, box-shadow 0.3s;
+  -o-transition: background 0.3s, box-shadow 0.3s;
+  -webkit-transition: background 0.3s, box-shadow 0.3s;
+  transition: background 0.3s, box-shadow 0.3s;
+}

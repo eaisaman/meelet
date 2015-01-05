@@ -11,6 +11,7 @@ define(
                         selectionList: "=",
                         selectItem: "=",
                         unsetOptionValue: "=?",
+                        enableSelection: "=?",
                         onOptionSelect: '&'
                     },
                     defaults = {
@@ -55,6 +56,22 @@ define(
                                 }));
 
                                 scope.options = _.extend(_.clone(options), $parse(attrs['uiSimpleDropdownOpts'])(scope, {}));
+
+                                scope.pickValue = function (selection) {
+                                    if (typeof selection === "object") {
+                                        return selection && selection[scope.options.dataField] || "";
+                                    } else {
+                                        return selection;
+                                    }
+                                }
+
+                                scope.pickLabel = function (selection) {
+                                    if (typeof selection === "object") {
+                                        return selection && selection[scope.options.labelField] || "";
+                                    } else {
+                                        return selection;
+                                    }
+                                }
                             },
                             post: function (scope, element, attrs) {
                                 function optWidth() {
@@ -71,7 +88,6 @@ define(
 
                                 function positionStyle(i) {
                                     var styleObj = {
-                                        zIndex: scope.options.zIndex + scope.selectionList.length - 1 - i,
                                         left: 0,
                                         transform: 'none'
                                     };
@@ -92,21 +108,21 @@ define(
                                         });
 
                                         if (scope.options.stack) {
-                                            if (i == scope.selectionList.length - 1) {
+                                            if (i == scope.optionLength(scope.selectionList) - 1) {
                                                 _.extend(styleObj, {
                                                     top: 9,
                                                     left: 4,
                                                     width: optWidth() - 8
                                                 });
                                             }
-                                            else if (i == scope.selectionList.length - 2) {
+                                            else if (i == scope.optionLength(scope.selectionList) - 2) {
                                                 _.extend(styleObj, {
                                                     top: 6,
                                                     left: 2,
                                                     width: optWidth() - 4
                                                 });
                                             }
-                                            else if (i == scope.selectionList.length - 3) {
+                                            else if (i == scope.optionLength(scope.selectionList) - 3) {
                                                 _.extend(styleObj, {
                                                     top: 3,
                                                     left: 0,
@@ -135,7 +151,7 @@ define(
                                     scope.options.delay && _.extend(styleObj,
                                         scope.options.slidingIn ?
                                             scope.prefixedStyle('transition-delay', '{0}ms', i * scope.options.delay) :
-                                            scope.prefixedStyle('transition-delay', '{0}ms', ( scope.selectionList.length - 1 - i ) * scope.options.delay)
+                                            scope.prefixedStyle('transition-delay', '{0}ms', ( scope.optionLength(scope.selectionList) - 1 - i ) * scope.options.delay)
                                     );
 
                                     if (scope.options.random) {
@@ -158,7 +174,7 @@ define(
 
                                     scope.options.delay && _.extend(styleObj,
                                         scope.options.slidingIn ?
-                                            scope.prefixedStyle('transition-delay', '{0}ms', (self.optsCount - 1 - i) * scope.options.delay) :
+                                            scope.prefixedStyle('transition-delay', '{0}ms', (scope.optionLength(scope.selectionList) - 1 - i) * scope.options.delay) :
                                             scope.prefixedStyle('transition-delay', '{0}ms', i * scope.options.delay)
                                     );
 
@@ -167,10 +183,12 @@ define(
                                     return styleObj;
                                 }
 
-                                scope.toggleOpen = function (event) {
-                                    event && event.stopPropagation && event.stopPropagation();
+                                scope.optionLength = function (selectionList) {
+                                    return (selectionList && selectionList.length || 0) + scope.options.displayUnsetOption ? 1 : 0;
+                                }
 
-                                    element.find(".cd-dropdown.cd-active").length && scope.close() || scope.open();
+                                scope.toggleOpen = function (event) {
+                                    element.find(".cd-dropdown.cd-active").length && scope.close(event) || scope.open(event);
                                 }
 
                                 scope.open = function (event) {
@@ -198,10 +216,21 @@ define(
                                 scope.onSelect = function (event) {
                                     event && event.stopPropagation && event.stopPropagation();
 
-                                    var $optEl = $(event.target),
-                                        value = $optEl.attr("data-value");
 
-                                    scope.selectItem = value;
+                                    if (scope.enableSelection == null || scope.enableSelection) {
+                                        var $optEl = $(event.target),
+                                            value = $optEl.attr("data-value"),
+                                            selectionOrder = $optEl.attr("selection-order");
+
+                                        if (selectionOrder != -1) {
+                                            scope.selection = scope.selectionList[selectionOrder];
+                                        } else {
+                                            scope.selection = null;
+                                        }
+
+                                        scope.selectItem = value;
+                                    }
+
                                     scope.close();
 
                                     $timeout(function () {
@@ -210,6 +239,21 @@ define(
 
                                     return true;
                                 }
+
+                                scope.$watch("selectItem", function (val) {
+                                    if (scope.pickValue(scope.selection) != val) {
+                                        if (scope.selectionList.every(function (s) {
+                                                if (scope.pickValue(s) == val) {
+                                                    scope.selection = s;
+                                                    return false;
+                                                }
+
+                                                return true;
+                                            })) {
+                                            scope.selection = null;
+                                        }
+                                    }
+                                })
 
                                 $timeout(function () {
                                     scope.close();

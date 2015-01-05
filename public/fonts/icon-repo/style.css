@@ -1,0 +1,132 @@
+@font-face {
+	font-family: 'icon-repo';
+	src: url('icon-repo.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+.icon-repo:before {
+	font-family: 'icon-repo';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon-repo-before:before {
+	font-family: 'icon-repo';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon-repo-after:after {
+	font-family: 'icon-repo';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon-repo-delete:before {
+	content: "\e600";
+}
+.icon-repo-select:before {
+	content: "\e601";
+}
+.icon-repo-back:before {
+	content: "\e602";
+}
+.icon-repo-home:before {
+	content: "\e603";
+}
+.icon-repo-widget:before {
+	content: "\e604";
+}
+.icon-repo-filter:before {
+	content: "\e605";
+}
+.icon-repo-menu:before {
+	content: "\e606";
+}
+.icon-repo-broken:before {
+	content: "\e607";
+}
+.icon-repo-exit:before {
+	content: "\e608";
+}
+
+.icon-repo-delete-before:before {
+	content: "\e600";
+}
+.icon-repo-select-before:before {
+	content: "\e601";
+}
+.icon-repo-back-before:before {
+	content: "\e602";
+}
+.icon-repo-home-before:before {
+	content: "\e603";
+}
+.icon-repo-widget-before:before {
+	content: "\e604";
+}
+.icon-repo-filter-before:before {
+	content: "\e605";
+}
+.icon-repo-menu-before:before {
+	content: "\e606";
+}
+.icon-repo-broken-before:before {
+	content: "\e607";
+}
+.icon-repo-exit-before:before {
+	content: "\e608";
+}
+
+.icon-repo-delete-after:after {
+	content: "\e600";
+}
+.icon-repo-select-after:after {
+	content: "\e601";
+}
+.icon-repo-back-after:after {
+	content: "\e602";
+}
+.icon-repo-home-after:after {
+	content: "\e603";
+}
+.icon-repo-widget-after:after {
+	content: "\e604";
+}
+.icon-repo-filter-after:after {
+	content: "\e605";
+}
+.icon-repo-menu-after:after {
+	content: "\e606";
+}
+.icon-repo-broken-after:after {
+	content: "\e607";
+}
+.icon-repo-exit-after:after {
+	content: "\e608";
+}

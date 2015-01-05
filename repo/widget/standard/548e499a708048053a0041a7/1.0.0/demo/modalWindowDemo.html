@@ -1,0 +1,66 @@
+<div class="widgetContainer fs-x-small" ng-controller="DemoController">
+    <div ui-widget-modal-window transition="{{demoTransition}}">
+        <div name="mainContent">
+            <header>
+                <h1>Nifty Modal Window Effects <span>Some inspiration for different modal window appearances</span></h1>
+            </header>
+            <div class="main clearfix">
+                <div class="column">
+                    <p>There are many possibilities for modal overlays to appear. Here are some modern ways of showing
+                        them
+                        using CSS transitions and animations.</p>
+                </div>
+                <div class="column">
+                    <button class="md-trigger" ng-click="doTransition('fadeInScaleUp', $event)">Fade in &amp; Scale</button>
+                    <button class="md-trigger" ng-click="doTransition('slideFromRight', $event)">Slide in (right)</button>
+                    <button class="md-trigger" ng-click="doTransition('slideFromBottom', $event)">Slide in (bottom)</button>
+                    <button class="md-trigger" ng-click="doTransition('newspaper', $event)">Newspaper</button>
+                    <button class="md-trigger" ng-click="doTransition('fall', $event)">Fall</button>
+                    <button class="md-trigger" ng-click="doTransition('sideFall', $event)">Side Fall</button>
+                    <button class="md-trigger" ng-click="doTransition('slideStickTop', $event)">Sticky Up</button>
+                    <button class="md-trigger" ng-click="doTransition('flipHorizontal3D', $event)">3D Flip (horizontal)</button>
+                    <button class="md-trigger" ng-click="doTransition('flipVertical3D', $event)">3D Flip (vertical)</button>
+                    <button class="md-trigger" ng-click="doTransition('sign3D', $event)">3D Sign</button>
+                    <button class="md-trigger" ng-click="doTransition('superScaled', $event)">Super Scaled</button>
+                    <button class="md-trigger" ng-click="doTransition('justMe', $event)">Just Me</button>
+                    <button class="md-trigger" ng-click="doTransition('slit3D', $event)">3D Slit</button>
+                    <button class="md-trigger" ng-click="doTransition('rotateFromBottom3D', $event)">3D Rotate Bottom</button>
+                    <button class="md-trigger" ng-click="doTransition('rotateFromLeft3D', $event)">3D Rotate In Left</button>
+                    <button class="md-trigger" ng-click="doTransition('blur', $event)">Blur</button>
+                    <!-- special modal that will add a perspective class to the html element -->
+                    <button class="md-trigger md-setperspective" ng-click="doTransition('slideFromBottomPerspective', $event)">
+                        Let
+                        me in
+                    </button>
+                    <button class="md-trigger md-setperspective" ng-click="doTransition('slideFromRightPerspective', $event)">
+                        Make
+                        way!
+                    </button>
+                    <button class="md-trigger md-setperspective" ng-click="doTransition('slipFromTopPerspective', $event)">Slip
+                        from
+                        top
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div name="modalContent">
+            <h3>Modal Dialog</h3>
+
+            <div>
+                <p>This is a modal window. You can do the following things with it:</p>
+                <ul>
+                    <li><strong>Read:</strong> modal windows will probably tell you something important so don't forget to
+                        read
+                        what they say.
+                    </li>
+                    <li><strong>Look:</strong> a modal window enjoys a certain kind of attention; just look at it and
+                        appreciate
+                        its presence.
+                    </li>
+                    <li><strong>Close:</strong> click on the button below to close the modal.</li>
+                </ul>
+                <button class="md-close" ng-click="doTransition('', $event)">Close me!</button>
+            </div>
+        </div>
+    </div>
+</div>

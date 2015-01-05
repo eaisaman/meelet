@@ -3,11 +3,16 @@
 @import "../global";
 @import "../bootstrap";
 
+$fs-x-huge: $font-size-h1 * 2;
 $fs-x-large: $font-size-h1;
 $fs-x-medium: $font-size-h2;
 $fs-x-small: $font-size-h3;
 $fs-x-smaller: $font-size-h4;
 $fs-x-tiny: $font-size-h5;
+
+.fs-x-huge {
+    font-size: $fs-x-huge !important;
+}
 
 .fs-x-large {
     font-size: $fs-x-large !important;
@@ -29,6 +34,10 @@ $fs-x-tiny: $font-size-h5;
     font-size: $fs-x-tiny !important;
 }
 
+.fs-x-huge-before:before {
+    font-size: $fs-x-huge !important;
+}
+
 .fs-x-large-before:before {
     font-size: $fs-x-large !important;
 }
@@ -47,6 +56,10 @@ $fs-x-tiny: $font-size-h5;
 
 .fs-x-tiny-before:before {
     font-size: $fs-x-tiny !important;
+}
+
+.fs-x-huge-after:after {
+    font-size: $fs-x-huge !important;
 }
 
 .fs-x-large-after:after {
@@ -182,3 +195,16 @@ $verticalScrollHeight: 300px;
 @include no-margin("top");
 @include no-margin("bottom");
 @include no-margin("all");
+
+.vt-align-center {
+    top: calc(50% - 0.5em);
+}
+
+.hz-align-center {
+    left: calc(50% - 0.5em);
+}
+
+.align-center {
+    top: calc(50% - 0.5em);
+    left: calc(50% - 0.5em);
+}

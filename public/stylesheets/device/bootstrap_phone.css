@@ -1,17 +1,4 @@
 @charset "UTF-8";
-.vt-align-center {
-  top: calc(50% - 0.5em);
-}
-
-.hz-align-center {
-  left: calc(50% - 0.5em);
-}
-
-.align-center {
-  top: calc(50% - 0.5em);
-  left: calc(50% - 0.5em);
-}
-
 /*! normalize.css v3.0.1 | MIT License | git.io/normalize */
 html {
   font-family: sans-serif;
@@ -6705,6 +6692,10 @@ button.close {
     display: none !important;
   }
 }
+.fs-x-huge {
+  font-size: 72px !important;
+}
+
 .fs-x-large {
   font-size: 36px !important;
 }
@@ -6725,6 +6716,10 @@ button.close {
   font-size: 14px !important;
 }
 
+.fs-x-huge-before:before {
+  font-size: 72px !important;
+}
+
 .fs-x-large-before:before {
   font-size: 36px !important;
 }
@@ -6743,6 +6738,10 @@ button.close {
 
 .fs-x-tiny-before:before {
   font-size: 14px !important;
+}
+
+.fs-x-huge-after:after {
+  font-size: 72px !important;
 }
 
 .fs-x-large-after:after {
@@ -6860,4 +6859,17 @@ button.close {
 
 .no-margin {
   margin: 0 !important;
+}
+
+.vt-align-center {
+  top: calc(50% - 0.5em);
+}
+
+.hz-align-center {
+  left: calc(50% - 0.5em);
+}
+
+.align-center {
+  top: calc(50% - 0.5em);
+  left: calc(50% - 0.5em);
 }

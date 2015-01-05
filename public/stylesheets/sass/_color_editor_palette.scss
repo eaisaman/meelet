@@ -1,9 +1,7 @@
 @import "compass/css3/transform";
 @import "compass/css3/transition";
 
-$color: rgba(0, 0, 0, 0.4);
 $activeBackgroundColor: rgba(0, 0, 0, 0.3);
-$borderColor: rgba(0, 0, 0, 0.4);
 
 @mixin color-editor-palette($colorEditorPaletteId) {
     ##{$colorEditorPaletteId} {

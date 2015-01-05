@@ -3,8 +3,6 @@
 @import "compass/css3/user-interface";
 @import "global";
 
-$color: rgba(0, 0, 0, 0.4);
-$borderColor: rgba(0, 0, 0, 0.4);
 $splitColor: #CACDC0;
 $activeBorderShadow: rgba(192, 192, 192, 0.8);
 $displayMoveButtonsDelay: 0.5s;
@@ -12,8 +10,8 @@ $hideMoveButtonsDelay: 0.1s;
 $disableBackgroundColor: rgba(0, 0, 0, 0.2);
 
 $tabHeaderWidth: 6em;
-$numOfControlGroups: 2;
-$controlGroupTitleWidth: 10em;
+$numOfControlGroups: 3;
+$controlGroupTitleWidth: 8em;
 $numOfStructureControls: 10;
 $dockWidth: 8em;
 $expandedDockWidth: 12em;
@@ -21,6 +19,7 @@ $expandedDockWidth: 12em;
 @mixin dock($dockId) {
     ##{$dockId} {
         position: absolute;
+        top: 3em;
         width: $dockWidth;
         color: $color;
 
@@ -127,8 +126,8 @@ $expandedDockWidth: 12em;
                         .ui-control-group-title {
                             @include flex(1);
 
-                            min-width: 10em;
-                            max-width: 10em;
+                            min-width: 8em;
+                            max-width: 8em;
                             line-height: 2;
                             text-align: center;
                             border-top: 1px solid $borderColor;

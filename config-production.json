@@ -1,0 +1,159 @@
+{
+    "routes": [
+        {
+            "/": {
+                "module": "static-favicon"
+            }
+        },
+        {
+            "/": {
+                "module": "morgan",
+                "parameters": ["dev"]
+            }
+        },
+        {
+            "/": {
+                "module": "body-parser",
+                "function": "json"
+            }
+        },
+        {
+            "/": {
+                "module": "body-parser",
+                "function": "urlencoded",
+                "parameters": [
+                    {
+                        "limit": 20480000
+                    }
+                ]
+            }
+        },
+        {
+            "/": {
+                "module": "./commons",
+                "function": "multipart"
+            }
+        },
+        {
+            "/": {
+                "module": "cookie-parser"
+            }
+        },
+        {
+            "/": {
+                "module": "./commons",
+                "function": "filter",
+                "parameters": [
+                    {
+                        "paths": ["/api/"]
+                    }
+                ]
+            }
+        },
+        {
+            "/api/public/": {
+                "module": "./routes/api/public"
+            }
+        },
+        {
+            "/": {
+                "module": "./commons",
+                "function": "session",
+                "parameters": [
+                    {
+                        "cookie": {
+                            "maxAge": 6000000,
+                            "httpOnly": false
+                        },
+
+                        "secret": "djikstra",
+
+                        "store": {
+                            "resource": "securityDb"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "/": {
+                "module": "passport",
+                "function": "initialize"
+            }
+        },
+        {
+            "/": {
+                "module": "passport",
+                "function": "session"
+            }
+        },
+        {
+            "/api/private/": {
+                "module": "./commons",
+                "function": "authenticate",
+                "parameters": [
+                    {
+                        "resource": "securityDb",
+                        "collectionName": "Users"
+                    }
+                ]
+            }
+        },
+        {
+            "/api/private/": {
+                "module": "./routes/api/private"
+            }
+        }
+    ],
+    "staticResources": [
+        {
+            "/": "public"
+        }
+    ],
+    "applicationResources": [
+        {
+            "resource": "mongooseDb",
+            "module": "./commons",
+            "function": "instantiateMongooseDb",
+            "parameters": [
+                {
+                    "url": "mongodb://meelet:meelet@localhost/meelet",
+                    "dbSchema": "./schema.json"
+                }
+            ]
+        },
+        {
+            "resource": "securityDb",
+            "module": "./commons",
+            "function": "instantiateMongoDb",
+            "parameters": [
+                {
+                    "url": "mongodb://meelet:meelet@localhost/meelet",
+                    "auto_reconnect": true
+                }
+            ]
+        }
+    ],
+    "settings": {
+        "views": "views",
+        "view engine": "jade",
+        "applicationDb": "mongooseDb",
+        "download": {
+            "folder": "download"
+        },
+        "upload": {
+            "folder": "upload"
+        },
+        "userFile": {
+            "sketchFolder": "sketches"
+        },
+        "logging": {
+            "appenders": [
+                {
+                    "type": "console"
+                }
+            ],
+            "replaceConsole": true
+        }
+    }
+}

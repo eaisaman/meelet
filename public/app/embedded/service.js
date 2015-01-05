@@ -1,16 +1,17 @@
 define(
     ["angular"],
     function () {
-        var appService = function ($rootScope, $http, $timeout, $q, $cookies, $cookieStore) {
+        var appService = function ($rootScope, $http, $timeout, $q, $compile, $cookies, $cookieStore) {
             this.$rootScope = $rootScope;
             this.$http = $http;
             this.$timeout = $timeout;
             this.$q = $q;
+            this.$compile = $compile;
             this.$cookies = $cookies;
             this.$cookieStore = $cookieStore;
         };
 
-        appService.$inject = ["$rootScope", "$http", "$timeout", "$q", "$cookies", "$cookieStore"];
+        appService.$inject = ["$rootScope", "$http", "$timeout", "$q", "$compile", "$cookies", "$cookieStore"];
 
         appService.prototype.NOOP = function () {
             var self = this,
@@ -23,9 +24,33 @@ define(
             return defer.promise;
         };
 
+        appService.prototype.loadRepoArtifact = appService.prototype.NOOP;
+
+        appService.prototype.loadIconArtifactList = appService.prototype.NOOP;
+
         appService.prototype.saveSketch = appService.prototype.NOOP;
 
         appService.prototype.loadSketch = appService.prototype.NOOP;
+
+        appService.prototype.getUser = appService.prototype.NOOP;
+
+        appService.prototype.getRepoLibrary = appService.prototype.NOOP;
+
+        appService.prototype.getRepoArtifact = appService.prototype.NOOP;
+
+        appService.prototype.getUserDetail = appService.prototype.NOOP;
+
+        appService.prototype.getProjectDetail = appService.prototype.NOOP;
+
+        appService.prototype.createProject = appService.prototype.NOOP;
+
+        appService.prototype.modifyProject = appService.prototype.NOOP;
+
+        appService.prototype.deleteProject = appService.prototype.NOOP;
+
+        appService.prototype.selectRepoArtifact = appService.prototype.NOOP;
+
+        appService.prototype.unselectRepoArtifact = appService.prototype.NOOP;
 
         return function (appModule) {
             appModule.

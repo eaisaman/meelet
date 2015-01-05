@@ -36,7 +36,16 @@ require.config({
 require(["jquery-lib", "jquery-plugins-lib", "hammer-lib", "jquery-ui-lib", "jquery-ui-plugins-lib", "angular-lib", "underscore-lib", "ckeditor-lib"], function () {
     window.appModule = angular.module(APP_MODULE_NAME, APP_MODULE_DEPS);
     window.appModule.value("angularEventTypes", {boundPropertiesEvent: "boundPropertiesEvent"});
-    window.appModule.value("angularConstants", {precision: 1000, percentPrecision: 1000});
+    window.appModule.value("angularConstants", {
+        precision: 1000,
+        percentPrecision: 1000,
+        treeNodeIdPrefix: "tree-node-",
+        repoTypes: [
+            {name: "widget", value: "widget"},
+            {name: "icon", value: "icon"}
+        ],
+        actionDelay: 100
+    });
 
     require(["angular-plugins-lib", "directive-lib", "app-lib"], function () {
         var configs = Array.prototype.slice.call(arguments);

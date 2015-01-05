@@ -31,6 +31,80 @@ define(
 
                     return false;
                 };
+            }).filter("without", function () {
+                return function (array, others, props) {
+                    var result = [];
+
+                    if (toString.call(array) === '[object Array]' && array.length) {
+                        if (others && others.length) {
+                            if (props) {
+                                if (typeof props === "string") {
+                                    props = [props];
+                                }
+
+                                if (toString.call(props) === '[object Array]') {
+                                    array.forEach(function (item) {
+                                        if (others.every(function (o) {
+                                                return !props.every(function (prop) {
+                                                    return o[prop] === item[prop];
+                                                });
+                                            })) {
+                                            result.push(item);
+                                        }
+                                    });
+                                }
+                            } else {
+                                array.forEach(function (item) {
+                                    if (others.every(function (o) {
+                                            return o !== item;
+                                        })) {
+                                        result.push(item);
+                                    }
+                                });
+                            }
+                        } else {
+                            result = _.clone(array);
+                        }
+                    }
+
+                    return result;
+                };
+            }).filter("with", function () {
+                return function (array, others, props) {
+                    var result = [];
+
+                    if (toString.call(array) === '[object Array]' && array.length) {
+                        if (others && others.length) {
+                            if (props) {
+                                if (typeof props === "string") {
+                                    props = [props];
+                                }
+
+                                if (toString.call(props) === '[object Array]') {
+                                    array.forEach(function (item) {
+                                        if (!others.every(function (o) {
+                                                return !props.every(function (prop) {
+                                                    return o[prop] === item[prop];
+                                                });
+                                            })) {
+                                            result.push(item);
+                                        }
+                                    });
+                                }
+                            } else {
+                                array.forEach(function (item) {
+                                    if (!others.every(function (o) {
+                                            return o !== item;
+                                        })) {
+                                        result.push(item);
+                                    }
+                                });
+                            }
+                        }
+                    }
+
+                    return result;
+                };
             }).filter('makeRange', function () {
                 return function (input) {
                     var lowBound, highBound;

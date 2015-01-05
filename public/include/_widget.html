@@ -1,0 +1,22 @@
+<div class="widgetContent ui-control-wrapper" ng-class="dockAlign">
+    <div class="widgetBar ui-control-bar fs-x-large">
+        <div class="pickerPane fs-x-large fs-x-large-before">{{pickerPaneWidget.name}}</div>
+    </div>
+    <div class="widgetPalette ui-control-panel">
+        <div class="widgetLibrary" ng-repeat="widgetLibrary in widgetLibraryList">
+            <div class="widgetTitle icon-widget-before icon-widget-cog-before">{{widgetLibrary.name}}</div>
+            <div class="accordianGroup" ng-repeat="artifact in widgetLibrary.artifactList"
+                 ng-click="toggleSelect($event.currentTarget, $event)">
+                <div class="accordianTitle col-as-12 fs-x-medium icon-widget-before icon-widget-angle-double-up-before">
+                    {{artifact.name}}
+                </div>
+                <div class="accordianBody col-as-12 no-padding">
+                    <div class="widgetPane fs-x-large fs-x-large-before col-as-3 no-padding"
+                         ng-repeat="pane in artifact.json"
+                         ng-click="pickWidget(pane) && $event.stopPropagation()">{{pane.name}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

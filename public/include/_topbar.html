@@ -1,0 +1,35 @@
+<link rel="stylesheet" type="text/css" href="fonts/icon-topbar/style.css"/>
+
+<div id="appTopBar">
+    <div class="topbarButton icon-topbar-before icon-topbar-back-before"
+         ng-click="urlService.back()"></div>
+    <div class="topbarButton icon-topbar-before icon-topbar-home-before"
+         ng-click="urlService.home()"></div>
+
+    <div ui-multi-transclude="extraButtons" class="extraButtons"></div>
+
+    <div class="topbarMenu icon-topbar-before icon-topbar-menu-before"
+         ng-click="toggleSelect($event.target, $event)">
+        <div class="btn-group open">
+            <ul class="dropdown-menu fs-x-small" role="menu">
+                <li class="icon-topbar-before icon-topbar-add-before" ng-click="onNewProject($event)"><a
+                        href="">New Project</a></li>
+                <li class="icon-topbar-before icon-topbar-select-before">
+                    <div id="topbarProjectDropdown" class="stackAndRotateSelect"
+                         ui-simple-dropdown
+                         ui-simple-dropdown-opts="{dataField:'_id', labelField:'name', zIndex:1000, gutter: 5, showTitle: true, displayUnsetOption: true}"
+                         selection-list="$root.userDetail.projectList" select-item="pickedProjectId"
+                         on-option-select="onSelectProject(pickedProjectId)">Select Project
+                    </div>
+                </li>
+                <li class="icon-topbar-before icon-topbar-Library-before"
+                    ng-click="onVisitRepoLibrary($event)"><a
+                        href="">Repo Library</a></li>
+                <li class="icon-topbar-before icon-topbar-showcase-before"><a href="">Show Case</a></li>
+                <li class="icon-topbar-before icon-topbar-help-before"><a href="">Help</a></li>
+                <li class="divider"></li>
+                <li class="icon-topbar-before icon-topbar-sign_in-before"><a href="">Sign In/Out</a></li>
+            </ul>
+        </div>
+    </div>
+</div>

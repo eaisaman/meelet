@@ -1,16 +1,14 @@
 define(
     ["angular", "jquery", "hammer"],
     function () {
-        var inject = ["$http", "$timeout", "$q", "$parse", "$compile", "angularEventTypes", "uiUtilService", "uiService"];
+        var inject = ["$http", "$timeout", "$q", "$parse", "$compile", "angularEventTypes", "appService", "uiUtilService", "uiService"];
 
         return function (appModule, extension, opts) {
-            appModule.directive("uiShape", _.union(inject, [function ($http, $timeout, $q, $parse, $compile, angularEventTypes, uiUtilService, uiService) {
+            appModule.directive("uiShape", _.union(inject, [function ($http, $timeout, $q, $parse, $compile, angularEventTypes, appService, uiUtilService, uiService) {
                 'use strict';
 
                 var boundProperties = {},
                     defaults = {
-                        shapeJson: "",
-                        shapes: [],
                         containerClass: "sketchHolder",
                         holderClass: "deviceHolder",
                         widgetClass: "sketchWidget",
@@ -22,7 +20,12 @@ define(
 
                 return {
                     restrict: "A",
-                    scope: angular.extend({dockAlign: "=", pickedShape: "=", isPlaying: "="}, boundProperties),
+                    scope: angular.extend({
+                        dockAlign: "=",
+                        pickedShape: "=",
+                        isPlaying: "=",
+                        iconLibraryList: "="
+                    }, boundProperties),
                     replace: false,
                     templateUrl: "include/_shape.html",
                     compile: function (element, attrs) {
@@ -123,19 +126,7 @@ define(
                                     }
                                 }
 
-                                if (options.shapeJson) {
-                                    $http.get(options.shapeJson).then(function (result) {
-                                        scope.shapes = result.data;
-                                        if (scope.shapes && scope.shapes.length) {
-                                            scope.pickShape(scope.shapes[0] && scope.shapes[0].list.length && scope.shapes[0].list[0] || null);
-                                        }
-                                    });
-                                } else {
-                                    scope.shapes = options.shapes || [];
-                                    if (scope.shapes && scope.shapes.length) {
-                                        scope.pickShape(scope.shapes[0] && scope.shapes[0].list.length && scope.shapes[0].list[0] || null);
-                                    }
-                                }
+                                appService.loadIconArtifactList();
 
                                 var mc = new Hammer.Manager(element.find(".pickerPane").get(0));
                                 mc.add(new Hammer.Pan({threshold: 0, pointers: 0}));

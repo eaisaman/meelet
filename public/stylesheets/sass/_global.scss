@@ -2,6 +2,9 @@
 @import "bootstrap-variables";
 
 $activeDarkenPercent: 10%;
+$color: rgba(0, 0, 0, 0.4);
+$borderColor: rgba(0, 0, 0, 0.4);
+$activeColor: #669933;
 
 @mixin emboss-title($pseudo: "", $onActive:true) {
     &#{$pseudo} {
@@ -36,17 +39,4 @@ $activeDarkenPercent: 10%;
         border-top: 1px solid #CACDC0;
         border-bottom: 1px solid #FFF;
     }
-}
-
-.vt-align-center {
-    top: calc(50% - 0.5em);
-}
-
-.hz-align-center {
-    left: calc(50% - 0.5em);
-}
-
-.align-center {
-    top: calc(50% - 0.5em);
-    left: calc(50% - 0.5em);
 }

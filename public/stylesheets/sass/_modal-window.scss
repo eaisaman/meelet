@@ -1,17 +1,23 @@
-@import "companimation";
 @import "compass/css3/transform";
 @import "compass/css3/transition";
 @import "animation/modal-window";
 
-@mixin modal-window($windowClass) {
+@mixin modal-window($modalWindowClass:modalWindowContainer) {
 
-    .#{$windowClass} {
-        &.md-perspective  {
+    .#{$modalWindowClass} {
+        &.md-perspective {
             @include perspective(600px);
         }
 
-        .contentContainer {
+        .mainContent {
             min-height: 100%;
+
+            [name=mainContent] {
+                position: relative;
+                float: left;
+                width: 100%;
+                height: 100%;
+            }
         }
 
         .md-modal {
@@ -19,7 +25,6 @@
             top: 50%;
             left: 50%;
             width: 50%;
-            max-width: 630px;
             min-width: 320px;
             height: auto;
             z-index: 2000;
@@ -28,11 +33,11 @@
             @include transform(translateX(-50%) translateY(-50%));
         }
 
-        .md-show {
+        .md-modal.show {
             visibility: visible;
         }
 
-        .md-overlay {
+        .modalOverlay {
             position: fixed;
             width: 100%;
             height: 100%;
@@ -45,7 +50,7 @@
             @include transition(all 0.3s);
         }
 
-        .md-show ~ .md-overlay {
+        .md-modal.show ~ .modalOverlay {
             opacity: 1;
             visibility: visible;
         }
@@ -53,53 +58,53 @@
         /* Individual modal styles with animations/transitions */
 
         /* Effect 1: Fade in and scale up */
-        .fadeInScaleUp .md-content {
+        .fadeInScaleUp > [name=modalContent] {
             opacity: 0;
             @include transform(scale(0.7));
             @include transition(all 0.3s);
         }
 
-        .md-show.fadeInScaleUp .md-content {
+        .md-modal.show.fadeInScaleUp > [name=modalContent] {
             opacity: 1;
             @include transform(scale(1));
         }
 
         /* Effect 2: Slide from the right */
-        .slideFromRight .md-content {
+        .slideFromRight > [name=modalContent] {
             opacity: 0;
             @include transform(translateX(20%));
             @include transition(all 0.3s cubic-bezier(0.25, 0.5, 0.5, 0.9));
         }
 
-        .md-show.slideFromRight .md-content {
+        .md-modal.show.slideFromRight > [name=modalContent] {
             opacity: 1;
             @include transform(translateX(0));
         }
 
         /* Effect 3: Slide from the bottom */
-        .slideFromBottom .md-content {
+        .slideFromBottom > [name=modalContent] {
             opacity: 0;
             @include transform(translateY(20%));
             @include transition(all 0.3s);
         }
 
-        .md-show.slideFromBottom .md-content {
+        .md-modal.show.slideFromBottom > [name=modalContent] {
             opacity: 1;
             @include transform(translateY(0));
         }
 
         /* Effect 4: Newspaper */
-        .newspaper .md-content {
+        .newspaper > [name=modalContent] {
             opacity: 0;
             @include transform(scale(0) rotate(720deg));
         }
 
-        .md-show.newspaper ~ .md-overlay,
-        .newspaper .md-content {
+        .md-modal.show.newspaper ~ .modalOverlay,
+        .newspaper > [name=modalContent] {
             @include transition(all 0.5s);
         }
 
-        .md-show.newspaper .md-content {
+        .md-modal.show.newspaper > [name=modalContent] {
             opacity: 1;
             @include transform(scale(1) rotate(0deg));
         }
@@ -109,13 +114,13 @@
             @include perspective(1300px);
         }
 
-        .fall .md-content {
+        .fall > [name=modalContent] {
             opacity: 0;
             @include transform-style(preserve-3d);
             @include transform(translateZ(600px) rotateX(20deg));
         }
 
-        .md-show.fall .md-content {
+        .md-modal.show.fall > [name=modalContent] {
             opacity: 1;
             @include transform(translateZ(0px) rotateX(0deg));
             @include transition(all 0.3s ease-in);
@@ -126,13 +131,13 @@
             @include perspective(1300px);
         }
 
-        .sideFall .md-content {
+        .sideFall > [name=modalContent] {
             opacity: 0;
             @include transform-style(preserve-3d);
             @include transform(translate(30%) translateZ(600px) rotate(10deg));
         }
 
-        .md-show.sideFall .md-content {
+        .md-modal.show.sideFall > [name=modalContent] {
             opacity: 1;
             @include transform(translate(0%) translateZ(0) rotate(0deg));
             @include transition(all 0.3s ease-in);
@@ -144,13 +149,13 @@
             @include transform(translateX(-50%));
         }
 
-        .slideStickTop .md-content {
+        .slideStickTop > [name=modalContent] {
             opacity: 0;
             @include transform(translateY(-200%));
             @include transition(all .3s);
         }
 
-        .md-show.slideStickTop .md-content {
+        .md-modal.show.slideStickTop > [name=modalContent] {
             opacity: 1;
             @include transform(translateY(0%));
             border-radius: 0 0 3px 3px;
@@ -161,14 +166,14 @@
             @include perspective(1300px);
         }
 
-        .flipHorizontal3D .md-content {
+        .flipHorizontal3D > [name=modalContent] {
             opacity: 0;
             @include transform-style(preserve-3d);
             @include transform(rotateY(-70deg));
             @include transition(all 0.3s);
         }
 
-        .md-show.flipHorizontal3D .md-content {
+        .md-modal.show.flipHorizontal3D > [name=modalContent] {
             opacity: 1;
             @include transform(rotateY(0deg));
         }
@@ -178,14 +183,14 @@
             @include perspective(1300px);
         }
 
-        .flipVertical3D .md-content {
+        .flipVertical3D > [name=modalContent] {
             opacity: 0;
             @include transform-style(preserve-3d);
             @include transform(rotateX(-70deg));
             @include transition(all 0.3s);
         }
 
-        .md-show.flipVertical3D .md-content {
+        .md-modal.show.flipVertical3D > [name=modalContent] {
             opacity: 1;
             @include transform(rotateX(0deg));
         }
@@ -195,7 +200,7 @@
             @include perspective(1300px);
         }
 
-        .sign3D .md-content {
+        .sign3D > [name=modalContent] {
             opacity: 0;
             @include transform-style(preserve-3d);
             @include transform(rotateX(-60deg));
@@ -203,40 +208,40 @@
             @include transform-origin(50% 0);
         }
 
-        .md-show.sign3D .md-content {
+        .md-modal.show.sign3D > [name=modalContent] {
             opacity: 1;
             @include transform(rotateX(0deg));
         }
 
         /* Effect 11: Super scaled */
-        .superScaled .md-content {
+        .superScaled > [name=modalContent] {
             opacity: 0;
             @include transform(scale(2));
             @include transition(all 0.3s);
         }
 
-        .md-show.superScaled .md-content {
+        .md-modal.show.superScaled > [name=modalContent] {
             opacity: 1;
             @include transform(scale(1));
         }
 
         /* Effect 12:  Just me */
-        .justMe .md-content {
+        .justMe > [name=modalContent] {
             opacity: 0;
             @include transform(scale(0.8));
             @include transition(all 0.3s);
         }
 
-        .md-show.justMe ~ .md-overlay {
+        .md-modal.show.justMe ~ .modalOverlay {
             background: #e74c3c;
         }
 
-        .justMe .md-content h3,
-        .justMe .md-content {
+        .justMe > [name=modalContent] h3,
+        .justMe > [name=modalContent] {
             background: transparent;
         }
 
-        .md-show.justMe .md-content {
+        .md-modal.show.justMe > [name=modalContent] {
             opacity: 1;
             @include transform(scale(1));
         }
@@ -246,14 +251,14 @@
             @include perspective(1300px);
         }
 
-        .slit3D .md-content {
+        .slit3D > [name=modalContent] {
             opacity: 0;
             @include transform-style(preserve-3d);
             @include transform(translateZ(-3000px) rotateY(90deg));
         }
 
-        .md-show.slit3D .md-content {
-            @extend %slit;
+        .md-modal.show.slit3D > [name=modalContent] {
+            @extend %modalWindow_slit;
         }
 
         /* Effect 14:  3D Rotate from bottom */
@@ -261,7 +266,7 @@
             @include perspective(1300px);
         }
 
-        .rotateFromBottom3D .md-content {
+        .rotateFromBottom3D > [name=modalContent] {
             opacity: 0;
             @include transform-style(preserve-3d);
             @include transform(translateY(100%) rotateX(90deg));
@@ -269,7 +274,7 @@
             @include transform-origin(0 100%);
         }
 
-        .md-show.rotateFromBottom3D .md-content {
+        .md-modal.show.rotateFromBottom3D > [name=modalContent] {
             opacity: 1;
             @include transform(translateY(0%) rotateX(0deg));
         }
@@ -279,7 +284,7 @@
             @include perspective(1300px);
         }
 
-        .rotateFromLeft3D .md-content {
+        .rotateFromLeft3D > [name=modalContent] {
             opacity: 0;
             @include transform-style(preserve-3d);
             @include transform(translateZ(100px) translateX(-30%) rotateY(90deg));
@@ -287,113 +292,113 @@
             @include transform-origin(0 100%);
         }
 
-        .md-show.rotateFromLeft3D .md-content {
+        .md-modal.show.rotateFromLeft3D > [name=modalContent] {
             opacity: 1;
             @include transform(translateZ(0px) translateX(0%) rotateY(0deg));
         }
 
         /* Effect 16:  Blur */
-        .md-show.blur ~ .md-overlay {
+        .md-modal.show.blur ~ .modalOverlay {
             background: rgba(180, 46, 32, 0.5);
         }
 
-        .md-show.blur ~ .contentContainer {
+        .md-modal.show.blur ~ .mainContent {
             @include filter(blur(3px));
         }
 
-        .blur .md-content {
+        .blur > [name=modalContent] {
             opacity: 0;
             @include transform(translateY(-5%));
         }
 
-        .md-show.blur ~ .contentContainer,
-        .blur .md-content {
+        .md-modal.show.blur ~ .mainContent,
+        .blur > [name=modalContent] {
             @include transition(all 0.3s);
         }
 
-        .md-show.blur .md-content {
+        .md-modal.show.blur > [name=modalContent] {
             opacity: 1;
             @include transform(translateY(0));
         }
 
         /* Effect 17:  Slide in from bottom with perspective on container */
-        .md-show.slideFromBottomPerspective ~ .contentContainer {
+        .md-modal.show.slideFromBottomPerspective ~ .mainContent {
             height: 100%;
             overflow: hidden;
             @include transition(transform 0.3s);
         }
 
-        .md-show.slideFromBottomPerspective ~ .contentContainer,
-        .md-show.slideFromBottomPerspective ~ .md-overlay {
+        .md-modal.show.slideFromBottomPerspective ~ .mainContent,
+        .md-modal.show.slideFromBottomPerspective ~ .modalOverlay {
             @include transform-style(preserve-3d);
             @include transform(rotateX(-2deg));
             @include transform-origin(50% 0%);
         }
 
-        .slideFromBottomPerspective .md-content {
+        .slideFromBottomPerspective > [name=modalContent] {
             opacity: 0;
             @include transform(translateY(200%));
         }
 
-        .md-show.slideFromBottomPerspective .md-content {
+        .md-modal.show.slideFromBottomPerspective > [name=modalContent] {
             opacity: 1;
             @include transform(translateY(0));
             @include transition(all 0.3s 0.2s);
         }
 
         /* Effect 18:  Slide from right with perspective on container */
-        .md-show.slideFromRightPerspective ~ .contentContainer {
+        .md-modal.show.slideFromRightPerspective ~ .mainContent {
             height: 100%;
             overflow: hidden;
         }
 
-        .md-show.slideFromRightPerspective ~ .md-overlay {
+        .md-modal.show.slideFromRightPerspective ~ .modalOverlay {
             background: rgba(143, 27, 15, 0.8);
             @include transition(all 0.5s);
         }
 
-        .md-show.slideFromRightPerspective ~ .contentContainer,
-        .md-show.slideFromRightPerspective ~ .md-overlay {
+        .md-modal.show.slideFromRightPerspective ~ .mainContent,
+        .md-modal.show.slideFromRightPerspective ~ .modalOverlay {
             @include transform-style(preserve-3d);
             @include transform-origin(0% 50%);
 
-            @extend %rotateRightSideFirst;
+            @extend %modalWindow_rotateRightSideFirst;
         }
 
-        .slideFromRightPerspective .md-content {
+        .slideFromRightPerspective > [name=modalContent] {
             opacity: 0;
             @include transform(translateX(200%));
         }
 
-        .md-show.slideFromRightPerspective .md-content {
+        .md-modal.show.slideFromRightPerspective > [name=modalContent] {
             opacity: 1;
             @include transform(translateX(0));
             @include transition(all 0.5s 0.1s);
         }
 
         /* Effect 19:  Slip in from the top with perspective on container */
-        .md-show.slipFromTopPerspective ~ .contentContainer {
+        .md-modal.show.slipFromTopPerspective ~ .mainContent {
             height: 100%;
             overflow: hidden;
         }
 
-        .md-show.slipFromTopPerspective ~ .md-overlay {
+        .md-modal.show.slipFromTopPerspective ~ .modalOverlay {
             @include transition(all 0.5s);
         }
 
-        .md-show.slipFromTopPerspective ~ .contentContainer,
-        .md-show.slipFromTopPerspective ~ .md-overlay {
+        .md-modal.show.slipFromTopPerspective ~ .mainContent,
+        .md-modal.show.slipFromTopPerspective ~ .modalOverlay {
             @include transform-style(preserve-3d);
             @include transform-origin(50% 100%);
-            @extend %OpenTop;
+            @extend %modalWindow_openTop;
         }
 
-        .slipFromTopPerspective .md-content {
+        .slipFromTopPerspective > [name=modalContent] {
             opacity: 0;
             @include transform(translateY(-200%));
         }
 
-        .md-show.slipFromTopPerspective .md-content {
+        .md-modal.show.slipFromTopPerspective > [name=modalContent] {
             opacity: 1;
             @include transform(translateY(0));
             @include transition(all 0.5s 0.1s);

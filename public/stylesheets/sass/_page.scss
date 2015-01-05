@@ -5,12 +5,8 @@
 @import "angular-ui-tree";
 @import "simple-dropdown";
 
-$color: rgba(0, 0, 0, 0.4);
-$borderColor: rgba(0, 0, 0, 0.4);
-$activeColor: #669933;
-
 @include angular-ui-tree(pageDetailsTree);
-@include simple-dropdown(widgetStateDropdown, $activeColor);
+@include simple-dropdown(widgetStateDropdown, null, $activeColor);
 
 @mixin page($pageEditorId) {
     ##{$pageEditorId} {

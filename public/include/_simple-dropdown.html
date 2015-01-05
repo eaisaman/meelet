@@ -1,14 +1,16 @@
-<div class="cd-dropdown" ng-if="selectionList && selectionList.length" ng-style="{'z-index':'{{options.zIndex + selectionList.length + 1}}'}">
-    <span ng-style="{'z-index':'{{options.zIndex + selectionList.length}}'}" ng-if="options.showTitle"
-          ng-click="toggleOpen($event)">{{selectItem && selectItem[options.labelField] || selectItem || options.title}}</span>
-    <div ng-style="{'z-index':'{{options.zIndex + selectionList.length}}'}" ng-click="toggleOpen($event)" ng-transclude></div>
-    <input type="hidden" class="cd-dropdown-input" ng-model="selectItem[options.labelField]">
+<div class="cd-dropdown" ng-if="selectionList && selectionList.length"
+     ng-style="{'z-index':'{{options.zIndex + selectionList.length + 1}}'}">
+    <span ng-style="{'z-index':'{{options.zIndex + selectionList.length}}'}" ng-show="options.showTitle && selection"
+          ng-click="toggleOpen($event)">{{pickLabel(selection) || options.title}}</span>
+
+    <div ng-style="{'z-index':'{{options.zIndex + selectionList.length}}'}" ng-click="toggleOpen($event)"
+         ng-transclude ng-show="!selection"></div>
     <ul ng-click="onSelect($event)">
         <li ng-if="options.displayUnsetOption">
-            <span data-value="{{unsetOptionValue[options.dataField]}}"></span>
+            <span selection-order="-1" data-value="{{pickValue(unsetOptionValue)}}"></span>
         </li>
         <li ng-repeat="selection in selectionList">
-            <span data-value="{{selection[options.dataField]}}">{{selection[options.labelField]}}</span>
+            <span ng-attr-selection-order="{{$index}}" data-value="{{pickValue(selection)}}">{{pickLabel(selection)}}</span>
         </li>
     </ul>
 </div>

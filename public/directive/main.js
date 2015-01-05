@@ -17,12 +17,14 @@ require.config(
             "ng.ui.text-shadow-editor": DIRECTIVE_LIB_PATH + "ng.ui.text-shadow-editor",
             "ng.ui.box-shadow-editor": DIRECTIVE_LIB_PATH + "ng.ui.box-shadow-editor",
             "ng.ui.shape": DIRECTIVE_LIB_PATH + "ng.ui.shape",
+            "ng.ui.widget": DIRECTIVE_LIB_PATH + "ng.ui.widget",
             "ng.ui.page": DIRECTIVE_LIB_PATH + "ng.ui.page",
             "ng.ui.dock": DIRECTIVE_LIB_PATH + "ng.ui.dock",
+            "ng.ui.topbar": DIRECTIVE_LIB_PATH + "ng.ui.topbar",
             "ng.ui.toolbar": DIRECTIVE_LIB_PATH + "ng.ui.toolbar",
             "ng.ui.simple-dropdown": DIRECTIVE_LIB_PATH + "ng.ui.simple-dropdown",
             "ng.ui.state-transition": DIRECTIVE_LIB_PATH + "ng.ui.state-transition",
-            "ng.ui.sidebar": DIRECTIVE_LIB_PATH + "ng.ui.sidebar"
+            "ng.ui.modal-window": DIRECTIVE_LIB_PATH + "ng.ui.modal-window"
         },
         waitSeconds: 0
     }
@@ -47,11 +49,13 @@ define([
         "ng.ui.text-shadow-editor",
         "ng.ui.box-shadow-editor",
         "ng.ui.shape",
+        "ng.ui.widget",
         "ng.ui.page",
         "ng.ui.dock",
+        "ng.ui.topbar",
         "ng.ui.toolbar",
         "ng.ui.state-transition",
-        "ng.ui.sidebar"
+        "ng.ui.modal-window"
     ],
     function () {
         var utilConfig = arguments[0],
@@ -114,27 +118,31 @@ define([
             });
 
             //Shape
-            directiveConfigs[13](appModule, extension, {
-                shapeJson: "directive/shape.json"
-            });
+            directiveConfigs[13](appModule, extension);
 
-            //Page
+            //Widget
             directiveConfigs[14](appModule, extension);
 
-            //Dock
+            //Page
             directiveConfigs[15](appModule, extension);
 
-            //Toolbar
+            //Dock
             directiveConfigs[16](appModule, extension);
 
+            //Topbar
+            directiveConfigs[17](appModule, extension);
+
+            //Toolbar
+            directiveConfigs[18](appModule, extension);
+
             //State transition
-            directiveConfigs[17](appModule, extension, {
+            directiveConfigs[19](appModule, extension, {
                 triggerJson: "directive/trigger.json",
                 animationJson: "directive/animation.json"
             });
 
-            //Sidebar
-            directiveConfigs[18](appModule, extension);
+            //Modal window
+            directiveConfigs[20](appModule, extension);
         }
     }
 );

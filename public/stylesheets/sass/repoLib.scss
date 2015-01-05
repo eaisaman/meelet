@@ -1,0 +1,175 @@
+@import "compass/css3/transform";
+@import "compass/css3/transition";
+@import "compass/css3/flexbox";
+@import "global";
+@import "normalize_include";
+@import "simple-dropdown";
+
+@include normalize-include(demoArea);
+@include simple-dropdown(null, artifactVersionDropdown, $activeColor);
+
+.repoLibContainer {
+    position: relative;
+    float: left;
+    width: 100%;
+    height: 100%;
+    color: $color;
+
+    .modalWindowContainer {
+        position: relative;
+        float: left;
+        width: 100%;
+        height: 100%;
+
+        > div {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            max-width: none;
+            max-height: none;
+            top: 0px;
+            left: 0px;
+
+            &.md-modal {
+                @include transform(translateX(0%) translateY(0%));
+            }
+        }
+
+        .repoLibMainContent {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+
+            .repoLibContent {
+                height: calc(100% - 4em);
+                margin: 0.5em 0;
+                overflow: auto;
+
+                .repoArtifact {
+                    position: relative;
+                    float: left;
+                    width: 400px;
+                    margin-right: 1em;
+                    padding: 15px;
+                    box-shadow: 0 15px 10px -10px #6D6D6D, 0 1px 4px #A4A4A4, 0 0 40px #E0E0E0 inset;
+
+                    .repoArtifactInfo {
+                        height: 2em;
+
+                        > label {
+                            height: 100%;
+                        }
+
+                        > div {
+                            height: 100%;
+
+                            > span {
+                                position: relative;
+                                float: left;
+                                width: 100%;
+                                height: 100%;
+                                display: -webkit-box;
+                                -webkit-box-orient: vertical;
+                                -webkit-line-clamp: 1;
+                                text-overflow: ellipsis;
+                                overflow: hidden;
+                                text-align: right;
+                            }
+
+                            .artifactVersionDropdown {
+                                position: absolute;
+                                width: 100%;
+                                height: 100%;
+                                overflow: visible;
+                                box-shadow: 0 2px 2px rgba(0, 0, 0, 0.4);
+                            }
+                        }
+                    }
+
+                    .repoArtifactDesc {
+                        height: 4em;
+                        margin-bottom: 1em;
+
+                        span {
+                            position: relative;
+                            float: left;
+                            width: 100%;
+                            height: 100%;
+                            text-align: center;
+                            display: -webkit-box;
+                            -webkit-box-orient: vertical;
+                            -webkit-line-clamp: 3;
+                            text-overflow: ellipsis;
+                            overflow: hidden;
+                        }
+                    }
+
+                    .repoArtifactButton {
+                        height: 2em;
+                        line-height: 2;
+                        background-color: #ddd;
+                        box-shadow: inset 0 -2px 0 rgba(0, 0, 0, .135);
+                        border-radius: 0.2em;
+                        display: inline-block;
+                        margin: 0.5em 0;
+                        text-align: center;
+
+                        &:active {
+                            background-color: #555;
+                            color: $activeColor;
+                            box-shadow: none;
+                        }
+                    }
+                }
+            }
+        }
+
+        .repoLibModalContent {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #fff;
+
+            .hideButton {
+                position: absolute;
+                top: 0.5em;
+                width: 2em;
+                height: 2em;
+                background-color: #ddd;
+                box-shadow: inset 0 -2px 0 rgba(0, 0, 0, .135);
+                border-radius: 0.2em;
+                display: inline-block;
+                margin: 0 0.5em;
+
+                &:active {
+                    background-color: #555;
+                    color: $activeColor;
+                    box-shadow: none;
+                }
+
+                &:before {
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    text-align: center;
+                    line-height: 2;
+                }
+            }
+
+            .demoContainer {
+                position: absolute;
+                top: 2em;
+                width: calc(100% - 2em);
+                height: calc(100% - 4em);
+                margin: 1em;
+
+                #demoArea {
+                    position: relative;
+                    float: left;
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+        }
+    }
+}

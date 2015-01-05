@@ -1,0 +1,70 @@
+@font-face {
+	font-family: 'icon-widget';
+	src: url('icon-widget.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+.icon-widget:before {
+	font-family: 'icon-widget';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon-widget-before:before {
+	font-family: 'icon-widget';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon-widget-after:after {
+	font-family: 'icon-widget';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon-widget-cog:before {
+	content: "\e600";
+}
+.icon-widget-angle-double-up:before {
+	content: "\e601";
+}
+
+.icon-widget-cog-before:before {
+	content: "\e600";
+}
+.icon-widget-angle-double-up-before:before {
+	content: "\e601";
+}
+
+.icon-widget-cog-after:after {
+	content: "\e600";
+}
+.icon-widget-angle-double-up-after:after {
+	content: "\e601";
+}
+

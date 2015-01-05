@@ -7,41 +7,36 @@
     ##{$toolbarContainerId} {
         .ui-toolbar {
             z-index: 1000;
-            position: absolute;
-            width: auto;
-            height: 2.4em;
-            background: #fff;
-
-            @include box-shadow(0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset);
-            &:before {
-                content: "";
-                position: absolute;
-                z-index: -2;
-                @include box-shadow(0 0 15px rgba(0, 0, 0, 0.6));
-            }
+            position: relative;
+            float: left;
+            width: 100%;
+            height: 100%;
 
             > div {
                 position: relative;
                 float: left;
+                top: 0.5em;
                 width: 2em;
                 height: 2em;
-                margin-left: 0.2em;
+                background-color: #ddd;
+                box-shadow: inset 0 -2px 0 rgba(0, 0, 0, .135);
+                border-radius: 0.2em;
+                display: inline-block;
+                margin: 0 0.5em 0 0;
+                color: $color;
 
-                &:last-child {
-                    margin-right: 0.2em;
+                &:active {
+                    background-color: #555;
+                    color: $activeColor;
+                    box-shadow: none;
                 }
 
                 &:before {
                     position: absolute;
                     width: 100%;
                     height: 100%;
-                    line-height: 2;
                     text-align: center;
-                    border-radius: 0.2em;
-                }
-
-                &:active:before {
-                    margin-top: 0.1em;
+                    line-height: 2;
                 }
             }
         }

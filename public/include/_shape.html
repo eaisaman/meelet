@@ -1,17 +1,22 @@
 <div class="shapeContent ui-control-wrapper" ng-class="dockAlign">
     <div class="shapeBar ui-control-bar fs-x-large">
-        <div class="pickerPane fs-x-large fs-x-large-before" ng-class="pickerPaneShape.thumbnailStyle.classList" ng-style="pickerPaneShape.thumbnailStyle.style"></div>
+        <div class="pickerPane fs-x-large fs-x-large-before" ng-class="pickerPaneShape.thumbnailStyle.classList"
+             ng-style="pickerPaneShape.thumbnailStyle.style"></div>
     </div>
     <div class="shapePalette ui-control-panel">
-        <div class="accordianGroup" ng-repeat="shapeGroup in shapes"
-             ng-click="toggleSelect($event.currentTarget, $event)">
-            <div class="accordianTitle col-as-12 icon-shape-before icon-shape-angle-double-up-before">
-                {{shapeGroup.group}}
-            </div>
-            <div class="accordianBody col-as-12 no-padding">
-                <div class="shapePane fs-x-large fs-x-large-before col-as-3 no-padding" ng-repeat="pane in shapeGroup.list"
-                     ng-click="pickShape(pane) && $event.stopPropagation()"
-                     ng-class="pane.thumbnailStyle.classList" ng-style="pane.thumbnailStyle.style">
+        <div class="shapeLibrary" ng-repeat="iconLibrary in iconLibraryList">
+            <div class="libraryTitle icon-shape-before icon-shape-glyphs-before">{{iconLibrary.name}}</div>
+            <div class="accordianGroup" ng-repeat="artifact in iconLibrary.artifactList"
+                 ng-click="toggleSelect($event.currentTarget, $event)">
+                <div class="accordianTitle col-as-12 fs-x-medium icon-shape-before icon-shape-angle-double-up-before">
+                    {{artifact.name}}
+                </div>
+                <div class="accordianBody col-as-12 no-padding">
+                    <div class="shapePane fs-x-large fs-x-large-before col-as-3 no-padding"
+                         ng-repeat="pane in artifact.json"
+                         ng-click="pickShape(pane) && $event.stopPropagation()"
+                         ng-class="pane.thumbnailStyle.classList" ng-style="pane.thumbnailStyle.style">
+                    </div>
                 </div>
             </div>
         </div>

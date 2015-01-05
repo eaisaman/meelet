@@ -3,8 +3,6 @@
 @import "compass/css3/flexbox";
 @import "global";
 
-$color: rgba(0, 0, 0, 0.4);
-
 @mixin angular-ui-tree($treeId, $activeColor: #99ccff, $activeBackgroundColor: #ccc) {
     ##{$treeId} {
         .angular-ui-tree-empty {
