@@ -54,17 +54,91 @@
             "/api/public/": {
                 "module": "./routes/api/public"
             }
+        },
+        {
+            "/": {
+                "module": "./commons",
+                "function": "session",
+                "parameters": [
+                    {
+                        "cookie": {
+                            "maxAge": 6000000,
+                            "httpOnly": false
+                        },
+
+                        "secret": "djikstra",
+
+                        "store": {
+                            "resource": "securityDb"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "/": {
+                "module": "passport",
+                "function": "initialize"
+            }
+        },
+        {
+            "/": {
+                "module": "passport",
+                "function": "session"
+            }
+        },
+        {
+            "/api/private/": {
+                "module": "./commons",
+                "function": "authenticate",
+                "parameters": [
+                    {
+                        "resource": "securityDb",
+                        "collectionName": "Users"
+                    }
+                ]
+            }
+        },
+        {
+            "/api/private/": {
+                "module": "./routes/api/private"
+            }
         }
     ],
     "staticResources": [
         {
-            "/": "public"
+            "/": "public",
+            "/repo": "repo"
         }
     ],
-    "applicationResources": [],
+    "applicationResources": [
+        {
+            "resource": "mongooseDb",
+            "module": "./commons",
+            "function": "instantiateMongooseDb",
+            "parameters": [
+                {
+                    "url": "mongodb://meelet:meelet@localhost/meelet",
+                    "dbSchema": "./schema.json"
+                }
+            ]
+        },
+        {
+            "resource": "securityDb",
+            "module": "./commons",
+            "function": "instantiateMongoDb",
+            "parameters": [
+                {
+                    "url": "mongodb://meelet:meelet@localhost/meelet",
+                    "auto_reconnect": true
+                }
+            ]
+        }
+    ],
     "settings": {
         "views": "views",
         "view engine": "jade",
+        "applicationDb": "mongooseDb",
         "download": {
             "folder": "download"
         },

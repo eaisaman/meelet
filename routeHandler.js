@@ -47,15 +47,24 @@ RouteHandler.prototype.routeOnFunctionName = function (holder) {
                 method = "get";
             } else if (_key.startsWith("post")) {
                 method = "post";
+            } else if (_key.startsWith("put")) {
+                method = "put";
             } else if (_key.startsWith("delete")) {
-                method = "post";
+                method = "delete";
             }
+            key = key.replace(new RegExp(method + "(.+)"), "$1");
+            key = key.charAt(0).toLowerCase() + key.substr(1);
 
-            RouteHandler.prototype.functionMap['/' + key] = {holder: holder, fn: member, parameterList: parameterList};
+            RouteHandler.prototype.functionMap[method] = RouteHandler.prototype.functionMap[method] || {};
+            RouteHandler.prototype.functionMap[method]['/' + key] = {
+                holder: holder,
+                fn: member,
+                parameterList: parameterList
+            };
 
             if (method) {
                 this.router[method]('/' + key, function (req, res) {
-                    var fnItem = RouteHandler.prototype.functionMap[req._parsedUrl.pathname];
+                    var fnItem = RouteHandler.prototype.functionMap[req.method.toLowerCase()][req._parsedUrl.pathname];
 
                     if (fnItem) {
                         var args = [];
@@ -81,6 +90,10 @@ RouteHandler.prototype.routeOnFunctionName = function (holder) {
                                         break;
                                     case "post":
                                         res.send(ret);
+                                    case "put":
+                                        res.send(ret);
+                                    case "delete":
+                                        res.send(ret);
                                         break;
                                 }
                             }
@@ -102,6 +115,10 @@ RouteHandler.prototype.routeOnFunctionName = function (holder) {
                                         res.json(ret);
                                         break;
                                     case "post":
+                                        res.send(ret);
+                                    case "put":
+                                        res.send(ret);
+                                    case "delete":
                                         res.send(ret);
                                         break;
                                 }

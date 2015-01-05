@@ -1,0 +1,62 @@
+{
+  "User": {
+    "updateTime": "date",
+    "createTime": "date",
+    "expireTime": "date",
+    "forbidden": "boolean",
+    "loginName": "string",
+    "name": "string",
+    "password": "string"
+  },
+  "UserGroup": {
+    "updateTime": "date",
+    "createTime": "date",
+    "sequence": "number",
+    "name": "string",
+    "parentId": "ObjectId",
+    "childGroupList": ["object"],
+    "userList": ["object"]
+  },
+  "UserGroupXref": {
+    "updateTime": "date",
+    "createTime": "date",
+    "userId": "ObjectId",
+    "groupId": "ObjectId"
+  },
+  "UserProject": {
+    "updateTime": "date",
+    "createTime": "date",
+    "name": "string",
+    "desc": "string",
+    "userId": "ObjectId",
+    "forbidden": "boolean"
+  },
+  "RepoLibrary": {
+    "updateTime": "date",
+    "createTime": "date",
+    "name": "string",
+    "creator": "string",
+    "thumbnailImg": "string",
+    "type": "string"
+  },
+  "RepoArtifact": {
+    "updateTime": "date",
+    "createTime": "date",
+    "library": "ObjectId",
+    "forbidden": "boolean",
+    "name": "string",
+    "designer": "string",
+    "desc": "string",
+    "type": "string",
+    "version": "string",
+    "versionList": ["object"]
+  },
+  "UserArtifactXref": {
+    "updateTime": "date",
+    "createTime": "date",
+    "userId": "ObjectId",
+    "projectId": "ObjectId",
+    "artifactId": "ObjectId",
+    "version": "string"
+  }
+}
