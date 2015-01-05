@@ -314,21 +314,20 @@ define(
 
                 if ($tabHead.attr("tab-sel") && !$tabHead.hasClass("select")) {
                     content = content && ("-" + content);
-                    $el = $($tabContainer.find("div[tab-sel^=tab-content" + content + "]").get(index));
                     $tabContainer.find("div[tab-sel^=tab-head" + content + "].select").removeClass("select");
                     $tabContainer.find("div[tab-sel^=tab-content" + content + "].select").removeClass("select");
 
+                    $el = $($tabContainer.find("div[tab-sel^=tab-content" + content + "]").get(index));
                     $el.addClass("select");
+                    $tabHead.addClass("select");
 
                     if (!$el.css("animation-name") || $el.css("animation-name") === "none") {
                         $timeout(function () {
-                            $tabHead.addClass("select");
                             defer.resolve();
                         });
                     } else {
                         uiUtilService.onAnimationEnd($el).then(
                             function () {
-                                $tabHead.addClass("select");
                                 defer.resolve();
                             }
                         );

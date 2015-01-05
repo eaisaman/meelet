@@ -11,6 +11,7 @@ define(
             });
             $rootScope.repoLibraryList = [];
             $rootScope.iconLibraryList = [];
+            $rootScope.widgetLibraryList = [];
             $rootScope.myRepoList = [];
             $rootScope.loginUser = {};
             $rootScope.userDetail = {projectList: []};
@@ -57,26 +58,26 @@ define(
             };
         }
 
-        function FrameSketchController($scope, $rootScope, $timeout, $q, angularEventTypes, uiService) {
+        function FrameSketchController($scope, $rootScope, $timeout, $q, angularEventTypes, appService, uiService) {
             $scope.zoomWidget = function (event) {
                 event && event.stopPropagation && event.stopPropagation();
 
-                if (scope.sketchObject.pickedPage && scope.sketchObject.pickedPage.$element) {
-                    var id = scope.zoomId,
+                if ($scope.sketchObject.pickedPage && $scope.sketchObject.pickedPage.$element) {
+                    var id = $scope.zoomId,
                         widgetObj;
 
                     if (id) {
                         widgetObj = $("#" + id).data("widgetObject");
 
                         widgetObj && widgetObj.zoomOut && widgetObj.zoomOut();
-                        scope.scale = undefined;
-                        scope.zoomId = null;
+                        $scope.scale = undefined;
+                        $scope.zoomId = null;
                     } else {
-                        widgetObj = scope.sketchObject.pickedWidget;
+                        widgetObj = $scope.sketchObject.pickedWidget;
 
                         if (widgetObj && widgetObj.isElement && !widgetObj.isTemporary) {
-                            scope.scale = widgetObj.zoomIn(scope.sketchObject.pickedPage.$element);
-                            scope.zoomId = widgetObj.id;
+                            $scope.scale = widgetObj.zoomIn($scope.sketchObject.pickedPage.$element);
+                            $scope.zoomId = widgetObj.id;
                         }
                     }
                 }
@@ -85,7 +86,7 @@ define(
             $scope.locateWidget = function (event) {
                 event && event.stopPropagation && event.stopPropagation();
 
-                var widgetObj = scope.sketchObject.pickedWidget;
+                var widgetObj = $scope.sketchObject.pickedWidget;
 
                 if (widgetObj && widgetObj.isElement && !widgetObj.isTemporary) {
                     var nodeScope = angular.element($("#" + angularConstants.treeNodeIdPrefix + widgetObj.id)).scope();
@@ -99,7 +100,7 @@ define(
             $scope.duplicateWidget = function (event) {
                 event && event.stopPropagation && event.stopPropagation();
 
-                var widgetObj = scope.sketchObject.pickedWidget;
+                var widgetObj = $scope.sketchObject.pickedWidget;
 
                 if (widgetObj && widgetObj.isElement) {
                     var $parent = widgetObj.$element.parent();
@@ -126,7 +127,7 @@ define(
             $scope.alignLeft = function (event) {
                 event && event.stopPropagation && event.stopPropagation();
 
-                var widgetObj = scope.sketchObject.pickedWidget;
+                var widgetObj = $scope.sketchObject.pickedWidget;
 
                 if (widgetObj && widgetObj.isElement && widgetObj.isTemporary) {
                     widgetObj.alignLeft && widgetObj.alignLeft();
@@ -136,7 +137,7 @@ define(
             $scope.alignCenter = function (event) {
                 event && event.stopPropagation && event.stopPropagation();
 
-                var widgetObj = scope.sketchObject.pickedWidget;
+                var widgetObj = $scope.sketchObject.pickedWidget;
 
                 if (widgetObj && widgetObj.isElement && widgetObj.isTemporary) {
                     widgetObj.alignCenter && widgetObj.alignCenter();
@@ -146,7 +147,7 @@ define(
             $scope.alignRight = function (event) {
                 event && event.stopPropagation && event.stopPropagation();
 
-                var widgetObj = scope.sketchObject.pickedWidget;
+                var widgetObj = $scope.sketchObject.pickedWidget;
 
                 if (widgetObj && widgetObj.isElement && widgetObj.isTemporary) {
                     widgetObj.alignRight && widgetObj.alignRight();
@@ -156,7 +157,7 @@ define(
             $scope.groupWidget = function (event) {
                 event && event.stopPropagation && event.stopPropagation();
 
-                var widgetObj = scope.sketchObject.pickedWidget;
+                var widgetObj = $scope.sketchObject.pickedWidget;
 
                 if (widgetObj && widgetObj.isElement && widgetObj.isTemporary) {
                     widgetObj.setTemporary(false);
@@ -166,7 +167,7 @@ define(
             $scope.ungroupWidget = function (event) {
                 event && event.stopPropagation && event.stopPropagation();
 
-                var widgetObj = scope.sketchObject.pickedWidget;
+                var widgetObj = $scope.sketchObject.pickedWidget;
 
                 if (widgetObj && widgetObj.isElement) {
                     widgetObj.disassemble();
@@ -176,29 +177,45 @@ define(
             $scope.toggleRuler = function (event) {
                 event && event.stopPropagation && event.stopPropagation();
 
-                scope.sketchWidgetSetting.showRuler = !scope.sketchWidgetSetting.showRuler;
+                $scope.sketchWidgetSetting.showRuler = !$scope.sketchWidgetSetting.showRuler;
             }
 
             $scope.togglePlayWidget = function (event) {
                 event && event.stopPropagation && event.stopPropagation();
 
-                scope.sketchWidgetSetting.isPlaying = !scope.sketchWidgetSetting.isPlaying;
+                $scope.sketchWidgetSetting.isPlaying = !$scope.sketchWidgetSetting.isPlaying;
             }
 
             $scope.saveSketch = function (event) {
                 event && event.stopPropagation && event.stopPropagation();
 
-                return appService.saveSketch(scope.sketchObject.sketchWorks);
+                return appService.saveSketch($scope.sketchObject.sketchWorks);
             }
 
             $scope.loadSketch = function (event) {
                 event && event.stopPropagation && event.stopPropagation();
 
-                return appService.loadSketch(scope.sketchObject.sketchWorks);
+                return uiService.loadSketch($scope.sketchObject.sketchWorks);
             }
 
             $scope.loadProject = function (event) {
                 event && event.stopPropagation && event.stopPropagation();
+            }
+
+            $scope.showDemo = function (event) {
+                event && event.stopPropagation();
+
+                appService.loadRepoArtifact($scope.sketchWidgetSetting.pickedArtifact, $scope.sketchWidgetSetting.pickedLibrary.name, "", "#frameSketchWidgetDemoArea").then(function () {
+                    var scope = angular.element($("#frameSketchContainer .md-modal")).scope();
+                    scope.toggleModalWindow();
+                });
+            }
+
+            $scope.hideDemo = function (event) {
+                event && event.stopPropagation();
+
+                var scope = angular.element($("#frameSketchContainer .md-modal")).scope();
+                scope.toggleModalWindow();
             }
 
             function setterFactory(obj, name, source) {
@@ -307,20 +324,19 @@ define(
             initMaster();
 
             function initSketch() {
-                var defer = $q.defer();
+                return $timeout(function () {
+                    var defer = $q.defer();
 
-                $timeout(function () {
-                    var pageObj = uiService.createPage($(".deviceHolder"));
-                    pageObj.addClass("pageHolder");
-                    $scope.sketchObject.pickedPage = pageObj;
-                    $scope.sketchObject.sketchWorks.pages.push(pageObj);
+                    uiService.createPage($(".deviceHolder")).then(function (pageObj) {
+                        $scope.sketchObject.pickedPage = pageObj;
+                        $scope.sketchObject.sketchWorks.pages.push(pageObj);
 
-                    CKEDITOR.inline('widgetText');
+                        CKEDITOR.inline('widgetText');
+                        defer.resolve();
+                    });
 
-                    defer.resolve();
+                    return defer.promise;
                 });
-
-                return defer.promise;
             }
 
             $scope.$on("$routeChangeSuccess", function (scope, next, current) {
@@ -556,7 +572,7 @@ define(
             $scope.showDemo = function (repoArtifact, event) {
                 event && event.stopPropagation();
 
-                appService.loadRepoArtifact(repoArtifact, $scope.repoLib.name, "#demoArea").then(function () {
+                appService.loadRepoArtifact(repoArtifact, $scope.repoLib.name, "", "#demoArea").then(function () {
                     var scope = angular.element($(".repoLibContainer .md-modal")).scope();
                     scope.toggleModalWindow();
                 });
@@ -646,7 +662,7 @@ define(
         return function (appModule) {
             appModule.
                 controller('RootController', ["$scope", "$rootScope", "$q", "appService", "urlService", RootController]).
-                controller('FrameSketchController', ["$scope", "$rootScope", "$timeout", "$q", "angularEventTypes", "uiService", FrameSketchController]).
+                controller('FrameSketchController', ["$scope", "$rootScope", "$timeout", "$q", "angularEventTypes", "appService", "uiService", FrameSketchController]).
                 controller('ProjectController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "urlService", ProjectController]).
                 controller('RepoController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "urlService", RepoController]).
                 controller('RepoLibController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "urlService", RepoLibController]);

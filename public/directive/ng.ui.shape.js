@@ -1,10 +1,10 @@
 define(
     ["angular", "jquery", "hammer"],
     function () {
-        var inject = ["$http", "$timeout", "$q", "$parse", "$compile", "angularEventTypes", "appService", "uiUtilService", "uiService"];
+        var inject = ["$http", "$timeout", "$q", "$parse", "$compile", "angularConstants", "angularEventTypes", "appService", "uiUtilService", "uiService"];
 
         return function (appModule, extension, opts) {
-            appModule.directive("uiShape", _.union(inject, [function ($http, $timeout, $q, $parse, $compile, angularEventTypes, appService, uiUtilService, uiService) {
+            appModule.directive("uiShape", _.union(inject, [function ($http, $timeout, $q, $parse, $compile, angularConstants, angularEventTypes, appService, uiUtilService, uiService) {
                 'use strict';
 
                 var boundProperties = {},
@@ -22,7 +22,6 @@ define(
                     restrict: "A",
                     scope: angular.extend({
                         dockAlign: "=",
-                        pickedShape: "=",
                         isPlaying: "=",
                         iconLibraryList: "="
                     }, boundProperties),
@@ -45,21 +44,21 @@ define(
 
                                 function addWidgetHandler(event) {
                                     if (scope.pickerPaneShape) {
-                                        var $el = $(event.target);
+                                        var $container = $("." + options.containerClass);
 
                                         if (event.type === "panstart") {
 
                                             $shapeElement = $("<div />");
 
                                             $shapeElement.addClass("pickerPaneShape fs-x-medium-before squarePane").addClass(scope.pickerPaneShape.shapeStyle.classList.join(" ")).css(scope.pickerPaneShape.shapeStyle.style).css("z-index", options.elementZIndex);
-                                            $shapeElement.css("left", event.srcEvent.pageX);
-                                            $shapeElement.css("top", event.srcEvent.pageY);
+                                            $shapeElement.css("left", event.srcEvent.clientX - $container.offset().left);
+                                            $shapeElement.css("top", event.srcEvent.clientY - $container.offset().top);
                                             $shapeElement.appendTo($("." + options.containerClass));
                                         } else if (event.type === "panmove") {
                                             var $to = $(event.srcEvent.toElement);
 
-                                            $shapeElement.css("left", event.srcEvent.pageX);
-                                            $shapeElement.css("top", event.srcEvent.pageY);
+                                            $shapeElement.css("left", event.srcEvent.clientX - $container.offset().left);
+                                            $shapeElement.css("top", event.srcEvent.clientY - $container.offset().top);
 
                                             if ($to.hasClass(options.widgetClass)) {
                                                 if (!$to.hasClass(options.hoverClass)) {
@@ -71,10 +70,11 @@ define(
                                             }
                                         } else if (event.type === "panend") {
                                             var $to = $(event.srcEvent.toElement),
-                                                x = event.srcEvent.pageX - $to.offset().left,
-                                                y = event.srcEvent.pageY - $to.offset().top;
+                                                x = event.srcEvent.clientX - $to.offset().left,
+                                                y = event.srcEvent.clientY - $to.offset().top;
 
-                                            x = Math.floor(x * 100) / 100, y = Math.floor(y * 100) / 100;
+                                            x = Math.floor(x * angularConstants.precision) / angularConstants.precision;
+                                            y = Math.floor(y * angularConstants.precision) / angularConstants.precision;
 
                                             if (!scope.isPlaying && ($to.hasClass(options.holderClass) || $to.hasClass(options.widgetClass))) {
                                                 var widgetObj = createWidget($to);

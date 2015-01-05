@@ -183,6 +183,14 @@ define(
                                     return styleObj;
                                 }
 
+
+                                function closeDropdown() {
+                                    element.find(".cd-dropdown").removeClass("cd-active");
+                                    element.find("li").each(function (i) {
+                                        $(this).css(closeStyle(i));
+                                    });
+                                }
+
                                 scope.optionLength = function (selectionList) {
                                     return (selectionList && selectionList.length || 0) + scope.options.displayUnsetOption ? 1 : 0;
                                 }
@@ -205,10 +213,7 @@ define(
                                 scope.close = function (event) {
                                     event && event.stopPropagation && event.stopPropagation();
 
-                                    element.find(".cd-dropdown").removeClass("cd-active");
-                                    element.find("li").each(function (i) {
-                                        $(this).css(closeStyle(i));
-                                    });
+                                    closeDropdown();
 
                                     return true;
                                 }
@@ -256,7 +261,7 @@ define(
                                 })
 
                                 $timeout(function () {
-                                    scope.close();
+                                    closeDropdown();
                                 });
                             }
                         }

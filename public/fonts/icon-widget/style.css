@@ -47,24 +47,24 @@
 	-moz-osx-font-smoothing: grayscale;
 }
 
+.icon-widget-show-demo:before {
+	content: "\e602";
+}
 .icon-widget-cog:before {
-	content: "\e600";
-}
-.icon-widget-angle-double-up:before {
 	content: "\e601";
 }
 
+.icon-widget-show-demo-before:before {
+	content: "\e602";
+}
 .icon-widget-cog-before:before {
-	content: "\e600";
-}
-.icon-widget-angle-double-up-before:before {
 	content: "\e601";
 }
 
-.icon-widget-cog-after:after {
-	content: "\e600";
+.icon-widget-show-demo-after:after {
+	content: "\e602";
 }
-.icon-widget-angle-double-up-after:after {
+.icon-widget-cog-after:after {
 	content: "\e601";
 }
 

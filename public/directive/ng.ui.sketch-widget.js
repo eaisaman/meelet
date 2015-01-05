@@ -59,7 +59,7 @@ define(
                                                                         scope.sketchObject.pickedWidget = null;
                                                                     }
                                                                 } else {
-                                                                    prevWidget.append(widget);
+                                                                    widget.appendTo(prevWidget);
                                                                 }
                                                             } else {
                                                                 prevWidget.removeClass("pickedWidget");
@@ -73,12 +73,11 @@ define(
                                                             if (!prevWidget.directContains(widget)) {
                                                                 if (prevWidget.id != widget.id) {
                                                                     if (widget.isTemporary) {
-                                                                        widget.append(prevWidget);
+                                                                        prevWidget.appendTo(widget);
                                                                         scope.sketchObject.pickedWidget = widget;
                                                                     } else {
-                                                                        var composite = uiService.createComposite([prevWidget, widget]);
+                                                                        var composite = uiService.createComposite([prevWidget, widget], true);
                                                                         composite.addClass(options.widgetClass);
-                                                                        composite.setTemporary(true);
                                                                         scope.sketchObject.pickedWidget = composite;
                                                                     }
                                                                     scope.sketchObject.pickedWidget.addClass("pickedWidget");
@@ -103,7 +102,7 @@ define(
                                                 prevWidget.removeClass("pickedWidget");
                                                 if (scope.sketchObject.pickedWidget == prevWidget)
                                                     scope.sketchObject.pickedWidget = null;
-                                                !prevWidget.isTemporary && prevWidget.isElement && toggleTextMode(prevWidget.$element, false);
+                                                !prevWidget.isTemporary && prevWidget.isElement && prevWidget.$element && toggleTextMode(prevWidget.$element, false);
                                             }
                                         }
 
@@ -405,9 +404,13 @@ define(
 
                                     options = angular.extend(options, $parse(attrs['uiSketchWidgetOpts'])(scope, {}));
 
+                                    scope.getWidgetObject = function () {
+                                        return uiService.createWidgetObj(element);
+                                    }
+
                                     //Since widget setting gesture may collide with actual playing gesture, we disable it for play.
                                     scope.$watch("isPlaying", function (value) {
-                                        var widgetObj = element.data("widgetObject");
+                                        var widgetObj = scope.getWidgetObject();
                                         widgetObj && widgetObj.setIsPlaying && widgetObj.setIsPlaying(value);
 
                                         if (value) {
@@ -419,6 +422,7 @@ define(
                                 },
                                 post: function (scope, element, attrs) {
                                     attrs.$observe(DIRECTIVE, function (value) {
+                                        scope.getWidgetObject();
                                         registerHandlers(scope, element);
                                     });
 

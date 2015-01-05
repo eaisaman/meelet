@@ -173,7 +173,7 @@ define(
                                 scope.loadSketch = function (event) {
                                     event && event.stopPropagation && event.stopPropagation();
 
-                                    return appService.loadSketch(scope.sketchObject.sketchWorks);
+                                    return uiService.loadSketch(scope.sketchObject.sketchWorks);
                                 }
                             }
                         }

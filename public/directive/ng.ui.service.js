@@ -1,19 +1,20 @@
 define(
     ["angular", "jquery", "underscore", "ng.ui.util"],
     function () {
-        var Service = function ($parse, $timeout, $q, $compile, $rootScope, angularConstants, uiUtilService) {
+        var Service = function ($parse, $timeout, $q, $compile, $rootScope, angularConstants, appService, uiUtilService) {
             this.$parse = $parse;
             this.$timeout = $timeout;
             this.$q = $q;
             this.$compile = $compile;
             this.$rootScope = $rootScope;
             this.angularConstants = angularConstants;
+            this.appService = appService;
             this.uiUtilService = uiUtilService;
 
             _.extend($inject, _.pick(this, Service.$inject));
         };
 
-        Service.$inject = ["$parse", "$timeout", "$q", "$compile", "$rootScope", "angularConstants", "uiUtilService"];
+        Service.$inject = ["$parse", "$timeout", "$q", "$compile", "$rootScope", "angularConstants", "appService", "uiUtilService"];
         var $inject = {};
 
         //Define sketch widget class
@@ -626,7 +627,7 @@ define(
                                     for (var key in args[1]) {
                                         self.pseudoCss(state, stateContext, pseudo, key, args[1][key]);
                                     }
-                                }  else {
+                                } else {
                                     _.keys(style).forEach(function (key) {
                                         delete style[key];
                                     });
@@ -794,8 +795,8 @@ define(
 
                         var pseudoWidgets = _.clone($inject.$rootScope.visiblePseudoEnabledWidgets);
                         if ($inject.$rootScope.visiblePseudoEnabledWidgets.every(function (w) {
-                            return w.id != self.widgetObj.id;
-                        })) {
+                                return w.id != self.widgetObj.id;
+                            })) {
                             pseudoWidgets.push(self.widgetObj);
                         }
 
@@ -999,6 +1000,7 @@ define(
                         id: "",
                         name: "NO NAME",
                         childWidgets: [],
+                        anchor: "",
                         initialStateOption: {name: "*"},
                         attr: {},
                         styleManager: null,
@@ -1022,7 +1024,7 @@ define(
                         this.styleManager = new StyleManager(this);
                     },
                     toJSON: function () {
-                        return _.extend(_.pick(this, ["id", "name", "childWidgets", "attr", "styleManager", "states", "stateOptions"]), {
+                        return _.extend(_.pick(this, ["id", "name", "childWidgets", "anchor", "attr", "styleManager", "states", "stateOptions"]), {
                             state: this.state.id,
                             stateContext: this.stateContext.node !== "?" && this.stateContext.id || ""
                         });
@@ -1030,6 +1032,7 @@ define(
                     fromObject: function (obj) {
                         var self = this;
 
+                        self.anchor = obj.anchor;
                         self.attr = _.omit(obj.attr, ["$$hashKey"]);
                         self.styleManager = StyleManager.prototype.fromObject(obj.styleManager);
                         self.styleManager.widgetObj = self;
@@ -1082,18 +1085,16 @@ define(
                         });
 
                         childWidgets.forEach(function (childWidget) {
-                            self.append(childWidget);
+                            childWidget.appendTo(self);
                         });
                     },
                     isKindOf: function (className) {
-                        var self = this;
-
                         return BaseSketchWidgetClass.prototype.CLASS_NAME == className;
                     },
                     clone: function () {
                         var self = this,
                             cloneObj = new self.initialize(),
-                            cloneMembers = _.difference(_.keys(self.MEMBERS), ["id", "childWidgets", "styleManager", "states", "$element"]);
+                            cloneMembers = _.difference(_.keys(self.MEMBERS), ["id", "childWidgets", "anchor", "styleManager", "states", "$element"]);
 
                         cloneMembers.forEach(function (member) {
                             cloneObj[member] = angular.copy(self[member]);
@@ -1113,88 +1114,299 @@ define(
 
                         return cloneObj;
                     },
-                    append: function (childWidget) {
-                        var self = this;
+                    parent: function () {
+                        var self = this,
+                            $parent;
 
-                        if (childWidget && childWidget.isKindOf && childWidget.isKindOf("BaseSketchWidget")) {
-                            childWidget.draw(self);
+                        if (self.$element) {
+                            if (self.anchor) {
+                                var $anchor = self.$element.parent("[widget-anchor='" + self.anchor + "']");
+                                if ($anchor.length) {
+                                    $parent = $anchor.nearest("[ui-sketch-widget]");
+                                }
+                            } else {
+                                $parent = self.$element.parent();
+                            }
                         }
 
-                        return self;
+                        return $parent && $parent.data("widgetObject") || null;
+                    },
+                    parentElement: function (parentWidgetElement) {
+                        var self = this,
+                            parentElement;
+
+                        if (self.$element) {
+                            if (self.anchor) {
+                                parentElement =
+                                    parentWidgetElement && parentWidgetElement.find("[widget-anchor='" + self.anchor + "']") || self.$element.parent("[widget-anchor='" + self.anchor + "']");
+                            } else {
+                                parentElement = parentWidgetElement || self.$element.parent("[ui-sketch-widget]");
+                            }
+                        }
+
+                        return parentElement;
+                    },
+                    detach: function () {
+                        var self = this;
+
+                        if (self.$element) {
+                            var parentWidgetObj = self.parent();
+
+                            if (parentWidgetObj) {
+                                var wIndex;
+                                if (!parentWidgetObj.childWidgets.every(function (obj, index) {
+                                        if (obj.id == self.id) {
+                                            wIndex = index;
+                                            return false;
+                                        }
+
+                                        return true;
+                                    })) {
+                                    parentWidgetObj.childWidgets.splice(wIndex, 1);
+                                }
+                            }
+
+                            self.$element.detach();
+                        }
+                    },
+                    removeChild: function (child) {
+                        var self = this,
+                            wIndex;
+
+                        if (typeof child === "number")
+                            wIndex = child;
+                        else if (typeof child === "object") {
+                            self.childWidgets.every(function (obj, index) {
+                                if (obj.id == child.id) {
+                                    wIndex = index;
+                                    return false;
+                                }
+
+                                return true;
+                            })
+                        }
+
+                        if (wIndex != null && wIndex < self.childWidgets.length) {
+                            child = self.childWidgets[wIndex];
+                            self.childWidgets.splice(wIndex, 1);
+                            if (child.$element) {
+                                child.$element.remove();
+                                child.styleManager.removePseudoStyle();
+                                child.$element = null;
+                            }
+
+                            return child;
+                        }
                     },
                     remove: function () {
                         var self = this;
 
                         if (self.$element) {
-                            var $parent = self.$element.parent();
+                            var parentWidgetObj = self.parent();
 
-                            if ($parent.length) {
-                                var parentWidgetObj = $parent.data("widgetObject");
+                            if (parentWidgetObj) {
+                                var wIndex;
+                                if (!parentWidgetObj.childWidgets.every(function (obj, index) {
+                                        if (obj.id == self.id) {
+                                            wIndex = index;
+                                            return false;
+                                        }
 
-                                if (parentWidgetObj) {
-                                    var wIndex;
-                                    if (!parentWidgetObj.childWidgets.every(function (obj, index) {
-                                            if (obj.id == self.id) {
-                                                wIndex = index;
-                                                return false;
-                                            }
-
-                                            return true;
-                                        })) {
-                                        parentWidgetObj.childWidgets.splice(wIndex, 1);
-                                    }
+                                        return true;
+                                    })) {
+                                    parentWidgetObj.childWidgets.splice(wIndex, 1);
                                 }
-
-                                self.$element.remove();
-                                self.styleManager.removePseudoStyle();
-
                             }
+
+                            self.$element.remove();
+                            self.styleManager.removePseudoStyle();
                             self.$element = null;
                         }
                     },
-                    draw: function (container) {
+                    appendTo: function (container) {
                         if (container) {
                             var self = this,
-                                widgetObj,
-                                parentId = self.$element && self.$element.parent().attr("id") || "";
+                                widgetObj;
 
-                            if (container.isKindOf && container.isKindOf("BaseSketchWidget")) {
-                                widgetObj = container;
-                            } else if (typeof container === "string" || angular.isElement(container)) {
-                                widgetObj = $(container).data("widgetObject");
-                            } else if (container.jquery) {
-                                widgetObj = container.data("widgetObject");
+                            if (!self.$element) {
+                                self.$element = $("<div />").data("widgetObject", self).attr("id", self.id);
+                                self.$element.attr(self.attr);
+                                self.childWidgets.forEach(function (child) {
+                                    if (child.$element) {
+                                        child.$element.detach();
+                                    } else {
+                                        child.$element = $("<div />").data("widgetObject", child).attr("id", child.id);
+                                    }
+                                    self.$element.append(child.$element);
+                                })
                             }
 
-                            self.$element = self.$element || $("<div />").data("widgetObject", self).attr("id", self.id);
-                            self.$element.attr(self.attr);
+                            var $container;
+                            if (container.isKindOf && container.isKindOf("BaseSketchWidget")) {
+                                $container = (container.$element = container.$element || $("<div />").data("widgetObject", container).attr("id", container.id));
+                                widgetObj = container;
+                            } else if (typeof container === "string" || angular.isElement(container)) {
+                                $container = $(container);
+                                widgetObj = $container.data("widgetObject");
+                            } else if (container.jquery) {
+                                $container = container;
+                                widgetObj = $container.data("widgetObject");
+                            }
 
                             if (widgetObj && widgetObj.isKindOf && widgetObj.isKindOf("BaseSketchWidget")) {
-                                widgetObj.childWidgets.every(function (obj) {
-                                    return obj.id != self.id;
-                                }) && widgetObj.childWidgets.push(self);
+                                var childLeft, childTop, childWidth, childHeight;
+
+                                //Keep offset and size or else they may be lost when the widget is detached later.
+                                if (self.$element && self.$element.parent().length) {
+                                    childLeft = self.$element.offset().left,
+                                        childTop = self.$element.offset().top,
+                                        childWidth = self.$element.width(),
+                                        childHeight = self.$element.height();
+
+                                    childLeft = Math.floor(childLeft * $inject.angularConstants.precision) / $inject.angularConstants.precision,
+                                        childTop = Math.floor(childTop * $inject.angularConstants.precision) / $inject.angularConstants.precision,
+                                        childWidth = Math.floor(childWidth * $inject.angularConstants.precision) / $inject.angularConstants.precision,
+                                        childHeight = Math.floor(childHeight * $inject.angularConstants.precision) / $inject.angularConstants.precision;
+                                }
+
+                                if ((self.parent() || {}).id !== widgetObj.id) {
+                                    self.detach();
+                                }
+
+                                if (widgetObj.childWidgets.every(function (obj) {
+                                        return obj.id != self.id;
+                                    })) {
+                                    widgetObj.childWidgets.push(self);
+                                }
 
                                 self.setStateContext(widgetObj.state);
 
-                                if (parentId && parentId !== widgetObj.id) {
-                                    self.$element.detach();
-                                }
-                                widgetObj.$element && widgetObj.$element.append(self.$element);
-                            } else {
-                                self.setStateContext(self.STATE_CONTEXT);
-                                if (!container.find("#" + self.id).length) {
-                                    var containerId = container.attr("id");
-                                    if (!containerId && !parentId && (parentId !== containerId)) {
-                                        self.$element.detach();
+                                var parentElement = self.parentElement(widgetObj.$element);
+                                parentElement && parentElement.append(self.$element);
+
+                                if (widgetObj.isTemporary) {
+                                    //Only widget whose element has already existed in html can be appended to temporary widget
+                                    if (self.$element && self.$element.parent().length) {
+                                        var left,
+                                            top,
+                                            offsetLeft,
+                                            offsetTop,
+                                            width,
+                                            height;
+
+                                        if ($container && $container.parent().length) {
+                                            left = offsetLeft = $container.offset().left, top = offsetTop = $container.offset().top, width = $container.width(), height = $container.height();
+                                        } else {
+                                            left = widgetObj.offsetLeft, top = widgetObj.offsetTop;
+
+                                            var m = (widgetObj.css("width") || "").match(/([-\d\.]+)px$/);
+                                            if (m && m.length == 2) width = Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision;
+                                            m = (widgetObj.css("height") || "").match(/([-\d\.]+)px$/);
+                                            if (m && m.length == 2) height = Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision;
+
+                                            if (left == undefined || top == undefined || width == undefined || height == undefined) {
+                                                left = childLeft, top = childTop, width = childWidth, height = childHeight;
+                                            }
+                                        }
+
+                                        if (childLeft < left) {
+                                            width += (left - childLeft);
+                                            left = childLeft;
+                                        }
+                                        if (childTop < top) {
+                                            height += (top - childTop);
+                                            top = childTop;
+                                        }
+                                        if (childLeft + childWidth > left + width) {
+                                            width = childLeft + childWidth - left;
+                                        }
+                                        if (childTop + childHeight > top + height) {
+                                            height = childTop + childHeight - top;
+                                        }
+
+                                        if ((widgetObj.offsetLeft != undefined && widgetObj.offsetLeft != left) || (offsetLeft != undefined && offsetLeft != left)) {
+                                            if (offsetLeft == undefined) {
+                                                offsetLeft = widgetObj.offsetLeft;
+                                            } else {
+                                                m = (widgetObj.css("left") || "").match(/([-\d\.]+)px$/);
+                                                if (m && m.length == 2) {
+                                                    widgetObj.css("left", (Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision + left - offsetLeft) + "px");
+                                                }
+                                            }
+                                            widgetObj.childWidgets.forEach(function (w) {
+                                                var cm = (w.css("left") || "").match(/([-\d\.]+)px$/),
+                                                    cLeft = parseFloat(cm[1]);
+                                                w.css("left", (cLeft - (left - offsetLeft) + "px"));
+                                            });
+                                        }
+                                        if ((widgetObj.offsetTop != undefined && widgetObj.offsetTop != top) || (offsetTop != undefined && offsetTop != top)) {
+                                            if (offsetTop == undefined) {
+                                                offsetTop = widgetObj.offsetTop;
+                                            } else {
+                                                m = (widgetObj.css("top") || "").match(/([-\d\.]+)px$/);
+                                                if (m && m.length == 2) {
+                                                    widgetObj.css("top", (Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision + top - offsetTop) + "px");
+                                                }
+                                            }
+                                            widgetObj.childWidgets.forEach(function (w) {
+                                                var cm = (w.css("top") || "").match(/([-\d\.]+)px$/),
+                                                    cTop = parseFloat(cm[1]);
+                                                w.css("top", (cTop - (top - offsetTop) + "px"));
+                                            });
+                                        }
+
+                                        if (!$container || !$container.parent().length) {
+                                            widgetObj.offsetLeft = left;
+                                            widgetObj.offsetTop = top;
+                                        }
+
+                                        widgetObj.css("width", width + "px");
+                                        widgetObj.css("height", height + "px");
+
+                                        childLeft -= left;
+                                        childTop -= top;
+                                        self.css("left", childLeft + "px");
+                                        self.css("top", childTop + "px");
                                     }
-                                    container.append(self.$element);
+                                }
+                            } else {
+                                if (!self.anchor && $container) {
+                                    //Sketch widget can be appended to a jquery element.
+                                    if (!$container.find("#" + self.id).length) {
+                                        self.$element.detach();
+                                        $container.append(self.$element);
+                                        self.setStateContext(self.STATE_CONTEXT);
+                                    }
                                 }
                             }
 
-                            self.childWidgets.forEach(function (child) {
-                                child.draw(self);
-                            })
-                            self.styleManager.draw();
+                            $container = self.$element.parent();
+                            if (self.offsetLeft != undefined) {
+                                if ($container.length) {
+                                    var containerLeft = $container.offset().left,
+                                        containerTop = $container.offset().top;
+
+                                    containerLeft = Math.floor(containerLeft * $inject.angularConstants.precision) / $inject.angularConstants.precision, containerTop = Math.floor(containerTop * $inject.angularConstants.precision) / $inject.angularConstants.precision;
+
+                                    self.css("left", (self.offsetLeft - containerLeft) + "px");
+                                    self.css("top", (self.offsetTop - containerTop) + "px");
+
+                                    delete self.offsetLeft, delete self.offsetTop;
+                                }
+                            }
+
+                            if ($container.length) {
+                                self.childWidgets.forEach(function (child) {
+                                    child.styleManager.draw();
+                                });
+                                self.styleManager.draw();
+
+                                if (self.isTemporary) {
+                                    self.$element.addClass("tempElement");
+                                } else {
+                                    self.$element.removeClass("tempElement");
+                                }
+                            }
                         }
 
                         return self;
@@ -1322,9 +1534,9 @@ define(
 
                                 return true;
                             });
-                        }
 
-                        return newState;
+                            return newState;
+                        }
                     },
                     removeState: function (value) {
                         if (value) {
@@ -1719,18 +1931,13 @@ define(
                             this.isPlaying = value;
                             this.isPlaying && this.registerTrigger();
                         }
-                    },
-                    setShape: function () {
-                    },
-                    getShape: function () {
-
                     }
                 }
             ),
             ElementSketchWidgetClass = Class(BaseSketchWidgetClass, {
                 CLASS_NAME: "ElementSketchWidget",
                 MEMBERS: {},
-                initialize: function (id, widgetsArr) {
+                initialize: function (id, widgetsArr, isTemporary) {
                     this.initialize.prototype.__proto__.initialize.apply(this, [id]);
                     var self = this,
                         MEMBERS = arguments.callee.prototype.MEMBERS;
@@ -1742,9 +1949,13 @@ define(
                     this.isElement = true;
                     this.isTemporary = false;
 
+                    if (isTemporary != null) {
+                        this.isTemporary = isTemporary;
+                    }
+
                     if (widgetsArr && toString.apply(widgetsArr) == "[object Array]") {
                         widgetsArr.forEach(function (childWidget) {
-                            self.append(childWidget);
+                            childWidget.appendTo(self);
                         });
                     }
                 },
@@ -1766,128 +1977,6 @@ define(
                     var self = this;
 
                     return ElementSketchWidgetClass.prototype.CLASS_NAME == className || self.initialize.prototype.__proto__.isKindOf.apply(self, [className]);
-                },
-                draw: function (container) {
-                    var self = this;
-
-                    if (container) {
-                        var $container;
-                        if (container.isKindOf && container.isKindOf("BaseSketchWidget")) {
-                            $container = container.$element;
-                        } else if (typeof container === "string" || angular.isElement(container)) {
-                            $container = $(container);
-                        } else if (container.jquery) {
-                            $container = container;
-                        }
-
-                        if ($container) {
-                            var containerLeft = $container.offset().left,
-                                containerTop = $container.offset().top;
-
-                            containerLeft = Math.floor(containerLeft * $inject.angularConstants.precision) / $inject.angularConstants.precision, containerTop = Math.floor(containerTop * $inject.angularConstants.precision) / $inject.angularConstants.precision;
-
-                            self.offsetLeft != undefined && self.css("left", (self.offsetLeft - containerLeft) + "px") && delete self.offsetLeft;
-                            self.offsetTop != undefined && self.css("top", (self.offsetTop - containerTop) + "px") && delete self.offsetTop;
-                        }
-
-                        self.initialize.prototype.__proto__.draw.apply(self, [container]);
-                    }
-                },
-                append: function (childWidget) {
-                    var self = this;
-
-                    if (childWidget.$element && childWidget.$element.parent().length) {
-                        var childLeft = childWidget.$element.offset().left,
-                            childTop = childWidget.$element.offset().top,
-                            childWidth = childWidget.$element.width(),
-                            childHeight = childWidget.$element.height(),
-                            left,
-                            top,
-                            offsetLeft,
-                            offsetTop,
-                            width,
-                            height;
-
-                        childLeft = Math.floor(childLeft * $inject.angularConstants.precision) / $inject.angularConstants.precision, childTop = Math.floor(childTop * $inject.angularConstants.precision) / $inject.angularConstants.precision, childWidth = Math.floor(childWidth * $inject.angularConstants.precision) / $inject.angularConstants.precision, childHeight = Math.floor(childHeight * $inject.angularConstants.precision) / $inject.angularConstants.precision;
-
-                        childWidget.remove();
-
-                        if (self.$element && self.$element.parent().length) {
-                            left = offsetLeft = self.$element.offset().left, top = offsetTop = self.$element.offset().top, width = self.$element.width(), height = self.$element.height();
-                        } else {
-                            left = self.offsetLeft, top = self.offsetTop;
-
-                            var m = (self.css("width") || "").match(/([-\d\.]+)px$/);
-                            if (m && m.length == 2) width = Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision;
-                            m = (self.css("height") || "").match(/([-\d\.]+)px$/);
-                            if (m && m.length == 2) height = Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision;
-
-                            if (left == undefined || top == undefined || width == undefined || height == undefined) {
-                                left = childLeft, top = childTop, width = childWidth, height = childHeight;
-                            }
-                        }
-
-                        if (childLeft < left) {
-                            width += (left - childLeft);
-                            left = childLeft;
-                        }
-                        if (childTop < top) {
-                            height += (top - childTop);
-                            top = childTop;
-                        }
-                        if (childLeft + childWidth > left + width) {
-                            width = childLeft + childWidth - left;
-                        }
-                        if (childTop + childHeight > top + height) {
-                            height = childTop + childHeight - top;
-                        }
-
-                        if ((self.offsetLeft != undefined && self.offsetLeft != left) || (offsetLeft != undefined && offsetLeft != left)) {
-                            if (offsetLeft == undefined) {
-                                offsetLeft = self.offsetLeft;
-                            } else {
-                                m = (self.css("left") || "").match(/([-\d\.]+)px$/);
-                                if (m && m.length == 2) {
-                                    self.css("left", (Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision + left - offsetLeft) + "px");
-                                }
-                            }
-                            self.childWidgets.forEach(function (w) {
-                                var cm = (w.css("left") || "").match(/([-\d\.]+)px$/),
-                                    cLeft = parseFloat(cm[1]);
-                                w.css("left", (cLeft - (left - offsetLeft) + "px"));
-                            });
-                        }
-                        if ((self.offsetTop != undefined && self.offsetTop != top) || (offsetTop != undefined && offsetTop != top)) {
-                            if (offsetTop == undefined) {
-                                offsetTop = self.offsetTop;
-                            } else {
-                                m = (self.css("top") || "").match(/([-\d\.]+)px$/);
-                                if (m && m.length == 2) {
-                                    self.css("top", (Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision + top - offsetTop) + "px");
-                                }
-                            }
-                            self.childWidgets.forEach(function (w) {
-                                var cm = (w.css("top") || "").match(/([-\d\.]+)px$/),
-                                    cTop = parseFloat(cm[1]);
-                                w.css("top", (cTop - (top - offsetTop) + "px"));
-                            });
-                        }
-
-                        if (!self.$element || !self.$element.parent().length) {
-                            self.offsetLeft = left;
-                            self.offsetTop = top;
-                        }
-
-                        self.css("width", width + "px");
-                        self.css("height", height + "px");
-
-                        childLeft -= left;
-                        childTop -= top;
-                        childWidget.css("left", childLeft + "px");
-                        childWidget.css("top", childTop + "px");
-                    }
-
-                    self.initialize.prototype.__proto__.append.apply(self, [childWidget]);
                 },
                 levelUp: function (widgetObj, doCompile, waiveDisassemble) {
                     var self = this;
@@ -1913,13 +2002,13 @@ define(
                         self.childWidgets.forEach(function (childWidget, index) {
                             var childLeft = 0, childTop = 0, childWidth = 0, childHeight = 0;
 
-                            var m = childWidget.css("left").match(/([-\d\.]+)px$/);
+                            var m = (childWidget.css("left") || "").match(/([-\d\.]+)px$/);
                             if (m && m.length == 2) childLeft = Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision;
-                            m = childWidget.css("top").match(/([-\d\.]+)px$/);
+                            m = (childWidget.css("top") || "").match(/([-\d\.]+)px$/);
                             if (m && m.length == 2) childTop = Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision;
-                            m = childWidget.css("width").match(/([-\d\.]+)px$/);
+                            m = (childWidget.css("width") || "").match(/([-\d\.]+)px$/);
                             if (m && m.length == 2) childWidth = Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision;
-                            m = childWidget.css("height").match(/([-\d\.]+)px$/);
+                            m = (childWidget.css("height") || "").match(/([-\d\.]+)px$/);
                             if (m && m.length == 2) childHeight = Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision;
 
                             if (childWidget.id == widgetObj.id) {
@@ -1935,12 +2024,11 @@ define(
                         });
 
                         if (wIndex != undefined) {
-                            widgetObj = self.childWidgets[wIndex];
-                            widgetObj.remove();
+                            widgetObj = self.removeChild(wIndex);
 
                             widgetObj.css("left", wChildLeft + "px");
                             widgetObj.css("top", wChildTop + "px");
-                            widgetObj.draw(self.$element.parent());
+                            widgetObj.appendTo(self.$element.parent());
 
                             if (doCompile) {
                                 var scope = angular.element(self.$element.parent()).scope();
@@ -2152,6 +2240,76 @@ define(
                     this.html = value;
                 }
             }),
+            RepoSketchWidgetClass = Class(BaseSketchWidgetClass, {
+                CLASS_NAME: "RepoSketchWidget",
+                MEMBERS: {
+                    artifactId: "",
+                    libraryName: "",
+                    version: ""
+                },
+                initialize: function (id, artifactId, libraryName, version) {
+                    this.initialize.prototype.__proto__.initialize.apply(this, [id]);
+                    var MEMBERS = arguments.callee.prototype.MEMBERS;
+
+                    for (var member in MEMBERS) {
+                        this[member] = angular.copy(MEMBERS[member]);
+                    }
+
+                    this.resizable = false;
+                    this.artifactId = artifactId;
+                    this.libraryName = libraryName;
+                    this.version = version;
+                },
+                toJSON: function () {
+                    var jsonObj = this.initialize.prototype.__proto__.toJSON.apply(this);
+                    _.extend(jsonObj, _.pick(this, ["CLASS_NAME", "artifactId", "libraryName", "version"]));
+
+                    return jsonObj;
+                },
+                fromObject: function (obj) {
+                    var ret = new RepoSketchWidgetClass(obj.id, obj.artifactId, obj.libraryName, obj.version);
+
+                    RepoSketchWidgetClass.prototype.__proto__.fromObject.apply(ret, [obj]);
+
+                    return ret;
+                },
+                isKindOf: function (className) {
+                    var self = this;
+
+                    return RepoSketchWidgetClass.prototype.CLASS_NAME == className || self.initialize.prototype.__proto__.isKindOf.apply(self, [className]);
+                },
+                appendTo: function (container) {
+                    var self = this;
+
+                    if (container) {
+                        $inject.appService.loadRepoArtifact(self.artifactId, self.libraryName, self.version).then(function (loadedSpec) {
+                            var $container;
+                            if (container.isKindOf && container.isKindOf("BaseSketchWidget")) {
+                                $container = container.$element;
+                            } else if (typeof container === "string" || angular.isElement(container)) {
+                                $container = $(container);
+                            } else if (container.jquery) {
+                                $container = container;
+                            }
+
+                            if ($container) {
+
+                                var containerLeft = $container.offset().left,
+                                    containerTop = $container.offset().top;
+
+                                containerLeft = Math.floor(containerLeft * $inject.angularConstants.precision) / $inject.angularConstants.precision, containerTop = Math.floor(containerTop * $inject.angularConstants.precision) / $inject.angularConstants.precision;
+
+                                self.offsetLeft != undefined && self.css("left", (self.offsetLeft - containerLeft) + "px") && delete self.offsetLeft;
+                                self.offsetTop != undefined && self.css("top", (self.offsetTop - containerTop) + "px") && delete self.offsetTop;
+                            }
+
+                            self.initialize.prototype.__proto__.appendTo.apply(self, [container]);
+
+                            self.$element.addClass("widgetIncludeAnchor").attr("ng-include", "'" + loadedSpec.template + "'");
+                        });
+                    }
+                }
+            }),
             PageSketchWidgetClass = Class(BaseSketchWidgetClass, {
                 CLASS_NAME: "PageSketchWidget",
                 MEMBERS: {},
@@ -2182,19 +2340,76 @@ define(
                     var self = this;
 
                     return PageSketchWidgetClass.prototype.CLASS_NAME == className || self.initialize.prototype.__proto__.isKindOf.apply(self, [className]);
+                },
+                parent: function () {
+                    return null;
+                },
+                parentElement: function () {
+                    var self = this;
+
+                    return self.$element && self.$element.parent() || null;
                 }
             });
 
-        Service.prototype.createWidget = function (containerElement, widgetObj) {
-            var self = this;
+        Service.prototype.createWidgetObj = function (element) {
+            var $el;
 
+            if (typeof element === "string" || angular.isElement(element)) {
+                $el = $(element);
+            } else if (element.jquery) {
+                $el = element;
+            }
+
+            if ($el && !$el.data("widgetObject")) {
+                var $parentElement = $el.parent("[widget-anchor]"),
+                    anchor;
+
+                if ($parentElement.length) {
+                    anchor = $parentElement.attr("widget-anchor");
+                    $parentElement = $parentElement.nearest("[ui-sketch-widget]");
+                } else {
+                    $parentElement = $el.parent("[ui-sketch-widget]");
+                }
+
+                var parentWidgetObj = $parentElement.data("widgetObject");
+                if (parentWidgetObj) {
+                    var widgetObj = new ElementSketchWidgetClass();
+                    widgetObj.$element = $el;
+                    widgetObj.anchor = anchor;
+                    $el.data("widgetObject", widgetObj);
+
+                    widgetObj.attr["ui-draggable"] = "";
+                    widgetObj.attr["ui-draggable-opts"] = "{threshold: 5, pointers: 0}";
+                    widgetObj.attr["ui-sketch-widget"] = "";
+                    widgetObj.attr["is-playing"] = "sketchWidgetSetting.isPlaying";
+                    widgetObj.attr["sketch-object"] = "sketchObject";
+
+                    widgetObj.appendTo(parentWidgetObj);
+                }
+
+                return widgetObj;
+            }
+        }
+
+        Service.prototype.createWidget = function (containerElement, widgetObj) {
             widgetObj = widgetObj || new ElementSketchWidgetClass();
             widgetObj.attr["ui-draggable"] = "";
             widgetObj.attr["ui-draggable-opts"] = "{threshold: 5, pointers: 0}";
             widgetObj.attr["ui-sketch-widget"] = "";
             widgetObj.attr["is-playing"] = "sketchWidgetSetting.isPlaying";
             widgetObj.attr["sketch-object"] = "sketchObject";
-            widgetObj.draw(containerElement);
+            widgetObj.appendTo(containerElement);
+
+            var scope = angular.element(containerElement).scope();
+            $inject.$compile(containerElement)(scope);
+
+            return widgetObj;
+        }
+
+        Service.prototype.createRepoWidget = function (containerElement, artifactId, libraryName, version) {
+            var widgetObj = new RepoSketchWidgetClass(null, artifactId, libraryName, version);
+
+            widgetObj.appendTo(containerElement);
 
             var scope = angular.element(containerElement).scope();
             $inject.$compile(containerElement)(scope);
@@ -2203,11 +2418,10 @@ define(
         }
 
         Service.prototype.copyWidget = function (widgetObj, holderElement) {
-            var self = this,
-                cloneObj = widgetObj.clone();
+            var cloneObj = widgetObj.clone();
 
             cloneObj.removeClass("pickedWidget");
-            cloneObj.draw(holderElement);
+            cloneObj.appendTo(holderElement);
 
             var scope = angular.element(cloneObj.$element.parent()).scope();
             $inject.$compile(cloneObj.$element.parent())(scope);
@@ -2215,11 +2429,12 @@ define(
             return cloneObj;
         }
 
-        Service.prototype.createComposite = function (widgetObjs) {
+        Service.prototype.createComposite = function (widgetObjs, isTemporary) {
             if (widgetObjs && widgetObjs.length) {
-                var containerId = null,
-                    containerElement = null;
-                widgetArr = [];
+                var self = this,
+                    containerId = null,
+                    containerElement = null,
+                    widgetArr = [];
 
                 widgetObjs.forEach(function (w) {
                     if (w.isElement) {
@@ -2238,17 +2453,17 @@ define(
                 });
 
                 if (widgetArr.length && containerElement) {
-                    var self = this,
-                        compositeObj = new ElementSketchWidgetClass(null, widgetArr);
+                    var compositeObj = new ElementSketchWidgetClass(null, widgetArr, isTemporary);
+
                     compositeObj.attr["ui-draggable"] = "";
                     compositeObj.attr["ui-draggable-opts"] = "{threshold: 5, pointers: 0}";
                     compositeObj.attr["ui-sketch-widget"] = "";
                     compositeObj.attr["is-playing"] = "sketchWidgetSetting.isPlaying";
                     compositeObj.attr["sketch-object"] = "sketchObject";
-                    compositeObj.draw(containerElement);
+                    compositeObj.appendTo(containerElement);
 
                     var scope = angular.element(compositeObj.$element.parent()).scope();
-                    $inject.$compile(compositeObj.$element.parent())(scope);
+                    self.$compile(compositeObj.$element.parent())(scope);
 
                     return compositeObj;
                 }
@@ -2264,20 +2479,32 @@ define(
             pageObj.attr["ui-sketch-widget"] = "";
             pageObj.attr["is-playing"] = "sketchWidgetSetting.isPlaying";
             pageObj.attr["sketch-object"] = "sketchObject";
-            pageObj.draw(holderElement);
+            pageObj.addClass("pageHolder");
+            pageObj.appendTo(holderElement);
 
-            var scope = angular.element(holderElement).scope();
-            $inject.$compile(holderElement)(scope);
+            return self.uiUtilService.whilst(function () {
+                return !angular.element(holderElement).scope();
+            }, function (callback) {
+                callback();
+            }, function () {
+                var scope = angular.element(holderElement).scope();
+                self.$compile(holderElement)(scope);
+            }).then(function () {
+                var defer = self.$q.defer();
 
-            return pageObj;
+                self.$timeout(function () {
+                    defer.resolve(pageObj);
+                });
+
+                return defer.promise;
+            }, 25);
         }
 
         Service.prototype.copyPage = function (pageObj, holderElement) {
-            var self = this,
-                cloneObj = pageObj.clone();
+            var cloneObj = pageObj.clone();
 
             cloneObj.removeClass("pickedWidget");
-            cloneObj.draw(holderElement);
+            cloneObj.appendTo(holderElement);
 
             var scope = angular.element(cloneObj.$element.parent()).scope();
             $inject.$compile(cloneObj.$element.parent())(scope);
@@ -2300,6 +2527,30 @@ define(
             });
 
             return ret;
+        }
+
+        Service.prototype.loadSketch = function (sketchWorks) {
+            var self = this;
+
+            return self.appService.loadSketch(sketchWorks).then(function (pages) {
+                var defer = self.$q.defer();
+
+                self.$timeout(function () {
+                    if (pages && pages.length) {
+                        sketchWorks.pages = [];
+                        pages.forEach(function (pageObj) {
+                            var page = self.fromObject(pageObj);
+                            page && sketchWorks.pages.push(page);
+                        });
+                    }
+
+                    defer.resolve(sketchWorks);
+                }, function () {
+                    defer.reject();
+                });
+
+                return defer.promise;
+            });
         }
 
         return function (appModule) {

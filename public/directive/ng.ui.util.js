@@ -296,8 +296,8 @@ define(
                         if (err) {
                             callback && callback(err);
                             defer.reject(err);
-                        }
-                        self.whilst(test, iterator, callback, timeout);
+                        } else
+                            self.whilst(test, iterator, callback, timeout);
                     });
                 }
                 else {

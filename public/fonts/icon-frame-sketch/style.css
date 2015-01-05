@@ -1,15 +1,39 @@
 @font-face {
 	font-family: 'icon-frame-sketch';
-	src:url('fonts/icon-frame-sketch.eot?-emdi8f');
-	src:url('fonts/icon-frame-sketch.eot?#iefix-emdi8f') format('embedded-opentype'),
-		url('fonts/icon-frame-sketch.woff?-emdi8f') format('woff'),
-		url('fonts/icon-frame-sketch.ttf?-emdi8f') format('truetype'),
-		url('fonts/icon-frame-sketch.svg?-emdi8f#icon-frame-sketch') format('svg');
+	src: url('icon-frame-sketch.ttf') format('truetype');
 	font-weight: normal;
 	font-style: normal;
 }
 
-.icon-frame-sketch {
+.icon-frame-sketch:before {
+	font-family: 'icon-frame-sketch';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon-frame-sketch-before:before {
+	font-family: 'icon-frame-sketch';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon-frame-sketch-after:after {
 	font-family: 'icon-frame-sketch';
 	speak: none;
 	font-style: normal;
@@ -24,5 +48,13 @@
 }
 
 .icon-frame-sketch-exit:before {
+	content: "\e600";
+}
+
+.icon-frame-sketch-exit-before:before {
+	content: "\e600";
+}
+
+.icon-frame-sketch-exit-after:after {
 	content: "\e600";
 }

@@ -1,7 +1,7 @@
 define(
     ["angular"],
     function () {
-        var appService = function ($rootScope, $http, $timeout, $q, $compile, $cookies, $cookieStore, uiService) {
+        var appService = function ($rootScope, $http, $timeout, $q, $compile, $cookies, $cookieStore) {
             this.$rootScope = $rootScope;
             this.$http = $http;
             this.$timeout = $timeout;
@@ -9,10 +9,9 @@ define(
             this.$compile = $compile;
             this.$cookies = $cookies;
             this.$cookieStore = $cookieStore;
-            this.uiService = uiService;
         };
 
-        appService.$inject = ["$rootScope", "$http", "$timeout", "$q", "$compile", "$cookies", "$cookieStore", "uiService"];
+        appService.$inject = ["$rootScope", "$http", "$timeout", "$q", "$compile", "$cookies", "$cookieStore"];
 
         appService.prototype.NOOP = function () {
             var self = this,
@@ -25,31 +24,40 @@ define(
             return defer.promise;
         };
 
-        appService.prototype.loadRepoArtifact = function (repoArtifact, repoLibName, demoSelector) {
+        appService.prototype.loadRepoArtifact = function (repoArtifact, repoLibName, version, demoSelector) {
+            version = version || repoArtifact.versionList[repoArtifact.versionList.length - 1].name;
+
             var self = this,
                 defer = self.$q.defer(),
+                loadedSpec = {artifactId: repoArtifact._id, libraryName: repoLibName, version: version},
                 repoUrl = "repo/{0}/{1}/{2}/{3}".format(
                     repoArtifact.type,
                     repoLibName,
                     repoArtifact._id,
-                    repoArtifact._version || repoArtifact.versionList[repoArtifact.versionList.length - 1].name);
+                    version);
 
             require(["{0}/main".format(repoUrl)],
                 function (artifact) {
                     function requireArtifact(artifact) {
-                        var jsArr = [],
-                            defer = self.$q.defer(),
-                            qArr = [];
-
                         artifact.stylesheets && artifact.stylesheets.forEach(function (href) {
                             var link = document.createElement("link");
                             link.type = "text/css";
                             link.rel = "stylesheet";
                             link.href = "{0}/{1}".format(repoUrl, href);
                             document.getElementsByTagName("head")[0].appendChild(link);
+
+                            (loadedSpec.stylesheets = loadedSpec.stylesheets || []).push(link.href);
                         });
 
+                        if (artifact.template)
+                            loadedSpec.template = "{0}/{1}".format(repoUrl, artifact.template);
+
+                        var jsArr = [],
+                            qArr = [];
+
                         if (artifact.json) {
+                            loadedSpec.json = "{0}/{1}".format(repoUrl, artifact.json);
+
                             qArr.push(self.$http.get("{0}/{1}".format(repoUrl, artifact.json)).then(
                                 function (result) {
                                     var jsonDefer = self.$q.defer();
@@ -73,10 +81,15 @@ define(
                         }
 
                         artifact.js && artifact.js.forEach(function (src) {
-                            jsArr.push("{0}/{1}".format(repoUrl, src));
+                            var requireUrl = "{0}/{1}".format(repoUrl, src);
+                            (loadedSpec.js = loadedSpec.js || []).push(requireUrl);
+
+                            if (!require.defined(requireUrl)) {
+                                jsArr.push(requireUrl);
+                            }
                         });
                         if (jsArr.length) {
-                            qArr.push(function () {
+                            qArr.push((function () {
                                 var jsDefer = self.$q.defer();
 
                                 jsArr.splice(0, 0, "ng.ui.extension") && require(jsArr, function () {
@@ -85,41 +98,62 @@ define(
                                         extension = args[0];
 
                                     configs.forEach(function (config) {
-                                        config(self.$compileProvider, self.$controllerProvider, extension, repoUrl);
+                                        config(self.$injector, self.$compileProvider, self.$controllerProvider, extension, repoUrl);
                                     });
 
                                     jsDefer.resolve();
                                 })
 
                                 return jsDefer.promise;
-                            });
+                            })());
                         }
 
-                        qArr.length || self.$timeout(function () {
-                            defer.resolve();
-                        });
+                        return self.$q.all(qArr).then(
+                            function () {
+                                var artifactDefer = self.$q.defer();
 
-                        return qArr.length && self.$q.all(qArr) || defer.promise;
+                                self.$timeout(function () {
+                                    artifactDefer.resolve(loadedSpec);
+                                });
+
+                                return artifactDefer.promise;
+
+                            }, function () {
+                                var errDefer = self.$q.defer();
+
+                                self.$timeout(function () {
+                                    errDefer.reject();
+                                });
+
+                                return errDefer.promise;
+                            }
+                        );
                     }
 
-                    function requireDemo(artifact) {
+                    function requireDemo(artifact, loadedSpec) {
                         var demoSpec = artifact.demo,
-                            defer = self.$q.defer();
+                            demoDefer = self.$q.defer();
 
                         if (demoSpec && demoSpec.url && demoSelector) {
+                            loadedSpec.demo = {};
+
                             demoSpec.stylesheets && demoSpec.stylesheets.forEach(function (href) {
                                 var link = document.createElement("link");
                                 link.type = "text/css";
                                 link.rel = "stylesheet";
                                 link.href = "{0}/{1}".format(repoUrl, href);
                                 document.getElementsByTagName("head")[0].appendChild(link);
+
+                                (loadedSpec.demo.stylesheets = loadedSpec.demo.stylesheets || []).push(link.href);
                             });
 
                             var jsArr = [],
-                                demoDefer = self.$q.defer();
+                                demoRequireDefer = self.$q.defer();
 
                             demoSpec.js && demoSpec.js.forEach(function (src) {
                                 jsArr.push("{0}/{1}".format(repoUrl, src));
+
+                                (loadedSpec.demo.js = loadedSpec.demo.js || []).push("{0}/{1}".format(repoUrl, src));
                             });
                             if (jsArr.length) {
                                 jsArr.splice(0, 0, "ng.ui.extension") && require(jsArr, function () {
@@ -127,18 +161,18 @@ define(
                                         extension = arguments[0];
 
                                     configs.forEach(function (config) {
-                                        config(self.$compileProvider, self.$controllerProvider, extension, repoUrl);
+                                        config(self.$injector, self.$compileProvider, self.$controllerProvider, extension, repoUrl);
                                     });
 
-                                    demoDefer.resolve();
+                                    demoRequireDefer.resolve();
                                 })
                             } else {
                                 self.$timeout(function () {
-                                    demoDefer.resolve();
+                                    demoRequireDefer.resolve();
                                 });
                             }
 
-                            demoDefer.promise.then(function () {
+                            demoRequireDefer.promise.then(function () {
                                 var $el;
                                 if (typeof demoSelector == "string")
                                     $el = $(demoSelector);
@@ -151,34 +185,45 @@ define(
                                     self.$compile($el.parent())(scope);
                                 }
 
-                                defer.resolve();
+                                demoDefer.resolve(loadedSpec);
                             });
                         } else {
                             self.$timeout(function () {
-                                defer.resolve();
+                                demoDefer.resolve(loadedSpec);
                             });
                         }
 
-                        return defer.promise;
+                        return demoDefer.promise;
                     }
 
-                    requireArtifact(artifact).then(requireDemo(artifact)).then(function () {
-                        defer.resolve();
-                    });
+                    requireArtifact(artifact).then(
+                        function (loadedSpec) {
+                            return requireDemo(artifact, loadedSpec);
+                        }, function () {
+                            defer.reject();
+                        }
+                    ).then(
+                        function (loadedSpec) {
+                            defer.resolve(loadedSpec);
+                        }, function () {
+                            defer.reject();
+                        }
+                    );
                 }
             );
 
             return defer.promise;
         }
 
-        appService.prototype.loadIconArtifactList = function () {
+        appService.prototype.loadArtifactList = function (type) {
             var self = this,
-                iconLibraryList = self.$rootScope.iconLibraryList || [],
-                libraryFilter = {type: "icon"};
-            self.$rootScope.iconLibraryList = iconLibraryList;
+                listName = type + "LibraryList",
+                artifactLibraryList = self.$rootScope[listName] || [],
+                libraryFilter = {type: type};
+            self.$rootScope[listName] = artifactLibraryList;
 
-            if (iconLibraryList.length) {
-                var updateTime = _.max(iconLibraryList, function (library) {
+            if (artifactLibraryList.length) {
+                var updateTime = _.max(artifactLibraryList, function (library) {
                     return library.updateTime;
                 });
                 libraryFilter.updateTime = {$gte: updateTime};
@@ -190,7 +235,7 @@ define(
                     defer = self.$q.defer();
 
                 //Update already loaded library, append recent library
-                iconLibraryList.forEach(function (loadedLibrary) {
+                artifactLibraryList.forEach(function (loadedLibrary) {
                     var index;
                     if (!libraryList.every(function (library, i) {
                             if (library._id === loadedLibrary._id) {
@@ -208,8 +253,8 @@ define(
                 });
                 if (libraryList.length > reloadCount) {
                     var recentLoadedList = libraryList.slice(reloadCount, libraryList.length - reloadCount);
-                    recentLoadedList.splice(0, 0, iconLibraryList.length, 0);
-                    Array.prototype.splice.apply(iconLibraryList, recentLoadedList);
+                    recentLoadedList.splice(0, 0, artifactLibraryList.length, 0);
+                    Array.prototype.splice.apply(artifactLibraryList, recentLoadedList);
                 }
 
                 //Load each library's artifacts
@@ -234,7 +279,7 @@ define(
                             var artifactList = result[i].data.result == "OK" && result[i].data.resultValue || [],
                                 recentArtifactList = [];
                             artifactList.forEach(function (artifact) {
-                                artifactArr.push({artifact: artifact, library: libraryList[i]});
+                                artifactArr.push({artifact: artifact, libraryName: libraryList[i].name});
 
                                 if (libraryList[i].artifactList.every(function (loadedArtifact) {
                                         if (artifact._id === loadedArtifact._id) {
@@ -257,7 +302,7 @@ define(
                             libraryList[i].artifactList = result[i].data.result == "OK" && result[i].data.resultValue || [];
 
                             libraryList[i].artifactList.forEach(function (artifact) {
-                                artifactArr.push({artifact: artifact, library: libraryList[i]});
+                                artifactArr.push({artifact: artifact, libraryName: libraryList[i].name});
                             });
                         }
 
@@ -275,7 +320,7 @@ define(
                     aDefer = self.$q.defer();
 
                 artifactArr && artifactArr.forEach(function (item) {
-                    artifactPromiseArr.push(self.loadRepoArtifact(item.artifact, item.library.name));
+                    artifactPromiseArr.push(self.loadRepoArtifact(item.artifact, item.libraryName));
                 });
                 artifactPromiseArr && self.$q.all(artifactPromiseArr).then(
                     function () {
@@ -299,6 +344,14 @@ define(
             });
         }
 
+        appService.prototype.loadIconArtifactList = function () {
+            return this.loadArtifactList("icon");
+        }
+
+        appService.prototype.loadWidgetArtifactList = function () {
+            return this.loadArtifactList("widget");
+        }
+
         appService.prototype.saveSketch = function (sketchWorks) {
             return this.$http({
                 method: 'POST',
@@ -319,18 +372,14 @@ define(
 
                 if (result.data.result === "OK") {
                     var resultValue = JSON.parse(result.data.resultValue);
-                    if (resultValue.pages && resultValue.pages.length) {
-                        sketchWorks.pages = [];
-                        resultValue.pages.forEach(function (pageObj) {
-                            var page = self.uiService.fromObject(pageObj);
-                            page && sketchWorks.pages.push(page);
-                        });
-                    }
+                    self.$timeout(function () {
+                        defer.resolve(resultValue.pages);
+                    });
+                } else {
+                    self.$timeout(function () {
+                        defer.reject();
+                    });
                 }
-
-                self.$timeout(function () {
-                    defer.resolve();
-                });
 
                 return defer.promise;
             });
@@ -450,10 +499,11 @@ define(
                         delete $httpProvider.defaults.headers.common['X-Requested-With'];
                     }
                 ]).
-                config(["$provide", "$controllerProvider", "$compileProvider", function ($provide, $controllerProvider, $compileProvider) {
+                config(["$provide", "$controllerProvider", "$compileProvider", "$injector", function ($provide, $controllerProvider, $compileProvider, $injector) {
                     $provide.service('appService', appService);
                     appService.prototype.$controllerProvider = $controllerProvider;
                     appService.prototype.$compileProvider = $compileProvider;
+                    appService.prototype.$injector = $injector;
                 }]);
         }
     }

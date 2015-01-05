@@ -1,18 +1,16 @@
 define(
     ["angular", "jquery", "hammer"],
     function () {
-        var inject = ["$http", "$timeout", "$q", "$parse", "$compile", "angularEventTypes", "uiUtilService", "uiService"];
+        var inject = ["$http", "$timeout", "$q", "$parse", "$compile", "angularConstants", "angularEventTypes", "appService", "uiUtilService", "uiService"];
 
         return function (appModule, extension, opts) {
-            appModule.directive("uiWidget", _.union(inject, [function ($http, $timeout, $q, $parse, $compile, angularEventTypes, uiUtilService, uiService) {
+            appModule.directive("uiWidget", _.union(inject, [function ($http, $timeout, $q, $parse, $compile, angularConstants, angularEventTypes, appService, uiUtilService, uiService) {
                 'use strict';
 
                 var boundProperties = {},
                     defaults = {
-                        shapeJson: "",
-                        shapes: [],
                         containerClass: "sketchHolder",
-                        holderClass: "deviceHolder",
+                        holderClass: "pageHolder",
                         widgetClass: "sketchWidget",
                         hoverClass: "widgetHover",
                         elementZIndex: 99
@@ -22,7 +20,14 @@ define(
 
                 return {
                     restrict: "A",
-                    scope: angular.extend({dockAlign: "=", pickedShape: "=", isPlaying: "="}, boundProperties),
+                    scope: angular.extend({
+                        dockAlign: "=",
+                        isPlaying: "=",
+                        widgetLibraryList: "=",
+                        pickedArtifact: "=",
+                        pickedLibrary: "=",
+                        showDemo: "&"
+                    }, boundProperties),
                     replace: false,
                     templateUrl: "include/_widget.html",
                     compile: function (element, attrs) {
@@ -38,25 +43,25 @@ define(
                                 options = _.extend(_.clone(options), $parse(attrs['uiWidgetOpts'])(scope, {}));
                             },
                             post: function (scope, element, attrs) {
-                                var $shapeElement;
+                                var $widgetElement;
 
                                 function addWidgetHandler(event) {
-                                    if (scope.pickerPaneShape) {
-                                        var $el = $(event.target);
+                                    if (scope.pickerPaneWidget) {
+                                        var $container = $("." + options.containerClass);
 
                                         if (event.type === "panstart") {
+                                            $widgetElement = $("<div />");
 
-                                            $shapeElement = $("<div />");
-
-                                            $shapeElement.addClass("pickerPaneShape fs-x-medium-before squarePane").addClass(scope.pickerPaneShape.shapeStyle.classList.join(" ")).css(scope.pickerPaneShape.shapeStyle.style).css("z-index", options.elementZIndex);
-                                            $shapeElement.css("left", event.srcEvent.pageX);
-                                            $shapeElement.css("top", event.srcEvent.pageY);
-                                            $shapeElement.appendTo($("." + options.containerClass));
+                                            $widgetElement.text(scope.pickerPaneWidget.name);
+                                            $widgetElement.addClass("pickerPaneWidget fs-x-medium").css("z-index", options.elementZIndex);
+                                            $widgetElement.css("left", event.srcEvent.clientX - $container.offset().left);
+                                            $widgetElement.css("top", event.srcEvent.clientY - $container.offset().top);
+                                            $widgetElement.appendTo($container);
                                         } else if (event.type === "panmove") {
                                             var $to = $(event.srcEvent.toElement);
 
-                                            $shapeElement.css("left", event.srcEvent.pageX);
-                                            $shapeElement.css("top", event.srcEvent.pageY);
+                                            $widgetElement.css("left", event.srcEvent.clientX - $container.offset().left);
+                                            $widgetElement.css("top", event.srcEvent.clientY - $container.offset().top);
 
                                             if ($to.hasClass(options.widgetClass)) {
                                                 if (!$to.hasClass(options.hoverClass)) {
@@ -68,39 +73,33 @@ define(
                                             }
                                         } else if (event.type === "panend") {
                                             var $to = $(event.srcEvent.toElement),
-                                                x = event.srcEvent.pageX - $to.offset().left,
-                                                y = event.srcEvent.pageY - $to.offset().top;
+                                                x = event.srcEvent.clientX - $to.offset().left,
+                                                y = event.srcEvent.clientY - $to.offset().top;
 
-                                            x = Math.floor(x * 100) / 100, y = Math.floor(y * 100) / 100;
+                                            x = Math.floor(x * angularConstants.precision) / angularConstants.precision;
+                                            y = Math.floor(y * angularConstants.precision) / angularConstants.precision;
 
                                             if (!scope.isPlaying && ($to.hasClass(options.holderClass) || $to.hasClass(options.widgetClass))) {
-                                                var widgetObj = createWidget($to);
-
-                                                widgetObj.css("left", x + "px");
-                                                widgetObj.css("top", y + "px");
+                                                appService.loadRepoArtifact(scope.pickedArtifact, scope.pickedLibrary.name).then(function (widgetSpec) {
+                                                    uiService.createRepoWidget($to, widgetSpec.artifactId, widgetSpec.libraryName, widgetSpec.version);
+                                                });
                                             }
 
-                                            $shapeElement.remove();
+                                            $widgetElement.remove();
                                             $("." + options.holderClass).find("." + options.hoverClass).removeClass(options.hoverClass);
                                         }
                                     }
                                 }
 
-                                function createWidget(containerElement) {
-                                    var widgetObj = uiService.createWidget(containerElement);
+                                scope.pickWidget = function (artifact, widgetLibrary, event) {
+                                    event && event.stopPropagation();
 
-                                    widgetObj.addClass(scope.pickerPaneShape.shapeStyle.classList.join(" "));
-                                    widgetObj.css(scope.pickerPaneShape.shapeStyle.style);
-                                    widgetObj.addClass(options.widgetClass);
-
-                                    return widgetObj;
-                                }
-
-                                scope.pickShape = function (value) {
-                                    scope.pickerPaneShape = null;
-                                    scope.pickedPane = value;
+                                    scope.pickerPaneWidget = null;
+                                    scope.pickedPane = artifact;
+                                    scope.pickedArtifact = artifact;
+                                    scope.pickedLibrary = widgetLibrary;
                                     $timeout(function () {
-                                        scope.pickerPaneShape = scope.pickedPane;
+                                        scope.pickerPaneWidget = scope.pickedPane;
                                     });
 
                                     return true;
@@ -123,19 +122,18 @@ define(
                                     }
                                 }
 
-                                if (options.shapeJson) {
-                                    $http.get(options.shapeJson).then(function (result) {
-                                        scope.shapes = result.data;
-                                        if (scope.shapes && scope.shapes.length) {
-                                            scope.pickShape(scope.shapes[0] && scope.shapes[0].list.length && scope.shapes[0].list[0] || null);
-                                        }
+                                scope.showArtifactDemo = function (artifact, widgetLibrary, event) {
+                                    event && event.stopPropagation();
+
+                                    scope.pickWidget(artifact, widgetLibrary);
+                                    $timeout(function () {
+                                        scope.showDemo && scope.showDemo();
                                     });
-                                } else {
-                                    scope.shapes = options.shapes || [];
-                                    if (scope.shapes && scope.shapes.length) {
-                                        scope.pickShape(scope.shapes[0] && scope.shapes[0].list.length && scope.shapes[0].list[0] || null);
-                                    }
+
+                                    return true;
                                 }
+
+                                appService.loadWidgetArtifactList();
 
                                 var mc = new Hammer.Manager(element.find(".pickerPane").get(0));
                                 mc.add(new Hammer.Pan({threshold: 0, pointers: 0}));

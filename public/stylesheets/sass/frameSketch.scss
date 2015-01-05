@@ -10,13 +10,14 @@
 @import "text-shadow-editor";
 @import "box-shadow-editor";
 @import "shape";
+@import "widget";
 @import "sketch_widget";
 @import "horizontal-ruler";
 @import "vertical-ruler";
 @import "dock";
 @import "page";
 @import "state_transition";
-@import "modal-window";
+@import "normalize_include";
 
 @include border-editor(border-control);
 @include color-picker(color-control);
@@ -25,15 +26,94 @@
 @include text-shadow-editor(text-shadow-control);
 @include box-shadow-editor(box-shadow-control);
 @include shape(shape-control);
+@include widget(widget-control);
 @include page(page-control);
 @include sketch-widget(sketchHolder);
 @include horizontal-ruler(horizontalRuler);
 @include vertical-ruler(verticalRuler);
 @include dock(sketchControls);
 @include state-transition(state-transition-control);
+@include normalize-include(frameSketchWidgetDemoArea);
 
 $activeBackgroundColor: rgba(0, 0, 0, 0.3);
 $zIndexWidgetText: 100;
+
+#frameSketchContainer {
+    position: relative;
+    float: left;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+
+    > .modalWindowContainer {
+        position: relative;
+        float: left;
+        width: 100%;
+        height: 100%;
+
+        > div {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            max-width: none;
+            max-height: none;
+            top: 0px;
+            left: 0px;
+
+            &.md-modal {
+                @include transform(translateX(0%) translateY(0%));
+            }
+        }
+
+        .frameSketchModalContent {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #fff;
+
+            .hideButton {
+                position: absolute;
+                top: 0.5em;
+                width: 2em;
+                height: 2em;
+                background-color: #ddd;
+                box-shadow: inset 0 -2px 0 rgba(0, 0, 0, .135);
+                border-radius: 0.2em;
+                display: inline-block;
+                margin: 0 0.5em;
+
+                &:active {
+                    background-color: #555;
+                    color: $activeColor;
+                    box-shadow: none;
+                }
+
+                &:before {
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    text-align: center;
+                    line-height: 2;
+                }
+            }
+
+            .frameSketchDemoContainer {
+                position: absolute;
+                top: 2em;
+                width: calc(100% - 2em);
+                height: calc(100% - 4em);
+                margin: 1em;
+
+                #frameSketchWidgetDemoArea {
+                    position: relative;
+                    float: left;
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+        }
+    }
+}
 
 #sketchContainer {
     position: relative;
@@ -47,6 +127,7 @@ $zIndexWidgetText: 100;
         float: left;
         width: 100%;
         height: calc(100% - 3em);
+        overflow: hidden;
 
         @include display-flex;
         @include flex-direction(row);
@@ -94,6 +175,24 @@ $zIndexWidgetText: 100;
 
                             .resize {
                                 position: absolute;
+                            }
+
+                            .widgetIncludeAnchor {
+                                position: absolute;
+                                width: 100%;
+                                height: 100%;
+
+                                .widgetContainer {
+                                    position: absolute;
+                                    width: 100%;
+                                    height: 100%;
+
+                                    > div {
+                                        position: absolute;
+                                        width: 100%;
+                                        height: 100%;
+                                    }
+                                }
                             }
                         }
                     }

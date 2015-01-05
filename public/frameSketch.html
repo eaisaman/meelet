@@ -1,5 +1,6 @@
 <link rel="stylesheet" type="text/css" href="stylesheets/frameSketch.css"/>
 <link rel="stylesheet" type="text/css" href="stylesheets/animation.css"/>
+<link rel="stylesheet" type="text/css" href="fonts/icon-frame-sketch/style.css"/>
 <link rel="stylesheet" type="text/css" href="fonts/icon-color-editor-palette/style.css"/>
 <link rel="stylesheet" type="text/css" href="fonts/icon-gradient-editor/style.css"/>
 <link rel="stylesheet" type="text/css" href="fonts/icon-text-shadow/style.css"/>
@@ -13,155 +14,177 @@
 <link rel="stylesheet" type="text/css" href="fonts/icon-horizontal-ruler/style.css"/>
 <link rel="stylesheet" type="text/css" href="fonts/icon-vertical-ruler/style.css"/>
 
-<div id="sketchContainer" class="fs-x-medium" ng-controller="FrameSketchController">
-    <div ui-topbar picked-project="project" load-project="loadProject()">
-        <div name="extraButtons">
-            <div ng-click="zoomWidget($event)" class="topbarButton icon-toolbar-before"
-                 ng-class="{'icon-toolbar-expand-before':!zoomId, 'icon-toolbar-collapse-before':zoomId}"></div>
-            <div ng-click="locateWidget($event)"
-                 class="topbarButton icon-toolbar-before icon-toolbar-locate-before"></div>
-            <div ng-click="duplicateWidget($event)"
-                 class="topbarButton icon-toolbar-before icon-toolbar-duplicate-before"></div>
-            <div ng-click="alignLeft($event)"
-                 class="topbarButton icon-toolbar-before icon-toolbar-align-left-before"></div>
-            <div ng-click="alignCenter($event)"
-                 class="topbarButton icon-toolbar-before icon-toolbar-align-center-before"></div>
-            <div ng-click="alignRight($event)"
-                 class="topbarButton icon-toolbar-before icon-toolbar-align-right-before"></div>
-            <div ng-click="groupWidget($event)"
-                 class="topbarButton icon-toolbar-before icon-toolbar-group-before"></div>
-            <div ng-click="ungroupWidget($event)"
-                 class="topbarButton icon-toolbar-before icon-toolbar-ungroup-before"></div>
-            <div ng-click="toggleRuler($event)"
-                 class="topbarButton icon-toolbar-before icon-toolbar-ruler-before"></div>
-            <div ng-click="togglePlayWidget($event)" class="topbarButton icon-toolbar-before"
-                 ng-class="{'icon-toolbar-play-before':!isPlaying, 'icon-toolbar-pause-before':isPlaying}"></div>
-            <div ng-click="saveSketch($event)" class="topbarButton icon-toolbar-before icon-toolbar-save-before"></div>
-            <div ng-click="loadSketch($event)" class="topbarButton icon-toolbar-before icon-toolbar-load-before"></div>
-        </div>
-    </div>
+<div id="frameSketchContainer"
+     ng-controller="FrameSketchController">
+    <div ui-modal-window transition="fadeInScaleUp">
+        <div id="sketchContainer" class="fs-x-medium" name="mainContent">
+            <div ui-topbar picked-project="project" load-project="loadProject()">
+                <div name="extraButtons">
+                    <div ng-click="zoomWidget($event)" class="topbarButton icon-toolbar-before"
+                         ng-class="{'icon-toolbar-expand-before':!zoomId, 'icon-toolbar-collapse-before':zoomId}"></div>
+                    <div ng-click="locateWidget($event)"
+                         class="topbarButton icon-toolbar-before icon-toolbar-locate-before"></div>
+                    <div ng-click="duplicateWidget($event)"
+                         class="topbarButton icon-toolbar-before icon-toolbar-duplicate-before"></div>
+                    <div ng-click="alignLeft($event)"
+                         class="topbarButton icon-toolbar-before icon-toolbar-align-left-before"></div>
+                    <div ng-click="alignCenter($event)"
+                         class="topbarButton icon-toolbar-before icon-toolbar-align-center-before"></div>
+                    <div ng-click="alignRight($event)"
+                         class="topbarButton icon-toolbar-before icon-toolbar-align-right-before"></div>
+                    <div ng-click="groupWidget($event)"
+                         class="topbarButton icon-toolbar-before icon-toolbar-group-before"></div>
+                    <div ng-click="ungroupWidget($event)"
+                         class="topbarButton icon-toolbar-before icon-toolbar-ungroup-before"></div>
+                    <div ng-click="toggleRuler($event)"
+                         class="topbarButton icon-toolbar-before icon-toolbar-ruler-before"></div>
+                    <div ng-click="togglePlayWidget($event)" class="topbarButton icon-toolbar-before"
+                         ng-class="{'icon-toolbar-play-before':!isPlaying, 'icon-toolbar-pause-before':isPlaying}"></div>
+                    <div ng-click="saveSketch($event)"
+                         class="topbarButton icon-toolbar-before icon-toolbar-save-before"></div>
+                    <div ng-click="loadSketch($event)"
+                         class="topbarButton icon-toolbar-before icon-toolbar-load-before"></div>
+                </div>
+            </div>
 
-    <div id="sketchHolder" class="sketchHolder">
-        <div class="deviceBackground" ng-style="{'background-image':'url(images/{{sketchDevice.img}})', 'min-width': '{{sketchDevice.width * 1.5}}', 'max-width': '{{sketchDevice.width * 1.5}}',
+            <div id="sketchHolder" class="sketchHolder">
+                <div class="deviceBackground" ng-style="{'background-image':'url(images/{{sketchDevice.img}})', 'min-width': '{{sketchDevice.width * 1.5}}', 'max-width': '{{sketchDevice.width * 1.5}}',
              'min-height': '{{sketchDevice.height * 1.5}}', 'max-height': '{{sketchDevice.height * 1.5}}'}">
-            <div class="deviceScreenBackground"
-                 ng-style="{'min-width': '{{sketchDevice.width + 90}}', 'max-width': '{{sketchDevice.width + 90}}',
+                    <div class="deviceScreenBackground"
+                         ng-style="{'min-width': '{{sketchDevice.width + 90}}', 'max-width': '{{sketchDevice.width + 90}}',
              'min-height': '{{sketchDevice.height + 90}}', 'max-height': '{{sketchDevice.height + 90}}'}">
-                <div class="deviceScreen"
-                     ng-style="{'width': '{{sketchDevice.width + 90}}', 'height': '{{sketchDevice.height + 90}}'}">
-                    <div id="deviceHolder" class="deviceHolder"
-                         ng-style="{'left': 45, 'top': 45, 'width': '{{sketchDevice.width}}', 'height': '{{sketchDevice.height}}'}"></div>
-                    <div id="verticalRuler" class="ruler fs-x-smaller" ng-if="sketchWidgetSetting.showRuler"
-                         ng-style="{'left':0, 'top': 45, 'width': 45, 'height': '{{sketchDevice.height}}'}"
-                         ui-vertical-ruler device-width="sketchDevice.width" device-height="sketchDevice.height"
-                         min-height="Math.floor(sketchDevice.height/sketchDevice.rulerMarkerCount * 1000) / 1000"
-                         marker-height="Math.floor(sketchDevice.height/sketchDevice.rulerMarkerCount * 1000) / 1000"
-                         marker-count="sketchDevice.rulerMarkerCount" picked-widget="sketchObject.pickedWidget">
-                    </div>
-                    <div id="horizontalRuler" class="ruler fs-x-smaller" ng-if="sketchWidgetSetting.showRuler"
-                         ng-style="{'left':45, 'top': 0, 'width': '{{sketchDevice.width}}', 'height': 45}"
-                         ui-horizontal-ruler device-width="sketchDevice.width" device-height="sketchDevice.height"
-                         min-width="Math.floor(sketchDevice.width/sketchDevice.rulerMarkerCount * 1000) / 1000"
-                         marker-width="Math.floor(sketchDevice.width/sketchDevice.rulerMarkerCount * 1000) / 1000"
-                         marker-count="sketchDevice.rulerMarkerCount" picked-widget="sketchObject.pickedWidget">
-                    </div>
-                    <div id="widgetText" contenteditable="true"
-                         ng-bind-html="sketchObject.pickedWidget.html | to_trusted"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="sketchControls" class="fs-x-large" ng-class="dockAlign" ui-dock
-         visible-pseudo-enabled-widgets="visiblePseudoEnabledWidgets">
-        <div class="ui-control-group-titles fs-x-small">
-            <div tab-sel="tab-head-control-group-1" class="ui-control-group-title" tab-content="control-group">
-                Structure
-            </div>
-            <div tab-sel="tab-head-control-group-2" class="ui-control-group-title" tab-content="control-group">Icons
-            </div>
-            <div tab-sel="tab-head-control-group-3" class="ui-control-group-title" tab-content="control-group">Widgets
-            </div>
-            <div class="showButton fs-x-large icon-dock-before icon-dock-eye-before"></div>
-            <div class="hideButton fs-x-large icon-dock-before icon-dock-eye-slash-before"></div>
-        </div>
-        <div class="ui-control-groups">
-            <div tab-sel="tab-content-control-group-1" class="ui-control-group">
-                <div id="page-control" class="ui-control ui-control-inline enable" ui-page
-                     ui-page-opts="{'pageHolderClass':'deviceHolder'}"
-                     tree-node-id-prefix="'tree-node-'"
-                     sketch-object="sketchObject" sketch-works="sketchObject.sketchWorks"
-                     dock-align="dockAlign">
-                </div>
-                <div class="structureContent" ng-click="$event.stopPropagation()">
-                    <section class="tabs">
-                        <input id="tab-1" type="radio" name="tabRadio" class="tab-selector-1 fs-x-smaller"
-                               checked="checked"/>
-                        <label class="tab-label-1 fs-x-smaller">Properties</label>
-                        <input id="tab-2" type="radio" name="tabRadio" class="tab-selector-2 fs-x-smaller"/>
-                        <label class="tab-label-2 fs-x-smaller" for="tab-2">States</label>
-
-                        <div class="content">
-                            <div class="content-1">
-                                <div id="color-control" class="ui-control ui-control-inline ui-control-bordered"
-                                     ui-color-picker
-                                     color="sketchWidgetSetting.color"
-                                     dock-align="dockAlign">
-                                    Color
-                                </div>
-
-                                <div id="border-control" class="ui-control ui-control-inline ui-control-bordered"
-                                     ui-border-editor
-                                     border="sketchWidgetSetting.border"
-                                     dock-align="dockAlign">
-                                    Border
-                                </div>
-
-                                <div id="fill-control" class="ui-control ui-control-inline ui-control-bordered"
-                                     ui-gradient-editor
-                                     gradient-color="sketchWidgetSetting.linearGradientColor"
-                                     dock-align="dockAlign">
-                                    Linear Gradient
-                                </div>
-
-                                <div id="text-shadow-control" class="ui-control ui-control-inline ui-control-bordered"
-                                     ui-text-shadow-editor
-                                     text-shadow="sketchWidgetSetting.textShadow"
-                                     dock-align="dockAlign">
-                                    Text Shadow
-                                </div>
-
-                                <div id="box-shadow-control" class="ui-control ui-control-inline ui-control-bordered"
-                                     ui-box-shadow-editor
-                                     box-shadow="sketchWidgetSetting.boxShadow"
-                                     dock-align="dockAlign">
-                                    Box Shadow
-                                </div>
+                        <div class="deviceScreen"
+                             ng-style="{'width': '{{sketchDevice.width + 90}}', 'height': '{{sketchDevice.height + 90}}'}">
+                            <div id="deviceHolder" class="deviceHolder"
+                                 ng-style="{'left': 45, 'top': 45, 'width': '{{sketchDevice.width}}', 'height': '{{sketchDevice.height}}'}"></div>
+                            <div id="verticalRuler" class="ruler fs-x-smaller" ng-if="sketchWidgetSetting.showRuler"
+                                 ng-style="{'left':0, 'top': 45, 'width': 45, 'height': '{{sketchDevice.height}}'}"
+                                 ui-vertical-ruler device-width="sketchDevice.width" device-height="sketchDevice.height"
+                                 min-height="Math.floor(sketchDevice.height/sketchDevice.rulerMarkerCount * 1000) / 1000"
+                                 marker-height="Math.floor(sketchDevice.height/sketchDevice.rulerMarkerCount * 1000) / 1000"
+                                 marker-count="sketchDevice.rulerMarkerCount" picked-widget="sketchObject.pickedWidget">
                             </div>
-                            <div class="content-2">
-                                <div id="state-transition-control" class="ui-control ui-control-inline enable"
-                                     ui-state-transition picked-Widget="sketchObject.pickedWidget"
-                                     picked-Page="sketchObject.pickedPage" dock-align="dockAlign"></div>
+                            <div id="horizontalRuler" class="ruler fs-x-smaller" ng-if="sketchWidgetSetting.showRuler"
+                                 ng-style="{'left':45, 'top': 0, 'width': '{{sketchDevice.width}}', 'height': 45}"
+                                 ui-horizontal-ruler device-width="sketchDevice.width"
+                                 device-height="sketchDevice.height"
+                                 min-width="Math.floor(sketchDevice.width/sketchDevice.rulerMarkerCount * 1000) / 1000"
+                                 marker-width="Math.floor(sketchDevice.width/sketchDevice.rulerMarkerCount * 1000) / 1000"
+                                 marker-count="sketchDevice.rulerMarkerCount" picked-widget="sketchObject.pickedWidget">
                             </div>
+                            <div id="widgetText" contenteditable="true"
+                                 ng-bind-html="sketchObject.pickedWidget.html | to_trusted"></div>
                         </div>
-                    </section>
+                    </div>
                 </div>
             </div>
-            <div tab-sel="tab-content-control-group-2" class="ui-control-group">
-                <div id="shape-control" class="ui-control ui-control-inline enable" ui-shape
-                     ui-shape-opts="{containerClass: 'sketchHolder', holderClass: 'pageHolder', widgetClass:'sketchWidget', hoverClass:'widgetHover', elementZIndex: 99}"
-                     picked-Shape="sketchSetting.shape" is-playing="sketchWidgetSetting.isPlaying"
-                     dock-align="dockAlign" icon-library-list="iconLibraryList">
+
+            <div id="sketchControls" class="fs-x-large" ng-class="dockAlign" ui-dock
+                 visible-pseudo-enabled-widgets="visiblePseudoEnabledWidgets">
+                <div class="ui-control-group-titles fs-x-small">
+                    <div tab-sel="tab-head-control-group-1" class="ui-control-group-title" tab-content="control-group">
+                        Structure
+                    </div>
+                    <div tab-sel="tab-head-control-group-2" class="ui-control-group-title" tab-content="control-group">
+                        Icons
+                    </div>
+                    <div tab-sel="tab-head-control-group-3" class="ui-control-group-title" tab-content="control-group">
+                        Widgets
+                    </div>
+                    <div class="showButton fs-x-large icon-dock-before icon-dock-eye-before"></div>
+                    <div class="hideButton fs-x-large icon-dock-before icon-dock-eye-slash-before"></div>
                 </div>
-            </div>
-            <div tab-sel="tab-content-control-group-3" class="ui-control-group">
-                <div id="widget-control" class="ui-control ui-control-inline enable" ui-widget
-                     ui-shape-opts="{containerClass: 'sketchHolder', holderClass: 'pageHolder', widgetClass:'sketchWidget', hoverClass:'widgetHover', elementZIndex: 99}"
-                     picked-Shape="sketchSetting.widget" is-playing="sketchWidgetSetting.isPlaying"
-                     dock-align="dockAlign" widget-library-list="widgetLibraryList">
+                <div class="ui-control-groups">
+                    <div id="page-control-group" tab-sel="tab-content-control-group-1" class="ui-control-group">
+                        <div id="page-control" class="ui-control ui-control-inline enable" ui-page
+                             ui-page-opts="{'pageHolderClass':'deviceHolder'}"
+                             tree-node-id-prefix="'tree-node-'"
+                             sketch-object="sketchObject" sketch-works="sketchObject.sketchWorks"
+                             dock-align="dockAlign">
+                        </div>
+                        <div class="structureContent" ng-click="$event.stopPropagation()">
+                            <section class="tabs">
+                                <input id="tab-1" type="radio" name="tabRadio" class="tab-selector-1 fs-x-smaller"
+                                       checked="checked"/>
+                                <label class="tab-label-1 fs-x-smaller">Properties</label>
+                                <input id="tab-2" type="radio" name="tabRadio" class="tab-selector-2 fs-x-smaller"/>
+                                <label class="tab-label-2 fs-x-smaller" for="tab-2">States</label>
+
+                                <div class="content">
+                                    <div class="content-1">
+                                        <div id="color-control" class="ui-control ui-control-inline ui-control-bordered"
+                                             ui-color-picker
+                                             color="sketchWidgetSetting.color"
+                                             dock-align="dockAlign">
+                                            Color
+                                        </div>
+
+                                        <div id="border-control"
+                                             class="ui-control ui-control-inline ui-control-bordered"
+                                             ui-border-editor
+                                             border="sketchWidgetSetting.border"
+                                             dock-align="dockAlign">
+                                            Border
+                                        </div>
+
+                                        <div id="fill-control" class="ui-control ui-control-inline ui-control-bordered"
+                                             ui-gradient-editor
+                                             gradient-color="sketchWidgetSetting.linearGradientColor"
+                                             dock-align="dockAlign">
+                                            Linear Gradient
+                                        </div>
+
+                                        <div id="text-shadow-control"
+                                             class="ui-control ui-control-inline ui-control-bordered"
+                                             ui-text-shadow-editor
+                                             text-shadow="sketchWidgetSetting.textShadow"
+                                             dock-align="dockAlign">
+                                            Text Shadow
+                                        </div>
+
+                                        <div id="box-shadow-control"
+                                             class="ui-control ui-control-inline ui-control-bordered"
+                                             ui-box-shadow-editor
+                                             box-shadow="sketchWidgetSetting.boxShadow"
+                                             dock-align="dockAlign">
+                                            Box Shadow
+                                        </div>
+                                    </div>
+                                    <div class="content-2">
+                                        <div id="state-transition-control" class="ui-control ui-control-inline enable"
+                                             ui-state-transition picked-Widget="sketchObject.pickedWidget"
+                                             picked-Page="sketchObject.pickedPage" dock-align="dockAlign"></div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                    <div id="shape-control-group" tab-sel="tab-content-control-group-2" class="ui-control-group">
+                        <div id="shape-control" class="ui-control ui-control-inline enable" ui-shape
+                             ui-shape-opts="{containerClass: 'sketchHolder', holderClass: 'pageHolder', widgetClass:'sketchWidget', hoverClass:'widgetHover', elementZIndex: 99}"
+                             is-playing="sketchWidgetSetting.isPlaying"
+                             dock-align="dockAlign" icon-library-list="iconLibraryList">
+                        </div>
+                    </div>
+                    <div id="widget-control-group" tab-sel="tab-content-control-group-3" class="ui-control-group">
+                        <div id="widget-control" class="ui-control ui-control-inline enable" ui-widget
+                             ui-shape-opts="{containerClass: 'sketchHolder', holderClass: 'pageHolder', widgetClass:'sketchWidget', hoverClass:'widgetHover', elementZIndex: 99}"
+                             is-playing="sketchWidgetSetting.isPlaying"
+                             picked-artifact="sketchWidgetSetting.pickedArtifact"
+                             picked-library="sketchWidgetSetting.pickedLibrary"
+                             dock-align="dockAlign" widget-library-list="widgetLibraryList" show-demo="showDemo()">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
+        <div class="frameSketchModalContent fs-x-large" name="modalContent">
+            <div class="hideButton icon-frame-sketch-before icon-frame-sketch-exit-before"
+                 ng-click="hideDemo($event)"></div>
+            <div class="frameSketchDemoContainer">
+                <div id="frameSketchWidgetDemoArea"></div>
+            </div>
+        </div>
+    </div>
 </div>
