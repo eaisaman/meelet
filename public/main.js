@@ -44,7 +44,17 @@ require(["jquery-lib", "jquery-plugins-lib", "hammer-lib", "jquery-ui-lib", "jqu
             {name: "widget", value: "widget"},
             {name: "icon", value: "icon"}
         ],
-        actionDelay: 100
+        widgetClasses: {
+            containerClass: "sketchHolder",
+            holderClass: "pageHolder",
+            widgetClass: "sketchWidget",
+            hoverClass: "widgetHover",
+            activeClass: "pickedWidget"
+        },
+        actionDelay: 100,
+        checkInterval: 10,
+        renderTimeout: 3000,
+        loadTimeout: 10000
     });
 
     require(["angular-plugins-lib", "directive-lib", "app-lib"], function () {

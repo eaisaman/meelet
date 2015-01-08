@@ -17,13 +17,17 @@ define(
                     return {
                         restrict: "A",
                         scope: {
+                            /**
+                             * Valid states include '*', 'select'.
+                             */
+                            state: "@",
                             /* Valid transitions include 'slideInOnTop', 'reveal', 'slideAlong', 'reverseSlideOut', 'scaleDownPusher',
                              * 'scaleUp', 'scaleRotatePusher', 'openDoor', 'fallDown', 'rotatePusher', 'rotateIn3D', 'rotateOut3D', 'delayed3DRotate'
                              * */
-                            transition: "@",
-                            side: "@",//Support 'leftSide', 'rightSide'
-                            overlay: "@",//Support 'overlay', ''. Whether add overlay shadow when the side bar is open.
-                            barContentWidth: "@"//Support px, %, em
+                            transition: "=?",
+                            side: "=?",//Support 'leftSide', 'rightSide'
+                            overlay: "=?",//Support 'overlay', ''. Whether add overlay shadow when the side bar is open.
+                            barContentWidth: "=?"//Support px, %, em
                         },
                         replace: true,
                         transclude: true,
@@ -43,6 +47,18 @@ define(
                                     scope.hideSideBar = function (event) {
                                         scope.toggleSelect("._widget_sideBarContainer", event, false);
                                     }
+
+                                    scope.$watch("state", function (value) {
+                                        if (value != null) {
+                                            scope.toggleSelect("._widget_sideBarContainer", null, value === "select");
+                                        }
+
+                                    });
+
+                                    scope.transition = "slideInOnTop";
+                                    scope.side = "leftSide";
+                                    scope.overlay = "overlay";
+                                    scope.barContentWidth = "300px";
                                 },
                                 post: function (scope, element, attrs) {
                                 }

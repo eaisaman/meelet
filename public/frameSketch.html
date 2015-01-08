@@ -112,6 +112,15 @@
 
                                 <div class="content">
                                     <div class="content-1">
+                                        <div id="widget-configurator-control"
+                                             class="ui-control ui-control-inline ui-control-bordered enable"
+                                             ng-if="uiService.isConfigurable(sketchObject.pickedWidget)"
+                                             ui-widget-configurator
+                                             picked-widget="sketchObject.pickedWidget"
+                                             dock-align="dockAlign">
+                                            Widget Configuration
+                                        </div>
+
                                         <div id="color-control" class="ui-control ui-control-inline ui-control-bordered"
                                              ui-color-picker
                                              color="sketchWidgetSetting.color"
@@ -161,14 +170,14 @@
                     </div>
                     <div id="shape-control-group" tab-sel="tab-content-control-group-2" class="ui-control-group">
                         <div id="shape-control" class="ui-control ui-control-inline enable" ui-shape
-                             ui-shape-opts="{containerClass: 'sketchHolder', holderClass: 'pageHolder', widgetClass:'sketchWidget', hoverClass:'widgetHover', elementZIndex: 99}"
+                             ui-shape-opts="{elementZIndex: 99}"
                              is-playing="sketchWidgetSetting.isPlaying"
                              dock-align="dockAlign" icon-library-list="iconLibraryList">
                         </div>
                     </div>
                     <div id="widget-control-group" tab-sel="tab-content-control-group-3" class="ui-control-group">
                         <div id="widget-control" class="ui-control ui-control-inline enable" ui-widget
-                             ui-shape-opts="{containerClass: 'sketchHolder', holderClass: 'pageHolder', widgetClass:'sketchWidget', hoverClass:'widgetHover', elementZIndex: 99}"
+                             ui-widget-opts="{elementZIndex: 99}"
                              is-playing="sketchWidgetSetting.isPlaying"
                              picked-artifact="sketchWidgetSetting.pickedArtifact"
                              picked-library="sketchWidgetSetting.pickedLibrary"

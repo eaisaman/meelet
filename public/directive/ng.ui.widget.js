@@ -7,12 +7,7 @@ define(
             appModule.directive("uiWidget", _.union(inject, [function ($http, $timeout, $q, $parse, $compile, angularConstants, angularEventTypes, appService, uiUtilService, uiService) {
                 'use strict';
 
-                var boundProperties = {},
-                    defaults = {
-                        containerClass: "sketchHolder",
-                        holderClass: "pageHolder",
-                        widgetClass: "sketchWidget",
-                        hoverClass: "widgetHover",
+                var defaults = {
                         elementZIndex: 99
                     },
                     options = _.extend(defaults, opts),
@@ -20,14 +15,14 @@ define(
 
                 return {
                     restrict: "A",
-                    scope: angular.extend({
+                    scope: {
                         dockAlign: "=",
                         isPlaying: "=",
                         widgetLibraryList: "=",
                         pickedArtifact: "=",
                         pickedLibrary: "=",
                         showDemo: "&"
-                    }, boundProperties),
+                    },
                     replace: false,
                     templateUrl: "include/_widget.html",
                     compile: function (element, attrs) {
@@ -38,9 +33,11 @@ define(
                                     scope: scope
                                 }));
 
-                                scope.$root.$broadcast(angularEventTypes.boundPropertiesEvent, uiUtilService.createDirectiveBoundMap(boundProperties, attrs));
-
                                 options = _.extend(_.clone(options), $parse(attrs['uiWidgetOpts'])(scope, {}));
+                                options.containerClass = angularConstants.widgetClasses.containerClass;
+                                options.holderClass = angularConstants.widgetClasses.holderClass;
+                                options.widgetClass = angularConstants.widgetClasses.widgetClass;
+                                options.hoverClass = angularConstants.widgetClasses.hoverClass;
                             },
                             post: function (scope, element, attrs) {
                                 var $widgetElement;
@@ -80,8 +77,10 @@ define(
                                             y = Math.floor(y * angularConstants.precision) / angularConstants.precision;
 
                                             if (!scope.isPlaying && ($to.hasClass(options.holderClass) || $to.hasClass(options.widgetClass))) {
-                                                appService.loadRepoArtifact(scope.pickedArtifact, scope.pickedLibrary.name).then(function (widgetSpec) {
-                                                    uiService.createRepoWidget($to, widgetSpec.artifactId, widgetSpec.libraryName, widgetSpec.version);
+                                                var version = scope.pickedArtifact.versionList[scope.pickedArtifact.versionList.length - 1].name;
+
+                                                appService.loadRepoArtifact(scope.pickedArtifact, scope.pickedLibrary.name, version).then(function (widgetSpec) {
+                                                    uiService.createRepoWidget($to, widgetSpec);
                                                 });
                                             }
 

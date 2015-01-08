@@ -7,12 +7,7 @@ define(
             appModule.directive("uiShape", _.union(inject, [function ($http, $timeout, $q, $parse, $compile, angularConstants, angularEventTypes, appService, uiUtilService, uiService) {
                 'use strict';
 
-                var boundProperties = {},
-                    defaults = {
-                        containerClass: "sketchHolder",
-                        holderClass: "deviceHolder",
-                        widgetClass: "sketchWidget",
-                        hoverClass: "widgetHover",
+                var defaults = {
                         elementZIndex: 99
                     },
                     options = _.extend(defaults, opts),
@@ -20,11 +15,11 @@ define(
 
                 return {
                     restrict: "A",
-                    scope: angular.extend({
+                    scope: {
                         dockAlign: "=",
                         isPlaying: "=",
                         iconLibraryList: "="
-                    }, boundProperties),
+                    },
                     replace: false,
                     templateUrl: "include/_shape.html",
                     compile: function (element, attrs) {
@@ -35,9 +30,11 @@ define(
                                     scope: scope
                                 }));
 
-                                scope.$root.$broadcast(angularEventTypes.boundPropertiesEvent, uiUtilService.createDirectiveBoundMap(boundProperties, attrs));
-
                                 options = _.extend(_.clone(options), $parse(attrs['uiShapeOpts'])(scope, {}));
+                                options.containerClass = angularConstants.widgetClasses.containerClass;
+                                options.holderClass = angularConstants.widgetClasses.holderClass;
+                                options.widgetClass = angularConstants.widgetClasses.widgetClass;
+                                options.hoverClass = angularConstants.widgetClasses.hoverClass;
                             },
                             post: function (scope, element, attrs) {
                                 var $shapeElement;
@@ -76,11 +73,13 @@ define(
                                             x = Math.floor(x * angularConstants.precision) / angularConstants.precision;
                                             y = Math.floor(y * angularConstants.precision) / angularConstants.precision;
 
-                                            if (!scope.isPlaying && ($to.hasClass(options.holderClass) || $to.hasClass(options.widgetClass))) {
+                                            if (!scope.isPlaying) {
                                                 var widgetObj = createWidget($to);
 
-                                                widgetObj.css("left", x + "px");
-                                                widgetObj.css("top", y + "px");
+                                                if (widgetObj) {
+                                                    widgetObj.css("left", x + "px");
+                                                    widgetObj.css("top", y + "px");
+                                                }
                                             }
 
                                             $shapeElement.remove();
@@ -92,9 +91,10 @@ define(
                                 function createWidget(containerElement) {
                                     var widgetObj = uiService.createWidget(containerElement);
 
-                                    widgetObj.addClass(scope.pickerPaneShape.shapeStyle.classList.join(" "));
-                                    widgetObj.css(scope.pickerPaneShape.shapeStyle.style);
-                                    widgetObj.addClass(options.widgetClass);
+                                    if (widgetObj) {
+                                        widgetObj.addClass(scope.pickerPaneShape.shapeStyle.classList.join(" "));
+                                        widgetObj.css(scope.pickerPaneShape.shapeStyle.style);
+                                    }
 
                                     return widgetObj;
                                 }
@@ -108,23 +108,6 @@ define(
 
                                     return true;
                                 };
-
-                                scope.togglePalette = function (event) {
-                                    event && event.stopPropagation();
-
-                                    var $wrapper = element.find(".ui-control-wrapper"),
-                                        $panel = element.find(".ui-control-panel");
-
-                                    if ($wrapper.hasClass("expanded")) {
-                                        scope.toggleDisplay($panel).then(function () {
-                                            return scope.toggleExpand($wrapper);
-                                        });
-                                    } else {
-                                        scope.toggleExpand($wrapper).then(function () {
-                                            return scope.toggleDisplay($panel);
-                                        });
-                                    }
-                                }
 
                                 appService.loadIconArtifactList();
 

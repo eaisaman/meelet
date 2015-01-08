@@ -18,6 +18,7 @@ require.config(
             "ng.ui.box-shadow-editor": DIRECTIVE_LIB_PATH + "ng.ui.box-shadow-editor",
             "ng.ui.shape": DIRECTIVE_LIB_PATH + "ng.ui.shape",
             "ng.ui.widget": DIRECTIVE_LIB_PATH + "ng.ui.widget",
+            "ng.ui.widget-configurator": DIRECTIVE_LIB_PATH + "ng.ui.widget-configurator",
             "ng.ui.page": DIRECTIVE_LIB_PATH + "ng.ui.page",
             "ng.ui.dock": DIRECTIVE_LIB_PATH + "ng.ui.dock",
             "ng.ui.topbar": DIRECTIVE_LIB_PATH + "ng.ui.topbar",
@@ -50,6 +51,7 @@ define([
         "ng.ui.box-shadow-editor",
         "ng.ui.shape",
         "ng.ui.widget",
+        "ng.ui.widget-configurator",
         "ng.ui.page",
         "ng.ui.dock",
         "ng.ui.topbar",
@@ -123,26 +125,29 @@ define([
             //Widget
             directiveConfigs[14](appModule, extension);
 
-            //Page
+            //Widget Configurator
             directiveConfigs[15](appModule, extension);
 
-            //Dock
+            //Page
             directiveConfigs[16](appModule, extension);
 
-            //Topbar
+            //Dock
             directiveConfigs[17](appModule, extension);
 
-            //Toolbar
+            //Topbar
             directiveConfigs[18](appModule, extension);
 
+            //Toolbar
+            directiveConfigs[19](appModule, extension);
+
             //State transition
-            directiveConfigs[19](appModule, extension, {
+            directiveConfigs[20](appModule, extension, {
                 triggerJson: "directive/trigger.json",
                 animationJson: "directive/animation.json"
             });
 
             //Modal window
-            directiveConfigs[20](appModule, extension);
+            directiveConfigs[21](appModule, extension);
         }
     }
 );

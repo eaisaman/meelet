@@ -7501,11 +7501,15 @@ button.close {
   display: block;
 }
 #topbarProjectDropdown .cd-dropdown ul li span {
-  display: block;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  text-overflow: ellipsis;
+  overflow: hidden;
   width: 100%;
   height: 2em;
   line-height: 2;
-  padding-left: 2em;
+  padding-left: 1em;
   color: #bcbcbc;
   background: #eee;
   cursor: pointer;

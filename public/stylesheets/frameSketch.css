@@ -7592,11 +7592,15 @@
   display: block;
 }
 #borderWidthDropdown .cd-dropdown ul li span {
-  display: block;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  text-overflow: ellipsis;
+  overflow: hidden;
   width: 100%;
   height: 2em;
   line-height: 2;
-  padding-left: 2em;
+  padding-left: 1em;
   color: #bcbcbc;
   background: #eee;
   cursor: pointer;
@@ -7892,11 +7896,15 @@
   display: block;
 }
 #borderStyleDropdown .cd-dropdown ul li span {
-  display: block;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  text-overflow: ellipsis;
+  overflow: hidden;
   width: 100%;
   height: 2em;
   line-height: 2;
-  padding-left: 2em;
+  padding-left: 1em;
   color: #bcbcbc;
   background: #eee;
   cursor: pointer;
@@ -8484,6 +8492,310 @@
 }
 #borderColorPalette .colorValuePanes > .hsbValuePane.select {
   opacity: 1;
+}
+
+.configurationItemList {
+  /* Stack the items with a slight offset */
+  /* Stack the items with a slight offset, and expand them with a slight random angle/left values.
+     Each item will have a different animation delay. */
+  /* Stack the items with a slight offset, and spread them as a fan.
+     Each item will have a different animation delay. */
+  /* Stack the items with a slight offset, and rotate the select label while clicking it. */
+  /*  Show the items by sliding them from the sides. */
+}
+.configurationItemList .cd-dropdown {
+  position: relative;
+  width: 100%;
+  display: block;
+}
+.configurationItemList .cd-dropdown > span {
+  position: relative;
+  width: 100%;
+  height: 2em;
+  line-height: 2;
+  color: #999;
+  font-weight: 700;
+  background: #fff;
+  display: block;
+  padding-left: 1em;
+  cursor: pointer;
+  -moz-backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -moz-user-select: -moz-none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+.configurationItemList .cd-dropdown > span:after {
+  content: '\25BC';
+  position: absolute;
+  right: 0px;
+  width: 2em;
+  line-height: 2;
+  text-align: center;
+  border-left: 1px solid #ddd;
+}
+.configurationItemList .cd-dropdown.cd-active > span:after {
+  content: '\25B2';
+}
+.configurationItemList .cd-dropdown > div {
+  position: relative;
+  width: 100%;
+  height: 2em;
+  color: #999;
+  font-weight: 700;
+  background: #fff;
+  display: block;
+  cursor: pointer;
+  overflow: hidden;
+  -moz-backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -moz-user-select: -moz-none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+.configurationItemList .cd-dropdown > div > * {
+  width: calc(100% - 2em);
+  line-height: 2;
+}
+.configurationItemList .cd-dropdown > div:after {
+  content: '\25BC';
+  position: absolute;
+  right: 0px;
+  width: 2em;
+  line-height: 2;
+  text-align: center;
+  border-left: 1px solid #ddd;
+}
+.configurationItemList .cd-dropdown.cd-active > div:after {
+  content: '\25B2';
+}
+.configurationItemList .cd-dropdown ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: block;
+  position: relative;
+  pointer-events: none;
+}
+.configurationItemList .cd-dropdown ul li {
+  display: block;
+}
+.configurationItemList .cd-dropdown ul li span {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 100%;
+  height: 2em;
+  line-height: 2;
+  padding-left: 1em;
+  color: #bcbcbc;
+  background: #eee;
+  cursor: pointer;
+  font-weight: 700;
+  -moz-backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -moz-user-select: -moz-none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+.configurationItemList .cd-dropdown.cd-active ul {
+  pointer-events: auto;
+}
+.configurationItemList.stackWithOffset .cd-dropdown > span,
+.configurationItemList.stackWithOffset .cd-dropdown ul li:nth-last-child(-n+3) span {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+.configurationItemList.stackWithOffset .cd-dropdown ul {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+}
+.configurationItemList.stackWithOffset .cd-dropdown ul li {
+  position: absolute;
+  width: 100%;
+}
+.configurationItemList.stackWithOffset .cd-dropdown.cd-active > span {
+  color: #669933;
+}
+.configurationItemList.stackWithOffset .cd-dropdown.cd-active > span,
+.configurationItemList.stackWithOffset .cd-dropdown.cd-active ul li span {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+.configurationItemList.stackWithOffset .cd-dropdown.cd-active ul li span {
+  -moz-transition: all 0.2s linear 0s;
+  -o-transition: all 0.2s linear 0s;
+  -webkit-transition: all 0.2s linear;
+  -webkit-transition-delay: 0s;
+  transition: all 0.2s linear 0s;
+}
+.configurationItemList.stackWithOffset .cd-dropdown.cd-active ul li span:hover {
+  background: #669933;
+  color: #fff;
+}
+.configurationItemList.stackAndExpand .cd-dropdown > span,
+.configurationItemList.stackAndExpand .cd-dropdown ul li:nth-last-child(-n+3) span {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+.configurationItemList.stackAndExpand .cd-dropdown ul {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+}
+.configurationItemList.stackAndExpand .cd-dropdown ul li {
+  position: absolute;
+  width: 100%;
+}
+.configurationItemList.stackAndExpand .cd-dropdown.cd-active > span {
+  color: #669933;
+}
+.configurationItemList.stackAndExpand .cd-dropdown.cd-active > span,
+.configurationItemList.stackAndExpand .cd-dropdown.cd-active ul li span {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+.configurationItemList.stackAndExpand .cd-dropdown.cd-active ul li span {
+  -moz-transition: all 0.2s linear 0s;
+  -o-transition: all 0.2s linear 0s;
+  -webkit-transition: all 0.2s linear;
+  -webkit-transition-delay: 0s;
+  transition: all 0.2s linear 0s;
+}
+.configurationItemList.stackAndExpand .cd-dropdown.cd-active ul li span:hover {
+  background: #669933;
+  color: #fff;
+}
+.configurationItemList.stackAndExpandFan .cd-dropdown > span,
+.configurationItemList.stackAndExpandFan .cd-dropdown ul li:nth-last-child(-n+3) span {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+.configurationItemList.stackAndExpandFan .cd-dropdown ul {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+}
+.configurationItemList.stackAndExpandFan .cd-dropdown ul li {
+  position: absolute;
+  width: 100%;
+}
+.configurationItemList.stackAndExpandFan .cd-dropdown.cd-active > span {
+  color: #669933;
+}
+.configurationItemList.stackAndExpandFan .cd-dropdown.cd-active > span,
+.configurationItemList.stackAndExpandFan .cd-dropdown.cd-active ul li span {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+.configurationItemList.stackAndExpandFan .cd-dropdown.cd-active ul li {
+  -moz-transform-origin: -200% 50% 50%;
+  -ms-transform-origin: -200% 50% 50%;
+  -webkit-transform-origin: -200% 50% 50%;
+  transform-origin: -200% 50% 50%;
+}
+.configurationItemList.stackAndExpandFan .cd-dropdown.cd-active ul li span {
+  -moz-transition: all 0.2s linear 0s;
+  -o-transition: all 0.2s linear 0s;
+  -webkit-transition: all 0.2s linear;
+  -webkit-transition-delay: 0s;
+  transition: all 0.2s linear 0s;
+}
+.configurationItemList.stackAndExpandFan .cd-dropdown.cd-active ul li span:hover {
+  background: #669933;
+  color: #fff;
+}
+.configurationItemList.stackAndRotateSelect .cd-dropdown {
+  -moz-perspective: 800px;
+  -webkit-perspective: 800px;
+  perspective: 800px;
+}
+.configurationItemList.stackAndRotateSelect .cd-dropdown > span {
+  -moz-transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -moz-transform-origin: 50% 0% 50%;
+  -ms-transform-origin: 50% 0% 50%;
+  -webkit-transform-origin: 50% 0% 50%;
+  transform-origin: 50% 0% 50%;
+  -moz-transition: -moz-transform 0.3s;
+  -o-transition: -o-transform 0.3s;
+  -webkit-transition: -webkit-transform 0.3s;
+  transition: transform 0.3s;
+}
+.configurationItemList.stackAndRotateSelect .cd-dropdown > span:active {
+  -moz-transform: rotateX(60deg);
+  -ms-transform: rotateX(60deg);
+  -webkit-transform: rotateX(60deg);
+  transform: rotateX(60deg);
+}
+.configurationItemList.stackAndRotateSelect .cd-dropdown > span,
+.configurationItemList.stackAndRotateSelect .cd-dropdown ul li:nth-last-child(-n+3) span {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+.configurationItemList.stackAndRotateSelect .cd-dropdown ul {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+}
+.configurationItemList.stackAndRotateSelect .cd-dropdown ul li {
+  position: absolute;
+  width: 100%;
+}
+.configurationItemList.stackAndRotateSelect .cd-dropdown.cd-active > span {
+  color: #669933;
+}
+.configurationItemList.stackAndRotateSelect .cd-dropdown.cd-active > span,
+.configurationItemList.stackAndRotateSelect .cd-dropdown.cd-active ul li span {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+.configurationItemList.stackAndRotateSelect .cd-dropdown.cd-active ul li span {
+  -moz-transition: all 0.2s linear 0s;
+  -o-transition: all 0.2s linear 0s;
+  -webkit-transition: all 0.2s linear;
+  -webkit-transition-delay: 0s;
+  transition: all 0.2s linear 0s;
+}
+.configurationItemList.stackAndRotateSelect .cd-dropdown.cd-active ul li span:hover {
+  background: #669933;
+  color: #fff;
+}
+.configurationItemList.slide .cd-dropdown ul {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+}
+.configurationItemList.slide .cd-dropdown > span,
+.configurationItemList.slide .cd-dropdown ul li {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+.configurationItemList.slide .cd-dropdown ul li {
+  position: absolute;
+  width: 100%;
+  pointer-events: none;
+}
+.configurationItemList.slide .cd-dropdown.cd-active > span {
+  color: #669933;
+}
+.configurationItemList.slide .cd-dropdown.cd-active ul li {
+  pointer-events: auto;
+}
+.configurationItemList.slide .cd-dropdown.cd-active ul li span {
+  -moz-transition: all 0.2s linear 0s;
+  -o-transition: all 0.2s linear 0s;
+  -webkit-transition: all 0.2s linear;
+  -webkit-transition-delay: 0s;
+  transition: all 0.2s linear 0s;
+}
+.configurationItemList.slide .cd-dropdown.cd-active ul li span:hover {
+  background: #669933;
+  color: #fff;
 }
 
 #colorPickerPalette {
@@ -9717,6 +10029,22 @@
   text-align: center;
   line-height: 1;
 }
+.sketchWidget:not(.zoom).pickedWidget [widget-anchor]:hover {
+  background-image: -webkit-linear-gradient(left, #6699CC, #99CCFF 50%, #ECF0F1);
+  background-image: -o-linear-gradient(left, #6699CC, #99CCFF 50%, #ECF0F1);
+  background-image: linear-gradient(to right, #6699cc, #99ccff 50%, #ecf0f1);
+  background-repeat: no-repeat;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF6699CC', endColorstr='#FFECF0F1', GradientType=1);
+}
+.sketchWidget:not(.zoom).pickedWidget [widget-anchor]:hover:before {
+  position: absolute;
+  width: 100%;
+  line-height: 1em;
+  content: attr(name);
+  top: calc(50% - 0.5em);
+  text-align: center;
+  font-weight: 900;
+}
 .sketchWidget.tempElement {
   border-style: dashed !important;
   background: transparent !important;
@@ -9945,11 +10273,15 @@
   display: block;
 }
 #widgetStateDropdown .cd-dropdown ul li span {
-  display: block;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  text-overflow: ellipsis;
+  overflow: hidden;
   width: 100%;
   height: 2em;
   line-height: 2;
-  padding-left: 2em;
+  padding-left: 1em;
   color: #bcbcbc;
   background: #eee;
   cursor: pointer;
@@ -10295,6 +10627,103 @@
 }
 #border-control > .borderContent > .borderPalette > .borderPane.borderColorPane.select .borderColorBar:after {
   content: '\25B2';
+}
+
+#widget-configurator-control .configurationContent {
+  color: rgba(0, 0, 0, 0.4);
+  background: #fff;
+}
+#widget-configurator-control .configurationContent > .configurationBar {
+  background-image: -webkit-linear-gradient(left, #6699CC, #99CCFF 50%, #ECF0F1);
+  background-image: -o-linear-gradient(left, #6699CC, #99CCFF 50%, #ECF0F1);
+  background-image: linear-gradient(to right, #6699cc, #99ccff 50%, #ecf0f1);
+  background-repeat: no-repeat;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF6699CC', endColorstr='#FFECF0F1', GradientType=1);
+}
+#widget-configurator-control .configurationContent > .configurationBar span {
+  position: absolute;
+  top: 5px;
+  left: 0;
+  width: 100%;
+  height: 1em;
+  line-height: 1;
+  text-align: center;
+  font-weight: 600;
+  text-shadow: 0px 2px 3px #666;
+}
+#widget-configurator-control .configurationContent > .configurationPalette {
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0 4px 3px #555;
+  -webkit-box-shadow: 0 4px 3px #555;
+  box-shadow: 0 4px 3px #555;
+}
+#widget-configurator-control .configurationContent > .configurationPalette > .configurationPane {
+  position: relative;
+  float: left;
+  width: calc(100% - 0.2em);
+  height: 2em;
+  background: #fff;
+}
+#widget-configurator-control .configurationContent > .configurationPalette > .configurationPane:after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  content: '';
+  width: 100%;
+  height: 2px;
+  background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuMCIgeTE9IjAuNSIgeDI9IjEuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ViZWJlYiIvPjxzdG9wIG9mZnNldD0iNTAlIiBzdG9wLWNvbG9yPSIjZWJlYmViIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjZmZmZmZmIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g');
+  background: -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, #ebebeb), color-stop(50%, #ebebeb), color-stop(100%, #ffffff));
+  background: -moz-linear-gradient(left, #ebebeb 0%, #ebebeb 50%, #ffffff 100%);
+  background: -webkit-linear-gradient(left, #ebebeb 0%, #ebebeb 50%, #ffffff 100%);
+  background: linear-gradient(to right, #ebebeb 0%, #ebebeb 50%, #ffffff 100%);
+}
+#widget-configurator-control .configurationContent > .configurationPalette > .configurationPane > .input-group {
+  top: calc(50% - 0.75em);
+}
+#widget-configurator-control .configurationContent > .configurationPalette > .configurationPane.list:nth-of-type(10) {
+  z-index: 3;
+}
+#widget-configurator-control .configurationContent > .configurationPalette > .configurationPane.list:nth-of-type(9) {
+  z-index: 4;
+}
+#widget-configurator-control .configurationContent > .configurationPalette > .configurationPane.list:nth-of-type(8) {
+  z-index: 5;
+}
+#widget-configurator-control .configurationContent > .configurationPalette > .configurationPane.list:nth-of-type(7) {
+  z-index: 6;
+}
+#widget-configurator-control .configurationContent > .configurationPalette > .configurationPane.list:nth-of-type(6) {
+  z-index: 7;
+}
+#widget-configurator-control .configurationContent > .configurationPalette > .configurationPane.list:nth-of-type(5) {
+  z-index: 8;
+}
+#widget-configurator-control .configurationContent > .configurationPalette > .configurationPane.list:nth-of-type(4) {
+  z-index: 9;
+}
+#widget-configurator-control .configurationContent > .configurationPalette > .configurationPane.list:nth-of-type(3) {
+  z-index: 10;
+}
+#widget-configurator-control .configurationContent > .configurationPalette > .configurationPane.list:nth-of-type(2) {
+  z-index: 11;
+}
+#widget-configurator-control .configurationContent > .configurationPalette > .configurationPane.list:nth-of-type(1) {
+  z-index: 12;
+}
+#widget-configurator-control .configurationContent > .configurationPalette > .configurationPane .configurationItemCheckBox > div {
+  left: 50%;
+}
+#widget-configurator-control .configurationContent > .configurationPalette > .configurationPane .configurationItemNumber input {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: calc(100% - 2em);
+  height: 2em;
+}
+#widget-configurator-control .configurationContent > .configurationPalette > .configurationPane .configurationItemNumber input::-webkit-inner-spin-button, #widget-configurator-control .configurationContent > .configurationPalette > .configurationPane .configurationItemNumber input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 #color-control > .pickerContent {
@@ -12505,35 +12934,38 @@
   height: 3em;
   margin: 0.2em;
 }
-#sketchControls.align-right > .dockContent .dockDetail .ui-control-groups .ui-control-group .ui-control:nth-child(10), #sketchControls.align-left > .dockContent .dockDetail .ui-control-groups .ui-control-group .ui-control:nth-child(10) {
+#sketchControls.align-right > .dockContent .dockDetail .ui-control-groups .ui-control-group .ui-control:nth-child(11), #sketchControls.align-left > .dockContent .dockDetail .ui-control-groups .ui-control-group .ui-control:nth-child(11) {
   z-index: 1;
 }
-#sketchControls.align-right > .dockContent .dockDetail .ui-control-groups .ui-control-group .ui-control:nth-child(9), #sketchControls.align-left > .dockContent .dockDetail .ui-control-groups .ui-control-group .ui-control:nth-child(9) {
+#sketchControls.align-right > .dockContent .dockDetail .ui-control-groups .ui-control-group .ui-control:nth-child(10), #sketchControls.align-left > .dockContent .dockDetail .ui-control-groups .ui-control-group .ui-control:nth-child(10) {
   z-index: 2;
 }
-#sketchControls.align-right > .dockContent .dockDetail .ui-control-groups .ui-control-group .ui-control:nth-child(8), #sketchControls.align-left > .dockContent .dockDetail .ui-control-groups .ui-control-group .ui-control:nth-child(8) {
+#sketchControls.align-right > .dockContent .dockDetail .ui-control-groups .ui-control-group .ui-control:nth-child(9), #sketchControls.align-left > .dockContent .dockDetail .ui-control-groups .ui-control-group .ui-control:nth-child(9) {
   z-index: 3;
 }
-#sketchControls.align-right > .dockContent .dockDetail .ui-control-groups .ui-control-group .ui-control:nth-child(7), #sketchControls.align-left > .dockContent .dockDetail .ui-control-groups .ui-control-group .ui-control:nth-child(7) {
+#sketchControls.align-right > .dockContent .dockDetail .ui-control-groups .ui-control-group .ui-control:nth-child(8), #sketchControls.align-left > .dockContent .dockDetail .ui-control-groups .ui-control-group .ui-control:nth-child(8) {
   z-index: 4;
 }
-#sketchControls.align-right > .dockContent .dockDetail .ui-control-groups .ui-control-group .ui-control:nth-child(6), #sketchControls.align-left > .dockContent .dockDetail .ui-control-groups .ui-control-group .ui-control:nth-child(6) {
+#sketchControls.align-right > .dockContent .dockDetail .ui-control-groups .ui-control-group .ui-control:nth-child(7), #sketchControls.align-left > .dockContent .dockDetail .ui-control-groups .ui-control-group .ui-control:nth-child(7) {
   z-index: 5;
 }
-#sketchControls.align-right > .dockContent .dockDetail .ui-control-groups .ui-control-group .ui-control:nth-child(5), #sketchControls.align-left > .dockContent .dockDetail .ui-control-groups .ui-control-group .ui-control:nth-child(5) {
+#sketchControls.align-right > .dockContent .dockDetail .ui-control-groups .ui-control-group .ui-control:nth-child(6), #sketchControls.align-left > .dockContent .dockDetail .ui-control-groups .ui-control-group .ui-control:nth-child(6) {
   z-index: 6;
 }
-#sketchControls.align-right > .dockContent .dockDetail .ui-control-groups .ui-control-group .ui-control:nth-child(4), #sketchControls.align-left > .dockContent .dockDetail .ui-control-groups .ui-control-group .ui-control:nth-child(4) {
+#sketchControls.align-right > .dockContent .dockDetail .ui-control-groups .ui-control-group .ui-control:nth-child(5), #sketchControls.align-left > .dockContent .dockDetail .ui-control-groups .ui-control-group .ui-control:nth-child(5) {
   z-index: 7;
 }
-#sketchControls.align-right > .dockContent .dockDetail .ui-control-groups .ui-control-group .ui-control:nth-child(3), #sketchControls.align-left > .dockContent .dockDetail .ui-control-groups .ui-control-group .ui-control:nth-child(3) {
+#sketchControls.align-right > .dockContent .dockDetail .ui-control-groups .ui-control-group .ui-control:nth-child(4), #sketchControls.align-left > .dockContent .dockDetail .ui-control-groups .ui-control-group .ui-control:nth-child(4) {
   z-index: 8;
 }
-#sketchControls.align-right > .dockContent .dockDetail .ui-control-groups .ui-control-group .ui-control:nth-child(2), #sketchControls.align-left > .dockContent .dockDetail .ui-control-groups .ui-control-group .ui-control:nth-child(2) {
+#sketchControls.align-right > .dockContent .dockDetail .ui-control-groups .ui-control-group .ui-control:nth-child(3), #sketchControls.align-left > .dockContent .dockDetail .ui-control-groups .ui-control-group .ui-control:nth-child(3) {
   z-index: 9;
 }
-#sketchControls.align-right > .dockContent .dockDetail .ui-control-groups .ui-control-group .ui-control:nth-child(1), #sketchControls.align-left > .dockContent .dockDetail .ui-control-groups .ui-control-group .ui-control:nth-child(1) {
+#sketchControls.align-right > .dockContent .dockDetail .ui-control-groups .ui-control-group .ui-control:nth-child(2), #sketchControls.align-left > .dockContent .dockDetail .ui-control-groups .ui-control-group .ui-control:nth-child(2) {
   z-index: 10;
+}
+#sketchControls.align-right > .dockContent .dockDetail .ui-control-groups .ui-control-group .ui-control:nth-child(1), #sketchControls.align-left > .dockContent .dockDetail .ui-control-groups .ui-control-group .ui-control:nth-child(1) {
+  z-index: 11;
 }
 #sketchControls.align-right > .dockContent .dockDetail .ui-control-groups .ui-control-group .ui-control:not(.enable) .ui-control-title .ui-control-enable-button:after, #sketchControls.align-left > .dockContent .dockDetail .ui-control-groups .ui-control-group .ui-control:not(.enable) .ui-control-title .ui-control-enable-button:after {
   content: "";

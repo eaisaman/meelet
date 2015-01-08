@@ -218,6 +218,10 @@ define(
                 scope.toggleModalWindow();
             }
 
+            $scope.isConfigurable = function (widgetObj) {
+                return uiService.isConfigurable(widgetObj);
+            }
+
             function setterFactory(obj, name, source) {
                 return function (to) {
                     var setterName = source && "setTrackablePseudoStyle" || ("set" + name.charAt(0).toUpperCase() + name.substr(1)),
@@ -327,7 +331,7 @@ define(
                 return $timeout(function () {
                     var defer = $q.defer();
 
-                    uiService.createPage($(".deviceHolder")).then(function (pageObj) {
+                    uiService.createPage(".deviceHolder").then(function (pageObj) {
                         $scope.sketchObject.pickedPage = pageObj;
                         $scope.sketchObject.sketchWorks.pages.push(pageObj);
 
@@ -345,6 +349,7 @@ define(
 
             var widgetSettingList = [];
 
+            $scope.uiService = uiService;
             $scope.Math = Math;
             $scope.sketchWidgetSetting = {};
             $scope.sketchPageSetting = {};

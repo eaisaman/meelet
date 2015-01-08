@@ -21,6 +21,8 @@ define(
 
             $scope.side = "leftSide";
             $scope.demoTransition = "slideInOnTop"
+            $scope.contentWidth = "300px"
+            $scope.overlay = "overlay"
         }
 
         return function ($injector, $compileProvider, $controllerProvider, extension, directiveUrl) {

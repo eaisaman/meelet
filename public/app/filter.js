@@ -2,8 +2,7 @@ define(
     ["angular", "underscore"],
     function () {
         return function (appModule) {
-            whereFilter.$inject = ['$parse'];
-            function whereFilter($parse) {
+            function whereFilter() {
                 return function (list, condition) {
                     return _.where(list, condition);
                 };

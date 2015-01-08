@@ -7,8 +7,7 @@ define(
             appModule.directive("uiHorizontalRuler", _.union(inject, [function ($timeout, $q, $log, angularEventTypes, angularConstants, uiService, uiUtilService, appService) {
                 'use strict';
 
-                var boundProperties = {},
-                    defaults = {
+                var defaults = {
                         deviation: 10
                     },
                     options = angular.extend(defaults, opts),
@@ -16,7 +15,7 @@ define(
 
                 return {
                     restrict: "A",
-                    scope: angular.extend({
+                    scope: {
                         dockAlign: "=",
                         sketchObject: "=",
                         isPlaying: "=",
@@ -27,7 +26,7 @@ define(
                         pickedWidget: "=",
                         markerWidth: "=",
                         minWidth: "="
-                    }, boundProperties),
+                    },
                     replace: false,
                     templateUrl: "include/_horizontal-ruler.html",
                     compile: function (element, attrs) {
@@ -40,13 +39,6 @@ define(
                                     element: element,
                                     scope: scope
                                 }));
-
-                                scope.$root.$broadcast(
-                                    angularEventTypes.boundPropertiesEvent,
-                                    uiUtilService.createDirectiveBoundMap(
-                                        boundProperties,
-                                        attrs)
-                                );
 
                                 scope.widgetHorizontalLocation = function (widget) {
                                     if (widget && widget.isElement && !widget.isTemporary) {

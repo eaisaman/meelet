@@ -7,8 +7,7 @@ define(
             appModule.directive("uiStateTransition", _.union(inject, [function ($http, $timeout, $q, uiUtilService, uiService) {
                 'use strict';
 
-                var boundProperties = {pickedWidget: "=", pickedPage: "="},
-                    defaults = {
+                var defaults = {
                         triggerJson: "",
                         animationJson: ""
                     },
@@ -17,7 +16,7 @@ define(
 
                 return {
                     restrict: "A",
-                    scope: angular.extend({dockAlign: "="}, boundProperties),
+                    scope: {pickedWidget: "=", pickedPage: "=", dockAlign: "="},
                     replace: false,
                     templateUrl: "include/_state_transition.html",
                     compile: function (element, attrs) {
@@ -28,8 +27,14 @@ define(
                                     scope: scope
                                 }));
 
-                                scope.triggers = {};
+                                scope.$watch("pickedWidget", function (value) {
+                                    if (value) {
+                                        var widgetObj = uiService.configurableWidget(value);
+                                        scope.activeWidget = widgetObj || scope.pickedWidget;
+                                    }
+                                });
 
+                                scope.triggers = {};
                                 scope.animations = [];
                             },
                             post: function (scope, element, attrs) {
@@ -68,26 +73,26 @@ define(
                                         $stateOption = $createButton.siblings(".stateOption.select"),
                                         stateName = $stateOption.attr("name");
 
-                                    stateName && scope.pickedWidget.addState(stateName);
+                                    stateName && scope.activeWidget.addState(stateName);
                                 }
 
                                 scope.createStateOption = function (event) {
                                     event && event.stopPropagation && event.stopPropagation();
 
                                     var stateName = $("#stateOptionInput").val();
-                                    stateName && scope.pickedWidget.addStateOption({name: stateName});
+                                    stateName && scope.activeWidget.addStateOption({name: stateName});
                                 }
 
                                 scope.createTransition = function (state, event) {
                                     event && event.stopPropagation && event.stopPropagation();
 
-                                    if (state && scope.pickedWidget) {
+                                    if (state && scope.activeWidget) {
                                         var $transitionInput = $('#' + state.id + ' .emptyTransition .transitionInput'),
                                             toStateName = $transitionInput.find("select").val(),
                                             toState;
 
                                         toStateName && toStateName !== state.name
-                                        && !scope.pickedWidget.states.every(function (s) {
+                                        && !scope.activeWidget.states.every(function (s) {
                                             if (s.context == state.context && s.name === toStateName) {
                                                 toState = s;
                                                 return false;
@@ -103,7 +108,7 @@ define(
                                         event.preventDefault && event.preventDefault();
                                     }
 
-                                    scope.pickedWidget && scope.pickedWidget.removeState(state);
+                                    scope.activeWidget && scope.activeWidget.removeState(state);
                                 }
 
                                 scope.deleteStateOption = function (stateOption, event) {
@@ -112,7 +117,7 @@ define(
                                         event.preventDefault && event.preventDefault();
                                     }
 
-                                    scope.pickedWidget && scope.pickedWidget.removeStateOption(stateOption);
+                                    scope.activeWidget && scope.activeWidget.removeStateOption(stateOption);
                                 }
 
                                 scope.deleteTransition = function (state, transition, event) {

@@ -10,7 +10,7 @@
             <span selection-order="-1" data-value="{{pickValue(unsetOptionValue)}}"></span>
         </li>
         <li ng-repeat="selection in selectionList">
-            <span ng-attr-selection-order="{{$index}}" data-value="{{pickValue(selection)}}">{{pickLabel(selection)}}</span>
+            <span ng-attr-selection-order="{{$index}}" data-value="{{pickValue(selection)}}" title="{{pickValue(selection)}}">{{pickLabel(selection)}}</span>
         </li>
     </ul>
 </div>

@@ -1,6 +1,7 @@
 @import "compass/css3/transform";
 @import "compass/css3/transition";
 @import "compass/css3/flexbox";
+@import "bootstrap/mixins/gradients";
 @import "global";
 
 $deepShadow: #555;
@@ -23,6 +24,20 @@ $deepShadow: #555;
             width: 100%;
             text-align: center;
             line-height: 1;
+        }
+
+        [widget-anchor]:hover {
+            @include gradient-horizontal-three-colors(#6699CC, #99CCFF, 50%, #ECF0F1);
+
+            &:before {
+                position: absolute;
+                width: 100%;
+                line-height: 1em;
+                content: attr(name);
+                top: calc(50% - 0.5em);
+                text-align: center;
+                font-weight: 900;
+            }
         }
     }
 

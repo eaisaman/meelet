@@ -7,8 +7,7 @@ define(
             appModule.directive("uiPage", _.union(inject, [function ($timeout, $q, $parse, angularEventTypes, angularConstants, uiUtilService, uiService) {
                 'use strict';
 
-                var boundProperties = {},
-                    defaults = {
+                var defaults = {
                         pageHolderClass: "deviceHolder",
                         pageClass: "pageHolder"
                     },
@@ -17,15 +16,13 @@ define(
 
                 return {
                     restrict: "A",
-                    scope: angular.extend({sketchObject: "=", sketchWorks: "=", dockAlign: "=", treeNodeIdPrefix: "="}, boundProperties),
+                    scope: {sketchObject: "=", sketchWorks: "=", dockAlign: "=", treeNodeIdPrefix: "="},
                     replace: false,
                     templateUrl: "include/_page.html",
                     compile: function (element, attrs) {
                         return {
                             pre: function (scope, element, attrs) {
                                 extension && extension.attach && extension.attach(scope, _.extend(injectObj, {element: element, scope: scope}));
-
-                                scope.$root.$broadcast(angularEventTypes.boundPropertiesEvent, uiUtilService.createDirectiveBoundMap(boundProperties, attrs));
 
                                 options = _.extend(_.clone(options), $parse(attrs['uiPageOpts'])(scope, {}));
                             },
@@ -46,9 +43,9 @@ define(
                                     event && event.stopPropagation && event.stopPropagation();
 
                                     var pageObj = uiService.createPage($("." + options.pageHolderClass));
-                                    pageObj.addClass("pickedWidget");
+                                    pageObj.addClass(angularConstants.widgetClasses.activeClass);
                                     pageObj.addClass(options.pageClass);
-                                    scope.sketchObject.pickedPage && scope.sketchObject.pickedPage.removeClass("pickedWidget");
+                                    scope.sketchObject.pickedPage && scope.sketchObject.pickedPage.removeClass(angularConstants.widgetClasses.activeClass);
                                     scope.sketchObject.pickedPage = pageObj;
                                     scope.sketchWorks.pages.push(pageObj);
                                 }
@@ -75,9 +72,9 @@ define(
                                         pageObj = scope.sketchWorks.pages[i],
                                         cloneObj = uiService.copyPage(pageObj, $("." + options.pageHolderClass));
 
-                                    cloneObj.addClass("pickedWidget");
+                                    cloneObj.addClass(angularConstants.widgetClasses.activeClass);
                                     cloneObj.addClass(options.pageClass);
-                                    scope.sketchObject.pickedPage && scope.sketchObject.pickedPage.removeClass("pickedWidget");
+                                    scope.sketchObject.pickedPage && scope.sketchObject.pickedPage.removeClass(angularConstants.widgetClasses.activeClass);
                                     scope.sketchObject.pickedPage = cloneObj;
                                     scope.sketchWorks.pages.splice(i + 1, 0, cloneObj);
                                 }

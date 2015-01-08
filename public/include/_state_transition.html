@@ -1,11 +1,11 @@
 <div class="stateContent ui-control-wrapper" ng-class="dockAlign">
     <div class="stateBar ui-control-bar">
         <span class="stateTitle fs-x-small icon-state-transition-before icon-state-transition-current-state-before">Current State</span>
-        <span class="stateName fs-x-medium">{{pickedWidget.state.name}}</span>
+        <span class="stateName fs-x-medium">{{activeWidget.state.name}}</span>
     </div>
     <div class="stateDetails ui-control-panel fs-x-medium">
         <div class="accordianGroup stateDefinition" ng-attr-id="{{state.id}}"
-             ng-repeat="state in pickedWidget.states|where:{context:pickedWidget.state.context}"
+             ng-repeat="state in activeWidget.states|where:{context:activeWidget.state.context}"
              ng-click="toggleSelect($event.currentTarget, $event)">
             <div class="accordianTitle col-as-12 icon-state-transition-before icon-state-transition-current-state-before">
                 <div class="deleteButton fs-x-tiny icon-state-transition-before icon-state-transition-cross-before"
@@ -131,7 +131,7 @@
 
                         <select class="form-control fs-x-small">
                             <option value="{{s.name}}"
-                                    ng-repeat="s in pickedWidget.states|where:{context:pickedWidget.state.context}"
+                                    ng-repeat="s in activeWidget.states|where:{context:activeWidget.state.context}"
                                     ng-if="s.name != state.name">{{s.name}}
                             </option>
                         </select>
@@ -139,8 +139,8 @@
                 </div>
             </div>
         </div>
-        <div class="stateOptions fs-x-small" ng-if="pickedWidget.stateOptions.length">
-            <div class="stateOption" ng-repeat="opt in pickedWidget.stateOptions"
+        <div class="stateOptions fs-x-small" ng-if="activeWidget.stateOptions.length">
+            <div class="stateOption" ng-repeat="opt in activeWidget.stateOptions"
                  ng-attr-name="{{opt.name}}"
                  ng-click="toggleExclusiveSelect($event.currentTarget, $event)">
                 <span class="icon-state-transition-before icon-state-transition-option-before">{{opt.name}}</span>

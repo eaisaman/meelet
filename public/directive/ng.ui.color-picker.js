@@ -26,7 +26,7 @@ define(
                                     scope: scope
                                 }));
 
-                                scope.$root.$broadcast(
+                                uiUtilService.broadcast(scope,
                                     angularEventTypes.boundPropertiesEvent,
                                     uiUtilService.createDirectiveBoundMap(
                                         boundProperties,

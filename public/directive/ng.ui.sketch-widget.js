@@ -15,9 +15,7 @@ define(
             var DIRECTION_VERTICAL = DIRECTION_UP | DIRECTION_DOWN;
             var DIRECTION_ALL = DIRECTION_HORIZONTAL | DIRECTION_VERTICAL;
 
-            var boundProperties = {},
-                defaults = {
-                    widgetClass: "sketchWidget",
+            var defaults = {
                     onceId: "sketch-widget.handler",
                     draggableOnceId: "draggable.dragHandler.handler"
                 },
@@ -29,9 +27,11 @@ define(
                 _.union(inject, [function ($parse, $timeout, $q, $compile, $log, angularConstants, angularEventTypes, uiUtilService, uiService) {
                     var injectObj = _.object(inject, Array.prototype.slice.call(arguments));
 
-                    var mc, resizeHandler, toggleHandler, toggleResizeOnPressHandler, toggleTextModeHandler;
+                    var resizeHandler, toggleHandler, toggleResizeOnPressHandler, toggleTextModeHandler;
 
                     function registerHandlers(scope, element) {
+                        var mc = element.data("hammer");
+
                         if (!mc) {
                             mc = new Hammer.Manager(element[0]);
                             mc.add(new Hammer.Press());
@@ -62,12 +62,12 @@ define(
                                                                     widget.appendTo(prevWidget);
                                                                 }
                                                             } else {
-                                                                prevWidget.removeClass("pickedWidget");
+                                                                prevWidget.removeClass(angularConstants.widgetClasses.activeClass);
                                                                 prevWidget.resizable && !prevWidget.isTemporary && toggleResize(prevWidget.$element, false);
                                                                 scope.sketchObject.pickedWidget = null;
                                                             }
                                                         } else {
-                                                            prevWidget.removeClass("pickedWidget");
+                                                            prevWidget.removeClass(angularConstants.widgetClasses.activeClass);
                                                             prevWidget.resizable && !prevWidget.isTemporary && toggleResize(prevWidget.$element, false);
 
                                                             if (!prevWidget.directContains(widget)) {
@@ -80,7 +80,7 @@ define(
                                                                         composite.addClass(options.widgetClass);
                                                                         scope.sketchObject.pickedWidget = composite;
                                                                     }
-                                                                    scope.sketchObject.pickedWidget.addClass("pickedWidget");
+                                                                    scope.sketchObject.pickedWidget.addClass(angularConstants.widgetClasses.activeClass);
                                                                 } else {
                                                                     scope.sketchObject.pickedWidget = null;
                                                                 }
@@ -89,17 +89,17 @@ define(
                                                     }
                                                 } else {
                                                     scope.sketchObject.pickedWidget = widget;
-                                                    scope.sketchObject.pickedWidget.addClass("pickedWidget");
+                                                    scope.sketchObject.pickedWidget.addClass(angularConstants.widgetClasses.activeClass);
                                                 }
                                             }
                                         } else {
                                             if (!scope.sketchObject.pickedWidget || scope.sketchObject.pickedWidget.id != widget.id) {
                                                 scope.sketchObject.pickedWidget = widget;
-                                                scope.sketchObject.pickedWidget.addClass("pickedWidget");
+                                                scope.sketchObject.pickedWidget.addClass(angularConstants.widgetClasses.activeClass);
                                             }
 
                                             if (prevWidget) {
-                                                prevWidget.removeClass("pickedWidget");
+                                                prevWidget.removeClass(angularConstants.widgetClasses.activeClass);
                                                 if (scope.sketchObject.pickedWidget == prevWidget)
                                                     scope.sketchObject.pickedWidget = null;
                                                 !prevWidget.isTemporary && prevWidget.isElement && prevWidget.$element && toggleTextMode(prevWidget.$element, false);
@@ -115,7 +115,13 @@ define(
                                 handler.onceId = options.onceId;
 
                                 var target = angular.isElement(event) && event || event.target,
-                                    widget = $(target).data("widgetObject");
+                                    $target = $(target);
+
+                                if ($target.attr("widget-anchor") != null) {
+                                    $target = $target.closest("[ui-sketch-widget]");
+                                }
+
+                                var widget = $target.data("widgetObject");
                                 if (widget) {
                                     uiUtilService.once(handler, null, 20)(widget, event.srcEvent && event.srcEvent.shiftKey);
                                 }
@@ -130,7 +136,7 @@ define(
 
                                         if (!scope.sketchObject.pickedWidget || scope.sketchObject.pickedWidget.id != widget.id) {
                                             scope.sketchObject.pickedWidget = widget;
-                                            scope.sketchObject.pickedWidget.addClass("pickedWidget");
+                                            scope.sketchObject.pickedWidget.addClass(angularConstants.widgetClasses.activeClass);
                                             widget.resizable && !widget.isTemporary && toggleResize(widget.$element);
                                         }
 
@@ -139,11 +145,11 @@ define(
                                                 var resizeToggled = prevWidget.resizable && !prevWidget.isTemporary && toggleResize(prevWidget.$element);
                                                 if (!resizeToggled) {
                                                     scope.sketchObject.pickedWidget = null;
-                                                    prevWidget.removeClass("pickedWidget");
+                                                    prevWidget.removeClass(angularConstants.widgetClasses.activeClass);
                                                 }
                                             } else {
                                                 prevWidget.resizable && !prevWidget.isTemporary && toggleResize(prevWidget.$element, false);
-                                                prevWidget.removeClass("pickedWidget");
+                                                prevWidget.removeClass(angularConstants.widgetClasses.activeClass);
                                             }
                                         }
 
@@ -293,14 +299,14 @@ define(
                                         prevWidget && !prevWidget.isTemporary && prevWidget.isElement && toggleTextMode(prevWidget.$element, false);
 
                                         if (!prevWidget || prevWidget.id != widget.id) {
-                                            prevWidget && prevWidget.removeClass("pickedWidget");
+                                            prevWidget && prevWidget.removeClass(angularConstants.widgetClasses.activeClass);
                                             scope.sketchObject.pickedWidget = widget;
                                             !widget.isTemporary && widget.isElement && toggleTextMode(widget.$element);
                                         } else {
                                             if (!toggleTextMode(widget.$element)) {
                                                 scope.sketchObject.pickedWidget = null;
                                             }
-                                            widget.removeClass("pickedWidget");
+                                            widget.removeClass(angularConstants.widgetClasses.activeClass);
                                         }
 
                                         defer.resolve();
@@ -375,6 +381,8 @@ define(
                     }
 
                     function unregisterHandlers(element) {
+                        var mc = element.data("hammer");
+
                         if (mc) {
                             mc.off("tap", toggleHandler);
                             mc.off("press", toggleTextModeHandler);
@@ -383,14 +391,12 @@ define(
                             //mc.off("press", toggleResizeOnPressHandler);
 
                             element.removeData("hammer");
-
-                            mc = null;
                         }
                     }
 
                     return {
                         restrict: "A",
-                        scope: angular.extend({sketchObject: "=", isPlaying: "="}, boundProperties),
+                        scope: {sketchObject: "=", isPlaying: "="},
                         replace: false,
                         compile: function (element, attrs) {
                             return {
@@ -400,17 +406,12 @@ define(
                                         scope: scope
                                     }));
 
-                                    scope.$root.$broadcast(angularEventTypes.boundPropertiesEvent, uiUtilService.createDirectiveBoundMap(boundProperties, attrs));
-
                                     options = angular.extend(options, $parse(attrs['uiSketchWidgetOpts'])(scope, {}));
-
-                                    scope.getWidgetObject = function () {
-                                        return uiService.createWidgetObj(element);
-                                    }
+                                    options.widgetClass = angularConstants.widgetClasses.widgetClass;
 
                                     //Since widget setting gesture may collide with actual playing gesture, we disable it for play.
                                     scope.$watch("isPlaying", function (value) {
-                                        var widgetObj = scope.getWidgetObject();
+                                        var widgetObj = uiService.createWidgetObj(element);
                                         widgetObj && widgetObj.setIsPlaying && widgetObj.setIsPlaying(value);
 
                                         if (value) {
@@ -422,7 +423,7 @@ define(
                                 },
                                 post: function (scope, element, attrs) {
                                     attrs.$observe(DIRECTIVE, function (value) {
-                                        scope.getWidgetObject();
+                                        uiService.createWidgetObj(element);
                                         registerHandlers(scope, element);
                                     });
 

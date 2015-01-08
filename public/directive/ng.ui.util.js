@@ -1,12 +1,13 @@
 define(
     ["angular", "jquery"],
     function () {
-        var Util = function ($timeout, $q) {
+        var Util = function ($timeout, $q, angularConstants) {
             this.$timeout = $timeout;
             this.$q = $q;
+            this.angularConstants = angularConstants;
         };
 
-        Util.$inject = ["$timeout", "$q"];
+        Util.$inject = ["$timeout", "$q", "angularConstants"];
 
         Util.prototype.rgbToHsl = function (r, g, b) {
             r /= 255, g /= 255, b /= 255;
@@ -286,27 +287,92 @@ define(
             return boundMap;
         }
 
-        Util.prototype.whilst = function (test, iterator, callback, timeout) {
+        //The root may not be set to the scope when part of the scope initialization program is executed.
+        Util.prototype.broadcast = function (scope, eventName, boundObj) {
+            var self = this;
+
+            self.whilst(function () {
+                return !scope.$root;
+            }, function (callback) {
+                callback();
+            }, function () {
+                scope.$root.$broadcast(eventName, boundObj);
+            }, self.angularConstants.checkInterval)
+        }
+
+        Util.prototype.timeout = function (callback, timeout) {
             var self = this,
                 defer = self.$q.defer();
 
-            self.$timeout(function () {
-                if (test()) {
-                    iterator(function (err) {
-                        if (err) {
-                            callback && callback(err);
-                            defer.reject(err);
-                        } else
-                            self.whilst(test, iterator, callback, timeout);
-                    });
-                }
-                else {
-                    callback && callback();
-                    defer.resolve("DONE");
-                }
-            }, timeout);
+            if (callback) {
+                var t = timeout > 0 && self.$timeout(function () {
+                        defer.reject("TIMEOUT");
+                    }, timeout) || null;
+
+                callback().then(function () {
+                    var args = Array.prototype.slice.call(arguments);
+
+                    t && self.$timeout.cancel(t);
+                    defer.resolve.apply(defer, args);
+                }, function () {
+                    var args = Array.prototype.slice.call(arguments);
+
+                    defer.reject.apply(defer, args);
+                });
+            } else {
+                self.$timeout(function () {
+                    defer.resolve();
+                });
+            }
 
             return defer.promise;
+        }
+
+        Util.prototype.whilst = function (test, iterator, callback, interval, whilstId, timeout) {
+            var self = this;
+
+            whilstId = whilstId || "whilst_" + new Date().getTime();
+            self.whilstMap = self.whilstMap || {};
+            self.whilstMap[whilstId] = self.whilstMap[whilstId] || {}
+            self.whilstMap[whilstId].defer = self.whilstMap[whilstId].defer || self.$q.defer();
+            var t = timeout > 0 && self.$timeout(function () {
+                    if (self.whilstMap[whilstId]) {
+                        self.whilstMap[whilstId].isTimeout = true;
+                        self.whilstMap[whilstId].defer.resolve("TIMEOUT");
+                        delete self.whilstMap[whilstId];
+                    }
+                }, timeout) || null;
+
+            self.$timeout(function () {
+                if (self.whilstMap[whilstId]) {
+                    var isTimeout = self.whilstMap[whilstId].isTimeout;
+
+                    if (test() && !isTimeout) {
+                        iterator(function (err) {
+                            if (err) {
+                                if (!isTimeout && t) {
+                                    self.$timeout.cancel(t);
+                                }
+                                callback && callback(err);
+                                self.whilstMap[whilstId].defer.resolve(err);
+                                delete self.whilstMap[whilstId];
+                            } else
+                                self.whilst(test, iterator, callback, interval, whilstId);
+                        });
+                    }
+                    else {
+                        if (!isTimeout && t) {
+                            self.$timeout.cancel(t);
+                        }
+
+                        callback && callback();
+                        self.whilstMap[whilstId].defer.resolve();
+                        delete self.whilstMap[whilstId];
+                    }
+                }
+            }, interval);
+
+            return self.whilstMap[whilstId].defer.promise;
         }
 
         Util.prototype.once = function (fn, callback, interval) {

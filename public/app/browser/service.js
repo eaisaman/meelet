@@ -29,7 +29,13 @@ define(
 
             var self = this,
                 defer = self.$q.defer(),
-                loadedSpec = {artifactId: repoArtifact._id, libraryName: repoLibName, version: version},
+                loadedSpec = {
+                    name: repoArtifact.name,
+                    artifactId: repoArtifact._id,
+                    libraryName: repoLibName,
+                    version: version,
+                    type: repoArtifact.type
+                },
                 repoUrl = "repo/{0}/{1}/{2}/{3}".format(
                     repoArtifact.type,
                     repoLibName,
@@ -51,6 +57,8 @@ define(
 
                         if (artifact.template)
                             loadedSpec.template = "{0}/{1}".format(repoUrl, artifact.template);
+
+                        loadedSpec.configuration = artifact.configuration;
 
                         var jsArr = [],
                             qArr = [];

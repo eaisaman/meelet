@@ -5,6 +5,7 @@
 @import "animation/directive_animation_keyframes";
 @import "animation/directive_animation";
 @import "border-editor";
+@import "widget-configurator";
 @import "color_picker";
 @import "gradient_editor";
 @import "text-shadow-editor";
@@ -20,6 +21,7 @@
 @import "normalize_include";
 
 @include border-editor(border-control);
+@include widget-configurator(widget-configurator-control);
 @include color-picker(color-control);
 @include color-picker(border-color-control);
 @include gradient-editor(fill-control);

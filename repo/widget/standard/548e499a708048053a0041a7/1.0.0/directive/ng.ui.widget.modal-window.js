@@ -18,12 +18,16 @@ define(
                         restrict: "A",
                         scope: {
                             /**
+                             * Valid states include '*', 'show'.
+                             */
+                            state: "@",
+                            /**
                              * Valid transitions include 'fadeInScaleUp', 'slideFromRight', 'slideFromBottom', 'newspaper', 'fall', 'sideFall',
                              * 'slideStickTop', 'flipHorizontal3D', 'flipVertical3D', 'sign3D', 'superScaled', 'justMe', 'slit3D', 'rotateFromBottom3D',
                              * 'rotateFromLeft3D', 'blur', 'slideFromBottomPerspective', 'slideFromRightPerspective', 'slipFromTopPerspective'
                              */
-                            transition: "@",
-                            setPerspective: "@" //Support true, false. Special modal that will add a perspective class to the html element.
+                            transition: "=?",
+                            setPerspective: "=?" //Support true, false. Special modal that will add a perspective class to the html element.
                         },
                         replace: true,
                         transclude: true,
@@ -39,6 +43,15 @@ define(
                                     scope.toggleModalWindow = function (event) {
                                         return scope.toggleDisplay('.md-modal', event);
                                     }
+
+                                    scope.$watch("state", function (value) {
+                                        if (value != null) {
+                                            scope.toggleDisplay('.md-modal', null, value === "show");
+                                        }
+                                    });
+
+                                    scope.transition= "fadeInScaleUp";
+                                    scope.setPerspective= false;
                                 },
                                 post: function (scope, element, attrs) {
                                 }
