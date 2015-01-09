@@ -154,6 +154,16 @@ define(
                 }
             }
 
+            $scope.fillParent = function (event) {
+                event && event.stopPropagation && event.stopPropagation();
+
+                var widgetObj = $scope.sketchObject.pickedWidget;
+
+                if (widgetObj && widgetObj.isElement && !widgetObj.isTemporary) {
+                    widgetObj.fillParent && widgetObj.fillParent();
+                }
+            }
+
             $scope.groupWidget = function (event) {
                 event && event.stopPropagation && event.stopPropagation();
 

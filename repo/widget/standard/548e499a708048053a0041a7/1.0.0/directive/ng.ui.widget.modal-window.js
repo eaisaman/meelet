@@ -50,8 +50,10 @@ define(
                                         }
                                     });
 
-                                    scope.transition= "fadeInScaleUp";
-                                    scope.setPerspective= false;
+                                    scope.transition = "fadeInScaleUp";
+                                    scope.setPerspective = false;
+                                    scope.modalContentWidth = "50%";
+                                    scope.modalContentHeight = "50%";
                                 },
                                 post: function (scope, element, attrs) {
                                 }

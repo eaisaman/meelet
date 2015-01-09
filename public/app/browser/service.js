@@ -368,12 +368,12 @@ define(
             });
         }
 
-        appService.prototype.loadSketch = function (sketchWorks) {
+        appService.prototype.loadSketch = function () {
             var self = this;
 
             return self.$http({
                 method: 'GET',
-                url: '/api/public/getSketch',
+                url: '/api/public/sketch',
                 params: {}
             }).then(function (result) {
                 var defer = self.$q.defer();

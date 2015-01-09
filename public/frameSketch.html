@@ -9,7 +9,7 @@
 <link rel="stylesheet" type="text/css" href="fonts/icon-shape/style.css"/>
 <link rel="stylesheet" type="text/css" href="fonts/icon-widget/style.css"/>
 <link rel="stylesheet" type="text/css" href="fonts/icon-page/style.css"/>
-<link rel="stylesheet" type="text/css" href="fonts/icon-toolbar/style.css"/>
+<link rel="stylesheet" type="text/css" href="fonts/icon-frame-sketch/style.css"/>
 <link rel="stylesheet" type="text/css" href="fonts/icon-state-transition/style.css"/>
 <link rel="stylesheet" type="text/css" href="fonts/icon-horizontal-ruler/style.css"/>
 <link rel="stylesheet" type="text/css" href="fonts/icon-vertical-ruler/style.css"/>
@@ -21,29 +21,31 @@
             <div ui-topbar picked-project="project" load-project="loadProject()">
                 <div name="extraButtons">
                     <div ng-hide="true" ng-click="zoomWidget($event)" class="topbarButton icon-toolbar-before"
-                         ng-class="{'icon-toolbar-expand-before':!zoomId, 'icon-toolbar-collapse-before':zoomId}"></div>
+                         ng-class="{'icon-frame-sketch-expand-before':!zoomId, 'icon-frame-sketch-collapse-before':zoomId}"></div>
                     <div ng-click="locateWidget($event)"
-                         class="topbarButton icon-toolbar-before icon-toolbar-locate-before"></div>
+                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-locate-before"></div>
                     <div ng-click="duplicateWidget($event)"
-                         class="topbarButton icon-toolbar-before icon-toolbar-duplicate-before"></div>
+                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-duplicate-before"></div>
                     <div ng-click="alignLeft($event)"
-                         class="topbarButton icon-toolbar-before icon-toolbar-align-left-before"></div>
+                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-align-left-before"></div>
                     <div ng-click="alignCenter($event)"
-                         class="topbarButton icon-toolbar-before icon-toolbar-align-center-before"></div>
+                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-align-center-before"></div>
                     <div ng-click="alignRight($event)"
-                         class="topbarButton icon-toolbar-before icon-toolbar-align-right-before"></div>
+                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-align-right-before"></div>
+                    <div ng-click="fillParent($event)"
+                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-fill-before"></div>
                     <div ng-click="groupWidget($event)"
-                         class="topbarButton icon-toolbar-before icon-toolbar-group-before"></div>
+                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-group-before"></div>
                     <div ng-click="ungroupWidget($event)"
-                         class="topbarButton icon-toolbar-before icon-toolbar-ungroup-before"></div>
+                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-ungroup-before"></div>
                     <div ng-click="toggleRuler($event)"
-                         class="topbarButton icon-toolbar-before icon-toolbar-ruler-before"></div>
-                    <div ng-click="togglePlayWidget($event)" class="topbarButton icon-toolbar-before"
-                         ng-class="{'icon-toolbar-play-before':!isPlaying, 'icon-toolbar-pause-before':isPlaying}"></div>
+                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-ruler-before"></div>
+                    <div ng-click="togglePlayWidget($event)" class="topbarButton icon-frame-sketch-before"
+                         ng-class="{'icon-frame-sketch-play-before':!sketchWidgetSetting.isPlaying, 'icon-frame-sketch-pause-before':sketchWidgetSetting.isPlaying}"></div>
                     <div ng-click="saveSketch($event)"
-                         class="topbarButton icon-toolbar-before icon-toolbar-save-before"></div>
+                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-save-before"></div>
                     <div ng-click="loadSketch($event)"
-                         class="topbarButton icon-toolbar-before icon-toolbar-load-before"></div>
+                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-load-before"></div>
                 </div>
             </div>
 

@@ -4,7 +4,7 @@
           ng-click="toggleOpen($event)">{{pickLabel(selection) || options.title}}</span>
 
     <div ng-style="{'z-index':'{{options.zIndex + selectionList.length}}'}" ng-click="toggleOpen($event)"
-         ng-transclude ng-show="!selection"></div>
+         ng-transclude ng-show="options.showTitle && !selection"></div>
     <ul ng-click="onSelect($event)">
         <li ng-if="options.displayUnsetOption">
             <span selection-order="-1" data-value="{{pickValue(unsetOptionValue)}}"></span>

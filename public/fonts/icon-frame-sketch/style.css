@@ -5,7 +5,7 @@
 	font-style: normal;
 }
 
-.icon-frame-sketch:before {
+.icon-frame-sketch {
 	font-family: 'icon-frame-sketch';
 	speak: none;
 	font-style: normal;
@@ -47,14 +47,194 @@
 	-moz-osx-font-smoothing: grayscale;
 }
 
-.icon-frame-sketch-exit:before {
+.icon-frame-sketch-fill:before {
 	content: "\e600";
 }
 
-.icon-frame-sketch-exit-before:before {
+.icon-frame-sketch-ruler:before {
+	content: "\e60f";
+}
+
+.icon-frame-sketch-play:before {
+	content: "\e601";
+}
+
+.icon-frame-sketch-pause:before {
+	content: "\e602";
+}
+
+.icon-frame-sketch-stop:before {
+	content: "\e603";
+}
+
+.icon-frame-sketch-align-left:before {
+	content: "\e604";
+}
+
+.icon-frame-sketch-align-center:before {
+	content: "\e605";
+}
+
+.icon-frame-sketch-align-right:before {
+	content: "\e606";
+}
+
+.icon-frame-sketch-expand:before {
+	content: "\e607";
+}
+
+.icon-frame-sketch-collapse:before {
+	content: "\e608";
+}
+
+.icon-frame-sketch-locate:before {
+	content: "\e609";
+}
+
+.icon-frame-sketch-duplicate:before {
+	content: "\e60a";
+}
+
+.icon-frame-sketch-group:before {
+	content: "\e60b";
+}
+
+.icon-frame-sketch-ungroup:before {
+	content: "\e60c";
+}
+
+.icon-frame-sketch-load:before {
+	content: "\e60e";
+}
+
+.icon-frame-sketch-save:before {
+	content: "\e022";
+}
+
+.icon-frame-sketch-fill-before:before {
 	content: "\e600";
 }
 
-.icon-frame-sketch-exit-after:after {
+.icon-frame-sketch-ruler-before:before {
+	content: "\e60f";
+}
+
+.icon-frame-sketch-play-before:before {
+	content: "\e601";
+}
+
+.icon-frame-sketch-pause-before:before {
+	content: "\e602";
+}
+
+.icon-frame-sketch-stop-before:before {
+	content: "\e603";
+}
+
+.icon-frame-sketch-align-left-before:before {
+	content: "\e604";
+}
+
+.icon-frame-sketch-align-center-before:before {
+	content: "\e605";
+}
+
+.icon-frame-sketch-align-right-before:before {
+	content: "\e606";
+}
+
+.icon-frame-sketch-expand-before:before {
+	content: "\e607";
+}
+
+.icon-frame-sketch-collapse-before:before {
+	content: "\e608";
+}
+
+.icon-frame-sketch-locate-before:before {
+	content: "\e609";
+}
+
+.icon-frame-sketch-duplicate-before:before {
+	content: "\e60a";
+}
+
+.icon-frame-sketch-group-before:before {
+	content: "\e60b";
+}
+
+.icon-frame-sketch-ungroup-before:before {
+	content: "\e60c";
+}
+
+.icon-frame-sketch-load-before:before {
+	content: "\e60e";
+}
+
+.icon-frame-sketch-save-before:before {
+	content: "\e022";
+}
+
+.icon-frame-sketch-fill-after:after {
 	content: "\e600";
+}
+
+.icon-frame-sketch-ruler-after:after {
+	content: "\e60f";
+}
+
+.icon-frame-sketch-play-after:after {
+	content: "\e601";
+}
+
+.icon-frame-sketch-pause-after:after {
+	content: "\e602";
+}
+
+.icon-frame-sketch-stop-after:after {
+	content: "\e603";
+}
+
+.icon-frame-sketch-align-left-after:after {
+	content: "\e604";
+}
+
+.icon-frame-sketch-align-center-after:after {
+	content: "\e605";
+}
+
+.icon-frame-sketch-align-right-after:after {
+	content: "\e606";
+}
+
+.icon-frame-sketch-expand-after:after {
+	content: "\e607";
+}
+
+.icon-frame-sketch-collapse-after:after {
+	content: "\e608";
+}
+
+.icon-frame-sketch-locate-after:after {
+	content: "\e609";
+}
+
+.icon-frame-sketch-duplicate-after:after {
+	content: "\e60a";
+}
+
+.icon-frame-sketch-group-after:after {
+	content: "\e60b";
+}
+
+.icon-frame-sketch-ungroup-after:after {
+	content: "\e60c";
+}
+
+.icon-frame-sketch-load-after:after {
+	content: "\e60e";
+}
+
+.icon-frame-sketch-save-after:after {
+	content: "\e022";
 }

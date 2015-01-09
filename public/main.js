@@ -49,7 +49,8 @@ require(["jquery-lib", "jquery-plugins-lib", "hammer-lib", "jquery-ui-lib", "jqu
             holderClass: "pageHolder",
             widgetClass: "sketchWidget",
             hoverClass: "widgetHover",
-            activeClass: "pickedWidget"
+            activeClass: "pickedWidget",
+            widgetContainerClass: "widgetContainer"
         },
         actionDelay: 100,
         checkInterval: 10,

@@ -47,7 +47,15 @@ define(
                 },
                 setPerspective: {
                     name: "Perspective",
-                    type:"boolean"
+                    type: "boolean"
+                },
+                modalContentWidth: {
+                    name: "Modal Width",
+                    type: "number"
+                },
+                modalContentHeight: {
+                    name: "Modal Height",
+                    type: "number"
                 }
             }
         };

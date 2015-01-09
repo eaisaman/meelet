@@ -1,4 +1,10 @@
 <div class="_widget_modalWindowContainer" version="1.0.0" ng-class="[setPerspective?'md-perspective':'']">
+    <style>
+        .md-modal {
+            width: {{modalContentWidth}} !important;
+            height: {{modalContentHeight}} !important;
+        }
+    </style>
     <div class="md-modal" ng-class="[transition]" ui-multi-transclude="modalContent">
     </div>
     <div ui-multi-transclude="mainContent" class="mainContent"></div>

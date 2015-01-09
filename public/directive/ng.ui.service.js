@@ -74,7 +74,7 @@ define(
                 },
                 fromObject: function (obj) {
                     var ret = new State(obj.node, obj.name, obj.context, obj.id);
-                    obj.transitions.forEach(function (t) {
+                    obj.transitions && obj.transitions.forEach(function (t) {
                         ret.transitions.push(Transition.prototype.fromObject(t));
                     });
 
@@ -303,7 +303,7 @@ define(
                     this.animation = animation;
                 },
                 toJSON: function () {
-                    var jsonObj = this.initialize.prototype.__proto__.toJSON.apply(this);
+                    var jsonObj = AnimationTransitionAction.prototype.__proto__.toJSON.apply(this);
                     _.extend(jsonObj, _.pick(this, ["animation", "CLASS_NAME"]));
 
                     return jsonObj;
@@ -397,7 +397,7 @@ define(
                     this.callback = callback;
                 },
                 toJSON: function () {
-                    var jsonObj = this.initialize.prototype.__proto__.toJSON.apply(this);
+                    var jsonObj = GestureTrigger.prototype.__proto__.toJSON.apply(this);
                     _.extend(jsonObj, _.pick(this, ["CLASS_NAME"]));
 
                     return jsonObj;
@@ -437,7 +437,8 @@ define(
                 CLASS_NAME: "StyleManager",
                 MEMBERS: {
                     widgetObj: null,
-                    stateMaps: {}
+                    stateMaps: {},
+                    omniClasses: [] //Classes irrelevant to widget state
                 },
                 initialize: function (widgetObj) {
                     //TODO How to group each element's style into a css class
@@ -451,13 +452,55 @@ define(
                     this.widgetObj = widgetObj;
                 },
                 toJSON: function () {
-                    return _.pick(this, ["stateMaps"], "CLASS_NAME");
+                    return _.pick(this, ["stateMaps", "omniClasses"], "CLASS_NAME");
                 },
                 fromObject: function (obj) {
                     var ret = new StyleManager();
                     ret.stateMaps = obj.stateMaps;
+                    ret.omniClasses = obj.omniClasses;
 
                     return ret;
+                },
+                addOmniClass: function (classes) {
+                    var self = this;
+
+                    if (classes) {
+                        var newClassList = _.difference(_.uniq(classes.split(" ")), self.omniClasses);
+
+                        if (newClassList.length) {
+                            newClassList.forEach(function (c) {
+                                self.omniClasses.splice(self.omniClasses.length, 0, c);
+                            });
+
+                            self.widgetObj.$element && self.widgetObj.$element.addClass(self.omniClasses.join(" "));
+                        }
+                    }
+
+                    return self;
+                },
+                removeOmniClass: function (classes) {
+                    var self = this;
+
+                    if (classes) {
+                        var removeClassList = _.uniq(classes.split(" "));
+
+                        if (removeClassList.length) {
+                            removeClassList.forEach(function (removeClazz) {
+                                var index;
+                                if (!self.omniClasses.every(function (c, i) {
+                                        if (c == removeClazz) {
+                                            index = i;
+                                            return false;
+                                        }
+                                        return true;
+                                    })) {
+                                    self.omniClasses.splice(index, 1);
+                                }
+                            });
+
+                            self.widgetObj.$element && self.widgetObj.$element.removeClass(removeClassList.join(" "));
+                        }
+                    }
                 },
                 addClass: function (classes, state, stateContext) {
                     var self = this;
@@ -539,29 +582,12 @@ define(
                     return self;
                 },
                 hasClass: function (clazz, state, stateContext) {
-                    var self = this;
+                    var self = this,
+                        classList = self.classList(state, stateContext);
 
-                    state = state || self.widgetObj.state;
-                    stateContext = stateContext || state.context;
-
-                    var stateMap = self.stateMaps[stateContext] || {},
-                        stateValue = stateMap[state.name] || {
-                                style: {},
-                                beforeStyle: {},
-                                afterStyle: {},
-                                styleSource: [],
-                                classList: []
-                            };
-
-                    if (stateMap === self.stateMaps[stateContext] && stateValue === stateMap[state.name]) {
-                        var classList = stateValue.classList;
-
-                        return !classList.every(function (c) {
-                            return c != clazz;
-                        });
-                    }
-
-                    return false;
+                    return !classList.every(function (c) {
+                        return c != clazz;
+                    });
                 },
                 classList: function (state, stateContext) {
                     var self = this;
@@ -581,7 +607,7 @@ define(
                     if (stateMap !== self.stateMaps[stateContext]) self.stateMaps[stateContext] = stateMap;
                     if (stateValue !== stateMap[state.name]) stateMap[state.name] = stateValue;
 
-                    return stateValue.classList;
+                    return _.union(stateValue.classList, self.omniClasses);
                 },
                 css: function (state, stateContext) {
                     var args = Array.prototype.slice.call(arguments);
@@ -873,7 +899,7 @@ define(
                                 classList: []
                             },
                         style = stateValue.style,
-                        classList = stateValue.classList;
+                        classList = self.classList();
 
                     if (self.widgetObj.$element) {
                         self.widgetObj.$element.addClass(classList.join(" "));
@@ -1063,7 +1089,7 @@ define(
                         });
 
                         var childWidgets = [],
-                            classes = ["ElementSketchWidgetClass"];
+                            classes = ["ElementSketchWidgetClass", "RepoSketchWidgetClass"];
                         obj.childWidgets.forEach(function (c) {
                             var className = c.CLASS_NAME,
                                 childWidget;
@@ -1459,6 +1485,16 @@ define(
 
                         return this;
                     },
+                    addOmniClass: function (classes) {
+                        this.styleManager.addOmniClass.apply(this.styleManager, [classes]);
+
+                        return this;
+                    },
+                    removeOmniClass: function (classes) {
+                        this.styleManager.removeOmniClass.apply(this.styleManager, [classes]);
+
+                        return this;
+                    },
                     hasClass: function (clazz) {
                         return this.styleManager.hasClass.apply(this.styleManager, [clazz, this.state, this.stateContext]);
                     },
@@ -1499,7 +1535,7 @@ define(
 
                             if (stateName) {
                                 if (self.states.every(function (s) {
-                                        if (s.context == self.stateContext && s.name == stateName) {
+                                        if (s.context.id == self.stateContext.id && s.name == stateName) {
                                             value = s;
                                             stateFound = true;
                                             return false;
@@ -1543,7 +1579,7 @@ define(
 
                         if (stateName) {
                             self.states.every(function (s) {
-                                if (s.context = self.stateContext && s.name == stateName) {
+                                if (s.context.id = self.stateContext.id && s.name == stateName) {
                                     state = s;
                                     return false;
                                 }
@@ -1562,7 +1598,7 @@ define(
                                 newState;
 
                             self.states.every(function (s) {
-                                return s.context != self.stateContext || s.name != stateName;
+                                return s.context.id != self.stateContext.id || s.name != stateName;
                             }) && self.stateOptions.every(function (stateOption) {
                                 if (stateOption.name == stateName) {
                                     newState = new State(self.id, stateName, self.stateContext);
@@ -1592,7 +1628,7 @@ define(
 
                                     var index;
                                     if (!self.states.every(function (state, i) {
-                                            if (state.context = self.stateContext && state.name === stateName) {
+                                            if (state.context.id = self.stateContext.id && state.name === stateName) {
                                                 index = i;
                                                 self.childWidgets.forEach(function (child) {
                                                     child.removeStateContext(state);
@@ -1619,7 +1655,7 @@ define(
                     addStateOption: function (value) {
                         var self = this;
 
-                        if (value && value.name) {
+                        if (value && value.name && value.name !== self.initialStateOption.name) {
                             if (self.stateOptions.every(function (s) {
                                     return s.name != value.name;
                                 })) {
@@ -1665,6 +1701,13 @@ define(
                                 }
                             }
                         }
+                    },
+                    getStates: function () {
+                        var self = this;
+
+                        return _.filter(self.states, function (state) {
+                            return state.context && state.context.id == self.stateContext.id;
+                        });
                     },
                     setStateContext: function (value) {
                         var self = this;
@@ -1998,7 +2041,7 @@ define(
                     }
                 },
                 toJSON: function () {
-                    var jsonObj = this.initialize.prototype.__proto__.toJSON.apply(this);
+                    var jsonObj = ElementSketchWidgetClass.prototype.__proto__.toJSON.apply(this);
                     _.extend(jsonObj, _.pick(this, ["CLASS_NAME", "html"]));
 
                     return jsonObj;
@@ -2230,6 +2273,8 @@ define(
                         }
                     }
                 },
+                fillParent: function () {
+                },
                 setTemporary: function (value) {
                     if (this.isTemporary != value && this.$element) {
                         if (value) {
@@ -2294,17 +2339,19 @@ define(
                     this.template = template;
                 },
                 toJSON: function () {
-                    var jsonObj = this.initialize.prototype.__proto__.toJSON.apply(this);
+                    var jsonObj = IncludeSketchWidgetClass.prototype.__proto__.toJSON.apply(this);
                     _.extend(jsonObj, _.pick(this, ["CLASS_NAME", "template"]));
 
                     return jsonObj;
                 },
                 fromObject: function (obj) {
-                    var ret = new IncludeSketchWidgetClass(obj.id, obj.template);
+                    var self = this;
 
-                    IncludeSketchWidgetClass.prototype.__proto__.fromObject.apply(ret, [obj]);
+                    self.template = obj.template
 
-                    return ret;
+                    IncludeSketchWidgetClass.prototype.__proto__.fromObject.apply(self, [obj]);
+
+                    return self;
                 },
                 isKindOf: function (className) {
                     var self = this;
@@ -2386,7 +2433,7 @@ define(
                     this.widgetSpec = widgetSpec;
                 },
                 toJSON: function () {
-                    var jsonObj = this.initialize.prototype.__proto__.toJSON.apply(this);
+                    var jsonObj = RepoSketchWidgetClass.prototype.__proto__.toJSON.apply(this);
                     _.extend(jsonObj, _.pick(this, ["CLASS_NAME", "widgetSpec"]));
 
                     return jsonObj;
@@ -2419,7 +2466,6 @@ define(
                             var stateOptions = stateConfiguration.options;
                             stateOptions.forEach(function (option) {
                                 RepoSketchWidgetClass.prototype.__proto__.addStateOption.apply(self, [{name: option.name}]);
-                                RepoSketchWidgetClass.prototype.__proto__.addState.apply(self, [option.name]);
                             });
                         }
 
@@ -2456,6 +2502,22 @@ define(
                         var scope = angular.element(this.$element.find(".ui-widget:nth-of-type(1) :first-child")).scope();
                         if (scope) scope.state = value;
                     }
+                },
+                setStateContext: function (value) {
+                    var self = this;
+
+                    if (value) {
+                        RepoSketchWidgetClass.prototype.__proto__.setStateContext.apply(self, [value]);
+
+                        var stateOptions = angular.copy(self.stateOptions);
+                        _.union([self.initialStateOption], stateOptions).forEach(function (stateOption) {
+                            if (self.states.every(function (s) {
+                                    return s.context.id != self.stateContext.id || s.name != stateOption.name;
+                                })) {
+                                self.states.push(new State(self.id, stateOption.name, self.stateContext));
+                            }
+                        });
+                    }
                 }
             }),
             PageSketchWidgetClass = Class(BaseSketchWidgetClass, {
@@ -2472,7 +2534,7 @@ define(
                     this.resizable = false;
                 },
                 toJSON: function () {
-                    var jsonObj = this.initialize.prototype.__proto__.toJSON.apply(this);
+                    var jsonObj = PageSketchWidgetClass.prototype.__proto__.toJSON.apply(this);
                     _.extend(jsonObj, _.pick(this, ["CLASS_NAME"]));
 
                     return jsonObj;
@@ -2530,12 +2592,16 @@ define(
                         parentWidgetObj.childWidgets.every(function (child) {
                             if (child.id === id) {
                                 widgetObj = child;
-                                widgetObj.childWidgets.splice(0, widgetObj.childWidgets.length);
                                 return false;
                             }
 
                             return true;
                         });
+                    } else if ($el.hasClass("widgetContainer") && parentWidgetObj.isKindOf("RepoSketchWidget")) {
+                        if (parentWidgetObj.childWidgets.length) {
+                            widgetObj = parentWidgetObj.childWidgets[0];
+                            widgetObj.addOmniClass(self.angularConstants.widgetClasses.widgetContainerClass);
+                        }
                     }
 
                     if (!widgetObj) {
@@ -2546,7 +2612,10 @@ define(
                         widgetObj.attr["ui-sketch-widget"] = "";
                         widgetObj.attr["is-playing"] = "sketchWidgetSetting.isPlaying";
                         widgetObj.attr["sketch-object"] = "sketchObject";
-                        widgetObj.addClass(self.angularConstants.widgetClasses.widgetClass);
+                        widgetObj.addOmniClass(self.angularConstants.widgetClasses.widgetClass);
+                        if ($el.hasClass(self.angularConstants.widgetClasses.widgetContainerClass)) {
+                            widgetObj.addOmniClass(self.angularConstants.widgetClasses.widgetContainerClass);
+                        }
                     }
 
                     widgetObj.$element = $el;
@@ -2590,7 +2659,7 @@ define(
                     widgetObj.attr["ui-sketch-widget"] = "";
                     widgetObj.attr["is-playing"] = "sketchWidgetSetting.isPlaying";
                     widgetObj.attr["sketch-object"] = "sketchObject";
-                    widgetObj.addClass(self.angularConstants.widgetClasses.widgetClass);
+                    widgetObj.addOmniClass(self.angularConstants.widgetClasses.widgetClass);
                     widgetObj.appendTo($parent);
 
                     var scope = angular.element(containerElement).scope();
@@ -2607,7 +2676,7 @@ define(
             widgetObj.attr["ui-sketch-widget"] = "";
             widgetObj.attr["is-playing"] = "sketchWidgetSetting.isPlaying";
             widgetObj.attr["sketch-object"] = "sketchObject";
-            widgetObj.addClass(self.angularConstants.widgetClasses.widgetClass);
+            widgetObj.addOmniClass(self.angularConstants.widgetClasses.widgetClass);
 
             widgetObj.appendTo(containerElement);
 
@@ -2658,7 +2727,7 @@ define(
                     compositeObj.attr["ui-sketch-widget"] = "";
                     compositeObj.attr["is-playing"] = "sketchWidgetSetting.isPlaying";
                     compositeObj.attr["sketch-object"] = "sketchObject";
-                    compositeObj.addClass(self.angularConstants.widgetClasses.widgetClass);
+                    compositeObj.addOmniClass(self.angularConstants.widgetClasses.widgetClass);
                     compositeObj.appendTo(containerElement);
 
                     var scope = angular.element(compositeObj.$element.parent()).scope();
@@ -2678,7 +2747,7 @@ define(
             pageObj.attr["ui-sketch-widget"] = "";
             pageObj.attr["is-playing"] = "sketchWidgetSetting.isPlaying";
             pageObj.attr["sketch-object"] = "sketchObject";
-            pageObj.addClass(self.angularConstants.widgetClasses.holderClass);
+            pageObj.addOmniClass(self.angularConstants.widgetClasses.holderClass);
             pageObj.appendTo(holderElement);
 
             return self.uiUtilService.whilst(function () {
