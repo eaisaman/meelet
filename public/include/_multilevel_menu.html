@@ -1,0 +1,32 @@
+<div class="multilevelMenuContainer">
+    <script type="text/ng-template" id="_multilevelSubMenu.html">
+        <li ng-repeat="item in item.list" data-value="{{pickValue(item)}}" ng-click="onSelect($event)">
+            <a href="">{{pickLabel(item)}}</a>
+
+            <div class="mp-level" ng-if="item.list && item.list.length">
+                <div class="mp-back" ng-click="goBack($event)">Back</div>
+                <ul ng-include="'_multilevelSubMenu.html'">
+                </ul>
+            </div>
+        </li>
+    </script>
+    <div class="openButton" ng-transclude ng-click="toggleMenu($event)"></div>
+
+    <div class="barContent" ng-click="$event.stopPropagation()">
+        <nav class="mp-menu">
+            <div class="mp-level" data-level="1">
+                <ul>
+                    <li ng-repeat="item in menuList" data-value="{{pickValue(item)}}" ng-click="onSelect($event)">
+                        <a href="">{{pickLabel(item)}}</a>
+
+                        <div class="mp-level" ng-if="item.list && item.list.length">
+                            <div class="mp-back" ng-click="goBack($event)">Back</div>
+                            <ul ng-include="'_multilevelSubMenu.html'">
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</div>

@@ -18,7 +18,8 @@ define(
                          * 'rotateFromLeft3D', 'blur', 'slideFromBottomPerspective', 'slideFromRightPerspective', 'slipFromTopPerspective'
                          */
                         transition: "@",
-                        setPerspective: "@" //Support true, false. Special modal that will add a perspective class to the html element.
+                        setPerspective: "@", //Support true, false. Special modal that will add a perspective class to the html element.
+                        onWindowClose: '&'
                     },
                     replace: true,
                     transclude: true,
@@ -32,7 +33,18 @@ define(
                                 }));
 
                                 scope.toggleModalWindow = function (event) {
-                                    return scope.toggleDisplay('.md-modal', event);
+                                    return scope.toggleDisplay('.md-modal', event).then(function () {
+                                        var defer = $q.defer();
+                                        $timeout(function () {
+                                            if (!element.find(".md-modal").hasClass("show")) {
+                                                scope.onWindowClose && scope.onWindowClose();
+                                            }
+
+                                            defer.resolve();
+                                        });
+
+                                        return defer.promise;
+                                    });
                                 }
                             },
                             post: function (scope, element, attrs) {

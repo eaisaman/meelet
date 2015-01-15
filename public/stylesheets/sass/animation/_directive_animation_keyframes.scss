@@ -412,8 +412,8 @@
 }
 
 /* Slide 100% width from current position to right
- * Used by directive ng.ui.dock, ng.ui-color-editor-palette, ng.ui.state-transition
- * Found in _dock.html, _color-editor-palette.html, _state_transition.html
+ * Used by directive ng.ui.dock, ng.ui-color-editor-palette
+ * Found in _dock.html, _color-editor-palette.html
  */
 @include slideRightKeyframes(slideRight);
 
@@ -430,8 +430,8 @@
 @include slideLeftKeyframes(slideLeft);
 
 /* Slide from the position 100% width left to original one back
- * Used by directive ng.ui-color-editor-palette
- * Found in _color-editor-palette.html
+ * Used by directive ng.ui-color-editor-palette, ng.ui.state-transition
+ * Found in _color-editor-palette.html, _state_transition.html
  */
 @include slideLeftRetournKeyframes(slideLeftRetourn);
 

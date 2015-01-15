@@ -7,6 +7,7 @@ require.config(
             "ng.ui.hammer-gestures": DIRECTIVE_LIB_PATH + "ng.ui.hammer-gestures",
             "ng.ui.draggable": DIRECTIVE_LIB_PATH + "ng.ui.draggable",
             "ng.ui.multi-transclude": DIRECTIVE_LIB_PATH + "ng.ui.multi-transclude",
+            "ng.ui.multilevel-menu": DIRECTIVE_LIB_PATH + "ng.ui.multilevel-menu",
             "ng.ui.sketch-widget": DIRECTIVE_LIB_PATH + "ng.ui.sketch-widget",
             "ng.ui.horizontal-ruler": DIRECTIVE_LIB_PATH + "ng.ui.horizontal-ruler",
             "ng.ui.vertical-ruler": DIRECTIVE_LIB_PATH + "ng.ui.vertical-ruler",
@@ -39,6 +40,7 @@ define([
         "ng.ui.hammer-gestures",
         "ng.ui.draggable",
         "ng.ui.multi-transclude",
+        "ng.ui.multilevel-menu",
         "ng.ui.sketch-widget",
         "ng.ui.simple-dropdown",
         "ng.ui.horizontal-ruler",
@@ -79,75 +81,78 @@ define([
             //Multi transclude
             directiveConfigs[2](appModule, extension);
 
-            //Sketch widget directive
+            //Multilevel Menu
             directiveConfigs[3](appModule, extension);
 
-            //Simple Dropdown
+            //Sketch widget directive
             directiveConfigs[4](appModule, extension);
 
-            //Horizontal ruler directive
+            //Simple Dropdown
             directiveConfigs[5](appModule, extension);
 
-            //Vertical ruler directive
+            //Horizontal ruler directive
             directiveConfigs[6](appModule, extension);
 
+            //Vertical ruler directive
+            directiveConfigs[7](appModule, extension);
+
             //Border Editor
-            directiveConfigs[7](appModule, extension, {
+            directiveConfigs[8](appModule, extension, {
                 borderJson: "directive/border.json"
             });
 
             //Color Editor Palette
-            directiveConfigs[8](appModule, extension, {
+            directiveConfigs[9](appModule, extension, {
                 colorJson: "directive/color-editor-palette.json"
             });
 
             //Color Picker
-            directiveConfigs[9](appModule, extension);
+            directiveConfigs[10](appModule, extension);
 
             //Gradient Editor
-            directiveConfigs[10](appModule, extension, {
+            directiveConfigs[11](appModule, extension, {
                 colorJson: "directive/gradient-editor-color.json"
             });
 
             //Text Shadow Editor
-            directiveConfigs[11](appModule, extension, {
+            directiveConfigs[12](appModule, extension, {
                 textShadowJson: "directive/text-shadow.json"
             });
 
             //Box Shadow Editor
-            directiveConfigs[12](appModule, extension, {
+            directiveConfigs[13](appModule, extension, {
                 boxShadowJson: "directive/box-shadow.json"
             });
 
             //Shape
-            directiveConfigs[13](appModule, extension);
-
-            //Widget
             directiveConfigs[14](appModule, extension);
 
-            //Widget Configurator
+            //Widget
             directiveConfigs[15](appModule, extension);
 
-            //Page
+            //Widget Configurator
             directiveConfigs[16](appModule, extension);
 
-            //Dock
+            //Page
             directiveConfigs[17](appModule, extension);
 
-            //Topbar
+            //Dock
             directiveConfigs[18](appModule, extension);
 
-            //Toolbar
+            //Topbar
             directiveConfigs[19](appModule, extension);
 
+            //Toolbar
+            directiveConfigs[20](appModule, extension);
+
             //State transition
-            directiveConfigs[20](appModule, extension, {
+            directiveConfigs[21](appModule, extension, {
                 triggerJson: "directive/trigger.json",
                 animationJson: "directive/animation.json"
             });
 
             //Modal window
-            directiveConfigs[21](appModule, extension);
+            directiveConfigs[22](appModule, extension);
         }
     }
 );

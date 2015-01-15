@@ -1,6 +1,6 @@
 [
   {
-    "group": "Bling",
+    "name": "Bling",
     "thumbnailStyle": {
       "classList": [
         "fs-x-small-before",
@@ -37,7 +37,7 @@
     ]
   },
   {
-    "group": "Static Effects",
+    "name": "Static Effects",
     "thumbnailStyle": {
       "classList": [
         "fs-x-small-before",
@@ -98,7 +98,7 @@
     ]
   },
   {
-    "group": "Static Effects Out",
+    "name": "Static Effects/Out",
     "thumbnailStyle": {
       "classList": [
         "fs-x-small-before",
@@ -135,7 +135,7 @@
     ]
   },
   {
-    "group": "Perspective",
+    "name": "Perspective",
     "thumbnailStyle": {
       "classList": [
         "fs-x-small-before",
@@ -196,7 +196,7 @@
     ]
   },
   {
-    "group": "Rotate",
+    "name": "Rotate",
     "thumbnailStyle": {
       "classList": [
         "fs-x-small-before",
@@ -233,7 +233,7 @@
     ]
   },
   {
-    "group": "Slide",
+    "name": "Slide",
     "thumbnailStyle": {
       "classList": [
         "fs-x-small-before",
@@ -294,7 +294,7 @@
     ]
   },
   {
-    "group": "Math",
+    "name": "Math",
     "thumbnailStyle": {
       "classList": [
         "fs-x-small-before",
@@ -337,7 +337,7 @@
     ]
   },
   {
-    "group": "Tin",
+    "name": "Tin",
     "thumbnailStyle": {
       "classList": [
         "fs-x-small-before",
@@ -398,7 +398,7 @@
     ]
   },
   {
-    "group": "Bomb",
+    "name": "Bomb",
     "thumbnailStyle": {
       "classList": [
         "fs-x-small-before",

@@ -57,7 +57,7 @@ define(
                 },
                 barContentWidth: {
                     name: "Bar Width",
-                    type: "number"
+                    type: "size"
                 }
             }
         };

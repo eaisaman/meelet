@@ -64,18 +64,25 @@ define(
                     for (var member in MEMBERS) {
                         this[member] = angular.copy(MEMBERS[member]);
                     }
-                    this.node = node;
+                    if (typeof node === "string") {
+                        this.node = node;
+                    } else {
+                        this.widgetObj = node;
+                        this.node = node.id;
+                    }
                     this.context = context;
                     this.name = name;
                     this.id = id || "State_" + new Date().getTime();
                 },
                 toJSON: function () {
-                    return _.extend(_.pick(this, ["id", "node", "name", "transition"], "CLASS_NAME"), {context: this.context && this.context.node !== "?" && this.context.id || ""});
+                    return _.extend(_.pick(this, ["id", "node", "name", "transitions"], "CLASS_NAME"), {context: this.context && this.context.node !== "?" && this.context.id || ""});
                 },
                 fromObject: function (obj) {
                     var ret = new State(obj.node, obj.name, obj.context, obj.id);
                     obj.transitions && obj.transitions.forEach(function (t) {
-                        ret.transitions.push(Transition.prototype.fromObject(t));
+                        var transition = Transition.prototype.fromObject(t);
+                        transition.state = ret;
+                        ret.transitions.push(transition);
                     });
 
                     return ret;
@@ -86,14 +93,8 @@ define(
                 toString: function () {
                     return this.node !== "?" && this.id || "?";
                 },
-                addTransition: function (toState) {
-                    var self = this;
-
-                    if (toState && toState.context === self.context) {
-                        self.transitions.every(function (t) {
-                            return t.toState.name !== toState.name;
-                        }) && self.transitions.push(new Transition(self, toState));
-                    }
+                addTransition: function (name) {
+                    this.transitions.push(new Transition(name, this));
                 },
                 removeToState: function (toState) {
                     var self = this;
@@ -111,6 +112,7 @@ define(
                 },
                 clone: function () {
                     var cloneObj = new State(this.node, this.name, this.context);
+                    cloneObj.widgetObj = this.widgetObj;
 
                     return cloneObj;
                 }
@@ -119,35 +121,39 @@ define(
                 CLASS_NAME: "Transition",
                 MEMBERS: {
                     id: "",
+                    name: "",
                     state: null,
-                    toState: null,
                     trigger: null,
                     actionObj: null
                 },
-                initialize: function (state, toState, id) {
+                initialize: function (name, state, id) {
                     var MEMBERS = arguments.callee.prototype.MEMBERS;
 
                     for (var member in MEMBERS) {
                         this[member] = angular.copy(MEMBERS[member]);
                     }
 
+                    this.name = name;
                     this.state = state;
-                    this.toState = toState;
                     this.id = id || "Transition_" + new Date().getTime();
+                    this.actionObj = new SequenceTransitionAction();
+
+                    if (typeof state === "object") {
+                        this.actionObj.widgetObj = state.widgetObj;
+                    }
                 },
                 toJSON: function () {
-                    return _.extend(_.pick(this, ["id", "trigger", "actionObj"], "CLASS_NAME"), {
-                        state: this.state.id,
-                        toState: this.toState.id
+                    return _.extend(_.pick(this, ["name", "id", "trigger", "actionObj"], "CLASS_NAME"), {
+                        state: this.state.id
                     });
                 },
                 fromObject: function (obj) {
-                    var ret = new Transition(obj.state, obj.toState, obj.id);
+                    var ret = new Transition(obj.name, null, obj.id);
 
                     obj.trigger && ret.setTrigger(obj.trigger.triggerType, obj.trigger.eventName, obj.trigger.options);
 
                     if (obj.actionObj) {
-                        var classes = ["AnimationTransitionAction"],
+                        var classes = ["SequenceTransitionAction"],
                             className = obj.actionObj.CLASS_NAME,
                             actionObj;
 
@@ -209,25 +215,12 @@ define(
                 setAction: function (actionObj) {
                     this.actionObj = actionObj;
                 },
-                setAnimationAction: function (animation) {
-                    this.setAction(new AnimationTransitionAction(angular.copy(animation)));
-                },
                 setTrigger: function (triggerType, eventName, options) {
                     var self = this,
                         trigger;
 
                     function triggerCallback(event, widgetObj) {
-                        var $q = $inject.$q,
-                            defer = $q.defer();
-
-                        self.actionObj && $q.all([self.actionObj.doAction(widgetObj)]).then(
-                            function (actionObjs) {
-                                actionObjs.forEach(function (obj) {
-                                    obj && obj.restoreWidget(widgetObj);
-                                });
-                                widgetObj.setState(self.toState);
-                            }
-                        );
+                        self.actionObj && self.actionObj.doAction();
                     }
 
                     if (triggerType === "Gesture") {
@@ -249,15 +242,8 @@ define(
                 registerTrigger: function (widgetObj) {
                     this.trigger && widgetObj.isPlaying && this.trigger.on(widgetObj);
                 },
-                unregisterTrigger: function (restoreWidget) {
-                    if (this.trigger) {
-                        var widgetObj = this.trigger.widgetObj;
-
-                        this.trigger.off();
-                        if (widgetObj && restoreWidget && this.actionObj) {
-                            this.actionObj.restoreWidget(widgetObj);
-                        }
-                    }
+                unregisterTrigger: function () {
+                    this.trigger && this.trigger.off();
                 }
             }),
             BaseTransitionAction = Class({
@@ -265,42 +251,138 @@ define(
                 MEMBERS: {
                     id: "",
                     actionType: "",
-                    name: ""
+                    widgetObj: null
                 },
-                initialize: function (actionType, name, id) {
+                initialize: function (widgetObj, actionType, id) {
                     var MEMBERS = arguments.callee.prototype.MEMBERS;
 
                     for (var member in MEMBERS) {
                         this[member] = angular.copy(MEMBERS[member]);
                     }
 
+                    this.widgetObj = widgetObj;
                     this.actionType = actionType;
-                    this.name = name;
                     this.id = id || "TransitionAction_" + new Date().getTime();
                 },
                 toJSON: function () {
-                    return _.pick(this, ["id", "actionType", "name"], "CLASS_NAME");
+                    return _.pick(this, ["id", "actionType"], "CLASS_NAME");
+                    return _.extend(_.pick(this, ["id", "actionType"], "CLASS_NAME"), {
+                        widgetObj: this.widgetObj.id
+                    });
                 },
                 fromObject: function (obj) {
+                    var self = this;
+
+                    BaseSketchWidgetClass.prototype.matchReference(obj.widgetObj, function (obj) {
+                        self.widgetObj = obj;
+                    });
                 },
                 doAction: function (widgetObj) {
                 },
                 restoreWidget: function (widgetObj) {
                 }
             }),
-            AnimationTransitionAction = Class(BaseTransitionAction, {
-                CLASS_NAME: "AnimationTransitionAction",
+            SequenceTransitionAction = Class(BaseTransitionAction, {
+                CLASS_NAME: "SequenceTransitionAction",
                 MEMBERS: {
-                    animation: null
+                    childActions: []
                 },
-                initialize: function (animation, id) {
-                    this.initialize.prototype.__proto__.initialize.apply(this, ["Animation", animation.name, id]);
+                initialize: function (widgetObj, id) {
+                    this.initialize.prototype.__proto__.initialize.apply(this, [widgetObj, "Sequence", id]);
                     var MEMBERS = arguments.callee.prototype.MEMBERS;
 
                     for (var member in MEMBERS) {
                         this[member] = angular.copy(MEMBERS[member]);
                     }
-                    this.animation = animation;
+                },
+                toJSON: function () {
+                    var jsonObj = SequenceTransitionAction.prototype.__proto__.toJSON.apply(this);
+                    _.extend(jsonObj, _.pick(this, ["childActions", "CLASS_NAME"]));
+
+                    return jsonObj;
+                },
+                fromObject: function (obj) {
+                    var ret = new SequenceTransitionAction(obj.widgetObj, obj.id);
+
+                    SequenceTransitionAction.prototype.__proto__.fromObject.apply(ret, [obj]);
+
+                    var classes = ["AnimationTransitionAction", "StateTransitionAction", "ConfigurationTransitionAction"];
+                    obj.childActions && obj.childActions.forEach(function (action) {
+                        var className = action.CLASS_NAME,
+                            actionObj;
+
+                        classes.every(function (clazz) {
+                            if (eval("className === {0}.prototype.CLASS_NAME".format(clazz))) {
+                                actionObj = eval("{0}.prototype.fromObject(action)".format(clazz));
+                                ret.childActions.push(actionObj);
+                                return false;
+                            }
+
+                            return true;
+                        });
+                    });
+
+                    return ret;
+                },
+                doAction: function () {
+                    var self = this,
+                        whilstId = "SequenceTransitionAction.doAction." + self.widgetObj.id,
+                        actionIndex = 0,
+                        defer = $inject.$q.defer();
+
+                    $inject.uiUtilService.whilst(function () {
+                            return actionIndex < self.childActions.length;
+                        }, function (callback) {
+                            var actionObj = self.childActions[actionIndex++];
+
+                            actionObj.doAction().then(function () {
+                                callback();
+                            });
+                        }, function (err) {
+                            if (!err) {
+                                defer.resolve(self);
+                            } else {
+                                defer.reject();
+                            }
+                        },
+                        $inject.angularConstants.checkInterval,
+                        whilstId,
+                        $inject.angularConstants.renderTimeout
+                    );
+
+                    $inject.$timeout(function () {
+                        defer.resolve(self);
+                    });
+
+                    return defer.promise;
+                },
+                addAction: function (actionType) {
+                    var action;
+
+                    if (actionType === "Animation") {
+                        action = new AnimationTransitionAction(this.widgetObj);
+                    } else if (actionType === "State") {
+                        action = new StateTransitionAction(this.widgetObj, this.widgetObj.initialStateOption.name);
+                    } else if (actionType === "Configuration") {
+                        action = new ConfigurationTransitionAction(this.widgetObj);
+                    }
+
+                    action && this.childActions.push(action);
+                }
+            }),
+            AnimationTransitionAction = Class(BaseTransitionAction, {
+                CLASS_NAME: "AnimationTransitionAction",
+                MEMBERS: {
+                    animation: {}
+                },
+                initialize: function (widgetObj, animation, id) {
+                    this.initialize.prototype.__proto__.initialize.apply(this, [widgetObj, "Animation", id]);
+                    var MEMBERS = arguments.callee.prototype.MEMBERS;
+
+                    for (var member in MEMBERS) {
+                        this[member] = angular.copy(MEMBERS[member]);
+                    }
+                    this.animation = animation || this.animation;
                 },
                 toJSON: function () {
                     var jsonObj = AnimationTransitionAction.prototype.__proto__.toJSON.apply(this);
@@ -309,26 +391,27 @@ define(
                     return jsonObj;
                 },
                 fromObject: function (obj) {
-                    var ret = new AnimationTransitionAction(obj.animation, obj.id);
+                    var ret = new AnimationTransitionAction(obj.widgetObj, obj.animation, obj.id);
 
                     AnimationTransitionAction.prototype.__proto__.fromObject.apply(ret, [obj]);
 
                     return ret;
                 },
-                doAction: function (widgetObj) {
+                doAction: function () {
                     var self = this,
                         defer = $inject.$q.defer();
 
-                    if (widgetObj.$element && widgetObj.$element.parent().length) {
+                    if (self.widgetObj.$element && self.widgetObj.$element.parent().length) {
                         self.cssAnimation = _.extend(
                             $inject.uiUtilService.prefixedStyle("animation", "{0} {1}s {2}", self.animation.name, self.animation.options.duration || 1, self.animation.options.timing || "")
                         );
 
-                        widgetObj.$element.css(self.cssAnimation);
+                        self.widgetObj.$element.css(self.cssAnimation);
 
-                        var animationName = widgetObj.$element.css("animation-name");
+                        var animationName = self.widgetObj.$element.css("animation-name");
                         if (animationName && animationName !== "none") {
-                            $inject.uiUtilService.onAnimationEnd(widgetObj.$element).then(function () {
+                            $inject.uiUtilService.onAnimationEnd(self.widgetObj.$element).then(function () {
+                                self.restoreWidget();
                                 defer.resolve(self);
                             });
 
@@ -342,14 +425,121 @@ define(
 
                     return defer.promise;
                 },
-                restoreWidget: function (widgetObj) {
+                restoreWidget: function () {
                     var self = this;
 
-                    if (widgetObj && self.cssAnimation) {
+                    if (self.widgetObj && self.cssAnimation) {
                         for (var key in self.cssAnimation) {
-                            widgetObj.$element.css(key, "");
+                            self.widgetObj.$element.css(key, "");
                         }
                     }
+                }
+            }),
+            StateTransitionAction = Class(BaseTransitionAction, {
+                CLASS_NAME: "StateTransitionAction",
+                MEMBERS: {
+                    newState: ""
+                },
+                initialize: function (widgetObj, newState, id) {
+                    this.initialize.prototype.__proto__.initialize.apply(this, [widgetObj, "State", id]);
+                    var MEMBERS = arguments.callee.prototype.MEMBERS;
+
+                    for (var member in MEMBERS) {
+                        this[member] = angular.copy(MEMBERS[member]);
+                    }
+                    this.newState = newState || this.newState;
+                },
+                toJSON: function () {
+                    var jsonObj = StateTransitionAction.prototype.__proto__.toJSON.apply(this);
+                    _.extend(jsonObj, _.pick(this, ["newState", "CLASS_NAME"]));
+
+                    return jsonObj;
+                },
+                fromObject: function (obj) {
+                    var ret = new StateTransitionAction(obj.widgetObj, obj.newState, obj.id);
+
+                    StateTransitionAction.prototype.__proto__.fromObject.apply(ret, [obj]);
+
+                    return ret;
+                },
+                doAction: function () {
+                    var self = this,
+                        defer = $inject.$q.defer();
+
+                    $inject.$timeout(function () {
+                        self.widgetObj.setState(self.newState);
+
+                        if (self.widgetObj.$element && self.widgetObj.$element.parent().length) {
+                            var animationName = self.widgetObj.$element.css("animation-name");
+                            if (animationName && animationName !== "none") {
+                                $inject.uiUtilService.onAnimationEnd(self.widgetObj.$element).then(function () {
+                                    defer.resolve(self);
+                                });
+                            }
+                        }
+                        defer.resolve(self);
+                    });
+
+                    return defer.promise;
+                }
+            }),
+            ConfigurationTransitionAction = Class(BaseTransitionAction, {
+                CLASS_NAME: "ConfigurationTransitionAction",
+                MEMBERS: {
+                    configuration: {}
+                },
+                initialize: function (widgetObj, configuration, id) {
+                    this.initialize.prototype.__proto__.initialize.apply(this, [widgetObj, "Configuration", id]);
+                    var MEMBERS = arguments.callee.prototype.MEMBERS;
+
+                    for (var member in MEMBERS) {
+                        this[member] = angular.copy(MEMBERS[member]);
+                    }
+                    if (widgetObj) {
+                        this.configuration = widgetObj.widgetSpec && widgetObj.widgetSpec.configuration || null;
+                    }
+                    this.configuration = this.configuration || configuration;
+                    this.configuration = angular.copy(this.configuration);
+                },
+                toJSON: function () {
+                    var jsonObj = ConfigurationTransitionAction.prototype.__proto__.toJSON.apply(this);
+
+                    _.extend(jsonObj, _.pick(this, ["configuration", "CLASS_NAME"]));
+
+                    return jsonObj;
+                },
+                fromObject: function (obj) {
+                    _.values(obj.configuration).forEach(function (value) {
+                        value.options && value.options.forEach(function (option) {
+                            delete option["$$hashKey"];
+                        });
+                    });
+
+                    var ret = new ConfigurationTransitionAction(obj.widgetObj, obj.configuration, obj.id);
+
+                    ConfigurationTransitionAction.prototype.__proto__.fromObject.apply(ret, [obj]);
+
+                    return ret;
+                },
+                doAction: function () {
+                    var self = this,
+                        defer = $inject.$q.defer();
+
+                    $inject.$timeout(function () {
+                        self.widgetObj.setConfiguration && self.widgetObj.setConfiguration(self.configuration);
+
+                        if (self.widgetObj.$element && self.widgetObj.$element.parent().length) {
+                            var animationName = self.widgetObj.$element.css("animation-name");
+                            if (animationName && animationName !== "none") {
+                                $inject.uiUtilService.onAnimationEnd(self.widgetObj.$element).then(function () {
+                                    defer.resolve(self);
+                                });
+                            }
+                        }
+                        defer.resolve(self);
+                    });
+
+                    return defer.promise;
                 }
             }),
             BaseTrigger = Class({
@@ -410,6 +600,7 @@ define(
                     return ret;
                 },
                 on: function (widgetObj) {
+                    //FIXME For RepoSketchWidget, hammer should listen on child element of class widgetContainer
                     var self = this;
 
                     if (widgetObj && widgetObj.$element && widgetObj.$element.parent().length && self.eventName) {
@@ -1045,9 +1236,45 @@ define(
                         }
                         this.id = id || ("Widget_" + new Date().getTime());
                         this.stateContext = this.STATE_CONTEXT;
-                        this.state = new State(this.id, this.initialStateOption.name, this.STATE_CONTEXT);
+                        this.state = new State(this, this.initialStateOption.name, this.STATE_CONTEXT);
                         this.states.push(this.state);
                         this.styleManager = new StyleManager(this);
+
+                        var proto = BaseSketchWidgetClass.prototype;
+                        if (proto.objectMap) {
+                            var value = proto.objectMap[this.id] || {callbacks: []};
+                            proto.objectMap[this.id] = value;
+                            value.item = this;
+                            value.callbacks.forEach(function (callback) {
+                                callback.call(null, value);
+                            });
+                            value.callbacks.splice(0, value.callbacks.length);
+                        }
+                    },
+                    dispose: function () {
+                        var self = this;
+
+                        self.remove();
+                    },
+                    startMatchReference: function () {
+                        var proto = BaseSketchWidgetClass.prototype;
+                        proto.objectMap = proto.objectMap || {};
+                    },
+                    matchReference: function (id, callback) {
+                        var proto = BaseSketchWidgetClass.prototype;
+                        if (proto.objectMap) {
+                            var value = proto.objectMap[id] || {callbacks: []};
+                            if (value.item) {
+                                callback(value.item);
+                            } else {
+                                proto.objectMap[id] = value;
+                                value.callbacks.push(callback);
+                            }
+                        }
+                    },
+                    endMatchReference: function () {
+                        var proto = BaseSketchWidgetClass.prototype;
+                        delete proto.objectMap;
                     },
                     toJSON: function () {
                         return _.extend(_.pick(this, ["id", "name", "childWidgets", "anchor", "attr", "styleManager", "states", "stateOptions"]), {
@@ -1059,6 +1286,7 @@ define(
                         var self = this;
 
                         self.anchor = obj.anchor;
+                        self.name = obj.name;
                         self.attr = _.omit(obj.attr, ["$$hashKey"]);
                         self.styleManager = StyleManager.prototype.fromObject(obj.styleManager);
                         self.styleManager.widgetObj = self;
@@ -1071,6 +1299,7 @@ define(
                         obj.states.forEach(function (s) {
                             var state = State.prototype.fromObject(s);
                             if (state) {
+                                state.widgetObj = self;
                                 self.states.push(state);
                                 stateMap[state.id] = state;
                                 if (!state.context) {
@@ -1080,12 +1309,6 @@ define(
                                     self.state = state;
                                 }
                             }
-                        });
-                        self.states.forEach(function (s) {
-                            s.transitions.forEach(function (t) {
-                                t.state = stateMap[t.state];
-                                t.toState = stateMap[t.toState];
-                            });
                         });
 
                         var childWidgets = [],
@@ -1104,7 +1327,8 @@ define(
                             });
                             if (childWidget) {
                                 childWidget.states.forEach(function (s) {
-                                    s.context = stateMap[s.context];
+                                    if (typeof s.context === "string")
+                                        s.context = stateMap[s.context];
                                 });
                                 childWidgets.push(childWidget);
                             }
@@ -1545,14 +1769,14 @@ define(
                                     })) {
                                     if (self.stateOptions.every(function (stateOption) {
                                             if (stateOption.name == stateName) {
-                                                value = new State(self.id, stateName, self.stateContext);
+                                                value = new State(self, stateName, self.stateContext);
                                                 return false;
                                             }
 
                                             return true;
                                         })) {
                                         if (self.initialStateOption.name == stateName)
-                                            value = new State(self.id, self.initialStateOption.name, self.stateContext);
+                                            value = new State(self, self.initialStateOption.name, self.stateContext);
                                         else
                                             value = null;
                                     }
@@ -1601,7 +1825,7 @@ define(
                                 return s.context.id != self.stateContext.id || s.name != stateName;
                             }) && self.stateOptions.every(function (stateOption) {
                                 if (stateOption.name == stateName) {
-                                    newState = new State(self.id, stateName, self.stateContext);
+                                    newState = new State(self, stateName, self.stateContext);
                                     self.states.push(newState);
                                     return false;
                                 }
@@ -1702,11 +1926,13 @@ define(
                             }
                         }
                     },
-                    getStates: function () {
-                        var self = this;
+                    getStates: function (context) {
+                        var self = this,
+                            states = _.clone(self.states),
+                            context = context || self.stateContext;
 
-                        return _.filter(self.states, function (state) {
-                            return state.context && state.context.id == self.stateContext.id;
+                        return _.filter(states, function (state) {
+                            return state.context && state.context.id == context.id;
                         });
                     },
                     setStateContext: function (value) {
@@ -2347,7 +2573,7 @@ define(
                 fromObject: function (obj) {
                     var self = this;
 
-                    self.template = obj.template
+                    self.template = obj.template;
 
                     IncludeSketchWidgetClass.prototype.__proto__.fromObject.apply(self, [obj]);
 
@@ -2363,57 +2589,79 @@ define(
 
                     IncludeSketchWidgetClass.prototype.__proto__.appendTo.apply(self, [container]);
 
-                    return $inject.uiUtilService.timeout(
-                        function () {
-                            var defer = $inject.$q.defer();
+                    if (self.$element) {
+                        return $inject.uiUtilService.whilst(function () {
+                                return !angular.element(self.$element).scope();
+                            }, function (callback) {
+                                callback();
+                            }, function (err) {
+                                var defer = $inject.$q.defer();
 
-                            var scope = angular.element(self.$element).scope();
-                            scope.$on("$includeContentLoaded", function () {
-                                function reAttachHandler() {
-                                    var $element = self.$element,
-                                        $parent = $element.parent(),
-                                        reAttachDefer = $inject.$q.defer(),
-                                        whilstId = "IncludeSketchWidgetClass.appendTo.reAttachHandler";
+                                if (!err) {
+                                    self.$element.attr("ng-include", "'" + self.template + "'");
 
-                                    $inject.uiUtilService.whilst(function () {
-                                            return !$parent.find("#" + self.id).length;
-                                        }, function (callback) {
-                                            callback();
-                                        }, function (err) {
-                                            if (!err) {
-                                                self.$element = null;
-                                                self.attach($parent.find("#" + self.id));
-                                                if (self.$element) {
-                                                    IncludeSketchWidgetClass.prototype.__proto__.appendTo.apply(self, [container]);
-                                                }
+                                    var $parent = self.$element.parent(),
+                                        scope = angular.element(self.$element).scope();
 
-                                                reAttachDefer.resolve();
+                                    scope.$on("$includeContentLoaded", function () {
+                                        function completionScanner() {
+                                            return $inject.uiUtilService.whilst(function () {
+                                                    return !$parent.find("#" + self.id).length;
+                                                }, function (callback) {
+                                                    callback();
+                                                }, null,
+                                                $inject.angularConstants.checkInterval,
+                                                "IncludeSketchWidgetClass.appendTo.completionScanner",
+                                                $inject.angularConstants.renderTimeout
+                                            );
+                                        }
+
+                                        completionScanner.onceId = "IncludeSketchWidgetClass.appendTo.completionScanner";
+
+                                        $inject.uiUtilService.once(completionScanner, function (err) {
+                                            if (err) {
+                                                defer.reject(err);
                                             } else {
-                                                reAttachDefer.reject();
+                                                defer.resolve(self);
                                             }
-                                        },
-                                        $inject.angularConstants.checkInterval,
-                                        whilstId,
-                                        $inject.angularConstants.renderTimeout
-                                    );
+                                        }, 20)();
+                                    });
 
-                                    return reAttachDefer.promise;
+                                    $inject.$compile(self.$element)(scope);
+                                } else {
+                                    $inject.$timeout(function () {
+                                        defer.reject(err);
+                                    });
                                 }
 
-                                reAttachHandler.onceId = "IncludeSketchWidgetClass.appendTo.reAttachHandler";
+                                return defer.promise;
+                            },
+                            $inject.angularConstants.checkInterval,
+                            "IncludeSketchWidgetClass.appendTo",
+                            $inject.angularConstants.renderTimeout
+                        ).then(function (err) {
+                                var defer = $inject.$q.defer();
 
-                                $inject.uiUtilService.once(reAttachHandler, function () {
-                                    defer.resolve();
-                                }, 20)();
-                            });
+                                $inject.$timeout(function () {
+                                    if (err) {
+                                        defer.reject(err);
+                                    } else {
+                                        defer.resolve(self);
+                                    }
+                                });
 
-                            self.$element.attr("ng-include", "'" + self.template + "'");
-                            $inject.$compile(self.$element)(scope);
+                                return defer.promise;
+                            }
+                        );
+                    } else {
+                        var defer = $inject.$q.defer();
 
-                            return defer.promise;
-                        },
-                        $inject.angularConstants.loadTimeout
-                    );
+                        $inject.$timeout(function () {
+                            defer.resolve(self);
+                        });
+
+                        return defer.promise;
+                    }
                 }
             }),
             RepoSketchWidgetClass = Class(IncludeSketchWidgetClass, {
@@ -2431,6 +2679,9 @@ define(
 
                     this.resizable = false;
                     this.widgetSpec = widgetSpec;
+                },
+                dispose: function () {
+                    RepoSketchWidgetClass.prototype.__proto__.dispose.apply(this);
                 },
                 toJSON: function () {
                     var jsonObj = RepoSketchWidgetClass.prototype.__proto__.toJSON.apply(this);
@@ -2453,38 +2704,79 @@ define(
                 appendTo: function (container) {
                     var self = this;
 
-                    return $inject.appService.loadRepoArtifact({
-                        _id: self.widgetSpec.artifactId,
-                        name: self.widgetSpec.name,
-                        type: self.widgetSpec.type
-                    }, self.widgetSpec.libraryName, self.widgetSpec.version).then(function (loadedSpec) {
-                        self.widgetSpec = loadedSpec;
-                        self.template = loadedSpec.template;
+                    return RepoSketchWidgetClass.prototype.__proto__.appendTo.apply(self, [container]).then(
+                        function () {
+                            return $inject.appService.loadRepoArtifact({
+                                _id: self.widgetSpec.artifactId,
+                                name: self.widgetSpec.name,
+                                type: self.widgetSpec.type
+                            }, self.widgetSpec.libraryName, self.widgetSpec.version).then(
+                                function (loadedSpec) {
+                                    var defer = $inject.$q.defer();
 
-                        var stateConfiguration = loadedSpec.configuration.state;
-                        if (stateConfiguration) {
-                            var stateOptions = stateConfiguration.options;
-                            stateOptions.forEach(function (option) {
-                                RepoSketchWidgetClass.prototype.__proto__.addStateOption.apply(self, [{name: option.name}]);
-                            });
-                        }
+                                    $inject.$timeout(function () {
+                                        self.widgetSpec = loadedSpec;
+                                        self.template = loadedSpec.template;
 
-                        return self.initialize.prototype.__proto__.appendTo.apply(self, [container]).then(function () {
-                            var defer = $inject.$q.defer();
+                                        var stateConfiguration = loadedSpec.configuration.state;
+                                        if (stateConfiguration) {
+                                            var stateOptions = stateConfiguration.options;
+                                            stateOptions.forEach(function (option) {
+                                                RepoSketchWidgetClass.prototype.__proto__.addStateOption.apply(self, [{name: option.name}]);
+                                            });
+                                        }
+
+                                        self.$element && self.$element.addClass("widgetIncludeAnchor");
+                                        defer.resolve();
+                                    });
+
+                                    return defer.promise;
+                                },
+                                function (err) {
+                                    var errorDefer = $inject.$q.defer();
+
+                                    $inject.$timeout(function () {
+                                        errorDefer.reject(err);
+                                    });
+
+                                    return errorDefer.promise;
+                                }
+                            );
+                        },
+                        function (err) {
+                            var errorDefer = $inject.$q.defer();
 
                             $inject.$timeout(function () {
-                                self.$element && self.$element.addClass("widgetIncludeAnchor");
-                                defer.resolve();
+                                errorDefer.reject(err);
                             });
 
-                            return defer.promise;
-                        });
-                    });
+                            return errorDefer.promise;
+                        }
+                    );
                 },
                 setConfiguration: function (key, value) {
-                    if (this.$element && this.$element.parent().length) {
-                        var scope = angular.element(this.$element.find(".ui-widget:nth-of-type(1) :first-child")).scope();
-                        if (scope) scope[key] = value;
+                    var self = this;
+
+                    if (self.$element && self.$element.parent().length) {
+                        var scope = angular.element(self.$element.find(".ui-widget:nth-of-type(1) :first-child")).scope();
+
+                        if (typeof key === "object") {
+                            _.each(key, function (item) {
+                                if (item.type === "list") {
+                                    scope[item.key] = item.pickedOption;
+                                } else if (item.type === "number") {
+                                    var m = (item.numberValue || "").match(/([-\d\.]+)(px|%)+$/)
+                                    if (m && m.length == 3) {
+                                        scope[item.key] = item.numberValue;
+                                    }
+                                } else if (item.type === "boolean") {
+                                    scope[item.key] = item.booleanValue;
+                                }
+                            });
+                        }
+                        else if (typeof key === "string") {
+                            scope[key] = value;
+                        }
                     }
                 },
                 addState: function () {
@@ -2500,7 +2792,7 @@ define(
 
                     if (this.$element && this.$element.parent().length) {
                         var scope = angular.element(this.$element.find(".ui-widget:nth-of-type(1) :first-child")).scope();
-                        if (scope) scope.state = value;
+                        scope.state = value;
                     }
                 },
                 setStateContext: function (value) {
@@ -2509,12 +2801,13 @@ define(
                     if (value) {
                         RepoSketchWidgetClass.prototype.__proto__.setStateContext.apply(self, [value]);
 
+                        //Initialize states from the widget setting
                         var stateOptions = angular.copy(self.stateOptions);
                         _.union([self.initialStateOption], stateOptions).forEach(function (stateOption) {
                             if (self.states.every(function (s) {
                                     return s.context.id != self.stateContext.id || s.name != stateOption.name;
                                 })) {
-                                self.states.push(new State(self.id, stateOption.name, self.stateContext));
+                                self.states.push(new State(self, stateOption.name, self.stateContext));
                             }
                         });
                     }
@@ -2540,9 +2833,14 @@ define(
                     return jsonObj;
                 },
                 fromObject: function (obj) {
-                    var ret = new PageSketchWidgetClass(obj.id);
+                    //Match marshalled widget id with created widget object.
+                    //Some objects may marshall widget id instead of the object. In order to restore object reference, match process will be handled.
+                    PageSketchWidgetClass.prototype.__proto__.startMatchReference.apply(null);
 
+                    var ret = new PageSketchWidgetClass(obj.id);
                     PageSketchWidgetClass.prototype.__proto__.fromObject.apply(ret, [obj]);
+
+                    PageSketchWidgetClass.prototype.__proto__.endMatchReference.apply(null);
 
                     return ret;
                 },
@@ -2582,50 +2880,52 @@ define(
                     $parentElement = $el.parent("[ui-sketch-widget]");
                 }
 
-                var parentWidgetObj = $parentElement.data("widgetObject");
-                if (parentWidgetObj) {
-                    var widgetObj,
-                        id = $el.attr("id");
+                if ($parentElement.length) {
+                    var parentWidgetObj = $parentElement.data("widgetObject");
+                    if (parentWidgetObj) {
+                        var widgetObj,
+                            id = $el.attr("id");
 
-                    //Fetch widget object if found
-                    if (id) {
-                        parentWidgetObj.childWidgets.every(function (child) {
-                            if (child.id === id) {
-                                widgetObj = child;
-                                return false;
+                        //Fetch widget object if found
+                        if (id) {
+                            parentWidgetObj.childWidgets.every(function (child) {
+                                if (child.id === id) {
+                                    widgetObj = child;
+                                    return false;
+                                }
+
+                                return true;
+                            });
+                        } else if ($el.hasClass(self.angularConstants.widgetClasses.widgetContainerClass) && parentWidgetObj.isKindOf("RepoSketchWidget")) {
+                            if (parentWidgetObj.childWidgets.length) {
+                                widgetObj = parentWidgetObj.childWidgets[0];
+                                widgetObj.addOmniClass(self.angularConstants.widgetClasses.widgetContainerClass);
                             }
-
-                            return true;
-                        });
-                    } else if ($el.hasClass("widgetContainer") && parentWidgetObj.isKindOf("RepoSketchWidget")) {
-                        if (parentWidgetObj.childWidgets.length) {
-                            widgetObj = parentWidgetObj.childWidgets[0];
-                            widgetObj.addOmniClass(self.angularConstants.widgetClasses.widgetContainerClass);
                         }
-                    }
 
-                    if (!widgetObj) {
-                        widgetObj = new ElementSketchWidgetClass();
+                        if (!widgetObj) {
+                            widgetObj = new ElementSketchWidgetClass();
 
-                        widgetObj.attr["ui-draggable"] = $el.attr("ui-draggable");
-                        widgetObj.attr["ui-draggable-opts"] = $el.attr("ui-draggable-opts");
-                        widgetObj.attr["ui-sketch-widget"] = "";
-                        widgetObj.attr["is-playing"] = "sketchWidgetSetting.isPlaying";
-                        widgetObj.attr["sketch-object"] = "sketchObject";
-                        widgetObj.addOmniClass(self.angularConstants.widgetClasses.widgetClass);
-                        if ($el.hasClass(self.angularConstants.widgetClasses.widgetContainerClass)) {
-                            widgetObj.addOmniClass(self.angularConstants.widgetClasses.widgetContainerClass);
+                            widgetObj.attr["ui-draggable"] = $el.attr("ui-draggable");
+                            widgetObj.attr["ui-draggable-opts"] = $el.attr("ui-draggable-opts");
+                            widgetObj.attr["ui-sketch-widget"] = "";
+                            widgetObj.attr["is-playing"] = "sketchWidgetSetting.isPlaying";
+                            widgetObj.attr["sketch-object"] = "sketchObject";
+                            widgetObj.addOmniClass(self.angularConstants.widgetClasses.widgetClass);
+                            if ($el.hasClass(self.angularConstants.widgetClasses.widgetContainerClass)) {
+                                widgetObj.addOmniClass(self.angularConstants.widgetClasses.widgetContainerClass);
+                            }
                         }
+
+                        widgetObj.$element = $el;
+                        widgetObj.anchor = anchor;
+                        $el.attr("id", widgetObj.id);
+                        $el.data("widgetObject", widgetObj);
+
+                        BaseSketchWidgetClass.prototype.appendTo.apply(widgetObj, [parentWidgetObj]);
+
+                        return widgetObj;
                     }
-
-                    widgetObj.$element = $el;
-                    widgetObj.anchor = anchor;
-                    $el.attr("id", widgetObj.id);
-                    $el.data("widgetObject", widgetObj);
-
-                    ElementSketchWidgetClass.prototype.appendTo.apply(widgetObj, [parentWidgetObj]);
-
-                    return widgetObj;
                 }
             }
         }
@@ -2775,15 +3075,27 @@ define(
             cloneObj.removeClass(self.angularConstants.widgetClasses.activeClass);
             cloneObj.appendTo(holderElement);
 
-            var scope = angular.element(cloneObj.$element.parent()).scope();
-            $inject.$compile(cloneObj.$element.parent())(scope);
+            return self.uiUtilService.whilst(function () {
+                return !angular.element(cloneObj.$element.parent()).scope();
+            }, function (callback) {
+                callback();
+            }, function () {
+                var scope = angular.element(cloneObj.$element.parent()).scope();
+                $inject.$compile(cloneObj.$element.parent())(scope);
+            }).then(function () {
+                var defer = self.$q.defer();
 
-            return cloneObj;
+                self.$timeout(function () {
+                    defer.resolve(cloneObj);
+                });
+
+                return defer.promise;
+            }, self.angularConstants.checkInterval);
         }
 
         Service.prototype.fromObject = function (obj) {
             var className = obj.CLASS_NAME,
-                classes = ["PageSketchWidgetClass", "ElementSketchWidgetClass", "StyleManager", "State", "Transition", "GestureTrigger", "AnimationTransitionAction"],
+                classes = ["PageSketchWidgetClass"],
                 ret;
 
             classes.every(function (clazz) {

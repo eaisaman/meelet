@@ -13,7 +13,7 @@ $tabHeaderWidth: 6em;
 $numOfControlGroups: 3;
 $controlGroupTitleWidth: 8em;
 $numOfStructureControls: 11;
-$dockWidth: 8em;
+$dockWidth: 10em;
 $expandedDockWidth: 12em;
 
 @mixin dock($dockId) {
@@ -115,6 +115,7 @@ $expandedDockWidth: 12em;
                     float: left;
                     width: 100%;
                     height: 100%;
+                    background: #fff;
 
                     .ui-control-group-titles {
                         height: 2em;

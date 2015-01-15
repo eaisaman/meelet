@@ -2,9 +2,9 @@ define(
     ["angular", "jquery"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$timeout", "$q", "$parse", "uiUtilService"];
+            var inject = ["$timeout", "$q", "$parse", "angularConstants", "uiUtilService"];
 
-            appModule.directive("uiSimpleDropdown", _.union(inject, [function ($timeout, $q, $parse, uiUtilService) {
+            appModule.directive("uiSimpleDropdown", _.union(inject, [function ($timeout, $q, $parse, angularConstants, uiUtilService) {
                 'use strict';
 
                 var boundProperties = {
@@ -247,7 +247,7 @@ define(
 
                                 scope.$watch("selectItem", function (val) {
                                     if (scope.pickValue(scope.selection) != val) {
-                                        if (scope.selectionList.every(function (s) {
+                                        if (scope.selectionList && scope.selectionList.every(function (s) {
                                                 if (scope.pickValue(s) == val) {
                                                     scope.selection = s;
                                                     return false;
@@ -262,7 +262,7 @@ define(
 
                                 $timeout(function () {
                                     closeDropdown();
-                                });
+                                }, angularConstants.actionDelay);
                             }
                         }
                     }

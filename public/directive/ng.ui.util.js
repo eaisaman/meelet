@@ -179,7 +179,7 @@ define(
         Util.prototype.prefixedStyle = function (style, format) {
             var styleObj = {};
 
-            if (style && format) {
+            if (style && format != null) {
                 var prefixes = ["-webkit-", "-moz-", "-ms-", "-o-", ""],
                     values = Array.prototype.slice.call(arguments, 2);
 
@@ -391,12 +391,21 @@ define(
             return function () {
                 var args = Array.prototype.slice.call(arguments);
 
-                fn.apply(null, args).then(function () {
-                        var callbackArgs = Array.prototype.slice.call(arguments);
-
+                fn.apply(null, args).then(
+                    function () {
                         self.$timeout(
                             function () {
-                                callback && callback.apply(null, callbackArgs);
+                                callback && callback();
+
+                                delete self.onceMap[onceId];
+                            },
+                            interval
+                        )
+                    },
+                    function (err) {
+                        self.$timeout(
+                            function () {
+                                callback && callback(err);
 
                                 delete self.onceMap[onceId];
                             },

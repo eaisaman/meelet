@@ -83,6 +83,16 @@ define(
                 }
             }
 
+            $scope.removeWidget = function (event) {
+                event && event.stopPropagation && event.stopPropagation();
+
+                var widgetObj = $scope.sketchObject.pickedWidget;
+
+                if (widgetObj && !widgetObj.isTemporary && !widgetObj.isKindOf("PageSketchWidget")) {
+                    widgetObj.dispose();
+                }
+            }
+
             $scope.locateWidget = function (event) {
                 event && event.stopPropagation && event.stopPropagation();
 
@@ -215,19 +225,45 @@ define(
             $scope.showDemo = function (event) {
                 event && event.stopPropagation();
 
+                $scope.modalUsage = "Demo";
                 appService.loadRepoArtifact($scope.sketchWidgetSetting.pickedArtifact, $scope.sketchWidgetSetting.pickedLibrary.name, "", "#frameSketchWidgetDemoArea").then(function () {
                     var scope = angular.element($("#frameSketchContainer .md-modal")).scope();
                     scope.toggleModalWindow();
                 });
             }
 
-            $scope.hideDemo = function (event) {
+            $scope.showWidgetName = function (callback, event) {
                 event && event.stopPropagation();
 
+                $scope.modalUsage = "WidgetName";
+                $("#newWidgetName").val("");
+                if (callback) {
+                    $scope.onModalClose = function () {
+                        callback($("#newWidgetName").val());
+                    };
+                }
                 var scope = angular.element($("#frameSketchContainer .md-modal")).scope();
                 scope.toggleModalWindow();
             }
 
+            $scope.hideModal = function (event) {
+                event && event.stopPropagation();
+
+                var scope = angular.element($("#frameSketchContainer .md-modal")).scope();
+                scope.toggleModalWindow().then(function () {
+                    $scope.onModalClose = null;
+                });
+            }
+
+            $scope.confirmWidgetName = function (event) {
+                event && event.stopPropagation();
+
+                var scope = angular.element($("#frameSketchContainer .md-modal")).scope();
+                scope.toggleModalWindow().then(function () {
+                    $scope.onModalClose && $scope.onModalClose();
+                    $scope.onModalClose = null;
+                });
+            }
             $scope.isConfigurable = function (widgetObj) {
                 return uiService.isConfigurable(widgetObj);
             }
@@ -326,6 +362,10 @@ define(
                         }
                     }
                 }
+            });
+
+            $scope.$on(angularEventTypes.beforeWidgetCreationEvent, function (event, fn) {
+                $scope.showWidgetName(fn);
             });
 
             function initMaster() {

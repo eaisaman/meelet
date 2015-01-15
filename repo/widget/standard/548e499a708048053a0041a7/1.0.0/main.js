@@ -51,11 +51,11 @@ define(
                 },
                 modalContentWidth: {
                     name: "Modal Width",
-                    type: "number"
+                    type: "size"
                 },
                 modalContentHeight: {
                     name: "Modal Height",
-                    type: "number"
+                    type: "size"
                 }
             }
         };

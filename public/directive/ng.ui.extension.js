@@ -30,7 +30,8 @@ define(
             return function (selector, event, state) {
                 event && event.stopPropagation && event.stopPropagation();
 
-                var $el;
+                var $el,
+                    defer = $q.defer();
 
                 if (typeof selector == "string")
                     $el = element.find(selector);
@@ -40,8 +41,6 @@ define(
                     $el = element;
 
                 if (state == null || $el.hasClass("expanded") ^ state) {
-                    var defer = $q.defer();
-
                     if ($el.hasClass("expanded")) {
                         $el.removeClass("expanded");
                         $el.addClass("collapsing");
@@ -73,11 +72,13 @@ define(
                             );
                         }
                     }
-
-                    return defer.promise;
                 } else {
-                    return angular.noop;
+                    $timeout(function () {
+                        defer.resolve(selector);
+                    });
                 }
+
+                return defer.promise;
             };
         }
 
@@ -85,7 +86,8 @@ define(
             return function (selector, event, state) {
                 event && event.stopPropagation && event.stopPropagation();
 
-                var $el;
+                var $el,
+                    defer = $q.defer();
 
                 if (typeof selector == "string")
                     $el = element.find(selector);
@@ -95,7 +97,6 @@ define(
                     $el = element;
 
                 if (state == null || $el.hasClass("show") ^ state) {
-                    var defer = $q.defer();
                     if ($el.hasClass("show")) {
                         $el.removeClass("show");
                         $el.addClass("hiding");
@@ -128,11 +129,13 @@ define(
                             );
                         }
                     }
-
-                    return defer.promise;
                 } else {
-                    return angular.noop;
+                    $timeout(function () {
+                        defer.resolve(selector);
+                    });
                 }
+
+                return defer.promise;
             };
         }
 
@@ -140,7 +143,8 @@ define(
             return function (selector, event, state) {
                 event && event.stopPropagation && event.stopPropagation();
 
-                var $el;
+                var $el,
+                    defer = $q.defer();
 
                 if (typeof selector == "string")
                     $el = element.find(selector);
@@ -150,8 +154,6 @@ define(
                     $el = element;
 
                 if (state == null || $el.hasClass("enable") ^ state) {
-                    var defer = $q.defer();
-
                     $el.toggleClass("enable");
                     if (!$el.css("animation-name") || $el.css("animation-name") === "none") {
                         $timeout(function () {
@@ -164,11 +166,13 @@ define(
                             }
                         );
                     }
-
-                    return defer.promise;
                 } else {
-                    return angular.noop;
+                    $timeout(function () {
+                        defer.resolve($el.hasClass("enable"));
+                    });
                 }
+
+                return defer.promise;
             };
         }
 
@@ -236,7 +240,8 @@ define(
             return function (selector, event, state) {
                 event && event.stopPropagation && event.stopPropagation();
 
-                var $el;
+                var $el,
+                    defer = $q.defer();
 
                 if (typeof selector == "string")
                     $el = element.find(selector);
@@ -246,8 +251,6 @@ define(
                     $el = element;
 
                 if (state == null || $el.hasClass("select") ^ state) {
-                    var defer = $q.defer();
-
                     $el.toggleClass("select");
                     if (!$el.css("animation-name") || $el.css("animation-name") === "none") {
                         $timeout(function () {
@@ -260,11 +263,13 @@ define(
                             }
                         );
                     }
-
-                    return defer.promise;
                 } else {
-                    return angular.noop;
+                    $timeout(function () {
+                        defer.resolve(selector);
+                    });
                 }
+
+                return defer.promise;
             };
         }
 

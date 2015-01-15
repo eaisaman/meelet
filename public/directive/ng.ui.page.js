@@ -42,12 +42,21 @@ define(
                                 scope.insertPage = function (event) {
                                     event && event.stopPropagation && event.stopPropagation();
 
-                                    var pageObj = uiService.createPage($("." + options.pageHolderClass));
-                                    pageObj.addClass(angularConstants.widgetClasses.activeClass);
-                                    pageObj.addClass(options.pageClass);
-                                    scope.sketchObject.pickedPage && scope.sketchObject.pickedPage.removeClass(angularConstants.widgetClasses.activeClass);
-                                    scope.sketchObject.pickedPage = pageObj;
-                                    scope.sketchWorks.pages.push(pageObj);
+                                    uiUtilService.broadcast(scope,
+                                        angularEventTypes.beforeWidgetCreationEvent,
+                                        function (name) {
+                                            if (name) {
+                                                uiService.createPage($("." + options.pageHolderClass)).then(function(pageObj) {
+                                                    pageObj.name = name;
+                                                    pageObj.addClass(angularConstants.widgetClasses.activeClass);
+                                                    pageObj.addClass(options.pageClass);
+                                                    scope.sketchObject.pickedPage && scope.sketchObject.pickedPage.removeClass(angularConstants.widgetClasses.activeClass);
+                                                    scope.sketchObject.pickedPage = pageObj;
+                                                    scope.sketchWorks.pages.push(pageObj);
+                                                });
+                                            }
+                                        }
+                                    );
                                 }
 
                                 scope.removePage = function (event) {
@@ -68,15 +77,23 @@ define(
                                 scope.copyPage = function (event) {
                                     event && event.stopPropagation && event.stopPropagation();
 
-                                    var i = $(".pageList select").val(),
-                                        pageObj = scope.sketchWorks.pages[i],
-                                        cloneObj = uiService.copyPage(pageObj, $("." + options.pageHolderClass));
+                                    uiUtilService.broadcast(scope,
+                                        angularEventTypes.beforeWidgetCreationEvent,
+                                        function (name) {
+                                            if (name) {
+                                                var i = $(".pageList select").val(),
+                                                    pageObj = scope.sketchWorks.pages[i];
 
-                                    cloneObj.addClass(angularConstants.widgetClasses.activeClass);
-                                    cloneObj.addClass(options.pageClass);
-                                    scope.sketchObject.pickedPage && scope.sketchObject.pickedPage.removeClass(angularConstants.widgetClasses.activeClass);
-                                    scope.sketchObject.pickedPage = cloneObj;
-                                    scope.sketchWorks.pages.splice(i + 1, 0, cloneObj);
+                                                uiService.copyPage(pageObj, $("." + options.pageHolderClass)).then(function (cloneObj) {
+                                                    cloneObj.addClass(angularConstants.widgetClasses.activeClass);
+                                                    cloneObj.addClass(options.pageClass);
+                                                    scope.sketchObject.pickedPage && scope.sketchObject.pickedPage.removeClass(angularConstants.widgetClasses.activeClass);
+                                                    scope.sketchObject.pickedPage = cloneObj;
+                                                    scope.sketchWorks.pages.splice(i + 1, 0, cloneObj);
+                                                });
+                                            }
+                                        }
+                                    );
                                 }
 
                                 scope.toggleSelectState = function (item, event) {

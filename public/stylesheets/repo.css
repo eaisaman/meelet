@@ -44,41 +44,6 @@
 #repoTypeDropdown .cd-dropdown.cd-active > span:after {
   content: '\25B2';
 }
-#repoTypeDropdown .cd-dropdown > div {
-  position: relative;
-  width: 100%;
-  height: 2em;
-  color: #999;
-  font-weight: 700;
-  background: #fff;
-  display: block;
-  cursor: pointer;
-  overflow: hidden;
-  -moz-backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  -moz-user-select: -moz-none;
-  -ms-user-select: none;
-  -webkit-user-select: none;
-  user-select: none;
-  -webkit-touch-callout: none;
-}
-#repoTypeDropdown .cd-dropdown > div > * {
-  width: calc(100% - 2em);
-  line-height: 2;
-}
-#repoTypeDropdown .cd-dropdown > div:after {
-  content: '\25BC';
-  position: absolute;
-  right: 0px;
-  width: 2em;
-  line-height: 2;
-  text-align: center;
-  border-left: 1px solid #ddd;
-}
-#repoTypeDropdown .cd-dropdown.cd-active > div:after {
-  content: '\25B2';
-}
 #repoTypeDropdown .cd-dropdown ul {
   list-style-type: none;
   margin: 0;

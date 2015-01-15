@@ -1,0 +1,177 @@
+@mixin multilevel-menu($multilevelMenuId, $multilevelMenuClass, $activeColor) {
+    $multilevelMenu: null;
+
+    @if $multilevelMenuId != null {
+        $multilevelMenu: "#" + $multilevelMenuId;
+    } @else {
+        $multilevelMenu: "." + $multilevelMenuClass;
+    }
+
+    #{$multilevelMenu}.multilevelMenuContainer {
+        &.select {
+            > .openButton:after {
+                content: '\25B2';
+            }
+
+            > .barContent {
+                visibility: visible;
+            }
+        }
+
+        > .openButton {
+            position: relative;
+            width: 100%;
+            height: 2em;
+            line-height: 2;
+            color: #999;
+            font-weight: 700;
+            background: #fff;
+            cursor: pointer;
+
+            @include backface-visibility(hidden);
+            @include user-select(none);
+            @include box-shadow(0 1px 4px #A4A4A4);
+            -webkit-touch-callout: none;
+
+            span {
+                position: relative;
+                float: left;
+                width: calc(100% - 0.25em);
+                padding-left: 0.25em;
+                height: 2em;
+                line-height: 2;
+            }
+
+            &:after {
+                position: absolute;
+                content: '\25BC';
+                right: 0;
+                width: 2em;
+                line-height: 2;
+                text-align: center;
+                border-left: 1px solid #ddd;
+            }
+        }
+
+        > .barContent {
+            position: relative;
+            float: left;
+            width: 100%;
+            height: auto;
+            z-index: 100;
+            visibility: hidden;
+
+            .mp-menu {
+                position: relative;
+                float: left;
+                width: 100%;
+                height: auto;
+                top: 5px;
+
+                /* content style */
+                ul {
+                    margin: 0;
+                    padding: 0;
+                    list-style: none;
+
+                    li a:hover {
+                        color: #fff;
+                        background: $activeColor;
+                    }
+
+                    li > a {
+                        position: relative;
+                        float: left;
+                        padding-left: 0.5em;
+                        width: 100%;
+                        line-height: 2.5;
+                        text-decoration: none;
+                        color: #999;
+                        outline: none;
+
+                        &:after {
+                            position: absolute;
+                            bottom: 0;
+                            left: 0;
+                            padding-left: 0.5em;
+                            width: 100%;
+                            height: 0px;
+                            content: '';
+                            border-top: 1px solid #CACDC0;
+                            border-bottom: 1px solid #FFF;
+                        }
+
+                        @include transition(background 0.3s, box-shadow 0.3s);
+                    }
+                }
+
+                .mp-level {
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    width: 100%;
+                    height: auto;
+                    background: #eee;
+
+                    @include transition(transform 0.3s);
+
+                    .mp-level {
+                        @include translate3d(-100%, 0, 0);
+                    }
+
+                    &.mp-level-overlay {
+                        cursor: pointer;
+
+                        > ul > li:not(.item-open) {
+                            display: none;
+                        }
+
+                        .mp-level:not(.mp-level-open) > ul > li {
+                            display: none;
+                        }
+
+                        &:after {
+                            width: 100%;
+                            height: 100%;
+                            opacity: 1;
+
+                            @include transition(opacity 0.3s);
+                        }
+                    }
+                }
+
+                > .mp-level, .mp-level.mp-level-open {
+                    opacity: 1;
+                    @include translate3d(0, 0, 0);
+                }
+
+                .mp-level.mp-level-open > ul > li > .mp-level:not(.mp-level-open) {
+                    opacity: 0;
+
+                    @include translate3d(-100%, 0, 0);
+                }
+            }
+
+            .mp-back {
+                position: relative;
+                float: left;
+                width: 100%;
+                background: rgba(0, 0, 0, 0.1);
+                outline: none;
+                color: #999;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                font-weight: 700;
+                padding-left: 0.5em;
+
+                @include box-shadow(inset 0 2px rgba(0, 0, 0, 0.2));
+                @include transition(background 0.3s);
+
+                &:hover {
+                    color: #fff;
+                    background: $activeColor;
+                }
+            }
+        }
+    }
+}

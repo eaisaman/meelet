@@ -2,9 +2,18 @@
 @import "compass/css3/transition";
 @import "bootstrap/mixins/gradients";
 @import "global";
+@import "multilevel-menu";
+@import "simple-dropdown";
+@import "angular-ui-tree";
 
 $underlineLinearGradient: (rgb(235, 235, 235) 0%, rgb(235, 235, 235) 50%, #fff 100%);
 $tabHeaderWidth: 6em;
+$maxNumOfConfigurationItems: 10;
+
+@include multilevel-menu(animationMultilevelMenu, null, $activeColor);
+@include simple-dropdown(null, widgetObjStateDropdown, $activeColor);
+@include simple-dropdown(null, configurationItemList, $activeColor);
+@include angular-ui-tree(actionWidgetTree);
 
 @mixin state-transition($stateEditorId) {
     ##{$stateEditorId} {
@@ -207,147 +216,281 @@ $tabHeaderWidth: 6em;
                                                     }
                                                 }
 
-                                                > .transition-action-wrapper {
+                                                .transition-action-wrapper {
                                                     position: relative;
                                                     float: left;
                                                     width: 100%;
                                                     height: auto;
                                                     margin-top: 0.5em;
 
-                                                    &.expanded {
-                                                        .transition-action-bar {
-                                                            @include box-shadow(0 8px 6px -6px black);
-                                                        }
-                                                    }
-
-                                                    &.collapsing {
-                                                        .transition-action-bar {
-                                                            @include box-shadow(0 8px 6px -6px black);
-                                                        }
-                                                    }
-
-                                                    > .transition-action-bar {
+                                                    .accordianGroup {
                                                         position: relative;
                                                         float: left;
                                                         width: 100%;
-                                                        height: 2em;
 
-                                                        &:before {
+                                                        > .accordianTitle {
                                                             position: relative;
                                                             float: left;
-                                                        }
-
-                                                        > span {
-                                                            position: relative;
-                                                            float: left;
-                                                            height: 2em;
-                                                            line-height: 2;
-
-                                                            @include emboss-title("", false);
-                                                        }
-
-                                                        > .animationPane {
-                                                            position: relative;
-                                                            float: left;
-                                                            height: 2em;
-                                                            overflow: hidden;
-                                                            line-height: 2;
-                                                            text-align: center;
-                                                        }
-
-                                                        @include emboss-title(":before", false);
-                                                    }
-
-                                                    > .transition-action-panel {
-                                                        position: relative;
-                                                        float: left;
-                                                        width: 100%;
-                                                        height: auto;
-                                                        margin-top: 5px;
-
-                                                        @include flipDownOrigin();
-
-                                                        &.show {
-                                                            @extend %flipDown;
-                                                        }
-
-                                                        &.hiding {
-                                                            @extend %flipUp;
-                                                        }
-
-                                                        > .animationOptions {
-                                                            position: relative;
                                                             width: 100%;
-                                                            overflow: hidden;
+                                                            text-align: left;
+                                                            z-index: 1;
+                                                            line-height: 2;
+                                                            background: #fff;
 
-                                                            > .input-group {
+                                                            &:after {
+                                                                position: absolute;
+                                                                right: 0;
+                                                                bottom: 0;
+                                                                content: '';
                                                                 width: 100%;
-
-                                                                .animationDurationInput {
-                                                                    &::-webkit-inner-spin-button,
-                                                                    &::-webkit-outer-spin-button {
-                                                                        -webkit-appearance: none;
-                                                                        margin: 0;
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-
-                                                        > .accordianGroup {
-                                                            position: relative;
-                                                            width: 100%;
-                                                            overflow: hidden;
-
-                                                            &.select {
-                                                                > .accordianTitle:before {
-                                                                    @extend %rotateUpSideDown;
-                                                                    @include animation-duration(0.3s);
-                                                                }
-
-                                                                > .accordianBody {
-
-                                                                    .animationPane {
-                                                                        height: 2em;
-                                                                        margin-top: 0.2em;
-                                                                        line-height: 2;
-                                                                    }
-                                                                }
+                                                                height: 2px;
+                                                                @include background(linear-gradient(right, $underlineLinearGradient));
                                                             }
 
-                                                            > .accordianTitle {
-                                                                z-index: 1;
+                                                            &:before {
+                                                                position: absolute;
+                                                                left: 0;
+                                                                top: calc(50%  - 0.5em);
+                                                                line-height: 1;
+                                                                text-align: center;
+                                                                width: 1em;
+
+                                                                @include transform(rotateZ(0deg));
+                                                                @include transition(transform 0.3s);
+                                                            }
+
+                                                            > *:not(.deleteButton) {
+                                                                position: relative;
+                                                                float: left;
+                                                                display: -webkit-box;
+                                                                -webkit-box-orient: vertical;
+                                                                -webkit-line-clamp: 1;
+                                                                text-overflow: ellipsis;
+                                                                overflow: hidden;
+                                                            }
+
+
+                                                        }
+
+                                                        > .accordianSubTitle {
+                                                            position: relative;
+                                                            float: left;
+                                                            width: 100%;
+                                                            margin-top: 0.5em;
+
+                                                            > * {
+                                                                position: relative;
+                                                                float: left;
                                                                 width: 100%;
+                                                                height: 2em;
                                                                 line-height: 2;
-                                                                background: #fff;
+                                                            }
+
+                                                            > span {
+                                                                @include emboss-title('', true);
+                                                            }
+
+                                                            #animationMultilevelMenu {
+                                                                z-index: 10;
+                                                            }
+                                                        }
+
+                                                        > .accordianBody {
+                                                            position: relative;
+                                                            float: left;
+                                                            width: 100%;
+                                                            margin-top: 0.5em;
+                                                            margin-bottom: 0.5em;
+
+                                                            @include transition(transform 0.3s);
+
+                                                            > .animationOptions, .configurationBody {
+                                                                opacity: 0;
+                                                                pointer-events: none;
+                                                                height: 0px;
+                                                                overflow: hidden;
+                                                            }
+
+                                                            .configurationPane {
+                                                                position: relative;
+                                                                float: left;
+                                                                width: 100%;
+                                                                height: auto;
+                                                                margin-bottom: 0.5em;
+
+                                                                $i: $maxNumOfConfigurationItems;
+                                                                @while $i > 0 {
+                                                                    &:nth-of-type(#{$i}) {
+                                                                        z-index: $maxNumOfConfigurationItems - $i + 100;
+                                                                    }
+                                                                    $i: $i - 1;
+                                                                }
+
+                                                                .input-group {
+                                                                    position: relative;
+                                                                    float: left;
+                                                                    width: calc(100% - 5px);
+                                                                    padding-left: 5px;
+                                                                }
+                                                            }
+                                                        }
+
+                                                        &.select {
+                                                            > .accordianBody {
+                                                                background: rgba(0, 0, 0, 0.1);
+
+                                                                @include box-shadow(inset 0 0 6px #555);
+
+                                                                > .animationOptions, .configurationBody {
+                                                                    opacity: 1;
+                                                                    pointer-events: auto;
+                                                                    height: auto;
+                                                                    overflow: visible;
+                                                                    margin: 0.5em 0;
+
+                                                                    input[type='number'] {
+                                                                        &::-webkit-inner-spin-button,
+                                                                        &::-webkit-outer-spin-button {
+                                                                            -webkit-appearance: none;
+                                                                            margin: 0;
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+
+                                                }
+
+                                                .emptyAction {
+                                                    position: relative;
+                                                    float: left;
+                                                    height: 3.4em;
+                                                    width: 100%;
+
+                                                    > span {
+                                                        display: block;
+                                                        position: relative;
+                                                        float: left;
+                                                        width: calc(100% - 1.4em);
+                                                        height: calc(100% - 1.4em);
+                                                        outline: 1px dashed;
+                                                        margin: 0.7em;
+                                                        line-height: 2;
+                                                        text-align: center;
+                                                        background-color: #ccc;
+
+                                                        @include transition(0.3s);
+                                                        @include gradient-striped();
+
+                                                        &:hover {
+                                                            background-color: darken(#ccc, $activeDarkenPercent);;
+                                                        }
+
+                                                        &:active {
+                                                            top: 2px;
+                                                        }
+                                                    }
+
+                                                    > .actionInput {
+                                                        display: none;
+                                                    }
+
+                                                    &.select {
+                                                        > span {
+                                                            display: none;
+                                                        }
+
+                                                        > .actionInput {
+                                                            display: table;
+
+                                                            position: relative;
+                                                            float: left;
+                                                            width: calc(100% - 1.4em);
+                                                            height: calc(100% - 1.4em);
+                                                            margin: 0.7em;
+                                                            line-height: 2;
+
+                                                            > select {
+                                                                line-height: 2 !important;
+                                                                height: calc(2em + 3px) !important;
+                                                            }
+
+                                                            > span {
+                                                                padding-top: 0;
+                                                                padding-bottom: 0;
 
                                                                 &:before {
                                                                     position: relative;
                                                                     float: left;
-                                                                    line-height: 2;
+                                                                    width: 100%;
+                                                                    height: 100%;
                                                                     text-align: center;
-                                                                    width: 1em;
-                                                                    height: 2em;
-
-                                                                    @include transform(rotateZ(0deg));
-                                                                    @include transition(transform 0.3s);
+                                                                    line-height: 2;
                                                                 }
-                                                            }
-
-                                                            > .accordianBody {
-                                                                margin-top: 0.5em;
-                                                                margin-bottom: 0.5em;
-
-                                                                @include transition(transform 0.3s);
-
-                                                                .animationPane {
-                                                                    position: relative;
-                                                                    float: left;
-                                                                    height: 0;
-                                                                    overflow: hidden;
+                                                                &:active {
+                                                                    background: darken($input-group-addon-bg, $activeDarkenPercent);
                                                                 }
                                                             }
                                                         }
                                                     }
+                                                }
+
+                                                #actionWidgetTreeTab {
+                                                    z-index: 101;
+                                                    position: absolute;
+                                                    width: 100%;
+                                                    height: 100%;
+                                                    left: 0;
+                                                    opacity: 0;
+                                                    pointer-events: none;
+                                                    background: #fff;
+
+                                                    @extend %slideLeft;
+                                                    @include animation-duration(0.3s);
+
+                                                    &.select {
+                                                        opacity: 1;
+                                                        pointer-events: auto;
+
+                                                        @extend %slideLeftRetourn;
+                                                        @include animation-duration(0.3s);
+                                                    }
+
+                                                    .hideButton {
+                                                        position: absolute;
+                                                        top: 0.5em;
+                                                        width: 2em;
+                                                        height: 2em;
+                                                        background-color: #ddd;
+                                                        box-shadow: inset 0 -2px 0 rgba(0, 0, 0, .135);
+                                                        border-radius: 0.2em;
+                                                        display: inline-block;
+                                                        margin: 0 0.5em;
+
+                                                        &:active {
+                                                            background-color: #555;
+                                                            color: $activeColor;
+                                                            box-shadow: none;
+                                                        }
+
+                                                        &:before {
+                                                            position: absolute;
+                                                            width: 100%;
+                                                            height: 100%;
+                                                            text-align: center;
+                                                            line-height: 2;
+                                                        }
+                                                    }
+
+                                                    #actionWidgetTree {
+                                                        position: absolute;
+                                                        top: 2em;
+                                                        width: calc(100% - 2em);
+                                                        height: calc(100% - 4em);
+                                                        margin: 1em;
+                                                    }
+
                                                 }
                                             }
 
@@ -417,11 +560,13 @@ $tabHeaderWidth: 6em;
                                     margin: 0.7em;
                                     line-height: 2;
                                     text-align: center;
+                                    background-color: #ccc;
 
                                     @include transition(0.3s);
+                                    @include gradient-striped();
 
                                     &:hover {
-                                        background-color: darken(#fff, $activeDarkenPercent);
+                                        background-color: darken(#ccc, $activeDarkenPercent);;
                                     }
 
                                     &:active {
@@ -429,7 +574,7 @@ $tabHeaderWidth: 6em;
                                     }
                                 }
 
-                                > .transitionInput {
+                                > .transitionNameInput {
                                     display: none;
                                 }
 
@@ -438,22 +583,24 @@ $tabHeaderWidth: 6em;
                                         display: none;
                                     }
 
-                                    > .transitionInput {
-                                        display: block;
+                                    > .transitionNameInput {
+                                        display: table;
 
                                         position: relative;
                                         float: left;
-                                        width: 100%;
-                                        height: 2em;
-                                        margin: 0.7em 0;
+                                        width: calc(100% - 1.4em);
+                                        height: calc(100% - 1.4em);
+                                        margin: 0.7em;
+                                        line-height: 2;
 
-                                        div {
-                                            position: relative;
-                                            float: left;
-                                            width: 3em;
-                                            height: 2em;
+                                        > input {
+                                            line-height: 2 !important;
+                                            height: calc(2em + 3px) !important;
+                                        }
 
-                                            @include emboss-title(':before');
+                                        > span {
+                                            padding-top: 0;
+                                            padding-bottom: 0;
 
                                             &:before {
                                                 position: relative;
@@ -463,17 +610,9 @@ $tabHeaderWidth: 6em;
                                                 text-align: center;
                                                 line-height: 2;
                                             }
-                                            &:active:before {
-                                                margin-top: 2px;
+                                            &:active {
+                                                background: darken($input-group-addon-bg, $activeDarkenPercent);
                                             }
-                                        }
-
-                                        > select {
-                                            position: relative;
-                                            float: left;
-                                            width: calc(100% - 3em) !important;
-                                            height: 2em !important;
-                                            line-height: 2 !important;
                                         }
                                     }
                                 }
@@ -663,11 +802,12 @@ $tabHeaderWidth: 6em;
 
                     &[tab-sel^='tab-content'] {
                         position: absolute;
-                        left: -100%;
+                        left: 0;
                         top: 0;
+                        display: none;
 
                         &.select {
-                            @extend %slideRight;
+                            display: block;
                         }
                     }
                 }
@@ -680,11 +820,12 @@ $tabHeaderWidth: 6em;
 
                     &[tab-sel^='tab-content'] {
                         position: absolute;
-                        right: -100%;
+                        left: 0;
                         top: 0;
+                        display: none;
 
                         &.select {
-                            @extend %slideLeft;
+                            display: block;
                         }
                     }
                 }

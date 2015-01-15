@@ -36,6 +36,7 @@ define(
 
                                 scope.triggers = {};
                                 scope.animations = [];
+                                scope._ = _;
                             },
                             post: function (scope, element, attrs) {
                                 scope.toggleTransitionDetails = function (selector, event) {
@@ -57,12 +58,57 @@ define(
                                     });
                                 }
 
+                                scope.selectTransitionDetailsTab = function ($tabContainer, $tabHead, event) {
+                                    scope.toggleSelect("#actionWidgetTreeTab", null, false).then(function () {
+                                        scope.selectTab($tabContainer, $tabHead, event);
+                                    });
+                                }
+
                                 scope.toggleActionPanel = function (selector, event) {
                                     scope.toggleExpand(selector, event).then(function (selector) {
                                         var $el = $(selector),
                                             $panel = $el.find(".transition-action-panel");
 
                                         return scope.toggleDisplay($panel);
+                                    });
+                                }
+
+                                scope.toggleConfigurationBody = function (event) {
+                                    event && event.stopPropagation && event.stopPropagation();
+
+                                    scope.toggleSelect(event.currentTarget).then(function (target) {
+                                        var $el = $(target);
+
+                                        if ($el.hasClass("select")) {
+                                            $el.find('input.configurationCheckBox').on('ifChanged', function (event) {
+                                                var configurationScope = angular.element(event.target).scope();
+                                                configurationScope.configurationItem.booleanValue = event.target.checked;
+                                                configurationScope.$apply();
+                                            }).iCheck({
+                                                checkboxClass: 'icheckbox_square-blue',
+                                                radioClass: 'iradio_square-blue',
+                                                increaseArea: '20%'
+                                            });
+                                        }
+                                    });
+                                }
+
+                                scope.toggleActionWidgetTree = function (action, event) {
+                                    event && event.stopPropagation && event.stopPropagation();
+
+                                    scope.toggleSelect("#actionWidgetTreeTab").then(function () {
+                                        if (element.find("#actionWidgetTreeTab").hasClass("select")) {
+                                            scope.pickedAction = action;
+                                        } else {
+                                            if (action) {
+                                                var $node = element.find("#actionWidgetTreeTab li.selected");
+                                                if ($node.length) {
+                                                    var nodeScope = angular.element($node).scope();
+                                                    action.widgetObj = nodeScope.item;
+                                                }
+                                            }
+                                            scope.pickedAction = null;
+                                        }
                                     });
                                 }
 
@@ -87,18 +133,17 @@ define(
                                     event && event.stopPropagation && event.stopPropagation();
 
                                     if (state && scope.activeWidget) {
-                                        var $transitionInput = $('#' + state.id + ' .emptyTransition .transitionInput'),
-                                            toStateName = $transitionInput.find("select").val(),
-                                            toState;
+                                        var transitionName = $("#transitionNameInput").val();
+                                        transitionName && state.addTransition(transitionName);
+                                    }
+                                }
 
-                                        toStateName && toStateName !== state.name
-                                        && !scope.activeWidget.states.every(function (s) {
-                                            if (s.context == state.context && s.name === toStateName) {
-                                                toState = s;
-                                                return false;
-                                            }
-                                            return true;
-                                        }) && state.addTransition(toState);
+                                scope.createAction = function (parentAction, event) {
+                                    event && event.stopPropagation && event.stopPropagation();
+
+                                    if (parentAction) {
+                                        var actionType = $("#actionTypeSelect").val();
+                                        actionType && parentAction.addAction(actionType);
                                     }
                                 }
 
@@ -126,7 +171,7 @@ define(
                                     if (state && transition) {
                                         var index;
                                         state.transitions.every(function (t, i) {
-                                            if (t.toState === transition.toState) {
+                                            if (t.id === transition.id) {
                                                 index = i;
                                                 return false;
                                             }
@@ -135,6 +180,37 @@ define(
 
                                         index != undefined && state.transitions.splice(index, 1);
                                     }
+                                }
+
+                                scope.deleteAction = function (parentAction, action, event) {
+                                    event && event.stopPropagation && event.stopPropagation();
+
+                                    if (parentAction && action) {
+                                        var index;
+                                        parentAction.childActions.every(function (a, i) {
+                                            if (a.id === action.id) {
+                                                index = i;
+                                                return false;
+                                            }
+                                            return true;
+                                        });
+
+                                        index != undefined && parentAction.childActions.splice(index, 1);
+                                    }
+                                }
+
+                                scope.getStateOptions = function (item) {
+                                    var stateOptions = [_.clone(item.initialStateOption)];
+
+                                    item.stateOptions.forEach(function (stateOption) {
+                                        stateOptions.push(_.clone(stateOption));
+                                    });
+
+                                    return stateOptions;
+                                }
+
+                                scope.setAnimation = function (item, name) {
+                                    item.animation = {name: name, options: {}};
                                 }
 
                                 if (options.triggerJson) {

@@ -35,7 +35,10 @@ require.config({
 
 require(["jquery-lib", "jquery-plugins-lib", "hammer-lib", "jquery-ui-lib", "jquery-ui-plugins-lib", "angular-lib", "underscore-lib", "ckeditor-lib"], function () {
     window.appModule = angular.module(APP_MODULE_NAME, APP_MODULE_DEPS);
-    window.appModule.value("angularEventTypes", {boundPropertiesEvent: "boundPropertiesEvent"});
+    window.appModule.value("angularEventTypes", {
+        boundPropertiesEvent: "boundPropertiesEvent",
+        beforeWidgetCreationEvent: "beforeWidgetCreationEvent"
+    });
     window.appModule.value("angularConstants", {
         precision: 1000,
         percentPrecision: 1000,

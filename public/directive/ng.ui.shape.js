@@ -66,6 +66,9 @@ define(
                                                 $("." + options.holderClass).find("." + options.hoverClass).removeClass(options.hoverClass);
                                             }
                                         } else if (event.type === "panend") {
+                                            $shapeElement.remove();
+                                            $("." + options.holderClass).find("." + options.hoverClass).removeClass(options.hoverClass);
+
                                             var $to = $(event.srcEvent.toElement),
                                                 x = event.srcEvent.clientX - $to.offset().left,
                                                 y = event.srcEvent.clientY - $to.offset().top;
@@ -74,16 +77,21 @@ define(
                                             y = Math.floor(y * angularConstants.precision) / angularConstants.precision;
 
                                             if (!scope.isPlaying) {
-                                                var widgetObj = createWidget($to);
+                                                uiUtilService.broadcast(scope,
+                                                    angularEventTypes.beforeWidgetCreationEvent,
+                                                    function (name) {
+                                                        if (name) {
+                                                            var widgetObj = createWidget($to);
+                                                            widgetObj.name = name;
 
-                                                if (widgetObj) {
-                                                    widgetObj.css("left", x + "px");
-                                                    widgetObj.css("top", y + "px");
-                                                }
+                                                            if (widgetObj) {
+                                                                widgetObj.css("left", x + "px");
+                                                                widgetObj.css("top", y + "px");
+                                                            }
+                                                        }
+                                                    }
+                                                );
                                             }
-
-                                            $shapeElement.remove();
-                                            $("." + options.holderClass).find("." + options.hoverClass).removeClass(options.hoverClass);
                                         }
                                     }
                                 }
