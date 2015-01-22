@@ -43,6 +43,13 @@
                     text-align: center;
                     border-left: 1px solid #ddd;
                 }
+
+                &:before {
+                    position: absolute;
+                    width: 100%;
+                    line-height: 2;
+                    text-align: center;
+                }
             }
 
             &.cd-active > span:after {
@@ -78,6 +85,13 @@
                         @include backface-visibility(hidden);
                         @include user-select(none);
                         -webkit-touch-callout: none;
+
+                        &:before {
+                            position: absolute;
+                            width: 100%;
+                            line-height: 2;
+                            text-align: center;
+                        }
                     }
                 }
             }

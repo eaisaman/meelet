@@ -72,6 +72,16 @@ define(
                                         return selection;
                                     }
                                 }
+
+                                scope.pickThumbnail = function (selection) {
+                                    if (scope.options.thumbnailField) {
+                                        if (typeof selection === "object") {
+                                            return selection && selection[scope.options.thumbnailField] || "";
+                                        }
+                                    }
+
+                                    return "";
+                                }
                             },
                             post: function (scope, element, attrs) {
                                 function optWidth() {

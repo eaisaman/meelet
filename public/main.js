@@ -1,5 +1,6 @@
 //Javascript libs
 var ANGULAR_LIB_PATH = "javascripts/angular/1.3.0-beta.8/",
+    ANGULAR_MODULES_LIB_PATH = "javascripts/angular-modules/",
     ANGULAR_PLUGINS_LIB_PATH = "javascripts/angular-plugins/",
     HAMMER_LIB_PATH = "javascripts/hammer/2.0.2/",
     JQUERY_LIB_PATH = "javascripts/jquery/2.1.1/",
@@ -13,12 +14,13 @@ var ANGULAR_LIB_PATH = "javascripts/angular/1.3.0-beta.8/",
 
 //Angular app module
 var APP_MODULE_NAME = "app",
-    APP_MODULE_DEPS = ["ngRoute", "ngCookies", "ngTouch"];
+    APP_MODULE_DEPS = ["ngRoute", "ngCookies", "ngTouch", "flow"];
 
 //String.min.js is a must for String.prototype.format
 require.config({
     paths: {
         "angular-lib": ANGULAR_LIB_PATH + "main",
+        "angular-modules-lib": ANGULAR_MODULES_LIB_PATH + "main",
         "angular-plugins-lib": ANGULAR_PLUGINS_LIB_PATH + "main",
         "hammer-lib": HAMMER_LIB_PATH + "main",
         "jquery-lib": JQUERY_LIB_PATH + "main",
@@ -33,7 +35,7 @@ require.config({
     waitSeconds: 0
 });
 
-require(["jquery-lib", "jquery-plugins-lib", "hammer-lib", "jquery-ui-lib", "jquery-ui-plugins-lib", "angular-lib", "underscore-lib", "ckeditor-lib"], function () {
+require(["jquery-lib", "jquery-plugins-lib", "hammer-lib", "jquery-ui-lib", "jquery-ui-plugins-lib", "angular-lib", "angular-modules-lib", "underscore-lib", "ckeditor-lib"], function () {
     window.appModule = angular.module(APP_MODULE_NAME, APP_MODULE_DEPS);
     window.appModule.value("angularEventTypes", {
         boundPropertiesEvent: "boundPropertiesEvent",
@@ -60,12 +62,30 @@ require(["jquery-lib", "jquery-plugins-lib", "hammer-lib", "jquery-ui-lib", "jqu
         renderTimeout: 3000,
         loadTimeout: 10000
     });
+    //For upload file angular module 'ng-flow'
+    window.appModule.config(['flowFactoryProvider', function (flowFactoryProvider) {
+        flowFactoryProvider.defaults = {
+            target: function (fileObj) {
+                return 'api/public/file';
+            },
+            permanentErrors: [404, 500, 501],
+            maxChunkRetries: 1,
+            chunkRetryInterval: 5000,
+            simultaneousUploads: 4
+        };
+        flowFactoryProvider.on('catchAll', function (event) {
+        });
+    }]);
+
+
+    //Angular Modules Config
+    arguments[6](window.appModule);
 
     require(["angular-plugins-lib", "directive-lib", "app-lib"], function () {
         var configs = Array.prototype.slice.call(arguments);
 
         configs.forEach(function (config) {
-            config(appModule);
+            config(window.appModule);
         });
 
         angular.bootstrap(document, [APP_MODULE_NAME]);

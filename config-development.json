@@ -108,7 +108,8 @@
     "staticResources": [
         {
             "/": "public",
-            "/repo": "repo"
+            "/repo": "repo",
+            "/project": "project"
         }
     ],
     "applicationResources": [
@@ -146,7 +147,7 @@
             "folder": "upload"
         },
         "userFile": {
-            "sketchFolder": "sketches"
+            "sketchFolder": "project"
         },
         "logging": {
             "appenders": [

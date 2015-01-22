@@ -14,6 +14,7 @@ require.config(
             "ng.ui.border-editor": DIRECTIVE_LIB_PATH + "ng.ui.border-editor",
             "ng.ui.color-editor-palette": DIRECTIVE_LIB_PATH + "ng.ui.color-editor-palette",
             "ng.ui.color-picker": DIRECTIVE_LIB_PATH + "ng.ui.color-picker",
+            "ng.ui.background-image": DIRECTIVE_LIB_PATH + "ng.ui.background-image",
             "ng.ui.gradient-editor": DIRECTIVE_LIB_PATH + "ng.ui.gradient-editor",
             "ng.ui.text-shadow-editor": DIRECTIVE_LIB_PATH + "ng.ui.text-shadow-editor",
             "ng.ui.box-shadow-editor": DIRECTIVE_LIB_PATH + "ng.ui.box-shadow-editor",
@@ -48,6 +49,7 @@ define([
         "ng.ui.border-editor",
         "ng.ui.color-editor-palette",
         "ng.ui.color-picker",
+        "ng.ui.background-image",
         "ng.ui.gradient-editor",
         "ng.ui.text-shadow-editor",
         "ng.ui.box-shadow-editor",
@@ -109,50 +111,53 @@ define([
             //Color Picker
             directiveConfigs[10](appModule, extension);
 
+            //Background Image
+            directiveConfigs[11](appModule, extension);
+
             //Gradient Editor
-            directiveConfigs[11](appModule, extension, {
+            directiveConfigs[12](appModule, extension, {
                 colorJson: "directive/gradient-editor-color.json"
             });
 
             //Text Shadow Editor
-            directiveConfigs[12](appModule, extension, {
+            directiveConfigs[13](appModule, extension, {
                 textShadowJson: "directive/text-shadow.json"
             });
 
             //Box Shadow Editor
-            directiveConfigs[13](appModule, extension, {
+            directiveConfigs[14](appModule, extension, {
                 boxShadowJson: "directive/box-shadow.json"
             });
 
             //Shape
-            directiveConfigs[14](appModule, extension);
-
-            //Widget
             directiveConfigs[15](appModule, extension);
 
-            //Widget Configurator
+            //Widget
             directiveConfigs[16](appModule, extension);
 
-            //Page
+            //Widget Configurator
             directiveConfigs[17](appModule, extension);
 
-            //Dock
+            //Page
             directiveConfigs[18](appModule, extension);
 
-            //Topbar
+            //Dock
             directiveConfigs[19](appModule, extension);
 
-            //Toolbar
+            //Topbar
             directiveConfigs[20](appModule, extension);
 
+            //Toolbar
+            directiveConfigs[21](appModule, extension);
+
             //State transition
-            directiveConfigs[21](appModule, extension, {
+            directiveConfigs[22](appModule, extension, {
                 triggerJson: "directive/trigger.json",
                 animationJson: "directive/animation.json"
             });
 
             //Modal window
-            directiveConfigs[22](appModule, extension);
+            directiveConfigs[23](appModule, extension);
         }
     }
 );

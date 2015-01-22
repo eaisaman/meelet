@@ -2,14 +2,14 @@ define(
     ["angular", "jquery"],
     function () {
         return function ($injector, $compileProvider, $controllerProvider, extension, directiveUrl) {
-            var inject = ["$http", "$timeout", "$q", "$parse", "angularEventTypes", "uiUtilService"],
+            var inject = ["$http", "$timeout", "$q", "$parse", "angularConstants", "angularEventTypes", "uiUtilService"],
                 name = "uiWidgetModalWindow",
                 version = "1.0.0",
                 directive = name + version.replace(/\./g, ""),
                 directiveService = name + version.replace(/\./g, "") + "Directive";
 
             if (!$injector.has(directiveService)) {
-                $compileProvider.directive(directive, _.union(inject, [function ($http, $timeout, $q, $parse, angularEventTypes, uiUtilService) {
+                $compileProvider.directive(directive, _.union(inject, [function ($http, $timeout, $q, $parse, angularConstants, angularEventTypes, uiUtilService) {
                     'use strict';
 
                     var injectObj = _.object(inject, Array.prototype.slice.call(arguments));
@@ -40,20 +40,50 @@ define(
                                         scope: scope
                                     }));
 
-                                    scope.toggleModalWindow = function (event) {
-                                        return scope.toggleDisplay('.md-modal', event);
+                                    function checkState() {
+                                        scope.deregisterWatchState && scope.deregisterWatchState();
+                                        scope.deregisterWatchState = null;
+
+                                        var defer = $q.defer();
+
+                                        $timeout(function () {
+                                            if (element.find(".md-modal").hasClass("show")) {
+                                                scope.state = "show";
+                                            } else {
+                                                scope.state = "*";
+                                            }
+                                            var $container = element.closest("." + angularConstants.widgetClasses.widgetContainerClass),
+                                                $widget = $container.parent(),
+                                                widgetObj = $widget.data("widgetObject");
+
+                                            widgetObj && widgetObj.setState(scope.state);
+
+                                            scope.deregisterWatchState = createStateWatch();
+                                            defer.resolve();
+                                        });
+
+                                        return defer.promise;
                                     }
 
-                                    scope.$watch("state", function (value) {
-                                        if (value != null) {
-                                            scope.toggleDisplay('.md-modal', null, value === "show");
-                                        }
-                                    });
+                                    function createStateWatch() {
+                                        return scope.$watch("state", function (value) {
+                                            if (value != null) {
+                                                scope.toggleDisplay('.md-modal', null, value === "show");
+                                            }
+                                        });
+                                    }
+
+                                    scope.toggleModalWindow = function (event) {
+                                        return scope.toggleDisplay('.md-modal', event).then(function () {
+                                            return checkState();
+                                        });
+                                    }
 
                                     scope.transition = "fadeInScaleUp";
                                     scope.setPerspective = false;
                                     scope.modalContentWidth = "50%";
                                     scope.modalContentHeight = "50%";
+                                    scope.deregisterWatchState = createStateWatch();
                                 },
                                 post: function (scope, element, attrs) {
                                 }

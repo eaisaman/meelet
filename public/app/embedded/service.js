@@ -34,6 +34,8 @@ define(
 
         appService.prototype.loadSketch = appService.prototype.NOOP;
 
+        appService.prototype.removeProjectImage = appService.prototype.NOOP;
+
         appService.prototype.getUser = appService.prototype.NOOP;
 
         appService.prototype.getRepoLibrary = appService.prototype.NOOP;

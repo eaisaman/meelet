@@ -575,7 +575,7 @@ define(
                 var pseudoStylePrefix = (pseudo || "") + "Style";
                 pseudoStylePrefix = pseudoStylePrefix.charAt(0).toLowerCase() + pseudoStylePrefix.substr(1);
 
-                return styles && styles[pseudoStylePrefix] || {};
+                return (styles[pseudoStylePrefix] = styles[pseudoStylePrefix] || {});
             }
         }
 

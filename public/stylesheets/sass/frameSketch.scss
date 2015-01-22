@@ -8,6 +8,7 @@
 @import "widget-configurator";
 @import "color_picker";
 @import "gradient_editor";
+@import "background-image-editor";
 @import "text-shadow-editor";
 @import "box-shadow-editor";
 @import "shape";
@@ -25,6 +26,7 @@
 @include color-picker(color-control);
 @include color-picker(border-color-control);
 @include gradient-editor(fill-control);
+@include background-image-editor(background-image-control);
 @include text-shadow-editor(text-shadow-control);
 @include box-shadow-editor(box-shadow-control);
 @include shape(shape-control);

@@ -2,14 +2,14 @@ define(
     ["angular", "jquery"],
     function () {
         return function ($injector, $compileProvider, $controllerProvider, extension, directiveUrl) {
-            var inject = ["$http", "$timeout", "$q", "$parse", "angularEventTypes", "uiUtilService"],
+            var inject = ["$http", "$timeout", "$q", "$parse", "angularConstants", "angularEventTypes", "uiUtilService"],
                 name = "uiWidgetSideBar",
                 version = "1.0.0",
                 directive = name + version.replace(/\./g, ""),
                 directiveService = name + version.replace(/\./g, "") + "Directive";
 
             if (!$injector.has(directiveService)) {
-                $compileProvider.directive(directive, _.union(inject, [function ($http, $timeout, $q, $parse, angularEventTypes, uiUtilService) {
+                $compileProvider.directive(directive, _.union(inject, [function ($http, $timeout, $q, $parse, angularConstants, angularEventTypes, uiUtilService) {
                     'use strict';
 
                     var injectObj = _.object(inject, Array.prototype.slice.call(arguments));
@@ -40,25 +40,56 @@ define(
                                         scope: scope
                                     }));
 
+                                    function checkState() {
+                                        scope.deregisterWatchState && scope.deregisterWatchState();
+                                        scope.deregisterWatchState = null;
+
+                                        var defer = $q.defer();
+
+                                        $timeout(function () {
+                                            if (element.find("._widget_sideBarContainer").hasClass("select")) {
+                                                scope.state = "select";
+                                            } else {
+                                                scope.state = "*";
+                                            }
+                                            var $container = element.closest("." + angularConstants.widgetClasses.widgetContainerClass),
+                                                $widget = $container.parent(),
+                                                widgetObj = $widget.data("widgetObject");
+
+                                            widgetObj && widgetObj.setState(scope.state);
+
+                                            scope.deregisterWatchState = createStateWatch();
+                                            defer.resolve();
+                                        });
+
+                                        return defer.promise;
+                                    }
+
+                                    function createStateWatch() {
+                                        return scope.$watch("state", function (value) {
+                                            if (value != null) {
+                                                scope.toggleSelect("._widget_sideBarContainer", null, value === "select");
+                                            }
+                                        });
+                                    }
+
                                     scope.toggleSideBar = function (event) {
-                                        scope.toggleSelect("._widget_sideBarContainer", event);
+                                        scope.toggleSelect("._widget_sideBarContainer", event).then(function () {
+                                            return checkState();
+                                        });
                                     }
 
                                     scope.hideSideBar = function (event) {
-                                        scope.toggleSelect("._widget_sideBarContainer", event, false);
+                                        scope.toggleSelect("._widget_sideBarContainer", event, false).then(function () {
+                                            return checkState();
+                                        });
                                     }
-
-                                    scope.$watch("state", function (value) {
-                                        if (value != null) {
-                                            scope.toggleSelect("._widget_sideBarContainer", null, value === "select");
-                                        }
-
-                                    });
 
                                     scope.transition = "slideInOnTop";
                                     scope.side = "leftSide";
                                     scope.overlay = "overlay";
                                     scope.barContentWidth = "300px";
+                                    scope.deregisterWatchState = createStateWatch();
                                 },
                                 post: function (scope, element, attrs) {
                                 }

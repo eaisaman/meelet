@@ -33,10 +33,12 @@ $deepShadow: #555;
                 position: absolute;
                 width: 100%;
                 line-height: 1em;
-                content: attr(name);
+                content: attr(desc);
                 top: calc(50% - 0.5em);
                 text-align: center;
                 font-weight: 900;
+                color: $fontColor;
+                letter-spacing: 2px;
             }
         }
     }

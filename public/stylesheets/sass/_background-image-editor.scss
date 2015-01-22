@@ -1,0 +1,408 @@
+@import "compass/css3/transform";
+@import "compass/css3/transition";
+@import "compass/css3/flexbox";
+@import "simple-dropdown";
+
+$rulerColor: rgb(186, 186, 186);
+$rulerActiveLineColor: rgb(221, 125, 0);
+$fontColor: rgba(0, 0, 0, 0.4);
+$borderColor: rgba(0, 0, 0, 0.4);
+$underlineLinearGradient: (rgb(235, 235, 235) 0%, rgb(235, 235, 235) 50%, #fff 100%);
+$activeColor: #669933;
+
+@include simple-dropdown(positionDropdown, null, $activeColor);
+@include simple-dropdown(repeatDropdown, null, $activeColor);
+
+@mixin background-image-editor($backgroundImageEditorId) {
+    ##{$backgroundImageEditorId} {
+        > .backgroundImageContent {
+            position: absolute;
+            left: 0;
+            top: 0;
+
+            > .backgroundImageBar {
+                position: relative;
+                float: left;
+                width: 100%;
+                height: 2em;
+
+                img {
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    padding: 5px;
+                    width: 100%;
+                    height: 100%;
+                }
+
+                .deleteButton {
+                    position: absolute;
+                    top: calc(50% - 0.5em);
+                    left: calc(50% - 0.5em);
+                    width: 1em;
+                    height: 1em;
+                    color: $fontColor;
+                    z-index: 1;
+
+                    &:before {
+                        position: absolute;
+                        width: 100%;
+                        height: 100%;
+                        line-height: 1;
+                        text-align: center;
+                    }
+
+                    &:hover:before {
+                        color: lighten($fontColor, 50%);
+                    }
+
+                    &:active:before {
+                        color: darken($fontColor, 50%);
+                    }
+                }
+            }
+
+            > .backgroundImagePalette {
+
+                > .backgroundImagePane {
+                    position: relative;
+                    float: left;
+                    width: calc(100% - 0.2em);
+                    height: auto;
+                    background: #fff;
+
+                    &:after {
+                        position: absolute;
+                        right: 0;
+                        bottom: 0;
+                        content: '';
+                        width: 100%;
+                        height: 2px;
+
+                        @include background(linear-gradient(left, $underlineLinearGradient));
+                    }
+
+                    > .paneTitle {
+                        position: relative;
+                        float: left;
+                        width: 100%;
+                        line-height: 2;
+                        font-weight: 600;
+                    }
+
+                    > .paneContent {
+                        position: relative;
+                        float: left;
+                        width: 100%;
+                        margin-bottom: 0.2em;
+
+                        > .input-group {
+                            float: left;
+                        }
+
+                        .backgroundImageButton {
+                            position: relative;
+                            float: left;
+                            width: 2em;
+                            height: 2em;
+                            background-color: #ddd;
+                            box-shadow: inset 0 -2px 0 rgba(0, 0, 0, .135);
+                            border-radius: 0.2em;
+                            display: inline-block;
+                            margin-left: 0.5em;
+
+                            &:active {
+                                background-color: #555;
+                                color: $activeColor;
+                                box-shadow: none;
+                            }
+
+                            &:before {
+                                position: absolute;
+                                left: 0;
+                                top: 0;
+                                width: 100%;
+                                height: 100%;
+                                text-align: center;
+                                line-height: 2;
+                                color: $fontColor;
+                            }
+                        }
+
+                        .backgroundImageDock {
+                            position: relative;
+                            float: left;
+                            width: calc(100% - 3em);
+                            height: 2em;
+                            border: 2px #f1f1f1 dashed;
+                            left: 5px;
+                            text-align: center;
+                            line-height: 2;
+                            font-weight: 600;
+
+                            &.drag-over {
+                                background: #5CB85C;
+                                color: #fff
+                            }
+                        }
+
+                        #positionRuler {
+                            position: relative;
+                            float: left;
+                            left: calc(50% - 150px);
+                            width: 300px;
+                            height: 300px;
+                            background: #ccc;
+                            margin-top: 2em;
+                            margin-bottom: 2em;
+
+                            .horizontalPositionContainer {
+                                position: absolute;
+                                top: -1em;
+                                left: 0;
+                                width: 100%;
+                                height: 0;
+                                font-weight: 600;
+                                z-index: 1;
+                            }
+
+                            .verticalPositionContainer {
+                                position: absolute;
+                                top: 0;
+                                left: -1em;
+                                width: 0;
+                                height: 100%;
+                                font-weight: 600;
+                                z-index: 1;
+                            }
+
+                            .positionCordContainer {
+                                position: absolute;
+                                width: 100%;
+                                height: 100%;
+                                left: 0;
+                                top: 0;
+
+                                #positionTarget {
+                                    position: absolute;
+                                    width: 1em;
+                                    height: 1em;
+                                    z-index: 1;
+
+                                    &:before {
+                                        position: absolute;
+                                        content: "";
+                                        left: -50%;
+                                        top: -50%;
+                                        width: 100%;
+                                        height: 100%;
+                                        border-radius: 100%;
+                                        border: 1px solid darken(#ccc, 30%);
+                                        background: darken(#ccc, 30%);
+                                    }
+                                }
+
+                                .horizontalDividers {
+                                    position: absolute;
+                                    top: 0;
+                                    width: 100%;
+                                    height: 0;
+                                    overflow: visible;
+
+                                    .horizontalDivider {
+                                        position: absolute;
+                                        pointer-events: none;
+                                        height: 300px;
+
+                                        &:nth-child(1) {
+                                            left: 0px;
+                                        }
+
+                                        &:nth-child(2) {
+                                            left: 150px;
+                                        }
+
+                                        &:nth-child(3) {
+                                            left: 300px;
+                                        }
+
+                                        &:after {
+                                            content: "";
+                                            position: absolute;
+                                            right: 0;
+                                            top: 0;
+                                            width: 1px;
+                                            height: 100%;
+                                            border-right: 1px solid $rulerActiveLineColor;
+                                        }
+
+                                        &.nearByDivider:after {
+                                            @include box-shadow(0 0 10px #555);
+                                        }
+                                    }
+
+                                    .horizontalLocator {
+                                        position: absolute;
+                                        left: 0;
+                                        top: 0;
+                                        width: 1em;
+                                        height: 1em;
+
+                                        .horizontalMoveControl {
+                                            position: absolute;
+                                            left: 50%;
+                                            top: -125%;
+                                            width: 100%;
+                                            z-index: 1;
+
+                                            &:active {
+                                                color: $rulerActiveLineColor;
+                                            }
+
+                                            &:before {
+                                                position: absolute;
+                                                left: -0.5em;
+                                                top: 0;
+                                                width: 100%;
+                                                height: 100%;
+                                                line-height: 1;
+                                                text-align: center;
+                                            }
+                                        }
+                                    }
+                                }
+
+                                .verticalDividers {
+                                    position: absolute;
+                                    left: 0;
+                                    width: 0;
+                                    height: 100%;
+                                    overflow: visible;
+
+                                    .verticalDivider {
+                                        position: absolute;
+                                        pointer-events: none;
+                                        width: 300px;
+
+                                        &:nth-child(1) {
+                                            top: 0px;
+                                        }
+
+                                        &:nth-child(2) {
+                                            top: 150px;
+                                        }
+
+                                        &:nth-child(3) {
+                                            top: 300px;
+                                        }
+
+                                        &:after {
+                                            content: "";
+                                            position: absolute;
+                                            left: 0;
+                                            bottom: 0;
+                                            height: 0;
+                                            width: 100%;
+                                            border-bottom: 1px solid $rulerActiveLineColor;
+                                        }
+
+                                        &.nearByDivider:after {
+                                            @include box-shadow(0 0 10px #555);
+                                        }
+                                    }
+
+                                    .verticalLocator {
+                                        position: absolute;
+                                        width: 1em;
+                                        height: 1em;
+                                        left: 0;
+                                        top: -0.5em;
+
+                                        .verticalMoveControl {
+                                            position: relative;
+                                            float: left;
+                                            left: -125%;
+                                            top: 0;
+                                            width: 100%;
+                                            z-index: 1;
+
+                                            &:active {
+                                                color: $rulerActiveLineColor;
+                                            }
+
+                                            &:before {
+                                                position: absolute;
+                                                left: 0;
+                                                top: 0;
+                                                width: 100%;
+                                                height: 100%;
+                                                line-height: 1;
+                                                text-align: center;
+                                            }
+                                        }
+                                    }
+
+                                }
+
+                                .horizontalCord {
+                                    position: absolute;
+                                    width: 1em;
+                                    height: 1em;
+
+                                    &[row="0"] {
+                                        top: 0px;
+                                    }
+
+                                    &[row="1"] {
+                                        top: 150px;
+                                    }
+
+                                    &[row="2"] {
+                                        top: 300px;
+                                    }
+
+                                    .verticalCord {
+                                        position: absolute;
+                                        width: 1em;
+                                        height: 1em;
+
+                                        span {
+                                            position: absolute;
+                                            left: -0.5em;
+                                            top: -0.5em;
+                                            width: 100%;
+                                            height: 100%;
+                                            border-radius: 100%;
+                                            border: 1px solid $rulerActiveLineColor;
+                                            background: #fff;
+
+                                            &:active {
+                                                background-color: darken($rulerActiveLineColor, 10%);
+                                            }
+
+                                            &.select {
+                                                background-color: darken($rulerActiveLineColor, 10%);
+                                            }
+                                        }
+
+                                        &[column="0"] {
+                                            left: 0px;
+                                        }
+
+                                        &[column="1"] {
+                                            left: 150px;
+                                        }
+
+                                        &[column="2"] {
+                                            left: 300px;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -7451,6 +7451,12 @@ button.close {
   text-align: center;
   border-left: 1px solid #ddd;
 }
+#topbarProjectDropdown .cd-dropdown > span:before {
+  position: absolute;
+  width: 100%;
+  line-height: 2;
+  text-align: center;
+}
 #topbarProjectDropdown .cd-dropdown.cd-active > span:after {
   content: '\25B2';
 }
@@ -7487,6 +7493,12 @@ button.close {
   -webkit-user-select: none;
   user-select: none;
   -webkit-touch-callout: none;
+}
+#topbarProjectDropdown .cd-dropdown ul li span:before {
+  position: absolute;
+  width: 100%;
+  line-height: 2;
+  text-align: center;
 }
 #topbarProjectDropdown .cd-dropdown.cd-active ul {
   pointer-events: auto;
@@ -7681,8 +7693,9 @@ button.close {
   position: relative;
   width: 100%;
   height: 3em;
-  background: rgba(255, 255, 255, 0.9);
+  background: #fff;
   box-shadow: 0 1px 4px #A4A4A4, 0 0 40px #E0E0E0 inset;
+  z-index: 100;
 }
 #appTopBar .topbarButton, #appTopBar .topbarMenu {
   position: relative;

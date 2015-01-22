@@ -209,17 +209,13 @@ define(
             $scope.saveSketch = function (event) {
                 event && event.stopPropagation && event.stopPropagation();
 
-                return appService.saveSketch($scope.sketchObject.sketchWorks);
+                return appService.saveSketch($scope.project._id, $scope.sketchObject.sketchWorks);
             }
 
             $scope.loadSketch = function (event) {
                 event && event.stopPropagation && event.stopPropagation();
 
-                return uiService.loadSketch($scope.sketchObject.sketchWorks);
-            }
-
-            $scope.loadProject = function (event) {
-                event && event.stopPropagation && event.stopPropagation();
+                return uiService.loadSketch($scope.project._id, $scope.sketchObject.sketchWorks);
             }
 
             $scope.showDemo = function (event) {

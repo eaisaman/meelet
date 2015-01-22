@@ -16,8 +16,8 @@
                      selection-list="configurationItem.options" select-item="configurationItem.pickedOption"
                      on-option-select="setItem(configurationItem)">
                 </div>
-                <div ng-if="configurationItem.type === 'number'" class="configurationItemNumber col-as-7 no-padding-left">
-                    <input type="text" class="form-control" ng-model="configurationItem.numberValue"/>
+                <div ng-if="configurationItem.type === 'size'" class="configurationItemNumber col-as-7 no-padding-left">
+                    <input type="text" class="form-control" ng-model="configurationItem.sizeValue"/>
                 </div>
                 <div ng-if="configurationItem.type === 'boolean'" class="configurationItemCheckBox col-as-7 no-padding-left">
                     <input type="checkbox" ng-checked="configurationItem.booleanValue" ng-attr-item-order="{{$index}}"/>

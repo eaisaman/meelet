@@ -337,7 +337,6 @@ define(
             self.whilstMap[whilstId].defer = self.whilstMap[whilstId].defer || self.$q.defer();
             var t = timeout > 0 && self.$timeout(function () {
                     if (self.whilstMap[whilstId]) {
-                        self.whilstMap[whilstId].isTimeout = true;
                         self.whilstMap[whilstId].defer.resolve("TIMEOUT");
                         delete self.whilstMap[whilstId];
                     }
@@ -345,25 +344,22 @@ define(
 
             self.$timeout(function () {
                 if (self.whilstMap[whilstId]) {
-                    var isTimeout = self.whilstMap[whilstId].isTimeout;
-
-                    if (test() && !isTimeout) {
+                    if (test()) {
                         iterator(function (err) {
-                            if (err) {
-                                if (!isTimeout && t) {
-                                    self.$timeout.cancel(t);
-                                }
-                                callback && callback(err);
-                                self.whilstMap[whilstId].defer.resolve(err);
-                                delete self.whilstMap[whilstId];
-                            } else
-                                self.whilst(test, iterator, callback, interval, whilstId);
+                            if (self.whilstMap[whilstId]) {
+                                if (err) {
+                                    t && self.$timeout.cancel(t);
+
+                                    callback && callback(err);
+                                    self.whilstMap[whilstId].defer.resolve(err);
+                                    delete self.whilstMap[whilstId];
+                                } else
+                                    self.whilst(test, iterator, callback, interval, whilstId);
+                            }
                         });
                     }
                     else {
-                        if (!isTimeout && t) {
-                            self.$timeout.cancel(t);
-                        }
+                        t && self.$timeout.cancel(t);
 
                         callback && callback();
                         self.whilstMap[whilstId].defer.resolve();
@@ -373,6 +369,57 @@ define(
             }, interval);
 
             return self.whilstMap[whilstId].defer.promise;
+        }
+
+        Util.prototype.chain = function (arr, interval, chainId, timeout) {
+            var self = this;
+
+            chainId = chainId || "chain_" + new Date().getTime();
+            self.chainMap = self.chainMap || {};
+            self.chainMap[chainId] = self.chainMap[chainId] || {}
+            self.chainMap[chainId].defer = self.chainMap[chainId].defer || self.$q.defer();
+            var t = timeout > 0 && self.$timeout(function () {
+                    if (self.chainMap[chainId]) {
+                        self.chainMap[chainId].defer.resolve("TIMEOUT");
+                        delete self.chainMap[chainId];
+                    }
+                }, timeout) || null;
+
+
+            function chainHandler(currentIndex) {
+                if (self.chainMap[chainId]) {
+                    if (currentIndex < arr.length) {
+                        var fn = arr[currentIndex];
+
+                        fn().then(
+                            function () {
+                                if (self.chainMap[chainId]) {
+                                    self.$timeout(function () {
+                                        chainHandler(currentIndex + 1);
+                                    });
+                                }
+                            },
+                            function (err) {
+                                if (self.chainMap[chainId]) {
+                                    t && self.$timeout.cancel(t);
+
+                                    self.chainMap[chainId].defer.resolve(err);
+                                    delete self.chainMap[chainId];
+                                }
+                            }
+                        );
+                    } else {
+                        t && self.$timeout.cancel(t);
+
+                        self.chainMap[chainId].defer.resolve();
+                        delete self.chainMap[chainId];
+                    }
+                }
+            }
+
+            chainHandler(0);
+
+            return self.chainMap[chainId].defer.promise;
         }
 
         Util.prototype.once = function (fn, callback, interval) {
@@ -752,6 +799,18 @@ define(
                     }
                 } else {
                     styleObj = {"background": ""};
+                }
+            } else if (styleName === "background-image") {
+                if (styleValue) {
+                    styleObj = {"background-image": "url({0})".format(styleValue)};
+                } else {
+                    styleObj = {"background-image": ""};
+                }
+            } else if (styleName === "background-position") {
+                if (styleValue && !_.isEmpty(styleValue)) {
+                    styleObj = {"background-position": "{0} {1}".format(styleValue.x, styleValue.y)};
+                } else {
+                    styleObj = {"background-position": ""};
                 }
             } else {
                 styleObj[styleName] = styleValue || "";

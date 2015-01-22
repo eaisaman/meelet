@@ -26,43 +26,273 @@ var UserFileController = function (fields) {
     });
 };
 
-UserFileController.prototype.postSketch = function (sketchWorks, request, success, fail) {
+UserFileController.prototype.postSketch = function (projectId, sketchWorks, request, success, fail) {
     var self = this;
 
-    var filePath = path.join(self.config.userFile.sketchFolder, "sketchWorks.json"),
-        out = fs.createWriteStream(filePath);
+    if (projectId) {
+        var projectPath = path.join(self.config.userFile.sketchFolder, projectId);
 
-    out.on('finish', function () {
-        success();
-    });
+        fs.mkdir(projectPath, 0777, function (fsError) {
+            if (!fsError || fsError.code === "EEXIST") {
+                var filePath = path.join(projectPath, "meelet.json"),
+                    out = fs.createWriteStream(filePath);
 
-    out.on('error', function (err) {
-        fail(err);
-    });
+                out.on('finish', function () {
+                    success();
+                });
 
-    out.write(sketchWorks);
-    out.end();
+                out.on('error', function (err) {
+                    fail(err);
+                });
+
+                out.write(sketchWorks);
+                out.end();
+            } else {
+                fail(fsError);
+            }
+        });
+    } else {
+        fail("Empty project id");
+    }
 }
 
-UserFileController.prototype.getSketch = function (success, fail) {
+UserFileController.prototype.getSketch = function (projectId, success, fail) {
     var self = this;
 
-    var filePath = path.join(self.config.userFile.sketchFolder, "sketchWorks.json"),
-        rs = fs.createReadStream(filePath),
-        ms = require('memorystream').createWriteStream();
+    if (projectId) {
+        var projectPath = path.join(self.config.userFile.sketchFolder, projectId);
 
-    rs.on('end', function () {
-        var ret = ms.toString();
-        ms.destroy();
-        success(ret);
-    });
+        fs.mkdir(projectPath, 0777, function (fsError) {
+            if (!fsError || fsError.code === "EEXIST") {
+                var filePath = path.join(projectPath, "meelet.json"),
+                    rs = fs.createReadStream(filePath),
+                    ms = require('memorystream').createWriteStream();
 
-    rs.on('error', function (err) {
-        ms.destroy();
-        fail(err);
-    });
+                rs.on('end', function () {
+                    var ret = ms.toString();
+                    ms.destroy();
+                    success(ret);
+                });
 
-    rs.pipe(ms);
+                rs.on('error', function (err) {
+                    ms.destroy();
+                    fail(err);
+                });
+
+                rs.pipe(ms);
+            } else {
+                fail(fsError);
+            }
+        });
+    } else {
+        fail("Empty project id");
+    }
+}
+
+UserFileController.prototype.getProjectImageChunk = function (request, projectId, flowChunkNumber, flowFilename, success, fail) {
+    var self = this;
+
+    if (projectId) {
+        var projectPath = path.join(self.config.userFile.sketchFolder, projectId);
+
+        async.waterfall(
+            [
+                function (next) {
+                    fs.mkdir(projectPath, 0777, function (fsError) {
+                        if (!fsError || fsError.code === "EEXIST") {
+                            next(null);
+                        } else {
+                            next(fsError);
+                        }
+                    });
+                },
+                function (next) {
+                    fs.mkdir(path.join(projectPath, "images"), 0777, function (fsError) {
+                        if (!fsError || fsError.code === "EEXIST") {
+                            next(null);
+                        } else {
+                            next(fsError);
+                        }
+                    });
+                }
+            ], function (err) {
+                if (!err) {
+                    fail("", {statusCode: 404});
+                } else {
+                    fail(err, {statusCode: 500});
+                }
+            }
+        );
+    } else {
+        fail(new Error('Empty project id'), {statusCode: 500});
+    }
+}
+
+UserFileController.prototype.postProjectImageChunk = function (request, projectId, flowFilename, flowChunkNumber, flowTotalChunks, flowCurrentChunkSize, flowTotalSize, success, fail) {
+    var self = this;
+
+    if (toString.call(projectId) === '[object Array]' && projectId.length) projectId = projectId[0];
+    if (toString.call(flowFilename) === '[object Array]' && flowFilename.length) flowFilename = flowFilename[0];
+    if (toString.call(flowChunkNumber) === '[object Array]' && flowChunkNumber.length) flowChunkNumber = flowChunkNumber[0];
+    if (toString.call(flowTotalChunks) === '[object Array]' && flowTotalChunks.length) flowTotalChunks = flowTotalChunks[0];
+    if (toString.call(flowCurrentChunkSize) === '[object Array]' && flowCurrentChunkSize.length) flowCurrentChunkSize = flowCurrentChunkSize[0];
+    if (toString.call(flowTotalSize) === '[object Array]' && flowTotalSize.length) flowTotalSize = flowTotalSize[0];
+
+    if (projectId) {
+        var projectPath = path.join(self.config.userFile.sketchFolder, projectId);
+
+        async.waterfall(
+            [
+                function (next) {
+                    fs.mkdir(projectPath, 0777, function (fsError) {
+                        if (!fsError || fsError.code === "EEXIST") {
+                            next(null);
+                        } else {
+                            next(fsError);
+                        }
+                    });
+                },
+                function (next) {
+                    fs.mkdir(path.join(projectPath, "images"), 0777, function (fsError) {
+                        if (!fsError || fsError.code === "EEXIST") {
+                            next(null);
+                        } else {
+                            next(fsError);
+                        }
+                    });
+                },
+                function (next) {
+                    self.fileController.postFile(request, path.join(projectPath, "images"), function (result) {
+                        if (result && result.length) {
+                            var folder = path.join(projectPath, "images"),
+                                partName = flowFilename + ".part" + flowChunkNumber;
+
+                            fs.rename(result[0], path.join(folder, partName), function (err) {
+                                next(err, partName);
+                            })
+                        } else {
+                            next("No files uploaded.");
+                        }
+                    }, next);
+                }
+            ], function (err, result) {
+                if (!err) {
+                    if (flowChunkNumber == flowTotalChunks) {
+                        var folder = path.join(projectPath, "images"),
+                            finalPath = path.join(folder, flowFilename);
+
+                        async.waterfall(
+                            [
+                                function (next) {
+                                    fs.unlink(finalPath, function (err) {
+                                        if (err && err.code !== "ENOENT") //Not Found
+                                            next(err);
+                                        else
+                                            next(null);
+                                    });
+                                },
+                                function (next) {
+                                    var startNumber = 0;
+
+                                    async.whilst(
+                                        function () {
+                                            return startNumber < flowTotalChunks;
+                                        },
+                                        function (wCallback) {
+                                            var partName = flowFilename + ".part" + (++startNumber),
+                                                filePath = path.join(folder, partName);
+
+                                            var raw = fs.createReadStream(filePath),
+                                                dest = fs.createWriteStream(finalPath, {flags: "a"});
+
+                                            dest.on('finish', function () {
+                                                wCallback(null);
+                                            });
+
+                                            raw.on('error', function (err) {
+                                                wCallback(err);
+                                            });
+
+                                            dest.on('error', function (err) {
+                                                wCallback(err);
+                                            });
+
+                                            raw.pipe(dest);
+                                        },
+                                        function (err) {
+                                            next(err);
+                                        }
+                                    );
+                                },
+                                function (next) {
+                                    var startNumber = 0;
+
+                                    async.whilst(
+                                        function () {
+                                            return startNumber < flowTotalChunks;
+                                        },
+                                        function (wCallback) {
+                                            var partName = flowFilename + ".part" + (++startNumber),
+                                                filePath = path.join(folder, partName);
+
+                                            fs.unlink(filePath, function (err) {
+                                                if (err && err.code !== "ENOENT") //Not Found
+                                                    wCallback(err);
+                                                else
+                                                    wCallback(null);
+                                            });
+                                        },
+                                        function (err) {
+                                            next(err);
+                                        }
+                                    );
+                                },
+                                function (next) {
+                                    var renameTo = "" + _.now() + path.extname(flowFilename),
+                                        renamePath = path.join(folder, renameTo);
+
+                                    fs.rename(finalPath, renamePath, function (err) {
+                                        next(err, renameTo);
+                                    })
+                                }
+                            ],
+                            function (err, result) {
+                                if (!err) {
+                                    success(result);
+                                } else {
+                                    fail(err, {statusCode: 500});
+                                }
+                            }
+                        );
+                    } else {
+                        success(result);
+                    }
+                } else {
+                    fail(err, {statusCode: 500});
+                }
+            }
+        );
+    } else {
+        fail("Empty project id", {statusCode: 500});
+    }
+}
+
+UserFileController.prototype.deleteProjectImage = function (projectId, fileName, success, fail) {
+    var self = this;
+
+    if (projectId && fileName) {
+        var projectPath = path.join(self.config.userFile.sketchFolder, projectId),
+            filePath = path.join(projectPath, "images", fileName);
+
+        fs.unlink(filePath, function (err) {
+            if (err && err.code !== "ENOENT") //Not Found
+                fail(err);
+            else
+                success();
+        })
+    } else {
+        fail("Empty project id or file name", {statusCode: 500});
+    }
 }
 
 UserFileController.prototype.getRepoLibrary = function (libraryFilter, success, fail) {

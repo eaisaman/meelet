@@ -41,6 +41,12 @@
   text-align: center;
   border-left: 1px solid #ddd;
 }
+#repoTypeDropdown .cd-dropdown > span:before {
+  position: absolute;
+  width: 100%;
+  line-height: 2;
+  text-align: center;
+}
 #repoTypeDropdown .cd-dropdown.cd-active > span:after {
   content: '\25B2';
 }
@@ -77,6 +83,12 @@
   -webkit-user-select: none;
   user-select: none;
   -webkit-touch-callout: none;
+}
+#repoTypeDropdown .cd-dropdown ul li span:before {
+  position: absolute;
+  width: 100%;
+  line-height: 2;
+  text-align: center;
 }
 #repoTypeDropdown .cd-dropdown.cd-active ul {
   pointer-events: auto;

@@ -4,6 +4,7 @@
 $activeDarkenPercent: 10%;
 $color: rgba(0, 0, 0, 0.4);
 $borderColor: rgba(0, 0, 0, 0.4);
+$fontColor: rgba(0, 0, 0, 0.4);
 $activeColor: #669933;
 
 @mixin emboss-title($pseudo: "", $onActive:true) {

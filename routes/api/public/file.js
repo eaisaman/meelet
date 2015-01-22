@@ -40,7 +40,10 @@ FileController.prototype.getFile = function (fileName, requestHeader, success, f
                                     } else {
                                         var lastModified = stat.mtime;
                                         if (lastModified.getTime() <= ifModifiedSince) {
-                                            next(new Error("Not modified"), {statusCode: 304, headers: {"Last-Modified": lastModified}});
+                                            next(new Error("Not modified"), {
+                                                statusCode: 304,
+                                                headers: {"Last-Modified": lastModified}
+                                            });
                                         } else {
                                             next(null);
                                         }
@@ -134,7 +137,7 @@ FileController.prototype.getFile = function (fileName, requestHeader, success, f
     );
 }
 
-FileController.prototype.postFile = function (request, success, fail) {
+FileController.prototype.postFile = function (request, uploadFolder, success, fail) {
     var self = this,
         files = [],
         destFiles = [];
@@ -146,8 +149,9 @@ FileController.prototype.postFile = function (request, success, fail) {
             files.push(request.files[key]);
     }
 
+    uploadFolder = uploadFolder || self.config.upload.folder;
     async.each(files, function (file, next) {
-        var filePath = path.join(self.config.upload.folder, file.originalFilename);
+        var filePath = path.join(uploadFolder, file.originalFilename);
         try {
             var ws = null,
                 rs = fs.createReadStream(file.path);

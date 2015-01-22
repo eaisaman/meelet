@@ -360,21 +360,21 @@ define(
             return this.loadArtifactList("widget");
         }
 
-        appService.prototype.saveSketch = function (sketchWorks) {
+        appService.prototype.saveSketch = function (projectId, sketchWorks) {
             return this.$http({
                 method: 'POST',
                 url: '/api/public/sketch',
-                params: {sketchWorks: JSON.stringify(sketchWorks)}
+                params: {projectId: projectId, sketchWorks: JSON.stringify(sketchWorks)}
             });
         }
 
-        appService.prototype.loadSketch = function () {
+        appService.prototype.loadSketch = function (projectId) {
             var self = this;
 
             return self.$http({
                 method: 'GET',
                 url: '/api/public/sketch',
-                params: {}
+                params: {projectId: projectId}
             }).then(function (result) {
                 var defer = self.$q.defer();
 
@@ -390,6 +390,15 @@ define(
                 }
 
                 return defer.promise;
+            });
+        }
+
+        appService.prototype.removeProjectImage = function (projectId, fileName) {
+            fileName = fileName.replace(/(.+\/)?([^\/]+)$/, "$2");
+            return this.$http({
+                method: 'DELETE',
+                url: '/api/public/projectImage',
+                params: {projectId: projectId, fileName: fileName}
             });
         }
 

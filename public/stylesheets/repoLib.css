@@ -218,6 +218,12 @@
   text-align: center;
   border-left: 1px solid #ddd;
 }
+.artifactVersionDropdown .cd-dropdown > span:before {
+  position: absolute;
+  width: 100%;
+  line-height: 2;
+  text-align: center;
+}
 .artifactVersionDropdown .cd-dropdown.cd-active > span:after {
   content: '\25B2';
 }
@@ -254,6 +260,12 @@
   -webkit-user-select: none;
   user-select: none;
   -webkit-touch-callout: none;
+}
+.artifactVersionDropdown .cd-dropdown ul li span:before {
+  position: absolute;
+  width: 100%;
+  line-height: 2;
+  text-align: center;
 }
 .artifactVersionDropdown .cd-dropdown.cd-active ul {
   pointer-events: auto;

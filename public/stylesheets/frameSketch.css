@@ -7542,6 +7542,12 @@
   text-align: center;
   border-left: 1px solid #ddd;
 }
+#borderWidthDropdown .cd-dropdown > span:before {
+  position: absolute;
+  width: 100%;
+  line-height: 2;
+  text-align: center;
+}
 #borderWidthDropdown .cd-dropdown.cd-active > span:after {
   content: '\25B2';
 }
@@ -7578,6 +7584,12 @@
   -webkit-user-select: none;
   user-select: none;
   -webkit-touch-callout: none;
+}
+#borderWidthDropdown .cd-dropdown ul li span:before {
+  position: absolute;
+  width: 100%;
+  line-height: 2;
+  text-align: center;
 }
 #borderWidthDropdown .cd-dropdown.cd-active ul {
   pointer-events: auto;
@@ -7811,6 +7823,12 @@
   text-align: center;
   border-left: 1px solid #ddd;
 }
+#borderStyleDropdown .cd-dropdown > span:before {
+  position: absolute;
+  width: 100%;
+  line-height: 2;
+  text-align: center;
+}
 #borderStyleDropdown .cd-dropdown.cd-active > span:after {
   content: '\25B2';
 }
@@ -7847,6 +7865,12 @@
   -webkit-user-select: none;
   user-select: none;
   -webkit-touch-callout: none;
+}
+#borderStyleDropdown .cd-dropdown ul li span:before {
+  position: absolute;
+  width: 100%;
+  line-height: 2;
+  text-align: center;
 }
 #borderStyleDropdown .cd-dropdown.cd-active ul {
   pointer-events: auto;
@@ -8467,6 +8491,12 @@
   text-align: center;
   border-left: 1px solid #ddd;
 }
+.configurationItemList .cd-dropdown > span:before {
+  position: absolute;
+  width: 100%;
+  line-height: 2;
+  text-align: center;
+}
 .configurationItemList .cd-dropdown.cd-active > span:after {
   content: '\25B2';
 }
@@ -8503,6 +8533,12 @@
   -webkit-user-select: none;
   user-select: none;
   -webkit-touch-callout: none;
+}
+.configurationItemList .cd-dropdown ul li span:before {
+  position: absolute;
+  width: 100%;
+  line-height: 2;
+  text-align: center;
 }
 .configurationItemList .cd-dropdown.cd-active ul {
   pointer-events: auto;
@@ -9467,6 +9503,568 @@
   opacity: 1;
 }
 
+#positionDropdown {
+  /* Stack the items with a slight offset */
+  /* Stack the items with a slight offset, and expand them with a slight random angle/left values.
+     Each item will have a different animation delay. */
+  /* Stack the items with a slight offset, and spread them as a fan.
+     Each item will have a different animation delay. */
+  /* Stack the items with a slight offset, and rotate the select label while clicking it. */
+  /*  Show the items by sliding them from the sides. */
+}
+#positionDropdown .cd-dropdown {
+  position: relative;
+  width: 100%;
+  display: block;
+}
+#positionDropdown .cd-dropdown > span {
+  position: relative;
+  width: 100%;
+  height: 2em;
+  line-height: 2;
+  color: #999;
+  font-weight: 700;
+  background: #fff;
+  display: block;
+  padding-left: 1em;
+  cursor: pointer;
+  -moz-backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -moz-user-select: -moz-none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+#positionDropdown .cd-dropdown > span:after {
+  content: '\25BC';
+  position: absolute;
+  right: 0px;
+  width: 2em;
+  line-height: 2;
+  text-align: center;
+  border-left: 1px solid #ddd;
+}
+#positionDropdown .cd-dropdown > span:before {
+  position: absolute;
+  width: 100%;
+  line-height: 2;
+  text-align: center;
+}
+#positionDropdown .cd-dropdown.cd-active > span:after {
+  content: '\25B2';
+}
+#positionDropdown .cd-dropdown ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: block;
+  position: relative;
+  pointer-events: none;
+}
+#positionDropdown .cd-dropdown ul li {
+  display: block;
+}
+#positionDropdown .cd-dropdown ul li span {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 100%;
+  height: 2em;
+  line-height: 2;
+  padding-left: 1em;
+  color: #bcbcbc;
+  background: #eee;
+  cursor: pointer;
+  font-weight: 700;
+  -moz-backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -moz-user-select: -moz-none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+#positionDropdown .cd-dropdown ul li span:before {
+  position: absolute;
+  width: 100%;
+  line-height: 2;
+  text-align: center;
+}
+#positionDropdown .cd-dropdown.cd-active ul {
+  pointer-events: auto;
+}
+#positionDropdown.stackWithOffset .cd-dropdown > span,
+#positionDropdown.stackWithOffset .cd-dropdown ul li:nth-last-child(-n+3) span {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+#positionDropdown.stackWithOffset .cd-dropdown ul {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+}
+#positionDropdown.stackWithOffset .cd-dropdown ul li {
+  position: absolute;
+  width: 100%;
+}
+#positionDropdown.stackWithOffset .cd-dropdown.cd-active > span {
+  color: #669933;
+}
+#positionDropdown.stackWithOffset .cd-dropdown.cd-active > span,
+#positionDropdown.stackWithOffset .cd-dropdown.cd-active ul li span {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+#positionDropdown.stackWithOffset .cd-dropdown.cd-active ul li span {
+  -moz-transition: all 0.2s linear 0s;
+  -o-transition: all 0.2s linear 0s;
+  -webkit-transition: all 0.2s linear;
+  -webkit-transition-delay: 0s;
+  transition: all 0.2s linear 0s;
+}
+#positionDropdown.stackWithOffset .cd-dropdown.cd-active ul li span:hover {
+  background: #669933;
+  color: #fff;
+}
+#positionDropdown.stackAndExpand .cd-dropdown > span,
+#positionDropdown.stackAndExpand .cd-dropdown ul li:nth-last-child(-n+3) span {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+#positionDropdown.stackAndExpand .cd-dropdown ul {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+}
+#positionDropdown.stackAndExpand .cd-dropdown ul li {
+  position: absolute;
+  width: 100%;
+}
+#positionDropdown.stackAndExpand .cd-dropdown.cd-active > span {
+  color: #669933;
+}
+#positionDropdown.stackAndExpand .cd-dropdown.cd-active > span,
+#positionDropdown.stackAndExpand .cd-dropdown.cd-active ul li span {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+#positionDropdown.stackAndExpand .cd-dropdown.cd-active ul li span {
+  -moz-transition: all 0.2s linear 0s;
+  -o-transition: all 0.2s linear 0s;
+  -webkit-transition: all 0.2s linear;
+  -webkit-transition-delay: 0s;
+  transition: all 0.2s linear 0s;
+}
+#positionDropdown.stackAndExpand .cd-dropdown.cd-active ul li span:hover {
+  background: #669933;
+  color: #fff;
+}
+#positionDropdown.stackAndExpandFan .cd-dropdown > span,
+#positionDropdown.stackAndExpandFan .cd-dropdown ul li:nth-last-child(-n+3) span {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+#positionDropdown.stackAndExpandFan .cd-dropdown ul {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+}
+#positionDropdown.stackAndExpandFan .cd-dropdown ul li {
+  position: absolute;
+  width: 100%;
+}
+#positionDropdown.stackAndExpandFan .cd-dropdown.cd-active > span {
+  color: #669933;
+}
+#positionDropdown.stackAndExpandFan .cd-dropdown.cd-active > span,
+#positionDropdown.stackAndExpandFan .cd-dropdown.cd-active ul li span {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+#positionDropdown.stackAndExpandFan .cd-dropdown.cd-active ul li {
+  -moz-transform-origin: -200% 50% 50%;
+  -ms-transform-origin: -200% 50% 50%;
+  -webkit-transform-origin: -200% 50% 50%;
+  transform-origin: -200% 50% 50%;
+}
+#positionDropdown.stackAndExpandFan .cd-dropdown.cd-active ul li span {
+  -moz-transition: all 0.2s linear 0s;
+  -o-transition: all 0.2s linear 0s;
+  -webkit-transition: all 0.2s linear;
+  -webkit-transition-delay: 0s;
+  transition: all 0.2s linear 0s;
+}
+#positionDropdown.stackAndExpandFan .cd-dropdown.cd-active ul li span:hover {
+  background: #669933;
+  color: #fff;
+}
+#positionDropdown.stackAndRotateSelect .cd-dropdown {
+  -moz-perspective: 800px;
+  -webkit-perspective: 800px;
+  perspective: 800px;
+}
+#positionDropdown.stackAndRotateSelect .cd-dropdown > span {
+  -moz-transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -moz-transform-origin: 50% 0% 50%;
+  -ms-transform-origin: 50% 0% 50%;
+  -webkit-transform-origin: 50% 0% 50%;
+  transform-origin: 50% 0% 50%;
+  -moz-transition: -moz-transform 0.3s;
+  -o-transition: -o-transform 0.3s;
+  -webkit-transition: -webkit-transform 0.3s;
+  transition: transform 0.3s;
+}
+#positionDropdown.stackAndRotateSelect .cd-dropdown > span:active {
+  -moz-transform: rotateX(60deg);
+  -ms-transform: rotateX(60deg);
+  -webkit-transform: rotateX(60deg);
+  transform: rotateX(60deg);
+}
+#positionDropdown.stackAndRotateSelect .cd-dropdown > span,
+#positionDropdown.stackAndRotateSelect .cd-dropdown ul li:nth-last-child(-n+3) span {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+#positionDropdown.stackAndRotateSelect .cd-dropdown ul {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+}
+#positionDropdown.stackAndRotateSelect .cd-dropdown ul li {
+  position: absolute;
+  width: 100%;
+}
+#positionDropdown.stackAndRotateSelect .cd-dropdown.cd-active > span {
+  color: #669933;
+}
+#positionDropdown.stackAndRotateSelect .cd-dropdown.cd-active > span,
+#positionDropdown.stackAndRotateSelect .cd-dropdown.cd-active ul li span {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+#positionDropdown.stackAndRotateSelect .cd-dropdown.cd-active ul li span {
+  -moz-transition: all 0.2s linear 0s;
+  -o-transition: all 0.2s linear 0s;
+  -webkit-transition: all 0.2s linear;
+  -webkit-transition-delay: 0s;
+  transition: all 0.2s linear 0s;
+}
+#positionDropdown.stackAndRotateSelect .cd-dropdown.cd-active ul li span:hover {
+  background: #669933;
+  color: #fff;
+}
+#positionDropdown.slide .cd-dropdown ul {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+}
+#positionDropdown.slide .cd-dropdown > span,
+#positionDropdown.slide .cd-dropdown ul li {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+#positionDropdown.slide .cd-dropdown ul li {
+  position: absolute;
+  width: 100%;
+  pointer-events: none;
+}
+#positionDropdown.slide .cd-dropdown.cd-active > span {
+  color: #669933;
+}
+#positionDropdown.slide .cd-dropdown.cd-active ul li {
+  pointer-events: auto;
+}
+#positionDropdown.slide .cd-dropdown.cd-active ul li span {
+  -moz-transition: all 0.2s linear 0s;
+  -o-transition: all 0.2s linear 0s;
+  -webkit-transition: all 0.2s linear;
+  -webkit-transition-delay: 0s;
+  transition: all 0.2s linear 0s;
+}
+#positionDropdown.slide .cd-dropdown.cd-active ul li span:hover {
+  background: #669933;
+  color: #fff;
+}
+
+#repeatDropdown {
+  /* Stack the items with a slight offset */
+  /* Stack the items with a slight offset, and expand them with a slight random angle/left values.
+     Each item will have a different animation delay. */
+  /* Stack the items with a slight offset, and spread them as a fan.
+     Each item will have a different animation delay. */
+  /* Stack the items with a slight offset, and rotate the select label while clicking it. */
+  /*  Show the items by sliding them from the sides. */
+}
+#repeatDropdown .cd-dropdown {
+  position: relative;
+  width: 100%;
+  display: block;
+}
+#repeatDropdown .cd-dropdown > span {
+  position: relative;
+  width: 100%;
+  height: 2em;
+  line-height: 2;
+  color: #999;
+  font-weight: 700;
+  background: #fff;
+  display: block;
+  padding-left: 1em;
+  cursor: pointer;
+  -moz-backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -moz-user-select: -moz-none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+#repeatDropdown .cd-dropdown > span:after {
+  content: '\25BC';
+  position: absolute;
+  right: 0px;
+  width: 2em;
+  line-height: 2;
+  text-align: center;
+  border-left: 1px solid #ddd;
+}
+#repeatDropdown .cd-dropdown > span:before {
+  position: absolute;
+  width: 100%;
+  line-height: 2;
+  text-align: center;
+}
+#repeatDropdown .cd-dropdown.cd-active > span:after {
+  content: '\25B2';
+}
+#repeatDropdown .cd-dropdown ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: block;
+  position: relative;
+  pointer-events: none;
+}
+#repeatDropdown .cd-dropdown ul li {
+  display: block;
+}
+#repeatDropdown .cd-dropdown ul li span {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 100%;
+  height: 2em;
+  line-height: 2;
+  padding-left: 1em;
+  color: #bcbcbc;
+  background: #eee;
+  cursor: pointer;
+  font-weight: 700;
+  -moz-backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -moz-user-select: -moz-none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+#repeatDropdown .cd-dropdown ul li span:before {
+  position: absolute;
+  width: 100%;
+  line-height: 2;
+  text-align: center;
+}
+#repeatDropdown .cd-dropdown.cd-active ul {
+  pointer-events: auto;
+}
+#repeatDropdown.stackWithOffset .cd-dropdown > span,
+#repeatDropdown.stackWithOffset .cd-dropdown ul li:nth-last-child(-n+3) span {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+#repeatDropdown.stackWithOffset .cd-dropdown ul {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+}
+#repeatDropdown.stackWithOffset .cd-dropdown ul li {
+  position: absolute;
+  width: 100%;
+}
+#repeatDropdown.stackWithOffset .cd-dropdown.cd-active > span {
+  color: #669933;
+}
+#repeatDropdown.stackWithOffset .cd-dropdown.cd-active > span,
+#repeatDropdown.stackWithOffset .cd-dropdown.cd-active ul li span {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+#repeatDropdown.stackWithOffset .cd-dropdown.cd-active ul li span {
+  -moz-transition: all 0.2s linear 0s;
+  -o-transition: all 0.2s linear 0s;
+  -webkit-transition: all 0.2s linear;
+  -webkit-transition-delay: 0s;
+  transition: all 0.2s linear 0s;
+}
+#repeatDropdown.stackWithOffset .cd-dropdown.cd-active ul li span:hover {
+  background: #669933;
+  color: #fff;
+}
+#repeatDropdown.stackAndExpand .cd-dropdown > span,
+#repeatDropdown.stackAndExpand .cd-dropdown ul li:nth-last-child(-n+3) span {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+#repeatDropdown.stackAndExpand .cd-dropdown ul {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+}
+#repeatDropdown.stackAndExpand .cd-dropdown ul li {
+  position: absolute;
+  width: 100%;
+}
+#repeatDropdown.stackAndExpand .cd-dropdown.cd-active > span {
+  color: #669933;
+}
+#repeatDropdown.stackAndExpand .cd-dropdown.cd-active > span,
+#repeatDropdown.stackAndExpand .cd-dropdown.cd-active ul li span {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+#repeatDropdown.stackAndExpand .cd-dropdown.cd-active ul li span {
+  -moz-transition: all 0.2s linear 0s;
+  -o-transition: all 0.2s linear 0s;
+  -webkit-transition: all 0.2s linear;
+  -webkit-transition-delay: 0s;
+  transition: all 0.2s linear 0s;
+}
+#repeatDropdown.stackAndExpand .cd-dropdown.cd-active ul li span:hover {
+  background: #669933;
+  color: #fff;
+}
+#repeatDropdown.stackAndExpandFan .cd-dropdown > span,
+#repeatDropdown.stackAndExpandFan .cd-dropdown ul li:nth-last-child(-n+3) span {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+#repeatDropdown.stackAndExpandFan .cd-dropdown ul {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+}
+#repeatDropdown.stackAndExpandFan .cd-dropdown ul li {
+  position: absolute;
+  width: 100%;
+}
+#repeatDropdown.stackAndExpandFan .cd-dropdown.cd-active > span {
+  color: #669933;
+}
+#repeatDropdown.stackAndExpandFan .cd-dropdown.cd-active > span,
+#repeatDropdown.stackAndExpandFan .cd-dropdown.cd-active ul li span {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+#repeatDropdown.stackAndExpandFan .cd-dropdown.cd-active ul li {
+  -moz-transform-origin: -200% 50% 50%;
+  -ms-transform-origin: -200% 50% 50%;
+  -webkit-transform-origin: -200% 50% 50%;
+  transform-origin: -200% 50% 50%;
+}
+#repeatDropdown.stackAndExpandFan .cd-dropdown.cd-active ul li span {
+  -moz-transition: all 0.2s linear 0s;
+  -o-transition: all 0.2s linear 0s;
+  -webkit-transition: all 0.2s linear;
+  -webkit-transition-delay: 0s;
+  transition: all 0.2s linear 0s;
+}
+#repeatDropdown.stackAndExpandFan .cd-dropdown.cd-active ul li span:hover {
+  background: #669933;
+  color: #fff;
+}
+#repeatDropdown.stackAndRotateSelect .cd-dropdown {
+  -moz-perspective: 800px;
+  -webkit-perspective: 800px;
+  perspective: 800px;
+}
+#repeatDropdown.stackAndRotateSelect .cd-dropdown > span {
+  -moz-transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -moz-transform-origin: 50% 0% 50%;
+  -ms-transform-origin: 50% 0% 50%;
+  -webkit-transform-origin: 50% 0% 50%;
+  transform-origin: 50% 0% 50%;
+  -moz-transition: -moz-transform 0.3s;
+  -o-transition: -o-transform 0.3s;
+  -webkit-transition: -webkit-transform 0.3s;
+  transition: transform 0.3s;
+}
+#repeatDropdown.stackAndRotateSelect .cd-dropdown > span:active {
+  -moz-transform: rotateX(60deg);
+  -ms-transform: rotateX(60deg);
+  -webkit-transform: rotateX(60deg);
+  transform: rotateX(60deg);
+}
+#repeatDropdown.stackAndRotateSelect .cd-dropdown > span,
+#repeatDropdown.stackAndRotateSelect .cd-dropdown ul li:nth-last-child(-n+3) span {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+#repeatDropdown.stackAndRotateSelect .cd-dropdown ul {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+}
+#repeatDropdown.stackAndRotateSelect .cd-dropdown ul li {
+  position: absolute;
+  width: 100%;
+}
+#repeatDropdown.stackAndRotateSelect .cd-dropdown.cd-active > span {
+  color: #669933;
+}
+#repeatDropdown.stackAndRotateSelect .cd-dropdown.cd-active > span,
+#repeatDropdown.stackAndRotateSelect .cd-dropdown.cd-active ul li span {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+#repeatDropdown.stackAndRotateSelect .cd-dropdown.cd-active ul li span {
+  -moz-transition: all 0.2s linear 0s;
+  -o-transition: all 0.2s linear 0s;
+  -webkit-transition: all 0.2s linear;
+  -webkit-transition-delay: 0s;
+  transition: all 0.2s linear 0s;
+}
+#repeatDropdown.stackAndRotateSelect .cd-dropdown.cd-active ul li span:hover {
+  background: #669933;
+  color: #fff;
+}
+#repeatDropdown.slide .cd-dropdown ul {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+}
+#repeatDropdown.slide .cd-dropdown > span,
+#repeatDropdown.slide .cd-dropdown ul li {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+#repeatDropdown.slide .cd-dropdown ul li {
+  position: absolute;
+  width: 100%;
+  pointer-events: none;
+}
+#repeatDropdown.slide .cd-dropdown.cd-active > span {
+  color: #669933;
+}
+#repeatDropdown.slide .cd-dropdown.cd-active ul li {
+  pointer-events: auto;
+}
+#repeatDropdown.slide .cd-dropdown.cd-active ul li span {
+  -moz-transition: all 0.2s linear 0s;
+  -o-transition: all 0.2s linear 0s;
+  -webkit-transition: all 0.2s linear;
+  -webkit-transition-delay: 0s;
+  transition: all 0.2s linear 0s;
+}
+#repeatDropdown.slide .cd-dropdown.cd-active ul li span:hover {
+  background: #669933;
+  color: #fff;
+}
+
 #shadowStopColorPalette {
   position: absolute;
   top: 5px;
@@ -9935,10 +10533,12 @@
   position: absolute;
   width: 100%;
   line-height: 1em;
-  content: attr(name);
+  content: attr(desc);
   top: calc(50% - 0.5em);
   text-align: center;
   font-weight: 900;
+  color: rgba(0, 0, 0, 0.4);
+  letter-spacing: 2px;
 }
 .sketchWidget.tempElement {
   border-style: dashed !important;
@@ -10118,6 +10718,12 @@
   text-align: center;
   border-left: 1px solid #ddd;
 }
+#widgetStateDropdown .cd-dropdown > span:before {
+  position: absolute;
+  width: 100%;
+  line-height: 2;
+  text-align: center;
+}
 #widgetStateDropdown .cd-dropdown.cd-active > span:after {
   content: '\25B2';
 }
@@ -10154,6 +10760,12 @@
   -webkit-user-select: none;
   user-select: none;
   -webkit-touch-callout: none;
+}
+#widgetStateDropdown .cd-dropdown ul li span:before {
+  position: absolute;
+  width: 100%;
+  line-height: 2;
+  text-align: center;
 }
 #widgetStateDropdown .cd-dropdown.cd-active ul {
   pointer-events: auto;
@@ -10552,6 +11164,12 @@
   text-align: center;
   border-left: 1px solid #ddd;
 }
+.widgetObjStateDropdown .cd-dropdown > span:before {
+  position: absolute;
+  width: 100%;
+  line-height: 2;
+  text-align: center;
+}
 .widgetObjStateDropdown .cd-dropdown.cd-active > span:after {
   content: '\25B2';
 }
@@ -10588,6 +11206,12 @@
   -webkit-user-select: none;
   user-select: none;
   -webkit-touch-callout: none;
+}
+.widgetObjStateDropdown .cd-dropdown ul li span:before {
+  position: absolute;
+  width: 100%;
+  line-height: 2;
+  text-align: center;
 }
 .widgetObjStateDropdown .cd-dropdown.cd-active ul {
   pointer-events: auto;
@@ -10821,6 +11445,12 @@
   text-align: center;
   border-left: 1px solid #ddd;
 }
+.configurationItemList .cd-dropdown > span:before {
+  position: absolute;
+  width: 100%;
+  line-height: 2;
+  text-align: center;
+}
 .configurationItemList .cd-dropdown.cd-active > span:after {
   content: '\25B2';
 }
@@ -10857,6 +11487,12 @@
   -webkit-user-select: none;
   user-select: none;
   -webkit-touch-callout: none;
+}
+.configurationItemList .cd-dropdown ul li span:before {
+  position: absolute;
+  width: 100%;
+  line-height: 2;
+  text-align: center;
 }
 .configurationItemList .cd-dropdown.cd-active ul {
   pointer-events: auto;
@@ -11881,6 +12517,344 @@
 #fill-control .editorContent.align-right .editorBar .angleStep > div {
   position: relative;
   float: left;
+}
+
+#background-image-control > .backgroundImageContent {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+#background-image-control > .backgroundImageContent > .backgroundImageBar {
+  position: relative;
+  float: left;
+  width: 100%;
+  height: 2em;
+}
+#background-image-control > .backgroundImageContent > .backgroundImageBar img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 5px;
+  width: 100%;
+  height: 100%;
+}
+#background-image-control > .backgroundImageContent > .backgroundImageBar .deleteButton {
+  position: absolute;
+  top: calc(50% - 0.5em);
+  left: calc(50% - 0.5em);
+  width: 1em;
+  height: 1em;
+  color: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+}
+#background-image-control > .backgroundImageContent > .backgroundImageBar .deleteButton:before {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  line-height: 1;
+  text-align: center;
+}
+#background-image-control > .backgroundImageContent > .backgroundImageBar .deleteButton:hover:before {
+  color: rgba(128, 128, 128, 0.4);
+}
+#background-image-control > .backgroundImageContent > .backgroundImageBar .deleteButton:active:before {
+  color: rgba(0, 0, 0, 0.4);
+}
+#background-image-control > .backgroundImageContent > .backgroundImagePalette > .backgroundImagePane {
+  position: relative;
+  float: left;
+  width: calc(100% - 0.2em);
+  height: auto;
+  background: #fff;
+}
+#background-image-control > .backgroundImageContent > .backgroundImagePalette > .backgroundImagePane:after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  content: '';
+  width: 100%;
+  height: 2px;
+  background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuMCIgeTE9IjAuNSIgeDI9IjEuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ViZWJlYiIvPjxzdG9wIG9mZnNldD0iNTAlIiBzdG9wLWNvbG9yPSIjZWJlYmViIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjZmZmZmZmIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g');
+  background: -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, #ebebeb), color-stop(50%, #ebebeb), color-stop(100%, #ffffff));
+  background: -moz-linear-gradient(left, #ebebeb 0%, #ebebeb 50%, #ffffff 100%);
+  background: -webkit-linear-gradient(left, #ebebeb 0%, #ebebeb 50%, #ffffff 100%);
+  background: linear-gradient(to right, #ebebeb 0%, #ebebeb 50%, #ffffff 100%);
+}
+#background-image-control > .backgroundImageContent > .backgroundImagePalette > .backgroundImagePane > .paneTitle {
+  position: relative;
+  float: left;
+  width: 100%;
+  line-height: 2;
+  font-weight: 600;
+}
+#background-image-control > .backgroundImageContent > .backgroundImagePalette > .backgroundImagePane > .paneContent {
+  position: relative;
+  float: left;
+  width: 100%;
+  margin-bottom: 0.2em;
+}
+#background-image-control > .backgroundImageContent > .backgroundImagePalette > .backgroundImagePane > .paneContent > .input-group {
+  float: left;
+}
+#background-image-control > .backgroundImageContent > .backgroundImagePalette > .backgroundImagePane > .paneContent .backgroundImageButton {
+  position: relative;
+  float: left;
+  width: 2em;
+  height: 2em;
+  background-color: #ddd;
+  box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.135);
+  border-radius: 0.2em;
+  display: inline-block;
+  margin-left: 0.5em;
+}
+#background-image-control > .backgroundImageContent > .backgroundImagePalette > .backgroundImagePane > .paneContent .backgroundImageButton:active {
+  background-color: #555;
+  color: #669933;
+  box-shadow: none;
+}
+#background-image-control > .backgroundImageContent > .backgroundImagePalette > .backgroundImagePane > .paneContent .backgroundImageButton:before {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  line-height: 2;
+  color: rgba(0, 0, 0, 0.4);
+}
+#background-image-control > .backgroundImageContent > .backgroundImagePalette > .backgroundImagePane > .paneContent .backgroundImageDock {
+  position: relative;
+  float: left;
+  width: calc(100% - 3em);
+  height: 2em;
+  border: 2px #f1f1f1 dashed;
+  left: 5px;
+  text-align: center;
+  line-height: 2;
+  font-weight: 600;
+}
+#background-image-control > .backgroundImageContent > .backgroundImagePalette > .backgroundImagePane > .paneContent .backgroundImageDock.drag-over {
+  background: #5CB85C;
+  color: #fff;
+}
+#background-image-control > .backgroundImageContent > .backgroundImagePalette > .backgroundImagePane > .paneContent #positionRuler {
+  position: relative;
+  float: left;
+  left: calc(50% - 150px);
+  width: 300px;
+  height: 300px;
+  background: #ccc;
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+#background-image-control > .backgroundImageContent > .backgroundImagePalette > .backgroundImagePane > .paneContent #positionRuler .horizontalPositionContainer {
+  position: absolute;
+  top: -1em;
+  left: 0;
+  width: 100%;
+  height: 0;
+  font-weight: 600;
+  z-index: 1;
+}
+#background-image-control > .backgroundImageContent > .backgroundImagePalette > .backgroundImagePane > .paneContent #positionRuler .verticalPositionContainer {
+  position: absolute;
+  top: 0;
+  left: -1em;
+  width: 0;
+  height: 100%;
+  font-weight: 600;
+  z-index: 1;
+}
+#background-image-control > .backgroundImageContent > .backgroundImagePalette > .backgroundImagePane > .paneContent #positionRuler .positionCordContainer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+}
+#background-image-control > .backgroundImageContent > .backgroundImagePalette > .backgroundImagePane > .paneContent #positionRuler .positionCordContainer #positionTarget {
+  position: absolute;
+  width: 1em;
+  height: 1em;
+  z-index: 1;
+}
+#background-image-control > .backgroundImageContent > .backgroundImagePalette > .backgroundImagePane > .paneContent #positionRuler .positionCordContainer #positionTarget:before {
+  position: absolute;
+  content: "";
+  left: -50%;
+  top: -50%;
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+  border: 1px solid gray;
+  background: gray;
+}
+#background-image-control > .backgroundImageContent > .backgroundImagePalette > .backgroundImagePane > .paneContent #positionRuler .positionCordContainer .horizontalDividers {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 0;
+  overflow: visible;
+}
+#background-image-control > .backgroundImageContent > .backgroundImagePalette > .backgroundImagePane > .paneContent #positionRuler .positionCordContainer .horizontalDividers .horizontalDivider {
+  position: absolute;
+  pointer-events: none;
+  height: 300px;
+}
+#background-image-control > .backgroundImageContent > .backgroundImagePalette > .backgroundImagePane > .paneContent #positionRuler .positionCordContainer .horizontalDividers .horizontalDivider:nth-child(1) {
+  left: 0px;
+}
+#background-image-control > .backgroundImageContent > .backgroundImagePalette > .backgroundImagePane > .paneContent #positionRuler .positionCordContainer .horizontalDividers .horizontalDivider:nth-child(2) {
+  left: 150px;
+}
+#background-image-control > .backgroundImageContent > .backgroundImagePalette > .backgroundImagePane > .paneContent #positionRuler .positionCordContainer .horizontalDividers .horizontalDivider:nth-child(3) {
+  left: 300px;
+}
+#background-image-control > .backgroundImageContent > .backgroundImagePalette > .backgroundImagePane > .paneContent #positionRuler .positionCordContainer .horizontalDividers .horizontalDivider:after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 1px;
+  height: 100%;
+  border-right: 1px solid #dd7d00;
+}
+#background-image-control > .backgroundImageContent > .backgroundImagePalette > .backgroundImagePane > .paneContent #positionRuler .positionCordContainer .horizontalDividers .horizontalDivider.nearByDivider:after {
+  -moz-box-shadow: 0 0 10px #555;
+  -webkit-box-shadow: 0 0 10px #555;
+  box-shadow: 0 0 10px #555;
+}
+#background-image-control > .backgroundImageContent > .backgroundImagePalette > .backgroundImagePane > .paneContent #positionRuler .positionCordContainer .horizontalDividers .horizontalLocator {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1em;
+  height: 1em;
+}
+#background-image-control > .backgroundImageContent > .backgroundImagePalette > .backgroundImagePane > .paneContent #positionRuler .positionCordContainer .horizontalDividers .horizontalLocator .horizontalMoveControl {
+  position: absolute;
+  left: 50%;
+  top: -125%;
+  width: 100%;
+  z-index: 1;
+}
+#background-image-control > .backgroundImageContent > .backgroundImagePalette > .backgroundImagePane > .paneContent #positionRuler .positionCordContainer .horizontalDividers .horizontalLocator .horizontalMoveControl:active {
+  color: #dd7d00;
+}
+#background-image-control > .backgroundImageContent > .backgroundImagePalette > .backgroundImagePane > .paneContent #positionRuler .positionCordContainer .horizontalDividers .horizontalLocator .horizontalMoveControl:before {
+  position: absolute;
+  left: -0.5em;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  line-height: 1;
+  text-align: center;
+}
+#background-image-control > .backgroundImageContent > .backgroundImagePalette > .backgroundImagePane > .paneContent #positionRuler .positionCordContainer .verticalDividers {
+  position: absolute;
+  left: 0;
+  width: 0;
+  height: 100%;
+  overflow: visible;
+}
+#background-image-control > .backgroundImageContent > .backgroundImagePalette > .backgroundImagePane > .paneContent #positionRuler .positionCordContainer .verticalDividers .verticalDivider {
+  position: absolute;
+  pointer-events: none;
+  width: 300px;
+}
+#background-image-control > .backgroundImageContent > .backgroundImagePalette > .backgroundImagePane > .paneContent #positionRuler .positionCordContainer .verticalDividers .verticalDivider:nth-child(1) {
+  top: 0px;
+}
+#background-image-control > .backgroundImageContent > .backgroundImagePalette > .backgroundImagePane > .paneContent #positionRuler .positionCordContainer .verticalDividers .verticalDivider:nth-child(2) {
+  top: 150px;
+}
+#background-image-control > .backgroundImageContent > .backgroundImagePalette > .backgroundImagePane > .paneContent #positionRuler .positionCordContainer .verticalDividers .verticalDivider:nth-child(3) {
+  top: 300px;
+}
+#background-image-control > .backgroundImageContent > .backgroundImagePalette > .backgroundImagePane > .paneContent #positionRuler .positionCordContainer .verticalDividers .verticalDivider:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 0;
+  width: 100%;
+  border-bottom: 1px solid #dd7d00;
+}
+#background-image-control > .backgroundImageContent > .backgroundImagePalette > .backgroundImagePane > .paneContent #positionRuler .positionCordContainer .verticalDividers .verticalDivider.nearByDivider:after {
+  -moz-box-shadow: 0 0 10px #555;
+  -webkit-box-shadow: 0 0 10px #555;
+  box-shadow: 0 0 10px #555;
+}
+#background-image-control > .backgroundImageContent > .backgroundImagePalette > .backgroundImagePane > .paneContent #positionRuler .positionCordContainer .verticalDividers .verticalLocator {
+  position: absolute;
+  width: 1em;
+  height: 1em;
+  left: 0;
+  top: -0.5em;
+}
+#background-image-control > .backgroundImageContent > .backgroundImagePalette > .backgroundImagePane > .paneContent #positionRuler .positionCordContainer .verticalDividers .verticalLocator .verticalMoveControl {
+  position: relative;
+  float: left;
+  left: -125%;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+#background-image-control > .backgroundImageContent > .backgroundImagePalette > .backgroundImagePane > .paneContent #positionRuler .positionCordContainer .verticalDividers .verticalLocator .verticalMoveControl:active {
+  color: #dd7d00;
+}
+#background-image-control > .backgroundImageContent > .backgroundImagePalette > .backgroundImagePane > .paneContent #positionRuler .positionCordContainer .verticalDividers .verticalLocator .verticalMoveControl:before {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  line-height: 1;
+  text-align: center;
+}
+#background-image-control > .backgroundImageContent > .backgroundImagePalette > .backgroundImagePane > .paneContent #positionRuler .positionCordContainer .horizontalCord {
+  position: absolute;
+  width: 1em;
+  height: 1em;
+}
+#background-image-control > .backgroundImageContent > .backgroundImagePalette > .backgroundImagePane > .paneContent #positionRuler .positionCordContainer .horizontalCord[row="0"] {
+  top: 0px;
+}
+#background-image-control > .backgroundImageContent > .backgroundImagePalette > .backgroundImagePane > .paneContent #positionRuler .positionCordContainer .horizontalCord[row="1"] {
+  top: 150px;
+}
+#background-image-control > .backgroundImageContent > .backgroundImagePalette > .backgroundImagePane > .paneContent #positionRuler .positionCordContainer .horizontalCord[row="2"] {
+  top: 300px;
+}
+#background-image-control > .backgroundImageContent > .backgroundImagePalette > .backgroundImagePane > .paneContent #positionRuler .positionCordContainer .horizontalCord .verticalCord {
+  position: absolute;
+  width: 1em;
+  height: 1em;
+}
+#background-image-control > .backgroundImageContent > .backgroundImagePalette > .backgroundImagePane > .paneContent #positionRuler .positionCordContainer .horizontalCord .verticalCord span {
+  position: absolute;
+  left: -0.5em;
+  top: -0.5em;
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+  border: 1px solid #dd7d00;
+  background: #fff;
+}
+#background-image-control > .backgroundImageContent > .backgroundImagePalette > .backgroundImagePane > .paneContent #positionRuler .positionCordContainer .horizontalCord .verticalCord span:active {
+  background-color: #aa6000;
+}
+#background-image-control > .backgroundImageContent > .backgroundImagePalette > .backgroundImagePane > .paneContent #positionRuler .positionCordContainer .horizontalCord .verticalCord span.select {
+  background-color: #aa6000;
+}
+#background-image-control > .backgroundImageContent > .backgroundImagePalette > .backgroundImagePane > .paneContent #positionRuler .positionCordContainer .horizontalCord .verticalCord[column="0"] {
+  left: 0px;
+}
+#background-image-control > .backgroundImageContent > .backgroundImagePalette > .backgroundImagePane > .paneContent #positionRuler .positionCordContainer .horizontalCord .verticalCord[column="1"] {
+  left: 150px;
+}
+#background-image-control > .backgroundImageContent > .backgroundImagePalette > .backgroundImagePane > .paneContent #positionRuler .positionCordContainer .horizontalCord .verticalCord[column="2"] {
+  left: 300px;
 }
 
 #text-shadow-control > .textShadowContent {
@@ -13497,7 +14471,7 @@
 
 #sketchControls {
   position: absolute;
-  top: 3em;
+  top: 2.5em;
   width: 10em;
   color: rgba(0, 0, 0, 0.4);
 }
@@ -13617,9 +14591,9 @@
 }
 #sketchControls.align-right > .dockContent .dockDetail .ui-control-groups .ui-control-group .ui-control, #sketchControls.align-left > .dockContent .dockDetail .ui-control-groups .ui-control-group .ui-control {
   position: relative;
-  width: calc(100% - 0.4em);
+  width: 100%;
   height: 3em;
-  margin: 0.2em;
+  margin: 0.2em 0;
 }
 #sketchControls.align-right > .dockContent .dockDetail .ui-control-groups .ui-control-group .ui-control:nth-child(11), #sketchControls.align-left > .dockContent .dockDetail .ui-control-groups .ui-control-group .ui-control:nth-child(11) {
   z-index: 1;
@@ -13669,7 +14643,7 @@
 #sketchControls.align-right > .dockContent .dockDetail .ui-control-groups .ui-control-group .ui-control .ui-control-title p, #sketchControls.align-left > .dockContent .dockDetail .ui-control-groups .ui-control-group .ui-control .ui-control-title p {
   position: relative;
   float: left;
-  width: calc(100% - 1em);
+  width: calc(100% - 1.2em);
   line-height: 1;
   text-align: left;
 }
@@ -13765,16 +14739,11 @@
   width: 100%;
   z-index: 6;
   opacity: 0;
+  height: 300%;
   -moz-transition: opacity 0.3s linear;
   -o-transition: opacity 0.3s linear;
   -webkit-transition: opacity 0.3s linear;
   transition: opacity 0.3s linear;
-}
-#sketchControls.align-right > .dockContent .dockDetail .ui-control-groups .ui-control-group .structureContent > .tabs > .content > div.content-1, #sketchControls.align-left > .dockContent .dockDetail .ui-control-groups .ui-control-group .structureContent > .tabs > .content > div.content-1 {
-  height: 300%;
-}
-#sketchControls.align-right > .dockContent .dockDetail .ui-control-groups .ui-control-group .structureContent > .tabs > .content > div.content-2, #sketchControls.align-left > .dockContent .dockDetail .ui-control-groups .ui-control-group .structureContent > .tabs > .content > div.content-2 {
-  height: 100%;
 }
 #sketchControls.align-right > .dockContent .dockDetail .ui-control-groups .ui-control-group .structureContent > .tabs > input.tab-selector-1:checked ~ .content > .content-1,
 #sketchControls.align-right > .dockContent .dockDetail .ui-control-groups .ui-control-group .structureContent > .tabs > input.tab-selector-2:checked ~ .content > .content-2, #sketchControls.align-left > .dockContent .dockDetail .ui-control-groups .ui-control-group .structureContent > .tabs > input.tab-selector-1:checked ~ .content > .content-1,
@@ -13835,6 +14804,11 @@
 #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group .ui-control.ui-control-bordered .ui-control-bar {
   border: 1px solid rgba(0, 0, 0, 0.4);
 }
+#sketchControls.align-right > .dockContent > .dockDetail .ui-control-group .ui-control.ui-control-bordered .ui-control-panel.show {
+  -moz-box-shadow: 0 3px 3px 0px black;
+  -webkit-box-shadow: 0 3px 3px 0px black;
+  box-shadow: 0 3px 3px 0px black;
+}
 #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group .ui-control .ui-control-wrapper {
   position: relative;
   float: left;
@@ -13862,6 +14836,10 @@
   -ms-transform: rotateX(-90deg);
   -webkit-transform: rotateX(-90deg);
   transform: rotateX(-90deg);
+}
+#sketchControls.align-right > .dockContent > .dockDetail .ui-control-group .ui-control .ui-control-wrapper .ui-control-panel.show {
+  padding-bottom: 10px;
+  background: #fff;
 }
 #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group .ui-control .ui-control-wrapper.expanded .ui-control-bar {
   -moz-box-shadow: 0 8px 6px -6px black;
@@ -13920,6 +14898,11 @@
 #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group .ui-control.ui-control-bordered .ui-control-bar {
   border: 1px solid rgba(0, 0, 0, 0.4);
 }
+#sketchControls.align-left > .dockContent > .dockDetail .ui-control-group .ui-control.ui-control-bordered .ui-control-panel.show {
+  -moz-box-shadow: 0 3px 3px 0px black;
+  -webkit-box-shadow: 0 3px 3px 0px black;
+  box-shadow: 0 3px 3px 0px black;
+}
 #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group .ui-control .ui-control-wrapper {
   position: relative;
   float: right;
@@ -13947,6 +14930,10 @@
   -ms-transform: rotateX(-90deg);
   -webkit-transform: rotateX(-90deg);
   transform: rotateX(-90deg);
+}
+#sketchControls.align-left > .dockContent > .dockDetail .ui-control-group .ui-control .ui-control-wrapper .ui-control-panel.show {
+  padding-bottom: 10px;
+  background: #fff;
 }
 #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group .ui-control .ui-control-wrapper.expanded .ui-control-bar {
   -moz-box-shadow: 0 8px 6px -6px black;

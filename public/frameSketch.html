@@ -3,6 +3,7 @@
 <link rel="stylesheet" type="text/css" href="fonts/icon-frame-sketch/style.css"/>
 <link rel="stylesheet" type="text/css" href="fonts/icon-color-editor-palette/style.css"/>
 <link rel="stylesheet" type="text/css" href="fonts/icon-gradient-editor/style.css"/>
+<link rel="stylesheet" type="text/css" href="fonts/icon-background-image/style.css"/>
 <link rel="stylesheet" type="text/css" href="fonts/icon-text-shadow/style.css"/>
 <link rel="stylesheet" type="text/css" href="fonts/icon-box-shadow/style.css"/>
 <link rel="stylesheet" type="text/css" href="fonts/icon-dock/style.css"/>
@@ -110,9 +111,9 @@
                             <section class="tabs">
                                 <input id="tab-1" type="radio" name="tabRadio" class="tab-selector-1 fs-x-smaller"
                                        checked="checked"/>
-                                <label class="tab-label-1 fs-x-smaller">Properties</label>
+                                <label class="tab-label-1 fs-x-small">Properties</label>
                                 <input id="tab-2" type="radio" name="tabRadio" class="tab-selector-2 fs-x-smaller"/>
-                                <label class="tab-label-2 fs-x-smaller" for="tab-2">States</label>
+                                <label class="tab-label-2 fs-x-small" for="tab-2">States</label>
 
                                 <div class="content">
                                     <div class="content-1">
@@ -123,6 +124,14 @@
                                              picked-widget="sketchObject.pickedWidget"
                                              dock-align="dockAlign">
                                             Widget Configuration
+                                        </div>
+
+                                        <div id="background-image-control"
+                                             class="ui-control ui-control-inline ui-control-bordered"
+                                             ui-background-image
+                                             background-image="sketchWidgetSetting.backgroundImage"
+                                             dock-align="dockAlign" project="project">
+                                            Background Image
                                         </div>
 
                                         <div id="color-control" class="ui-control ui-control-inline ui-control-bordered"

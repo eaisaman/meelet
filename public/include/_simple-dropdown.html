@@ -1,15 +1,18 @@
 <div class="cd-dropdown" ng-style="{'z-index':'{{options.zIndex + optionLength(selectionList) + 1}}'}">
-    <span ng-style="{'z-index':'{{options.zIndex + optionLength(selectionList)}}'}" ng-show="options.showTitle && selection"
+    <span ng-style="{'z-index':'{{options.zIndex + optionLength(selectionList)}}'}"
+          ng-show="options.showTitle && selection"
+          ng-class="pickThumbnail(selection)"
           ng-click="toggleOpen($event)">{{pickLabel(selection) || options.title}}</span>
 
     <span ng-style="{'z-index':'{{options.zIndex + getSelectionLength()}}'}" ng-click="toggleOpen($event)"
-         ng-transclude ng-show="options.showTitle && !selection"></span>
+          ng-transclude ng-show="options.showTitle && !selection"></span>
     <ul ng-click="onSelect($event)">
         <li ng-if="options.displayUnsetOption">
             <span selection-order="-1" data-value="{{pickValue(unsetOptionValue)}}"></span>
         </li>
         <li ng-repeat="selection in selectionList">
-            <span ng-attr-selection-order="{{$index}}" data-value="{{pickValue(selection)}}" title="{{pickValue(selection)}}">{{pickLabel(selection)}}</span>
+            <span ng-attr-selection-order="{{$index}}" data-value="{{pickValue(selection)}}"
+                  title="{{pickValue(selection)}}" ng-class="pickThumbnail(selection)">{{pickLabel(selection)}}</span>
         </li>
     </ul>
 </div>

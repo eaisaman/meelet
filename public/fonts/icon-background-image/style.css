@@ -1,0 +1,86 @@
+@font-face {
+	font-family: 'icon-background-image';
+	src: url('icon-background-image.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+.icon-background-image:before {
+	font-family: 'icon-background-image';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon-background-image-before:before {
+	font-family: 'icon-background-image';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon-background-image-after:after {
+	font-family: 'icon-background-image';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon-background-image-delete:before {
+    content: "\e600";
+}
+
+.icon-background-image-move:before {
+    content: "\e601";
+}
+
+.icon-background-image-upload:before {
+    content: "\e602";
+}
+
+.icon-background-image-delete-before:before {
+    content: "\e600";
+}
+
+.icon-background-image-move-before:before {
+    content: "\e601";
+}
+
+.icon-background-image-upload-before:before {
+    content: "\e602";
+}
+
+.icon-background-image-delete-after:after {
+    content: "\e600";
+}
+
+.icon-background-image-move-after:after {
+    content: "\e601";
+}
+
+.icon-background-image-upload-after:after {
+    content: "\e602";
+}
+
+

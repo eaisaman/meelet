@@ -1,0 +1,94 @@
+<div class="ui-control-title fs-x-small">
+    <p ng-transclude></p>
+
+    <div class="ui-control-enable-button icon-dock-after icon-dock-cross-after"
+         ng-click="toggleBackgroundImageControl()"></div>
+</div>
+<div class="backgroundImageContent ui-control-wrapper">
+    <div class="backgroundImageBar ui-control-bar fs-x-large"
+         ng-click="togglePalette($event)">
+        <img ng-if="pickedBackgroundImageUrl" ng-src="{{pickedBackgroundImageUrl}}"/>
+
+        <div ng-if="pickedBackgroundImageUrl" ng-click="clearBackgroundImageUrl($event)"
+             class="deleteButton fs-x-huge icon-background-image-before icon-background-image-delete-before"></div>
+    </div>
+    <div class="backgroundImagePalette ui-control-panel">
+        <div class="backgroundImagePane">
+            <div class="paneTitle fs-x-small">Image Source</div>
+            <div class="paneContent fs-x-smaller"
+                 flow-init="{'target':'api/public/projectImageChunk', 'simultaneousUploads':1, 'query':{'projectId':project._id}}"
+                 flow-file-success="onUploadSuccess($file, $message)" flow-files-submitted="$flow.upload()">
+                <div class="backgroundImageButton form-control fs-x-smaller-before icon-background-image-before icon-background-image-upload-before"
+                     flow-btn>
+                    <input type="file" style="visibility: hidden; position: absolute;">
+                </div>
+                <div class="backgroundImageDock" flow-drop ng-class="dropClass" flow-drag-enter="dropClass='drag-over'"
+                     flow-drag-leave="dropClass=''">
+                    OR Drag And Drop file here
+                </div>
+            </div>
+        </div>
+        <div class="backgroundImagePane">
+            <div class="paneTitle fs-x-small">Position</div>
+            <div class="paneContent">
+                <div class="input-group col-as-5 no-padding fs-x-smaller">
+                    <label class="col-as-4 no-padding control-label">X%</label>
+
+                    <div class="col-as-7 no-padding">
+                        <input type="text" class="form-control" ng-model="pickedBackgroundPosition.x"/>
+                    </div>
+                </div>
+                <div class="input-group col-as-5 no-padding fs-x-smaller">
+                    <label class="col-as-4 no-padding control-label">Y%</label>
+
+                    <div class="col-as-7 no-padding">
+                        <input type="text" class="form-control" ng-model="pickedBackgroundPosition.y"/>
+                    </div>
+                </div>
+                <div id="positionRuler" class="fs-x-smaller">
+                    <div class="positionCordContainer">
+                        <div id="positionTarget"
+                             ng-style="{'left':pickedBackgroundPosition.x + pickedBackgroundPosition.unit, 'top': pickedBackgroundPosition.y + pickedBackgroundPosition.unit}"></div>
+                        <span class="horizontalDividers">
+                            <span class="horizontalDivider"
+                                  ng-class="{'nearByDivider':i==nearByHorizontalMarkerIndex}"
+                                  ng-repeat="i in [0,3]|makeRange"></span>
+
+                            <div class="fs-x-small horizontalLocator">
+                                <div class="horizontalMoveControl icon-background-image-before icon-background-image-move-before"></div>
+                            </div>
+                        </span>
+
+                        <span class="verticalDividers">
+                            <span class="verticalDivider"
+                                  ng-class="{'nearByDivider':i==nearByVerticalMarkerIndex}"
+                                  ng-repeat="i in [0,3]|makeRange"></span>
+
+                            <div class="fs-x-small verticalLocator">
+                                <div class="verticalMoveControl icon-background-image-before icon-background-image-move-before"></div>
+                            </div>
+                        </span>
+
+                        <div class="horizontalCord" ng-attr-row="{{i}}"
+                             ng-repeat="i in [0,3]|makeRange">
+                            <div class="verticalCord" ng-attr-column="{{j}}"
+                                 ng-repeat="j in [0,3]|makeRange">
+                                <span ng-class="{'select':j==nearByHorizontalCordIndex && i==nearByVerticalCordIndex}"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="backgroundImagePane">
+            <div class="paneTitle fs-x-small">Repeat</div>
+            <div id="repeatDropdown" class="paneContent fs-x-smaller stackAndRotateSelect"
+                 ui-simple-dropdown
+                 ui-simple-dropdown-opts="{dataField:'value', labelField:'name', zIndex:100, gutter: 5, showTitle: true, displayUnsetOption: false}"
+                 selection-list="repeatList"
+                 select-item="pickBackgroundRepeatValue"
+                 on-option-select="">
+            </div>
+        </div>
+    </div>
+</div>

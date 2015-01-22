@@ -30,233 +30,341 @@ define(
                     var resizeHandler, toggleHandler, toggleResizeOnPressHandler, toggleTextModeHandler;
 
                     function registerHandlers(scope, element) {
-                        var mc = element.data("hammer");
+                        var widgetObj = element.data("widgetObject");
 
-                        if (!mc) {
-                            mc = new Hammer.Manager(element[0]);
-                            mc.add(new Hammer.Press());
-                            mc.add(new Hammer.Tap());
-                            element.data("hammer", mc);
+                        if (widgetObj && !widgetObj.hasClass(angularConstants.widgetClasses.widgetContainerClass)) {
+                            var mc = element.data("hammer");
 
-                            toggleHandler = function (event) {
-                                function handler(widget, shiftPressed) {
-                                    var defer = $q.defer();
+                            if (!mc) {
+                                mc = new Hammer.Manager(element[0]);
+                                mc.add(new Hammer.Press());
+                                mc.add(new Hammer.Tap());
+                                element.data("hammer", mc);
 
-                                    $timeout(function () {
-                                        var prevWidget = scope.sketchObject.pickedWidget;
+                                toggleHandler = function (event) {
+                                    function handler(widget, shiftPressed) {
+                                        var defer = $q.defer();
 
-                                        if (shiftPressed) {
-                                            if (widget.isElement) {
-                                                if (prevWidget) {
-                                                    if (prevWidget.isElement) {
-                                                        if (prevWidget.isTemporary) {
-                                                            if (prevWidget.id != widget.id) {
-                                                                if (prevWidget.directContains(widget)) {
-                                                                    prevWidget.levelUp(widget, true);
+                                        $timeout(function () {
+                                            var prevWidget = scope.sketchObject.pickedWidget;
 
-                                                                    if (prevWidget.childWidgets.length == 1) {
-                                                                        prevWidget.disassemble();
-                                                                        scope.sketchObject.pickedWidget = null;
+                                            if (shiftPressed) {
+                                                if (widget.isElement) {
+                                                    if (prevWidget) {
+                                                        if (prevWidget.isElement) {
+                                                            if (prevWidget.isTemporary) {
+                                                                if (prevWidget.id != widget.id) {
+                                                                    if (prevWidget.directContains(widget)) {
+                                                                        prevWidget.levelUp(widget, true);
+
+                                                                        if (prevWidget.childWidgets.length == 1) {
+                                                                            prevWidget.disassemble();
+                                                                            scope.sketchObject.pickedWidget = null;
+                                                                        }
+                                                                    } else {
+                                                                        widget.appendTo(prevWidget);
                                                                     }
                                                                 } else {
-                                                                    widget.appendTo(prevWidget);
+                                                                    prevWidget.removeOmniClass(angularConstants.widgetClasses.activeClass);
+                                                                    prevWidget.resizable && !prevWidget.isTemporary && toggleResize(prevWidget.$element, false);
+                                                                    scope.sketchObject.pickedWidget = null;
                                                                 }
                                                             } else {
-                                                                prevWidget.removeClass(angularConstants.widgetClasses.activeClass);
+                                                                prevWidget.removeOmniClass(angularConstants.widgetClasses.activeClass);
                                                                 prevWidget.resizable && !prevWidget.isTemporary && toggleResize(prevWidget.$element, false);
-                                                                scope.sketchObject.pickedWidget = null;
-                                                            }
-                                                        } else {
-                                                            prevWidget.removeClass(angularConstants.widgetClasses.activeClass);
-                                                            prevWidget.resizable && !prevWidget.isTemporary && toggleResize(prevWidget.$element, false);
 
-                                                            if (!prevWidget.directContains(widget)) {
-                                                                if (prevWidget.id != widget.id) {
-                                                                    if (widget.isTemporary) {
-                                                                        prevWidget.appendTo(widget);
-                                                                        scope.sketchObject.pickedWidget = widget;
+                                                                if (!prevWidget.directContains(widget)) {
+                                                                    if (prevWidget.id != widget.id) {
+                                                                        if (widget.isTemporary) {
+                                                                            prevWidget.appendTo(widget);
+                                                                            scope.sketchObject.pickedWidget = widget;
+                                                                        } else {
+                                                                            var composite = uiService.createComposite([prevWidget, widget], true);
+                                                                            composite.addClass(options.widgetClass);
+                                                                            scope.sketchObject.pickedWidget = composite;
+                                                                        }
+                                                                        scope.sketchObject.pickedWidget.addOmniClass(angularConstants.widgetClasses.activeClass);
                                                                     } else {
-                                                                        var composite = uiService.createComposite([prevWidget, widget], true);
-                                                                        composite.addClass(options.widgetClass);
-                                                                        scope.sketchObject.pickedWidget = composite;
+                                                                        scope.sketchObject.pickedWidget = null;
                                                                     }
-                                                                    scope.sketchObject.pickedWidget.addClass(angularConstants.widgetClasses.activeClass);
-                                                                } else {
-                                                                    scope.sketchObject.pickedWidget = null;
                                                                 }
                                                             }
                                                         }
+                                                    } else {
+                                                        scope.sketchObject.pickedWidget = widget;
+                                                        scope.sketchObject.pickedWidget.addOmniClass(angularConstants.widgetClasses.activeClass);
                                                     }
-                                                } else {
+                                                }
+                                            } else {
+                                                if (!scope.sketchObject.pickedWidget || scope.sketchObject.pickedWidget.id != widget.id) {
                                                     scope.sketchObject.pickedWidget = widget;
-                                                    scope.sketchObject.pickedWidget.addClass(angularConstants.widgetClasses.activeClass);
+                                                    scope.sketchObject.pickedWidget.addOmniClass(angularConstants.widgetClasses.activeClass);
+                                                }
+
+                                                if (prevWidget) {
+                                                    prevWidget.removeOmniClass(angularConstants.widgetClasses.activeClass);
+                                                    if (scope.sketchObject.pickedWidget == prevWidget)
+                                                        scope.sketchObject.pickedWidget = null;
+                                                    !prevWidget.isTemporary && prevWidget.isElement && prevWidget.$element && toggleTextMode(prevWidget.$element, false);
                                                 }
                                             }
-                                        } else {
+
+                                            defer.resolve();
+                                        });
+
+                                        return defer.promise;
+                                    }
+
+                                    handler.onceId = options.onceId;
+
+                                    var target = angular.isElement(event) && event || event.target,
+                                        $target = $(target);
+
+                                    if ($target.attr("widget-anchor") != null) {
+                                        var $container = $target.closest("." + angularConstants.widgetClasses.widgetContainerClass);
+                                        $target = $container.parent();
+                                    }
+
+                                    var widget = $target.data("widgetObject");
+                                    if (widget) {
+                                        uiUtilService.once(handler, null, 20)(widget, event.srcEvent && event.srcEvent.shiftKey);
+                                    }
+                                }
+
+                                toggleResizeOnPressHandler = function (event) {
+                                    function handler(widget) {
+                                        var defer = $q.defer();
+
+                                        $timeout(function () {
+                                            var prevWidget = scope.sketchObject.pickedWidget;
+
                                             if (!scope.sketchObject.pickedWidget || scope.sketchObject.pickedWidget.id != widget.id) {
                                                 scope.sketchObject.pickedWidget = widget;
-                                                scope.sketchObject.pickedWidget.addClass(angularConstants.widgetClasses.activeClass);
+                                                scope.sketchObject.pickedWidget.addOmniClass(angularConstants.widgetClasses.activeClass);
+                                                widget.resizable && !widget.isTemporary && toggleResize(widget.$element);
                                             }
 
                                             if (prevWidget) {
-                                                prevWidget.removeClass(angularConstants.widgetClasses.activeClass);
-                                                if (scope.sketchObject.pickedWidget == prevWidget)
-                                                    scope.sketchObject.pickedWidget = null;
-                                                !prevWidget.isTemporary && prevWidget.isElement && prevWidget.$element && toggleTextMode(prevWidget.$element, false);
-                                            }
-                                        }
-
-                                        defer.resolve();
-                                    });
-
-                                    return defer.promise;
-                                }
-
-                                handler.onceId = options.onceId;
-
-                                var target = angular.isElement(event) && event || event.target,
-                                    $target = $(target);
-
-                                if ($target.attr("widget-anchor") != null) {
-                                    $target = $target.closest("[ui-sketch-widget]");
-                                }
-
-                                var widget = $target.data("widgetObject");
-                                if (widget) {
-                                    uiUtilService.once(handler, null, 20)(widget, event.srcEvent && event.srcEvent.shiftKey);
-                                }
-                            }
-
-                            toggleResizeOnPressHandler = function (event) {
-                                function handler(widget) {
-                                    var defer = $q.defer();
-
-                                    $timeout(function () {
-                                        var prevWidget = scope.sketchObject.pickedWidget;
-
-                                        if (!scope.sketchObject.pickedWidget || scope.sketchObject.pickedWidget.id != widget.id) {
-                                            scope.sketchObject.pickedWidget = widget;
-                                            scope.sketchObject.pickedWidget.addClass(angularConstants.widgetClasses.activeClass);
-                                            widget.resizable && !widget.isTemporary && toggleResize(widget.$element);
-                                        }
-
-                                        if (prevWidget) {
-                                            if (scope.sketchObject.pickedWidget == prevWidget) {
-                                                var resizeToggled = prevWidget.resizable && !prevWidget.isTemporary && toggleResize(prevWidget.$element);
-                                                if (!resizeToggled) {
-                                                    scope.sketchObject.pickedWidget = null;
-                                                    prevWidget.removeClass(angularConstants.widgetClasses.activeClass);
+                                                if (scope.sketchObject.pickedWidget == prevWidget) {
+                                                    var resizeToggled = prevWidget.resizable && !prevWidget.isTemporary && toggleResize(prevWidget.$element);
+                                                    if (!resizeToggled) {
+                                                        scope.sketchObject.pickedWidget = null;
+                                                        prevWidget.removeOmniClass(angularConstants.widgetClasses.activeClass);
+                                                    }
+                                                } else {
+                                                    prevWidget.resizable && !prevWidget.isTemporary && toggleResize(prevWidget.$element, false);
+                                                    prevWidget.removeOmniClass(angularConstants.widgetClasses.activeClass);
                                                 }
+                                            }
+
+                                            defer.resolve();
+                                        });
+
+                                        return defer.promise;
+                                    }
+
+                                    handler.onceId = options.onceId;
+
+                                    var target = angular.isElement(event) && event || event.target,
+                                        $target = $(target);
+
+                                    if ($target.attr("widget-anchor") != null) {
+                                        var $container = $target.closest("." + angularConstants.widgetClasses.widgetContainerClass);
+                                        $target = $container.parent();
+                                    }
+
+                                    var widget = $target.data("widgetObject");
+                                    if (widget && widget.isKindOf("ElementSketchWidget")) {
+                                        uiUtilService.once(handler, null, 20)(widget);
+                                    }
+                                }
+
+                                resizeHandler = function (event) {
+                                    function handler(event) {
+                                        var defer = $q.defer();
+
+                                        $timeout(function () {
+                                            var $u = $(event.target),
+                                                direction = parseInt($u.attr("direction")) || DIRECTION_NONE,
+                                                top = event.srcEvent.pageY - $u.offset().top,
+                                                left = event.srcEvent.pageX - $u.offset().left;
+
+                                            top = Math.floor(top * angularConstants.precision) / angularConstants.precision;
+                                            left = Math.floor(left * angularConstants.precision) / angularConstants.precision;
+
+                                            if (VERBOSE) {
+                                                $log.debug(event.type);
+                                            }
+
+                                            if (event.type === "panstart") {
+                                                var height = $u.height(),
+                                                    width = $u.width();
+
+                                                if (top >= height - 5 && top <= height)
+                                                    direction |= DIRECTION_DOWN;
+                                                else if (top <= 5)
+                                                    direction |= DIRECTION_UP;
+
+                                                if (left >= width - 5 && top <= width)
+                                                    direction |= DIRECTION_RIGHT;
+                                                else if (left <= 5)
+                                                    direction |= DIRECTION_LEFT;
+
+                                                $u.attr("direction", direction);
+                                            } else if (event.type === "panmove") {
+                                                if (direction & DIRECTION_HORIZONTAL) {
+                                                    $u.width(left);
+                                                }
+
+                                                if (direction & DIRECTION_VERTICAL) {
+                                                    $u.height(top);
+                                                }
+                                            } else if (event.type == "panend") {
+                                                var w = $u.width(), h = $u.height(), widgetObj = element.data("widgetObject");
+                                                w = Math.floor(w * angularConstants.precision) / angularConstants.precision, h = Math.floor(h * angularConstants.precision) / angularConstants.precision;
+
+                                                if (widgetObj) {
+                                                    widgetObj.css("width", w + "px");
+                                                    widgetObj.css("height", h + "px");
+                                                } else {
+                                                    element.width(w);
+                                                    element.height(h);
+                                                }
+                                            }
+
+                                            defer.resolve();
+                                        });
+
+                                        return defer.promise;
+                                    }
+
+                                    handler.onceId = options.draggableOnceId;
+                                    uiUtilService.once(handler, null, 20)(event);
+                                }
+
+                                function toggleResize($el, state) {
+                                    var $resize = $el.prev();
+
+                                    if (!$resize.hasClass("resize")) {
+                                        if (state == undefined || state) {
+                                            $resize = $("<div class='resize' />")
+                                                .load("include/_sketch_widget_resize.html")
+                                                .insertBefore($el);
+                                            var left = $el.position().left,
+                                                top = $el.position().top,
+                                                width = $el.width(),
+                                                height = $el.height(),
+                                                zIndex = $el.css("z-index") || 0;
+
+                                            if (zIndex === "auto")
+                                                zIndex = 0;
+                                            left = Math.floor(left * angularConstants.precision) / angularConstants.precision;
+                                            top = Math.floor(top * angularConstants.precision) / angularConstants.precision;
+                                            width = Math.floor(width * angularConstants.precision) / angularConstants.precision;
+                                            height = Math.floor(height * angularConstants.precision) / angularConstants.precision;
+
+                                            $resize.width(width);
+                                            $resize.height(height);
+                                            $resize.css("left", left + "px");
+                                            $resize.css("top", top + "px");
+                                            $resize.css("z-index", zIndex + 1);
+
+                                            var backgroundColor = $el.css("background-color"),
+                                                borderColor = backgroundColor;
+                                            if (backgroundColor) {
+                                                backgroundColor = uiUtilService.rgbToHex(backgroundColor);
+                                                borderColor = uiUtilService.contrastColor(backgroundColor) === "#ffffff" ? uiUtilService.lighterColor(backgroundColor, 0.5) : uiUtilService.lighterColor(backgroundColor, -0.5);
                                             } else {
-                                                prevWidget.resizable && !prevWidget.isTemporary && toggleResize(prevWidget.$element, false);
-                                                prevWidget.removeClass(angularConstants.widgetClasses.activeClass);
+                                                borderColor = "#000000";
                                             }
+                                            $resize.css("color", borderColor);
+
+                                            var rmc = new Hammer.Manager($resize.get(0));
+                                            rmc.add(new Hammer.Pan({threshold: 0, pointers: 0}));
+                                            rmc.add(new Hammer.Tap());
+                                            rmc.on("panstart panmove panend", resizeHandler);
+                                            rmc.on("tap", function (event) {
+                                                rmc.off("panstart panmove panend");
+                                                rmc.off("tap");
+
+                                                $timeout(function () {
+                                                    toggleHandler($(event.target).next());
+                                                });
+                                            });
                                         }
+                                    } else {
+                                        if (state == undefined || !state)
+                                            $resize.remove();
+                                    }
 
-                                        defer.resolve();
-                                    });
-
-                                    return defer.promise;
+                                    return $resize.parent().length && $resize.hasClass("resize");
                                 }
 
-                                handler.onceId = options.onceId;
+                                toggleTextModeHandler = function (event) {
+                                    function handler(widget) {
+                                        var defer = $q.defer();
 
-                                var target = angular.isElement(event) && event || event.target,
-                                    widget = $(target).data("widgetObject");
-                                if (widget && widget.isKindOf("ElementSketchWidget")) {
-                                    uiUtilService.once(handler, null, 20)(widget);
-                                }
-                            }
+                                        $timeout(function () {
+                                            var prevWidget = scope.sketchObject.pickedWidget;
 
-                            resizeHandler = function (event) {
-                                function handler(event) {
-                                    var defer = $q.defer();
+                                            prevWidget && !prevWidget.isTemporary && prevWidget.isElement && toggleTextMode(prevWidget.$element, false);
 
-                                    $timeout(function () {
-                                        var $u = $(event.target),
-                                            direction = parseInt($u.attr("direction")) || DIRECTION_NONE,
-                                            top = event.srcEvent.pageY - $u.offset().top,
-                                            left = event.srcEvent.pageX - $u.offset().left;
-
-                                        top = Math.floor(top * angularConstants.precision) / angularConstants.precision;
-                                        left = Math.floor(left * angularConstants.precision) / angularConstants.precision;
-
-                                        if (VERBOSE) {
-                                            $log.debug(event.type);
-                                        }
-
-                                        if (event.type === "panstart") {
-                                            var height = $u.height(),
-                                                width = $u.width();
-
-                                            if (top >= height - 5 && top <= height)
-                                                direction |= DIRECTION_DOWN;
-                                            else if (top <= 5)
-                                                direction |= DIRECTION_UP;
-
-                                            if (left >= width - 5 && top <= width)
-                                                direction |= DIRECTION_RIGHT;
-                                            else if (left <= 5)
-                                                direction |= DIRECTION_LEFT;
-
-                                            $u.attr("direction", direction);
-                                        } else if (event.type === "panmove") {
-                                            if (direction & DIRECTION_HORIZONTAL) {
-                                                $u.width(left);
-                                            }
-
-                                            if (direction & DIRECTION_VERTICAL) {
-                                                $u.height(top);
-                                            }
-                                        } else if (event.type == "panend") {
-                                            var w = $u.width(), h = $u.height(), widgetObj = element.data("widgetObject");
-                                            w = Math.floor(w * angularConstants.precision) / angularConstants.precision, h = Math.floor(h * angularConstants.precision) / angularConstants.precision;
-
-                                            if (widgetObj) {
-                                                widgetObj.css("width", w + "px");
-                                                widgetObj.css("height", h + "px");
+                                            if (!prevWidget || prevWidget.id != widget.id) {
+                                                prevWidget && prevWidget.removeOmniClass(angularConstants.widgetClasses.activeClass);
+                                                scope.sketchObject.pickedWidget = widget;
+                                                !widget.isTemporary && widget.isElement && toggleTextMode(widget.$element);
                                             } else {
-                                                element.width(w);
-                                                element.height(h);
+                                                if (!toggleTextMode(widget.$element)) {
+                                                    scope.sketchObject.pickedWidget = null;
+                                                }
+                                                widget.removeOmniClass(angularConstants.widgetClasses.activeClass);
                                             }
-                                        }
 
-                                        defer.resolve();
-                                    });
+                                            defer.resolve();
+                                        });
 
-                                    return defer.promise;
+                                        return defer.promise;
+                                    }
+
+                                    handler.onceId = options.onceId;
+
+                                    var target = angular.isElement(event) && event || event.target,
+                                        $target = $(target);
+
+                                    if ($target.attr("widget-anchor") != null) {
+                                        var $container = $target.closest("." + angularConstants.widgetClasses.widgetContainerClass);
+                                        $target = $container.parent();
+                                    }
+
+                                    var widget = $target.data("widgetObject");
+                                    if (widget && widget.isKindOf("ElementSketchWidget")) {
+                                        uiUtilService.once(handler, null, 20)(widget);
+                                    }
                                 }
 
-                                handler.onceId = options.draggableOnceId;
-                                uiUtilService.once(handler, null, 20)(event);
-                            }
+                                function toggleTextMode($el, state) {
+                                    var widgetObj = $el.data("widgetObject"),
+                                        $text = $("#widgetText"),
+                                        editingWidget = $text.data("widgetObject"),
+                                        left = $el.offset().left,
+                                        top = $el.offset().top,
+                                        width = $el.width(),
+                                        height = $el.height();
 
-                            function toggleResize($el, state) {
-                                var $resize = $el.prev();
+                                    if (state == null)
+                                        state = !editingWidget || editingWidget.id !== widgetObj.id;
 
-                                if (!$resize.hasClass("resize")) {
-                                    if (state == undefined || state) {
-                                        $resize = $("<div class='resize' />")
-                                            .load("include/_sketch_widget_resize.html")
-                                            .insertBefore($el);
-                                        var left = $el.position().left,
-                                            top = $el.position().top,
-                                            width = $el.width(),
-                                            height = $el.height(),
-                                            zIndex = $el.css("z-index") || 0;
+                                    $text.toggle(state);
 
-                                        if (zIndex === "auto")
-                                            zIndex = 0;
+                                    if (state) {
                                         left = Math.floor(left * angularConstants.precision) / angularConstants.precision;
                                         top = Math.floor(top * angularConstants.precision) / angularConstants.precision;
                                         width = Math.floor(width * angularConstants.precision) / angularConstants.precision;
                                         height = Math.floor(height * angularConstants.precision) / angularConstants.precision;
 
-                                        $resize.width(width);
-                                        $resize.height(height);
-                                        $resize.css("left", left + "px");
-                                        $resize.css("top", top + "px");
-                                        $resize.css("z-index", zIndex + 1);
+                                        $text.width(width);
+                                        $text.height(height);
+                                        $text.offset({left: left, top: top});
 
                                         var backgroundColor = $el.css("background-color"),
                                             borderColor = backgroundColor;
@@ -266,131 +374,46 @@ define(
                                         } else {
                                             borderColor = "#000000";
                                         }
-                                        $resize.css("color", borderColor);
-
-                                        var rmc = new Hammer.Manager($resize.get(0));
-                                        rmc.add(new Hammer.Pan({threshold: 0, pointers: 0}));
-                                        rmc.add(new Hammer.Tap());
-                                        rmc.on("panstart panmove panend", resizeHandler);
-                                        rmc.on("tap", function (event) {
-                                            rmc.off("panstart panmove panend");
-                                            rmc.off("tap");
-
-                                            $timeout(function () {
-                                                toggleHandler($(event.target).next());
-                                            });
-                                        });
-                                    }
-                                } else {
-                                    if (state == undefined || !state)
-                                        $resize.remove();
-                                }
-
-                                return $resize.parent().length && $resize.hasClass("resize");
-                            }
-
-                            toggleTextModeHandler = function (event) {
-                                function handler(widget) {
-                                    var defer = $q.defer();
-
-                                    $timeout(function () {
-                                        var prevWidget = scope.sketchObject.pickedWidget;
-
-                                        prevWidget && !prevWidget.isTemporary && prevWidget.isElement && toggleTextMode(prevWidget.$element, false);
-
-                                        if (!prevWidget || prevWidget.id != widget.id) {
-                                            prevWidget && prevWidget.removeClass(angularConstants.widgetClasses.activeClass);
-                                            scope.sketchObject.pickedWidget = widget;
-                                            !widget.isTemporary && widget.isElement && toggleTextMode(widget.$element);
-                                        } else {
-                                            if (!toggleTextMode(widget.$element)) {
-                                                scope.sketchObject.pickedWidget = null;
-                                            }
-                                            widget.removeClass(angularConstants.widgetClasses.activeClass);
-                                        }
-
-                                        defer.resolve();
-                                    });
-
-                                    return defer.promise;
-                                }
-
-                                handler.onceId = options.onceId;
-
-                                var target = angular.isElement(event) && event || event.target,
-                                    widget = $(target).data("widgetObject");
-                                if (widget && widget.isKindOf("ElementSketchWidget")) {
-                                    uiUtilService.once(handler, null, 20)(widget);
-                                }
-                            }
-
-                            function toggleTextMode($el, state) {
-                                var widgetObj = $el.data("widgetObject"),
-                                    $text = $("#widgetText"),
-                                    editingWidget = $text.data("widgetObject"),
-                                    left = $el.offset().left,
-                                    top = $el.offset().top,
-                                    width = $el.width(),
-                                    height = $el.height();
-
-                                if (state == null)
-                                    state = !editingWidget || editingWidget.id !== widgetObj.id;
-
-                                $text.toggle(state);
-
-                                if (state) {
-                                    left = Math.floor(left * angularConstants.precision) / angularConstants.precision;
-                                    top = Math.floor(top * angularConstants.precision) / angularConstants.precision;
-                                    width = Math.floor(width * angularConstants.precision) / angularConstants.precision;
-                                    height = Math.floor(height * angularConstants.precision) / angularConstants.precision;
-
-                                    $text.width(width);
-                                    $text.height(height);
-                                    $text.offset({left: left, top: top});
-
-                                    var backgroundColor = $el.css("background-color"),
-                                        borderColor = backgroundColor;
-                                    if (backgroundColor) {
-                                        backgroundColor = uiUtilService.rgbToHex(backgroundColor);
-                                        borderColor = uiUtilService.contrastColor(backgroundColor) === "#ffffff" ? uiUtilService.lighterColor(backgroundColor, 0.5) : uiUtilService.lighterColor(backgroundColor, -0.5);
+                                        $text.css("color", borderColor);
+                                        $text.data("widgetObject", widgetObj);
+                                        $text.focus();
                                     } else {
-                                        borderColor = "#000000";
-                                    }
-                                    $text.css("color", borderColor);
-                                    $text.data("widgetObject", widgetObj);
-                                    $text.focus();
-                                } else {
-                                    if (editingWidget) {
-                                        $text.css("width", "auto");
-                                        if ($text.width()) {
-                                            editingWidget.setHtml($text.html());
+                                        if (editingWidget) {
+                                            $text.css("width", "auto");
+                                            if ($text.width()) {
+                                                editingWidget.setHtml($text.html());
+                                            }
                                         }
+                                        $text.removeData("widgetObject");
                                     }
-                                    $text.removeData("widgetObject");
+
+                                    return state;
                                 }
 
-                                return state;
+                                mc.on("tap", toggleHandler);
+                                mc.on("press", toggleTextModeHandler);
+
+                                //Disable resize mode on sketch widget since we can use ruler function instead.
+                                //mc.on("press", toggleResizeOnPressHandler);
                             }
-
-                            mc.on("tap", toggleHandler);
-                            mc.on("press", toggleTextModeHandler);
-
-                            //Disable resize mode on sketch widget since we can use ruler function instead.
-                            //mc.on("press", toggleResizeOnPressHandler);
                         }
                     }
 
                     function unregisterHandlers(element) {
-                        var mc = element.data("hammer");
+                        var widgetObj = element.data("widgetObject");
 
-                        if (mc) {
-                            mc.off("tap", toggleHandler);
-                            mc.off("press", toggleTextModeHandler);
+                        if (widgetObj && !widgetObj.hasClass(angularConstants.widgetClasses.widgetContainerClass)) {
+                            var mc = element.data("hammer");
 
-                            //Disable resize mode on sketch widget since we can use ruler function instead.
-                            //mc.off("press", toggleResizeOnPressHandler);
+                            if (mc) {
+                                mc.off("tap", toggleHandler);
+                                mc.off("press", toggleTextModeHandler);
 
-                            element.removeData("hammer");
+                                //Disable resize mode on sketch widget since we can use ruler function instead.
+                                //mc.off("press", toggleResizeOnPressHandler);
+
+                                element.removeData("hammer");
+                            }
                         }
                     }
 

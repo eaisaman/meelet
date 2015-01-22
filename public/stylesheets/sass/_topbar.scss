@@ -8,8 +8,9 @@
         position: relative;
         width: 100%;
         height: 3em;
-        background: rgba(255, 255, 255, 0.9);
+        background: #fff;
         box-shadow: 0 1px 4px #A4A4A4, 0 0 40px #E0E0E0 inset;
+        z-index: 100;
 
         .topbarButton, .topbarMenu {
             position: relative;

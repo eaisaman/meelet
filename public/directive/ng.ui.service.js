@@ -138,7 +138,7 @@ define(
                     this.id = id || "Transition_" + new Date().getTime();
                     this.actionObj = new SequenceTransitionAction();
 
-                    if (typeof state === "object") {
+                    if (state != null && typeof state === "object") {
                         this.actionObj.widgetObj = state.widgetObj;
                     }
                 },
@@ -150,7 +150,10 @@ define(
                 fromObject: function (obj) {
                     var ret = new Transition(obj.name, null, obj.id);
 
-                    obj.trigger && ret.setTrigger(obj.trigger.triggerType, obj.trigger.eventName, obj.trigger.options);
+                    if (obj.trigger) {
+                        ret.setTrigger(obj.trigger.id, obj.trigger.triggerType, obj.trigger.eventName, obj.trigger.options);
+                        ret[obj.trigger.triggerType.charAt(0).toLowerCase() + obj.trigger.triggerType.substr(1) + "EventName"] = obj.trigger.id;
+                    }
 
                     if (obj.actionObj) {
                         var classes = ["SequenceTransitionAction"],
@@ -177,11 +180,11 @@ define(
 
                     if (!fn.assign.customizedForTrigger) {
                         fn.assign = function (scope, eventId) {
-                            function triggerSetterHandler(transition, triggerType, eventName, options) {
+                            function triggerSetterHandler(transition, eventId, triggerType, eventName, options) {
                                 var defer = $inject.$q.defer();
 
                                 $inject.$timeout(function () {
-                                    transition.setTrigger(triggerType, eventName, options);
+                                    transition.setTrigger(eventId, triggerType, eventName, options);
 
                                     defer.resolve();
                                 });
@@ -201,7 +204,7 @@ define(
                                     var options = triggerInfo[0].options,
                                         eventName = triggerInfo[0].eventName;
 
-                                    $inject.uiUtilService.once(triggerSetterHandler, null, 20)(transition, triggerType, eventName, options);
+                                    $inject.uiUtilService.once(triggerSetterHandler, null, 20)(transition, eventId, triggerType, eventName, options);
                                 }
 
                                 return result;
@@ -215,28 +218,25 @@ define(
                 setAction: function (actionObj) {
                     this.actionObj = actionObj;
                 },
-                setTrigger: function (triggerType, eventName, options) {
+                setTrigger: function (id, triggerType, eventName, options) {
                     var self = this,
                         trigger;
 
-                    function triggerCallback(event, widgetObj) {
+                    function triggerCallback() {
                         self.actionObj && self.actionObj.doAction();
                     }
 
                     if (triggerType === "Gesture") {
                         if (eventName) {
-                            trigger = new GestureTrigger(eventName, options, triggerCallback);
+                            trigger = new GestureTrigger(id, eventName, options, triggerCallback);
                         }
                     }
 
                     if (trigger) {
-                        var widgetObj;
                         if (this.trigger) {
-                            widgetObj = this.trigger.widgetObj;
                             this.unregisterTrigger();
                         }
                         this.trigger = trigger;
-                        widgetObj && this.trigger.on(widgetObj);
                     }
                 },
                 registerTrigger: function (widgetObj) {
@@ -265,7 +265,6 @@ define(
                     this.id = id || "TransitionAction_" + new Date().getTime();
                 },
                 toJSON: function () {
-                    return _.pick(this, ["id", "actionType"], "CLASS_NAME");
                     return _.extend(_.pick(this, ["id", "actionType"], "CLASS_NAME"), {
                         widgetObj: this.widgetObj.id
                     });
@@ -277,7 +276,7 @@ define(
                         self.widgetObj = obj;
                     });
                 },
-                doAction: function (widgetObj) {
+                doAction: function () {
                 },
                 restoreWidget: function (widgetObj) {
                 }
@@ -326,35 +325,19 @@ define(
                 },
                 doAction: function () {
                     var self = this,
-                        whilstId = "SequenceTransitionAction.doAction." + self.widgetObj.id,
-                        actionIndex = 0,
-                        defer = $inject.$q.defer();
+                        arr = [],
+                        chainId = "SequenceTransitionAction.doAction." + self.widgetObj.id;
 
-                    $inject.uiUtilService.whilst(function () {
-                            return actionIndex < self.childActions.length;
-                        }, function (callback) {
-                            var actionObj = self.childActions[actionIndex++];
-
-                            actionObj.doAction().then(function () {
-                                callback();
-                            });
-                        }, function (err) {
-                            if (!err) {
-                                defer.resolve(self);
-                            } else {
-                                defer.reject();
-                            }
-                        },
-                        $inject.angularConstants.checkInterval,
-                        whilstId,
-                        $inject.angularConstants.renderTimeout
-                    );
-
-                    $inject.$timeout(function () {
-                        defer.resolve(self);
+                    self.childActions.forEach(function (actionObj) {
+                        arr.push(function () {
+                            return actionObj.doAction();
+                        });
                     });
 
-                    return defer.promise;
+                    return $inject.uiUtilService.chain(arr,
+                        $inject.angularConstants.checkInterval,
+                        chainId,
+                        $inject.angularConstants.renderTimeout);
                 },
                 addAction: function (actionType) {
                     var action;
@@ -545,25 +528,27 @@ define(
             BaseTrigger = Class({
                 CLASS_NAME: "BaseTrigger",
                 MEMBERS: {
+                    id: "",
                     triggerType: "",
                     eventName: "",
                     options: null,
                     widgetObj: null,
                     callback: null
                 },
-                initialize: function (triggerType, eventName, options) {
+                initialize: function (id, triggerType, eventName, options) {
                     var MEMBERS = arguments.callee.prototype.MEMBERS;
 
                     for (var member in MEMBERS) {
                         this[member] = angular.copy(MEMBERS[member]);
                     }
 
+                    this.id = id;
                     this.triggerType = triggerType;
                     this.eventName = eventName;
                     this.options = options;
                 },
                 toJSON: function () {
-                    return _.pick(this, ["triggerType", "eventName", "options"], "CLASS_NAME");
+                    return _.pick(this, ["id", "triggerType", "eventName", "options"], "CLASS_NAME");
                 },
                 fromObject: function (obj) {
                 },
@@ -576,8 +561,8 @@ define(
             GestureTrigger = Class(BaseTrigger, {
                 CLASS_NAME: "GestureTrigger",
                 MEMBERS: {},
-                initialize: function (eventName, options, callback) {
-                    this.initialize.prototype.__proto__.initialize.apply(this, ["Gesture", eventName, _.clone(options)]);
+                initialize: function (id, eventName, options, callback) {
+                    this.initialize.prototype.__proto__.initialize.apply(this, [id, "Gesture", eventName, _.clone(options)]);
                     var MEMBERS = arguments.callee.prototype.MEMBERS;
 
                     for (var member in MEMBERS) {
@@ -593,14 +578,13 @@ define(
                     return jsonObj;
                 },
                 fromObject: function (obj) {
-                    var ret = new GestureTrigger(obj.eventName, obj.options);
+                    var ret = new GestureTrigger(obj.id, obj.eventName, obj.options);
 
                     GestureTrigger.prototype.__proto__.fromObject.apply(ret, [obj]);
 
                     return ret;
                 },
                 on: function (widgetObj) {
-                    //FIXME For RepoSketchWidget, hammer should listen on child element of class widgetContainer
                     var self = this;
 
                     if (widgetObj && widgetObj.$element && widgetObj.$element.parent().length && self.eventName) {
@@ -608,7 +592,7 @@ define(
 
                         self.hammer = new Hammer(widgetObj.$element.get(0), _.clone(self.options));
                         self.hammer.on(self.eventName, function (event) {
-                            self.callback && self.callback(event, widgetObj);
+                            self.callback && self.callback();
                             $inject.$timeout(function () {
                                 self.off();
                             });
@@ -643,7 +627,7 @@ define(
                     this.widgetObj = widgetObj;
                 },
                 toJSON: function () {
-                    return _.pick(this, ["stateMaps", "omniClasses"], "CLASS_NAME");
+                    return _.extend(_.pick(this, ["stateMaps"], "CLASS_NAME"), {omniClasses: _.without(this.omniClasses, $inject.angularConstants.widgetClasses.activeClass)});
                 },
                 fromObject: function (obj) {
                     var ret = new StyleManager();
@@ -1320,6 +1304,7 @@ define(
                             classes.every(function (clazz) {
                                 if (eval("className === {0}.prototype.CLASS_NAME".format(clazz))) {
                                     childWidget = eval("{0}.prototype.fromObject(c)".format(clazz));
+                                    childWidget.stateContext = stateMap[c.stateContext];
                                     return false;
                                 }
 
@@ -2005,12 +1990,12 @@ define(
 
                         return self;
                     },
-                    unregisterTrigger: function (restoreWidget) {
+                    unregisterTrigger: function () {
                         var self = this;
 
                         //TODO Need function to undo modification on widget element
                         self.state.transitions.forEach(function (transition) {
-                            transition.unregisterTrigger(restoreWidget);
+                            transition.unregisterTrigger();
                         });
 
                         return self;
@@ -2764,10 +2749,10 @@ define(
                             _.each(key, function (item) {
                                 if (item.type === "list") {
                                     scope[item.key] = item.pickedOption;
-                                } else if (item.type === "number") {
-                                    var m = (item.numberValue || "").match(/([-\d\.]+)(px|%)+$/)
+                                } else if (item.type === "size") {
+                                    var m = (item.sizeValue || "").match(/([-\d\.]+)(px|%)+$/)
                                     if (m && m.length == 3) {
-                                        scope[item.key] = item.numberValue;
+                                        scope[item.key] = item.sizeValue;
                                     }
                                 } else if (item.type === "boolean") {
                                     scope[item.key] = item.booleanValue;
@@ -2861,7 +2846,8 @@ define(
 
         Service.prototype.createWidgetObj = function (element) {
             var self = this,
-                $el;
+                $el,
+                widgetObj;
 
             if (element.jquery) {
                 $el = element;
@@ -2869,7 +2855,9 @@ define(
                 $el = $(element);
             }
 
-            if ($el && $el.attr("ui-sketch-widget") != null && !$el.data("widgetObject")) {
+            widgetObj = $el && $el.data("widgetObject");
+
+            if ($el && $el.attr("ui-sketch-widget") != null && !widgetObj) {
                 var $parentElement = $el.parent("[widget-anchor]"),
                     anchor;
 
@@ -2883,8 +2871,7 @@ define(
                 if ($parentElement.length) {
                     var parentWidgetObj = $parentElement.data("widgetObject");
                     if (parentWidgetObj) {
-                        var widgetObj,
-                            id = $el.attr("id");
+                        var id = $el.attr("id");
 
                         //Fetch widget object if found
                         if (id) {
@@ -2923,11 +2910,11 @@ define(
                         $el.data("widgetObject", widgetObj);
 
                         BaseSketchWidgetClass.prototype.appendTo.apply(widgetObj, [parentWidgetObj]);
-
-                        return widgetObj;
                     }
                 }
             }
+
+            return widgetObj;
         }
 
         Service.prototype.createWidget = function (containerElement, widgetObj) {
@@ -2987,7 +2974,7 @@ define(
             var self = this,
                 cloneObj = widgetObj.clone();
 
-            cloneObj.removeClass(self.angularConstants.widgetClasses.activeClass);
+            cloneObj.removeOmniClass(self.angularConstants.widgetClasses.activeClass);
             cloneObj.appendTo(holderElement);
 
             var scope = angular.element(cloneObj.$element.parent()).scope();
@@ -3072,7 +3059,7 @@ define(
             var self = this,
                 cloneObj = pageObj.clone();
 
-            cloneObj.removeClass(self.angularConstants.widgetClasses.activeClass);
+            cloneObj.removeOmniClass(self.angularConstants.widgetClasses.activeClass);
             cloneObj.appendTo(holderElement);
 
             return self.uiUtilService.whilst(function () {
@@ -3094,7 +3081,8 @@ define(
         }
 
         Service.prototype.fromObject = function (obj) {
-            var className = obj.CLASS_NAME,
+            var self = this,
+                className = obj.CLASS_NAME,
                 classes = ["PageSketchWidgetClass"],
                 ret;
 
@@ -3133,10 +3121,10 @@ define(
             return result;
         }
 
-        Service.prototype.loadSketch = function (sketchWorks) {
+        Service.prototype.loadSketch = function (projectId, sketchWorks) {
             var self = this;
 
-            return self.appService.loadSketch(sketchWorks).then(function (pages) {
+            return self.appService.loadSketch(projectId, sketchWorks).then(function (pages) {
                 var defer = self.$q.defer();
 
                 self.$timeout(function () {

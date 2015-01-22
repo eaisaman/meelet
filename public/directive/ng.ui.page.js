@@ -48,9 +48,9 @@ define(
                                             if (name) {
                                                 uiService.createPage($("." + options.pageHolderClass)).then(function(pageObj) {
                                                     pageObj.name = name;
-                                                    pageObj.addClass(angularConstants.widgetClasses.activeClass);
+                                                    pageObj.addOmniClass(angularConstants.widgetClasses.activeClass);
                                                     pageObj.addClass(options.pageClass);
-                                                    scope.sketchObject.pickedPage && scope.sketchObject.pickedPage.removeClass(angularConstants.widgetClasses.activeClass);
+                                                    scope.sketchObject.pickedPage && scope.sketchObject.pickedPage.removeOmniClass(angularConstants.widgetClasses.activeClass);
                                                     scope.sketchObject.pickedPage = pageObj;
                                                     scope.sketchWorks.pages.push(pageObj);
                                                 });
@@ -85,9 +85,9 @@ define(
                                                     pageObj = scope.sketchWorks.pages[i];
 
                                                 uiService.copyPage(pageObj, $("." + options.pageHolderClass)).then(function (cloneObj) {
-                                                    cloneObj.addClass(angularConstants.widgetClasses.activeClass);
+                                                    cloneObj.addOmniClass(angularConstants.widgetClasses.activeClass);
                                                     cloneObj.addClass(options.pageClass);
-                                                    scope.sketchObject.pickedPage && scope.sketchObject.pickedPage.removeClass(angularConstants.widgetClasses.activeClass);
+                                                    scope.sketchObject.pickedPage && scope.sketchObject.pickedPage.removeOmniClass(angularConstants.widgetClasses.activeClass);
                                                     scope.sketchObject.pickedPage = cloneObj;
                                                     scope.sketchWorks.pages.splice(i + 1, 0, cloneObj);
                                                 });
