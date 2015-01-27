@@ -1913,12 +1913,19 @@ define(
                     },
                     getStates: function (context) {
                         var self = this,
-                            states = _.clone(self.states),
-                            context = context || self.stateContext;
+                            context = context || self.stateContext,
+                            states = _.filter(self.states, function (state) {
+                                return state.context && state.context.id == context.id;
+                            });
 
-                        return _.filter(states, function (state) {
-                            return state.context && state.context.id == context.id;
-                        });
+                        self.watchedStates = self.watchedStates || {};
+                        self.watchedStates[context.id] = self.watchedStates[context.id] || [];
+                        self.watchedStates[context.id].splice(0, self.watchedStates[context.id].length);
+
+                        states.splice(0, 0, 0, 0);
+                        Array.prototype.splice.apply(self.watchedStates[context.id], states);
+
+                        return self.watchedStates[context.id];
                     },
                     setStateContext: function (value) {
                         var self = this;
@@ -2708,6 +2715,12 @@ define(
                                             var stateOptions = stateConfiguration.options;
                                             stateOptions.forEach(function (option) {
                                                 RepoSketchWidgetClass.prototype.__proto__.addStateOption.apply(self, [{name: option.name}]);
+
+                                                if (self.states.every(function (s) {
+                                                        return s.context.id != self.stateContext.id || s.name != option.name;
+                                                    })) {
+                                                    self.states.push(new State(self, option.name, self.stateContext));
+                                                }
                                             });
                                         }
 
@@ -2756,6 +2769,8 @@ define(
                                     }
                                 } else if (item.type === "boolean") {
                                     scope[item.key] = item.booleanValue;
+                                } else if (item.type === "readableList") {
+                                    scope[item.key] = item.pickedOption;
                                 }
                             });
                         }
@@ -2898,6 +2913,7 @@ define(
                             widgetObj.attr["ui-sketch-widget"] = "";
                             widgetObj.attr["is-playing"] = "sketchWidgetSetting.isPlaying";
                             widgetObj.attr["sketch-object"] = "sketchObject";
+                            widgetObj.attr["ng-class"] = "{'isPlaying': sketchWidgetSetting.isPlaying}";
                             widgetObj.addOmniClass(self.angularConstants.widgetClasses.widgetClass);
                             if ($el.hasClass(self.angularConstants.widgetClasses.widgetContainerClass)) {
                                 widgetObj.addOmniClass(self.angularConstants.widgetClasses.widgetContainerClass);
@@ -2946,6 +2962,7 @@ define(
                     widgetObj.attr["ui-sketch-widget"] = "";
                     widgetObj.attr["is-playing"] = "sketchWidgetSetting.isPlaying";
                     widgetObj.attr["sketch-object"] = "sketchObject";
+                    widgetObj.attr["ng-class"] = "{'isPlaying': sketchWidgetSetting.isPlaying}";
                     widgetObj.addOmniClass(self.angularConstants.widgetClasses.widgetClass);
                     widgetObj.appendTo($parent);
 
@@ -2963,6 +2980,7 @@ define(
             widgetObj.attr["ui-sketch-widget"] = "";
             widgetObj.attr["is-playing"] = "sketchWidgetSetting.isPlaying";
             widgetObj.attr["sketch-object"] = "sketchObject";
+            widgetObj.attr["ng-class"] = "{'isPlaying': sketchWidgetSetting.isPlaying}";
             widgetObj.addOmniClass(self.angularConstants.widgetClasses.widgetClass);
 
             widgetObj.appendTo(containerElement);
@@ -3014,6 +3032,7 @@ define(
                     compositeObj.attr["ui-sketch-widget"] = "";
                     compositeObj.attr["is-playing"] = "sketchWidgetSetting.isPlaying";
                     compositeObj.attr["sketch-object"] = "sketchObject";
+                    compositeObj.attr["ng-class"] = "{'isPlaying': sketchWidgetSetting.isPlaying}";
                     compositeObj.addOmniClass(self.angularConstants.widgetClasses.widgetClass);
                     compositeObj.appendTo(containerElement);
 
@@ -3034,6 +3053,7 @@ define(
             pageObj.attr["ui-sketch-widget"] = "";
             pageObj.attr["is-playing"] = "sketchWidgetSetting.isPlaying";
             pageObj.attr["sketch-object"] = "sketchObject";
+            pageObj.attr["ng-class"] = "{'isPlaying': sketchWidgetSetting.isPlaying}";
             pageObj.addOmniClass(self.angularConstants.widgetClasses.holderClass);
             pageObj.appendTo(holderElement);
 

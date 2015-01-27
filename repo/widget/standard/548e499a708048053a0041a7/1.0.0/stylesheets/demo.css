@@ -113,6 +113,8 @@
   padding: 5px 0;
 }
 .widgetDemoContainer [ui-widget-modal-window-1-0-0] [name='modalContent'] > div button {
+  position: absolute;
+  left: calc(50% - 4em);
   display: block;
   margin: 0 auto;
   border: none;
@@ -125,6 +127,10 @@
   text-transform: uppercase;
   cursor: pointer;
   border-radius: 2px;
+}
+.widgetDemoContainer [ui-widget-modal-window-1-0-0] .md-modal {
+  top: 20% !important;
+  height: 60% !important;
 }
 .widgetDemoContainer [ui-widget-modal-window-1-0-0] .modalOverlay {
   position: absolute;

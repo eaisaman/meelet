@@ -15,30 +15,32 @@ $deepShadow: #555;
     border-width: 1px;
     border-style: solid;
 
-    &:not(.zoom).pickedWidget {
-        @include box-shadow(0 0 20px $deepShadow);
-
-        &:before {
-            position: absolute;
-            top: calc(50% - 0.5em);
-            width: 100%;
-            text-align: center;
-            line-height: 1;
-        }
-
-        [widget-anchor]:hover {
-            @include gradient-horizontal-three-colors(#6699CC, #99CCFF, 50%, #ECF0F1);
+    &:not(.zoom):not(.isPlaying) {
+        &.pickedWidget {
+            @include box-shadow(0 0 20px $deepShadow);
 
             &:before {
                 position: absolute;
-                width: 100%;
-                line-height: 1em;
-                content: attr(desc);
                 top: calc(50% - 0.5em);
+                width: 100%;
                 text-align: center;
-                font-weight: 900;
-                color: $fontColor;
-                letter-spacing: 2px;
+                line-height: 1;
+            }
+
+            [widget-anchor]:hover {
+                @include gradient-horizontal-three-colors(#6699CC, #99CCFF, 50%, #ECF0F1);
+
+                &:before {
+                    position: absolute;
+                    width: 100%;
+                    line-height: 1em;
+                    content: attr(desc);
+                    top: calc(50% - 0.5em);
+                    text-align: center;
+                    font-weight: 900;
+                    color: $fontColor;
+                    letter-spacing: 2px;
+                }
             }
         }
     }

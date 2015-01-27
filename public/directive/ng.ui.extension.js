@@ -20,7 +20,7 @@ define(
                         argNames.forEach(function (argName) {
                             args.push(injectObj[argName]);
                         });
-                        bindObj[m[1]] = fn.apply(null, args);
+                        bindObj[m[1]] = fn.apply(bindObj, args);
                     }
                 }
             }
@@ -136,6 +136,42 @@ define(
                 }
 
                 return defer.promise;
+            };
+        }
+
+        Extension.prototype.toggleExclusiveDisplayService = function (element, $q, $timeout, uiUtilService) {
+            return function (selector, event, state) {
+                event && event.stopPropagation && event.stopPropagation();
+
+                var $el, self = this;
+
+                if (typeof selector === "string")
+                    $el = element.find(selector);
+                else if (selector && typeof selector === "object")
+                    $el = selector.jquery && selector || $(selector);
+                else
+                    $el = element;
+
+                if (state == null || $el.hasClass("show") ^ state) {
+                    var arr = [];
+
+                    if (!$el.hasClass("show")) {
+                        $el.siblings(".show").each(function (i, siblingElement) {
+                            arr.push(self.toggleDisplay(siblingElement, event, false));
+                        });
+                    }
+                    arr.push(self.toggleDisplay($el, event, state));
+
+                    return $q.all(arr);
+                } else {
+                    var defer = $q.defer()
+
+                    $timeout(function () {
+                        defer.resolve(selector);
+                    });
+
+                    return defer.promise;
+                }
             };
         }
 
@@ -274,7 +310,7 @@ define(
         }
 
         Extension.prototype.toggleExclusiveSelectService = function (element, $q, $timeout, uiUtilService) {
-            return function (selector, event) {
+            return function (selector, event, state) {
                 event && event.stopPropagation && event.stopPropagation();
 
                 var $el, defer = $q.defer();
@@ -286,19 +322,25 @@ define(
                 else
                     $el = element;
 
-                $el.toggleClass("select");
-                if (!$el.css("animation-name") || $el.css("animation-name") === "none") {
-                    $timeout(function () {
-                        $el.siblings().removeClass("select");
-                        defer.resolve();
-                    });
-                } else {
-                    uiUtilService.onAnimationEnd($el).then(
-                        function () {
-                            $el.siblings().removeClass("select");
+                if (state == null || $el.hasClass("select") ^ state) {
+                    $el.siblings().removeClass("select");
+
+                    $el.toggleClass("select");
+                    if (!$el.css("animation-name") || $el.css("animation-name") === "none") {
+                        $timeout(function () {
                             defer.resolve();
-                        }
-                    );
+                        });
+                    } else {
+                        uiUtilService.onAnimationEnd($el).then(
+                            function () {
+                                defer.resolve();
+                            }
+                        );
+                    }
+                } else {
+                    $timeout(function () {
+                        defer.resolve(selector);
+                    });
                 }
 
                 return defer.promise;

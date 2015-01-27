@@ -132,6 +132,8 @@
                 }
 
                 button {
+                    position: absolute;
+                    left: calc(50% - 4em);
                     display: block;
                     margin: 0 auto;
                     border: none;
@@ -146,6 +148,11 @@
                     border-radius: 2px;
                 }
             }
+        }
+
+        .md-modal {
+            top: 20% !important;
+            height: 60% !important;
         }
 
         .modalOverlay {

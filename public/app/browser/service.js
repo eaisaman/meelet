@@ -188,6 +188,7 @@ define(
                                     $el = demoSelector.jquery && demoSelector || $(demoSelector);
 
                                 if ($el) {
+                                    $el.empty();
                                     $el.attr("ng-include", "'{0}/{1}'".format(repoUrl, demoSpec.url));
                                     var scope = angular.element($el.parent()).scope();
                                     self.$compile($el.parent())(scope);

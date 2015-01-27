@@ -255,10 +255,10 @@ define(
                                     return true;
                                 }
 
-                                scope.$watch("selectItem", function (val) {
-                                    if (scope.pickValue(scope.selection) != val) {
+                                scope.$watch("selectItem", function (to) {
+                                    if (scope.pickValue(scope.selection) != to) {
                                         if (scope.selectionList && scope.selectionList.every(function (s) {
-                                                if (scope.pickValue(s) == val) {
+                                                if (scope.pickValue(s) == to) {
                                                     scope.selection = s;
                                                     return false;
                                                 }
@@ -270,9 +270,34 @@ define(
                                     }
                                 })
 
-                                $timeout(function () {
-                                    closeDropdown();
-                                }, angularConstants.actionDelay);
+                                scope.$watch("selectionList", function (to) {
+                                    if (to != null && to.length) {
+                                        uiUtilService.whilst(
+                                            function () {
+                                                return element.find("ul").find("li").length !== scope.optionLength(to);
+                                            },
+                                            function (callback) {
+                                                callback();
+                                            },
+                                            function (err) {
+                                                var defer = $q.defer();
+
+                                                if (!err) {
+                                                    $timeout(function () {
+                                                        defer.resolve();
+                                                        closeDropdown();
+                                                    }, angularConstants.actionDelay);
+                                                } else {
+                                                    $timeout(function () {
+                                                        defer.reject();
+                                                    });
+                                                }
+
+                                                return defer.promise;
+                                            }
+                                        );
+                                    }
+                                });
                             }
                         }
                     }

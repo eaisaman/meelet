@@ -1,0 +1,968 @@
+@import "animation/tab";
+
+$color: rgba(0, 0, 0, 0.4);
+$activeBorderShadow: rgba(192, 192, 192, 0.8);
+$tabHeaderWidth: 8em;
+$tabHeaderHeight: 2em;
+$numOfMaxTabs: 10;
+
+@mixin tab($tabClass, $version) {
+
+    .#{$tabClass}[version='#{$version}'] {
+        &[tab-transition=moveToLeft] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_moveFromRight;
+                }
+
+                &.hiding {
+                    @extend %_widget_tab_moveToLeft;
+                }
+            }
+        }
+
+        &[tab-transition=moveToRight] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_moveFromLeft;
+                }
+
+                &.hiding {
+                    @extend %_widget_tab_moveToRight;
+                }
+            }
+        }
+
+        &[tab-transition=moveToTop] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_moveFromBottom;
+                }
+
+                &.hiding {
+                    @extend %_widget_tab_moveToTop;
+                }
+            }
+        }
+
+        &[tab-transition=moveToBottom] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_moveFromTop;
+                }
+
+                &.hiding {
+                    @extend %_widget_tab_moveToBottom;
+                }
+            }
+        }
+
+        &[tab-transition=fadeToLeft] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_moveFromRight;
+                }
+
+                &.hiding {
+                    @extend %_widget_tab_fade;
+                }
+            }
+        }
+
+        &[tab-transition=fadeToRight] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_moveFromLeft;
+                }
+
+                &.hiding {
+                    @extend %_widget_tab_fade;
+                }
+            }
+        }
+
+        &[tab-transition=fadeToTop] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_moveFromBottom;
+                }
+
+                &.hiding {
+                    @extend %_widget_tab_fade;
+                }
+            }
+        }
+
+        &[tab-transition=fadeToBottom] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_moveFromTop;
+                }
+
+                &.hiding {
+                    @extend %_widget_tab_fade;
+                }
+            }
+        }
+
+        &[tab-transition=moveToLeftFade] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_moveFromRightFade;
+                }
+
+                &.hiding {
+                    @extend %_widget_tab_moveToLeftFade;
+                }
+            }
+        }
+
+        &[tab-transition=moveToRightFade] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_moveFromLeftFade;
+                }
+
+                &.hiding {
+                    @extend %_widget_tab_moveToRightFade;
+                }
+            }
+        }
+
+        &[tab-transition=moveToBottomFade] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_moveFromBottomFade;
+                }
+
+                &.hiding {
+                    @extend %_widget_tab_moveToTopFade;
+                }
+            }
+        }
+
+        &[tab-transition=moveToTopFade] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_moveFromTopFade;
+                }
+
+                &.hiding {
+                    @extend %_widget_tab_moveToBottomFade;
+                }
+            }
+        }
+
+        &[tab-transition=moveToLeftScaleDown] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_moveFromRight;
+                }
+
+                &.hiding {
+                    @extend %_widget_tab_scaleDown;
+                }
+            }
+        }
+
+        &[tab-transition=moveToRightScaleDown] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_moveFromLeft;
+                }
+
+                &.hiding {
+                    @extend %_widget_tab_scaleDown;
+                }
+            }
+        }
+
+        &[tab-transition=moveToTopScaleDown] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_moveFromBottom;
+                }
+
+                &.hiding {
+                    @extend %_widget_tab_scaleDown;
+                }
+            }
+        }
+
+        &[tab-transition=moveToBottomScaleDown] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_moveFromTop;
+                }
+
+                &.hiding {
+                    @extend %_widget_tab_scaleDown;
+                }
+            }
+        }
+
+        &[tab-transition=scaleUpAtLeft] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_scaleUp;
+                }
+
+                &.hiding {
+                    @extend %_widget_tab_moveToRight;
+                }
+            }
+        }
+
+        &[tab-transition=scaleUpAtRight] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_scaleUp;
+                }
+
+                &.hiding {
+                    @extend %_widget_tab_moveToLeft;
+                }
+            }
+        }
+
+        &[tab-transition=scaleUpAtTop] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_scaleUp;
+                }
+
+                &.hiding {
+                    @extend %_widget_tab_moveToBottom;
+                }
+            }
+        }
+
+        &[tab-transition=scaleUpAtBottom] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_scaleUp;
+                }
+
+                &.hiding {
+                    @extend %_widget_tab_moveToTop;
+                }
+            }
+        }
+
+        &[tab-transition=scaleUp] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_scaleUp;
+                }
+
+                &.hiding {
+                    @extend %_widget_tab_scaleDownUp;
+                }
+            }
+        }
+
+        &[tab-transition=scaleUpCenter] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_scaleUpCenter;
+                }
+
+                &.hiding {
+                    @extend %_widget_tab_scaleDownCenter;
+                }
+            }
+        }
+
+        &[tab-transition=moveToLeftAfterRotation] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_moveFromRight;
+                    @include animation-delay(0.2s);
+                }
+
+                @extend %_widget_tab_rotateRightSideFirst;
+                @include transform-origin(0% 50%);
+            }
+        }
+
+        &[tab-transition=moveToRightAfterRotation] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_moveFromLeft;
+                    @include animation-delay(0.2s);
+                }
+
+                @extend %_widget_tab_rotateLeftSideFirst;
+                @include transform-origin(100% 50%);
+            }
+        }
+
+        &[tab-transition=moveToTopAfterRotation] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_moveFromBottom;
+                    @include animation-delay(0.2s);
+                }
+
+                @extend %_widget_tab_rotateBottomSideFirst;
+                @include transform-origin(50% 0%);
+            }
+        }
+
+        &[tab-transition=moveToBottomAfterRotation] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_moveFromTop;
+                    @include animation-delay(0.2s);
+                }
+
+                @extend %_widget_tab_rotateTopSideFirst;
+                @include transform-origin(50% 100%);
+            }
+        }
+
+        &[tab-transition=flipInLeftOutRight] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_flipInLeft;
+                    @include animation-delay(0.5s);
+                    @include transform-origin(50% 50%);
+                }
+
+                @extend %_widget_tab_flipOutRight;
+                @include transform-origin(50% 50%);
+            }
+        }
+
+        &[tab-transition=flipInRightOutLeft] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_flipInRight;
+                    @include animation-delay(0.5s);
+                    @include transform-origin(50% 50%);
+                }
+
+                @extend %_widget_tab_flipOutLeft;
+                @include transform-origin(50% 50%);
+            }
+        }
+
+        &[tab-transition=flipInBottomOutTop] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_flipInBottom;
+                    @include animation-delay(0.5s);
+                    @include transform-origin(50% 50%);
+                }
+
+                @extend %_widget_tab_flipOutTop;
+                @include transform-origin(50% 50%);
+            }
+        }
+
+        &[tab-transition=flipInTopOutBottom] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_flipInTop;
+                }
+
+                @extend %_widget_tab_flipOutBottom;
+            }
+        }
+
+        &[tab-transition=pushLeft] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_moveFromRight;
+                }
+
+                @extend %_widget_tab_rotatePushLeft;
+                @include transform-origin(0% 50%);
+            }
+        }
+
+        &[tab-transition=pushRight] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_moveFromLeft;
+                }
+
+                @extend %_widget_tab_rotatePushRight;
+                @include transform-origin(100% 50%);
+            }
+        }
+
+        &[tab-transition=pushTop] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_moveFromBottom;
+                }
+
+                @extend %_widget_tab_rotatePushTop;
+                @include transform-origin(50% 0%);
+            }
+        }
+
+        &[tab-transition=pushBottom] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_moveFromTop;
+                }
+
+                @extend %_widget_tab_rotatePushBottom;
+                @include transform-origin(50% 100%);
+            }
+        }
+
+        &[tab-transition=roomToLeft] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_rotateRoomLeftIn;
+                    @include transform-origin(0% 50%);
+                }
+
+                @extend %_widget_tab_rotateRoomLeftOut;
+                @include transform-origin(100% 50%);
+            }
+        }
+
+        &[tab-transition=roomToRight] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_rotateRoomRightIn;
+                    @include transform-origin(100% 50%);
+                }
+
+                @extend %_widget_tab_rotateRoomRightOut;
+                @include transform-origin(0% 50%);
+            }
+        }
+
+        &[tab-transition=roomToTop] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_rotateRoomTopIn;
+                    @include transform-origin(50% 0%);
+                }
+
+                @extend %_widget_tab_rotateRoomTopOut;
+                @include transform-origin(50% 100%);
+            }
+        }
+
+        &[tab-transition=roomToBottom] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_rotateRoomBottomIn;
+                    @include transform-origin(50% 100%);
+                }
+
+                @extend %_widget_tab_rotateRoomBottomOut;
+                @include transform-origin(50% 0%);
+            }
+        }
+
+        &[tab-transition=cubeToLeft] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_rotateCubeLeftIn;
+                    @include transform-origin(0% 50%);
+                }
+
+                @extend %_widget_tab_rotateCubeLeftOut;
+                @include transform-origin(100% 50%);
+            }
+        }
+
+        &[tab-transition=cubeToRight] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_rotateCubeRightIn;
+                    @include transform-origin(100% 50%);
+                }
+
+                @extend %_widget_tab_rotateCubeRightOut;
+                @include transform-origin(0% 50%);
+            }
+        }
+
+        &[tab-transition=cubeToTop] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_rotateCubeTopIn;
+                    @include transform-origin(50% 0%);
+                }
+
+                @extend %_widget_tab_rotateCubeTopOut;
+                @include transform-origin(50% 100%);
+            }
+        }
+
+        &[tab-transition=cubeToBottom] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_rotateCubeBottomIn;
+                    @include transform-origin(50% 100%);
+                }
+
+                @extend %_widget_tab_rotateCubeBottomOut;
+                @include transform-origin(50% 0%);
+            }
+        }
+
+        &[tab-transition=carouselToLeft] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_rotateCarouselLeftIn;
+                    @include transform-origin(0% 50%);
+                }
+
+                @extend %_widget_tab_rotateCarouselLeftOut;
+                @include transform-origin(100% 50%);
+            }
+        }
+
+        &[tab-transition=carouselToRight] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_rotateCarouselRightIn;
+                    @include transform-origin(100% 50%);
+                }
+
+                @extend %_widget_tab_rotateCarouselRightOut;
+                @include transform-origin(0% 50%);
+            }
+        }
+
+        &[tab-transition=carouselToTop] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_rotateCarouselTopIn;
+                    @include transform-origin(50% 0%);
+                }
+
+                @extend %_widget_tab_rotateCarouselTopOut;
+                @include transform-origin(50% 100%);
+            }
+        }
+
+        &[tab-transition=carouselToBottom] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_rotateCarouselBottomIn;
+                    @include transform-origin(50% 100%);
+                }
+
+                @extend %_widget_tab_rotateCarouselBottomOut;
+                @include transform-origin(50% 0%);
+            }
+        }
+
+        &[tab-transition=sides] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_rotateSidesIn;
+                    @include animation-delay(0.2s);
+                    @include transform-origin(150% 50%);
+                }
+
+                @extend %_widget_tab_rotateSidesOut;
+                @include transform-origin(-50% 50%);
+            }
+        }
+
+        &[tab-transition=fall] {
+            > .tabGroups > .tabGroup {
+                visibility: hidden;
+
+                &.show {
+                    visibility: visible;
+                    @extend %_widget_tab_scaleUp;
+                }
+
+                &.hiding {
+                    visibility: visible;
+                    z-index: 1;
+
+                    @extend %_widget_tab_rotateFall;
+                    @include transform-origin(0% 0%);
+                }
+            }
+        }
+
+        &[tab-transition=newspaper] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_rotateInNewspaper;
+                    @include animation-delay(0.5s);
+                    @include transform-origin(50% 50%);
+                }
+
+                @extend %_widget_tab_rotateOutNewspaper;
+                @include transform-origin(50% 50%);
+            }
+        }
+
+        &[tab-transition=slide] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_rotateSlideIn;
+                    @include transform-origin(50% 50%);
+                }
+
+                @extend %_widget_tab_rotateSlideOut;
+                @include transform-origin(50% 50%);
+            }
+        }
+
+        &[tab-align=alignTop] {
+
+            > .tabTitles {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: $tabHeaderHeight;
+
+                > .tabTitle {
+                    z-index: 1;
+                    position: relative;
+                    float: left;
+                    margin-right: 0.5em;
+                    height: $tabHeaderHeight;
+                    width: $tabHeaderWidth;
+
+                    &:first-child {
+                        margin-left: 0.5em;
+                    }
+
+                    &.select {
+                        margin-top: 1px;
+                        height: calc(#{$tabHeaderHeight} - 2px);
+
+                        @include box-shadow(0px -5px 6px $activeBorderShadow);
+
+                        label {
+                            text-shadow: 1px 0px 0px ghostwhite, -1px 0px 0px ghostwhite, 0px 1px 0px ghostwhite, 0px -1px 0px ghostwhite, 1px 1px 0px ghostwhite, -1px -1px 0px ghostwhite, -1px 1px 0px ghostwhite, 1px -1px 0px ghostwhite, 0px 6px 1px silver;
+                            background: #fff;
+                        }
+                    }
+
+                    label {
+                        position: absolute;
+                        width: 100%;
+                        height: 100%;
+                        line-height: 2;
+                        text-align: center;
+                        display: -webkit-box;
+                        -webkit-box-orient: vertical;
+                        -webkit-line-clamp: 1;
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                        text-shadow: 1px 0px 0px ghostwhite, -1px 0px 0px ghostwhite, 0px 1px 0px ghostwhite, 0px -1px 0px ghostwhite, 1px 1px 0px ghostwhite, -1px -1px 0px ghostwhite, -1px 1px 0px ghostwhite, 1px -1px 0px ghostwhite;
+                        background: $color;
+                        pointer-events: none;
+
+                        @include transition(0.3s);
+                    }
+                }
+            }
+
+            > .tabGroups {
+                position: absolute;
+                left: 0;
+                top: $tabHeaderHeight;
+                width: 100%;
+                height: calc(100% - #{$tabHeaderHeight});
+                overflow: hidden;
+                background: $color;
+
+                @include box-shadow(inset 0 0 5px rgba(192, 192, 192, 0.8));
+                @include perspective(1200px);
+
+                > .tabGroup {
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    pointer-events: none;
+
+                    @include backface-visibility(hidden);
+                    @include transform(translate3d(0, 0, 0));
+                    @include transform-style(preserve-3d);
+
+                    &.show {
+                        pointer-events: auto;
+                    }
+                }
+            }
+        }
+
+        &[tab-align=alignBottom] {
+
+            > .tabTitles {
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                width: 100%;
+                height: $tabHeaderHeight;
+
+                > .tabTitle {
+                    z-index: 1;
+                    position: relative;
+                    float: left;
+                    margin-right: 0.5em;
+                    height: $tabHeaderHeight;
+                    width: $tabHeaderWidth;
+
+                    &:first-child {
+                        margin-left: 0.5em;
+                    }
+
+                    &.select {
+                        margin-top: -1px;
+                        height: calc(#{$tabHeaderHeight} - 2px);
+
+                        @include box-shadow(0px 5px 6px $activeBorderShadow);
+
+                        label {
+                            text-shadow: 1px 0px 0px ghostwhite, -1px 0px 0px ghostwhite, 0px 1px 0px ghostwhite, 0px -1px 0px ghostwhite, 1px 1px 0px ghostwhite, -1px -1px 0px ghostwhite, -1px 1px 0px ghostwhite, 1px -1px 0px ghostwhite, 0px 6px 1px silver;
+                            background: #fff;
+                        }
+                    }
+
+                    label {
+                        position: absolute;
+                        width: 100%;
+                        height: 100%;
+                        line-height: 2;
+                        text-align: center;
+                        display: -webkit-box;
+                        -webkit-box-orient: vertical;
+                        -webkit-line-clamp: 1;
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                        text-shadow: 1px 0px 0px ghostwhite, -1px 0px 0px ghostwhite, 0px 1px 0px ghostwhite, 0px -1px 0px ghostwhite, 1px 1px 0px ghostwhite, -1px -1px 0px ghostwhite, -1px 1px 0px ghostwhite, 1px -1px 0px ghostwhite;
+                        background: $color;
+                        pointer-events: none;
+
+                        @include transition(0.3s);
+                    }
+                }
+            }
+
+            > .tabGroups {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: calc(100% - #{$tabHeaderHeight});
+                overflow: hidden;
+                background: $color;
+
+                @include box-shadow(inset 0 0 5px rgba(192, 192, 192, 0.8));
+                @include perspective(1200px);
+
+                > .tabGroup {
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    pointer-events: none;
+
+                    @include backface-visibility(hidden);
+                    @include transform(translate3d(0, 0, 0));
+                    @include transform-style(preserve-3d);
+
+                    &.show {
+                        pointer-events: auto;
+                    }
+                }
+            }
+        }
+
+        &[tab-align=alignLeft] {
+
+            > .tabTitles {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: $tabHeaderHeight;
+                height: 100%;
+
+                > .tabTitle {
+                    z-index: 1;
+                    position: absolute;
+                    left: ($tabHeaderHeight - $tabHeaderWidth) / 2;
+                    top: ($tabHeaderWidth - $tabHeaderHeight) / 2 + 0.5em;
+                    margin-bottom: 0.5em;
+                    height: $tabHeaderHeight;
+                    width: $tabHeaderWidth;
+
+                    @include transform(rotateZ(-90deg));
+
+                    &:first-child {
+                        margin-top: 0.5em;
+                    }
+
+                    $i: 1;
+                    $top: ($tabHeaderWidth - $tabHeaderHeight) / 2 + 0.5em;
+                    @while $i < $numOfMaxTabs {
+                        &:nth-child(#{$i+1}) {
+                            top: $top + $i * $tabHeaderWidth + ($i + 1) * 0.5em;
+                        }
+                        $i: $i + 1;
+                    }
+
+                    &.select {
+                        margin-left: 1px;
+
+                        @include box-shadow(0px -5px 6px $activeBorderShadow);
+
+                        label {
+                            text-shadow: 1px 0px 0px ghostwhite, -1px 0px 0px ghostwhite, 0px 1px 0px ghostwhite, 0px -1px 0px ghostwhite, 1px 1px 0px ghostwhite, -1px -1px 0px ghostwhite, -1px 1px 0px ghostwhite, 1px -1px 0px ghostwhite, 0px 6px 1px silver;
+                            background: #fff;
+                        }
+                    }
+
+                    label {
+                        position: absolute;
+                        width: 100%;
+                        height: 100%;
+                        line-height: 2;
+                        text-align: center;
+                        display: -webkit-box;
+                        -webkit-box-orient: vertical;
+                        -webkit-line-clamp: 1;
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                        text-shadow: 1px 0px 0px ghostwhite, -1px 0px 0px ghostwhite, 0px 1px 0px ghostwhite, 0px -1px 0px ghostwhite, 1px 1px 0px ghostwhite, -1px -1px 0px ghostwhite, -1px 1px 0px ghostwhite, 1px -1px 0px ghostwhite;
+                        background: $color;
+                        pointer-events: none;
+
+                        @include transition(0.3s);
+                    }
+                }
+            }
+
+            > .tabGroups {
+                position: absolute;
+                left: $tabHeaderHeight;
+                top: 0;
+                width: calc(100% - #{$tabHeaderHeight});
+                height: 100%;
+                overflow: hidden;
+                background: $color;
+
+                @include box-shadow(inset 0 0 5px rgba(192, 192, 192, 0.8));
+                @include perspective(1200px);
+
+                > .tabGroup {
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    pointer-events: none;
+
+                    @include backface-visibility(hidden);
+                    @include transform(translate3d(0, 0, 0));
+                    @include transform-style(preserve-3d);
+
+                    &.show {
+                        pointer-events: auto;
+                    }
+                }
+            }
+        }
+
+        &[tab-align=alignRight] {
+
+            > .tabTitles {
+                position: absolute;
+                right: 0;
+                top: 0;
+                width: $tabHeaderHeight;
+                height: 100%;
+
+                > .tabTitle {
+                    z-index: 1;
+                    position: absolute;
+                    left: ($tabHeaderHeight - $tabHeaderWidth) / 2;
+                    top: ($tabHeaderWidth - $tabHeaderHeight) / 2 + 0.5em;
+                    margin-bottom: 0.5em;
+                    height: $tabHeaderHeight;
+                    width: $tabHeaderWidth;
+
+                    @include transform(rotateZ(90deg));
+
+                    &:first-child {
+                        margin-top: 0.5em;
+                    }
+
+                    $i: 1;
+                    $top: ($tabHeaderWidth - $tabHeaderHeight) / 2 + 0.5em;
+                    @while $i < $numOfMaxTabs {
+                        &:nth-child(#{$i+1}) {
+                            top: $top + $i * $tabHeaderWidth + ($i + 1) * 0.5em;
+                        }
+                        $i: $i + 1;
+                    }
+
+                    &.select {
+                        margin-left: -1px;
+
+                        @include box-shadow(0px -5px 6px $activeBorderShadow);
+
+                        label {
+                            text-shadow: 1px 0px 0px ghostwhite, -1px 0px 0px ghostwhite, 0px 1px 0px ghostwhite, 0px -1px 0px ghostwhite, 1px 1px 0px ghostwhite, -1px -1px 0px ghostwhite, -1px 1px 0px ghostwhite, 1px -1px 0px ghostwhite, 0px 6px 1px silver;
+                            background: #fff;
+                        }
+                    }
+
+                    label {
+                        position: absolute;
+                        width: 100%;
+                        height: 100%;
+                        line-height: 2;
+                        text-align: center;
+                        display: -webkit-box;
+                        -webkit-box-orient: vertical;
+                        -webkit-line-clamp: 1;
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                        text-shadow: 1px 0px 0px ghostwhite, -1px 0px 0px ghostwhite, 0px 1px 0px ghostwhite, 0px -1px 0px ghostwhite, 1px 1px 0px ghostwhite, -1px -1px 0px ghostwhite, -1px 1px 0px ghostwhite, 1px -1px 0px ghostwhite;
+                        background: $color;
+                        pointer-events: none;
+
+                        @include transition(0.3s);
+                    }
+                }
+            }
+
+            > .tabGroups {
+                position: absolute;
+                right: $tabHeaderHeight;
+                top: 0;
+                width: calc(100% - #{$tabHeaderHeight});
+                height: 100%;
+                overflow: hidden;
+                background: $color;
+
+                @include box-shadow(inset 0 0 5px rgba(192, 192, 192, 0.8));
+                @include perspective(1200px);
+
+                > .tabGroup {
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    pointer-events: none;
+
+                    @include backface-visibility(hidden);
+                    @include transform(translate3d(0, 0, 0));
+                    @include transform-style(preserve-3d);
+
+                    &.show {
+                        pointer-events: auto;
+                    }
+                }
+            }
+        }
+    }
+}

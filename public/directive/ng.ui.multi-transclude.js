@@ -3,13 +3,35 @@ define(
     function () {
         return function (appModule) {
 
-            appModule.controller('uiMultiTranscludeController', ['$scope', '$transclude', function ($scope, $transclude) {
+            appModule.controller('uiMultiTranscludeController', ['$scope', '$transclude', '$q', '$timeout', 'uiUtilService', function ($scope, $transclude, $q, $timeout, uiUtilService) {
                 this.transclude = function (name, element) {
                     $transclude && $transclude(function (clone) {
                         for (var i = 0; i < clone.length; ++i) {
                             var el = angular.element(clone[i]);
                             if (el.attr('name') === name) {
-                                element.append(el);
+                                uiUtilService.whilst(
+                                    function () {
+                                        return !el.scope();
+                                    }, function (callback) {
+                                        callback();
+                                    }, function (err) {
+                                        var defer = $q.defer();
+
+                                        if (!err) {
+                                            $timeout(function () {
+                                                element.append(el);
+
+                                                defer.resolve();
+                                            });
+                                        } else {
+                                            $timeout(function () {
+                                                defer.reject(err);
+                                            });
+                                        }
+
+                                        return defer.promise;
+                                    }
+                                );
                                 return;
                             }
                         }

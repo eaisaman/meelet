@@ -2,7 +2,9 @@
     <span ng-style="{'z-index':'{{options.zIndex + optionLength(selectionList)}}'}"
           ng-show="options.showTitle && selection"
           ng-class="pickThumbnail(selection)"
-          ng-click="toggleOpen($event)">{{pickLabel(selection) || options.title}}</span>
+          ng-click="toggleOpen($event)">
+        <span>{{pickLabel(selection) || options.title}}</span>
+    </span>
 
     <span ng-style="{'z-index':'{{options.zIndex + getSelectionLength()}}'}" ng-click="toggleOpen($event)"
           ng-transclude ng-show="options.showTitle && !selection"></span>

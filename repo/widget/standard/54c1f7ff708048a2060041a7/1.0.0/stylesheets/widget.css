@@ -1,0 +1,3470 @@
+._widget_tabContainer[version='1.0.0'][tab-transition=moveToLeft] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=fadeToLeft] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=moveToLeftScaleDown] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=moveToLeftAfterRotation] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=pushLeft] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=moveToLeft] > .tabGroups > .tabGroup.hiding, ._widget_tabContainer[version='1.0.0'][tab-transition=scaleUpAtRight] > .tabGroups > .tabGroup.hiding, ._widget_tabContainer[version='1.0.0'][tab-transition=moveToRight] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=fadeToRight] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=moveToRightScaleDown] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=moveToRightAfterRotation] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=pushRight] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=moveToRight] > .tabGroups > .tabGroup.hiding, ._widget_tabContainer[version='1.0.0'][tab-transition=scaleUpAtLeft] > .tabGroups > .tabGroup.hiding, ._widget_tabContainer[version='1.0.0'][tab-transition=moveToTop] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=fadeToTop] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=moveToTopScaleDown] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=moveToTopAfterRotation] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=pushTop] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=moveToTop] > .tabGroups > .tabGroup.hiding, ._widget_tabContainer[version='1.0.0'][tab-transition=scaleUpAtBottom] > .tabGroups > .tabGroup.hiding, ._widget_tabContainer[version='1.0.0'][tab-transition=moveToBottom] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=fadeToBottom] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=moveToBottomScaleDown] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=moveToBottomAfterRotation] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=pushBottom] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=moveToBottom] > .tabGroups > .tabGroup.hiding, ._widget_tabContainer[version='1.0.0'][tab-transition=scaleUpAtTop] > .tabGroups > .tabGroup.hiding, ._widget_tabContainer[version='1.0.0'][tab-transition=fadeToLeft] > .tabGroups > .tabGroup.hiding, ._widget_tabContainer[version='1.0.0'][tab-transition=fadeToRight] > .tabGroups > .tabGroup.hiding, ._widget_tabContainer[version='1.0.0'][tab-transition=fadeToTop] > .tabGroups > .tabGroup.hiding, ._widget_tabContainer[version='1.0.0'][tab-transition=fadeToBottom] > .tabGroups > .tabGroup.hiding, ._widget_tabContainer[version='1.0.0'][tab-transition=moveToLeftFade] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=moveToLeftFade] > .tabGroups > .tabGroup.hiding, ._widget_tabContainer[version='1.0.0'][tab-transition=moveToRightFade] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=moveToRightFade] > .tabGroups > .tabGroup.hiding, ._widget_tabContainer[version='1.0.0'][tab-transition=moveToBottomFade] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=moveToBottomFade] > .tabGroups > .tabGroup.hiding, ._widget_tabContainer[version='1.0.0'][tab-transition=moveToTopFade] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=moveToTopFade] > .tabGroups > .tabGroup.hiding, ._widget_tabContainer[version='1.0.0'][tab-transition=moveToLeftScaleDown] > .tabGroups > .tabGroup.hiding, ._widget_tabContainer[version='1.0.0'][tab-transition=moveToRightScaleDown] > .tabGroups > .tabGroup.hiding, ._widget_tabContainer[version='1.0.0'][tab-transition=moveToTopScaleDown] > .tabGroups > .tabGroup.hiding, ._widget_tabContainer[version='1.0.0'][tab-transition=moveToBottomScaleDown] > .tabGroups > .tabGroup.hiding, ._widget_tabContainer[version='1.0.0'][tab-transition=scaleUpAtLeft] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=scaleUpAtRight] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=scaleUpAtTop] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=scaleUpAtBottom] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=scaleUp] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=fall] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=scaleUp] > .tabGroups > .tabGroup.hiding, ._widget_tabContainer[version='1.0.0'][tab-transition=scaleUpCenter] > .tabGroups > .tabGroup.hiding, ._widget_tabContainer[version='1.0.0'][tab-transition=scaleUpCenter] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=moveToLeftAfterRotation] > .tabGroups > .tabGroup, ._widget_tabContainer[version='1.0.0'][tab-transition=moveToRightAfterRotation] > .tabGroups > .tabGroup, ._widget_tabContainer[version='1.0.0'][tab-transition=moveToBottomAfterRotation] > .tabGroups > .tabGroup, ._widget_tabContainer[version='1.0.0'][tab-transition=moveToTopAfterRotation] > .tabGroups > .tabGroup, ._widget_tabContainer[version='1.0.0'][tab-transition=flipInLeftOutRight] > .tabGroups > .tabGroup, ._widget_tabContainer[version='1.0.0'][tab-transition=flipInLeftOutRight] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=flipInRightOutLeft] > .tabGroups > .tabGroup, ._widget_tabContainer[version='1.0.0'][tab-transition=flipInRightOutLeft] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=flipInBottomOutTop] > .tabGroups > .tabGroup, ._widget_tabContainer[version='1.0.0'][tab-transition=flipInBottomOutTop] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=flipInTopOutBottom] > .tabGroups > .tabGroup, ._widget_tabContainer[version='1.0.0'][tab-transition=flipInTopOutBottom] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=newspaper] > .tabGroups > .tabGroup, ._widget_tabContainer[version='1.0.0'][tab-transition=newspaper] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=fall] > .tabGroups > .tabGroup.hiding, ._widget_tabContainer[version='1.0.0'][tab-transition=pushLeft] > .tabGroups > .tabGroup, ._widget_tabContainer[version='1.0.0'][tab-transition=pushRight] > .tabGroups > .tabGroup, ._widget_tabContainer[version='1.0.0'][tab-transition=pushTop] > .tabGroups > .tabGroup, ._widget_tabContainer[version='1.0.0'][tab-transition=pushBottom] > .tabGroups > .tabGroup, ._widget_tabContainer[version='1.0.0'][tab-transition=roomToLeft] > .tabGroups > .tabGroup, ._widget_tabContainer[version='1.0.0'][tab-transition=roomToLeft] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=roomToRight] > .tabGroups > .tabGroup, ._widget_tabContainer[version='1.0.0'][tab-transition=roomToRight] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=roomToTop] > .tabGroups > .tabGroup, ._widget_tabContainer[version='1.0.0'][tab-transition=roomToTop] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=roomToBottom] > .tabGroups > .tabGroup, ._widget_tabContainer[version='1.0.0'][tab-transition=roomToBottom] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=cubeToLeft] > .tabGroups > .tabGroup, ._widget_tabContainer[version='1.0.0'][tab-transition=cubeToLeft] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=cubeToRight] > .tabGroups > .tabGroup, ._widget_tabContainer[version='1.0.0'][tab-transition=cubeToRight] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=cubeToTop] > .tabGroups > .tabGroup, ._widget_tabContainer[version='1.0.0'][tab-transition=cubeToTop] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=cubeToBottom] > .tabGroups > .tabGroup, ._widget_tabContainer[version='1.0.0'][tab-transition=cubeToBottom] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=carouselToLeft] > .tabGroups > .tabGroup, ._widget_tabContainer[version='1.0.0'][tab-transition=carouselToLeft] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=carouselToRight] > .tabGroups > .tabGroup, ._widget_tabContainer[version='1.0.0'][tab-transition=carouselToRight] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=carouselToTop] > .tabGroups > .tabGroup, ._widget_tabContainer[version='1.0.0'][tab-transition=carouselToTop] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=carouselToBottom] > .tabGroups > .tabGroup, ._widget_tabContainer[version='1.0.0'][tab-transition=carouselToBottom] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=sides] > .tabGroups > .tabGroup, ._widget_tabContainer[version='1.0.0'][tab-transition=sides] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=slide] > .tabGroups > .tabGroup, ._widget_tabContainer[version='1.0.0'][tab-transition=slide] > .tabGroups > .tabGroup.show {
+  -moz-animation-duration: 1s;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -moz-animation-fill-mode: both;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  -webkit-backface-visibility: none;
+  -moz-backface-visibility: none;
+  -o-backface-visibility: none;
+  backface-visibility: none;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=moveToLeft] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=fadeToLeft] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=moveToLeftScaleDown] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=moveToLeftAfterRotation] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=pushLeft] > .tabGroups > .tabGroup.show {
+  -moz-animation-name: _widget_tab_moveFromRight;
+  -webkit-animation-name: _widget_tab_moveFromRight;
+  animation-name: _widget_tab_moveFromRight;
+  -moz-animation-duration: 0.6s;
+  -webkit-animation-duration: 0.6s;
+  animation-duration: 0.6s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=moveToLeft] > .tabGroups > .tabGroup.hiding, ._widget_tabContainer[version='1.0.0'][tab-transition=scaleUpAtRight] > .tabGroups > .tabGroup.hiding {
+  -moz-animation-name: _widget_tab_moveToLeft;
+  -webkit-animation-name: _widget_tab_moveToLeft;
+  animation-name: _widget_tab_moveToLeft;
+  -moz-animation-duration: 0.6s;
+  -webkit-animation-duration: 0.6s;
+  animation-duration: 0.6s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=moveToRight] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=fadeToRight] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=moveToRightScaleDown] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=moveToRightAfterRotation] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=pushRight] > .tabGroups > .tabGroup.show {
+  -moz-animation-name: _widget_tab_moveFromLeft;
+  -webkit-animation-name: _widget_tab_moveFromLeft;
+  animation-name: _widget_tab_moveFromLeft;
+  -moz-animation-duration: 0.6s;
+  -webkit-animation-duration: 0.6s;
+  animation-duration: 0.6s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=moveToRight] > .tabGroups > .tabGroup.hiding, ._widget_tabContainer[version='1.0.0'][tab-transition=scaleUpAtLeft] > .tabGroups > .tabGroup.hiding {
+  -moz-animation-name: _widget_tab_moveToRight;
+  -webkit-animation-name: _widget_tab_moveToRight;
+  animation-name: _widget_tab_moveToRight;
+  -moz-animation-duration: 0.6s;
+  -webkit-animation-duration: 0.6s;
+  animation-duration: 0.6s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=moveToTop] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=fadeToTop] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=moveToTopScaleDown] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=moveToTopAfterRotation] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=pushTop] > .tabGroups > .tabGroup.show {
+  -moz-animation-name: _widget_tab_moveFromBottom;
+  -webkit-animation-name: _widget_tab_moveFromBottom;
+  animation-name: _widget_tab_moveFromBottom;
+  -moz-animation-duration: 0.6s;
+  -webkit-animation-duration: 0.6s;
+  animation-duration: 0.6s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=moveToTop] > .tabGroups > .tabGroup.hiding, ._widget_tabContainer[version='1.0.0'][tab-transition=scaleUpAtBottom] > .tabGroups > .tabGroup.hiding {
+  -moz-animation-name: _widget_tab_moveToTop;
+  -webkit-animation-name: _widget_tab_moveToTop;
+  animation-name: _widget_tab_moveToTop;
+  -moz-animation-duration: 0.6s;
+  -webkit-animation-duration: 0.6s;
+  animation-duration: 0.6s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=moveToBottom] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=fadeToBottom] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=moveToBottomScaleDown] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=moveToBottomAfterRotation] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=pushBottom] > .tabGroups > .tabGroup.show {
+  -moz-animation-name: _widget_tab_moveFromTop;
+  -webkit-animation-name: _widget_tab_moveFromTop;
+  animation-name: _widget_tab_moveFromTop;
+  -moz-animation-duration: 0.6s;
+  -webkit-animation-duration: 0.6s;
+  animation-duration: 0.6s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=moveToBottom] > .tabGroups > .tabGroup.hiding, ._widget_tabContainer[version='1.0.0'][tab-transition=scaleUpAtTop] > .tabGroups > .tabGroup.hiding {
+  -moz-animation-name: _widget_tab_moveToBottom;
+  -webkit-animation-name: _widget_tab_moveToBottom;
+  animation-name: _widget_tab_moveToBottom;
+  -moz-animation-duration: 0.6s;
+  -webkit-animation-duration: 0.6s;
+  animation-duration: 0.6s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=fadeToLeft] > .tabGroups > .tabGroup.hiding, ._widget_tabContainer[version='1.0.0'][tab-transition=fadeToRight] > .tabGroups > .tabGroup.hiding, ._widget_tabContainer[version='1.0.0'][tab-transition=fadeToTop] > .tabGroups > .tabGroup.hiding, ._widget_tabContainer[version='1.0.0'][tab-transition=fadeToBottom] > .tabGroups > .tabGroup.hiding {
+  -moz-animation-name: _widget_tab_fade;
+  -webkit-animation-name: _widget_tab_fade;
+  animation-name: _widget_tab_fade;
+  -moz-animation-duration: 0.7s;
+  -webkit-animation-duration: 0.7s;
+  animation-duration: 0.7s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=moveToLeftFade] > .tabGroups > .tabGroup.show {
+  -moz-animation-name: _widget_tab_moveFromRightFade;
+  -webkit-animation-name: _widget_tab_moveFromRightFade;
+  animation-name: _widget_tab_moveFromRightFade;
+  -moz-animation-duration: 0.7s;
+  -webkit-animation-duration: 0.7s;
+  animation-duration: 0.7s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=moveToLeftFade] > .tabGroups > .tabGroup.hiding {
+  -moz-animation-name: _widget_tab_moveToLeftFade;
+  -webkit-animation-name: _widget_tab_moveToLeftFade;
+  animation-name: _widget_tab_moveToLeftFade;
+  -moz-animation-duration: 0.7s;
+  -webkit-animation-duration: 0.7s;
+  animation-duration: 0.7s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=moveToRightFade] > .tabGroups > .tabGroup.show {
+  -moz-animation-name: _widget_tab_moveFromLeftFade;
+  -webkit-animation-name: _widget_tab_moveFromLeftFade;
+  animation-name: _widget_tab_moveFromLeftFade;
+  -moz-animation-duration: 0.7s;
+  -webkit-animation-duration: 0.7s;
+  animation-duration: 0.7s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=moveToRightFade] > .tabGroups > .tabGroup.hiding {
+  -moz-animation-name: _widget_tab_moveToRightFade;
+  -webkit-animation-name: _widget_tab_moveToRightFade;
+  animation-name: _widget_tab_moveToRightFade;
+  -moz-animation-duration: 0.7s;
+  -webkit-animation-duration: 0.7s;
+  animation-duration: 0.7s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=moveToBottomFade] > .tabGroups > .tabGroup.show {
+  -moz-animation-name: _widget_tab_moveFromBottomFade;
+  -webkit-animation-name: _widget_tab_moveFromBottomFade;
+  animation-name: _widget_tab_moveFromBottomFade;
+  -moz-animation-duration: 0.7s;
+  -webkit-animation-duration: 0.7s;
+  animation-duration: 0.7s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=moveToBottomFade] > .tabGroups > .tabGroup.hiding {
+  -moz-animation-name: _widget_tab_moveToTopFade;
+  -webkit-animation-name: _widget_tab_moveToTopFade;
+  animation-name: _widget_tab_moveToTopFade;
+  -moz-animation-duration: 0.7s;
+  -webkit-animation-duration: 0.7s;
+  animation-duration: 0.7s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=moveToTopFade] > .tabGroups > .tabGroup.show {
+  -moz-animation-name: _widget_tab_moveFromTopFade;
+  -webkit-animation-name: _widget_tab_moveFromTopFade;
+  animation-name: _widget_tab_moveFromTopFade;
+  -moz-animation-duration: 0.7s;
+  -webkit-animation-duration: 0.7s;
+  animation-duration: 0.7s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=moveToTopFade] > .tabGroups > .tabGroup.hiding {
+  -moz-animation-name: _widget_tab_moveToBottomFade;
+  -webkit-animation-name: _widget_tab_moveToBottomFade;
+  animation-name: _widget_tab_moveToBottomFade;
+  -moz-animation-duration: 0.7s;
+  -webkit-animation-duration: 0.7s;
+  animation-duration: 0.7s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=moveToTopFade] > .tabGroups > .tabGroup.hiding {
+  -moz-animation-name: _widget_tab_moveToBottomFade;
+  -webkit-animation-name: _widget_tab_moveToBottomFade;
+  animation-name: _widget_tab_moveToBottomFade;
+  -moz-animation-duration: 0.7s;
+  -webkit-animation-duration: 0.7s;
+  animation-duration: 0.7s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=moveToLeftScaleDown] > .tabGroups > .tabGroup.hiding, ._widget_tabContainer[version='1.0.0'][tab-transition=moveToRightScaleDown] > .tabGroups > .tabGroup.hiding, ._widget_tabContainer[version='1.0.0'][tab-transition=moveToTopScaleDown] > .tabGroups > .tabGroup.hiding, ._widget_tabContainer[version='1.0.0'][tab-transition=moveToBottomScaleDown] > .tabGroups > .tabGroup.hiding {
+  -moz-animation-name: _widget_tab_scaleDown;
+  -webkit-animation-name: _widget_tab_scaleDown;
+  animation-name: _widget_tab_scaleDown;
+  -moz-animation-duration: 0.7s;
+  -webkit-animation-duration: 0.7s;
+  animation-duration: 0.7s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=scaleUpAtLeft] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=scaleUpAtRight] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=scaleUpAtTop] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=scaleUpAtBottom] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=scaleUp] > .tabGroups > .tabGroup.show, ._widget_tabContainer[version='1.0.0'][tab-transition=fall] > .tabGroups > .tabGroup.show {
+  -moz-animation-name: _widget_tab_scaleUp;
+  -webkit-animation-name: _widget_tab_scaleUp;
+  animation-name: _widget_tab_scaleUp;
+  -moz-animation-duration: 0.7s;
+  -webkit-animation-duration: 0.7s;
+  animation-duration: 0.7s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=scaleUp] > .tabGroups > .tabGroup.hiding {
+  -moz-animation-name: _widget_tab_scaleDownUp;
+  -webkit-animation-name: _widget_tab_scaleDownUp;
+  animation-name: _widget_tab_scaleDownUp;
+  -moz-animation-duration: 0.5s;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=scaleUpCenter] > .tabGroups > .tabGroup.hiding {
+  -moz-animation-name: _widget_tab_scaleDownCenter;
+  -webkit-animation-name: _widget_tab_scaleDownCenter;
+  animation-name: _widget_tab_scaleDownCenter;
+  -moz-animation-duration: 0.4s;
+  -webkit-animation-duration: 0.4s;
+  animation-duration: 0.4s;
+  -moz-animation-timing-function: ease-in;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=scaleUpCenter] > .tabGroups > .tabGroup.show {
+  -moz-animation-name: _widget_tab_scaleUpCenter;
+  -webkit-animation-name: _widget_tab_scaleUpCenter;
+  animation-name: _widget_tab_scaleUpCenter;
+  -moz-animation-duration: 0.4s;
+  -webkit-animation-duration: 0.4s;
+  animation-duration: 0.4s;
+  -moz-animation-timing-function: ease-out;
+  -webkit-animation-timing-function: ease-out;
+  animation-timing-function: ease-out;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=moveToLeftAfterRotation] > .tabGroups > .tabGroup {
+  -moz-animation-name: _widget_tab_rotateRightSideFirst;
+  -webkit-animation-name: _widget_tab_rotateRightSideFirst;
+  animation-name: _widget_tab_rotateRightSideFirst;
+  -moz-animation-duration: 0.8s;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -moz-animation-timing-function: ease-in;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=moveToRightAfterRotation] > .tabGroups > .tabGroup {
+  -moz-animation-name: _widget_tab_rotateLeftSideFirst;
+  -webkit-animation-name: _widget_tab_rotateLeftSideFirst;
+  animation-name: _widget_tab_rotateLeftSideFirst;
+  -moz-animation-duration: 0.8s;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -moz-animation-timing-function: ease-in;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=moveToBottomAfterRotation] > .tabGroups > .tabGroup {
+  -moz-animation-name: _widget_tab_rotateTopSideFirst;
+  -webkit-animation-name: _widget_tab_rotateTopSideFirst;
+  animation-name: _widget_tab_rotateTopSideFirst;
+  -moz-animation-duration: 0.8s;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -moz-animation-timing-function: ease-in;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=moveToTopAfterRotation] > .tabGroups > .tabGroup {
+  -moz-animation-name: _widget_tab_rotateBottomSideFirst;
+  -webkit-animation-name: _widget_tab_rotateBottomSideFirst;
+  animation-name: _widget_tab_rotateBottomSideFirst;
+  -moz-animation-duration: 0.8s;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -moz-animation-timing-function: ease-in;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=flipInLeftOutRight] > .tabGroups > .tabGroup {
+  -moz-animation-name: _widget_tab_flipOutRight;
+  -webkit-animation-name: _widget_tab_flipOutRight;
+  animation-name: _widget_tab_flipOutRight;
+  -moz-animation-duration: 0.5s;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  -moz-animation-timing-function: ease-in;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=flipInLeftOutRight] > .tabGroups > .tabGroup.show {
+  -moz-animation-name: _widget_tab_flipInLeft;
+  -webkit-animation-name: _widget_tab_flipInLeft;
+  animation-name: _widget_tab_flipInLeft;
+  -moz-animation-duration: 0.5s;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  -moz-animation-timing-function: ease-in;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=flipInRightOutLeft] > .tabGroups > .tabGroup {
+  -moz-animation-name: _widget_tab_flipOutLeft;
+  -webkit-animation-name: _widget_tab_flipOutLeft;
+  animation-name: _widget_tab_flipOutLeft;
+  -moz-animation-duration: 0.5s;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  -moz-animation-timing-function: ease-in;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=flipInRightOutLeft] > .tabGroups > .tabGroup.show {
+  -moz-animation-name: _widget_tab_flipInRight;
+  -webkit-animation-name: _widget_tab_flipInRight;
+  animation-name: _widget_tab_flipInRight;
+  -moz-animation-duration: 0.5s;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  -moz-animation-timing-function: ease-in;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=flipInBottomOutTop] > .tabGroups > .tabGroup {
+  -moz-animation-name: _widget_tab_flipOutTop;
+  -webkit-animation-name: _widget_tab_flipOutTop;
+  animation-name: _widget_tab_flipOutTop;
+  -moz-animation-duration: 0.5s;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  -moz-animation-timing-function: ease-in;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=flipInBottomOutTop] > .tabGroups > .tabGroup.show {
+  -moz-animation-name: _widget_tab_flipInBottom;
+  -webkit-animation-name: _widget_tab_flipInBottom;
+  animation-name: _widget_tab_flipInBottom;
+  -moz-animation-duration: 0.5s;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  -moz-animation-timing-function: ease-in;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=flipInTopOutBottom] > .tabGroups > .tabGroup {
+  -moz-animation-name: _widget_tab_flipOutBottom;
+  -webkit-animation-name: _widget_tab_flipOutBottom;
+  animation-name: _widget_tab_flipOutBottom;
+  -moz-animation-duration: 0.5s;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  -moz-animation-timing-function: ease-in;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=flipInTopOutBottom] > .tabGroups > .tabGroup.show {
+  -moz-animation-name: _widget_tab_flipInTop;
+  -webkit-animation-name: _widget_tab_flipInTop;
+  animation-name: _widget_tab_flipInTop;
+  -moz-animation-duration: 0.5s;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  -moz-animation-timing-function: ease-in;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=newspaper] > .tabGroups > .tabGroup {
+  -moz-animation-name: _widget_tab_rotateOutNewspaper;
+  -webkit-animation-name: _widget_tab_rotateOutNewspaper;
+  animation-name: _widget_tab_rotateOutNewspaper;
+  -moz-animation-duration: 0.5s;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  -moz-animation-timing-function: ease-in;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=newspaper] > .tabGroups > .tabGroup.show {
+  -moz-animation-name: _widget_tab_rotateInNewspaper;
+  -webkit-animation-name: _widget_tab_rotateInNewspaper;
+  animation-name: _widget_tab_rotateInNewspaper;
+  -moz-animation-duration: 0.5s;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  -moz-animation-timing-function: ease-out;
+  -webkit-animation-timing-function: ease-out;
+  animation-timing-function: ease-out;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=fall] > .tabGroups > .tabGroup.hiding {
+  -moz-animation-name: _widget_tab_rotateFall;
+  -webkit-animation-name: _widget_tab_rotateFall;
+  animation-name: _widget_tab_rotateFall;
+  -moz-animation-duration: 1s;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -moz-animation-timing-function: ease-in;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=pushLeft] > .tabGroups > .tabGroup {
+  -moz-animation-name: _widget_tab_rotatePushLeft;
+  -webkit-animation-name: _widget_tab_rotatePushLeft;
+  animation-name: _widget_tab_rotatePushLeft;
+  -moz-animation-duration: 0.8s;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=pushRight] > .tabGroups > .tabGroup {
+  -moz-animation-name: _widget_tab_rotatePushRight;
+  -webkit-animation-name: _widget_tab_rotatePushRight;
+  animation-name: _widget_tab_rotatePushRight;
+  -moz-animation-duration: 0.8s;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=pushTop] > .tabGroups > .tabGroup {
+  -moz-animation-name: _widget_tab_rotatePushTop;
+  -webkit-animation-name: _widget_tab_rotatePushTop;
+  animation-name: _widget_tab_rotatePushTop;
+  -moz-animation-duration: 0.8s;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=pushBottom] > .tabGroups > .tabGroup {
+  -moz-animation-name: _widget_tab_rotatePushBottom;
+  -webkit-animation-name: _widget_tab_rotatePushBottom;
+  animation-name: _widget_tab_rotatePushBottom;
+  -moz-animation-duration: 0.8s;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=roomToLeft] > .tabGroups > .tabGroup {
+  -moz-animation-name: _widget_tab_rotateRoomLeftOut;
+  -webkit-animation-name: _widget_tab_rotateRoomLeftOut;
+  animation-name: _widget_tab_rotateRoomLeftOut;
+  -moz-animation-duration: 0.8s;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=roomToLeft] > .tabGroups > .tabGroup.show {
+  -moz-animation-name: _widget_tab_rotateRoomLeftIn;
+  -webkit-animation-name: _widget_tab_rotateRoomLeftIn;
+  animation-name: _widget_tab_rotateRoomLeftIn;
+  -moz-animation-duration: 0.8s;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=roomToRight] > .tabGroups > .tabGroup {
+  -moz-animation-name: _widget_tab_rotateRoomRightOut;
+  -webkit-animation-name: _widget_tab_rotateRoomRightOut;
+  animation-name: _widget_tab_rotateRoomRightOut;
+  -moz-animation-duration: 0.8s;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=roomToRight] > .tabGroups > .tabGroup.show {
+  -moz-animation-name: _widget_tab_rotateRoomRightIn;
+  -webkit-animation-name: _widget_tab_rotateRoomRightIn;
+  animation-name: _widget_tab_rotateRoomRightIn;
+  -moz-animation-duration: 0.8s;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=roomToTop] > .tabGroups > .tabGroup {
+  -moz-animation-name: _widget_tab_rotateRoomTopOut;
+  -webkit-animation-name: _widget_tab_rotateRoomTopOut;
+  animation-name: _widget_tab_rotateRoomTopOut;
+  -moz-animation-duration: 0.8s;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=roomToTop] > .tabGroups > .tabGroup.show {
+  -moz-animation-name: _widget_tab_rotateRoomTopIn;
+  -webkit-animation-name: _widget_tab_rotateRoomTopIn;
+  animation-name: _widget_tab_rotateRoomTopIn;
+  -moz-animation-duration: 0.8s;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=roomToBottom] > .tabGroups > .tabGroup {
+  -moz-animation-name: _widget_tab_rotateRoomBottomOut;
+  -webkit-animation-name: _widget_tab_rotateRoomBottomOut;
+  animation-name: _widget_tab_rotateRoomBottomOut;
+  -moz-animation-duration: 0.8s;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=roomToBottom] > .tabGroups > .tabGroup.show {
+  -moz-animation-name: _widget_tab_rotateRoomBottomIn;
+  -webkit-animation-name: _widget_tab_rotateRoomBottomIn;
+  animation-name: _widget_tab_rotateRoomBottomIn;
+  -moz-animation-duration: 0.8s;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=cubeToLeft] > .tabGroups > .tabGroup {
+  -moz-animation-name: _widget_tab_rotateCubeLeftOut;
+  -webkit-animation-name: _widget_tab_rotateCubeLeftOut;
+  animation-name: _widget_tab_rotateCubeLeftOut;
+  -moz-animation-duration: 0.6s;
+  -webkit-animation-duration: 0.6s;
+  animation-duration: 0.6s;
+  -moz-animation-timing-function: ease-in;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=cubeToLeft] > .tabGroups > .tabGroup.show {
+  -moz-animation-name: _widget_tab_rotateCubeLeftIn;
+  -webkit-animation-name: _widget_tab_rotateCubeLeftIn;
+  animation-name: _widget_tab_rotateCubeLeftIn;
+  -moz-animation-duration: 0.6s;
+  -webkit-animation-duration: 0.6s;
+  animation-duration: 0.6s;
+  -moz-animation-timing-function: ease-in;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=cubeToRight] > .tabGroups > .tabGroup {
+  -moz-animation-name: _widget_tab_rotateCubeRightOut;
+  -webkit-animation-name: _widget_tab_rotateCubeRightOut;
+  animation-name: _widget_tab_rotateCubeRightOut;
+  -moz-animation-duration: 0.6s;
+  -webkit-animation-duration: 0.6s;
+  animation-duration: 0.6s;
+  -moz-animation-timing-function: ease-in;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=cubeToRight] > .tabGroups > .tabGroup.show {
+  -moz-animation-name: _widget_tab_rotateCubeRightIn;
+  -webkit-animation-name: _widget_tab_rotateCubeRightIn;
+  animation-name: _widget_tab_rotateCubeRightIn;
+  -moz-animation-duration: 0.6s;
+  -webkit-animation-duration: 0.6s;
+  animation-duration: 0.6s;
+  -moz-animation-timing-function: ease-in;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=cubeToTop] > .tabGroups > .tabGroup {
+  -moz-animation-name: _widget_tab_rotateCubeTopOut;
+  -webkit-animation-name: _widget_tab_rotateCubeTopOut;
+  animation-name: _widget_tab_rotateCubeTopOut;
+  -moz-animation-duration: 0.6s;
+  -webkit-animation-duration: 0.6s;
+  animation-duration: 0.6s;
+  -moz-animation-timing-function: ease-in;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=cubeToTop] > .tabGroups > .tabGroup.show {
+  -moz-animation-name: _widget_tab_rotateCubeTopIn;
+  -webkit-animation-name: _widget_tab_rotateCubeTopIn;
+  animation-name: _widget_tab_rotateCubeTopIn;
+  -moz-animation-duration: 0.6s;
+  -webkit-animation-duration: 0.6s;
+  animation-duration: 0.6s;
+  -moz-animation-timing-function: ease-in;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=cubeToBottom] > .tabGroups > .tabGroup {
+  -moz-animation-name: _widget_tab_rotateCubeBottomOut;
+  -webkit-animation-name: _widget_tab_rotateCubeBottomOut;
+  animation-name: _widget_tab_rotateCubeBottomOut;
+  -moz-animation-duration: 0.6s;
+  -webkit-animation-duration: 0.6s;
+  animation-duration: 0.6s;
+  -moz-animation-timing-function: ease-in;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=cubeToBottom] > .tabGroups > .tabGroup.show {
+  -moz-animation-name: _widget_tab_rotateCubeBottomIn;
+  -webkit-animation-name: _widget_tab_rotateCubeBottomIn;
+  animation-name: _widget_tab_rotateCubeBottomIn;
+  -moz-animation-duration: 0.6s;
+  -webkit-animation-duration: 0.6s;
+  animation-duration: 0.6s;
+  -moz-animation-timing-function: ease-in;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=carouselToLeft] > .tabGroups > .tabGroup {
+  -moz-animation-name: _widget_tab_rotateCarouselLeftOut;
+  -webkit-animation-name: _widget_tab_rotateCarouselLeftOut;
+  animation-name: _widget_tab_rotateCarouselLeftOut;
+  -moz-animation-duration: 0.8s;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=carouselToLeft] > .tabGroups > .tabGroup.show {
+  -moz-animation-name: _widget_tab_rotateCarouselLeftIn;
+  -webkit-animation-name: _widget_tab_rotateCarouselLeftIn;
+  animation-name: _widget_tab_rotateCarouselLeftIn;
+  -moz-animation-duration: 0.8s;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=carouselToRight] > .tabGroups > .tabGroup {
+  -moz-animation-name: _widget_tab_rotateCarouselRightOut;
+  -webkit-animation-name: _widget_tab_rotateCarouselRightOut;
+  animation-name: _widget_tab_rotateCarouselRightOut;
+  -moz-animation-duration: 0.8s;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=carouselToRight] > .tabGroups > .tabGroup.show {
+  -moz-animation-name: _widget_tab_rotateCarouselRightIn;
+  -webkit-animation-name: _widget_tab_rotateCarouselRightIn;
+  animation-name: _widget_tab_rotateCarouselRightIn;
+  -moz-animation-duration: 0.8s;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=carouselToTop] > .tabGroups > .tabGroup {
+  -moz-animation-name: _widget_tab_rotateCarouselTopOut;
+  -webkit-animation-name: _widget_tab_rotateCarouselTopOut;
+  animation-name: _widget_tab_rotateCarouselTopOut;
+  -moz-animation-duration: 0.8s;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=carouselToTop] > .tabGroups > .tabGroup.show {
+  -moz-animation-name: _widget_tab_rotateCarouselTopIn;
+  -webkit-animation-name: _widget_tab_rotateCarouselTopIn;
+  animation-name: _widget_tab_rotateCarouselTopIn;
+  -moz-animation-duration: 0.8s;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=carouselToBottom] > .tabGroups > .tabGroup {
+  -moz-animation-name: _widget_tab_rotateCarouselBottomOut;
+  -webkit-animation-name: _widget_tab_rotateCarouselBottomOut;
+  animation-name: _widget_tab_rotateCarouselBottomOut;
+  -moz-animation-duration: 0.8s;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=carouselToBottom] > .tabGroups > .tabGroup.show {
+  -moz-animation-name: _widget_tab_rotateCarouselBottomIn;
+  -webkit-animation-name: _widget_tab_rotateCarouselBottomIn;
+  animation-name: _widget_tab_rotateCarouselBottomIn;
+  -moz-animation-duration: 0.8s;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=sides] > .tabGroups > .tabGroup {
+  -moz-animation-name: _widget_tab_rotateSidesOut;
+  -webkit-animation-name: _widget_tab_rotateSidesOut;
+  animation-name: _widget_tab_rotateSidesOut;
+  -moz-animation-duration: 0.5s;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  -moz-animation-timing-function: ease-in;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=sides] > .tabGroups > .tabGroup.show {
+  -moz-animation-name: _widget_tab_rotateSidesIn;
+  -webkit-animation-name: _widget_tab_rotateSidesIn;
+  animation-name: _widget_tab_rotateSidesIn;
+  -moz-animation-duration: 0.5s;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  -moz-animation-timing-function: ease-out;
+  -webkit-animation-timing-function: ease-out;
+  animation-timing-function: ease-out;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=slide] > .tabGroups > .tabGroup {
+  -moz-animation-name: _widget_tab_rotateSlideOut;
+  -webkit-animation-name: _widget_tab_rotateSlideOut;
+  animation-name: _widget_tab_rotateSlideOut;
+  -moz-animation-duration: 1s;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+._widget_tabContainer[version='1.0.0'][tab-transition=slide] > .tabGroups > .tabGroup.show {
+  -moz-animation-name: _widget_tab_rotateSlideIn;
+  -webkit-animation-name: _widget_tab_rotateSlideIn;
+  animation-name: _widget_tab_rotateSlideIn;
+  -moz-animation-duration: 1s;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+  -moz-animation-direction: both;
+  -webkit-animation-direction: both;
+  animation-direction: both;
+}
+
+@-webkit-keyframes _widget_tab_moveFromRight {
+  from {
+    -webkit-transform: translateX(100%);
+  }
+}
+@-moz-keyframes _widget_tab_moveFromRight {
+  from {
+    -moz-transform: translateX(100%);
+  }
+}
+@keyframes _widget_tab_moveFromRight {
+  from {
+    transform: translateX(100%);
+  }
+}
+@-webkit-keyframes _widget_tab_moveToLeft {
+  to {
+    -webkit-transform: translateX(-100%);
+  }
+}
+@-moz-keyframes _widget_tab_moveToLeft {
+  to {
+    -moz-transform: translateX(-100%);
+  }
+}
+@keyframes _widget_tab_moveToLeft {
+  to {
+    transform: translateX(-100%);
+  }
+}
+@-webkit-keyframes _widget_tab_moveFromLeft {
+  from {
+    -webkit-transform: translateX(-100%);
+  }
+}
+@-moz-keyframes _widget_tab_moveFromLeft {
+  from {
+    -moz-transform: translateX(-100%);
+  }
+}
+@keyframes _widget_tab_moveFromLeft {
+  from {
+    transform: translateX(-100%);
+  }
+}
+@-webkit-keyframes _widget_tab_moveToRight {
+  to {
+    -webkit-transform: translateX(100%);
+  }
+}
+@-moz-keyframes _widget_tab_moveToRight {
+  to {
+    -moz-transform: translateX(100%);
+  }
+}
+@keyframes _widget_tab_moveToRight {
+  to {
+    transform: translateX(100%);
+  }
+}
+@-webkit-keyframes moveToBottom {
+  to {
+    -webkit-transform: translateY(100%);
+  }
+}
+@-moz-keyframes moveToBottom {
+  to {
+    -moz-transform: translateY(100%);
+  }
+}
+@keyframes moveToBottom {
+  to {
+    transform: translateY(100%);
+  }
+}
+@-webkit-keyframes _widget_tab_moveFromBottom {
+  from {
+    -webkit-transform: translateY(100%);
+  }
+}
+@-moz-keyframes _widget_tab_moveFromBottom {
+  from {
+    -moz-transform: translateY(100%);
+  }
+}
+@keyframes _widget_tab_moveFromBottom {
+  from {
+    transform: translateY(100%);
+  }
+}
+@-webkit-keyframes _widget_tab_moveToTop {
+  to {
+    -webkit-transform: translateY(-100%);
+  }
+}
+@-moz-keyframes _widget_tab_moveToTop {
+  to {
+    -moz-transform: translateY(-100%);
+  }
+}
+@keyframes _widget_tab_moveToTop {
+  to {
+    transform: translateY(-100%);
+  }
+}
+@-webkit-keyframes _widget_tab_moveFromTop {
+  from {
+    -webkit-transform: translateY(-100%);
+  }
+}
+@-moz-keyframes _widget_tab_moveFromTop {
+  from {
+    -moz-transform: translateY(-100%);
+  }
+}
+@keyframes _widget_tab_moveFromTop {
+  from {
+    transform: translateY(-100%);
+  }
+}
+@-webkit-keyframes _widget_tab_moveToBottom {
+  to {
+    -webkit-transform: translateY(100%);
+  }
+}
+@-moz-keyframes _widget_tab_moveToBottom {
+  to {
+    -moz-transform: translateY(100%);
+  }
+}
+@keyframes _widget_tab_moveToBottom {
+  to {
+    transform: translateY(100%);
+  }
+}
+@-webkit-keyframes _widget_tab_fade {
+  to {
+    opacity: 0.3;
+  }
+}
+@-moz-keyframes _widget_tab_fade {
+  to {
+    opacity: 0.3;
+  }
+}
+@keyframes _widget_tab_fade {
+  to {
+    opacity: 0.3;
+  }
+}
+@-webkit-keyframes _widget_tab_moveToLeftFade {
+  to {
+    opacity: 0.3;
+    -webkit-transform: translateX(-100%);
+  }
+}
+@-moz-keyframes _widget_tab_moveToLeftFade {
+  to {
+    opacity: 0.3;
+    -moz-transform: translateX(-100%);
+  }
+}
+@keyframes _widget_tab_moveToLeftFade {
+  to {
+    opacity: 0.3;
+    transform: translateX(-100%);
+  }
+}
+@-webkit-keyframes _widget_tab_moveFromLeftFade {
+  from {
+    opacity: 0.3;
+    -webkit-transform: translateX(-100%);
+  }
+}
+@-moz-keyframes _widget_tab_moveFromLeftFade {
+  from {
+    opacity: 0.3;
+    -moz-transform: translateX(-100%);
+  }
+}
+@keyframes _widget_tab_moveFromLeftFade {
+  from {
+    opacity: 0.3;
+    transform: translateX(-100%);
+  }
+}
+@-webkit-keyframes _widget_tab_moveToRightFade {
+  to {
+    opacity: 0.3;
+    -webkit-transform: translateX(100%);
+  }
+}
+@-moz-keyframes _widget_tab_moveToRightFade {
+  to {
+    opacity: 0.3;
+    -moz-transform: translateX(100%);
+  }
+}
+@keyframes _widget_tab_moveToRightFade {
+  to {
+    opacity: 0.3;
+    transform: translateX(100%);
+  }
+}
+@-webkit-keyframes _widget_tab_moveFromRightFade {
+  from {
+    opacity: 0.3;
+    -webkit-transform: translateX(100%);
+  }
+}
+@-moz-keyframes _widget_tab_moveFromRightFade {
+  from {
+    opacity: 0.3;
+    -moz-transform: translateX(100%);
+  }
+}
+@keyframes _widget_tab_moveFromRightFade {
+  from {
+    opacity: 0.3;
+    transform: translateX(100%);
+  }
+}
+@-webkit-keyframes _widget_tab_moveToTopFade {
+  to {
+    opacity: 0.3;
+    -webkit-transform: translateY(-100%);
+  }
+}
+@-moz-keyframes _widget_tab_moveToTopFade {
+  to {
+    opacity: 0.3;
+    -moz-transform: translateY(-100%);
+  }
+}
+@keyframes _widget_tab_moveToTopFade {
+  to {
+    opacity: 0.3;
+    transform: translateY(-100%);
+  }
+}
+@-webkit-keyframes _widget_tab_moveFromTopFade {
+  from {
+    opacity: 0.3;
+    -webkit-transform: translateY(-100%);
+  }
+}
+@-moz-keyframes _widget_tab_moveFromTopFade {
+  from {
+    opacity: 0.3;
+    -moz-transform: translateY(-100%);
+  }
+}
+@keyframes _widget_tab_moveFromTopFade {
+  from {
+    opacity: 0.3;
+    transform: translateY(-100%);
+  }
+}
+@-webkit-keyframes _widget_tab_moveToBottomFade {
+  to {
+    opacity: 0.3;
+    -webkit-transform: translateY(100%);
+  }
+}
+@-moz-keyframes _widget_tab_moveToBottomFade {
+  to {
+    opacity: 0.3;
+    -moz-transform: translateY(100%);
+  }
+}
+@keyframes _widget_tab_moveToBottomFade {
+  to {
+    opacity: 0.3;
+    transform: translateY(100%);
+  }
+}
+@-webkit-keyframes _widget_tab_moveFromBottomFade {
+  from {
+    opacity: 0.3;
+    -webkit-transform: translateY(100%);
+  }
+}
+@-moz-keyframes _widget_tab_moveFromBottomFade {
+  from {
+    opacity: 0.3;
+    -moz-transform: translateY(100%);
+  }
+}
+@keyframes _widget_tab_moveFromBottomFade {
+  from {
+    opacity: 0.3;
+    transform: translateY(100%);
+  }
+}
+@-webkit-keyframes _widget_tab_scaleDown {
+  to {
+    opacity: 0;
+    -webkit-transform: scale(0.8);
+  }
+}
+@-moz-keyframes _widget_tab_scaleDown {
+  to {
+    opacity: 0;
+    -moz-transform: scale(0.8);
+  }
+}
+@keyframes _widget_tab_scaleDown {
+  to {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+@-webkit-keyframes _widget_tab_scaleUp {
+  from {
+    opacity: 0;
+    -webkit-transform: scale(0.8);
+  }
+}
+@-moz-keyframes _widget_tab_scaleUp {
+  from {
+    opacity: 0;
+    -moz-transform: scale(0.8);
+  }
+}
+@keyframes _widget_tab_scaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+@-webkit-keyframes _widget_tab_scaleUpDown {
+  from {
+    opacity: 0;
+    -webkit-transform: scale(1.2);
+  }
+}
+@-moz-keyframes _widget_tab_scaleUpDown {
+  from {
+    opacity: 0;
+    -moz-transform: scale(1.2);
+  }
+}
+@keyframes _widget_tab_scaleUpDown {
+  from {
+    opacity: 0;
+    transform: scale(1.2);
+  }
+}
+@-webkit-keyframes _widget_tab_scaleDownUp {
+  to {
+    opacity: 0;
+    -webkit-transform: scale(1.2);
+  }
+}
+@-moz-keyframes _widget_tab_scaleDownUp {
+  to {
+    opacity: 0;
+    -moz-transform: scale(1.2);
+  }
+}
+@keyframes _widget_tab_scaleDownUp {
+  to {
+    opacity: 0;
+    transform: scale(1.2);
+  }
+}
+@-webkit-keyframes _widget_tab_scaleDownCenter {
+  to {
+    opacity: 0;
+    -webkit-transform: scale(0.7);
+  }
+}
+@-moz-keyframes _widget_tab_scaleDownCenter {
+  to {
+    opacity: 0;
+    -moz-transform: scale(0.7);
+  }
+}
+@keyframes _widget_tab_scaleDownCenter {
+  to {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+}
+@-webkit-keyframes _widget_tab_scaleUpCenter {
+  from {
+    opacity: 0;
+    -webkit-transform: scale(0.7);
+  }
+}
+@-moz-keyframes _widget_tab_scaleUpCenter {
+  from {
+    opacity: 0;
+    -moz-transform: scale(0.7);
+  }
+}
+@keyframes _widget_tab_scaleUpCenter {
+  from {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+}
+@-webkit-keyframes _widget_tab_rotateRightSideFirst {
+  40% {
+    -webkit-transform: rotateY(15deg);
+    opacity: .8;
+    -webkit-animation-timing-function: ease-out;
+  }
+  100% {
+    -webkit-transform: scale(0.8) translateZ(-200px);
+    opacity: 0;
+  }
+}
+@-moz-keyframes _widget_tab_rotateRightSideFirst {
+  40% {
+    -moz-transform: rotateY(15deg);
+    opacity: .8;
+    -moz-animation-timing-function: ease-out;
+  }
+  100% {
+    -moz-transform: scale(0.8) translateZ(-200px);
+    opacity: 0;
+  }
+}
+@keyframes _widget_tab_rotateRightSideFirst {
+  40% {
+    transform: rotateY(15deg);
+    opacity: .8;
+    animation-timing-function: ease-out;
+  }
+  100% {
+    transform: scale(0.8) translateZ(-200px);
+    opacity: 0;
+  }
+}
+@-webkit-keyframes _widget_tab_rotateLeftSideFirst {
+  40% {
+    -webkit-transform: rotateY(-15deg);
+    opacity: .8;
+    -webkit-animation-timing-function: ease-out;
+  }
+  100% {
+    -webkit-transform: scale(0.8) translateZ(-200px);
+    opacity: 0;
+  }
+}
+@-moz-keyframes _widget_tab_rotateLeftSideFirst {
+  40% {
+    -moz-transform: rotateY(-15deg);
+    opacity: .8;
+    -moz-animation-timing-function: ease-out;
+  }
+  100% {
+    -moz-transform: scale(0.8) translateZ(-200px);
+    opacity: 0;
+  }
+}
+@keyframes _widget_tab_rotateLeftSideFirst {
+  40% {
+    transform: rotateY(-15deg);
+    opacity: .8;
+    animation-timing-function: ease-out;
+  }
+  100% {
+    transform: scale(0.8) translateZ(-200px);
+    opacity: 0;
+  }
+}
+@-webkit-keyframes _widget_tab_rotateTopSideFirst {
+  40% {
+    -webkit-transform: rotateX(15deg);
+    opacity: .8;
+    -webkit-animation-timing-function: ease-out;
+  }
+  100% {
+    -webkit-transform: scale(0.8) translateZ(-200px);
+    opacity: 0;
+  }
+}
+@-moz-keyframes _widget_tab_rotateTopSideFirst {
+  40% {
+    -moz-transform: rotateX(15deg);
+    opacity: .8;
+    -moz-animation-timing-function: ease-out;
+  }
+  100% {
+    -moz-transform: scale(0.8) translateZ(-200px);
+    opacity: 0;
+  }
+}
+@keyframes _widget_tab_rotateTopSideFirst {
+  40% {
+    transform: rotateX(15deg);
+    opacity: .8;
+    animation-timing-function: ease-out;
+  }
+  100% {
+    transform: scale(0.8) translateZ(-200px);
+    opacity: 0;
+  }
+}
+@-webkit-keyframes _widget_tab_rotateBottomSideFirst {
+  40% {
+    -webkit-transform: rotateX(-15deg);
+    opacity: .8;
+    -webkit-animation-timing-function: ease-out;
+  }
+  100% {
+    -webkit-transform: scale(0.8) translateZ(-200px);
+    opacity: 0;
+  }
+}
+@-moz-keyframes _widget_tab_rotateBottomSideFirst {
+  40% {
+    -moz-transform: rotateX(-15deg);
+    opacity: .8;
+    -moz-animation-timing-function: ease-out;
+  }
+  100% {
+    -moz-transform: scale(0.8) translateZ(-200px);
+    opacity: 0;
+  }
+}
+@keyframes _widget_tab_rotateBottomSideFirst {
+  40% {
+    transform: rotateX(-15deg);
+    opacity: .8;
+    animation-timing-function: ease-out;
+  }
+  100% {
+    transform: scale(0.8) translateZ(-200px);
+    opacity: 0;
+  }
+}
+@-webkit-keyframes _widget_tab_flipOutRight {
+  to {
+    -webkit-transform: translateZ(-1000px) rotateY(90deg);
+    opacity: 0.2;
+  }
+}
+@-moz-keyframes _widget_tab_flipOutRight {
+  to {
+    -moz-transform: translateZ(-1000px) rotateY(90deg);
+    opacity: 0.2;
+  }
+}
+@keyframes _widget_tab_flipOutRight {
+  to {
+    transform: translateZ(-1000px) rotateY(90deg);
+    opacity: 0.2;
+  }
+}
+@-webkit-keyframes _widget_tab_flipInLeft {
+  from {
+    -webkit-transform: translateZ(-1000px) rotateY(-90deg);
+    opacity: 0.2;
+  }
+}
+@-moz-keyframes _widget_tab_flipInLeft {
+  from {
+    -moz-transform: translateZ(-1000px) rotateY(-90deg);
+    opacity: 0.2;
+  }
+}
+@keyframes _widget_tab_flipInLeft {
+  from {
+    transform: translateZ(-1000px) rotateY(-90deg);
+    opacity: 0.2;
+  }
+}
+@-webkit-keyframes _widget_tab_flipOutLeft {
+  to {
+    -webkit-transform: translateZ(-1000px) rotateY(-90deg);
+    opacity: 0.2;
+  }
+}
+@-moz-keyframes _widget_tab_flipOutLeft {
+  to {
+    -moz-transform: translateZ(-1000px) rotateY(-90deg);
+    opacity: 0.2;
+  }
+}
+@keyframes _widget_tab_flipOutLeft {
+  to {
+    transform: translateZ(-1000px) rotateY(-90deg);
+    opacity: 0.2;
+  }
+}
+@-webkit-keyframes _widget_tab_flipInRight {
+  from {
+    -webkit-transform: translateZ(-1000px) rotateY(90deg);
+    opacity: 0.2;
+  }
+}
+@-moz-keyframes _widget_tab_flipInRight {
+  from {
+    -moz-transform: translateZ(-1000px) rotateY(90deg);
+    opacity: 0.2;
+  }
+}
+@keyframes _widget_tab_flipInRight {
+  from {
+    transform: translateZ(-1000px) rotateY(90deg);
+    opacity: 0.2;
+  }
+}
+@-webkit-keyframes _widget_tab_flipOutTop {
+  to {
+    -webkit-transform: translateZ(-1000px) rotateX(90deg);
+    opacity: 0.2;
+  }
+}
+@-moz-keyframes _widget_tab_flipOutTop {
+  to {
+    -moz-transform: translateZ(-1000px) rotateX(90deg);
+    opacity: 0.2;
+  }
+}
+@keyframes _widget_tab_flipOutTop {
+  to {
+    transform: translateZ(-1000px) rotateX(90deg);
+    opacity: 0.2;
+  }
+}
+@-webkit-keyframes _widget_tab_flipInBottom {
+  from {
+    -webkit-transform: translateZ(-1000px) rotateX(-90deg);
+    opacity: 0.2;
+  }
+}
+@-moz-keyframes _widget_tab_flipInBottom {
+  from {
+    -moz-transform: translateZ(-1000px) rotateX(-90deg);
+    opacity: 0.2;
+  }
+}
+@keyframes _widget_tab_flipInBottom {
+  from {
+    transform: translateZ(-1000px) rotateX(-90deg);
+    opacity: 0.2;
+  }
+}
+@-webkit-keyframes _widget_tab_flipOutBottom {
+  to {
+    -webkit-transform: translateZ(-1000px) rotateX(-90deg);
+    opacity: 0.2;
+  }
+}
+@-moz-keyframes _widget_tab_flipOutBottom {
+  to {
+    -moz-transform: translateZ(-1000px) rotateX(-90deg);
+    opacity: 0.2;
+  }
+}
+@keyframes _widget_tab_flipOutBottom {
+  to {
+    transform: translateZ(-1000px) rotateX(-90deg);
+    opacity: 0.2;
+  }
+}
+@-webkit-keyframes _widget_tab_flipInTop {
+  from {
+    -webkit-transform: translateZ(-1000px) rotateX(90deg);
+    opacity: 0.2;
+  }
+}
+@-moz-keyframes _widget_tab_flipInTop {
+  from {
+    -moz-transform: translateZ(-1000px) rotateX(90deg);
+    opacity: 0.2;
+  }
+}
+@keyframes _widget_tab_flipInTop {
+  from {
+    transform: translateZ(-1000px) rotateX(90deg);
+    opacity: 0.2;
+  }
+}
+@-webkit-keyframes _widget_tab_rotateOutNewspaper {
+  to {
+    -webkit-transform: translateZ(-3000px) rotateZ(360deg);
+    opacity: 0;
+  }
+}
+@-moz-keyframes _widget_tab_rotateOutNewspaper {
+  to {
+    -moz-transform: translateZ(-3000px) rotateZ(360deg);
+    opacity: 0;
+  }
+}
+@keyframes _widget_tab_rotateOutNewspaper {
+  to {
+    transform: translateZ(-3000px) rotateZ(360deg);
+    opacity: 0;
+  }
+}
+@-webkit-keyframes _widget_tab_rotateInNewspaper {
+  from {
+    -webkit-transform: translateZ(-3000px) rotateZ(-360deg);
+    opacity: 0;
+  }
+}
+@-moz-keyframes _widget_tab_rotateInNewspaper {
+  from {
+    -moz-transform: translateZ(-3000px) rotateZ(-360deg);
+    opacity: 0;
+  }
+}
+@keyframes _widget_tab_rotateInNewspaper {
+  from {
+    transform: translateZ(-3000px) rotateZ(-360deg);
+    opacity: 0;
+  }
+}
+@-webkit-keyframes _widget_tab_rotateFall {
+  0% {
+    -webkit-transform: rotateZ(0deg);
+  }
+  20% {
+    -webkit-transform: rotateZ(10deg);
+    -webkit-animation-timing-function: ease-out;
+  }
+  40% {
+    -webkit-transform: rotateZ(17deg);
+  }
+  60% {
+    -webkit-transform: rotateZ(16deg);
+  }
+  100% {
+    -webkit-transform: translateY(100%) rotateZ(17deg);
+  }
+}
+@-moz-keyframes _widget_tab_rotateFall {
+  0% {
+    -moz-transform: rotateZ(0deg);
+  }
+  20% {
+    -moz-transform: rotateZ(10deg);
+    -moz-animation-timing-function: ease-out;
+  }
+  40% {
+    -moz-transform: rotateZ(17deg);
+  }
+  60% {
+    -moz-transform: rotateZ(16deg);
+  }
+  100% {
+    -moz-transform: translateY(100%) rotateZ(17deg);
+  }
+}
+@keyframes _widget_tab_rotateFall {
+  0% {
+    transform: rotateZ(0deg);
+  }
+  20% {
+    transform: rotateZ(10deg);
+    animation-timing-function: ease-out;
+  }
+  40% {
+    transform: rotateZ(17deg);
+  }
+  60% {
+    transform: rotateZ(16deg);
+  }
+  100% {
+    transform: translateY(100%) rotateZ(17deg);
+  }
+}
+@-webkit-keyframes _widget_tab_rotatePushLeft {
+  to {
+    opacity: 0;
+    -webkit-transform: rotateY(90deg);
+  }
+}
+@-moz-keyframes _widget_tab_rotatePushLeft {
+  to {
+    opacity: 0;
+    -moz-transform: rotateY(90deg);
+  }
+}
+@keyframes _widget_tab_rotatePushLeft {
+  to {
+    opacity: 0;
+    transform: rotateY(90deg);
+  }
+}
+@-webkit-keyframes _widget_tab_rotatePushRight {
+  to {
+    opacity: 0;
+    -webkit-transform: rotateY(-90deg);
+  }
+}
+@-moz-keyframes _widget_tab_rotatePushRight {
+  to {
+    opacity: 0;
+    -moz-transform: rotateY(-90deg);
+  }
+}
+@keyframes _widget_tab_rotatePushRight {
+  to {
+    opacity: 0;
+    transform: rotateY(-90deg);
+  }
+}
+@-webkit-keyframes _widget_tab_rotatePushTop {
+  to {
+    opacity: 0;
+    -webkit-transform: rotateX(-90deg);
+  }
+}
+@-moz-keyframes _widget_tab_rotatePushTop {
+  to {
+    opacity: 0;
+    -moz-transform: rotateX(-90deg);
+  }
+}
+@keyframes _widget_tab_rotatePushTop {
+  to {
+    opacity: 0;
+    transform: rotateX(-90deg);
+  }
+}
+@-webkit-keyframes _widget_tab_rotatePushBottom {
+  to {
+    opacity: 0;
+    -webkit-transform: rotateX(90deg);
+  }
+}
+@-moz-keyframes _widget_tab_rotatePushBottom {
+  to {
+    opacity: 0;
+    -moz-transform: rotateX(90deg);
+  }
+}
+@keyframes _widget_tab_rotatePushBottom {
+  to {
+    opacity: 0;
+    transform: rotateX(90deg);
+  }
+}
+@-webkit-keyframes _widget_tab_rotatePullRight {
+  from {
+    opacity: 0;
+    -webkit-transform: rotateY(-90deg);
+  }
+}
+@-moz-keyframes _widget_tab_rotatePullRight {
+  from {
+    opacity: 0;
+    -moz-transform: rotateY(-90deg);
+  }
+}
+@keyframes _widget_tab_rotatePullRight {
+  from {
+    opacity: 0;
+    transform: rotateY(-90deg);
+  }
+}
+@-webkit-keyframes _widget_tab_rotatePullLeft {
+  from {
+    opacity: 0;
+    -webkit-transform: rotateY(90deg);
+  }
+}
+@-moz-keyframes _widget_tab_rotatePullLeft {
+  from {
+    opacity: 0;
+    -moz-transform: rotateY(90deg);
+  }
+}
+@keyframes _widget_tab_rotatePullLeft {
+  from {
+    opacity: 0;
+    transform: rotateY(90deg);
+  }
+}
+@-webkit-keyframes _widget_tab_rotatePullTop {
+  from {
+    opacity: 0;
+    -webkit-transform: rotateX(-90deg);
+  }
+}
+@-moz-keyframes _widget_tab_rotatePullTop {
+  from {
+    opacity: 0;
+    -moz-transform: rotateX(-90deg);
+  }
+}
+@keyframes _widget_tab_rotatePullTop {
+  from {
+    opacity: 0;
+    transform: rotateX(-90deg);
+  }
+}
+@-webkit-keyframes _widget_tab_rotatePullBottom {
+  from {
+    opacity: 0;
+    -webkit-transform: rotateX(90deg);
+  }
+}
+@-moz-keyframes _widget_tab_rotatePullBottom {
+  from {
+    opacity: 0;
+    -moz-transform: rotateX(90deg);
+  }
+}
+@keyframes _widget_tab_rotatePullBottom {
+  from {
+    opacity: 0;
+    transform: rotateX(90deg);
+  }
+}
+@-webkit-keyframes _widget_tab_rotateFoldRight {
+  to {
+    opacity: 0;
+    -webkit-transform: translateX(100%) rotateY(90deg);
+  }
+}
+@-moz-keyframes _widget_tab_rotateFoldRight {
+  to {
+    opacity: 0;
+    -moz-transform: translateX(100%) rotateY(90deg);
+  }
+}
+@keyframes _widget_tab_rotateFoldRight {
+  to {
+    opacity: 0;
+    transform: translateX(100%) rotateY(90deg);
+  }
+}
+@-webkit-keyframes _widget_tab_rotateFoldLeft {
+  to {
+    opacity: 0;
+    -webkit-transform: translateX(-100%) rotateY(-90deg);
+  }
+}
+@-moz-keyframes _widget_tab_rotateFoldLeft {
+  to {
+    opacity: 0;
+    -moz-transform: translateX(-100%) rotateY(-90deg);
+  }
+}
+@keyframes _widget_tab_rotateFoldLeft {
+  to {
+    opacity: 0;
+    transform: translateX(-100%) rotateY(-90deg);
+  }
+}
+@-webkit-keyframes _widget_tab_rotateFoldTop {
+  to {
+    opacity: 0;
+    -webkit-transform: translateY(-100%) rotateX(90deg);
+  }
+}
+@-moz-keyframes _widget_tab_rotateFoldTop {
+  to {
+    opacity: 0;
+    -moz-transform: translateY(-100%) rotateX(90deg);
+  }
+}
+@keyframes _widget_tab_rotateFoldTop {
+  to {
+    opacity: 0;
+    transform: translateY(-100%) rotateX(90deg);
+  }
+}
+@-webkit-keyframes _widget_tab_rotateFoldBottom {
+  to {
+    opacity: 0;
+    -webkit-transform: translateY(100%) rotateX(-90deg);
+  }
+}
+@-moz-keyframes _widget_tab_rotateFoldBottom {
+  to {
+    opacity: 0;
+    -moz-transform: translateY(100%) rotateX(-90deg);
+  }
+}
+@keyframes _widget_tab_rotateFoldBottom {
+  to {
+    opacity: 0;
+    transform: translateY(100%) rotateX(-90deg);
+  }
+}
+@-webkit-keyframes _widget_tab_rotateUnfoldLeft {
+  from {
+    opacity: 0;
+    -webkit-transform: translateX(-100%) rotateY(-90deg);
+  }
+}
+@-moz-keyframes _widget_tab_rotateUnfoldLeft {
+  from {
+    opacity: 0;
+    -moz-transform: translateX(-100%) rotateY(-90deg);
+  }
+}
+@keyframes _widget_tab_rotateUnfoldLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-100%) rotateY(-90deg);
+  }
+}
+@-webkit-keyframes _widget_tab_rotateUnfoldRight {
+  from {
+    opacity: 0;
+    -webkit-transform: translateX(100%) rotateY(90deg);
+  }
+}
+@-moz-keyframes _widget_tab_rotateUnfoldRight {
+  from {
+    opacity: 0;
+    -moz-transform: translateX(100%) rotateY(90deg);
+  }
+}
+@keyframes _widget_tab_rotateUnfoldRight {
+  from {
+    opacity: 0;
+    transform: translateX(100%) rotateY(90deg);
+  }
+}
+@-webkit-keyframes _widget_tab_rotateUnfoldTop {
+  from {
+    opacity: 0;
+    -webkit-transform: translateY(-100%) rotateX(90deg);
+  }
+}
+@-moz-keyframes _widget_tab_rotateUnfoldTop {
+  from {
+    opacity: 0;
+    -moz-transform: translateY(-100%) rotateX(90deg);
+  }
+}
+@keyframes _widget_tab_rotateUnfoldTop {
+  from {
+    opacity: 0;
+    transform: translateY(-100%) rotateX(90deg);
+  }
+}
+@-webkit-keyframes _widget_tab_rotateUnfoldBottom {
+  from {
+    opacity: 0;
+    -webkit-transform: translateY(100%) rotateX(-90deg);
+  }
+}
+@-moz-keyframes _widget_tab_rotateUnfoldBottom {
+  from {
+    opacity: 0;
+    -moz-transform: translateY(100%) rotateX(-90deg);
+  }
+}
+@keyframes _widget_tab_rotateUnfoldBottom {
+  from {
+    opacity: 0;
+    transform: translateY(100%) rotateX(-90deg);
+  }
+}
+@-webkit-keyframes _widget_tab_rotateRoomLeftOut {
+  to {
+    opacity: .3;
+    -webkit-transform: translateX(-100%) rotateY(90deg);
+  }
+}
+@-moz-keyframes _widget_tab_rotateRoomLeftOut {
+  to {
+    opacity: .3;
+    -moz-transform: translateX(-100%) rotateY(90deg);
+  }
+}
+@keyframes _widget_tab_rotateRoomLeftOut {
+  to {
+    opacity: .3;
+    transform: translateX(-100%) rotateY(90deg);
+  }
+}
+@-webkit-keyframes _widget_tab_rotateRoomLeftIn {
+  from {
+    opacity: .3;
+    -webkit-transform: translateX(100%) rotateY(-90deg);
+  }
+}
+@-moz-keyframes _widget_tab_rotateRoomLeftIn {
+  from {
+    opacity: .3;
+    -moz-transform: translateX(100%) rotateY(-90deg);
+  }
+}
+@keyframes _widget_tab_rotateRoomLeftIn {
+  from {
+    opacity: .3;
+    transform: translateX(100%) rotateY(-90deg);
+  }
+}
+@-webkit-keyframes _widget_tab_rotateRoomRightOut {
+  to {
+    opacity: .3;
+    -webkit-transform: translateX(100%) rotateY(-90deg);
+  }
+}
+@-moz-keyframes _widget_tab_rotateRoomRightOut {
+  to {
+    opacity: .3;
+    -moz-transform: translateX(100%) rotateY(-90deg);
+  }
+}
+@keyframes _widget_tab_rotateRoomRightOut {
+  to {
+    opacity: .3;
+    transform: translateX(100%) rotateY(-90deg);
+  }
+}
+@-webkit-keyframes _widget_tab_rotateRoomRightIn {
+  from {
+    opacity: .3;
+    -webkit-transform: translateX(-100%) rotateY(90deg);
+  }
+}
+@-moz-keyframes _widget_tab_rotateRoomRightIn {
+  from {
+    opacity: .3;
+    -moz-transform: translateX(-100%) rotateY(90deg);
+  }
+}
+@keyframes _widget_tab_rotateRoomRightIn {
+  from {
+    opacity: .3;
+    transform: translateX(-100%) rotateY(90deg);
+  }
+}
+@-webkit-keyframes _widget_tab_rotateRoomTopOut {
+  to {
+    opacity: .3;
+    -webkit-transform: translateY(-100%) rotateX(-90deg);
+  }
+}
+@-moz-keyframes _widget_tab_rotateRoomTopOut {
+  to {
+    opacity: .3;
+    -moz-transform: translateY(-100%) rotateX(-90deg);
+  }
+}
+@keyframes _widget_tab_rotateRoomTopOut {
+  to {
+    opacity: .3;
+    transform: translateY(-100%) rotateX(-90deg);
+  }
+}
+@-webkit-keyframes _widget_tab_rotateRoomTopIn {
+  from {
+    opacity: .3;
+    -webkit-transform: translateY(100%) rotateX(90deg);
+  }
+}
+@-moz-keyframes _widget_tab_rotateRoomTopIn {
+  from {
+    opacity: .3;
+    -moz-transform: translateY(100%) rotateX(90deg);
+  }
+}
+@keyframes _widget_tab_rotateRoomTopIn {
+  from {
+    opacity: .3;
+    transform: translateY(100%) rotateX(90deg);
+  }
+}
+@-webkit-keyframes _widget_tab_rotateRoomBottomOut {
+  to {
+    opacity: .3;
+    -webkit-transform: translateY(100%) rotateX(90deg);
+  }
+}
+@-moz-keyframes _widget_tab_rotateRoomBottomOut {
+  to {
+    opacity: .3;
+    -moz-transform: translateY(100%) rotateX(90deg);
+  }
+}
+@keyframes _widget_tab_rotateRoomBottomOut {
+  to {
+    opacity: .3;
+    transform: translateY(100%) rotateX(90deg);
+  }
+}
+@-webkit-keyframes _widget_tab_rotateRoomBottomIn {
+  from {
+    opacity: .3;
+    -webkit-transform: translateY(-100%) rotateX(-90deg);
+  }
+}
+@-moz-keyframes _widget_tab_rotateRoomBottomIn {
+  from {
+    opacity: .3;
+    -moz-transform: translateY(-100%) rotateX(-90deg);
+  }
+}
+@keyframes _widget_tab_rotateRoomBottomIn {
+  from {
+    opacity: .3;
+    transform: translateY(-100%) rotateX(-90deg);
+  }
+}
+@-webkit-keyframes _widget_tab_rotateCubeLeftOut {
+  50% {
+    -webkit-animation-timing-function: ease-out;
+    -webkit-transform: translateX(-50%) translateZ(-200px) rotateY(-45deg);
+  }
+  100% {
+    opacity: .3;
+    -webkit-transform: translateX(-100%) rotateY(-90deg);
+  }
+}
+@-moz-keyframes _widget_tab_rotateCubeLeftOut {
+  50% {
+    -moz-animation-timing-function: ease-out;
+    -moz-transform: translateX(-50%) translateZ(-200px) rotateY(-45deg);
+  }
+  100% {
+    opacity: .3;
+    -moz-transform: translateX(-100%) rotateY(-90deg);
+  }
+}
+@keyframes _widget_tab_rotateCubeLeftOut {
+  50% {
+    animation-timing-function: ease-out;
+    transform: translateX(-50%) translateZ(-200px) rotateY(-45deg);
+  }
+  100% {
+    opacity: .3;
+    transform: translateX(-100%) rotateY(-90deg);
+  }
+}
+@-webkit-keyframes _widget_tab_rotateCubeLeftIn {
+  0% {
+    opacity: .3;
+    -webkit-transform: translateX(100%) rotateY(90deg);
+  }
+  50% {
+    -webkit-animation-timing-function: ease-out;
+    -webkit-transform: translateX(50%) translateZ(-200px) rotateY(45deg);
+  }
+}
+@-moz-keyframes _widget_tab_rotateCubeLeftIn {
+  0% {
+    opacity: .3;
+    -moz-transform: translateX(100%) rotateY(90deg);
+  }
+  50% {
+    -moz-animation-timing-function: ease-out;
+    -moz-transform: translateX(50%) translateZ(-200px) rotateY(45deg);
+  }
+}
+@keyframes _widget_tab_rotateCubeLeftIn {
+  0% {
+    opacity: .3;
+    transform: translateX(100%) rotateY(90deg);
+  }
+  50% {
+    animation-timing-function: ease-out;
+    transform: translateX(50%) translateZ(-200px) rotateY(45deg);
+  }
+}
+@-webkit-keyframes _widget_tab_rotateCubeRightOut {
+  50% {
+    -webkit-animation-timing-function: ease-out;
+    -webkit-transform: translateX(50%) translateZ(-200px) rotateY(45deg);
+  }
+  100% {
+    opacity: .3;
+    -webkit-transform: translateX(100%) rotateY(90deg);
+  }
+}
+@-moz-keyframes _widget_tab_rotateCubeRightOut {
+  50% {
+    -moz-animation-timing-function: ease-out;
+    -moz-transform: translateX(50%) translateZ(-200px) rotateY(45deg);
+  }
+  100% {
+    opacity: .3;
+    -moz-transform: translateX(100%) rotateY(90deg);
+  }
+}
+@keyframes _widget_tab_rotateCubeRightOut {
+  50% {
+    animation-timing-function: ease-out;
+    transform: translateX(50%) translateZ(-200px) rotateY(45deg);
+  }
+  100% {
+    opacity: .3;
+    transform: translateX(100%) rotateY(90deg);
+  }
+}
+@-webkit-keyframes _widget_tab_rotateCubeRightIn {
+  0% {
+    opacity: .3;
+    -webkit-transform: translateX(-100%) rotateY(-90deg);
+  }
+  50% {
+    -webkit-animation-timing-function: ease-out;
+    -webkit-transform: translateX(-50%) translateZ(-200px) rotateY(-45deg);
+  }
+}
+@-moz-keyframes _widget_tab_rotateCubeRightIn {
+  0% {
+    opacity: .3;
+    -moz-transform: translateX(-100%) rotateY(-90deg);
+  }
+  50% {
+    -moz-animation-timing-function: ease-out;
+    -moz-transform: translateX(-50%) translateZ(-200px) rotateY(-45deg);
+  }
+}
+@keyframes _widget_tab_rotateCubeRightIn {
+  0% {
+    opacity: .3;
+    transform: translateX(-100%) rotateY(-90deg);
+  }
+  50% {
+    animation-timing-function: ease-out;
+    transform: translateX(-50%) translateZ(-200px) rotateY(-45deg);
+  }
+}
+@-webkit-keyframes _widget_tab_rotateCubeTopOut {
+  50% {
+    -webkit-animation-timing-function: ease-out;
+    -webkit-transform: translateY(-50%) translateZ(-200px) rotateX(45deg);
+  }
+  100% {
+    opacity: .3;
+    -webkit-transform: translateY(-100%) rotateX(90deg);
+  }
+}
+@-moz-keyframes _widget_tab_rotateCubeTopOut {
+  50% {
+    -moz-animation-timing-function: ease-out;
+    -moz-transform: translateY(-50%) translateZ(-200px) rotateX(45deg);
+  }
+  100% {
+    opacity: .3;
+    -moz-transform: translateY(-100%) rotateX(90deg);
+  }
+}
+@keyframes _widget_tab_rotateCubeTopOut {
+  50% {
+    animation-timing-function: ease-out;
+    transform: translateY(-50%) translateZ(-200px) rotateX(45deg);
+  }
+  100% {
+    opacity: .3;
+    transform: translateY(-100%) rotateX(90deg);
+  }
+}
+@-webkit-keyframes _widget_tab_rotateCubeTopIn {
+  0% {
+    opacity: .3;
+    -webkit-transform: translateY(100%) rotateX(-90deg);
+  }
+  50% {
+    -webkit-animation-timing-function: ease-out;
+    -webkit-transform: translateY(50%) translateZ(-200px) rotateX(-45deg);
+  }
+}
+@-moz-keyframes _widget_tab_rotateCubeTopIn {
+  0% {
+    opacity: .3;
+    -moz-transform: translateY(100%) rotateX(-90deg);
+  }
+  50% {
+    -moz-animation-timing-function: ease-out;
+    -moz-transform: translateY(50%) translateZ(-200px) rotateX(-45deg);
+  }
+}
+@keyframes _widget_tab_rotateCubeTopIn {
+  0% {
+    opacity: .3;
+    transform: translateY(100%) rotateX(-90deg);
+  }
+  50% {
+    animation-timing-function: ease-out;
+    transform: translateY(50%) translateZ(-200px) rotateX(-45deg);
+  }
+}
+@-webkit-keyframes _widget_tab_rotateCubeBottomOut {
+  50% {
+    -webkit-animation-timing-function: ease-out;
+    -webkit-transform: translateY(50%) translateZ(-200px) rotateX(-45deg);
+  }
+  100% {
+    opacity: .3;
+    -webkit-transform: translateY(100%) rotateX(-90deg);
+  }
+}
+@-moz-keyframes _widget_tab_rotateCubeBottomOut {
+  50% {
+    -moz-animation-timing-function: ease-out;
+    -moz-transform: translateY(50%) translateZ(-200px) rotateX(-45deg);
+  }
+  100% {
+    opacity: .3;
+    -moz-transform: translateY(100%) rotateX(-90deg);
+  }
+}
+@keyframes _widget_tab_rotateCubeBottomOut {
+  50% {
+    animation-timing-function: ease-out;
+    transform: translateY(50%) translateZ(-200px) rotateX(-45deg);
+  }
+  100% {
+    opacity: .3;
+    transform: translateY(100%) rotateX(-90deg);
+  }
+}
+@-webkit-keyframes _widget_tab_rotateCubeBottomIn {
+  0% {
+    opacity: .3;
+    -webkit-transform: translateY(-100%) rotateX(90deg);
+  }
+  50% {
+    -webkit-animation-timing-function: ease-out;
+    -webkit-transform: translateY(-50%) translateZ(-200px) rotateX(45deg);
+  }
+}
+@-moz-keyframes _widget_tab_rotateCubeBottomIn {
+  0% {
+    opacity: .3;
+    -moz-transform: translateY(-100%) rotateX(90deg);
+  }
+  50% {
+    -moz-animation-timing-function: ease-out;
+    -moz-transform: translateY(-50%) translateZ(-200px) rotateX(45deg);
+  }
+}
+@keyframes _widget_tab_rotateCubeBottomIn {
+  0% {
+    opacity: .3;
+    transform: translateY(-100%) rotateX(90deg);
+  }
+  50% {
+    animation-timing-function: ease-out;
+    transform: translateY(-50%) translateZ(-200px) rotateX(45deg);
+  }
+}
+@-webkit-keyframes _widget_tab_rotateCarouselLeftOut {
+  to {
+    opacity: .3;
+    -webkit-transform: translateX(-150%) scale(0.4) rotateY(-65deg);
+  }
+}
+@-moz-keyframes _widget_tab_rotateCarouselLeftOut {
+  to {
+    opacity: .3;
+    -moz-transform: translateX(-150%) scale(0.4) rotateY(-65deg);
+  }
+}
+@keyframes _widget_tab_rotateCarouselLeftOut {
+  to {
+    opacity: .3;
+    transform: translateX(-150%) scale(0.4) rotateY(-65deg);
+  }
+}
+@-webkit-keyframes _widget_tab_rotateCarouselLeftIn {
+  from {
+    opacity: .3;
+    -webkit-transform: translateX(200%) scale(0.4) rotateY(65deg);
+  }
+}
+@-moz-keyframes _widget_tab_rotateCarouselLeftIn {
+  from {
+    opacity: .3;
+    -moz-transform: translateX(200%) scale(0.4) rotateY(65deg);
+  }
+}
+@keyframes _widget_tab_rotateCarouselLeftIn {
+  from {
+    opacity: .3;
+    transform: translateX(200%) scale(0.4) rotateY(65deg);
+  }
+}
+@-webkit-keyframes _widget_tab_rotateCarouselRightOut {
+  to {
+    opacity: .3;
+    -webkit-transform: translateX(200%) scale(0.4) rotateY(65deg);
+  }
+}
+@-moz-keyframes _widget_tab_rotateCarouselRightOut {
+  to {
+    opacity: .3;
+    -moz-transform: translateX(200%) scale(0.4) rotateY(65deg);
+  }
+}
+@keyframes _widget_tab_rotateCarouselRightOut {
+  to {
+    opacity: .3;
+    transform: translateX(200%) scale(0.4) rotateY(65deg);
+  }
+}
+@-webkit-keyframes _widget_tab_rotateCarouselRightIn {
+  from {
+    opacity: .3;
+    -webkit-transform: translateX(-200%) scale(0.4) rotateY(-65deg);
+  }
+}
+@-moz-keyframes _widget_tab_rotateCarouselRightIn {
+  from {
+    opacity: .3;
+    -moz-transform: translateX(-200%) scale(0.4) rotateY(-65deg);
+  }
+}
+@keyframes _widget_tab_rotateCarouselRightIn {
+  from {
+    opacity: .3;
+    transform: translateX(-200%) scale(0.4) rotateY(-65deg);
+  }
+}
+@-webkit-keyframes _widget_tab_rotateCarouselTopOut {
+  to {
+    opacity: .3;
+    -webkit-transform: translateY(-200%) scale(0.4) rotateX(65deg);
+  }
+}
+@-moz-keyframes _widget_tab_rotateCarouselTopOut {
+  to {
+    opacity: .3;
+    -moz-transform: translateY(-200%) scale(0.4) rotateX(65deg);
+  }
+}
+@keyframes _widget_tab_rotateCarouselTopOut {
+  to {
+    opacity: .3;
+    transform: translateY(-200%) scale(0.4) rotateX(65deg);
+  }
+}
+@-webkit-keyframes _widget_tab_rotateCarouselTopIn {
+  from {
+    opacity: .3;
+    -webkit-transform: translateY(200%) scale(0.4) rotateX(-65deg);
+  }
+}
+@-moz-keyframes _widget_tab_rotateCarouselTopIn {
+  from {
+    opacity: .3;
+    -moz-transform: translateY(200%) scale(0.4) rotateX(-65deg);
+  }
+}
+@keyframes _widget_tab_rotateCarouselTopIn {
+  from {
+    opacity: .3;
+    transform: translateY(200%) scale(0.4) rotateX(-65deg);
+  }
+}
+@-webkit-keyframes _widget_tab_rotateCarouselBottomOut {
+  to {
+    opacity: .3;
+    -webkit-transform: translateY(200%) scale(0.4) rotateX(-65deg);
+  }
+}
+@-moz-keyframes _widget_tab_rotateCarouselBottomOut {
+  to {
+    opacity: .3;
+    -moz-transform: translateY(200%) scale(0.4) rotateX(-65deg);
+  }
+}
+@keyframes _widget_tab_rotateCarouselBottomOut {
+  to {
+    opacity: .3;
+    transform: translateY(200%) scale(0.4) rotateX(-65deg);
+  }
+}
+@-webkit-keyframes _widget_tab_rotateCarouselBottomIn {
+  from {
+    opacity: .3;
+    -webkit-transform: translateY(-200%) scale(0.4) rotateX(65deg);
+  }
+}
+@-moz-keyframes _widget_tab_rotateCarouselBottomIn {
+  from {
+    opacity: .3;
+    -moz-transform: translateY(-200%) scale(0.4) rotateX(65deg);
+  }
+}
+@keyframes _widget_tab_rotateCarouselBottomIn {
+  from {
+    opacity: .3;
+    transform: translateY(-200%) scale(0.4) rotateX(65deg);
+  }
+}
+@-webkit-keyframes _widget_tab_rotateSidesOut {
+  to {
+    opacity: 0;
+    -webkit-transform: translateZ(-500px) rotateY(90deg);
+  }
+}
+@-moz-keyframes _widget_tab_rotateSidesOut {
+  to {
+    opacity: 0;
+    -moz-transform: translateZ(-500px) rotateY(90deg);
+  }
+}
+@keyframes _widget_tab_rotateSidesOut {
+  to {
+    opacity: 0;
+    transform: translateZ(-500px) rotateY(90deg);
+  }
+}
+@-webkit-keyframes _widget_tab_rotateSidesIn {
+  from {
+    opacity: 0;
+    -webkit-transform: translateZ(-500px) rotateY(-90deg);
+  }
+}
+@-moz-keyframes _widget_tab_rotateSidesIn {
+  from {
+    opacity: 0;
+    -moz-transform: translateZ(-500px) rotateY(-90deg);
+  }
+}
+@keyframes _widget_tab_rotateSidesIn {
+  from {
+    opacity: 0;
+    transform: translateZ(-500px) rotateY(-90deg);
+  }
+}
+@-webkit-keyframes _widget_tab_rotateSlideOut {
+  25% {
+    opacity: .5;
+    -webkit-transform: translateZ(-500px);
+  }
+  75% {
+    opacity: .5;
+    -webkit-transform: translateZ(-500px) translateX(-200%);
+  }
+  100% {
+    opacity: .5;
+    -webkit-transform: translateZ(-500px) translateX(-200%);
+  }
+}
+@-moz-keyframes _widget_tab_rotateSlideOut {
+  25% {
+    opacity: .5;
+    -moz-transform: translateZ(-500px);
+  }
+  75% {
+    opacity: .5;
+    -moz-transform: translateZ(-500px) translateX(-200%);
+  }
+  100% {
+    opacity: .5;
+    -moz-transform: translateZ(-500px) translateX(-200%);
+  }
+}
+@keyframes _widget_tab_rotateSlideOut {
+  25% {
+    opacity: .5;
+    transform: translateZ(-500px);
+  }
+  75% {
+    opacity: .5;
+    transform: translateZ(-500px) translateX(-200%);
+  }
+  100% {
+    opacity: .5;
+    transform: translateZ(-500px) translateX(-200%);
+  }
+}
+@-webkit-keyframes _widget_tab_rotateSlideIn {
+  0%, 25% {
+    opacity: .5;
+    -webkit-transform: translateZ(-500px) translateX(200%);
+  }
+  75% {
+    opacity: .5;
+    -webkit-transform: translateZ(-500px);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateZ(0) translateX(0);
+  }
+}
+@-moz-keyframes _widget_tab_rotateSlideIn {
+  0%, 25% {
+    opacity: .5;
+    -moz-transform: translateZ(-500px) translateX(200%);
+  }
+  75% {
+    opacity: .5;
+    -moz-transform: translateZ(-500px);
+  }
+  100% {
+    opacity: 1;
+    -moz-transform: translateZ(0) translateX(0);
+  }
+}
+@keyframes _widget_tab_rotateSlideIn {
+  0%, 25% {
+    opacity: .5;
+    transform: translateZ(-500px) translateX(200%);
+  }
+  75% {
+    opacity: .5;
+    transform: translateZ(-500px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateZ(0) translateX(0);
+  }
+}
+._widget_tabContainer[version='1.0.0'][tab-transition=moveToLeftAfterRotation] > .tabGroups > .tabGroup {
+  -moz-transform-origin: 0% 50% 50%;
+  -ms-transform-origin: 0% 50% 50%;
+  -webkit-transform-origin: 0% 50% 50%;
+  transform-origin: 0% 50% 50%;
+}
+._widget_tabContainer[version='1.0.0'][tab-transition=moveToLeftAfterRotation] > .tabGroups > .tabGroup.show {
+  -moz-animation-delay: 0.2s;
+  -webkit-animation-delay: 0.2s;
+  animation-delay: 0.2s;
+}
+._widget_tabContainer[version='1.0.0'][tab-transition=moveToRightAfterRotation] > .tabGroups > .tabGroup {
+  -moz-transform-origin: 100% 50% 50%;
+  -ms-transform-origin: 100% 50% 50%;
+  -webkit-transform-origin: 100% 50% 50%;
+  transform-origin: 100% 50% 50%;
+}
+._widget_tabContainer[version='1.0.0'][tab-transition=moveToRightAfterRotation] > .tabGroups > .tabGroup.show {
+  -moz-animation-delay: 0.2s;
+  -webkit-animation-delay: 0.2s;
+  animation-delay: 0.2s;
+}
+._widget_tabContainer[version='1.0.0'][tab-transition=moveToTopAfterRotation] > .tabGroups > .tabGroup {
+  -moz-transform-origin: 50% 0% 50%;
+  -ms-transform-origin: 50% 0% 50%;
+  -webkit-transform-origin: 50% 0% 50%;
+  transform-origin: 50% 0% 50%;
+}
+._widget_tabContainer[version='1.0.0'][tab-transition=moveToTopAfterRotation] > .tabGroups > .tabGroup.show {
+  -moz-animation-delay: 0.2s;
+  -webkit-animation-delay: 0.2s;
+  animation-delay: 0.2s;
+}
+._widget_tabContainer[version='1.0.0'][tab-transition=moveToBottomAfterRotation] > .tabGroups > .tabGroup {
+  -moz-transform-origin: 50% 100% 50%;
+  -ms-transform-origin: 50% 100% 50%;
+  -webkit-transform-origin: 50% 100% 50%;
+  transform-origin: 50% 100% 50%;
+}
+._widget_tabContainer[version='1.0.0'][tab-transition=moveToBottomAfterRotation] > .tabGroups > .tabGroup.show {
+  -moz-animation-delay: 0.2s;
+  -webkit-animation-delay: 0.2s;
+  animation-delay: 0.2s;
+}
+._widget_tabContainer[version='1.0.0'][tab-transition=flipInLeftOutRight] > .tabGroups > .tabGroup {
+  -moz-transform-origin: 50% 50% 50%;
+  -ms-transform-origin: 50% 50% 50%;
+  -webkit-transform-origin: 50% 50% 50%;
+  transform-origin: 50% 50% 50%;
+}
+._widget_tabContainer[version='1.0.0'][tab-transition=flipInLeftOutRight] > .tabGroups > .tabGroup.show {
+  -moz-animation-delay: 0.5s;
+  -webkit-animation-delay: 0.5s;
+  animation-delay: 0.5s;
+  -moz-transform-origin: 50% 50% 50%;
+  -ms-transform-origin: 50% 50% 50%;
+  -webkit-transform-origin: 50% 50% 50%;
+  transform-origin: 50% 50% 50%;
+}
+._widget_tabContainer[version='1.0.0'][tab-transition=flipInRightOutLeft] > .tabGroups > .tabGroup {
+  -moz-transform-origin: 50% 50% 50%;
+  -ms-transform-origin: 50% 50% 50%;
+  -webkit-transform-origin: 50% 50% 50%;
+  transform-origin: 50% 50% 50%;
+}
+._widget_tabContainer[version='1.0.0'][tab-transition=flipInRightOutLeft] > .tabGroups > .tabGroup.show {
+  -moz-animation-delay: 0.5s;
+  -webkit-animation-delay: 0.5s;
+  animation-delay: 0.5s;
+  -moz-transform-origin: 50% 50% 50%;
+  -ms-transform-origin: 50% 50% 50%;
+  -webkit-transform-origin: 50% 50% 50%;
+  transform-origin: 50% 50% 50%;
+}
+._widget_tabContainer[version='1.0.0'][tab-transition=flipInBottomOutTop] > .tabGroups > .tabGroup {
+  -moz-transform-origin: 50% 50% 50%;
+  -ms-transform-origin: 50% 50% 50%;
+  -webkit-transform-origin: 50% 50% 50%;
+  transform-origin: 50% 50% 50%;
+}
+._widget_tabContainer[version='1.0.0'][tab-transition=flipInBottomOutTop] > .tabGroups > .tabGroup.show {
+  -moz-animation-delay: 0.5s;
+  -webkit-animation-delay: 0.5s;
+  animation-delay: 0.5s;
+  -moz-transform-origin: 50% 50% 50%;
+  -ms-transform-origin: 50% 50% 50%;
+  -webkit-transform-origin: 50% 50% 50%;
+  transform-origin: 50% 50% 50%;
+}
+._widget_tabContainer[version='1.0.0'][tab-transition=pushLeft] > .tabGroups > .tabGroup {
+  -moz-transform-origin: 0% 50% 50%;
+  -ms-transform-origin: 0% 50% 50%;
+  -webkit-transform-origin: 0% 50% 50%;
+  transform-origin: 0% 50% 50%;
+}
+._widget_tabContainer[version='1.0.0'][tab-transition=pushRight] > .tabGroups > .tabGroup {
+  -moz-transform-origin: 100% 50% 50%;
+  -ms-transform-origin: 100% 50% 50%;
+  -webkit-transform-origin: 100% 50% 50%;
+  transform-origin: 100% 50% 50%;
+}
+._widget_tabContainer[version='1.0.0'][tab-transition=pushTop] > .tabGroups > .tabGroup {
+  -moz-transform-origin: 50% 0% 50%;
+  -ms-transform-origin: 50% 0% 50%;
+  -webkit-transform-origin: 50% 0% 50%;
+  transform-origin: 50% 0% 50%;
+}
+._widget_tabContainer[version='1.0.0'][tab-transition=pushBottom] > .tabGroups > .tabGroup {
+  -moz-transform-origin: 50% 100% 50%;
+  -ms-transform-origin: 50% 100% 50%;
+  -webkit-transform-origin: 50% 100% 50%;
+  transform-origin: 50% 100% 50%;
+}
+._widget_tabContainer[version='1.0.0'][tab-transition=roomToLeft] > .tabGroups > .tabGroup {
+  -moz-transform-origin: 100% 50% 50%;
+  -ms-transform-origin: 100% 50% 50%;
+  -webkit-transform-origin: 100% 50% 50%;
+  transform-origin: 100% 50% 50%;
+}
+._widget_tabContainer[version='1.0.0'][tab-transition=roomToLeft] > .tabGroups > .tabGroup.show {
+  -moz-transform-origin: 0% 50% 50%;
+  -ms-transform-origin: 0% 50% 50%;
+  -webkit-transform-origin: 0% 50% 50%;
+  transform-origin: 0% 50% 50%;
+}
+._widget_tabContainer[version='1.0.0'][tab-transition=roomToRight] > .tabGroups > .tabGroup {
+  -moz-transform-origin: 0% 50% 50%;
+  -ms-transform-origin: 0% 50% 50%;
+  -webkit-transform-origin: 0% 50% 50%;
+  transform-origin: 0% 50% 50%;
+}
+._widget_tabContainer[version='1.0.0'][tab-transition=roomToRight] > .tabGroups > .tabGroup.show {
+  -moz-transform-origin: 100% 50% 50%;
+  -ms-transform-origin: 100% 50% 50%;
+  -webkit-transform-origin: 100% 50% 50%;
+  transform-origin: 100% 50% 50%;
+}
+._widget_tabContainer[version='1.0.0'][tab-transition=roomToTop] > .tabGroups > .tabGroup {
+  -moz-transform-origin: 50% 100% 50%;
+  -ms-transform-origin: 50% 100% 50%;
+  -webkit-transform-origin: 50% 100% 50%;
+  transform-origin: 50% 100% 50%;
+}
+._widget_tabContainer[version='1.0.0'][tab-transition=roomToTop] > .tabGroups > .tabGroup.show {
+  -moz-transform-origin: 50% 0% 50%;
+  -ms-transform-origin: 50% 0% 50%;
+  -webkit-transform-origin: 50% 0% 50%;
+  transform-origin: 50% 0% 50%;
+}
+._widget_tabContainer[version='1.0.0'][tab-transition=roomToBottom] > .tabGroups > .tabGroup {
+  -moz-transform-origin: 50% 0% 50%;
+  -ms-transform-origin: 50% 0% 50%;
+  -webkit-transform-origin: 50% 0% 50%;
+  transform-origin: 50% 0% 50%;
+}
+._widget_tabContainer[version='1.0.0'][tab-transition=roomToBottom] > .tabGroups > .tabGroup.show {
+  -moz-transform-origin: 50% 100% 50%;
+  -ms-transform-origin: 50% 100% 50%;
+  -webkit-transform-origin: 50% 100% 50%;
+  transform-origin: 50% 100% 50%;
+}
+._widget_tabContainer[version='1.0.0'][tab-transition=cubeToLeft] > .tabGroups > .tabGroup {
+  -moz-transform-origin: 100% 50% 50%;
+  -ms-transform-origin: 100% 50% 50%;
+  -webkit-transform-origin: 100% 50% 50%;
+  transform-origin: 100% 50% 50%;
+}
+._widget_tabContainer[version='1.0.0'][tab-transition=cubeToLeft] > .tabGroups > .tabGroup.show {
+  -moz-transform-origin: 0% 50% 50%;
+  -ms-transform-origin: 0% 50% 50%;
+  -webkit-transform-origin: 0% 50% 50%;
+  transform-origin: 0% 50% 50%;
+}
+._widget_tabContainer[version='1.0.0'][tab-transition=cubeToRight] > .tabGroups > .tabGroup {
+  -moz-transform-origin: 0% 50% 50%;
+  -ms-transform-origin: 0% 50% 50%;
+  -webkit-transform-origin: 0% 50% 50%;
+  transform-origin: 0% 50% 50%;
+}
+._widget_tabContainer[version='1.0.0'][tab-transition=cubeToRight] > .tabGroups > .tabGroup.show {
+  -moz-transform-origin: 100% 50% 50%;
+  -ms-transform-origin: 100% 50% 50%;
+  -webkit-transform-origin: 100% 50% 50%;
+  transform-origin: 100% 50% 50%;
+}
+._widget_tabContainer[version='1.0.0'][tab-transition=cubeToTop] > .tabGroups > .tabGroup {
+  -moz-transform-origin: 50% 100% 50%;
+  -ms-transform-origin: 50% 100% 50%;
+  -webkit-transform-origin: 50% 100% 50%;
+  transform-origin: 50% 100% 50%;
+}
+._widget_tabContainer[version='1.0.0'][tab-transition=cubeToTop] > .tabGroups > .tabGroup.show {
+  -moz-transform-origin: 50% 0% 50%;
+  -ms-transform-origin: 50% 0% 50%;
+  -webkit-transform-origin: 50% 0% 50%;
+  transform-origin: 50% 0% 50%;
+}
+._widget_tabContainer[version='1.0.0'][tab-transition=cubeToBottom] > .tabGroups > .tabGroup {
+  -moz-transform-origin: 50% 0% 50%;
+  -ms-transform-origin: 50% 0% 50%;
+  -webkit-transform-origin: 50% 0% 50%;
+  transform-origin: 50% 0% 50%;
+}
+._widget_tabContainer[version='1.0.0'][tab-transition=cubeToBottom] > .tabGroups > .tabGroup.show {
+  -moz-transform-origin: 50% 100% 50%;
+  -ms-transform-origin: 50% 100% 50%;
+  -webkit-transform-origin: 50% 100% 50%;
+  transform-origin: 50% 100% 50%;
+}
+._widget_tabContainer[version='1.0.0'][tab-transition=carouselToLeft] > .tabGroups > .tabGroup {
+  -moz-transform-origin: 100% 50% 50%;
+  -ms-transform-origin: 100% 50% 50%;
+  -webkit-transform-origin: 100% 50% 50%;
+  transform-origin: 100% 50% 50%;
+}
+._widget_tabContainer[version='1.0.0'][tab-transition=carouselToLeft] > .tabGroups > .tabGroup.show {
+  -moz-transform-origin: 0% 50% 50%;
+  -ms-transform-origin: 0% 50% 50%;
+  -webkit-transform-origin: 0% 50% 50%;
+  transform-origin: 0% 50% 50%;
+}
+._widget_tabContainer[version='1.0.0'][tab-transition=carouselToRight] > .tabGroups > .tabGroup {
+  -moz-transform-origin: 0% 50% 50%;
+  -ms-transform-origin: 0% 50% 50%;
+  -webkit-transform-origin: 0% 50% 50%;
+  transform-origin: 0% 50% 50%;
+}
+._widget_tabContainer[version='1.0.0'][tab-transition=carouselToRight] > .tabGroups > .tabGroup.show {
+  -moz-transform-origin: 100% 50% 50%;
+  -ms-transform-origin: 100% 50% 50%;
+  -webkit-transform-origin: 100% 50% 50%;
+  transform-origin: 100% 50% 50%;
+}
+._widget_tabContainer[version='1.0.0'][tab-transition=carouselToTop] > .tabGroups > .tabGroup {
+  -moz-transform-origin: 50% 100% 50%;
+  -ms-transform-origin: 50% 100% 50%;
+  -webkit-transform-origin: 50% 100% 50%;
+  transform-origin: 50% 100% 50%;
+}
+._widget_tabContainer[version='1.0.0'][tab-transition=carouselToTop] > .tabGroups > .tabGroup.show {
+  -moz-transform-origin: 50% 0% 50%;
+  -ms-transform-origin: 50% 0% 50%;
+  -webkit-transform-origin: 50% 0% 50%;
+  transform-origin: 50% 0% 50%;
+}
+._widget_tabContainer[version='1.0.0'][tab-transition=carouselToBottom] > .tabGroups > .tabGroup {
+  -moz-transform-origin: 50% 0% 50%;
+  -ms-transform-origin: 50% 0% 50%;
+  -webkit-transform-origin: 50% 0% 50%;
+  transform-origin: 50% 0% 50%;
+}
+._widget_tabContainer[version='1.0.0'][tab-transition=carouselToBottom] > .tabGroups > .tabGroup.show {
+  -moz-transform-origin: 50% 100% 50%;
+  -ms-transform-origin: 50% 100% 50%;
+  -webkit-transform-origin: 50% 100% 50%;
+  transform-origin: 50% 100% 50%;
+}
+._widget_tabContainer[version='1.0.0'][tab-transition=sides] > .tabGroups > .tabGroup {
+  -moz-transform-origin: -50% 50% 50%;
+  -ms-transform-origin: -50% 50% 50%;
+  -webkit-transform-origin: -50% 50% 50%;
+  transform-origin: -50% 50% 50%;
+}
+._widget_tabContainer[version='1.0.0'][tab-transition=sides] > .tabGroups > .tabGroup.show {
+  -moz-animation-delay: 0.2s;
+  -webkit-animation-delay: 0.2s;
+  animation-delay: 0.2s;
+  -moz-transform-origin: 150% 50% 50%;
+  -ms-transform-origin: 150% 50% 50%;
+  -webkit-transform-origin: 150% 50% 50%;
+  transform-origin: 150% 50% 50%;
+}
+._widget_tabContainer[version='1.0.0'][tab-transition=fall] > .tabGroups > .tabGroup {
+  visibility: hidden;
+}
+._widget_tabContainer[version='1.0.0'][tab-transition=fall] > .tabGroups > .tabGroup.show {
+  visibility: visible;
+}
+._widget_tabContainer[version='1.0.0'][tab-transition=fall] > .tabGroups > .tabGroup.hiding {
+  visibility: visible;
+  z-index: 1;
+  -moz-transform-origin: 0% 0% 50%;
+  -ms-transform-origin: 0% 0% 50%;
+  -webkit-transform-origin: 0% 0% 50%;
+  transform-origin: 0% 0% 50%;
+}
+._widget_tabContainer[version='1.0.0'][tab-transition=newspaper] > .tabGroups > .tabGroup {
+  -moz-transform-origin: 50% 50% 50%;
+  -ms-transform-origin: 50% 50% 50%;
+  -webkit-transform-origin: 50% 50% 50%;
+  transform-origin: 50% 50% 50%;
+}
+._widget_tabContainer[version='1.0.0'][tab-transition=newspaper] > .tabGroups > .tabGroup.show {
+  -moz-animation-delay: 0.5s;
+  -webkit-animation-delay: 0.5s;
+  animation-delay: 0.5s;
+  -moz-transform-origin: 50% 50% 50%;
+  -ms-transform-origin: 50% 50% 50%;
+  -webkit-transform-origin: 50% 50% 50%;
+  transform-origin: 50% 50% 50%;
+}
+._widget_tabContainer[version='1.0.0'][tab-transition=slide] > .tabGroups > .tabGroup {
+  -moz-transform-origin: 50% 50% 50%;
+  -ms-transform-origin: 50% 50% 50%;
+  -webkit-transform-origin: 50% 50% 50%;
+  transform-origin: 50% 50% 50%;
+}
+._widget_tabContainer[version='1.0.0'][tab-transition=slide] > .tabGroups > .tabGroup.show {
+  -moz-transform-origin: 50% 50% 50%;
+  -ms-transform-origin: 50% 50% 50%;
+  -webkit-transform-origin: 50% 50% 50%;
+  transform-origin: 50% 50% 50%;
+}
+._widget_tabContainer[version='1.0.0'][tab-align=alignTop] > .tabTitles {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 2em;
+}
+._widget_tabContainer[version='1.0.0'][tab-align=alignTop] > .tabTitles > .tabTitle {
+  z-index: 1;
+  position: relative;
+  float: left;
+  margin-right: 0.5em;
+  height: 2em;
+  width: 8em;
+}
+._widget_tabContainer[version='1.0.0'][tab-align=alignTop] > .tabTitles > .tabTitle:first-child {
+  margin-left: 0.5em;
+}
+._widget_tabContainer[version='1.0.0'][tab-align=alignTop] > .tabTitles > .tabTitle.select {
+  margin-top: 1px;
+  height: calc(2em - 2px);
+  -moz-box-shadow: 0px -5px 6px rgba(192, 192, 192, 0.8);
+  -webkit-box-shadow: 0px -5px 6px rgba(192, 192, 192, 0.8);
+  box-shadow: 0px -5px 6px rgba(192, 192, 192, 0.8);
+}
+._widget_tabContainer[version='1.0.0'][tab-align=alignTop] > .tabTitles > .tabTitle.select label {
+  text-shadow: 1px 0px 0px ghostwhite, -1px 0px 0px ghostwhite, 0px 1px 0px ghostwhite, 0px -1px 0px ghostwhite, 1px 1px 0px ghostwhite, -1px -1px 0px ghostwhite, -1px 1px 0px ghostwhite, 1px -1px 0px ghostwhite, 0px 6px 1px silver;
+  background: #fff;
+}
+._widget_tabContainer[version='1.0.0'][tab-align=alignTop] > .tabTitles > .tabTitle label {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  line-height: 2;
+  text-align: center;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  text-shadow: 1px 0px 0px ghostwhite, -1px 0px 0px ghostwhite, 0px 1px 0px ghostwhite, 0px -1px 0px ghostwhite, 1px 1px 0px ghostwhite, -1px -1px 0px ghostwhite, -1px 1px 0px ghostwhite, 1px -1px 0px ghostwhite;
+  background: rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+._widget_tabContainer[version='1.0.0'][tab-align=alignTop] > .tabGroups {
+  position: absolute;
+  left: 0;
+  top: 2em;
+  width: 100%;
+  height: calc(100% - 2em);
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: inset 0 0 5px rgba(192, 192, 192, 0.8);
+  -webkit-box-shadow: inset 0 0 5px rgba(192, 192, 192, 0.8);
+  box-shadow: inset 0 0 5px rgba(192, 192, 192, 0.8);
+  -moz-perspective: 1200px;
+  -webkit-perspective: 1200px;
+  perspective: 1200px;
+}
+._widget_tabContainer[version='1.0.0'][tab-align=alignTop] > .tabGroups > .tabGroup {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  -moz-backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -moz-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  -moz-transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+._widget_tabContainer[version='1.0.0'][tab-align=alignTop] > .tabGroups > .tabGroup.show {
+  pointer-events: auto;
+}
+._widget_tabContainer[version='1.0.0'][tab-align=alignBottom] > .tabTitles {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2em;
+}
+._widget_tabContainer[version='1.0.0'][tab-align=alignBottom] > .tabTitles > .tabTitle {
+  z-index: 1;
+  position: relative;
+  float: left;
+  margin-right: 0.5em;
+  height: 2em;
+  width: 8em;
+}
+._widget_tabContainer[version='1.0.0'][tab-align=alignBottom] > .tabTitles > .tabTitle:first-child {
+  margin-left: 0.5em;
+}
+._widget_tabContainer[version='1.0.0'][tab-align=alignBottom] > .tabTitles > .tabTitle.select {
+  margin-top: -1px;
+  height: calc(2em - 2px);
+  -moz-box-shadow: 0px 5px 6px rgba(192, 192, 192, 0.8);
+  -webkit-box-shadow: 0px 5px 6px rgba(192, 192, 192, 0.8);
+  box-shadow: 0px 5px 6px rgba(192, 192, 192, 0.8);
+}
+._widget_tabContainer[version='1.0.0'][tab-align=alignBottom] > .tabTitles > .tabTitle.select label {
+  text-shadow: 1px 0px 0px ghostwhite, -1px 0px 0px ghostwhite, 0px 1px 0px ghostwhite, 0px -1px 0px ghostwhite, 1px 1px 0px ghostwhite, -1px -1px 0px ghostwhite, -1px 1px 0px ghostwhite, 1px -1px 0px ghostwhite, 0px 6px 1px silver;
+  background: #fff;
+}
+._widget_tabContainer[version='1.0.0'][tab-align=alignBottom] > .tabTitles > .tabTitle label {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  line-height: 2;
+  text-align: center;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  text-shadow: 1px 0px 0px ghostwhite, -1px 0px 0px ghostwhite, 0px 1px 0px ghostwhite, 0px -1px 0px ghostwhite, 1px 1px 0px ghostwhite, -1px -1px 0px ghostwhite, -1px 1px 0px ghostwhite, 1px -1px 0px ghostwhite;
+  background: rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+._widget_tabContainer[version='1.0.0'][tab-align=alignBottom] > .tabGroups {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: calc(100% - 2em);
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: inset 0 0 5px rgba(192, 192, 192, 0.8);
+  -webkit-box-shadow: inset 0 0 5px rgba(192, 192, 192, 0.8);
+  box-shadow: inset 0 0 5px rgba(192, 192, 192, 0.8);
+  -moz-perspective: 1200px;
+  -webkit-perspective: 1200px;
+  perspective: 1200px;
+}
+._widget_tabContainer[version='1.0.0'][tab-align=alignBottom] > .tabGroups > .tabGroup {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  -moz-backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -moz-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  -moz-transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+._widget_tabContainer[version='1.0.0'][tab-align=alignBottom] > .tabGroups > .tabGroup.show {
+  pointer-events: auto;
+}
+._widget_tabContainer[version='1.0.0'][tab-align=alignLeft] > .tabTitles {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2em;
+  height: 100%;
+}
+._widget_tabContainer[version='1.0.0'][tab-align=alignLeft] > .tabTitles > .tabTitle {
+  z-index: 1;
+  position: absolute;
+  left: -3em;
+  top: 3.5em;
+  margin-bottom: 0.5em;
+  height: 2em;
+  width: 8em;
+  -moz-transform: rotateZ(-90deg);
+  -ms-transform: rotateZ(-90deg);
+  -webkit-transform: rotateZ(-90deg);
+  transform: rotateZ(-90deg);
+}
+._widget_tabContainer[version='1.0.0'][tab-align=alignLeft] > .tabTitles > .tabTitle:first-child {
+  margin-top: 0.5em;
+}
+._widget_tabContainer[version='1.0.0'][tab-align=alignLeft] > .tabTitles > .tabTitle:nth-child(2) {
+  top: 12.5em;
+}
+._widget_tabContainer[version='1.0.0'][tab-align=alignLeft] > .tabTitles > .tabTitle:nth-child(3) {
+  top: 21em;
+}
+._widget_tabContainer[version='1.0.0'][tab-align=alignLeft] > .tabTitles > .tabTitle:nth-child(4) {
+  top: 29.5em;
+}
+._widget_tabContainer[version='1.0.0'][tab-align=alignLeft] > .tabTitles > .tabTitle:nth-child(5) {
+  top: 38em;
+}
+._widget_tabContainer[version='1.0.0'][tab-align=alignLeft] > .tabTitles > .tabTitle:nth-child(6) {
+  top: 46.5em;
+}
+._widget_tabContainer[version='1.0.0'][tab-align=alignLeft] > .tabTitles > .tabTitle:nth-child(7) {
+  top: 55em;
+}
+._widget_tabContainer[version='1.0.0'][tab-align=alignLeft] > .tabTitles > .tabTitle:nth-child(8) {
+  top: 63.5em;
+}
+._widget_tabContainer[version='1.0.0'][tab-align=alignLeft] > .tabTitles > .tabTitle:nth-child(9) {
+  top: 72em;
+}
+._widget_tabContainer[version='1.0.0'][tab-align=alignLeft] > .tabTitles > .tabTitle:nth-child(10) {
+  top: 80.5em;
+}
+._widget_tabContainer[version='1.0.0'][tab-align=alignLeft] > .tabTitles > .tabTitle.select {
+  margin-left: 1px;
+  -moz-box-shadow: 0px -5px 6px rgba(192, 192, 192, 0.8);
+  -webkit-box-shadow: 0px -5px 6px rgba(192, 192, 192, 0.8);
+  box-shadow: 0px -5px 6px rgba(192, 192, 192, 0.8);
+}
+._widget_tabContainer[version='1.0.0'][tab-align=alignLeft] > .tabTitles > .tabTitle.select label {
+  text-shadow: 1px 0px 0px ghostwhite, -1px 0px 0px ghostwhite, 0px 1px 0px ghostwhite, 0px -1px 0px ghostwhite, 1px 1px 0px ghostwhite, -1px -1px 0px ghostwhite, -1px 1px 0px ghostwhite, 1px -1px 0px ghostwhite, 0px 6px 1px silver;
+  background: #fff;
+}
+._widget_tabContainer[version='1.0.0'][tab-align=alignLeft] > .tabTitles > .tabTitle label {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  line-height: 2;
+  text-align: center;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  text-shadow: 1px 0px 0px ghostwhite, -1px 0px 0px ghostwhite, 0px 1px 0px ghostwhite, 0px -1px 0px ghostwhite, 1px 1px 0px ghostwhite, -1px -1px 0px ghostwhite, -1px 1px 0px ghostwhite, 1px -1px 0px ghostwhite;
+  background: rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+._widget_tabContainer[version='1.0.0'][tab-align=alignLeft] > .tabGroups {
+  position: absolute;
+  left: 2em;
+  top: 0;
+  width: calc(100% - 2em);
+  height: 100%;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: inset 0 0 5px rgba(192, 192, 192, 0.8);
+  -webkit-box-shadow: inset 0 0 5px rgba(192, 192, 192, 0.8);
+  box-shadow: inset 0 0 5px rgba(192, 192, 192, 0.8);
+  -moz-perspective: 1200px;
+  -webkit-perspective: 1200px;
+  perspective: 1200px;
+}
+._widget_tabContainer[version='1.0.0'][tab-align=alignLeft] > .tabGroups > .tabGroup {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  -moz-backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -moz-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  -moz-transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+._widget_tabContainer[version='1.0.0'][tab-align=alignLeft] > .tabGroups > .tabGroup.show {
+  pointer-events: auto;
+}
+._widget_tabContainer[version='1.0.0'][tab-align=alignRight] > .tabTitles {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 2em;
+  height: 100%;
+}
+._widget_tabContainer[version='1.0.0'][tab-align=alignRight] > .tabTitles > .tabTitle {
+  z-index: 1;
+  position: absolute;
+  left: -3em;
+  top: 3.5em;
+  margin-bottom: 0.5em;
+  height: 2em;
+  width: 8em;
+  -moz-transform: rotateZ(90deg);
+  -ms-transform: rotateZ(90deg);
+  -webkit-transform: rotateZ(90deg);
+  transform: rotateZ(90deg);
+}
+._widget_tabContainer[version='1.0.0'][tab-align=alignRight] > .tabTitles > .tabTitle:first-child {
+  margin-top: 0.5em;
+}
+._widget_tabContainer[version='1.0.0'][tab-align=alignRight] > .tabTitles > .tabTitle:nth-child(2) {
+  top: 12.5em;
+}
+._widget_tabContainer[version='1.0.0'][tab-align=alignRight] > .tabTitles > .tabTitle:nth-child(3) {
+  top: 21em;
+}
+._widget_tabContainer[version='1.0.0'][tab-align=alignRight] > .tabTitles > .tabTitle:nth-child(4) {
+  top: 29.5em;
+}
+._widget_tabContainer[version='1.0.0'][tab-align=alignRight] > .tabTitles > .tabTitle:nth-child(5) {
+  top: 38em;
+}
+._widget_tabContainer[version='1.0.0'][tab-align=alignRight] > .tabTitles > .tabTitle:nth-child(6) {
+  top: 46.5em;
+}
+._widget_tabContainer[version='1.0.0'][tab-align=alignRight] > .tabTitles > .tabTitle:nth-child(7) {
+  top: 55em;
+}
+._widget_tabContainer[version='1.0.0'][tab-align=alignRight] > .tabTitles > .tabTitle:nth-child(8) {
+  top: 63.5em;
+}
+._widget_tabContainer[version='1.0.0'][tab-align=alignRight] > .tabTitles > .tabTitle:nth-child(9) {
+  top: 72em;
+}
+._widget_tabContainer[version='1.0.0'][tab-align=alignRight] > .tabTitles > .tabTitle:nth-child(10) {
+  top: 80.5em;
+}
+._widget_tabContainer[version='1.0.0'][tab-align=alignRight] > .tabTitles > .tabTitle.select {
+  margin-left: -1px;
+  -moz-box-shadow: 0px -5px 6px rgba(192, 192, 192, 0.8);
+  -webkit-box-shadow: 0px -5px 6px rgba(192, 192, 192, 0.8);
+  box-shadow: 0px -5px 6px rgba(192, 192, 192, 0.8);
+}
+._widget_tabContainer[version='1.0.0'][tab-align=alignRight] > .tabTitles > .tabTitle.select label {
+  text-shadow: 1px 0px 0px ghostwhite, -1px 0px 0px ghostwhite, 0px 1px 0px ghostwhite, 0px -1px 0px ghostwhite, 1px 1px 0px ghostwhite, -1px -1px 0px ghostwhite, -1px 1px 0px ghostwhite, 1px -1px 0px ghostwhite, 0px 6px 1px silver;
+  background: #fff;
+}
+._widget_tabContainer[version='1.0.0'][tab-align=alignRight] > .tabTitles > .tabTitle label {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  line-height: 2;
+  text-align: center;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  text-shadow: 1px 0px 0px ghostwhite, -1px 0px 0px ghostwhite, 0px 1px 0px ghostwhite, 0px -1px 0px ghostwhite, 1px 1px 0px ghostwhite, -1px -1px 0px ghostwhite, -1px 1px 0px ghostwhite, 1px -1px 0px ghostwhite;
+  background: rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+._widget_tabContainer[version='1.0.0'][tab-align=alignRight] > .tabGroups {
+  position: absolute;
+  right: 2em;
+  top: 0;
+  width: calc(100% - 2em);
+  height: 100%;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: inset 0 0 5px rgba(192, 192, 192, 0.8);
+  -webkit-box-shadow: inset 0 0 5px rgba(192, 192, 192, 0.8);
+  box-shadow: inset 0 0 5px rgba(192, 192, 192, 0.8);
+  -moz-perspective: 1200px;
+  -webkit-perspective: 1200px;
+  perspective: 1200px;
+}
+._widget_tabContainer[version='1.0.0'][tab-align=alignRight] > .tabGroups > .tabGroup {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  -moz-backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -moz-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  -moz-transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+._widget_tabContainer[version='1.0.0'][tab-align=alignRight] > .tabGroups > .tabGroup.show {
+  pointer-events: auto;
+}

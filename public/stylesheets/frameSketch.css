@@ -7515,13 +7515,13 @@
 }
 #borderWidthDropdown .cd-dropdown > span {
   position: relative;
+  float: left;
   width: 100%;
   height: 2em;
   line-height: 2;
   color: #999;
   font-weight: 700;
   background: #fff;
-  display: block;
   padding-left: 1em;
   cursor: pointer;
   -moz-backface-visibility: hidden;
@@ -7547,6 +7547,17 @@
   width: 100%;
   line-height: 2;
   text-align: center;
+}
+#borderWidthDropdown .cd-dropdown > span > span {
+  position: absolute;
+  width: calc(100% - 3em);
+  height: 100%;
+  line-height: 2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 #borderWidthDropdown .cd-dropdown.cd-active > span:after {
   content: '\25B2';
@@ -7796,13 +7807,13 @@
 }
 #borderStyleDropdown .cd-dropdown > span {
   position: relative;
+  float: left;
   width: 100%;
   height: 2em;
   line-height: 2;
   color: #999;
   font-weight: 700;
   background: #fff;
-  display: block;
   padding-left: 1em;
   cursor: pointer;
   -moz-backface-visibility: hidden;
@@ -7828,6 +7839,17 @@
   width: 100%;
   line-height: 2;
   text-align: center;
+}
+#borderStyleDropdown .cd-dropdown > span > span {
+  position: absolute;
+  width: calc(100% - 3em);
+  height: 100%;
+  line-height: 2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 #borderStyleDropdown .cd-dropdown.cd-active > span:after {
   content: '\25B2';
@@ -8464,13 +8486,13 @@
 }
 .configurationItemList .cd-dropdown > span {
   position: relative;
+  float: left;
   width: 100%;
   height: 2em;
   line-height: 2;
   color: #999;
   font-weight: 700;
   background: #fff;
-  display: block;
   padding-left: 1em;
   cursor: pointer;
   -moz-backface-visibility: hidden;
@@ -8496,6 +8518,17 @@
   width: 100%;
   line-height: 2;
   text-align: center;
+}
+.configurationItemList .cd-dropdown > span > span {
+  position: absolute;
+  width: calc(100% - 3em);
+  height: 100%;
+  line-height: 2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 .configurationItemList .cd-dropdown.cd-active > span:after {
   content: '\25B2';
@@ -9519,13 +9552,13 @@
 }
 #positionDropdown .cd-dropdown > span {
   position: relative;
+  float: left;
   width: 100%;
   height: 2em;
   line-height: 2;
   color: #999;
   font-weight: 700;
   background: #fff;
-  display: block;
   padding-left: 1em;
   cursor: pointer;
   -moz-backface-visibility: hidden;
@@ -9551,6 +9584,17 @@
   width: 100%;
   line-height: 2;
   text-align: center;
+}
+#positionDropdown .cd-dropdown > span > span {
+  position: absolute;
+  width: calc(100% - 3em);
+  height: 100%;
+  line-height: 2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 #positionDropdown .cd-dropdown.cd-active > span:after {
   content: '\25B2';
@@ -9800,13 +9844,13 @@
 }
 #repeatDropdown .cd-dropdown > span {
   position: relative;
+  float: left;
   width: 100%;
   height: 2em;
   line-height: 2;
   color: #999;
   font-weight: 700;
   background: #fff;
-  display: block;
   padding-left: 1em;
   cursor: pointer;
   -moz-backface-visibility: hidden;
@@ -9832,6 +9876,17 @@
   width: 100%;
   line-height: 2;
   text-align: center;
+}
+#repeatDropdown .cd-dropdown > span > span {
+  position: absolute;
+  width: calc(100% - 3em);
+  height: 100%;
+  line-height: 2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 #repeatDropdown .cd-dropdown.cd-active > span:after {
   content: '\25B2';
@@ -10510,26 +10565,26 @@
   border-width: 1px;
   border-style: solid;
 }
-.sketchWidget:not(.zoom).pickedWidget {
+.sketchWidget:not(.zoom):not(.isPlaying).pickedWidget {
   -moz-box-shadow: 0 0 20px #555;
   -webkit-box-shadow: 0 0 20px #555;
   box-shadow: 0 0 20px #555;
 }
-.sketchWidget:not(.zoom).pickedWidget:before {
+.sketchWidget:not(.zoom):not(.isPlaying).pickedWidget:before {
   position: absolute;
   top: calc(50% - 0.5em);
   width: 100%;
   text-align: center;
   line-height: 1;
 }
-.sketchWidget:not(.zoom).pickedWidget [widget-anchor]:hover {
+.sketchWidget:not(.zoom):not(.isPlaying).pickedWidget [widget-anchor]:hover {
   background-image: -webkit-linear-gradient(left, #6699CC, #99CCFF 50%, #ECF0F1);
   background-image: -o-linear-gradient(left, #6699CC, #99CCFF 50%, #ECF0F1);
   background-image: linear-gradient(to right, #6699cc, #99ccff 50%, #ecf0f1);
   background-repeat: no-repeat;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF6699CC', endColorstr='#FFECF0F1', GradientType=1);
 }
-.sketchWidget:not(.zoom).pickedWidget [widget-anchor]:hover:before {
+.sketchWidget:not(.zoom):not(.isPlaying).pickedWidget [widget-anchor]:hover:before {
   position: absolute;
   width: 100%;
   line-height: 1em;
@@ -10691,13 +10746,13 @@
 }
 #widgetStateDropdown .cd-dropdown > span {
   position: relative;
+  float: left;
   width: 100%;
   height: 2em;
   line-height: 2;
   color: #999;
   font-weight: 700;
   background: #fff;
-  display: block;
   padding-left: 1em;
   cursor: pointer;
   -moz-backface-visibility: hidden;
@@ -10723,6 +10778,17 @@
   width: 100%;
   line-height: 2;
   text-align: center;
+}
+#widgetStateDropdown .cd-dropdown > span > span {
+  position: absolute;
+  width: calc(100% - 3em);
+  height: 100%;
+  line-height: 2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 #widgetStateDropdown .cd-dropdown.cd-active > span:after {
   content: '\25B2';
@@ -11137,13 +11203,13 @@
 }
 .widgetObjStateDropdown .cd-dropdown > span {
   position: relative;
+  float: left;
   width: 100%;
   height: 2em;
   line-height: 2;
   color: #999;
   font-weight: 700;
   background: #fff;
-  display: block;
   padding-left: 1em;
   cursor: pointer;
   -moz-backface-visibility: hidden;
@@ -11169,6 +11235,17 @@
   width: 100%;
   line-height: 2;
   text-align: center;
+}
+.widgetObjStateDropdown .cd-dropdown > span > span {
+  position: absolute;
+  width: calc(100% - 3em);
+  height: 100%;
+  line-height: 2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 .widgetObjStateDropdown .cd-dropdown.cd-active > span:after {
   content: '\25B2';
@@ -11418,13 +11495,13 @@
 }
 .configurationItemList .cd-dropdown > span {
   position: relative;
+  float: left;
   width: 100%;
   height: 2em;
   line-height: 2;
   color: #999;
   font-weight: 700;
   background: #fff;
-  display: block;
   padding-left: 1em;
   cursor: pointer;
   -moz-backface-visibility: hidden;
@@ -11450,6 +11527,17 @@
   width: 100%;
   line-height: 2;
   text-align: center;
+}
+.configurationItemList .cd-dropdown > span > span {
+  position: absolute;
+  width: calc(100% - 3em);
+  height: 100%;
+  line-height: 2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 .configurationItemList .cd-dropdown.cd-active > span:after {
   content: '\25B2';
@@ -15901,8 +15989,8 @@
 }
 #frameSketchContainer > .modalWindowContainer > div {
   position: absolute;
-  width: 100%;
-  height: 100%;
+  width: 100% !important;
+  height: 100% !important;
   max-width: none;
   max-height: none;
   top: 0px;

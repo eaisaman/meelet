@@ -1,0 +1,48 @@
+<div class="widgetDemoContainer" ng-controller="TabDemoController">
+    <div class="ui-widget fs-x-large" ui-widget-tab-1-0-0 tab-titles="demoTitles" align="demoAlign"
+         transition="demoTransition">
+        <div name="Tab1">
+            <div class="demoTab" style="position:absolute;width:100%;height:100%;background: #7bb7fa;">
+                <div class="demoTabContent">
+                    <div class="input-group">
+                        <label class="col-as-4 no-padding-right control-label">Align</label>
+
+                        <div class="col-as-8 no-padding-left">
+                            <div class="fs-x-large form-control no-padding alignDropDown stackAndRotateSelect"
+                                 ui-simple-dropdown
+                                 ui-simple-dropdown-opts="{dataField:'name', labelField:'name', zIndex:100, gutter: 5, showTitle: true, displayUnsetOption: false}"
+                                 selection-list="alignList"
+                                 select-item="demoAlign"
+                                 on-option-select="setAlign(demoAlign)">
+                                {{demoAlign || 'Choose an alignment'}}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label class="col-as-4 no-padding-right control-label">Transition</label>
+
+                        <div class="col-as-8 no-padding-left">
+                            <div class="transitionSelection" ui-multilevel-menu menu-list="transitions"
+                                 ui-multilevel-menu-opts="{dataField:'name', labelField:'name', zIndex:100}"
+                                 picked-menu-item="demoTransition"
+                                 on-menu-select="setTransition(demoTransition)">
+                                {{demoTransition || 'Choose a transition'}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div name="Tab2">
+            <div class="demoTab" style="position:absolute;width:100%;height:100%;background: #0ac2d2;">
+            </div>
+        </div>
+
+        <div name="Tab3">
+            <div class="demoTab" style="position:absolute;width:100%;height:100%;background: #60d7a9;">
+            </div>
+        </div>
+    </div>
+</div>
