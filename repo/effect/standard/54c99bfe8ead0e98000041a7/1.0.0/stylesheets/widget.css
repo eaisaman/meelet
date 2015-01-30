@@ -1,0 +1,85 @@
+[ui-widget-creative-button-1-0-0][effect=sonar]:active {
+  -moz-animation-duration: 1s;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -moz-animation-fill-mode: both;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  -webkit-backface-visibility: none;
+  -moz-backface-visibility: none;
+  -o-backface-visibility: none;
+  backface-visibility: none;
+}
+
+[ui-widget-creative-button-1-0-0][effect=sonar]:active {
+  -moz-animation-name: _widget_creativeButton_sonarEffect;
+  -webkit-animation-name: _widget_creativeButton_sonarEffect;
+  animation-name: _widget_creativeButton_sonarEffect;
+  -moz-animation-duration: 0.5s;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  -moz-animation-timing-function: ease-out;
+  -webkit-animation-timing-function: ease-out;
+  animation-timing-function: ease-out;
+  -moz-animation-iteration-count: 1;
+  -webkit-animation-iteration-count: 1;
+  animation-iteration-count: 1;
+  -moz-animation-delay: 75ms;
+  -webkit-animation-delay: 75ms;
+  animation-delay: 75ms;
+}
+
+@-webkit-keyframes _widget_creativeButton_sonarEffect {
+  0% {
+    opacity: 0.3;
+  }
+  40% {
+    opacity: 0.5;
+    box-shadow: 0 0 0 2px rgba(192, 192, 192, 0.1), 0 0 10px 10px rgba(192, 192, 192, 0.3), 0 0 0 10px rgba(192, 192, 192, 0.5);
+  }
+  100% {
+    box-shadow: 0 0 0 2px rgba(192, 192, 192, 0.1), 0 0 10px 10px rgba(192, 192, 192, 0.3), 0 0 0 10px rgba(192, 192, 192, 0.5);
+    -webkit-transform: scale(1.5);
+    opacity: 0;
+  }
+}
+@-moz-keyframes _widget_creativeButton_sonarEffect {
+  0% {
+    opacity: 0.3;
+  }
+  40% {
+    opacity: 0.5;
+    box-shadow: 0 0 0 2px rgba(192, 192, 192, 0.1), 0 0 10px 10px rgba(192, 192, 192, 0.3), 0 0 0 10px rgba(192, 192, 192, 0.5);
+  }
+  100% {
+    box-shadow: 0 0 0 2px rgba(192, 192, 192, 0.1), 0 0 10px 10px rgba(192, 192, 192, 0.3), 0 0 0 10px rgba(192, 192, 192, 0.5);
+    -moz-transform: scale(1.5);
+    opacity: 0;
+  }
+}
+@keyframes _widget_creativeButton_sonarEffect {
+  0% {
+    opacity: 0.3;
+  }
+  40% {
+    opacity: 0.5;
+    box-shadow: 0 0 0 2px rgba(192, 192, 192, 0.1), 0 0 10px 10px rgba(192, 192, 192, 0.3), 0 0 0 10px rgba(192, 192, 192, 0.5);
+  }
+  100% {
+    box-shadow: 0 0 0 2px rgba(192, 192, 192, 0.1), 0 0 10px 10px rgba(192, 192, 192, 0.3), 0 0 0 10px rgba(192, 192, 192, 0.5);
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+[ui-widget-creative-button-1-0-0][effect=shake] {
+  color: #0a833d;
+}
+[ui-widget-creative-button-1-0-0][effect=moveRight] {
+  color: #0a833d;
+}
+[ui-widget-creative-button-1-0-0][effect=shrink] {
+  color: #0a833d;
+}
+[ui-widget-creative-button-1-0-0][effect=contrast] {
+  color: #0a833d;
+}

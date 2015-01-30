@@ -1,0 +1,27 @@
+@import "animation/creative-button";
+
+@mixin creative-button($widgetDirective, $version) {
+    [#{$widgetDirective}-#{str_replace($version, '.', '-')}] {
+        &[effect=sonar] {
+            &:active {
+                @extend %_widget_creativeButton_sonarEffect;
+            }
+        }
+
+        &[effect=shake] {
+            color: #0a833d;
+        }
+
+        &[effect=moveRight] {
+            color: #0a833d;
+        }
+
+        &[effect=shrink] {
+            color: #0a833d;
+        }
+
+        &[effect=contrast] {
+            color: #0a833d;
+        }
+    }
+}
