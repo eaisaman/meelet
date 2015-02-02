@@ -21,7 +21,7 @@
   position: absolute;
   left: 0;
   top: 0;
-  width: 20%;
+  width: 30%;
   height: 2em;
   line-height: 2;
   text-align: left;
@@ -43,5 +43,8 @@
   width: 8em;
   height: 2em;
   text-transform: uppercase;
-  border: 3px solid #fff;
+  color: #fff;
+}
+.widgetDemoContainer > section > [ui-widget-creative-link-1-0-0] [ng-transclude] span {
+  text-align: center;
 }

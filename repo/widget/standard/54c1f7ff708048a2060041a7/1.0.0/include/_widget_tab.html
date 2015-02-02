@@ -1,7 +1,7 @@
 <div class="_widget_tabContainer" version="1.0.0" ng-attr-tab-align="{{align}}" ng-attr-tab-transition="{{transition}}">
     <div class="tabTitles" ng-click="selectWidgetTab($event)">
         <div class="tabTitle" ng-repeat="titleObj in tabTitles" ng-attr-tab-index="{{$index}}"
-             ng-class="{'select': pickedTabTitle && pickedTabTitle === titleObj.name || $index == 0}">
+             ng-class="{'select': pickedTabTitle && pickedTabTitle === titleObj.name || (!pickedTabTitle && $index == 0)}">
             <label>{{titleObj.name}}</label>
         </div>
     </div>

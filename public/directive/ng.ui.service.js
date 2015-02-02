@@ -344,6 +344,8 @@ define(
 
                     if (actionType === "Animation") {
                         action = new AnimationTransitionAction(this.widgetObj);
+                    } else if (actionType === "Effect") {
+                        action = new EffectTransitionAction(this.widgetObj);
                     } else if (actionType === "State") {
                         action = new StateTransitionAction(this.widgetObj, this.widgetObj.initialStateOption.name);
                     } else if (actionType === "Configuration") {
@@ -351,6 +353,64 @@ define(
                     }
 
                     action && this.childActions.push(action);
+                }
+            }),
+            EffectTransitionAction = Class(BaseTransitionAction, {
+                CLASS_NAME: "EffectTransitionAction",
+                MEMBERS: {
+                    effect: {}
+                },
+                initialize: function (widgetObj, effect, id) {
+                    this.initialize.prototype.__proto__.initialize.apply(this, [widgetObj, "Effect", id]);
+                    var MEMBERS = arguments.callee.prototype.MEMBERS;
+
+                    for (var member in MEMBERS) {
+                        this[member] = angular.copy(MEMBERS[member]);
+                    }
+                    this.effect = effect || this.effect;
+                },
+                toJSON: function () {
+                    var jsonObj = AnimationTransitionAction.prototype.__proto__.toJSON.apply(this);
+                    _.extend(jsonObj, _.pick(this, ["effect", "CLASS_NAME"]));
+
+                    return jsonObj;
+                },
+                fromObject: function (obj) {
+                    var ret = new EffectTransitionAction(obj.widgetObj, obj.effect, obj.id);
+
+                    EffectTransitionAction.prototype.__proto__.fromObject.apply(ret, [obj]);
+
+                    return ret;
+                },
+                doAction: function () {
+                    var self = this,
+                        defer = $inject.$q.defer();
+
+                    if (self.widgetObj.$element && self.effect.name && self.widgetObj.$element.parent().length) {
+                        self.widgetObj.$element.addClass(self.effect.name);
+
+                        if (self.effect.duration) {
+                            $inject.$timeout(function () {
+                                self.restoreWidget();
+                                defer.resolve(self);
+                            }, self.effect.duration);
+
+                            return defer.promise;
+                        }
+                    }
+
+                    $inject.$timeout(function () {
+                        defer.resolve(self);
+                    });
+
+                    return defer.promise;
+                },
+                restoreWidget: function () {
+                    var self = this;
+
+                    if (self.widgetObj && self.effect.name) {
+                        self.widgetObj.$element.removeClass(self.effect.name);
+                    }
                 }
             }),
             AnimationTransitionAction = Class(BaseTransitionAction, {
@@ -2581,7 +2641,7 @@ define(
 
                     IncludeSketchWidgetClass.prototype.__proto__.appendTo.apply(self, [container]);
 
-                    if (self.$element) {
+                    if (self.$element && self.template) {
                         return $inject.uiUtilService.whilst(function () {
                                 return !angular.element(self.$element).scope();
                             }, function (callback) {
@@ -2696,6 +2756,8 @@ define(
                 appendTo: function (container) {
                     var self = this;
 
+
+                    //FIXME loadRepoArtifact should be invoked before appendTo?
                     return RepoSketchWidgetClass.prototype.__proto__.appendTo.apply(self, [container]).then(
                         function () {
                             return $inject.appService.loadRepoArtifact({
@@ -2751,6 +2813,17 @@ define(
                             return errorDefer.promise;
                         }
                     );
+                },
+                getConfiguration: function (key) {
+                    var self = this;
+
+                    if (self.$element && self.$element.parent().length) {
+                        var scope = angular.element(self.$element.find(".ui-widget:nth-of-type(1) :first-child")).scope();
+
+                        return scope[key];
+                    }
+
+                    return null;
                 },
                 setConfiguration: function (key, value) {
                     var self = this;
@@ -2885,48 +2958,48 @@ define(
 
                 if ($parentElement.length) {
                     var parentWidgetObj = $parentElement.data("widgetObject");
-                    if (parentWidgetObj) {
-                        var id = $el.attr("id");
+                    parentWidgetObj = parentWidgetObj || self.createWidgetObj($parentElement);
 
-                        //Fetch widget object if found
-                        if (id) {
-                            parentWidgetObj.childWidgets.every(function (child) {
-                                if (child.id === id) {
-                                    widgetObj = child;
-                                    return false;
-                                }
+                    var id = $el.attr("id");
 
-                                return true;
-                            });
-                        } else if ($el.hasClass(self.angularConstants.widgetClasses.widgetContainerClass) && parentWidgetObj.isKindOf("RepoSketchWidget")) {
-                            if (parentWidgetObj.childWidgets.length) {
-                                widgetObj = parentWidgetObj.childWidgets[0];
-                                widgetObj.addOmniClass(self.angularConstants.widgetClasses.widgetContainerClass);
+                    //Fetch widget object if found
+                    if (id) {
+                        parentWidgetObj.childWidgets.every(function (child) {
+                            if (child.id === id) {
+                                widgetObj = child;
+                                return false;
                             }
+
+                            return true;
+                        });
+                    } else if ($el.hasClass(self.angularConstants.widgetClasses.widgetContainerClass) && parentWidgetObj.isKindOf("RepoSketchWidget")) {
+                        if (parentWidgetObj.childWidgets.length) {
+                            widgetObj = parentWidgetObj.childWidgets[0];
+                            widgetObj.addOmniClass(self.angularConstants.widgetClasses.widgetContainerClass);
                         }
-
-                        if (!widgetObj) {
-                            widgetObj = new ElementSketchWidgetClass();
-
-                            widgetObj.attr["ui-draggable"] = $el.attr("ui-draggable");
-                            widgetObj.attr["ui-draggable-opts"] = $el.attr("ui-draggable-opts");
-                            widgetObj.attr["ui-sketch-widget"] = "";
-                            widgetObj.attr["is-playing"] = "sketchWidgetSetting.isPlaying";
-                            widgetObj.attr["sketch-object"] = "sketchObject";
-                            widgetObj.attr["ng-class"] = "{'isPlaying': sketchWidgetSetting.isPlaying}";
-                            widgetObj.addOmniClass(self.angularConstants.widgetClasses.widgetClass);
-                            if ($el.hasClass(self.angularConstants.widgetClasses.widgetContainerClass)) {
-                                widgetObj.addOmniClass(self.angularConstants.widgetClasses.widgetContainerClass);
-                            }
-                        }
-
-                        widgetObj.$element = $el;
-                        widgetObj.anchor = anchor;
-                        $el.attr("id", widgetObj.id);
-                        $el.data("widgetObject", widgetObj);
-
-                        BaseSketchWidgetClass.prototype.appendTo.apply(widgetObj, [parentWidgetObj]);
                     }
+
+                    if (!widgetObj) {
+                        widgetObj = new ElementSketchWidgetClass();
+
+                        widgetObj.attr["ui-draggable"] = $el.attr("ui-draggable");
+                        widgetObj.attr["ui-draggable-opts"] = $el.attr("ui-draggable-opts");
+                        widgetObj.attr["ui-sketch-widget"] = "";
+                        widgetObj.attr["is-playing"] = "sketchWidgetSetting.isPlaying";
+                        widgetObj.attr["sketch-object"] = "sketchObject";
+                        widgetObj.attr["ng-class"] = "{'isPlaying': sketchWidgetSetting.isPlaying}";
+                        widgetObj.addOmniClass(self.angularConstants.widgetClasses.widgetClass);
+                        if ($el.hasClass(self.angularConstants.widgetClasses.widgetContainerClass)) {
+                            widgetObj.addOmniClass(self.angularConstants.widgetClasses.widgetContainerClass);
+                        }
+                    }
+
+                    widgetObj.$element = $el;
+                    widgetObj.anchor = anchor;
+                    $el.attr("id", widgetObj.id);
+                    $el.data("widgetObject", widgetObj);
+
+                    BaseSketchWidgetClass.prototype.appendTo.apply(widgetObj, [parentWidgetObj]);
                 }
             }
 

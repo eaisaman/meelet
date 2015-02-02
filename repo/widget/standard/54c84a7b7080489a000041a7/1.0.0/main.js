@@ -3,12 +3,12 @@ define(
     function () {
 
         return {
-            js: ["directive/ng.ui.widget.tab"],
+            js: ["directive/ng.ui.widget.creative-link"],
             stylesheets: ["stylesheets/widget.css"],
             demo: {
                 js: ["demo/demo.js"],
                 stylesheets: ["stylesheets/demo.css"],
-                url: "demo/tabDemo.html"
+                url: "demo/creativeLinkDemo.html"
             },
             template: "app/widget.html",
             configuration: {

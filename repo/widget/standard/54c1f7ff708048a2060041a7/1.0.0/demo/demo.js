@@ -42,6 +42,22 @@ define(
                             list: [{name: "flipInLeftOutRight"}, {name: "flipInRightOutLeft"}, {name: "flipInBottomOutTop"}, {name: "flipInTopOutBottom"}]
                         },
                         {
+                            name: "PUSH",
+                            list: [{name: "pushLeft"}, {name: "pushRight"}, {name: "pushTop"}, {name: "pushBottom"}]
+                        },
+                        {
+                            name: "PULL",
+                            list: [{name: "pullLeft"}, {name: "pullRight"}, {name: "pullTop"}, {name: "pullBottom"}]
+                        },
+                        {
+                            name: "FOLD",
+                            list: [{name: "foldLeft"}, {name: "foldRight"}, {name: "foldTop"}, {name: "foldBottom"}]
+                        },
+                        {
+                            name: "UNFOLD",
+                            list: [{name: "unfoldLeft"}, {name: "unfoldRight"}, {name: "unfoldTop"}, {name: "unfoldBottom"}]
+                        },
+                        {
                             name: "ROOM",
                             list: [{name: "roomToLeft"}, {name: "roomToRight"}, {name: "roomToTop"}, {name: "roomToBottom"}]
                         },

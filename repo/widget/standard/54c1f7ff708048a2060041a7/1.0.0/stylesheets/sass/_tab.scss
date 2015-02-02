@@ -15,9 +15,7 @@ $numOfMaxTabs: 10;
                     @extend %_widget_tab_moveFromRight;
                 }
 
-                &.hiding {
-                    @extend %_widget_tab_moveToLeft;
-                }
+                @extend %_widget_tab_moveToLeft;
             }
         }
 
@@ -27,9 +25,7 @@ $numOfMaxTabs: 10;
                     @extend %_widget_tab_moveFromLeft;
                 }
 
-                &.hiding {
-                    @extend %_widget_tab_moveToRight;
-                }
+                @extend %_widget_tab_moveToRight;
             }
         }
 
@@ -39,9 +35,7 @@ $numOfMaxTabs: 10;
                     @extend %_widget_tab_moveFromBottom;
                 }
 
-                &.hiding {
-                    @extend %_widget_tab_moveToTop;
-                }
+                @extend %_widget_tab_moveToTop;
             }
         }
 
@@ -51,57 +45,67 @@ $numOfMaxTabs: 10;
                     @extend %_widget_tab_moveFromTop;
                 }
 
-                &.hiding {
-                    @extend %_widget_tab_moveToBottom;
-                }
+                @extend %_widget_tab_moveToBottom;
             }
         }
 
         &[tab-transition=fadeToLeft] {
             > .tabGroups > .tabGroup {
                 &.show {
+                    opacity: 1;
                     @extend %_widget_tab_moveFromRight;
                 }
 
                 &.hiding {
                     @extend %_widget_tab_fade;
                 }
+
+                opacity: 0;
             }
         }
 
         &[tab-transition=fadeToRight] {
             > .tabGroups > .tabGroup {
                 &.show {
+                    opacity: 1;
                     @extend %_widget_tab_moveFromLeft;
                 }
 
                 &.hiding {
                     @extend %_widget_tab_fade;
                 }
+
+                opacity: 0;
             }
         }
 
         &[tab-transition=fadeToTop] {
             > .tabGroups > .tabGroup {
                 &.show {
+                    opacity: 1;
                     @extend %_widget_tab_moveFromBottom;
                 }
 
                 &.hiding {
                     @extend %_widget_tab_fade;
                 }
+
+                opacity: 0;
             }
         }
 
         &[tab-transition=fadeToBottom] {
             > .tabGroups > .tabGroup {
                 &.show {
+                    opacity: 1;
                     @extend %_widget_tab_moveFromTop;
                 }
 
                 &.hiding {
                     @extend %_widget_tab_fade;
                 }
+
+                opacity: 0;
             }
         }
 
@@ -111,9 +115,7 @@ $numOfMaxTabs: 10;
                     @extend %_widget_tab_moveFromRightFade;
                 }
 
-                &.hiding {
-                    @extend %_widget_tab_moveToLeftFade;
-                }
+                @extend %_widget_tab_moveToLeftFade;
             }
         }
 
@@ -123,9 +125,7 @@ $numOfMaxTabs: 10;
                     @extend %_widget_tab_moveFromLeftFade;
                 }
 
-                &.hiding {
-                    @extend %_widget_tab_moveToRightFade;
-                }
+                @extend %_widget_tab_moveToRightFade;
             }
         }
 
@@ -135,9 +135,7 @@ $numOfMaxTabs: 10;
                     @extend %_widget_tab_moveFromBottomFade;
                 }
 
-                &.hiding {
-                    @extend %_widget_tab_moveToTopFade;
-                }
+                @extend %_widget_tab_moveToTopFade;
             }
         }
 
@@ -147,9 +145,7 @@ $numOfMaxTabs: 10;
                     @extend %_widget_tab_moveFromTopFade;
                 }
 
-                &.hiding {
-                    @extend %_widget_tab_moveToBottomFade;
-                }
+                @extend %_widget_tab_moveToBottomFade;
             }
         }
 
@@ -159,9 +155,7 @@ $numOfMaxTabs: 10;
                     @extend %_widget_tab_moveFromRight;
                 }
 
-                &.hiding {
-                    @extend %_widget_tab_scaleDown;
-                }
+                @extend %_widget_tab_scaleDown;
             }
         }
 
@@ -171,9 +165,7 @@ $numOfMaxTabs: 10;
                     @extend %_widget_tab_moveFromLeft;
                 }
 
-                &.hiding {
-                    @extend %_widget_tab_scaleDown;
-                }
+                @extend %_widget_tab_scaleDown;
             }
         }
 
@@ -183,9 +175,7 @@ $numOfMaxTabs: 10;
                     @extend %_widget_tab_moveFromBottom;
                 }
 
-                &.hiding {
-                    @extend %_widget_tab_scaleDown;
-                }
+                @extend %_widget_tab_scaleDown;
             }
         }
 
@@ -195,9 +185,7 @@ $numOfMaxTabs: 10;
                     @extend %_widget_tab_moveFromTop;
                 }
 
-                &.hiding {
-                    @extend %_widget_tab_scaleDown;
-                }
+                @extend %_widget_tab_scaleDown;
             }
         }
 
@@ -207,9 +195,7 @@ $numOfMaxTabs: 10;
                     @extend %_widget_tab_scaleUp;
                 }
 
-                &.hiding {
-                    @extend %_widget_tab_moveToRight;
-                }
+                @extend %_widget_tab_moveToRight;
             }
         }
 
@@ -219,9 +205,7 @@ $numOfMaxTabs: 10;
                     @extend %_widget_tab_scaleUp;
                 }
 
-                &.hiding {
-                    @extend %_widget_tab_moveToLeft;
-                }
+                @extend %_widget_tab_moveToLeft;
             }
         }
 
@@ -231,9 +215,7 @@ $numOfMaxTabs: 10;
                     @extend %_widget_tab_scaleUp;
                 }
 
-                &.hiding {
-                    @extend %_widget_tab_moveToBottom;
-                }
+                @extend %_widget_tab_moveToBottom;
             }
         }
 
@@ -243,9 +225,7 @@ $numOfMaxTabs: 10;
                     @extend %_widget_tab_scaleUp;
                 }
 
-                &.hiding {
-                    @extend %_widget_tab_moveToTop;
-                }
+                @extend %_widget_tab_moveToTop;
             }
         }
 
@@ -255,9 +235,7 @@ $numOfMaxTabs: 10;
                     @extend %_widget_tab_scaleUp;
                 }
 
-                &.hiding {
-                    @extend %_widget_tab_scaleDownUp;
-                }
+                @extend %_widget_tab_scaleDownUp;
             }
         }
 
@@ -267,9 +245,7 @@ $numOfMaxTabs: 10;
                     @extend %_widget_tab_scaleUpCenter;
                 }
 
-                &.hiding {
-                    @extend %_widget_tab_scaleDownCenter;
-                }
+                @extend %_widget_tab_scaleDownCenter;
             }
         }
 
@@ -411,6 +387,146 @@ $numOfMaxTabs: 10;
 
                 @extend %_widget_tab_rotatePushBottom;
                 @include transform-origin(50% 100%);
+            }
+        }
+
+        &[tab-transition=pullRight] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_rotatePullRight;
+                    @include animation-delay(0.18s);
+                    @include transform-origin(100% 50%);
+                }
+
+                @extend %_widget_tab_rotatePushLeft;
+                @include transform-origin(0% 50%);
+            }
+        }
+
+        &[tab-transition=pullLeft] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_rotatePullLeft;
+                    @include animation-delay(0.18s);
+                    @include transform-origin(0% 50%);
+                }
+
+                @extend %_widget_tab_rotatePushRight;
+                @include transform-origin(100% 50%);
+            }
+        }
+
+        &[tab-transition=pullBottom] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_rotatePullBottom;
+                    @include animation-delay(0.18s);
+                    @include transform-origin(50% 100%);
+                }
+
+                @extend %_widget_tab_rotatePushTop;
+                @include transform-origin(50% 0%);
+            }
+        }
+
+        &[tab-transition=pullTop] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_rotatePullTop;
+                    @include animation-delay(0.18s);
+                    @include transform-origin(50% 0%);
+                }
+
+                @extend %_widget_tab_rotatePushBottom;
+                @include transform-origin(50% 100%);
+            }
+        }
+
+        &[tab-transition=foldLeft] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_moveFromRightFade;
+                }
+
+                @extend %_widget_tab_rotateFoldLeft;
+                @include transform-origin(100% 50%);
+            }
+        }
+
+        &[tab-transition=fadeRight] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_moveFromLeftFade;
+                }
+
+                @extend %_widget_tab_rotateFoldRight;
+                @include transform-origin(0% 50%);
+            }
+        }
+
+        &[tab-transition=fadeTop] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_moveFromBottomFade;
+                }
+
+                @extend %_widget_tab_rotateFoldTop;
+                @include transform-origin(50% 100%);
+            }
+        }
+
+        &[tab-transition=fadeBottom] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_moveFromTopFade;
+                }
+
+                @extend %_widget_tab_rotateFoldBottom;
+                @include transform-origin(50% 0%);
+            }
+        }
+
+        &[tab-transition=unfoldRight] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_rotateUnfoldRight;
+                    @include transform-origin(0% 50%);
+                }
+
+                @extend %_widget_tab_moveToLeftFade;
+            }
+        }
+
+        &[tab-transition=unfoldLeft] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_rotateUnfoldLeft;
+                    @include transform-origin(100% 50%);
+                }
+
+                @extend %_widget_tab_moveToRightFade;
+            }
+        }
+
+        &[tab-transition=unfoldBottom] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_rotateUnfoldBottom;
+                    @include transform-origin(50% 0%);
+                }
+
+                @extend %_widget_tab_moveToTopFade;
+            }
+        }
+
+        &[tab-transition=unfoldTop] {
+            > .tabGroups > .tabGroup {
+                &.show {
+                    @extend %_widget_tab_rotateUnfoldTop;
+                    @include transform-origin(50% 100%);
+                }
+
+                @extend %_widget_tab_moveToBottomFade;
             }
         }
 

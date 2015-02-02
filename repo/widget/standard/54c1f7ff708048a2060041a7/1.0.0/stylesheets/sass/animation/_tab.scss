@@ -44,10 +44,10 @@
 @include baseAnimation(_widget_tab_rotatePushRight, 0.8s, ease, null, null, null, both);
 @include baseAnimation(_widget_tab_rotatePushTop, 0.8s, ease, null, null, null, both);
 @include baseAnimation(_widget_tab_rotatePushBottom, 0.8s, ease, null, null, null, both);
-@include baseAnimation(_widget_tab_rotatePullLeft, 0.8s, ease, null, null, null, both);
-@include baseAnimation(_widget_tab_rotatePullRight, 0.8s, ease, null, null, null, both);
-@include baseAnimation(_widget_tab_rotatePullTop, 0.8s, ease, null, null, null, both);
-@include baseAnimation(_widget_tab_rotatePullBottom, 0.8s, ease, null, null, null, both);
+@include baseAnimation(_widget_tab_rotatePullLeft, 0.5s, ease, null, null, null, both);
+@include baseAnimation(_widget_tab_rotatePullRight, 0.5s, ease, null, null, null, both);
+@include baseAnimation(_widget_tab_rotatePullTop, 0.5s, ease, null, null, null, both);
+@include baseAnimation(_widget_tab_rotatePullBottom, 0.5s, ease, null, null, null, both);
 
 @include baseAnimation(_widget_tab_rotateFoldLeft, 0.7s, ease, null, null, null, both);
 @include baseAnimation(_widget_tab_rotateFoldRight, 0.7s, ease, null, null, null, both);

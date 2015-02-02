@@ -3,6 +3,18 @@
     "group": "Gesture",
     "list": [
       {
+        "id": "9ED12F03-8A38-4A17-950C-239040F61A78",
+        "name": "Touch Start",
+        "eventName": "touchstart",
+        "options": {}
+      },
+      {
+        "id": "A4AFEF2A-F742-4573-8C56-C540E43A4E03",
+        "name": "Touch End",
+        "eventName": "touchend",
+        "options": {}
+      },
+      {
         "id": "D54B8BC4-4655-4D34-82F1-0B94BBDC5C90",
         "name": "Tap",
         "eventName": "tap",

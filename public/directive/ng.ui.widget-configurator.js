@@ -34,7 +34,11 @@ define(
                                         scope.widgetSpec = _.pick(widgetObj.widgetSpec, "configuration", "name");
                                         var configuration = [];
                                         _.each(_.omit(scope.widgetSpec.configuration, "state"), function (value, key) {
-                                            configuration.push(_.extend(value, {key: key}));
+                                            var obj = _.extend(value, {key: key});
+                                            if (obj.type === "boundReadList" || obj.type === "boundWriteList") {
+                                                obj.options = widgetObj.getConfiguration(obj.listName);
+                                            }
+                                            configuration.push(obj);
                                         });
                                         scope.widgetSpec.configuration = configuration;
                                     }
@@ -52,7 +56,49 @@ define(
                                         }
                                     } else if (item.type === "boolean") {
                                         widgetObj.setConfiguration(item.key, item.booleanValue);
+                                    } else if (item.type === "boundReadList") {
+                                        widgetObj.setConfiguration(item.key, item.pickedOption);
                                     }
+                                }
+
+                                scope.createConfigurationItemOption = function (item, event) {
+                                    event && event.stopPropagation();
+
+                                    var $el = $(event.target).siblings("input"),
+                                        optionName = $el.val();
+
+                                    if (optionName) {
+                                        if (item.options.every(function (opt) {
+                                                return opt.name !== optionName;
+                                            })) {
+                                            item.options.push({name: optionName});
+                                        }
+                                    }
+                                }
+
+                                scope.deleteConfigurationItemOption = function (item, option, event) {
+                                    event && event.stopPropagation();
+
+                                    var index;
+                                    if (!item.options.every(function (opt, i) {
+                                            if (opt.name === option.name) {
+                                                index = i;
+                                                return false;
+                                            }
+
+                                            return true;
+                                        })) {
+                                        item.options.splice(index, 1);
+                                        if (!item.options.length) {
+                                            item.pickedOption = "";
+                                        }
+                                    }
+                                }
+
+                                scope.toggleConfigurationPanel = function (el, event) {
+                                    scope.toggleDisplay($(el).find("> .configurationPanel"), event).then(function ($panel) {
+                                        scope.toggleSelect($(el).find("> .configurationBar"), null, $panel.hasClass("show"));
+                                    });
                                 }
 
                                 function createConfigurationItemAssign(name) {

@@ -47,6 +47,7 @@ require(["jquery-lib", "jquery-plugins-lib", "hammer-lib", "jquery-ui-lib", "jqu
         treeNodeIdPrefix: "tree-node-",
         repoTypes: [
             {name: "widget", value: "widget"},
+            {name: "effect", value: "effect"},
             {name: "icon", value: "icon"}
         ],
         widgetClasses: {

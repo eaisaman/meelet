@@ -294,7 +294,7 @@ define(
                                                 }
 
                                                 return defer.promise;
-                                            }
+                                            }, angularConstants.checkInterval
                                         );
                                     }
                                 });

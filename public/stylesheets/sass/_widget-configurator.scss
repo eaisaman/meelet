@@ -68,7 +68,7 @@ $maxNumOfItems: 10;
 
                     $i: $maxNumOfItems;
                     @while $i > 0 {
-                        &.list:nth-of-type(#{$i}) {
+                        &:nth-of-type(#{$i}) {
                             z-index: $maxNumOfItems - $i + 3;
                         }
                         $i: $i - 1;
@@ -93,6 +93,207 @@ $maxNumOfItems: 10;
                             top: 0;
                             width: calc(100% - 2em);
                             height: 2em;
+                        }
+                    }
+
+                    .configurationItemWritableList {
+
+                        .configurationBar {
+                            z-index: 1;
+                            width: 100%;
+                            height: 2em;
+                            line-height: 2;
+                            background: #fff;
+                            text-align: center;
+
+                            @include box-shadow(0 1px 4px #A4A4A4, 0 0 40px #E0E0E0 inset);
+                            @include gradient-horizontal(#3399cc, #ecf0f1);
+
+                            &.select {
+                                @include box-shadow(0 8px 6px -6px black);
+                            }
+
+                            &:before {
+                                position: relative;
+                                float: left;
+                                top: calc(50% - 0.5em);
+                                line-height: 1;
+                                text-align: center;
+                                width: 1em;
+                                font-weight: 900;
+                            }
+
+                            span {
+                                position: relative;
+                                float: left;
+                                display: -webkit-box;
+                                -webkit-box-orient: vertical;
+                                -webkit-line-clamp: 1;
+                                text-overflow: ellipsis;
+                                overflow: hidden;
+                            }
+                        }
+
+                        .configurationPanel {
+                            z-index: 1;
+                            position: absolute;
+                            top: 100%;
+                            width: 100%;
+                            margin-top: 5px;
+                            pointer-events: none;
+                            opacity: 0;
+                            @include flipDownOrigin();
+
+                            .emptyConfigurationItemOption {
+                                position: relative;
+                                float: left;
+                                height: 3.4em;
+
+                                > span {
+                                    display: block;
+                                    position: relative;
+                                    float: left;
+                                    width: 100%;
+                                    height: calc(100% - 1.4em);
+                                    outline: 1px dashed;
+                                    margin: 0.7em 0;
+                                    line-height: 2;
+                                    text-align: center;
+                                    background-color: #ccc;
+
+                                    @include transition(0.3s);
+                                    @include gradient-striped();
+
+                                    &:hover {
+                                        background-color: darken(#ccc, $activeDarkenPercent);;
+                                    }
+
+                                    &:active {
+                                        top: 2px;
+                                    }
+                                }
+
+                                > .configurationItemOptionInput {
+                                    display: none;
+                                }
+
+                                &.select {
+                                    > span {
+                                        display: none;
+                                    }
+
+                                    > .configurationItemOptionInput {
+                                        display: table;
+
+                                        position: relative;
+                                        float: left;
+                                        width: 100%;
+                                        height: calc(100% - 1.4em);
+                                        margin: 0.7em 0;
+                                        line-height: 2;
+
+                                        > input {
+                                            line-height: 2 !important;
+                                            height: calc(2em + 3px) !important;
+                                        }
+
+                                        > span {
+                                            padding-top: 0;
+                                            padding-bottom: 0;
+
+                                            &:before {
+                                                position: relative;
+                                                float: left;
+                                                width: 100%;
+                                                height: 100%;
+                                                text-align: center;
+                                                line-height: 2;
+                                            }
+                                            &:active {
+                                                background: darken($input-group-addon-bg, $activeDarkenPercent);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            .configurationItemOption {
+                                display: block;
+                                position: relative;
+                                float: left;
+                                height: auto;
+                                width: 100%;
+                                overflow: hidden;
+
+                                &:after {
+                                    position: absolute;
+                                    right: 0;
+                                    bottom: 0;
+                                    content: '';
+                                    width: 100%;
+                                    height: 2px;
+
+                                    @include background(linear-gradient(left, $underlineLinearGradient));
+                                }
+
+                                span {
+                                    position: relative;
+                                    float: left;
+                                    width: 100%;
+                                    height: 100%;
+                                    line-height: 2;
+
+                                    @include gradient-horizontal(#3399cc, #ecf0f1);
+
+                                    &:before {
+                                        position: relative;
+                                        float: left;
+                                        line-height: 2;
+                                        width: 2em;
+                                        text-align: center;
+                                    }
+                                }
+
+                                .deleteButton {
+                                    position: absolute;
+                                    right: 2px;
+                                    top: 2px;
+                                    width: 1.5em;
+                                    height: 1.5em;
+                                    border-radius: 100%;
+                                    background: rgba(#ccc, 0.7);
+
+                                    &:before {
+                                        position: absolute;
+                                        width: 1em;
+                                        height: 1em;
+                                        line-height: 1;
+                                        margin: 0.25em;
+                                        text-align: center;
+                                        font-weight: 600;
+                                        color: #fff;
+                                        text-shadow: 0px 2px 3px #aaa, 0px 2px 1px #fff;
+                                    }
+
+                                    &:active {
+                                        background: rgba(#ccc, 0.3);
+                                        &:before {
+                                            color: #888;
+                                        }
+                                    }
+                                }
+                            }
+
+                            &.show {
+                                padding-bottom: 10px;
+                                background: #fff;
+                                pointer-events: auto;
+                                opacity: 1;
+
+                                @include box-shadow(0 3px 3px 0px black);
+                                @extend %flipDown;
+                                @include animation-duration(0.3s);
+                            }
                         }
                     }
                 }

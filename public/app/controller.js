@@ -58,7 +58,7 @@ define(
             };
         }
 
-        function FrameSketchController($scope, $rootScope, $timeout, $q, angularEventTypes, angularConstants, appService, uiService) {
+        function FrameSketchController($scope, $rootScope, $timeout, $q, angularEventTypes, angularConstants, appService, uiService, uiUtilService) {
             $scope.zoomWidget = function (event) {
                 event && event.stopPropagation && event.stopPropagation();
 
@@ -374,7 +374,11 @@ define(
             initMaster();
 
             function initSketch() {
-                return $timeout(function () {
+                return uiUtilService.whilst(function () {
+                    return !$(".deviceHolder").length;
+                }, function (callback) {
+                    callback();
+                }, function () {
                     var defer = $q.defer();
 
                     uiService.createPage(".deviceHolder").then(function (pageObj) {
@@ -386,7 +390,7 @@ define(
                     });
 
                     return defer.promise;
-                });
+                }, angularConstants.checkInterval, "FrameSketchController.initSketch");
             }
 
             $scope.$on("$routeChangeSuccess", function (scope, next, current) {
@@ -713,7 +717,7 @@ define(
         return function (appModule) {
             appModule.
                 controller('RootController', ["$scope", "$rootScope", "$q", "appService", "urlService", RootController]).
-                controller('FrameSketchController', ["$scope", "$rootScope", "$timeout", "$q", "angularEventTypes", "angularConstants", "appService", "uiService", FrameSketchController]).
+                controller('FrameSketchController', ["$scope", "$rootScope", "$timeout", "$q", "angularEventTypes", "angularConstants", "appService", "uiService", "uiUtilService", FrameSketchController]).
                 controller('ProjectController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "urlService", ProjectController]).
                 controller('RepoController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "urlService", RepoController]).
                 controller('RepoLibController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "urlService", RepoLibController]);

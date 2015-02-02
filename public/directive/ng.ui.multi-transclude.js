@@ -3,7 +3,7 @@ define(
     function () {
         return function (appModule) {
 
-            appModule.controller('uiMultiTranscludeController', ['$scope', '$transclude', '$q', '$timeout', 'uiUtilService', function ($scope, $transclude, $q, $timeout, uiUtilService) {
+            appModule.controller('uiMultiTranscludeController', ['$scope', '$transclude', '$q', '$timeout', 'angularConstants', 'uiUtilService', function ($scope, $transclude, $q, $timeout, angularConstants, uiUtilService) {
                 this.transclude = function (name, element) {
                     $transclude && $transclude(function (clone) {
                         for (var i = 0; i < clone.length; ++i) {
@@ -30,7 +30,7 @@ define(
                                         }
 
                                         return defer.promise;
-                                    }
+                                    }, angularConstants.checkInterval
                                 );
                                 return;
                             }

@@ -26,7 +26,7 @@
             <span ng-click="toggleActionWidgetTree(item, $event)">{{item.widgetObj.name}}</span>
 
             <div id="animationMultilevelMenu" ui-multilevel-menu menu-list="animations"
-                 ui-multilevel-menu-opts="{dataField:'name', labelField:'name', zIndex:100}"
+                 ui-multilevel-menu-opts="{dataField:'name', labelField:'name', zIndex:101}"
                  picked-menu-item="pickedAnimation"
                  on-menu-select="item.animation = {name: pickedAnimation, options: {}}">
                 {{item.animation.name || 'Choose an animation'}}
@@ -58,6 +58,24 @@
                         </select>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="accordianGroup" ng-if="item.actionType == 'Effect'"
+         ng-click="toggleSelect($event.currentTarget, $event)">
+        <div class="accordianTitle fs-x-medium-before col-as-12 icon-state-transition-before icon-state-transition-animation-before">
+            <div class="deleteButton fs-x-tiny icon-state-transition-before icon-state-transition-cross-before"
+                 ng-click="deleteAction(parentAction, item, $event)"></div>
+            <span class="col-as-offset-1 col-as-10 no-padding">Effect</span>
+        </div>
+        <div class="accordianSubTitle fs-x-smaller col-as-12">
+            <span ng-click="toggleActionWidgetTree(item, $event)">{{item.widgetObj.name}}</span>
+
+            <div id="effectMultilevelMenu" ui-multilevel-menu menu-list="effects"
+                 ui-multilevel-menu-opts="{dataField:'name', labelField:'name', zIndex:100}"
+                 picked-menu-item="pickedEffect"
+                 on-menu-select="item.effect = {name: pickedEffect, options: {}}">
+                {{item.effect.name || 'Choose an effect'}}
             </div>
         </div>
     </div>
@@ -202,6 +220,7 @@
                                     <div class="actionInput input-group" ng-click="$event.stopPropagation()">
                                         <select id="actionTypeSelect" class="form-control fs-x-smaller">
                                             <option value="Animation">Animation</option>
+                                            <option value="Effect">Effect</option>
                                             <option value="State">Change State</option>
                                             <option value="Configuration">Change Configuration</option>
                                         </select>

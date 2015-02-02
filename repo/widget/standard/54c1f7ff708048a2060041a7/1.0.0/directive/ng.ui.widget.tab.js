@@ -6,7 +6,8 @@ define(
                 name = "uiWidgetTab",
                 version = "1.0.0",
                 directive = name + version.replace(/\./g, ""),
-                directiveService = name + version.replace(/\./g, "") + "Directive";
+                directiveService = name + version.replace(/\./g, "") + "Directive",
+                widgetAnchorId = "ACD77ACC-BAB4-4198-901E-F219FA2A2641";
 
             if (!$injector.has(directiveService)) {
                 $controllerProvider.
@@ -58,7 +59,7 @@ define(
                             /**
                              * Valid align values include 'alignTop', 'alignBottom', 'alignLeft', 'alignRight'
                              */
-                            align: "=",
+                            align: "=?",
                             /**
                              * Valid transition values include 'moveToLeft', 'moveToRight', 'moveToTop', 'moveToBottom',
                              * 'fadeToLeft', 'fadeToRight', 'fadeToTop', 'fadeToBottom',
@@ -67,13 +68,17 @@ define(
                              * 'scaleUpAtLeft', 'scaleUpAtRight', 'scaleUpAtTop', 'scaleUpAtBottom', 'scaleUp', 'scaleUpCenter',
                              * 'moveToLeftAfterRotation', 'moveToRightAfterRotation', 'moveToTopAfterRotation', 'moveToBottomAfterRotation',
                              * 'flipInLeftOutRight', 'flipInRightOutLeft', 'flipInBottomOutTop', 'flipInTopOutBottom',
+                             * 'pushLeft', 'pushRight', 'pushTop', 'pushBottom',
+                             * 'pullLeft', 'pullRight', 'pullTop', 'pullBottom',
+                             * 'foldLeft', 'foldRight', 'foldTop', 'foldBottom',
+                             * 'UnfoldLeft', 'UnfoldRight', 'UnfoldTop', 'UnfoldBottom',
                              * 'roomToLeft', 'roomToRight', 'roomToTop', 'roomToBottom',
                              * 'cubeToLeft', 'cubeToRight', 'cubeToTop', 'cubeToBottom',
                              * 'carouselToLeft', 'carouselToRight', 'carouselToTop', 'carouselToBottom',
                              * 'sides', fall', 'newspaper', "slide"
                              */
-                            transition: "=",
-                            tabTitles: "=",
+                            transition: "=?",
+                            tabTitles: "=?",
                             pickedTabTitle: "=?"
                         },
                         replace: true,
@@ -108,7 +113,7 @@ define(
                                                     addClass("tabGroup fs-x-large-before").
                                                     attr("tab-index", i).
                                                     attr("desc", "Tab Group " + titleObj.name).
-                                                    attr("widget-anchor", "ACD77ACC-BAB4-4198-901E-F219FA2A2641-" + i).
+                                                    attr("widget-anchor", widgetAnchorId + "-" + i).
                                                     attr("ng-class", "{'show': pickedTabTitle === '{0}'}".format(titleObj.name));
 
                                                 element.find(".tabGroups").append($tabGroup);
@@ -121,6 +126,10 @@ define(
                                             });
                                         }
                                     });
+
+                                    scope.align = scope.align || "alignTop";
+                                    scope.transition = scope.transition || "moveToLeft";
+                                    scope.tabTitles = scope.tabTitles || [];
                                 },
                                 post: function (scope, element, attrs, ctrl) {
                                 }

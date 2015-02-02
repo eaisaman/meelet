@@ -18,6 +18,13 @@
                      selection-list="configurationItem.options" select-item="configurationItem.pickedOption"
                      on-option-select="setItem(configurationItem)">
                 </div>
+                <div ng-if="configurationItem.type === 'boundReadList'"
+                     class="configurationItemList col-as-7 no-padding stackAndRotateSelect"
+                     ui-simple-dropdown
+                     ui-simple-dropdown-opts="{dataField:'name', labelField:'name', zIndex:1000, gutter: 5, showTitle: true, displayUnsetOption: false, zIndex: 100}"
+                     selection-list="configurationItem.options" select-item="configurationItem.pickedOption"
+                     on-option-select="setItem(configurationItem)">
+                </div>
                 <div ng-if="configurationItem.type === 'size'" class="configurationItemNumber col-as-7 no-padding-left">
                     <input type="text" class="form-control" ng-model="configurationItem.sizeValue"/>
                 </div>
@@ -25,8 +32,36 @@
                      class="configurationItemCheckBox col-as-7 no-padding-left">
                     <input type="checkbox" ng-checked="configurationItem.booleanValue" ng-attr-item-order="{{$index}}"/>
                 </div>
-                <div ng-if="configurationItem.type === 'writableList'"
-                     class="configurationItemWritableList col-as-7 no-padding-left"></div>
+                <div ng-if="configurationItem.type === 'boundWriteList'"
+                     class="configurationItemWritableList col-as-7 no-padding"
+                     ng-click="toggleConfigurationPanel($event.currentTarget, $event)">
+                    <div class="configurationBar fs-x-smaller fs-x-large-before col-as-12 no-padding icon-widget-configurator-before icon-widget-configurator-list-before">
+                        <span class="col-push-3 col-as-7 no-padding">{{configurationItem.options.length && configurationItem.options.length + " Tabs" || "None"}}</span>
+                    </div>
+                    <div class="configurationPanel col-as-12 no-padding">
+                        <div class="emptyConfigurationItemOption col-as-12"
+                             ng-click="toggleSelect('.emptyConfigurationItemOption', $event)">
+                            <span>New Item Option</span>
+
+                            <div class="configurationItemOptionInput input-group"
+                                 ng-click="$event.stopPropagation()">
+                                <input autocorrect="off" class="form-control fs-x-smaller" autocapitalize="off"
+                                       placeholder=""
+                                       required="required"/>
+                                    <span class="input-group-addon fs-x-smaller-before icon-widget-configurator-before icon-widget-configurator-plus-before"
+                                          ng-click="createConfigurationItemOption(configurationItem, $event);toggleSelect('.configurationItemOptionInput', $event)"></span>
+                            </div>
+                        </div>
+                        <div class="configurationItemOption fs-x-small"
+                             ng-repeat="opt in configurationItem.options" ng-click="$event.stopPropagation()">
+
+                            <span class="icon-widget-configurator-before icon-widget-configurator-option-before">{{opt.name}}</span>
+
+                            <div class="deleteButton fs-x-tiny icon-widget-configurator-before icon-widget-configurator-cross-before"
+                                 ng-click="deleteConfigurationItemOption(configurationItem, opt, $event)"/>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

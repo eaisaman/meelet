@@ -1,0 +1,97 @@
+@font-face {
+    font-family: 'icon-widget-configurator';
+    src: url('icon-widget-configurator.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.icon-widget-configurator:before {
+    font-family: 'icon-widget-configurator';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-widget-configurator-before:before {
+    font-family: 'icon-widget-configurator';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-widget-configurator-after:after {
+    font-family: 'icon-widget-configurator';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-widget-configurator-list:before {
+    content: "\e600";
+}
+
+.icon-widget-configurator-cross:before {
+    content: "\e601";
+}
+
+.icon-widget-configurator-plus:before {
+    content: "\e602";
+}
+
+.icon-widget-configurator-option:before {
+    content: "\e603";
+}
+
+.icon-widget-configurator-list-before:before {
+    content: "\e600";
+}
+
+.icon-widget-configurator-cross-before:before {
+    content: "\e601";
+}
+
+.icon-widget-configurator-plus-before:before {
+    content: "\e602";
+}
+
+.icon-widget-configurator-option-before:before {
+    content: "\e603";
+}
+
+.icon-widget-configurator-list-after:after {
+    content: "\e600";
+}
+
+.icon-widget-configurator-cross-after:after {
+    content: "\e601";
+}
+
+.icon-widget-configurator-plus-after:after {
+    content: "\e602";
+}
+
+.icon-widget-configurator-option-after:after {
+    content: "\e603";
+}
+

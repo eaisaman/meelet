@@ -2,6 +2,9 @@
 @import "compass/css3/transform";
 @import "compass/css3/transition";
 @import "public/global";
+@import "creative-button";
+
+@include creative-button("ui-effect-creative-button-demo", "1.0.0", ":active");
 
 .widgetDemoContainer {
     position: relative;
@@ -39,14 +42,24 @@
             @include emboss-title();
         }
 
-        > [ui-widget-creative-button-1-0-0] {
+        > [ui-effect-creative-button-demo-1-0-0] {
             position: relative;
             float: left;
             top: 2em;
-            margin: 1em;
+            margin: 1em 2em;
             width: 8em;
             height: 2em;
             text-transform: uppercase;
+            border: 3px solid #fff;
+
+            span {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                text-align: center;
+                line-height: 2;
+                color: #fff;
+            }
         }
     }
 }

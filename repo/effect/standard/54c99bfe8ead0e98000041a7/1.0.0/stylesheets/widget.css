@@ -1,4 +1,4 @@
-[ui-widget-creative-button-1-0-0][effect=sonar]:active {
+[ui-effect-creative-button-1-0-0][effect=sonar], [ui-effect-creative-button-1-0-0][effect=shrink], [ui-effect-creative-button-1-0-0][effect=shake] {
   -moz-animation-duration: 1s;
   -webkit-animation-duration: 1s;
   animation-duration: 1s;
@@ -11,13 +11,13 @@
   backface-visibility: none;
 }
 
-[ui-widget-creative-button-1-0-0][effect=sonar]:active {
-  -moz-animation-name: _widget_creativeButton_sonarEffect;
-  -webkit-animation-name: _widget_creativeButton_sonarEffect;
-  animation-name: _widget_creativeButton_sonarEffect;
-  -moz-animation-duration: 0.5s;
-  -webkit-animation-duration: 0.5s;
-  animation-duration: 0.5s;
+[ui-effect-creative-button-1-0-0][effect=sonar] {
+  -moz-animation-name: _effect_creativeButton_sonarEffect;
+  -webkit-animation-name: _effect_creativeButton_sonarEffect;
+  animation-name: _effect_creativeButton_sonarEffect;
+  -moz-animation-duration: 0.3s;
+  -webkit-animation-duration: 0.3s;
+  animation-duration: 0.3s;
   -moz-animation-timing-function: ease-out;
   -webkit-animation-timing-function: ease-out;
   animation-timing-function: ease-out;
@@ -29,7 +29,28 @@
   animation-delay: 75ms;
 }
 
-@-webkit-keyframes _widget_creativeButton_sonarEffect {
+[ui-effect-creative-button-1-0-0][effect=shrink] {
+  -moz-animation-name: _effect_creativeButton_shrink;
+  -webkit-animation-name: _effect_creativeButton_shrink;
+  animation-name: _effect_creativeButton_shrink;
+  -moz-animation-duration: 0.3s;
+  -webkit-animation-duration: 0.3s;
+  animation-duration: 0.3s;
+  -moz-animation-timing-function: forward;
+  -webkit-animation-timing-function: forward;
+  animation-timing-function: forward;
+}
+
+[ui-effect-creative-button-1-0-0][effect=shake] {
+  -moz-animation-name: _effect_creativeButton_shake;
+  -webkit-animation-name: _effect_creativeButton_shake;
+  animation-name: _effect_creativeButton_shake;
+  -moz-animation-duration: 0.3s;
+  -webkit-animation-duration: 0.3s;
+  animation-duration: 0.3s;
+}
+
+@-webkit-keyframes _effect_creativeButton_sonarEffect {
   0% {
     opacity: 0.3;
   }
@@ -43,7 +64,7 @@
     opacity: 0;
   }
 }
-@-moz-keyframes _widget_creativeButton_sonarEffect {
+@-moz-keyframes _effect_creativeButton_sonarEffect {
   0% {
     opacity: 0.3;
   }
@@ -57,7 +78,7 @@
     opacity: 0;
   }
 }
-@keyframes _widget_creativeButton_sonarEffect {
+@keyframes _effect_creativeButton_sonarEffect {
   0% {
     opacity: 0.3;
   }
@@ -71,15 +92,76 @@
     opacity: 0;
   }
 }
-[ui-widget-creative-button-1-0-0][effect=shake] {
-  color: #0a833d;
+@-webkit-keyframes _effect_creativeButton_shrink {
+  50% {
+    opacity: 1;
+    -webkit-transform: scale(0.7);
+  }
+  100% {
+    opacity: 0.3;
+    -webkit-transform: scale(1);
+  }
 }
-[ui-widget-creative-button-1-0-0][effect=moveRight] {
-  color: #0a833d;
+@-moz-keyframes _effect_creativeButton_shrink {
+  50% {
+    opacity: 1;
+    -moz-transform: scale(0.7);
+  }
+  100% {
+    opacity: 0.3;
+    -moz-transform: scale(1);
+  }
 }
-[ui-widget-creative-button-1-0-0][effect=shrink] {
-  color: #0a833d;
+@keyframes _effect_creativeButton_shrink {
+  50% {
+    opacity: 1;
+    transform: scale(0.7);
+  }
+  100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
 }
-[ui-widget-creative-button-1-0-0][effect=contrast] {
-  color: #0a833d;
+@-webkit-keyframes _effect_creativeButton_shake {
+  0%, 100% {
+    -webkit-transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    -webkit-transform: translateX(-10px);
+  }
+  20%, 40%, 60%, 80% {
+    -webkit-transform: translateX(10px);
+  }
+}
+@-moz-keyframes _effect_creativeButton_shake {
+  0%, 100% {
+    -moz-transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    -moz-transform: translateX(-10px);
+  }
+  20%, 40%, 60%, 80% {
+    -moz-transform: translateX(10px);
+  }
+}
+@keyframes _effect_creativeButton_shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-10px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(10px);
+  }
+}
+[ui-effect-creative-button-1-0-0][effect=sunken] {
+  background: rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0 1px 4px 1px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset, 0 1px 1px #ddd inset, 0 2px 1px #d6d6d6 inset, 0 3px 1px #ccc inset, 0 4px 1px #c5c5c5 inset, 0 5px 1px #c1c1c1 inset, 0 6px 1px #bbb inset, 0 7px 1px #777 inset, 0 8px 3px 1px rgba(0, 0, 0, 0.6) inset, 0 9px 5px 1px rgba(0, 0, 0, 0.3) inset, 0 10px 7px 0 rgba(0, 0, 0, 0.2) inset, 0 11px 17px 0 rgba(0, 0, 0, 0.2) inset, 0 12px 21px 0 rgba(0, 0, 0, 0.1) inset, 0 13px 25px 0 rgba(0, 0, 0, 0.1) inset;
+  -webkit-box-shadow: 0 1px 4px 1px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset, 0 1px 1px #ddd inset, 0 2px 1px #d6d6d6 inset, 0 3px 1px #ccc inset, 0 4px 1px #c5c5c5 inset, 0 5px 1px #c1c1c1 inset, 0 6px 1px #bbb inset, 0 7px 1px #777 inset, 0 8px 3px 1px rgba(0, 0, 0, 0.6) inset, 0 9px 5px 1px rgba(0, 0, 0, 0.3) inset, 0 10px 7px 0 rgba(0, 0, 0, 0.2) inset, 0 11px 17px 0 rgba(0, 0, 0, 0.2) inset, 0 12px 21px 0 rgba(0, 0, 0, 0.1) inset, 0 13px 25px 0 rgba(0, 0, 0, 0.1) inset;
+  box-shadow: 0 1px 4px 1px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset, 0 1px 1px #ddd inset, 0 2px 1px #d6d6d6 inset, 0 3px 1px #ccc inset, 0 4px 1px #c5c5c5 inset, 0 5px 1px #c1c1c1 inset, 0 6px 1px #bbb inset, 0 7px 1px #777 inset, 0 8px 3px 1px rgba(0, 0, 0, 0.6) inset, 0 9px 5px 1px rgba(0, 0, 0, 0.3) inset, 0 10px 7px 0 rgba(0, 0, 0, 0.2) inset, 0 11px 17px 0 rgba(0, 0, 0, 0.2) inset, 0 12px 21px 0 rgba(0, 0, 0, 0.1) inset, 0 13px 25px 0 rgba(0, 0, 0, 0.1) inset;
+  -moz-transform: rotateX(15deg);
+  -ms-transform: rotateX(15deg);
+  -webkit-transform: rotateX(15deg);
+  transform: rotateX(15deg);
 }

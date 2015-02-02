@@ -14,12 +14,13 @@ define(
             configuration: {
                 tabTitles: {
                     name: "Tabs",
-                    type: "writableList"
+                    type: "boundWriteList",
+                    listName: "tabTitles"
                 },
                 pickedTabTitle: {
                     name: "Active Tab",
-                    type: "readableList",
-                    "listName": "tabTitles"
+                    type: "boundReadList",
+                    listName: "tabTitles"
                 },
                 align: {
                     name: "Align",

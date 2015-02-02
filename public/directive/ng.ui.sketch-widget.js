@@ -120,7 +120,7 @@ define(
                                     var target = angular.isElement(event) && event || event.target,
                                         $target = $(target);
 
-                                    if ($target.attr("widget-anchor") != null) {
+                                    if ($target.attr("ui-sketch-widget") === undefined) {
                                         var $container = $target.closest("." + angularConstants.widgetClasses.widgetContainerClass);
                                         $target = $container.parent();
                                     }
