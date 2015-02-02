@@ -30,13 +30,16 @@ define(
 
                                 scope.$watch("pickedWidget", function (value) {
                                     if (value) {
-                                        var widgetObj = uiService.configurableWidget(value);
-                                        scope.widgetSpec = _.pick(widgetObj.widgetSpec, "configuration", "name");
+                                        scope.configurableWidget = uiService.configurableWidget(value);
+                                        scope.widgetSpec = _.pick(scope.configurableWidget.widgetSpec, "configuration", "name");
                                         var configuration = [];
                                         _.each(_.omit(scope.widgetSpec.configuration, "state"), function (value, key) {
                                             var obj = _.extend(value, {key: key});
-                                            if (obj.type === "boundReadList" || obj.type === "boundWriteList") {
-                                                obj.options = widgetObj.getConfiguration(obj.listName);
+                                            if (obj.type === "boundReadList") {
+                                                obj.options = scope.configurableWidget.getConfiguration(obj.listName);
+                                                obj.pickedOption = scope.configurableWidget.getConfiguration(key);
+                                            } else if (obj.type === "boundWriteList") {
+                                                obj.options = scope.configurableWidget.getConfiguration(obj.listName);
                                             }
                                             configuration.push(obj);
                                         });
@@ -45,7 +48,7 @@ define(
                                 });
 
                                 scope.setItem = function (item) {
-                                    var widgetObj = uiService.configurableWidget(scope.pickedWidget);
+                                    var widgetObj = scope.configurableWidget;
 
                                     if (item.type === "list") {
                                         widgetObj.setConfiguration(item.key, item.pickedOption);
@@ -64,7 +67,8 @@ define(
                                 scope.createConfigurationItemOption = function (item, event) {
                                     event && event.stopPropagation();
 
-                                    var $el = $(event.target).siblings("input"),
+                                    var widgetObj = scope.configurableWidget,
+                                        $el = $(event.target).siblings("input"),
                                         optionName = $el.val();
 
                                     if (optionName) {
