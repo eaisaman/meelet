@@ -99,32 +99,59 @@ define(
                                             tabIndex = $el.attr("tab-index"),
                                             $tab = element.find(".tabGroup[tab-index = " + tabIndex + "]");
 
+                                        scope.pickedTabTitle = scope.tabTitles[tabIndex].name;
+
                                         return $q.all([scope.toggleExclusiveSelect($el, event, true), scope.toggleExclusiveDisplay($tab, event, true)]);
                                     }
 
-                                    scope.$watch("tabTitles", function (to) {
+                                    scope.onModifyTabTitles = function (to) {
                                         if (to != null) {
                                             scope.pickedTabTitle = to.length && to[0].name || "";
 
-                                            element.find(".tabGroup").remove();
-
                                             to.forEach(function (titleObj, i) {
-                                                var $tabGroup = $("<div />").
-                                                    addClass("tabGroup fs-x-large-before").
-                                                    attr("tab-index", i).
-                                                    attr("desc", "Tab Group " + titleObj.name).
-                                                    attr("widget-anchor", widgetAnchorId + "-" + i).
-                                                    attr("ng-class", "{'show': pickedTabTitle === '{0}'}".format(titleObj.name));
+                                                var $tabGroup = element.find(".tabGroup[" + i + "]"),
+                                                    $group = $tabGroup;
+                                                for (; $group.length && $group.attr("tab-name") !== titleObj.name; $group = $group.next()) {
+                                                }
 
-                                                element.find(".tabGroups").append($tabGroup);
+                                                if ($group.length) {
+                                                    if ($group != $tabGroup) {
+                                                        $group.detach();
+                                                        $tabGroup.before($group);
+                                                    }
+                                                } else {
+                                                    var $newGroup = $("<div />").
+                                                        addClass("tabGroup fs-x-large-before").
+                                                        attr("tab-index", i).
+                                                        attr("tab-name", titleObj.name).
+                                                        attr("desc", "Tab Group " + titleObj.name).
+                                                        attr("widget-anchor", widgetAnchorId + "-" + i).
+                                                        attr("ng-class", "{'show': pickedTabTitle === '{0}'}".format(titleObj.name));
+
+                                                    if ($tabGroup.length) {
+                                                        $tabGroup.before($newGroup);
+                                                    } else {
+                                                        element.find(".tabGroups").append($newGroup);
+                                                    }
+                                                }
                                             });
+                                            if (to.length) {
+                                                element.find(".tabGroup[" + (to.length - 1) + "]").nextAll().remove();
+                                                element.find(".tabGroup").each(function (i, groupElement) {
+                                                    $(groupElement).attr("tab-index", i).attr("widget-anchor", widgetAnchorId + "-" + i);
+                                                });
 
-                                            $compile(element.find(".tabGroups"))(scope);
+                                                $compile(element.find(".tabGroups"))(scope);
 
-                                            element.find(".tabGroups").children(".tabGroup").each(function (i, groupElement) {
-                                                ctrl.transclude(to[i].name, $(groupElement));
-                                            });
+                                                element.find(".tabGroups").children(".tabGroup").each(function (i, groupElement) {
+                                                    ctrl.transclude(to[i].name, $(groupElement));
+                                                });
+                                            }
                                         }
+                                    }
+
+                                    scope.$watch("tabTitles", function (to) {
+                                        scope.onModifyTabTitles(to);
                                     });
 
                                     scope.align = scope.align || "alignTop";
