@@ -3,8 +3,16 @@
 
 $activeBackgroundColor: rgba(0, 0, 0, 0.3);
 
-@mixin color-editor-palette($colorEditorPaletteId) {
-    ##{$colorEditorPaletteId} {
+@mixin color-editor-palette($colorEditorPaletteId, $colorEditorPaletteClass) {
+    $colorEditorPalette: null;
+
+    @if $colorEditorPaletteId != null {
+        $colorEditorPalette : "#" + $colorEditorPaletteId;
+    } @else {
+        $colorEditorPalette : "." + $colorEditorPaletteClass;
+    }
+
+    #{$colorEditorPalette} {
         position: absolute;
         top: 5px;
         width: 100%;

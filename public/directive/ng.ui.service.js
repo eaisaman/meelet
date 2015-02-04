@@ -2756,7 +2756,6 @@ define(
                 appendTo: function (container) {
                     var self = this;
 
-
                     //FIXME loadRepoArtifact should be invoked before appendTo?
                     return RepoSketchWidgetClass.prototype.__proto__.appendTo.apply(self, [container]).then(
                         function () {
@@ -2842,6 +2841,10 @@ define(
                                     }
                                 } else if (item.type === "boolean") {
                                     scope[item.key] = item.booleanValue;
+                                } else if (item.type === "text") {
+                                    scope[item.key] = item.textValue;
+                                } else if (item.type === "color") {
+                                    scope[item.key] = item.colorValue;
                                 } else if (item.type === "readableList") {
                                     scope[item.key] = item.pickedOption;
                                 }
@@ -2850,6 +2853,32 @@ define(
                         else if (typeof key === "string") {
                             scope[key] = value;
                         }
+                    }
+                },
+                setHandDownConfiguration: function (key, value) {
+                    var self = this;
+
+                    self.setConfiguration(key, value);
+
+                    //handDownList will be flushed after sending back configuration items to server
+                    (self.handDownConfigurationList = self.handDownConfigurationList || []).push({
+                        key: key,
+                        value: value
+                    });
+                },
+                applyHandDownConfiguration: function () {
+                    var self = this;
+
+                    if (self.handDownConfigurationList && self.handDownConfigurationList.length) {
+                        return $inject.appService.applyHandDownConfiguration();
+                    } else {
+                        var defer = $inject.$q.defer();
+
+                        $inject.$timeout(function () {
+                            defer.resolve();
+                        });
+
+                        return defer.promise;
                     }
                 },
                 addState: function () {
@@ -3212,6 +3241,44 @@ define(
             }
 
             return result;
+        }
+
+        Service.prototype.anchorElement = function (element) {
+            var $element;
+
+            if (element.jquery) {
+                $element = element;
+            } else if (typeof element === "string" || angular.isElement(element)) {
+                $element = $(element);
+            }
+
+            var anchor = $element.attr("widget-anchor");
+            if (anchor) {
+                $element.children("[ui-sketch-widget]").each(function (i, childElement) {
+                    var $child = $(childElement),
+                        widgetObj = $child.data("widgetObject");
+
+                    widgetObj.anchor = anchor;
+                });
+            }
+        }
+
+        Service.prototype.disposeElement = function (element) {
+            var $element;
+
+            if (element.jquery) {
+                $element = element;
+            } else if (typeof element === "string" || angular.isElement(element)) {
+                $element = $(element);
+            }
+
+            $element.children("[ui-sketch-widget]").each(function (i, childElement) {
+                var $child = $(childElement),
+                    widgetObj = $child.data("widgetObject");
+
+                widgetObj.dispose();
+            });
+            $element.remove();
         }
 
         Service.prototype.loadSketch = function (projectId, sketchWorks) {

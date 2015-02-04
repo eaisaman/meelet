@@ -28,39 +28,76 @@ define(
                                     scope: scope
                                 }));
 
+                                function createConfigurationObject(value, key) {
+                                    var obj = _.extend(value, {key: key});
+                                    if (obj.type === "boundReadList") {
+                                        obj.options = scope.configurableWidget.getConfiguration(obj.listName);
+                                        obj.pickedOption = scope.configurableWidget.getConfiguration(key);
+                                    } else if (obj.type === "boundWriteList") {
+                                        obj.options = scope.configurableWidget.getConfiguration(obj.listName);
+                                    } else if (obj.type === "list") {
+                                        obj.pickedOption = scope.configurableWidget.getConfiguration(key);
+                                    } else if (obj.type === "size") {
+                                        obj.sizeValue = scope.configurableWidget.getConfiguration(key);
+                                    } else if (obj.type === "boolean") {
+                                        obj.booleanValue = scope.configurableWidget.getConfiguration(key);
+                                    } else if (obj.type === "text") {
+                                        obj.textValue = scope.configurableWidget.getConfiguration(key);
+                                    } else if (obj.type === "color") {
+                                        obj.colorValue = scope.configurableWidget.getConfiguration(key);
+                                    }
+
+                                    return obj;
+                                }
+
                                 scope.$watch("pickedWidget", function (value) {
                                     if (value) {
                                         scope.configurableWidget = uiService.configurableWidget(value);
                                         scope.widgetSpec = _.pick(scope.configurableWidget.widgetSpec, "configuration", "name");
-                                        var configuration = [];
-                                        _.each(_.omit(scope.widgetSpec.configuration, "state"), function (value, key) {
-                                            var obj = _.extend(value, {key: key});
-                                            if (obj.type === "boundReadList") {
-                                                obj.options = scope.configurableWidget.getConfiguration(obj.listName);
-                                                obj.pickedOption = scope.configurableWidget.getConfiguration(key);
-                                            } else if (obj.type === "boundWriteList") {
-                                                obj.options = scope.configurableWidget.getConfiguration(obj.listName);
-                                            }
-                                            configuration.push(obj);
+                                        var configuration = [],
+                                            handDownConfiguration = [];
+
+                                        _.each(_.omit(scope.widgetSpec.configuration, "state", "handDownConfiguration"), function (value, key) {
+                                            configuration.push(createConfigurationObject(value, key));
                                         });
+
+                                        _.each(scope.widgetSpec.configuration.handDownConfiguration && scope.widgetSpec.configuration.handDownConfiguration, function (value, key) {
+                                            handDownConfiguration.push(createConfigurationObject(value, key));
+                                        });
+
                                         scope.widgetSpec.configuration = configuration;
+                                        scope.widgetSpec.handDownConfiguration = handDownConfiguration;
                                     }
                                 });
 
+                                scope.applyHandDownConfiguration = function (event) {
+                                    event && event.stopPropagation();
+
+                                    scope.widgetSpec.isApplyingHandDown = true;
+                                    scope.pickedWidget.applyHandDownConfiguration().then(function () {
+                                        scope.widgetSpec.isApplyingHandDown = false;
+                                    });
+                                }
+
                                 scope.setItem = function (item) {
-                                    var widgetObj = scope.configurableWidget;
+                                    var widgetObj = scope.configurableWidget,
+                                        setterFn = item.handDown && widgetObj.setHandDownConfiguration || widgetObj.setConfiguration;
 
                                     if (item.type === "list") {
-                                        widgetObj.setConfiguration(item.key, item.pickedOption);
+                                        setterFn.apply(widgetObj, [item.key, item.pickedOption]);
                                     } else if (item.type === "number") {
                                         var m = (item.numberValue || "").match(/([-\d\.]+)(px|%)+$/)
                                         if (m && m.length == 3) {
-                                            widgetObj.setConfiguration(item.key, item.numberValue);
+                                            setterFn.apply(widgetObj, [item.key, item.numberValue]);
                                         }
                                     } else if (item.type === "boolean") {
-                                        widgetObj.setConfiguration(item.key, item.booleanValue);
+                                        setterFn.apply(widgetObj, [item.key, item.booleanValue]);
+                                    } else if (item.type === "text") {
+                                        setterFn.apply(widgetObj, [item.key, item.textValue]);
+                                    } else if (item.type === "color") {
+                                        setterFn.apply(widgetObj, [item.key, item.colorValue]);
                                     } else if (item.type === "boundReadList") {
-                                        widgetObj.setConfiguration(item.key, item.pickedOption);
+                                        setterFn.apply(widgetObj, [item.key, item.pickedOption]);
                                     }
                                 }
 
@@ -139,7 +176,8 @@ define(
                                     return fn;
                                 }
 
-                                createConfigurationItemAssign("configurationItem.numberValue");
+                                createConfigurationItemAssign("configurationItem.sizeValue");
+                                createConfigurationItemAssign("configurationItem.textValue");
 
                             },
                             post: function (scope, element, attrs) {

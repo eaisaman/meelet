@@ -11,7 +11,7 @@ $activeColor: #669933;
 
 @include simple-dropdown(borderWidthDropdown, null, $activeColor);
 @include simple-dropdown(borderStyleDropdown, null, $activeColor);
-@include color-editor-palette(borderColorPalette);
+@include color-editor-palette(borderColorPalette, null);
 
 @mixin border-editor($borderEditorId) {
     ##{$borderEditorId} {

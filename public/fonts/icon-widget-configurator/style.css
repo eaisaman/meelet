@@ -63,6 +63,10 @@
     content: "\e603";
 }
 
+.icon-widget-configurator-loading-bubbles:before {
+    content: "\e604";
+}
+
 .icon-widget-configurator-list-before:before {
     content: "\e600";
 }
@@ -79,6 +83,10 @@
     content: "\e603";
 }
 
+.icon-widget-configurator-loading-bubbles-before:before {
+    content: "\e604";
+}
+
 .icon-widget-configurator-list-after:after {
     content: "\e600";
 }
@@ -93,5 +101,9 @@
 
 .icon-widget-configurator-option-after:after {
     content: "\e603";
+}
+
+.icon-widget-configurator-loading-bubbles-after:after {
+    content: "\e604";
 }
 

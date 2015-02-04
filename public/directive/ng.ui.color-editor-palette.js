@@ -22,7 +22,10 @@ define(
 
                 return {
                     restrict: "A",
-                    scope: {selectedColor: "="},
+                    scope: {
+                        selectedColor: "=",
+                        onColorSelect: '&'
+                    },
                     replace: false,
                     templateUrl: "include/_color-editor-palette.html",
                     compile: function (element, attrs) {
@@ -250,6 +253,7 @@ define(
                                                             return c != to;
                                                         }) && scope.colors.splice(0, 0, to);
 
+                                                        scope.onColorSelect && scope.onColorSelect();
                                                         (!scope.selectedColorObj || scope.selectedColorObj.color !== to) && scope.pickColor({color: to});
                                                     } else {
                                                         if (scope.colors && scope.colors.length) {
@@ -432,7 +436,13 @@ define(
                                             }
                                         );
                                     } else {
-                                        return angular.noop;
+                                        var defer = $q.defer();
+
+                                        $timeout(function () {
+                                            defer.resolve();
+                                        });
+
+                                        return defer.promise;
                                     }
                                 }
 
@@ -447,7 +457,13 @@ define(
                                             }
                                         );
                                     } else {
-                                        return angular.noop;
+                                        var defer = $q.defer();
+
+                                        $timeout(function () {
+                                            defer.resolve();
+                                        });
+
+                                        return defer.promise;
                                     }
                                 }
 

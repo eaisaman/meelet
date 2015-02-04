@@ -6,8 +6,7 @@
         <span>{{widgetSpec.name}}</span>
     </div>
     <div class="configurationPalette ui-control-panel">
-        <div class="configurationPane" ng-class="configurationItem.type"
-             ng-repeat="configurationItem in widgetSpec.configuration">
+        <div class="configurationPane" ng-repeat="configurationItem in widgetSpec.configuration">
             <div class="input-group col-as-12 fs-x-smaller">
                 <label class="col-as-5 no-padding-right control-label">{{configurationItem.name}}</label>
 
@@ -27,6 +26,9 @@
                 </div>
                 <div ng-if="configurationItem.type === 'size'" class="configurationItemNumber col-as-7 no-padding-left">
                     <input type="text" class="form-control" ng-model="configurationItem.sizeValue"/>
+                </div>
+                <div ng-if="configurationItem.type === 'text'" class="configurationItemNumber col-as-7 no-padding-left">
+                    <input type="text" class="form-control" ng-model="configurationItem.textValue"/>
                 </div>
                 <div ng-if="configurationItem.type === 'boolean'"
                      class="configurationItemCheckBox col-as-7 no-padding-left">
@@ -60,6 +62,37 @@
                             <div class="deleteButton fs-x-tiny icon-widget-configurator-before icon-widget-configurator-cross-before"
                                  ng-click="deleteConfigurationItemOption(configurationItem, opt, $event)"/>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="handDownConfigurationGroup" ng-if="widgetSpec.handDownConfiguration.length">
+            <div class="handDownConfigurationBar">
+                <span class="handDownButton icon-widget-configurator-before icon-widget-configurator-before"
+                      ng-class="{'empty':pickedWidget.handDownConfigurationList && pickedWidget.handDownConfigurationList.length, 'handingDown':widgetSpec.isApplyingHandDown}"
+                      ng-click="applyHandDownConfiguration($event)"></span>
+                <span class="handDownTitle">Hand Down Configuration</span>
+            </div>
+            <div class="configurationPane" ng-repeat="configurationItem in widgetSpec.handDownConfiguration">
+                <div class="input-group col-as-12 fs-x-smaller">
+                    <label class="col-as-5 no-padding-right control-label">{{configurationItem.name}}</label>
+
+                    <div ng-if="configurationItem.type === 'list'"
+                         class="configurationItemList col-as-7 no-padding stackAndRotateSelect"
+                         ui-simple-dropdown
+                         ui-simple-dropdown-opts="{dataField:'value', labelField:'name', zIndex:1000, gutter: 5, showTitle: true, displayUnsetOption: false, zIndex: 100}"
+                         selection-list="configurationItem.options" select-item="configurationItem.pickedOption"
+                         on-option-select="setItem(configurationItem)">
+                    </div>
+                    <div ng-if="configurationItem.type === 'size'"
+                         class="configurationItemNumber col-as-7 no-padding-left">
+                        <input type="text" class="form-control" ng-model="configurationItem.sizeValue"/>
+                    </div>
+                    <div ng-if="configurationItem.type === 'color'"
+                         class="configurationItemColor col-as-7 no-padding-left">
+                        <div class="configurationColorPalette" ui-color-editor-palette
+                             selected-color="configurationItem.colorValue"
+                             on-select-color="setItem(configurationItem)"></div>
                     </div>
                 </div>
             </div>

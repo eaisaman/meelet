@@ -11,7 +11,7 @@ $activeBorderShadow: rgba(192, 192, 192, 0.8);
 $dockWidth: 8em;
 $expandedDockWidth: 12em;
 
-@include color-editor-palette(colorStopEditorPalette);
+@include color-editor-palette(colorStopEditorPalette, null);
 
 @mixin gradient-editor($gradientEditorId) {
     ##{$gradientEditorId} {

@@ -33,7 +33,8 @@
     "oauth2orize": "~1.0.1",
     "express-session": "~1.1.0",
     "connect-mongo": "~0.4.1",
-    "mongodb": "~1.4.4"
+    "mongodb": "~1.4.4",
+    "grunt-contrib-compass": "~1.0.1"
   },
   "devDependencies": {
     "grunt": "^0.4.5",

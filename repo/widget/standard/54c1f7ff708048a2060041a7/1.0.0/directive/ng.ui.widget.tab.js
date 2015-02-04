@@ -2,7 +2,7 @@ define(
     ["angular", "jquery"],
     function () {
         return function ($injector, $compileProvider, $controllerProvider, extension, directiveUrl) {
-            var inject = ["$http", "$timeout", "$q", "$parse", "$compile", "angularConstants", "angularEventTypes", "uiUtilService"],
+            var inject = ["$http", "$timeout", "$q", "$parse", "$compile", "angularConstants", "angularEventTypes", "uiService", "uiUtilService"],
                 name = "uiWidgetTab",
                 version = "1.0.0",
                 directive = name + version.replace(/\./g, ""),
@@ -47,7 +47,7 @@ define(
                         }
                     }]);
 
-                $compileProvider.directive(directive, _.union(inject, [function ($http, $timeout, $q, $parse, $compile, angularConstants, angularEventTypes, uiUtilService) {
+                $compileProvider.directive(directive, _.union(inject, [function ($http, $timeout, $q, $parse, $compile, angularConstants, angularEventTypes, uiService, uiUtilService) {
                     'use strict';
 
                     var injectObj = _.object(inject, Array.prototype.slice.call(arguments));
@@ -125,7 +125,7 @@ define(
                                                         attr("tab-index", i).
                                                         attr("tab-name", titleObj.name).
                                                         attr("desc", "Tab Group " + titleObj.name).
-                                                        attr("widget-anchor", widgetAnchorId + "-" + i).
+                                                        attr("widget-anchor", "{0}[{1}]".format(widgetAnchorId, titleObj.name)).
                                                         attr("ng-class", "{'show': pickedTabTitle === '{0}'}".format(titleObj.name));
 
                                                     if ($tabGroup.length) {
@@ -136,9 +136,13 @@ define(
                                                 }
                                             });
                                             if (to.length) {
-                                                element.find(".tabGroup[" + (to.length - 1) + "]").nextAll().remove();
                                                 element.find(".tabGroup").each(function (i, groupElement) {
-                                                    $(groupElement).attr("tab-index", i).attr("widget-anchor", widgetAnchorId + "-" + i);
+                                                    if (i < to.length) {
+                                                        $(groupElement).attr("tab-index", i).attr("widget-anchor", "{0}[{1}]".format(widgetAnchorId, to[i].name));
+                                                        uiService.anchorElement(groupElement);
+                                                    } else {
+                                                        uiService.disposeElement(groupElement);
+                                                    }
                                                 });
 
                                                 $compile(element.find(".tabGroups"))(scope);
@@ -149,10 +153,6 @@ define(
                                             }
                                         }
                                     }
-
-                                    scope.$watch("tabTitles", function (to) {
-                                        scope.onModifyTabTitles(to);
-                                    });
 
                                     scope.align = scope.align || "alignTop";
                                     scope.transition = scope.transition || "moveToLeft";

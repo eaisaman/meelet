@@ -3,7 +3,7 @@
 $borderColor: rgba(0, 0, 0, 0.4);
 $activeBorderShadow: rgba(192, 192, 192, 0.8);
 
-@include color-editor-palette(colorPickerPalette);
+@include color-editor-palette(colorPickerPalette, null);
 
 @mixin color-picker($colorPickerId) {
     ##{$colorPickerId} {

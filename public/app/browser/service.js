@@ -361,6 +361,10 @@ define(
             return this.loadArtifactList("widget");
         }
 
+        appService.prototype.applyHandDownConfiguration = function () {
+            return appService.prototype.NOOP;
+        }
+
         appService.prototype.saveSketch = function (projectId, sketchWorks) {
             return this.$http({
                 method: 'POST',

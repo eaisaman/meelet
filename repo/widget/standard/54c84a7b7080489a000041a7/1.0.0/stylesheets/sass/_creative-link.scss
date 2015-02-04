@@ -1,9 +1,9 @@
 @import "compass/css3/transform";
 @import "compass/css3/transition";
 
-@mixin creative-link($creativeLinkClass, $version) {
+@mixin creative-link($creativeLinkClass, $version, $color: #ffffff, $inactiveColor: #95a5a6, $backgroundColor: #ffffff, $inactiveBackgroundColor: #000000, $lineColor: #ffffff, $inactiveLineColor: #95a5a6) {
     .#{$creativeLinkClass}[version='#{$version}'] {
-        > .ui-widget {
+        > .linkContent {
             position: absolute;
             left: 0;
             top: 0;
@@ -16,6 +16,7 @@
                 top: 0;
                 width: 100%;
                 height: 100%;
+                text-align: center;
             }
         }
 
@@ -68,9 +69,9 @@
                 left: 0;
                 width: 100%;
                 height: 0.2em;
-                background: rgba(0, 0, 0, 0.1);
                 content: '';
                 opacity: 0;
+                background: $lineColor;
 
                 -webkit-transition: opacity 0.3s, -webkit-transform 0.3s;
                 -moz-transition: opacity 0.3s, -moz-transform 0.3s;
@@ -93,9 +94,9 @@
                 left: 0;
                 width: 100%;
                 height: 0px;
-                background: rgba(0, 0, 0, 0.1);
                 content: '';
                 opacity: 0;
+                background: $lineColor;
 
                 -webkit-transition: height 0.3s, opacity 0.3s, -webkit-transform 0.3s;
                 -moz-transition: height 0.3s, opacity 0.3s, -moz-transform 0.3s;
@@ -119,8 +120,8 @@
                 left: 0;
                 width: 100%;
                 height: 3px;
-                background: #fff;
                 content: '';
+                background: $lineColor;
 
                 -webkit-transition: -webkit-transform 0.3s;
                 -moz-transition: -moz-transform 0.3s;
@@ -155,8 +156,9 @@
                 left: 0;
                 width: 100%;
                 height: 2px;
-                background: #fff;
                 content: '';
+                background: $lineColor;
+
                 -webkit-transition: top 0.3s;
                 -moz-transition: top 0.3s;
                 transition: top 0.3s;
@@ -168,8 +170,9 @@
                 left: 0;
                 width: 2px;
                 height: 2px;
-                background: #fff;
                 content: '';
+                background: $lineColor;
+
                 -webkit-transition: height 0.3s;
                 -moz-transition: height 0.3s;
                 transition: height 0.3s;
@@ -194,16 +197,18 @@
                 left: 0;
                 width: 100%;
                 height: 100%;
-                border: 3px solid #354856;
+                border: 3px solid;
                 content: '';
+                border-color: $inactiveLineColor;
+
                 -webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
                 -moz-transition: -moz-transform 0.3s, opacity 0.3s;
                 transition: transform 0.3s, opacity 0.3s;
             }
 
             &:after {
-                border-color: #fff;
                 opacity: 0;
+                border-color: $lineColor;
 
                 @include transform(translateY(-7px) translateX(6px));
             }
@@ -225,28 +230,28 @@
         &[link-effect=reveal] {
             overflow: hidden;
 
-            .ui-widget {
+            .linkContent {
                 -webkit-transition: -webkit-transform 0.4s, opacity 0.2s;
                 -moz-transition: -moz-transform 0.4s, opacity 0.2s;
                 transition: transform 0.4s, opacity 0.2s;
             }
 
-            .ui-widget:nth-of-type(1) {
+            .linkContent:nth-of-type(1) {
                 opacity: 0;
-                color: #0f7c67;
-                background: #fff;
+                color: $color;
+                background: $backgroundColor;
 
                 @include transform(translateX(-25%));
             }
 
             &.toggled {
-                .ui-widget:nth-of-type(1) {
+                .linkContent:nth-of-type(1) {
                     opacity: 1;
 
                     @include transform(translateX(0%));
                 }
 
-                .ui-widget:nth-of-type(2) {
+                .linkContent:nth-of-type(2) {
                     @include transform(translateX(100%));
                 }
             }
@@ -266,7 +271,6 @@
                     top: 0;
                     height: 100%;
                     width: 5px;
-                    background: #fff;
                     opacity: 0.2;
                     @include transition(all 0.3s);
                 }
@@ -304,13 +308,13 @@
         }
 
         &[link-effect=scaleDown] {
-            .ui-widget {
+            .linkContent {
                 &:nth-of-type(1) {
-                    color: rgba(0, 0, 0, 0.2);
+                    color: $color;
                 }
 
                 &:nth-of-type(2) {
-                    color: #fff;
+                    color: $inactiveColor;
 
                     -webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
                     -moz-transition: -moz-transform 0.3s, opacity 0.3s;
@@ -319,7 +323,7 @@
             }
 
             &.toggled {
-                .ui-widget:nth-of-type(2) {
+                .linkContent:nth-of-type(2) {
                     opacity: 0;
 
                     @include transform(scale(0.9));
@@ -328,14 +332,15 @@
         }
 
         &[link-effect=fallDown] {
-            .ui-widget {
+            .linkContent {
                 &:nth-of-type(1) {
-                    color: #6f8686;
+                    color: $inactiveColor;
                 }
 
                 &:nth-of-type(2) {
-                    color: #fff;
                     opacity: 0;
+                    color: $color;
+
                     text-shadow: 0 0 1px rgba(255, 255, 255, 0.3);
                     -webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
                     -moz-transition: -moz-transform 0.3s, opacity 0.3s;
@@ -346,7 +351,7 @@
             }
 
             &.toggled {
-                .ui-widget:nth-of-type(2) {
+                .linkContent:nth-of-type(2) {
                     opacity: 1;
 
                     @include transform(scale(1) translateX(0px) translateY(0px) rotate(0deg));
@@ -355,13 +360,13 @@
         }
 
         &[link-effect=fadeOut] {
-            .ui-widget {
+            .linkContent {
                 &:nth-of-type(1) {
-                    color: #10649b;
+                    color: $color;
                 }
 
                 &:nth-of-type(2) {
-                    color: #fff;
+                    color: $inactiveColor;
 
                     -webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
                     -moz-transition: -moz-transform 0.3s, opacity 0.3s;
@@ -376,8 +381,8 @@
                 bottom: 0;
                 width: 100%;
                 height: 2px;
-                background: #fff;
                 opacity: 0;
+                background: $lineColor;
 
                 -webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
                 -moz-transition: -moz-transform 0.3s, opacity 0.3s;
@@ -387,7 +392,7 @@
             }
 
             &.toggled {
-                .ui-widget:nth-of-type(2) {
+                .linkContent:nth-of-type(2) {
                     opacity: 0;
 
                     @include transform(translateY(-2px));
@@ -404,9 +409,9 @@
         &[link-effect=flipUp] {
             @include perspective(800px);
 
-            .ui-widget:nth-of-type(1) {
-                background: #fff;
-                color: #2f4351;
+            .linkContent:nth-of-type(1) {
+                color: $color;
+                background: $backgroundColor;
 
                 -webkit-transition: -webkit-transform 0.6s;
                 -moz-transition: -moz-transform 0.6s;
@@ -419,19 +424,20 @@
                 @include transform(rotateX(270deg));
             }
 
-            .ui-widget:nth-of-type(2) {
+            .linkContent:nth-of-type(2) {
                 opacity: 1;
-                background: #2f4351;
+                color: $inactiveColor;
+                background: $inactiveBackgroundColor;
 
                 @include transition(opacity 0.6s);
             }
 
             &.toggled {
-                .ui-widget:nth-of-type(1) {
+                .linkContent:nth-of-type(1) {
                     @include transform(rotateX(0deg));
                 }
 
-                .ui-widget:nth-of-type(2) {
+                .linkContent:nth-of-type(2) {
                     opacity: 0;
                 }
             }
@@ -445,9 +451,10 @@
                 left: 0;
                 width: 100%;
                 height: 2px;
-                background: #fff;
                 content: '';
                 opacity: 0;
+                background: $lineColor;
+
                 -webkit-transition: opacity 0.3s, -webkit-transform 0.3s;
                 -moz-transition: opacity 0.3s, -moz-transform 0.3s;
                 transition: opacity 0.3s, transform 0.3s;

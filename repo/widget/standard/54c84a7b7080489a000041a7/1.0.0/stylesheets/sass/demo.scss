@@ -48,11 +48,20 @@
             width: 8em;
             height: 2em;
             text-transform: uppercase;
-            color: #fff;
 
-            [ng-transclude] span {
+            .linkContent span {
                 text-align: center;
             }
+        }
+
+        @include creative-link("_widget_creativeLinkContainer", "1.0.0");
+
+        &#reveal {
+            @include creative-link("_widget_creativeLinkContainer", "1.0.0", $color: #ffffff, $inactiveColor: #95a5a6, $backgroundColor: #cccccc, $inactiveBackgroundColor: #000000, $lineColor: #ffffff, $inactiveLineColor: #95a5a6);
+        }
+
+        &#flipUp {
+            @include creative-link("_widget_creativeLinkContainer", "1.0.0", $color: #000000);
         }
     }
 }

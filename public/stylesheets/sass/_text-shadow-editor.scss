@@ -4,7 +4,7 @@
 $borderColor: rgba(0, 0, 0, 0.4);
 $activeBorderShadow: rgba(192, 192, 192, 0.8);
 
-@include color-editor-palette(shadowStopColorPalette);
+@include color-editor-palette(shadowStopColorPalette, null);
 
 @mixin text-shadow-editor($textShadowEditorId) {
     ##{$textShadowEditorId} {
