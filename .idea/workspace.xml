@@ -2,43 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e0c8aa76-af86-40a2-a1e4-f776d4689a71" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/image-widget-configurator/loading-bubbles.svg" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/public/stylesheets/sass/.gitignore" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/public/stylesheets/sass/bootstrap" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/public/stylesheets/sass/compass" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/fonts/icon-widget-configurator/icon-widget-configurator.eot" afterPath="$PROJECT_DIR$/public/fonts/icon-widget-configurator/icon-widget-configurator.eot" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/fonts/icon-widget-configurator/icon-widget-configurator.ttf" afterPath="$PROJECT_DIR$/public/fonts/icon-widget-configurator/icon-widget-configurator.ttf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/fonts/icon-widget-configurator/icon-widget-configurator.woff" afterPath="$PROJECT_DIR$/public/fonts/icon-widget-configurator/icon-widget-configurator.woff" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/repo/effect/standard/54c99bfe8ead0e98000041a7/1.0.0/stylesheets/sass/public" afterPath="$PROJECT_DIR$/repo/effect/standard/54c99bfe8ead0e98000041a7/1.0.0/stylesheets/sass/public" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/stylesheets/sass/_border-editor.scss" afterPath="$PROJECT_DIR$/public/stylesheets/sass/_border-editor.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/stylesheets/sass/_color_editor_palette.scss" afterPath="$PROJECT_DIR$/public/stylesheets/sass/_color_editor_palette.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/stylesheets/sass/_color_picker.scss" afterPath="$PROJECT_DIR$/public/stylesheets/sass/_color_picker.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/repo/widget/standard/54c84a7b7080489a000041a7/1.0.0/stylesheets/sass/_creative-link.scss" afterPath="$PROJECT_DIR$/repo/widget/standard/54c84a7b7080489a000041a7/1.0.0/stylesheets/sass/_creative-link.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/stylesheets/sass/_gradient_editor.scss" afterPath="$PROJECT_DIR$/public/stylesheets/sass/_gradient_editor.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/stylesheets/sass/_text-shadow-editor.scss" afterPath="$PROJECT_DIR$/public/stylesheets/sass/_text-shadow-editor.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/include/_widget-configurator.html" afterPath="$PROJECT_DIR$/public/include/_widget-configurator.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/stylesheets/sass/_widget-configurator.scss" afterPath="$PROJECT_DIR$/public/stylesheets/sass/_widget-configurator.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/repo/widget/standard/54c84a7b7080489a000041a7/1.0.0/include/_widget_creative_link.html" afterPath="$PROJECT_DIR$/repo/widget/standard/54c84a7b7080489a000041a7/1.0.0/include/_widget_creative_link.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/repo/widget/standard/54c84a7b7080489a000041a7/1.0.0/demo/creativeLinkDemo.html" afterPath="$PROJECT_DIR$/repo/widget/standard/54c84a7b7080489a000041a7/1.0.0/demo/creativeLinkDemo.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/repo/widget/standard/54c84a7b7080489a000041a7/1.0.0/stylesheets/demo.css" afterPath="$PROJECT_DIR$/repo/widget/standard/54c84a7b7080489a000041a7/1.0.0/stylesheets/demo.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/fonts/icon-widget-configurator/demo.html" afterPath="$PROJECT_DIR$/public/fonts/icon-widget-configurator/demo.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/repo/widget/standard/54c84a7b7080489a000041a7/1.0.0/demo/demo.js" afterPath="$PROJECT_DIR$/repo/widget/standard/54c84a7b7080489a000041a7/1.0.0/demo/demo.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/repo/widget/standard/54c84a7b7080489a000041a7/1.0.0/stylesheets/sass/demo.scss" afterPath="$PROJECT_DIR$/repo/widget/standard/54c84a7b7080489a000041a7/1.0.0/stylesheets/sass/demo.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/stylesheets/frameSketch.css" afterPath="$PROJECT_DIR$/public/stylesheets/frameSketch.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/fonts/icon-widget-configurator/icon-widget-configurator.svg" afterPath="$PROJECT_DIR$/public/fonts/icon-widget-configurator/icon-widget-configurator.svg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/repo/widget/standard/54c84a7b7080489a000041a7/1.0.0/main.js" afterPath="$PROJECT_DIR$/repo/widget/standard/54c84a7b7080489a000041a7/1.0.0/main.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.color-editor-palette.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.color-editor-palette.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.service.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.service.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.widget-configurator.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.widget-configurator.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/repo/widget/standard/54c84a7b7080489a000041a7/1.0.0/directive/ng.ui.widget.creative-link.js" afterPath="$PROJECT_DIR$/repo/widget/standard/54c84a7b7080489a000041a7/1.0.0/directive/ng.ui.widget.creative-link.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/repo/widget/standard/54c1f7ff708048a2060041a7/1.0.0/directive/ng.ui.widget.tab.js" afterPath="$PROJECT_DIR$/repo/widget/standard/54c1f7ff708048a2060041a7/1.0.0/directive/ng.ui.widget.tab.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/fonts/icon-widget-configurator/selection.json" afterPath="$PROJECT_DIR$/public/fonts/icon-widget-configurator/selection.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/browser/service.js" afterPath="$PROJECT_DIR$/public/app/browser/service.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/embedded/service.js" afterPath="$PROJECT_DIR$/public/app/embedded/service.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/fonts/icon-widget-configurator/style.css" afterPath="$PROJECT_DIR$/public/fonts/icon-widget-configurator/style.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/repo/widget/standard/54c84a7b7080489a000041a7/1.0.0/stylesheets/widget.css" afterPath="$PROJECT_DIR$/repo/widget/standard/54c84a7b7080489a000041a7/1.0.0/stylesheets/widget.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="meelet.iws" />
     <ignored path=".idea/workspace.xml" />
