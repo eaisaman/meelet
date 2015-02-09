@@ -147,7 +147,8 @@
             "folder": "upload"
         },
         "userFile": {
-            "sketchFolder": "project"
+            "sketchFolder": "project",
+            "repoFolder": "repo"
         },
         "logging": {
             "appenders": [

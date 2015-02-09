@@ -26,6 +26,36 @@ var UserFileController = function (fields) {
     });
 };
 
+UserFileController.prototype.postConfiguration = function (projectId, artifactId, widgetId, configuration, success, fail) {
+    var self = this;
+
+    if (projectId) {
+        var projectPath = path.join(self.config.userFile.sketchFolder, projectId);
+
+        fs.mkdir(projectPath, 0777, function (fsError) {
+            if (!fsError || fsError.code === "EEXIST") {
+                var filePath = path.join(projectPath, "meelet.json"),
+                    out = fs.createWriteStream(filePath);
+
+                out.on('finish', function () {
+                    success();
+                });
+
+                out.on('error', function (err) {
+                    fail(err);
+                });
+
+                out.write(sketchWorks);
+                out.end();
+            } else {
+                fail(fsError);
+            }
+        });
+    } else {
+        fail("Empty project id");
+    }
+}
+
 UserFileController.prototype.postSketch = function (projectId, sketchWorks, request, success, fail) {
     var self = this;
 
@@ -51,6 +81,49 @@ UserFileController.prototype.postSketch = function (projectId, sketchWorks, requ
                 fail(fsError);
             }
         });
+    } else {
+        fail("Empty project id");
+    }
+}
+
+UserFileController.prototype.postConfigurableArtifact = function (projectId, widgetId, libraryName, artifactId, type, version, success, fail) {
+    if (projectId) {
+        commons.addConfigurableArtifact(projectId, widgetId, libraryName, artifactId, type, version, function (err, cssName) {
+            if (!err) {
+                success({css: cssName});
+            } else {
+                fail(err);
+            }
+        })
+    } else {
+        fail("Empty project id");
+    }
+}
+
+UserFileController.prototype.deleteConfigurableArtifact = function (projectId, widgetId, artifactId, success, fail) {
+    if (projectId) {
+        commons.removeConfigurableArtifact(projectId, widgetId, artifactId, function (err) {
+            if (!err) {
+                success();
+            } else {
+                fail(err);
+            }
+        })
+    } else {
+        fail("Empty project id");
+    }
+}
+
+UserFileController.prototype.putConfigurableArtifact = function (projectId, widgetId, artifactId, configuration, success, fail) {
+    if (projectId) {
+        configuration = (configuration && JSON.parse(configuration)) || {};
+        commons.removeConfigurableArtifact(projectId, widgetId, artifactId, configuration, function (err, cssName) {
+            if (!err) {
+                success({css: cssName});
+            } else {
+                fail(err);
+            }
+        })
     } else {
         fail("Empty project id");
     }

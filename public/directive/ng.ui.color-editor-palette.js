@@ -225,6 +225,7 @@ define(
 
                                                     $timeout(function () {
                                                         scope.selectedColor = value;
+                                                        scope.onColorSelect && scope.onColorSelect();
                                                         defer.resolve();
                                                     });
 
@@ -253,7 +254,6 @@ define(
                                                             return c != to;
                                                         }) && scope.colors.splice(0, 0, to);
 
-                                                        scope.onColorSelect && scope.onColorSelect();
                                                         (!scope.selectedColorObj || scope.selectedColorObj.color !== to) && scope.pickColor({color: to});
                                                     } else {
                                                         if (scope.colors && scope.colors.length) {

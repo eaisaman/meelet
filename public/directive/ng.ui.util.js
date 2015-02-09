@@ -70,12 +70,16 @@ define(
         }
 
         Util.prototype.contrastColor = function (hex) {
-            var rgbval = parseInt(this.formalizeHex(hex).replace(/#/, ''), 16),
-                r = rgbval >> 16,
-                g = (rgbval & 65280) >> 8,
-                b = rgbval & 255,
-                brightness = r * 0.299 + g * 0.587 + b * 0.114;
-            return (brightness > 160) ? "#000000" : "#ffffff"
+            if (hex) {
+                var rgbval = parseInt(this.formalizeHex(hex).replace(/#/, ''), 16),
+                    r = rgbval >> 16,
+                    g = (rgbval & 65280) >> 8,
+                    b = rgbval & 255,
+                    brightness = r * 0.299 + g * 0.587 + b * 0.114;
+                return (brightness > 160) ? "#000000" : "#ffffff"
+            }
+
+            return "";
         }
 
         Util.prototype.lighterColor = function (rgb, percent) {
@@ -371,7 +375,7 @@ define(
             return self.whilstMap[whilstId].defer.promise;
         }
 
-        Util.prototype.chain = function (arr, interval, chainId, timeout) {
+        Util.prototype.chain = function (arr, chainId, timeout) {
             var self = this;
 
             chainId = chainId || "chain_" + new Date().getTime();
@@ -875,6 +879,28 @@ define(
             });
 
             return defer.promise;
+        }
+
+        Util.prototype.getResolveDefer = function () {
+            var self = this,
+                defer = self.$q.defer();
+
+            self.$timeout(function () {
+                defer.resolve();
+            });
+
+            return defer.promise;
+        }
+
+        Util.prototype.getRejectDefer = function (err) {
+            var self = this,
+                errorDefer = self.$q.defer();
+
+            self.$timeout(function () {
+                errorDefer.reject(err);
+            });
+
+            return errorDefer.promise;
         }
 
         return function (appModule) {

@@ -67,11 +67,11 @@
             </div>
         </div>
         <div class="handDownConfigurationGroup" ng-if="widgetSpec.handDownConfiguration.length">
-            <div class="handDownConfigurationBar">
-                <span class="handDownButton icon-widget-configurator-before icon-widget-configurator-before"
-                      ng-class="{'empty':pickedWidget.handDownConfigurationList && pickedWidget.handDownConfigurationList.length, 'handingDown':widgetSpec.isApplyingHandDown}"
+            <div class="handDownConfigurationBar fs-x-smaller">
+                <span class="handDownButton fs-x-large-before col-as-3 no-padding icon-widget-configurator-before icon-widget-configurator-loading-bubbles-before"
+                      ng-class="{'dirty':pickedWidget.handDownConfigurationList && pickedWidget.handDownConfigurationList.length, 'handingDown':widgetSpec.isApplyingHandDown}"
                       ng-click="applyHandDownConfiguration($event)"></span>
-                <span class="handDownTitle">Hand Down Configuration</span>
+                <span class="handDownTitle col-as-9 no-padding">Hand Down Configuration</span>
             </div>
             <div class="configurationPane" ng-repeat="configurationItem in widgetSpec.handDownConfiguration">
                 <div class="input-group col-as-12 fs-x-smaller">
@@ -90,9 +90,18 @@
                     </div>
                     <div ng-if="configurationItem.type === 'color'"
                          class="configurationItemColor col-as-7 no-padding-left">
+                        <div class="configurationColorBar fs-x-smaller"
+                             ng-click="toggleSelectConfigurationColor($event)">
+                            <div class="configurationColorPickerPane"
+                                 ng-style="{'color':'{{configurationItem.contrastColorValue}}', 'background-color':'{{configurationItem.colorValue}}'}"
+                                 ng-if="configurationItem.colorIsSet">
+                                {{configurationItem.colorValue}}
+                            </div>
+                        </div>
+
                         <div class="configurationColorPalette" ui-color-editor-palette
                              selected-color="configurationItem.colorValue"
-                             on-select-color="setItem(configurationItem)"></div>
+                             on-color-select="setColorItem(configurationItem)"></div>
                     </div>
                 </div>
             </div>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="ProjectTasksOptions">
+  <component name="ProjectTasksOptions" suppressed-tasks="Jade;HAML">
     <TaskOptions isEnabled="true">
       <option name="arguments" value="compile $ProjectFileDir$/public/stylesheets/sass -c $ProjectFileDir$/public/stylesheets/sass/config.rb" />
       <option name="checkSyntaxErrors" value="true" />

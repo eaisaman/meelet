@@ -1,7 +1,18 @@
 @import "compass/css3/transform";
 @import "compass/css3/transition";
 
-@mixin creative-link($creativeLinkClass, $version, $color: #ffffff, $inactiveColor: #95a5a6, $backgroundColor: #ffffff, $inactiveBackgroundColor: #000000, $lineColor: #ffffff, $inactiveLineColor: #95a5a6) {
+$default-creative-link-value-map: (
+        creativeLinkClass: "_widget_creativeLinkContainer",
+        version: "1.0.0",
+        color: #ffffff,
+        inactiveColor: #95a5a6,
+        backgroundColor: #ffffff,
+        inactiveBackgroundColor: #000000,
+        lineColor: #ffffff,
+        inactiveLineColor: #95a5a6
+);
+
+@mixin creative-link($creativeLinkClass, $version, $color, $inactiveColor, $backgroundColor, $inactiveBackgroundColor, $lineColor, $inactiveLineColor) {
     .#{$creativeLinkClass}[version='#{$version}'] {
         > .linkContent {
             position: absolute;

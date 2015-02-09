@@ -46,9 +46,70 @@ $maxNumOfItems: 10;
                 @include box-shadow(0 4px 3px #555);
 
                 .handDownConfigurationGroup {
+                    position: relative;
+                    float: left;
+                    width: 100%;
+                    height: auto;
+                    background: #fff;
+
                     .handDownConfigurationBar {
-                        .handDownButton {}
-                        .handDownTitle {}
+                        position: relative;
+                        float: left;
+                        width: 100%;
+                        height: 3em;
+                        margin-bottom: 5px;
+                        border-bottom: 3px solid rgba(0, 0, 0, .135);
+
+                        span {
+                            position: relative;
+                            float: left;
+                            height: 100%;
+                            line-height: 3;
+
+                            &.handDownButton {
+                                background-color: #ddd;
+                                box-shadow: inset 0 -2px 0 rgba(0, 0, 0, .135);
+                                border-radius: 0.2em;
+                                display: inline-block;
+
+                                &:active {
+                                    background-color: #555;
+                                    box-shadow: none;
+                                }
+
+                                &:before {
+                                    position: absolute;
+                                    width: 100%;
+                                    line-height: 1;
+                                    top: calc(50% - 0.5em);
+                                    text-align: center;
+                                    color: #fff;
+
+                                    @include transition(color 1s);
+                                }
+
+                                &.dirty:before {
+                                    color: $color;
+                                }
+
+                                &.handingDown {
+                                    pointer-events: none;
+                                    background-image: url('../images/image-widget-configurator/loading-bubbles.svg');
+                                    background-repeat: no-repeat;
+                                    background-position: center center;
+
+                                    &:before {
+                                        content: "";
+                                    }
+                                }
+                            }
+
+                            &.handDownTitle {
+                                text-align: center;
+                                font-weight: 900;
+                                text-shadow: 0px 2px 3px #ccc;
+                            }
+                        }
                     }
                 }
 
@@ -306,6 +367,63 @@ $maxNumOfItems: 10;
                     }
 
                     .configurationItemColor {
+                        height: 100%;
+
+                        .configurationColorBar {
+                            height: 100%;
+
+                            @include box-shadow(0 5px 5px rgba(0, 0, 0, 0.1));
+                            @include transform-style(preserve-3d);
+                            @include transform-origin(50% 0%);
+                            @include transition(transform 0.3s);
+
+                            @include backface-visibility(hidden);
+                            @include user-select(none);
+                            -webkit-touch-callout: none;
+
+                            &:after {
+                                content: '\25BC';
+                                position: absolute;
+                                right: 0px;
+                                width: 2em;
+                                line-height: 2;
+                                text-align: center;
+                                border-left: 1px solid #ddd;
+                            }
+
+                            &:active {
+                                @include transform(rotateX(60deg));
+                            }
+
+                            .configurationColorPickerPane {
+                                position: absolute;
+                                left: 0;
+                                top: 0;
+                                width: calc(100% - 2em);
+                                height: 2em;
+                                line-height: 2;
+                                text-align: center;
+                            }
+                        }
+
+                        .configurationColorPalette {
+                            z-index: 1;
+                            position: absolute;
+                            top: 50px !important;
+                            left: 0;
+                            width: 200% !important;
+                            padding-top: 15px;
+                            opacity: 0;
+                            pointer-events: none;
+
+                            &.show {
+                                pointer-events: auto;
+                                opacity: 1;
+
+                                @extend %twisterInDown;
+                            }
+                        }
+
                         @include color_editor_palette(null, configurationColorPalette);
                     }
                 }

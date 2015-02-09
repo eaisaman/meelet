@@ -30,7 +30,11 @@ define(
 
         appService.prototype.loadWidgetArtifactList = appService.prototype.NOOP;
 
-        appService.prototype.applyHandDownConfiguration = appService.prototype.NOOP;
+        appService.prototype.addConfigurableArtifact = appService.prototype.NOOP;
+
+        appService.prototype.removeConfigurableArtifact = appService.prototype.NOOP;
+
+        appService.prototype.updateConfigurableArtifact = appService.prototype.NOOP;
 
         appService.prototype.saveSketch = appService.prototype.NOOP;
 

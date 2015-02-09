@@ -45,6 +45,10 @@ define(
                                         obj.textValue = scope.configurableWidget.getConfiguration(key);
                                     } else if (obj.type === "color") {
                                         obj.colorValue = scope.configurableWidget.getConfiguration(key);
+                                        if (obj.colorValue) {
+                                            obj.backgroundColorValue = uiUtilService.contrastColor(obj.colorValue);
+                                            obj.colorIsSet = true;
+                                        }
                                     }
 
                                     return obj;
@@ -70,6 +74,25 @@ define(
                                     }
                                 });
 
+                                scope.toggleSelectConfigurationColor = function (event) {
+                                    event && event.stopPropagation && event.stopPropagation();
+
+                                    var $colorBar = $(event.currentTarget),
+                                        $colorPane = $colorBar.parent(),
+                                        $palette = $colorBar.siblings(".configurationColorPalette"),
+                                        paletteScope = angular.element($palette.find("> :first-child")).scope();
+
+                                    if ($colorPane.hasClass("select")) {
+                                        paletteScope.closePalette().then(function () {
+                                            return scope.toggleSelect($colorPane);
+                                        });
+                                    } else {
+                                        scope.toggleSelect($colorPane).then(function () {
+                                            return paletteScope.openPalette();
+                                        });
+                                    }
+                                }
+
                                 scope.applyHandDownConfiguration = function (event) {
                                     event && event.stopPropagation();
 
@@ -77,6 +100,17 @@ define(
                                     scope.pickedWidget.applyHandDownConfiguration().then(function () {
                                         scope.widgetSpec.isApplyingHandDown = false;
                                     });
+                                }
+
+                                scope.setColorItem = function (item) {
+                                    item.contrastColorValue = uiUtilService.contrastColor(item.colorValue);
+                                    item.colorIsSet = false;
+
+                                    $timeout(function () {
+                                        item.colorIsSet = true;
+                                    });
+
+                                    scope.setItem(item);
                                 }
 
                                 scope.setItem = function (item) {
@@ -178,7 +212,6 @@ define(
 
                                 createConfigurationItemAssign("configurationItem.sizeValue");
                                 createConfigurationItemAssign("configurationItem.textValue");
-
                             },
                             post: function (scope, element, attrs) {
                                 scope.togglePalette = function (event) {

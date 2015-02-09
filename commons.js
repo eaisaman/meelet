@@ -4,15 +4,59 @@ _.string = require('underscore.string');
 var express = require('express');
 var url = require('url');
 var path = require('path');
+var fs = require('fs');
+var glob = require('glob');
+var rimraf = require('rimraf');
+var spawn = require('child_process').spawn;
 var crypto = require('crypto');
 var multiparty = require('multiparty');
 var mongo = require('mongodb');
 var session = require('express-session');
 var passport = require('passport');
 var httpStrategies = require('passport-http');
+var ejs = require("ejs");
+var memory_cache = require('cache-manager').caching({store: 'memory', max: 100, ttl: 10/*seconds*/});
 
 var Commons = function () {
 }, c = new Commons();
+
+Commons.prototype.spawn = function (cmd, args, opts, done) {
+
+    var child = spawn(cmd, args || [], opts);
+
+    var stdout = new Buffer('');
+    var stderr = new Buffer('');
+    if (child.stdout) {
+        child.stdout.on('data', function (buf) {
+            stdout = Buffer.concat([stdout, new Buffer(buf)]);
+        });
+    }
+    if (child.stderr) {
+        child.stderr.on('data', function (buf) {
+            stderr = Buffer.concat([stderr, new Buffer(buf)]);
+        });
+    }
+    child.on('close', function (code) {
+
+        var result = {
+            stdout: stdout.toString(),
+            stderr: stderr.toString()
+        };
+
+        if (code === 0) {
+            done(null, result, code);
+        }
+        else {
+            done(new Error(stderr), result, code);
+        }
+    });
+
+    return child;
+}
+
+Commons.prototype.listFiles = function (dir, patterns, callback) {
+
+}
 
 Commons.prototype.batchLimit = function (arr, batchSize, concurrentLimit, iterator, final) {
     async.eachLimit(
@@ -61,7 +105,11 @@ Commons.prototype.multipart = function () {
                         if (arr) {
                             arr = arr[0].split(/[-|\/]/);
                             if (arr.length == 3) {
-                                file[0].range = {start: parseInt(arr[0]), end: parseInt(arr[1]), total: parseInt(arr[2])};
+                                file[0].range = {
+                                    start: parseInt(arr[0]),
+                                    end: parseInt(arr[1]),
+                                    total: parseInt(arr[2])
+                                };
                             }
                         }
                     }
@@ -92,8 +140,8 @@ Commons.prototype.filter = function (options) {
         var originalUrl = url.parse(req.originalUrl),
             _url = _(originalUrl.pathname),
             matched = paths.length && !paths.every(function (p) {
-                return !_url.startsWith(p);
-        });
+                    return !_url.startsWith(p);
+                });
 
         if (matched) {
             next();
@@ -126,7 +174,8 @@ Commons.prototype.instantiateMongooseDb = function (options, resourceName, callb
 }
 
 Commons.prototype.instantiateMongoDb = function (options, resourceName, callback) {
-    var defaultOptions = {host: '127.0.0.1',
+    var defaultOptions = {
+        host: '127.0.0.1',
         port: 27017,
         auto_reconnect: false,
         ssl: false,
@@ -175,9 +224,9 @@ Commons.prototype.instantiateMongoDb = function (options, resourceName, callback
 
     var db = new mongo.Db(options.db,
             new mongo.Server(options.host || defaultOptions.host,
-                    options.port || defaultOptions.port,
+                options.port || defaultOptions.port,
                 serverOptions),
-            { w: options.w || defaultOptions.w }),
+            {w: options.w || defaultOptions.w}),
         resource = {name: resourceName, instance: db, schema: {}};
 
     db.open(function (err) {
@@ -299,6 +348,279 @@ Commons.prototype.authenticate = function (options) {
             });
         }
     };
+}
+
+Commons.prototype.addConfigurableArtifact = function (projectId, widgetId, libraryName, artifactId, type, version, callback) {
+    var self = this,
+        config = require('./config');
+
+    if (projectId) {
+        var projectPath = path.join(config.userFile.sketchFolder, projectId),
+            cssPath = path.join(projectPath, "stylesheets"),
+            sassPath = path.join(cssPath, "sass"),
+            configPath = path.join(sassPath, artifactId),
+            artifactSassPath = path.join(config.userFile.repoFolder, type, libraryName, artifactId, version, "stylesheets", "sass"),
+            ejsPath = path.join(artifactSassPath, "configurable-widget.ejs"),
+            widgetScssPath = path.join(configPath, _.string.sprintf("configurable-widget-%s.scss", widgetId));
+
+        fs.exists(widgetScssPath, function (exist) {
+            if (exist) {
+                callback(null);
+            } else {
+                async.waterfall(
+                    [
+                        function (next) {
+                            fs.exists(ejsPath, function (exist) {
+                                if (exist) {
+                                    next(null);
+                                } else {
+                                    next(new Error("Cannot find artifact configuration template."));
+                                }
+                            });
+                        },
+                        function (next) {
+                            fs.mkdir(sassPath, 0777, function (fsError) {
+                                if (!fsError || fsError.code === "EEXIST") {
+                                    next(null);
+                                } else {
+                                    next(fsError);
+                                }
+                            });
+                        },
+                        function (next) {
+                            fs.mkdir(configPath, 0777, function (fsError) {
+                                if (!fsError || fsError.code === "EEXIST") {
+                                    next(null);
+                                } else {
+                                    next(fsError);
+                                }
+                            });
+                        },
+                        function (next) {
+                            fs.link(artifactSassPath, path.join(configPath, "sass"), function (fsError) {
+                                if (!fsError || fsError.code === "EEXIST") {
+                                    next(null);
+                                } else {
+                                    next(fsError);
+                                }
+                            });
+                        },
+                        function (next) {
+                            //save empty configuration file _configuration-<widget id>.scss
+                            fs.writeFile(
+                                path.join(configPath, _.string.sprintf("_configuration-%s.scss", widgetId)),
+                                _.string.sprintf("$configuration-%s: ();", widgetId),
+                                function (err) {
+                                    next(err);
+                                });
+                        },
+                        function (next) {
+                            //ejs render
+                            try {
+                                var templateStr = fs.readFileSync(path.join(configPath, "sass", "configurable-widget.ejs"), "utf8"),
+                                    options = {debug: false, client: true},
+                                    ejsCompileCacheKey = "";
+
+                                memory_cache.wrap(ejsCompileCacheKey, function (cacheCb) {
+                                    try {
+                                        var fn = ejs.compile(templateStr, options);
+                                        cacheCb(null, fn);
+                                    } catch (compileErr) {
+                                        cacheCb(compileErr);
+                                    }
+                                }, function (err, fn) {
+                                    if (err) {
+                                        next(err);
+                                    } else {
+                                        try {
+                                            var scssContent = fn({configuration: null, widgetId: [widgetId]});
+                                            fs.writeFile(
+                                                widgetScssPath,
+                                                scssContent,
+                                                function (err) {
+                                                    next(err);
+                                                }
+                                            );
+                                        } catch (renderErr) {
+                                            next(renderErr);
+                                        }
+                                    }
+                                });
+                            } catch (err) {
+                                next(err);
+                            }
+                        },
+                        function (next) {
+                            //compass compile
+                            var basePath = configPath,
+                                specify = widgetScssPath;
+
+                            self.spawn("compass",
+                                ["compile", basePath, specify, "--css-dir", cssPath, "--sass-dir", configPath],
+                                {},
+                                function (err, result, code) {
+                                    next(err);
+                                }
+                            );
+                        }
+                    ], function (err) {
+                        callback(err, _.string.sprintf("%s.css", path.basename(widgetScssPath)));
+                    }
+                );
+            }
+        });
+    } else {
+        callback(new Error("Empty project id"));
+    }
+}
+
+Commons.prototype.removeConfigurableArtifact = function (projectId, widgetId, artifactId, callback) {
+    var config = require('./config');
+
+    if (projectId) {
+        var projectPath = path.join(config.userFile.sketchFolder, projectId),
+            cssPath = path.join(projectPath, "stylesheets"),
+            sassPath = path.join(cssPath, "sass"),
+            configPath = path.join(sassPath, artifactId),
+            widgetConfigPath = path.join(configPath, _.string.sprintf("_configuration-%s.scss", widgetId)),
+            widgetScssPath = path.join(configPath, _.string.sprintf("configurable-widget-%s.scss", widgetId)),
+            widgetCssPath = path.join(cssPath, _.string.sprintf("configurable-widget-%s.scss", widgetId));
+
+        async.waterfall([
+            function (next) {
+                async.parallel([
+                    function (callback) {
+                        fs.unlink(widgetConfigPath, function (err) {
+                            if (err && err.code !== "ENOENT") //Not Found
+                                callback(err);
+                            else
+                                callback(null);
+                        });
+                    },
+                    function (callback) {
+                        fs.unlink(widgetScssPath, function (err) {
+                            if (err && err.code !== "ENOENT") //Not Found
+                                callback(err);
+                            else
+                                callback(null);
+                        });
+                    },
+                    function (callback) {
+                        fs.unlink(widgetCssPath, function (err) {
+                            if (err && err.code !== "ENOENT") //Not Found
+                                callback(err);
+                            else
+                                callback(null);
+                        });
+                    }
+                ], function (errs) {
+                    if (errs && errs.length) {
+                        var msg = new Buffer(_.string.sprintf("Total Errors %d%s", errs.length, path.sep));
+                        errs.forEach(function (e) {
+                            msg.write(e.message, msg.length);
+                            msg.write(path.sep);
+                        });
+                        next(msg.toString());
+                    } else {
+                        next(null);
+                    }
+                });
+
+            },
+            function (next) {
+                glob("*.scss", {cwd: configPath}, function (err, files) {
+                    next(err, files);
+                });
+            },
+            function (files, next) {
+                if (files && files.length) {
+                    next(null);
+                } else {
+                    //Artifact is used not any more.
+                    rimraf(configPath, function (err) {
+                        next(err);
+                    });
+                }
+            }
+        ], function (err) {
+            callback(err);
+        });
+    }
+}
+
+Commons.prototype.configureArtifact = function (projectId, widgetId, artifactId, configuration, callback) {
+    var config = require('./config');
+
+    if (projectId) {
+        var projectPath = path.join(config.userFile.sketchFolder, projectId),
+            cssPath = path.join(projectPath, "stylesheets"),
+            sassPath = path.join(cssPath, "sass"),
+            configPath = path.join(sassPath, artifactId),
+            widgetConfigPath = path.join(configPath, _.string.sprintf("_configuration-%s.scss", widgetId)),
+            widgetScssPath = path.join(configPath, _.string.sprintf("configurable-widget-%s.scss", widgetId));
+
+        async.waterfall(
+            [
+                function (next) {
+                    async.parallel(
+                        [
+                            function (callback) {
+                                fs.exists(widgetConfigPath, function (err) {
+                                    callback(err);
+                                });
+                            },
+                            function (callback) {
+                                fs.exists(widgetScssPath, function (err) {
+                                    callback(err);
+                                });
+                            }
+                        ],
+                        function (errs) {
+                            if (errs && errs.length) {
+                                var msg = new Buffer(_.string.sprintf("Total Errors %d%s", errs.length, path.sep));
+                                errs.forEach(function (e) {
+                                    msg.write(e.message, msg.length);
+                                    msg.write(path.sep);
+                                });
+                                next(msg.toString());
+                            } else {
+                                next(null);
+                            }
+                        }
+                    );
+                },
+                function (next) {
+                    //save configuration file _configuration-<widget id>.scss
+                    var configArr = [];
+                    _.each(configuration, function (value, key) {
+                        configArr.push(key + ":" + value);
+                    });
+                    fs.writeFile(
+                        path.join(configPath, _.string.sprintf("_configuration-%s.scss", widgetId)),
+                        _.string.sprintf("$configuration-%s: (%s);", widgetId, configArr.join(",")),
+                        function (err) {
+                            next(err);
+                        });
+                },
+                function (next) {
+                    //compass compile
+                    var basePath = configPath,
+                        specify = widgetScssPath;
+
+                    self.spawn("compass",
+                        ["compile", basePath, specify, "--css-dir", cssPath, "--sass-dir", configPath],
+                        {},
+                        function (err, result, code) {
+                            next(err);
+                        }
+                    );
+                }
+            ],
+            function (err) {
+                callback(err, _.string.sprintf("%s.css", path.basename(widgetScssPath)));
+            }
+        );
+    }
 }
 
 module.exports = c;

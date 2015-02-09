@@ -21,6 +21,7 @@ define(
                         widgetLibraryList: "=",
                         pickedArtifact: "=",
                         pickedLibrary: "=",
+                        project: "=",
                         showDemo: "&"
                     },
                     replace: false,
@@ -80,7 +81,7 @@ define(
                                                 var version = scope.pickedArtifact.versionList[scope.pickedArtifact.versionList.length - 1].name;
 
                                                 appService.loadRepoArtifact(scope.pickedArtifact, scope.pickedLibrary.name, version).then(function (widgetSpec) {
-                                                    uiService.createRepoWidget($to, widgetSpec);
+                                                    uiService.createRepoWidget($to, scope.project._id, widgetSpec);
                                                 });
                                             }
 

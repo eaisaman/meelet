@@ -335,7 +335,6 @@ define(
                     });
 
                     return $inject.uiUtilService.chain(arr,
-                        $inject.angularConstants.checkInterval,
                         chainId,
                         $inject.angularConstants.renderTimeout);
                 },
@@ -2734,6 +2733,8 @@ define(
                 },
                 dispose: function () {
                     RepoSketchWidgetClass.prototype.__proto__.dispose.apply(this);
+
+                    $inject.appService.deleteConfigurableArtifact(self.widgetSpec.projectId, self.id, self.widgetSpec.artifactId);
                 },
                 toJSON: function () {
                     var jsonObj = RepoSketchWidgetClass.prototype.__proto__.toJSON.apply(this);
@@ -2759,57 +2760,61 @@ define(
                     //FIXME loadRepoArtifact should be invoked before appendTo?
                     return RepoSketchWidgetClass.prototype.__proto__.appendTo.apply(self, [container]).then(
                         function () {
-                            return $inject.appService.loadRepoArtifact({
-                                _id: self.widgetSpec.artifactId,
-                                name: self.widgetSpec.name,
-                                type: self.widgetSpec.type
-                            }, self.widgetSpec.libraryName, self.widgetSpec.version).then(
-                                function (loadedSpec) {
-                                    var defer = $inject.$q.defer();
+                            return $inject.$q.all([
+                                $inject.appService.loadRepoArtifact({
+                                    _id: self.widgetSpec.artifactId,
+                                    name: self.widgetSpec.name,
+                                    type: self.widgetSpec.type
+                                }, self.widgetSpec.libraryName, self.widgetSpec.version).then(
+                                    function (loadedSpec) {
+                                        var defer = $inject.$q.defer();
 
-                                    $inject.$timeout(function () {
-                                        self.widgetSpec = loadedSpec;
-                                        self.template = loadedSpec.template;
+                                        $inject.$timeout(function () {
+                                            self.widgetSpec = loadedSpec;
+                                            self.template = loadedSpec.template;
 
-                                        var stateConfiguration = loadedSpec.configuration.state;
-                                        if (stateConfiguration) {
-                                            var stateOptions = stateConfiguration.options;
-                                            stateOptions.forEach(function (option) {
-                                                RepoSketchWidgetClass.prototype.__proto__.addStateOption.apply(self, [{name: option.name}]);
+                                            var stateConfiguration = loadedSpec.configuration.state;
+                                            if (stateConfiguration) {
+                                                var stateOptions = stateConfiguration.options;
+                                                stateOptions.forEach(function (option) {
+                                                    RepoSketchWidgetClass.prototype.__proto__.addStateOption.apply(self, [{name: option.name}]);
 
-                                                if (self.states.every(function (s) {
-                                                        return s.context.id != self.stateContext.id || s.name != option.name;
-                                                    })) {
-                                                    self.states.push(new State(self, option.name, self.stateContext));
-                                                }
-                                            });
-                                        }
+                                                    if (self.states.every(function (s) {
+                                                            return s.context.id != self.stateContext.id || s.name != option.name;
+                                                        })) {
+                                                        self.states.push(new State(self, option.name, self.stateContext));
+                                                    }
+                                                });
+                                            }
 
-                                        self.$element && self.$element.addClass("widgetIncludeAnchor");
-                                        defer.resolve();
-                                    });
+                                            self.$element && self.$element.addClass("widgetIncludeAnchor");
+                                            defer.resolve();
+                                        });
 
-                                    return defer.promise;
-                                },
-                                function (err) {
-                                    var errorDefer = $inject.$q.defer();
-
-                                    $inject.$timeout(function () {
-                                        errorDefer.reject(err);
-                                    });
-
-                                    return errorDefer.promise;
+                                        return defer.promise;
+                                    },
+                                    function (err) {
+                                        return $inject.uiUtilService.getRejectDefer(err);
+                                    }
+                                ),
+                                $inject.appService.addConfigurableArtifact(
+                                    self.widgetSpec.projectId,
+                                    self.id,
+                                    self.widgetSpec.libraryName,
+                                    self.widgetSpec.artifactId,
+                                    self.widgetSpec.type,
+                                    self.widgetSpec.version
+                                )
+                            ]).then(
+                                function () {
+                                    return $inject.uiUtilService.getResolveDefer();
+                                }, function (err) {
+                                    return $inject.uiUtilService.getRejectDefer(err);
                                 }
                             );
                         },
                         function (err) {
-                            var errorDefer = $inject.$q.defer();
-
-                            $inject.$timeout(function () {
-                                errorDefer.reject(err);
-                            });
-
-                            return errorDefer.promise;
+                            return $inject.uiUtilService.getRejectDefer(err);
                         }
                     );
                 },
@@ -2861,25 +2866,26 @@ define(
                     self.setConfiguration(key, value);
 
                     //handDownList will be flushed after sending back configuration items to server
-                    (self.handDownConfigurationList = self.handDownConfigurationList || []).push({
-                        key: key,
-                        value: value
-                    });
+                    self.handDownConfigurationList = self.handDownConfigurationList || [];
+                    if (self.handDownConfigurationList.every(function (item) {
+                            if (item.key === key) {
+                                item.value = value;
+                                return false;
+                            }
+
+                            return true;
+                        })) {
+                        self.handDownConfigurationList.push({
+                            key: key,
+                            value: value
+                        });
+                    }
                 },
                 applyHandDownConfiguration: function () {
                     var self = this;
 
-                    if (self.handDownConfigurationList && self.handDownConfigurationList.length) {
-                        return $inject.appService.applyHandDownConfiguration();
-                    } else {
-                        var defer = $inject.$q.defer();
+                    return $inject.appService.updateConfigurableArtifact(self.handDownConfigurationList);
 
-                        $inject.$timeout(function () {
-                            defer.resolve();
-                        });
-
-                        return defer.promise;
-                    }
                 },
                 addState: function () {
                 },
@@ -3076,9 +3082,9 @@ define(
             }
         }
 
-        Service.prototype.createRepoWidget = function (containerElement, widgetSpec) {
+        Service.prototype.createRepoWidget = function (containerElement, projectId, widgetSpec) {
             var self = this,
-                widgetObj = new RepoSketchWidgetClass(null, widgetSpec);
+                widgetObj = new RepoSketchWidgetClass(null, _.extend(angular.copy(widgetSpec), {projectId: projectId}));
             widgetObj.attr["ui-sketch-widget"] = "";
             widgetObj.attr["is-playing"] = "sketchWidgetSetting.isPlaying";
             widgetObj.attr["sketch-object"] = "sketchObject";

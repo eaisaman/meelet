@@ -361,9 +361,117 @@ define(
             return this.loadArtifactList("widget");
         }
 
-        appService.prototype.applyHandDownConfiguration = function () {
-            return appService.prototype.NOOP;
-        }
+        appService.prototype.addConfigurableArtifact = function (projectId, widgetId, libraryName, artifactId, type, version) {
+            var self = this;
+
+            return self.$http({
+                method: 'POST',
+                url: '/api/public/configurableArtifact',
+                params: {
+                    projectId: projectId,
+                    widgetId: widgetId,
+                    libraryName: libraryName,
+                    artifactId: artifactId,
+                    type: type,
+                    version: version
+                }
+            }).then(function (result) {
+                var defer = self.$q.defer();
+
+                if (result.data.result === "OK") {
+                    defer.resolve();
+                } else {
+                    self.$timeout(function () {
+                        defer.reject();
+                    });
+                }
+
+                return defer.promise;
+            }, function () {
+                var errDefer = self.$q.defer();
+
+                self.$timeout(function () {
+                    errDefer.reject();
+                });
+
+                return errDefer.promise;
+            });
+        };
+
+        appService.prototype.deleteConfigurableArtifact = function (projectId, widgetId, artifactId) {
+            var self = this;
+
+            return self.$http({
+                method: 'DELETE',
+                url: '/api/public/configurableArtifact',
+                params: {
+                    projectId: projectId,
+                    widgetId: widgetId,
+                    artifactId: artifactId
+                }
+            }).then(function (result) {
+                var defer = self.$q.defer();
+
+                if (result.data.result === "OK") {
+                    defer.resolve();
+                } else {
+                    self.$timeout(function () {
+                        defer.reject();
+                    });
+                }
+
+                return defer.promise;
+            }, function () {
+                var errDefer = self.$q.defer();
+
+                self.$timeout(function () {
+                    errDefer.reject();
+                });
+
+                return errDefer.promise;
+            });
+        };
+
+        appService.prototype.updateConfigurableArtifact = function (projectId, widgetId, artifactId, configurationArray) {
+            var self = this,
+                configuration = {};
+
+            _.each(configurationArray, function (obj) {
+                configuration[obj.key] = obj.value;
+            });
+
+            return self.$http({
+                method: 'PUT',
+                url: '/api/public/configurableArtifact',
+                params: {
+                    projectId: projectId,
+                    widgetId: widgetId,
+                    artifactId: artifactId,
+                    configuration: JSON.stringify(configuration)
+                }
+            }).then(function (result) {
+                var defer = self.$q.defer();
+
+                if (result.data.result === "OK") {
+                    configurationArray && configurationArray.splice(0, configurationArray.length);
+                    defer.resolve();
+                } else {
+                    self.$timeout(function () {
+                        defer.reject();
+                    });
+                }
+
+                return defer.promise;
+            }, function () {
+                var errDefer = self.$q.defer();
+
+                self.$timeout(function () {
+                    errDefer.reject();
+                });
+
+                return errDefer.promise;
+            });
+        };
 
         appService.prototype.saveSketch = function (projectId, sketchWorks) {
             return this.$http({
