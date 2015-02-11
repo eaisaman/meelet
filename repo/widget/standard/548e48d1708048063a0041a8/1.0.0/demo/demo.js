@@ -21,7 +21,6 @@ define(
 
             $scope.side = "leftSide";
             $scope.demoTransition = "slideInOnTop"
-            $scope.contentWidth = "300px"
             $scope.overlay = "overlay"
         }
 

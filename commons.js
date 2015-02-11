@@ -361,7 +361,8 @@ Commons.prototype.addConfigurableArtifact = function (projectId, widgetId, libra
             configPath = path.join(sassPath, artifactId),
             artifactSassPath = path.join(config.userFile.repoFolder, type, libraryName, artifactId, version, "stylesheets", "sass"),
             ejsPath = path.join(artifactSassPath, "configurable-widget.ejs"),
-            widgetScssPath = path.join(configPath, _.string.sprintf("configurable-widget-%s.scss", widgetId));
+            widgetScssPath = path.join(configPath, _.string.sprintf("configurable-widget-%s.scss", widgetId)),
+            widgetCssPath = path.join(cssPath, _.string.sprintf("configurable-widget-%s.css", widgetId));
 
         fs.exists(widgetScssPath, function (exist) {
             if (exist) {
@@ -370,34 +371,43 @@ Commons.prototype.addConfigurableArtifact = function (projectId, widgetId, libra
                 async.waterfall(
                     [
                         function (next) {
-                            fs.exists(ejsPath, function (exist) {
-                                if (exist) {
-                                    next(null);
-                                } else {
-                                    next(new Error("Cannot find artifact configuration template."));
+                            async.parallel(
+                                [
+                                    function (callback) {
+                                        fs.exists(ejsPath, function (exist) {
+                                            if (exist) {
+                                                callback(null);
+                                            } else {
+                                                callback(new Error(_.string.sprintf("Path %s not exist.", ejsPath)));
+                                            }
+                                        });
+                                    },
+                                    function (callback) {
+                                        fs.mkdir(configPath, 0777, function (fsError) {
+                                            if (!fsError || fsError.code === "EEXIST") {
+                                                callback(null);
+                                            } else {
+                                                callback(fsError);
+                                            }
+                                        });
+                                    },
+                                ],
+                                function (errs) {
+                                    if (errs && errs.length) {
+                                        var msg = new Buffer(_.string.sprintf("Total Errors %d%s", errs.length, path.sep));
+                                        errs.forEach(function (e) {
+                                            msg.write(e.message, msg.length);
+                                            msg.write(path.sep);
+                                        });
+                                        next(msg.toString());
+                                    } else {
+                                        next(null);
+                                    }
                                 }
-                            });
+                            );
                         },
                         function (next) {
-                            fs.mkdir(sassPath, 0777, function (fsError) {
-                                if (!fsError || fsError.code === "EEXIST") {
-                                    next(null);
-                                } else {
-                                    next(fsError);
-                                }
-                            });
-                        },
-                        function (next) {
-                            fs.mkdir(configPath, 0777, function (fsError) {
-                                if (!fsError || fsError.code === "EEXIST") {
-                                    next(null);
-                                } else {
-                                    next(fsError);
-                                }
-                            });
-                        },
-                        function (next) {
-                            fs.link(artifactSassPath, path.join(configPath, "sass"), function (fsError) {
+                            fs.symlink(artifactSassPath, path.join(configPath, "sass"), function (fsError) {
                                 if (!fsError || fsError.code === "EEXIST") {
                                     next(null);
                                 } else {
@@ -464,7 +474,7 @@ Commons.prototype.addConfigurableArtifact = function (projectId, widgetId, libra
                             );
                         }
                     ], function (err) {
-                        callback(err, _.string.sprintf("%s.css", path.basename(widgetScssPath)));
+                        callback(err, path.basename(widgetCssPath));
                     }
                 );
             }
@@ -484,7 +494,7 @@ Commons.prototype.removeConfigurableArtifact = function (projectId, widgetId, ar
             configPath = path.join(sassPath, artifactId),
             widgetConfigPath = path.join(configPath, _.string.sprintf("_configuration-%s.scss", widgetId)),
             widgetScssPath = path.join(configPath, _.string.sprintf("configurable-widget-%s.scss", widgetId)),
-            widgetCssPath = path.join(cssPath, _.string.sprintf("configurable-widget-%s.scss", widgetId));
+            widgetCssPath = path.join(cssPath, _.string.sprintf("configurable-widget-%s.css", widgetId));
 
         async.waterfall([
             function (next) {
@@ -548,8 +558,9 @@ Commons.prototype.removeConfigurableArtifact = function (projectId, widgetId, ar
     }
 }
 
-Commons.prototype.configureArtifact = function (projectId, widgetId, artifactId, configuration, callback) {
-    var config = require('./config');
+Commons.prototype.updateConfigurableArtifact = function (projectId, widgetId, artifactId, configuration, callback) {
+    var self = this,
+        config = require('./config');
 
     if (projectId) {
         var projectPath = path.join(config.userFile.sketchFolder, projectId),
@@ -557,7 +568,8 @@ Commons.prototype.configureArtifact = function (projectId, widgetId, artifactId,
             sassPath = path.join(cssPath, "sass"),
             configPath = path.join(sassPath, artifactId),
             widgetConfigPath = path.join(configPath, _.string.sprintf("_configuration-%s.scss", widgetId)),
-            widgetScssPath = path.join(configPath, _.string.sprintf("configurable-widget-%s.scss", widgetId));
+            widgetScssPath = path.join(configPath, _.string.sprintf("configurable-widget-%s.scss", widgetId)),
+            widgetCssPath = path.join(cssPath, _.string.sprintf("configurable-widget-%s.css", widgetId));
 
         async.waterfall(
             [
@@ -565,13 +577,21 @@ Commons.prototype.configureArtifact = function (projectId, widgetId, artifactId,
                     async.parallel(
                         [
                             function (callback) {
-                                fs.exists(widgetConfigPath, function (err) {
-                                    callback(err);
+                                fs.exists(widgetConfigPath, function (exist) {
+                                    if (exist) {
+                                        callback(null);
+                                    } else {
+                                        callback(new Error(_.string.sprintf("Path %s not exist.", widgetConfigPath)));
+                                    }
                                 });
                             },
                             function (callback) {
-                                fs.exists(widgetScssPath, function (err) {
-                                    callback(err);
+                                fs.exists(widgetScssPath, function (exist) {
+                                    if (exist) {
+                                        callback(null);
+                                    } else {
+                                        callback(new Error(_.string.sprintf("Path %s not exist.", widgetScssPath)));
+                                    }
                                 });
                             }
                         ],
@@ -617,7 +637,7 @@ Commons.prototype.configureArtifact = function (projectId, widgetId, artifactId,
                 }
             ],
             function (err) {
-                callback(err, _.string.sprintf("%s.css", path.basename(widgetScssPath)));
+                callback(err, path.basename(widgetCssPath));
             }
         );
     }

@@ -60,17 +60,6 @@ define(
                                 var leftResizeMgr, moveMgr, rightResizeMgr,
                                     leftResizeHandler, moveHandler, toggleMoveModeHandler, rightResizeHandler;
 
-                                function calculateWidth($e) {
-                                    var m = ($e.css("width") || "").match(/([-\d\.]+)px$/),
-                                        width;
-                                    if (m && m.length == 2)
-                                        width = Math.floor(parseFloat(m[1]) * angularConstants.precision) / angularConstants.precision;
-                                    else
-                                        width = Math.floor($e.width() * angularConstants.precision) / angularConstants.precision;
-
-                                    return width;
-                                }
-
                                 function registerHandlers() {
                                     leftResizeHandler = function (event) {
                                         var $u = $(event.target).parent(),
@@ -86,8 +75,8 @@ define(
                                         } else if (event.type === "panmove") {
                                             if (touchX != undefined) {
                                                 var moveX = event.srcEvent.clientX - ($u.offset().left + touchX),
-                                                    maxWidth = calculateWidth($u.parent()),
-                                                    width = calculateWidth($u),
+                                                    maxWidth = uiUtilService.calculateWidth($u.parent()),
+                                                    width = uiUtilService.calculateWidth($u),
                                                     ftLeft,
                                                     left;
 
@@ -124,7 +113,7 @@ define(
                                         } else {
                                             if (touchX != undefined) {
                                                 if (scope.nearByMarkerIndex != null) {
-                                                    var width = calculateWidth($u),
+                                                    var width = uiUtilService.calculateWidth($u),
                                                         ftLeft, left;
 
                                                     var m = ($u.css("left") || "").match(/([-\d\.]+)px$/);
@@ -160,8 +149,8 @@ define(
                                         } else if (event.type === "panmove") {
                                             if (touchX != undefined) {
                                                 var moveX = event.srcEvent.clientX - ($u.parent().offset().left + touchX),
-                                                    maxWidth = calculateWidth($u.parent()),
-                                                    width = calculateWidth($u),
+                                                    maxWidth = uiUtilService.calculateWidth($u.parent()),
+                                                    width = uiUtilService.calculateWidth($u),
                                                     ftLeft,
                                                     left;
 
@@ -221,7 +210,7 @@ define(
                                             if (touchX != undefined) {
                                                 if (scope.alignCenter) {
                                                     if (scope.nearByMarkerIndex != null) {
-                                                        var width = calculateWidth($u),
+                                                        var width = uiUtilService.calculateWidth($u),
                                                             right = Math.floor((scope.nearByMarkerIndex * scope.markerWidth) * angularConstants.precision) / angularConstants.precision,
                                                             left = right - width / 2;
 
@@ -233,7 +222,7 @@ define(
 
                                                     if (moveDirection === "right") {
                                                         if (scope.nearByMarkerIndex != null) {
-                                                            var width = calculateWidth($u),
+                                                            var width = uiUtilService.calculateWidth($u),
                                                                 right = Math.floor((scope.nearByMarkerIndex * scope.markerWidth) * angularConstants.precision) / angularConstants.precision,
                                                                 left = right - width;
 
@@ -268,8 +257,8 @@ define(
                                         } else if (event.type === "panmove") {
                                             if (touchX != undefined) {
                                                 var newWidth = event.srcEvent.clientX - $u.offset().left + touchX,
-                                                    maxWidth = calculateWidth($u.parent()),
-                                                    width = calculateWidth($u),
+                                                    maxWidth = uiUtilService.calculateWidth($u.parent()),
+                                                    width = uiUtilService.calculateWidth($u),
                                                     ftLeft;
 
                                                 var m = ($u.css("left") || "").match(/([-\d\.]+)px$/);

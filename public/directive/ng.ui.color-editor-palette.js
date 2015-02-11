@@ -42,7 +42,7 @@ define(
                                     $http.get(options.colorJson).then(function (result) {
                                         scope.colors = result.data;
 
-                                        scope.selectedColorObj && scope.colors && scope.colors.every(function (c) {
+                                        scope.selectedColorObj.color && scope.colors && scope.colors.every(function (c) {
                                             return c != scope.selectedColorObj.color;
                                         }) && scope.colors.splice(0, 0, scope.selectedColorObj.color);
                                     });
@@ -51,6 +51,7 @@ define(
                                 }
 
                                 scope.Math = Math;
+                                scope.selectedColorObj = scope.selectedColorObj || {};
                             },
                             post: function (scope, element, attrs) {
                                 function setSelectedColor(color) {
@@ -216,32 +217,25 @@ define(
                                     }
                                 });
 
-                                scope.watchSelectedColorObj = function (state) {
-                                    if (state) {
-                                        if (!scope.deregisterColorObjWatch) {
-                                            scope.deregisterColorObjWatch = scope.$watch("selectedColorObj.color", function (to) {
-                                                function changeSelectedColor(value) {
-                                                    var defer = $q.defer();
+                                scope.updateSelectedColor = function (to) {
+                                    function changeSelectedColor(value) {
+                                        var defer = $q.defer();
 
-                                                    $timeout(function () {
-                                                        scope.selectedColor = value;
-                                                        scope.onColorSelect && scope.onColorSelect();
-                                                        defer.resolve();
-                                                    });
-
-                                                    return defer.promise;
-                                                }
-
-                                                changeSelectedColor.onceId = "color-editor-palette.changeSelectedColor";
-
-                                                if (to && scope.selectedColor !== to)
-                                                    uiUtilService.latestOnce(changeSelectedColor, null, 500)(to);
+                                        $timeout(function () {
+                                            scope.selectedColor = value;
+                                            scope.onColorSelect && $timeout(function () {
+                                                scope.onColorSelect();
                                             });
-                                        }
-                                    } else {
-                                        scope.deregisterColorObjWatch && scope.deregisterColorObjWatch();
-                                        scope.deregisterColorObjWatch = null;
+                                            defer.resolve();
+                                        });
+
+                                        return defer.promise;
                                     }
+
+                                    changeSelectedColor.onceId = "color-editor-palette.changeSelectedColor";
+
+                                    if (to && scope.selectedColor !== to)
+                                        uiUtilService.latestOnce(changeSelectedColor, null, 50)(to);
                                 }
 
                                 scope.watchSelectedColor = function (state) {
@@ -254,7 +248,7 @@ define(
                                                             return c != to;
                                                         }) && scope.colors.splice(0, 0, to);
 
-                                                        (!scope.selectedColorObj || scope.selectedColorObj.color !== to) && scope.pickColor({color: to});
+                                                        scope.selectedColorObj.color !== to && scope.pickColor({color: to});
                                                     } else {
                                                         if (scope.colors && scope.colors.length) {
                                                             to = scope.colors[0];
@@ -362,6 +356,7 @@ define(
                                     }
 
                                     scope.selectedColorObj = colorObj;
+                                    scope.updateSelectedColor(colorObj.color);
 
                                     element.find(".colorSticker").css("background-color", colorObj.color).attr("picked-color", colorObj.color);
 
@@ -391,9 +386,10 @@ define(
                                 scope.observeColorValueScrollMeter = function (event) {
                                     event && event.stopPropagation && event.stopPropagation();
 
+
                                     var $u = $(event.currentTarget),
-                                        top = parseFloat(($u.css("top") || "0px").replace(/px/g, "")),
-                                        height = parseFloat(($u.css("height") || "0px").replace(/px/g, "")),
+                                        top = uiUtilService.calculateTop($u),
+                                        height = uiUtilService.calculateHeight($u),
                                         range = parseInt($u.attr("color-range")),
                                         valueName = $u.attr("color-value-name"),
                                         distance = $u.parent().height();
@@ -430,7 +426,6 @@ define(
                                         return scope.showInitialTab().then(
                                             function () {
                                                 scope.watchSelectedColor(false);
-                                                scope.watchSelectedColorObj(false);
 
                                                 return scope.toggleDisplay(element);
                                             }
@@ -451,7 +446,6 @@ define(
                                         return scope.toggleDisplay(element).then(
                                             function () {
                                                 scope.watchSelectedColor(true);
-                                                scope.watchSelectedColorObj(true);
 
                                                 return scope.showInitialTab();
                                             }

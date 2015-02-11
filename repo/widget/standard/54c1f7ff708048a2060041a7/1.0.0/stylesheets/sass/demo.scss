@@ -5,6 +5,7 @@
 @import "compass/css3/flexbox";
 @import "public/multilevel-menu";
 @import "public/simple-dropdown";
+@import "tab";
 
 $activeColor: #669933;
 
@@ -61,4 +62,6 @@ $activeColor: #669933;
         height: 100%;
         overflow: hidden;
     }
+
+    @include tab($default-tab-value-map...);
 }

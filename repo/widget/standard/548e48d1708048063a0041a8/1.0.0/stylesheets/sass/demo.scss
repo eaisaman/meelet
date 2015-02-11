@@ -1,6 +1,7 @@
 @import "compass/css3/box-shadow";
 @import "compass/css3/transform";
 @import "compass/css3/transition";
+@import "sidebar";
 
 .widgetDemoContainer {
     position: relative;
@@ -97,12 +98,7 @@
         }
 
         [name='barContent'] {
-            position: absolute;
-            top: 0;
-            left: 0;
             z-index: 100;
-            width: 300px;
-            height: 100%;
             background: #48a770;
 
             @include transition(all 0.5s);
@@ -159,4 +155,6 @@
             }
         }
     }
+
+    @include sidebar($default-sidebar-value-map...);
 }

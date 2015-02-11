@@ -60,17 +60,6 @@ define(
                                 var topResizeMgr, moveMgr, bottomResizeMgr,
                                     topResizeHandler, moveHandler, toggleMoveModeHandler, bottomResizeHandler;
 
-                                function calculateHeight($e) {
-                                    var m = ($e.css("height") || "").match(/([-\d\.]+)px$/),
-                                        height;
-                                    if (m && m.length == 2)
-                                        height = Math.floor(parseFloat(m[1]) * angularConstants.precision) / angularConstants.precision;
-                                    else
-                                        height = Math.floor($e.height() * angularConstants.precision) / angularConstants.precision;
-
-                                    return height;
-                                }
-
                                 function registerHandlers() {
                                     topResizeHandler = function (event) {
                                         var $u = $(event.target).parent(),
@@ -84,8 +73,8 @@ define(
                                         } else if (event.type === "panmove") {
                                             if (touchY != undefined) {
                                                 var moveY = event.srcEvent.clientY - ($u.offset().top + touchY),
-                                                    maxHeight = calculateHeight($u.parent()),
-                                                    height = calculateHeight($u),
+                                                    maxHeight = uiUtilService.calculateHeight($u.parent()),
+                                                    height = uiUtilService.calculateHeight($u),
                                                     ftTop,
                                                     top;
 
@@ -122,7 +111,7 @@ define(
                                         } else {
                                             if (touchY != undefined) {
                                                 if (scope.nearByMarkerIndex != null) {
-                                                    var height = calculateHeight($u),
+                                                    var height = uiUtilService.calculateHeight($u),
                                                         ftTop, top;
 
                                                     var m = ($u.css("top") || "").match(/([-\d\.]+)px$/);
@@ -158,8 +147,8 @@ define(
                                         } else if (event.type === "panmove") {
                                             if (touchY != undefined) {
                                                 var moveY = event.srcEvent.clientY - ($u.parent().offset().top + touchY),
-                                                    maxHeight = calculateHeight($u.parent()),
-                                                    height = calculateHeight($u),
+                                                    maxHeight = uiUtilService.calculateHeight($u.parent()),
+                                                    height = uiUtilService.calculateHeight($u),
                                                     ftTop,
                                                     top;
 
@@ -218,7 +207,7 @@ define(
                                             if (touchY != undefined) {
                                                 if (scope.alignCenter) {
                                                     if (scope.nearByMarkerIndex != null) {
-                                                        var height = calculateHeight($u),
+                                                        var height = uiUtilService.calculateHeight($u),
                                                             bottom = Math.floor((scope.nearByMarkerIndex * scope.markerHeight) * angularConstants.precision) / angularConstants.precision,
                                                             top = bottom - height / 2;
 
@@ -230,7 +219,7 @@ define(
 
                                                     if (moveDirection === "down") {
                                                         if (scope.nearByMarkerIndex != null) {
-                                                            var height = calculateHeight($u),
+                                                            var height = uiUtilService.calculateHeight($u),
                                                                 bottom = Math.floor((scope.nearByMarkerIndex * scope.markerHeight) * angularConstants.precision) / angularConstants.precision,
                                                                 top = bottom - height;
 
@@ -265,8 +254,8 @@ define(
                                         } else if (event.type === "panmove") {
                                             if (touchY != undefined) {
                                                 var newHeight = event.srcEvent.clientY - $u.offset().top + touchY,
-                                                    maxHeight = calculateHeight($u.parent()),
-                                                    height = calculateHeight($u),
+                                                    maxHeight = uiUtilService.calculateHeight($u.parent()),
+                                                    height = uiUtilService.calculateHeight($u),
                                                     ftTop;
 
                                                 var m = ($u.css("top") || "").match(/([-\d\.]+)px$/);

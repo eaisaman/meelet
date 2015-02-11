@@ -1,103 +1,13 @@
 <div>
-    <style>
-        ._widget_sideBarContainer.rightSide.scaleUp > .barContent {
-        {{composePrefixedCss("transform","translate3d(0, 0, -{0})", barContentWidth)}}
-        }
-
-        ._widget_sideBarContainer.leftSide.scaleUp > .barContent {
-        {{composePrefixedCss("transform","translate3d(0, 0, -{0})", barContentWidth)}}
-        }
-
-        ._widget_sideBarContainer.rightSide.reveal.select > .mainContent {
-        {{composePrefixedCss("transform","translate3d(-{0}, 0, 0)", barContentWidth)}}
-        }
-
-        ._widget_sideBarContainer.rightSide.slideAlong.select > .mainContent {
-        {{composePrefixedCss("transform","translate3d(-{0}, 0, 0)", barContentWidth)}}
-        }
-
-        ._widget_sideBarContainer.rightSide.reverseSlideOut.select > .mainContent {
-        {{composePrefixedCss("transform","translate3d(-{0}, 0, 0)", barContentWidth)}}
-        }
-
-        ._widget_sideBarContainer.rightSide.rotatePusher.select > .mainContent {
-        {{composePrefixedCss("transform","translate3d(-{0}, 0, 0) rotateY(15deg)", barContentWidth)}}
-        }
-
-        ._widget_sideBarContainer.rightSide.rotateIn3D.select > .mainContent {
-        {{composePrefixedCss("transform","translate3d(-{0}, 0, 0)", barContentWidth)}}
-        }
-
-        ._widget_sideBarContainer.rightSide.rotateOut3D.select > .mainContent {
-        {{composePrefixedCss("transform","translate3d(-{0}, 0, 0)", barContentWidth)}}
-        }
-
-        ._widget_sideBarContainer.rightSide.scaleDownPusher.select > .mainContent {
-        {{composePrefixedCss("transform","translate3d(0, 0, -{0})", barContentWidth)}}
-        }
-
-        ._widget_sideBarContainer.rightSide.scaleUp.select > .mainContent {
-        {{composePrefixedCss("transform","translate3d(-{0}, 0, 0)", barContentWidth)}}
-        }
-
-        ._widget_sideBarContainer.rightSide.fallDown.select > .mainContent {
-        {{composePrefixedCss("transform","translate3d(-{0}, 0, 0)", barContentWidth)}}
-        }
-
-        ._widget_sideBarContainer.rightSide.delayed3DRotate.select > .mainContent {
-        {{composePrefixedCss("transform","translate3d(-{0}, 0, 0)", barContentWidth)}}
-        }
-
-        ._widget_sideBarContainer.leftSide.reveal.select > .mainContent {
-        {{composePrefixedCss("transform","translate3d({0}, 0, 0)", barContentWidth)}}
-        }
-
-        ._widget_sideBarContainer.leftSide.slideAlong.select > .mainContent {
-        {{composePrefixedCss("transform","translate3d({0}, 0, 0)", barContentWidth)}}
-        }
-
-        ._widget_sideBarContainer.leftSide.reverseSlideOut.select > .mainContent {
-        {{composePrefixedCss("transform","translate3d({0}, 0, 0)", barContentWidth)}}
-        }
-
-        ._widget_sideBarContainer.leftSide.rotatePusher.select > .mainContent {
-        {{composePrefixedCss("transform","translate3d({0}, 0, 0) rotateY(-15deg)", barContentWidth)}}
-        }
-
-        ._widget_sideBarContainer.leftSide.rotateIn3D.select > .mainContent {
-        {{composePrefixedCss("transform","translate3d({0}, 0, 0)", barContentWidth)}}
-        }
-
-        ._widget_sideBarContainer.leftSide.rotateOut3D.select > .mainContent {
-        {{composePrefixedCss("transform","translate3d({0}, 0, 0)", barContentWidth)}}
-        }
-
-        ._widget_sideBarContainer.leftSide.scaleDownPusher.select > .mainContent {
-        {{composePrefixedCss("transform","translate3d(0, 0, -{0})", barContentWidth)}}
-        }
-
-        ._widget_sideBarContainer.leftSide.scaleUp.select > .mainContent {
-        {{composePrefixedCss("transform","translate3d({0}, 0, 0)", barContentWidth)}}
-        }
-
-        ._widget_sideBarContainer.leftSide.fallDown.select > .mainContent {
-        {{composePrefixedCss("transform","translate3d({0}, 0, 0)", barContentWidth)}}
-        }
-
-        ._widget_sideBarContainer.leftSide.delayed3DRotate.select > .mainContent {
-        {{composePrefixedCss("transform","translate3d({0}, 0, 0)", barContentWidth)}}
-        }
-    </style>
-
     <div class="_widget_sideBarContainer" version="1.0.0" ng-class="[transition, side, overlay]"
          ng-show="transition|in:['slideInOnTop', 'reveal', 'slideAlong', 'reverseSlideOut', 'scaleDownPusher', 'scaleUp', 'scaleRotatePusher', 'openDoor', 'fallDown']">
-        <div ui-multi-transclude="barContent" class="barContent" ng-style="{'width':barContentWidth}" ng-click="$event.stopPropagation()"></div>
+        <div ui-multi-transclude="barContent" class="barContent" ng-click="$event.stopPropagation()"></div>
         <div ui-multi-transclude="mainContent" class="mainContent" ng-click="hideSideBar($event)"></div>
     </div>
     <div class="_widget_sideBarContainer" version="1.0.0" ng-class="[transition, side, overlay]"
          ng-show="transition|in:['rotatePusher', 'rotateIn3D', 'rotateOut3D', 'delayed3DRotate']">
         <div ui-multi-transclude="mainContent" class="mainContent" ng-click="hideSideBar($event)">
-            <div ui-multi-transclude="barContent" class="barContent" ng-style="{'width':barContentWidth}" ng-click="$event.stopPropagation()"></div>
+            <div ui-multi-transclude="barContent" class="barContent" ng-click="$event.stopPropagation()"></div>
         </div>
     </div>
 </div>

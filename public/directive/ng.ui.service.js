@@ -1295,9 +1295,15 @@ define(
                         }
                     },
                     dispose: function () {
-                        var self = this;
+                        var self = this,
+                            defer = $inject.$q.defer();
 
-                        self.remove();
+                        $inject.$timeout(function () {
+                            self.remove();
+                            defer.resolve();
+                        });
+
+                        return defer.promise;
                     },
                     startMatchReference: function () {
                         var proto = BaseSketchWidgetClass.prototype;
@@ -2047,6 +2053,20 @@ define(
                             self.stateContext = null;
                         }
                     },
+                    fillParent: function () {
+                        var self = this,
+                            $parent = self.$element && self.$element.parent();
+
+                        if ($parent.length) {
+                            var height = $inject.uiUtilService.calculateHeight($parent),
+                                width = $inject.uiUtilService.calculateWidth($parent);
+
+                            self.css("width", width + "px");
+                            self.css("height", height + "px");
+                            self.css("left", "0px");
+                            self.css("top", "0px");
+                        }
+                    },
                     registerTrigger: function () {
                         var self = this;
 
@@ -2550,8 +2570,6 @@ define(
                         }
                     }
                 },
-                fillParent: function () {
-                },
                 setTemporary: function (value) {
                     if (this.isTemporary != value && this.$element) {
                         if (value) {
@@ -2732,9 +2750,13 @@ define(
                     this.widgetSpec = widgetSpec;
                 },
                 dispose: function () {
-                    RepoSketchWidgetClass.prototype.__proto__.dispose.apply(this);
+                    var self = this;
 
-                    $inject.appService.deleteConfigurableArtifact(self.widgetSpec.projectId, self.id, self.widgetSpec.artifactId);
+                    return RepoSketchWidgetClass.prototype.__proto__.dispose.apply(self).then(function () {
+                        return $inject.appService.deleteConfigurableArtifact(self.widgetSpec.projectId, self.id, self.widgetSpec.artifactId);
+                    }, function (err) {
+                        return $inject.uiUtilService.getRejectDefer(err);
+                    });
                 },
                 toJSON: function () {
                     var jsonObj = RepoSketchWidgetClass.prototype.__proto__.toJSON.apply(this);
@@ -2770,9 +2792,6 @@ define(
                                         var defer = $inject.$q.defer();
 
                                         $inject.$timeout(function () {
-                                            self.widgetSpec = loadedSpec;
-                                            self.template = loadedSpec.template;
-
                                             var stateConfiguration = loadedSpec.configuration.state;
                                             if (stateConfiguration) {
                                                 var stateOptions = stateConfiguration.options;
@@ -2839,6 +2858,8 @@ define(
                             _.each(key, function (item) {
                                 if (item.type === "list") {
                                     scope[item.key] = item.pickedOption;
+                                } else if (item.type === "multilevel-list") {
+                                    scope[item.key] = item.pickedOption;
                                 } else if (item.type === "size") {
                                     var m = (item.sizeValue || "").match(/([-\d\.]+)(px|%)+$/)
                                     if (m && m.length == 3) {
@@ -2861,6 +2882,8 @@ define(
                     }
                 },
                 setHandDownConfiguration: function (key, value) {
+                    //FIXME Read default hand down configuration from main.js
+
                     var self = this;
 
                     self.setConfiguration(key, value);
@@ -2884,7 +2907,11 @@ define(
                 applyHandDownConfiguration: function () {
                     var self = this;
 
-                    return $inject.appService.updateConfigurableArtifact(self.handDownConfigurationList);
+                    if (self.handDownConfigurationList.length) {
+                        return $inject.appService.updateConfigurableArtifact(self.widgetSpec.projectId, self.id, self.widgetSpec.artifactId, self.handDownConfigurationList);
+                    } else {
+                        return $inject.uiUtilService.getResolveDefer();
+                    }
 
                 },
                 addState: function () {

@@ -3,12 +3,15 @@
 @import "bootstrap/mixins/gradients";
 @import "global";
 @import "simple-dropdown";
+@import "multilevel-menu";
 @import "color_editor_palette";
 
 $activeColor: #669933;
 $underlineLinearGradient: (rgb(235, 235, 235) 0%, rgb(235, 235, 235) 50%, #fff 100%);
-$maxNumOfItems: 10;
+$maxNumOfItems: 20;
+$maxNumOfHandDownItems: 20;
 
+@include multilevel-menu(null, configurationItemMultilevelList, $activeColor);
 @include simple-dropdown(null, configurationItemList, $activeColor);
 
 @mixin widget-configurator($widgetConfiguratorId) {
@@ -111,6 +114,16 @@ $maxNumOfItems: 10;
                             }
                         }
                     }
+
+                    .handDownConfiguration {
+                        $i: $maxNumOfHandDownItems;
+                        @while $i > 0 {
+                            &:nth-of-type(#{$i}) {
+                                z-index: $maxNumOfHandDownItems - $i + 3;
+                            }
+                            $i: $i - 1;
+                        }
+                    }
                 }
 
                 .configurationPane {
@@ -133,14 +146,6 @@ $maxNumOfItems: 10;
 
                     > .input-group {
                         top: calc(50% - 0.75em);
-                    }
-
-                    $i: $maxNumOfItems;
-                    @while $i > 0 {
-                        &:nth-of-type(#{$i}) {
-                            z-index: $maxNumOfItems - $i + 3;
-                        }
-                        $i: $i - 1;
                     }
 
                     .configurationItemCheckBox {
@@ -425,6 +430,16 @@ $maxNumOfItems: 10;
                         }
 
                         @include color_editor_palette(null, configurationColorPalette);
+                    }
+                }
+
+                .widgetConfiguration {
+                    $i: $maxNumOfItems;
+                    @while $i > 0 {
+                        &:nth-of-type(#{$i}) {
+                            z-index: $maxNumOfItems - $i + 3;
+                        }
+                        $i: $i - 1;
                     }
                 }
             }

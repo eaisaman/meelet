@@ -4,7 +4,7 @@ define(
 
         return {
             js: ["directive/ng.ui.widget.sidebar"],
-            stylesheets: ["stylesheets/widget.css"],
+            stylesheets: [],
             demo: {
                 js: ["demo/demo.js"],
                 stylesheets: ["stylesheets/demo.css", "stylesheets/icons.css"],
@@ -55,9 +55,27 @@ define(
                         {name: "transparent", value: ""}
                     ]
                 },
-                barContentWidth: {
-                    name: "Bar Width",
-                    type: "size"
+                handDownConfiguration: {
+                    barContentWidth: {
+                        name: "Bar Width",
+                        type: "size",
+                        handDown: true
+                    },
+                    overlayColor: {
+                        name: "Overlay Color",
+                        type: "color",
+                        handDown: true
+                    },
+                    mainColor: {
+                        name: "Main Color",
+                        type: "color",
+                        handDown: true
+                    },
+                    barColor: {
+                        name: "Bar Color",
+                        type: "color",
+                        handDown: true
+                    }
                 }
             }
         };

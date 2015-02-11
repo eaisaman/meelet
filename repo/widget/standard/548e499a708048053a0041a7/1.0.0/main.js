@@ -4,7 +4,7 @@ define(
 
         return {
             js: ["directive/ng.ui.widget.modal-window"],
-            stylesheets: ["stylesheets/widget.css"],
+            stylesheets: [],
             demo: {
                 js: ["demo/demo.js"],
                 stylesheets: ["stylesheets/demo.css"],
@@ -49,13 +49,32 @@ define(
                     name: "Perspective",
                     type: "boolean"
                 },
-                modalContentWidth: {
-                    name: "Modal Width",
-                    type: "size"
-                },
-                modalContentHeight: {
-                    name: "Modal Height",
-                    type: "size"
+                handDownConfiguration: {
+                    modalContentWidth: {
+                        name: "Modal Width",
+                        type: "size",
+                        handDown: true
+                    },
+                    modalContentHeight: {
+                        name: "Modal Height",
+                        type: "size",
+                        handDown: true
+                    },
+                    overlayColor: {
+                        name: "Overlay Color",
+                        type: "color",
+                        handDown: true
+                    },
+                    mainColor: {
+                        name: "Main Color",
+                        type: "color",
+                        handDown: true
+                    },
+                    modalColor: {
+                        name: "Modal Color",
+                        type: "color",
+                        handDown: true
+                    }
                 }
             }
         };

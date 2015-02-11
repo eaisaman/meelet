@@ -9,6 +9,54 @@ define(
 
         Util.$inject = ["$timeout", "$q", "angularConstants"];
 
+        Util.prototype.calculateTop = function ($element) {
+            var self = this,
+                m = ($element.css("top") || "").match(/([-\d\.]+)px$/),
+                top;
+            if (m && m.length == 2)
+                top = Math.floor(parseFloat(m[1]) * self.angularConstants.precision) / self.angularConstants.precision;
+            else
+                top = Math.floor(($element.offset().top - $element.parent().offset().top) * self.angularConstants.precision) / self.angularConstants.precision;
+
+            return top;
+        }
+
+        Util.prototype.calculateLeft = function ($element) {
+            var self = this,
+                m = ($element.css("left") || "").match(/([-\d\.]+)px$/),
+                left;
+            if (m && m.length == 2)
+                left = Math.floor(parseFloat(m[1]) * self.angularConstants.precision) / self.angularConstants.precision;
+            else
+                left = Math.floor(($element.offset().left - $element.parent().offset().left) * self.angularConstants.precision) / self.angularConstants.precision;
+
+            return left;
+        }
+
+        Util.prototype.calculateHeight = function ($element) {
+            var self = this,
+                m = ($element.css("height") || "").match(/([-\d\.]+)px$/),
+                height;
+            if (m && m.length == 2)
+                height = Math.floor(parseFloat(m[1]) * self.angularConstants.precision) / self.angularConstants.precision;
+            else
+                height = Math.floor($element.height() * self.angularConstants.precision) / self.angularConstants.precision;
+
+            return height;
+        }
+
+        Util.prototype.calculateWidth = function ($element) {
+            var self = this,
+                m = ($element.css("width") || "").match(/([-\d\.]+)px$/),
+                width;
+            if (m && m.length == 2)
+                width = Math.floor(parseFloat(m[1]) * self.angularConstants.precision) / self.angularConstants.precision;
+            else
+                width = Math.floor($element.height() * self.angularConstants.precision) / self.angularConstants.precision;
+
+            return width;
+        }
+
         Util.prototype.rgbToHsl = function (r, g, b) {
             r /= 255, g /= 255, b /= 255;
             var max = Math.max(r, g, b), min = Math.min(r, g, b);

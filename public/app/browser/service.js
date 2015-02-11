@@ -47,9 +47,12 @@ define(
                     function requireArtifact(artifact) {
                         artifact.stylesheets && artifact.stylesheets.forEach(function (href) {
                             var link = document.createElement("link");
+
                             link.type = "text/css";
                             link.rel = "stylesheet";
                             link.href = "{0}/{1}".format(repoUrl, href);
+                            link.setAttribute("artifact", repoArtifact._id)
+
                             document.getElementsByTagName("head")[0].appendChild(link);
 
                             (loadedSpec.stylesheets = loadedSpec.stylesheets || []).push(link.href);
@@ -150,6 +153,8 @@ define(
                                 link.type = "text/css";
                                 link.rel = "stylesheet";
                                 link.href = "{0}/{1}".format(repoUrl, href);
+                                link.setAttribute("artifact", repoArtifact._id)
+
                                 document.getElementsByTagName("head")[0].appendChild(link);
 
                                 (loadedSpec.demo.stylesheets = loadedSpec.demo.stylesheets || []).push(link.href);
@@ -205,6 +210,7 @@ define(
                         return demoDefer.promise;
                     }
 
+                    $("head link[type='text/css'][artifact={0}]".format(repoArtifact._id)).remove();
                     requireArtifact(artifact).then(
                         function (loadedSpec) {
                             return requireDemo(artifact, loadedSpec);
@@ -379,6 +385,17 @@ define(
                 var defer = self.$q.defer();
 
                 if (result.data.result === "OK") {
+                    $("head link[type='text/css'][widget='{0}']".format(widgetId)).remove();
+
+                    var link = document.createElement("link");
+                    link.type = "text/css";
+                    link.rel = "stylesheet";
+                    link.href = "project/{0}/stylesheets/{1}".format(projectId, result.data.resultValue.css);
+                    link.setAttribute("artifact", artifactId);
+                    link.setAttribute("widget", widgetId);
+
+                    document.getElementsByTagName("head")[0].appendChild(link);
+
                     defer.resolve();
                 } else {
                     self.$timeout(function () {
@@ -413,6 +430,8 @@ define(
                 var defer = self.$q.defer();
 
                 if (result.data.result === "OK") {
+                    $("head link[type='text/css'][widget='{0}']".format(widgetId)).remove();
+
                     defer.resolve();
                 } else {
                     self.$timeout(function () {
@@ -453,6 +472,17 @@ define(
                 var defer = self.$q.defer();
 
                 if (result.data.result === "OK") {
+                    $("head link[type='text/css'][widget='{0}']".format(widgetId)).remove();
+
+                    var link = document.createElement("link");
+                    link.type = "text/css";
+                    link.rel = "stylesheet";
+                    link.href = "project/{0}/stylesheets/{1}".format(projectId, result.data.resultValue.css);
+                    link.setAttribute("artifact", artifactId);
+                    link.setAttribute("widget", widgetId);
+
+                    document.getElementsByTagName("head")[0].appendChild(link);
+
                     configurationArray && configurationArray.splice(0, configurationArray.length);
                     defer.resolve();
                 } else {
@@ -472,6 +502,8 @@ define(
                 return errDefer.promise;
             });
         };
+
+        //FIXME Cache sketch to cookies
 
         appService.prototype.saveSketch = function (projectId, sketchWorks) {
             return this.$http({

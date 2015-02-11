@@ -1,7 +1,19 @@
-$borderColor: rgba(0, 0, 0, 0.4);
-$activeBorderShadow: rgba(192, 192, 192, 0.8);
+@import "compass/css3/transform";
+@import "compass/css3/transition";
+@import "compass/css3/filter";
+@import "compass/css3/box-shadow";
 
-@mixin sidebar($sideBarClass, $version) {
+$default-sidebar-value-map: (
+        sideBarClass: "_widget_sideBarContainer",
+        version: "1.0.0",
+        barContentWidth: 30%,
+        overlayColor: #d4d4d4,
+        overlayOpacity: 0.5,
+        mainColor: #ffffff,
+        barColor: #cccccc
+);
+
+@mixin sidebar($sideBarClass, $version, $barContentWidth, $overlayColor, $overlayOpacity, $mainColor, $barColor) {
 
     .#{$sideBarClass}[version='#{$version}'].rightSide {
         &.overlay {
@@ -12,7 +24,7 @@ $activeBorderShadow: rgba(192, 192, 192, 0.8);
                     left: 0;
                     width: 0;
                     height: 0;
-                    background: rgba(0,0,0,0.2);
+                    background: rgba($overlayColor, $overlayOpacity);
                     content: '';
                     opacity: 1;
                 }
@@ -34,6 +46,7 @@ $activeBorderShadow: rgba(192, 192, 192, 0.8);
             right: 0;
             z-index: 99;
             height: 100%;
+            background-color: $mainColor;
 
             @include transition(transform 0.5s);
 
@@ -51,14 +64,17 @@ $activeBorderShadow: rgba(192, 192, 192, 0.8);
             right: 0;
             z-index: 100;
             visibility: hidden;
+            width: $barContentWidth;
             height: 100%;
             display: none;
+            background-color: $barColor;
 
             @include transition(all 0.5s);
 
             > [name=barContent] {
-                position: relative;
-                float: left;
+                position: absolute;
+                left: 0;
+                top: 0;
                 width: 100%;
                 height: 100%;
             }
@@ -89,14 +105,17 @@ $activeBorderShadow: rgba(192, 192, 192, 0.8);
             }
 
             &.select {
-                >.barContent {
+                > .mainContent {
+                    @include transform(translate3d(-#{$barContentWidth}, 0, 0));
+                }
+
+                > .barContent {
                     visibility: visible;
 
                     @include transition(transform 0.5s);
                 }
             }
         }
-
 
         /* Effect 4: Slide along */
         &.slideAlong {
@@ -106,6 +125,10 @@ $activeBorderShadow: rgba(192, 192, 192, 0.8);
             }
 
             &.select {
+                > .mainContent {
+                    @include transform(translate3d(-#{$barContentWidth}, 0, 0));
+                }
+
                 > .barContent {
                     visibility: visible;
 
@@ -123,6 +146,10 @@ $activeBorderShadow: rgba(192, 192, 192, 0.8);
             }
 
             &.select {
+                > .mainContent {
+                    @include transform(translate3d(-#{$barContentWidth}, 0, 0));
+                }
+
                 > .barContent {
                     visibility: visible;
 
@@ -149,11 +176,13 @@ $activeBorderShadow: rgba(192, 192, 192, 0.8);
 
             &.select {
                 > .mainContent {
+                    @include transform(translate3d(-#{$barContentWidth}, 0, 0) rotateY(15deg));
+
                     > .barContent {
                         visibility: visible;
 
                         @include transition(transform 0.5s);
-                        @include transform(translate3d(100%, 0, 0) rotateY(-15deg));
+                        @include transform(translate3d(0, 0, 0) rotateY(-15deg));
                     }
                 }
             }
@@ -176,6 +205,8 @@ $activeBorderShadow: rgba(192, 192, 192, 0.8);
 
             &.select {
                 > .mainContent {
+                    @include transform(translate3d(-#{$barContentWidth}, 0, 0));
+
                     > .barContent {
                         visibility: visible;
 
@@ -203,6 +234,8 @@ $activeBorderShadow: rgba(192, 192, 192, 0.8);
 
             &.select {
                 > .mainContent {
+                    @include transform(translate3d(-#{$barContentWidth}, 0, 0));
+
                     > .barContent {
                         visibility: visible;
 
@@ -227,6 +260,10 @@ $activeBorderShadow: rgba(192, 192, 192, 0.8);
             }
 
             &.select {
+                > .mainContent {
+                    @include transform(translate3d(0, 0, -300px));
+                }
+
                 > .barContent {
                     visibility: visible;
 
@@ -244,9 +281,15 @@ $activeBorderShadow: rgba(192, 192, 192, 0.8);
             > .barContent {
                 z-index: 1;
                 opacity: 1;
+
+                @include transform(translate3d(0, 0, -#{$barContentWidth}));
             }
 
             &.select {
+                > .mainContent {
+                    @include transform(translate3d(-#{$barContentWidth}, 0, 0));
+                }
+
                 > .barContent {
                     visibility: visible;
 
@@ -323,6 +366,10 @@ $activeBorderShadow: rgba(192, 192, 192, 0.8);
             }
 
             &.select {
+                > .mainContent {
+                    @include transform(translate3d(-#{$barContentWidth}, 0, 0));
+                }
+
                 > .barContent {
                     visibility: visible;
 
@@ -349,6 +396,8 @@ $activeBorderShadow: rgba(192, 192, 192, 0.8);
 
             &.select {
                 > .mainContent {
+                    @include transform(translate3d(-#{$barContentWidth}, 0, 0));
+
                     > .barContent {
                         visibility: visible;
 
@@ -368,7 +417,7 @@ $activeBorderShadow: rgba(192, 192, 192, 0.8);
                     right: 0;
                     width: 0;
                     height: 0;
-                    background: rgba(0,0,0,0.2);
+                    background: rgba($overlayColor, $overlayOpacity);
                     content: '';
                     opacity: 1;
                 }
@@ -390,6 +439,7 @@ $activeBorderShadow: rgba(192, 192, 192, 0.8);
             left: 0;
             z-index: 99;
             height: 100%;
+            background-color: $mainColor;
 
             @include transition(transform 0.5s);
 
@@ -407,13 +457,16 @@ $activeBorderShadow: rgba(192, 192, 192, 0.8);
             left: 0;
             z-index: 100;
             visibility: hidden;
+            width: $barContentWidth;
             height: 100%;
+            background-color: $barColor;
 
             @include transition(all 0.5s);
 
             > [name=barContent] {
-                position: relative;
-                float: left;
+                position: absolute;
+                left: 0;
+                top: 0;
                 width: 100%;
                 height: 100%;
             }
@@ -443,7 +496,11 @@ $activeBorderShadow: rgba(192, 192, 192, 0.8);
             }
 
             &.select {
-                >.barContent {
+                > .mainContent {
+                    @include transform(translate3d(#{$barContentWidth}, 0, 0));
+                }
+
+                > .barContent {
                     visibility: visible;
 
                     @include transition(transform 0.5s);
@@ -459,6 +516,10 @@ $activeBorderShadow: rgba(192, 192, 192, 0.8);
             }
 
             &.select {
+                > .mainContent {
+                    @include transform(translate3d(#{$barContentWidth}, 0, 0));
+                }
+
                 > .barContent {
                     visibility: visible;
 
@@ -476,6 +537,10 @@ $activeBorderShadow: rgba(192, 192, 192, 0.8);
             }
 
             &.select {
+                > .mainContent {
+                    @include transform(translate3d(#{$barContentWidth}, 0, 0));
+                }
+
                 > .barContent {
                     visibility: visible;
 
@@ -502,6 +567,8 @@ $activeBorderShadow: rgba(192, 192, 192, 0.8);
 
             &.select {
                 > .mainContent {
+                    @include transform(translate3d(#{$barContentWidth}, 0, 0) rotateY(-15deg));
+
                     > .barContent {
                         visibility: visible;
 
@@ -529,6 +596,8 @@ $activeBorderShadow: rgba(192, 192, 192, 0.8);
 
             &.select {
                 > .mainContent {
+                    @include transform(translate3d(#{$barContentWidth}, 0, 0));
+
                     > .barContent {
                         visibility: visible;
 
@@ -556,6 +625,8 @@ $activeBorderShadow: rgba(192, 192, 192, 0.8);
 
             &.select {
                 > .mainContent {
+                    @include transform(translate3d(#{$barContentWidth}, 0, 0));
+
                     > .barContent {
                         visibility: visible;
 
@@ -580,6 +651,10 @@ $activeBorderShadow: rgba(192, 192, 192, 0.8);
             }
 
             &.select {
+                > .mainContent {
+                    @include transform(translate3d(0, 0, -300px));
+                }
+
                 > .barContent {
                     visibility: visible;
 
@@ -597,9 +672,15 @@ $activeBorderShadow: rgba(192, 192, 192, 0.8);
             > .barContent {
                 z-index: 1;
                 opacity: 1;
+
+                @include transform(translate3d(0, 0, -#{$barContentWidth}));
             }
 
             &.select {
+                > .mainContent {
+                    @include transform(translate3d(#{$barContentWidth}, 0, 0));
+                }
+
                 > .barContent {
                     visibility: visible;
 
@@ -676,6 +757,10 @@ $activeBorderShadow: rgba(192, 192, 192, 0.8);
             }
 
             &.select {
+                > .mainContent {
+                    @include transform(translate3d(#{$barContentWidth}, 0, 0));
+                }
+
                 > .barContent {
                     visibility: visible;
 
@@ -702,6 +787,8 @@ $activeBorderShadow: rgba(192, 192, 192, 0.8);
 
             &.select {
                 > .mainContent {
+                    @include transform(translate3d(#{$barContentWidth}, 0, 0));
+
                     > .barContent {
                         visibility: visible;
 

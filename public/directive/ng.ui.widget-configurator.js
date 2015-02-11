@@ -28,14 +28,16 @@ define(
                                     scope: scope
                                 }));
 
-                                function createConfigurationObject(value, key) {
-                                    var obj = _.extend(value, {key: key});
+                                function createConfigurationObject(value, key, index) {
+                                    var obj = _.extend({}, value, {key: key, index: index});
                                     if (obj.type === "boundReadList") {
                                         obj.options = scope.configurableWidget.getConfiguration(obj.listName);
                                         obj.pickedOption = scope.configurableWidget.getConfiguration(key);
                                     } else if (obj.type === "boundWriteList") {
                                         obj.options = scope.configurableWidget.getConfiguration(obj.listName);
                                     } else if (obj.type === "list") {
+                                        obj.pickedOption = scope.configurableWidget.getConfiguration(key);
+                                    } else if (obj.type === "multilevel-list") {
                                         obj.pickedOption = scope.configurableWidget.getConfiguration(key);
                                     } else if (obj.type === "size") {
                                         obj.sizeValue = scope.configurableWidget.getConfiguration(key);
@@ -45,10 +47,6 @@ define(
                                         obj.textValue = scope.configurableWidget.getConfiguration(key);
                                     } else if (obj.type === "color") {
                                         obj.colorValue = scope.configurableWidget.getConfiguration(key);
-                                        if (obj.colorValue) {
-                                            obj.backgroundColorValue = uiUtilService.contrastColor(obj.colorValue);
-                                            obj.colorIsSet = true;
-                                        }
                                     }
 
                                     return obj;
@@ -62,11 +60,11 @@ define(
                                             handDownConfiguration = [];
 
                                         _.each(_.omit(scope.widgetSpec.configuration, "state", "handDownConfiguration"), function (value, key) {
-                                            configuration.push(createConfigurationObject(value, key));
+                                            configuration.push(createConfigurationObject(value, key, configuration.length));
                                         });
 
                                         _.each(scope.widgetSpec.configuration.handDownConfiguration && scope.widgetSpec.configuration.handDownConfiguration, function (value, key) {
-                                            handDownConfiguration.push(createConfigurationObject(value, key));
+                                            handDownConfiguration.push(createConfigurationObject(value, key, handDownConfiguration.length));
                                         });
 
                                         scope.widgetSpec.configuration = configuration;
@@ -74,7 +72,7 @@ define(
                                     }
                                 });
 
-                                scope.toggleSelectConfigurationColor = function (event) {
+                                scope.toggleSelectConfigurationColor = function (item, event) {
                                     event && event.stopPropagation && event.stopPropagation();
 
                                     var $colorBar = $(event.currentTarget),
@@ -82,6 +80,7 @@ define(
                                         $palette = $colorBar.siblings(".configurationColorPalette"),
                                         paletteScope = angular.element($palette.find("> :first-child")).scope();
 
+                                    scope.pickedItem = item;
                                     if ($colorPane.hasClass("select")) {
                                         paletteScope.closePalette().then(function () {
                                             return scope.toggleSelect($colorPane);
@@ -102,15 +101,11 @@ define(
                                     });
                                 }
 
-                                scope.setColorItem = function (item) {
-                                    item.contrastColorValue = uiUtilService.contrastColor(item.colorValue);
-                                    item.colorIsSet = false;
-
-                                    $timeout(function () {
-                                        item.colorIsSet = true;
+                                scope.initHandDownColorStyle = function (item) {
+                                    $("#handDownConfiguration-" + item.index + " .configurationColorPickerPane").css({
+                                        'color': uiUtilService.contrastColor(item.colorValue),
+                                        'background-color': item.colorValue
                                     });
-
-                                    scope.setItem(item);
                                 }
 
                                 scope.setItem = function (item) {
@@ -118,6 +113,8 @@ define(
                                         setterFn = item.handDown && widgetObj.setHandDownConfiguration || widgetObj.setConfiguration;
 
                                     if (item.type === "list") {
+                                        setterFn.apply(widgetObj, [item.key, item.pickedOption]);
+                                    } else if (item.type === "multilevel-list") {
                                         setterFn.apply(widgetObj, [item.key, item.pickedOption]);
                                     } else if (item.type === "number") {
                                         var m = (item.numberValue || "").match(/([-\d\.]+)(px|%)+$/)
@@ -130,6 +127,7 @@ define(
                                         setterFn.apply(widgetObj, [item.key, item.textValue]);
                                     } else if (item.type === "color") {
                                         setterFn.apply(widgetObj, [item.key, item.colorValue]);
+                                        item.handDown && scope.initHandDownColorStyle(item);
                                     } else if (item.type === "boundReadList") {
                                         setterFn.apply(widgetObj, [item.key, item.pickedOption]);
                                     }

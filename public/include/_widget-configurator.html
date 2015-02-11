@@ -6,21 +6,29 @@
         <span>{{widgetSpec.name}}</span>
     </div>
     <div class="configurationPalette ui-control-panel">
-        <div class="configurationPane" ng-repeat="configurationItem in widgetSpec.configuration">
+        <div class="configurationPane widgetConfiguration" ng-repeat="configurationItem in widgetSpec.configuration">
             <div class="input-group col-as-12 fs-x-smaller">
                 <label class="col-as-5 no-padding-right control-label">{{configurationItem.name}}</label>
 
                 <div ng-if="configurationItem.type === 'list'"
                      class="configurationItemList col-as-7 no-padding stackAndRotateSelect"
                      ui-simple-dropdown
-                     ui-simple-dropdown-opts="{dataField:'value', labelField:'name', zIndex:1000, gutter: 5, showTitle: true, displayUnsetOption: false, zIndex: 100}"
+                     ui-simple-dropdown-opts="{dataField:'value', labelField:'name', zIndex:100, gutter: 5, showTitle: true, displayUnsetOption: false}"
                      selection-list="configurationItem.options" select-item="configurationItem.pickedOption"
                      on-option-select="setItem(configurationItem)">
+                </div>
+                <div ng-if="configurationItem.type === 'multilevel-list'"
+                     class="configurationItemMultilevelList col-as-7 no-padding" ui-multilevel-menu
+                     menu-list="configurationItem.options"
+                     ui-multilevel-menu-opts="{dataField:'value', labelField:'name', zIndex:101}"
+                     picked-menu-item="configurationItem.pickedOption"
+                     on-menu-select="setItem(configurationItem)">
+                    {{configurationItem.pickedOption || 'Choose a transition'}}
                 </div>
                 <div ng-if="configurationItem.type === 'boundReadList'"
                      class="configurationItemList col-as-7 no-padding stackAndRotateSelect"
                      ui-simple-dropdown
-                     ui-simple-dropdown-opts="{dataField:'name', labelField:'name', zIndex:1000, gutter: 5, showTitle: true, displayUnsetOption: false, zIndex: 100}"
+                     ui-simple-dropdown-opts="{dataField:'name', labelField:'name', zIndex:102, gutter: 5, showTitle: true, displayUnsetOption: false}"
                      selection-list="configurationItem.options" select-item="configurationItem.pickedOption"
                      on-option-select="setItem(configurationItem)">
                 </div>
@@ -66,21 +74,22 @@
                 </div>
             </div>
         </div>
-        <div class="handDownConfigurationGroup" ng-if="widgetSpec.handDownConfiguration.length">
+        <div class="handDownConfigurationGroup widgetConfiguration" ng-if="widgetSpec.handDownConfiguration.length">
             <div class="handDownConfigurationBar fs-x-smaller">
                 <span class="handDownButton fs-x-large-before col-as-3 no-padding icon-widget-configurator-before icon-widget-configurator-loading-bubbles-before"
                       ng-class="{'dirty':pickedWidget.handDownConfigurationList && pickedWidget.handDownConfigurationList.length, 'handingDown':widgetSpec.isApplyingHandDown}"
                       ng-click="applyHandDownConfiguration($event)"></span>
                 <span class="handDownTitle col-as-9 no-padding">Hand Down Configuration</span>
             </div>
-            <div class="configurationPane" ng-repeat="configurationItem in widgetSpec.handDownConfiguration">
+            <div ng-attr-id="handDownConfiguration-{{$index}}" class="configurationPane handDownConfiguration"
+                 ng-repeat="configurationItem in widgetSpec.handDownConfiguration">
                 <div class="input-group col-as-12 fs-x-smaller">
                     <label class="col-as-5 no-padding-right control-label">{{configurationItem.name}}</label>
 
                     <div ng-if="configurationItem.type === 'list'"
                          class="configurationItemList col-as-7 no-padding stackAndRotateSelect"
                          ui-simple-dropdown
-                         ui-simple-dropdown-opts="{dataField:'value', labelField:'name', zIndex:1000, gutter: 5, showTitle: true, displayUnsetOption: false, zIndex: 100}"
+                         ui-simple-dropdown-opts="{dataField:'value', labelField:'name', zIndex:200, gutter: 5, showTitle: true, displayUnsetOption: false}"
                          selection-list="configurationItem.options" select-item="configurationItem.pickedOption"
                          on-option-select="setItem(configurationItem)">
                     </div>
@@ -88,20 +97,17 @@
                          class="configurationItemNumber col-as-7 no-padding-left">
                         <input type="text" class="form-control" ng-model="configurationItem.sizeValue"/>
                     </div>
-                    <div ng-if="configurationItem.type === 'color'"
+                    <div ng-if="configurationItem.type === 'color'" ng-init="initHandDownColorStyle(configurationItem)"
                          class="configurationItemColor col-as-7 no-padding-left">
                         <div class="configurationColorBar fs-x-smaller"
-                             ng-click="toggleSelectConfigurationColor($event)">
-                            <div class="configurationColorPickerPane"
-                                 ng-style="{'color':'{{configurationItem.contrastColorValue}}', 'background-color':'{{configurationItem.colorValue}}'}"
-                                 ng-if="configurationItem.colorIsSet">
+                             ng-click="toggleSelectConfigurationColor(configurationItem, $event)">
+                            <div class="configurationColorPickerPane">
                                 {{configurationItem.colorValue}}
                             </div>
                         </div>
 
                         <div class="configurationColorPalette" ui-color-editor-palette
-                             selected-color="configurationItem.colorValue"
-                             on-color-select="setColorItem(configurationItem)"></div>
+                             selected-color="pickedItem.colorValue" on-color-select="setItem(pickedItem)"></div>
                     </div>
                 </div>
             </div>

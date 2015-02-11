@@ -89,7 +89,9 @@ define(
                 var widgetObj = $scope.sketchObject.pickedWidget;
 
                 if (widgetObj && !widgetObj.isTemporary && !widgetObj.isKindOf("PageSketchWidget")) {
-                    widgetObj.dispose();
+                    widgetObj.dispose().then(function () {
+                        $scope.sketchObject.pickedWidget = null;
+                    });
                 }
             }
 

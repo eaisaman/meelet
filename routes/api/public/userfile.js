@@ -117,7 +117,7 @@ UserFileController.prototype.deleteConfigurableArtifact = function (projectId, w
 UserFileController.prototype.putConfigurableArtifact = function (projectId, widgetId, artifactId, configuration, success, fail) {
     if (projectId) {
         configuration = (configuration && JSON.parse(configuration)) || {};
-        commons.removeConfigurableArtifact(projectId, widgetId, artifactId, configuration, function (err, cssName) {
+        commons.updateConfigurableArtifact(projectId, widgetId, artifactId, configuration, function (err, cssName) {
             if (!err) {
                 success({css: cssName});
             } else {

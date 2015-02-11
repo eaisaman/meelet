@@ -1,0 +1,29 @@
+@import "sass/modal-window";
+<% if (configuration) {
+%>
+$configuration: <%= configuration %>;
+$configurable-modal-window-value-map: map-merge($default-modal-window-value-map, $configuration);
+<%
+widgetId.forEach(function(id, index) {
+%>
+#<%= id %>
+<% if (index < widgetId.length - 1) { %>,<% } %>
+<%
+});
+%>
+{
+@include modal-window($configurable-modal-window-value-map...);
+}
+<%
+} else {
+        widgetId.forEach(function(id) {
+%>
+@import "configuration-<%= id %>";
+$configuration-<%= id %>: map-merge($default-modal-window-value-map, $configuration-<%= id %>);
+#<%= id %>
+{
+@include modal-window($configuration-<%= id %>...);
+}
+<%
+});}
+%>

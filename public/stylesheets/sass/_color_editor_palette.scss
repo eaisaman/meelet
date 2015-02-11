@@ -19,6 +19,7 @@ $activeBackgroundColor: rgba(0, 0, 0, 0.3);
         min-width: 12em;
         background: #fff;
         border: 1px solid $borderColor;
+        pointer-events: none;
 
         @include animation-duration(0.3s);
 
@@ -31,6 +32,17 @@ $activeBackgroundColor: rgba(0, 0, 0, 0.3);
             content: '';
             border-top: 1px solid $borderColor;
             border-bottom: 1px solid #FFF;
+        }
+
+        &.show {
+            pointer-events: auto;
+
+            > .tabContents > div[tab-sel^='tab-content'].select {
+                pointer-events: auto;
+                opacity: 1;
+
+                @extend %flipDown;
+            }
         }
 
         > .topBar {
@@ -197,12 +209,6 @@ $activeBackgroundColor: rgba(0, 0, 0, 0.3);
                 @include box-shadow(0 4px 3px #555);
                 @include flipDownOrigin();
                 @include animation-duration(0.3s);
-
-                &.select {
-                    pointer-events: auto;
-                    opacity: 1;
-                    @extend %flipDown;
-                }
             }
         }
 
