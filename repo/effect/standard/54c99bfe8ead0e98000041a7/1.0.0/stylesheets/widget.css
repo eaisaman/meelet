@@ -155,7 +155,7 @@
     transform: translateX(10px);
   }
 }
-[ui-effect-creative-button-1-0-0][effect=sunken] {
+[ui-effect-creative-button-1-0-0][effect=sunken]:active {
   background: rgba(0, 0, 0, 0.1);
   -moz-box-shadow: 0 1px 4px 1px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset, 0 1px 1px #ddd inset, 0 2px 1px #d6d6d6 inset, 0 3px 1px #ccc inset, 0 4px 1px #c5c5c5 inset, 0 5px 1px #c1c1c1 inset, 0 6px 1px #bbb inset, 0 7px 1px #777 inset, 0 8px 3px 1px rgba(0, 0, 0, 0.6) inset, 0 9px 5px 1px rgba(0, 0, 0, 0.3) inset, 0 10px 7px 0 rgba(0, 0, 0, 0.2) inset, 0 11px 17px 0 rgba(0, 0, 0, 0.2) inset, 0 12px 21px 0 rgba(0, 0, 0, 0.1) inset, 0 13px 25px 0 rgba(0, 0, 0, 0.1) inset;
   -webkit-box-shadow: 0 1px 4px 1px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset, 0 1px 1px #ddd inset, 0 2px 1px #d6d6d6 inset, 0 3px 1px #ccc inset, 0 4px 1px #c5c5c5 inset, 0 5px 1px #c1c1c1 inset, 0 6px 1px #bbb inset, 0 7px 1px #777 inset, 0 8px 3px 1px rgba(0, 0, 0, 0.6) inset, 0 9px 5px 1px rgba(0, 0, 0, 0.3) inset, 0 10px 7px 0 rgba(0, 0, 0, 0.2) inset, 0 11px 17px 0 rgba(0, 0, 0, 0.2) inset, 0 12px 21px 0 rgba(0, 0, 0, 0.1) inset, 0 13px 25px 0 rgba(0, 0, 0, 0.1) inset;

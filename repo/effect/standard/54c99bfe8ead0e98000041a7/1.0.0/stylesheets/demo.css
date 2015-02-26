@@ -1,4 +1,4 @@
-[ui-effect-creative-button-demo-1-0-0][effect=sonar]:active, [ui-effect-creative-button-demo-1-0-0][effect=shrink]:active, [ui-effect-creative-button-demo-1-0-0][effect=shake]:active {
+[ui-effect-creative-button-demo-1-0-0][effect=sonar], [ui-effect-creative-button-demo-1-0-0][effect=shrink], [ui-effect-creative-button-demo-1-0-0][effect=shake] {
   -moz-animation-duration: 1s;
   -webkit-animation-duration: 1s;
   animation-duration: 1s;
@@ -11,7 +11,7 @@
   backface-visibility: none;
 }
 
-[ui-effect-creative-button-demo-1-0-0][effect=sonar]:active {
+[ui-effect-creative-button-demo-1-0-0][effect=sonar] {
   -moz-animation-name: _effect_creativeButton_sonarEffect;
   -webkit-animation-name: _effect_creativeButton_sonarEffect;
   animation-name: _effect_creativeButton_sonarEffect;
@@ -29,7 +29,7 @@
   animation-delay: 75ms;
 }
 
-[ui-effect-creative-button-demo-1-0-0][effect=shrink]:active {
+[ui-effect-creative-button-demo-1-0-0][effect=shrink] {
   -moz-animation-name: _effect_creativeButton_shrink;
   -webkit-animation-name: _effect_creativeButton_shrink;
   animation-name: _effect_creativeButton_shrink;
@@ -41,7 +41,7 @@
   animation-timing-function: forward;
 }
 
-[ui-effect-creative-button-demo-1-0-0][effect=shake]:active {
+[ui-effect-creative-button-demo-1-0-0][effect=shake] {
   -moz-animation-name: _effect_creativeButton_shake;
   -webkit-animation-name: _effect_creativeButton_shake;
   animation-name: _effect_creativeButton_shake;

@@ -1,0 +1,151 @@
+@import "compass/css3/box-shadow";
+@import "compass/css3/transform";
+@import "compass/css3/transition";
+@import "public/global";
+
+.widgetDemoContainer {
+    position: relative;
+    float: left;
+    width: 100%;
+    height: auto;
+    background: #333;
+
+    a:focus {
+        outline: thin dotted;
+    }
+    a:hover, a:active {
+        outline: 0;
+    }
+    a {
+        text-decoration: none;
+        color: #2980b9;
+        -webkit-transition: 0.3s;
+        -moz-transition: 0.3s;
+        -o-transition: 0.3s;
+        transition: 0.3s;
+    }
+    a:hover, a:focus {
+        color: #3498db;
+    }
+    a:active {
+        color: #e0e0e0;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        margin: 0.625em 0;
+        font-weight: inherit;
+        line-height: 1.4em;
+        clear: both;
+    }
+    h1 {
+        font-size: 2.457em;
+    }
+    h2 {
+        font-size: 2.169em;
+    }
+    h3 {
+        font-size: 1.877em;
+    }
+    h4 {
+        font-size: 1.433em;
+    }
+    h5 {
+        font-size: 1.322em;
+    }
+    h6 {
+        font-size: 1.211em;
+    }
+    hr {
+        background-color: #ccc;
+        border: 0;
+        height: 1px;
+        margin-bottom: 1.5em;
+    }
+
+    /*animation*/
+    #timing {
+        -webkit-animation-duration: 1s;
+        -moz-animation-duration: 1s;
+        -o-animation-duration: 1s;
+        animation-duration: 1s;
+        -webkit-animation-fill-mode: both;
+        -moz-animation-fill-mode: both;
+        -o-animation-fill-mode: both;
+        animation-fill-mode: both;
+    }
+
+    /*style for the demo*/
+    #testbox {
+        width: 30%;
+        float: left;
+        position: relative;
+        z-index: 11;
+        height: auto;
+    }
+    #testbox #retrobox {
+        width: 100px;
+        height: 100px;
+        left: 12%;
+        position: fixed;
+        z-index: 12;
+        top: 200px;
+        text-align: center;
+        line-height: 100px;
+        font-size: 2em;
+        border: 2px solid #fff;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        border-radius: 4px;
+        -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+    }
+    #testbox #timing {
+        width: 100px;
+        height: 100px;
+        left: 12%;
+        position: fixed;
+        top: 200px;
+        z-index: 13;
+        text-align: center;
+        line-height: 100px;
+        font-size: 2.4em;
+        background: #EF4836;
+        color: #fff;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+    }
+    #cssoptions {
+        width: 70%;
+        height: 100%;
+        padding: 60px 4%;
+        float: right;
+        position: relative;
+        overflow: auto;
+    }
+    #cssoptions h3 {
+        font-weight: 100;
+        color: #fff;
+    }
+    #cssoptions .btn {
+        display: block;
+        float: left;
+        margin: 10px 10px 10px 0;
+        padding: 12px 18px;
+        background: #333;
+        background: rgba(0, 0, 0, 0.3);
+        border: 2px solid #fff;
+        color: #fff;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    #cssoptions .btn:hover {
+        background: #333;
+        background: rgba(0, 0, 0, 0.6);
+    }
+}

@@ -30,7 +30,8 @@ define(
                         {name: "alignBottom", value: "alignBottom"},
                         {name: "alignLeft", value: "alignLeft"},
                         {name: "alignRight", value: "alignRight"}
-                    ]
+                    ],
+                    defaultValue: "alignTop"
                 },
                 transition: {
                     name: "Transition",
@@ -283,23 +284,27 @@ define(
                             name: "slide",
                             value: "slide"
                         }
-                    ]
+                    ],
+                    defaultValue: "moveToLeft"
                 },
                 handDownConfiguration: {
                     tabBackgroundColor: {
                         name: "Background Color",
                         type: "color",
-                        handDown: true
+                        handDown: true,
+                        defaultValue: "#d4d4d4"
                     },
                     titleBackgroundColor: {
                         name: "Title Color",
                         type: "color",
-                        handDown: true
+                        handDown: true,
+                        defaultValue: "#838383"
                     },
                     activeTitleBackgroundColor: {
                         name: "Active Color",
                         type: "color",
-                        handDown: true
+                        handDown: true,
+                        defaultValue: "#fffff"
                     }
                 }
             }

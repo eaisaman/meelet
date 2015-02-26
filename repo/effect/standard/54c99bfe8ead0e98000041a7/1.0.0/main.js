@@ -3,6 +3,7 @@ define(
     function () {
 
         return {
+            directiveName: "ui-effect-creative-button",
             js: [],
             stylesheets: ["stylesheets/widget.css"],
             demo: {

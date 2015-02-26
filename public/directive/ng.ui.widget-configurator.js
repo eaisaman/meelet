@@ -31,22 +31,12 @@ define(
                                 function createConfigurationObject(value, key, index) {
                                     var obj = _.extend({}, value, {key: key, index: index});
                                     if (obj.type === "boundReadList") {
-                                        obj.options = scope.configurableWidget.getConfiguration(obj.listName);
-                                        obj.pickedOption = scope.configurableWidget.getConfiguration(key);
+                                        obj.options = scope.configurableWidget.getScopedValue(obj.listName);
+                                        obj.pickedValue = scope.configurableWidget.getConfiguration(key);
                                     } else if (obj.type === "boundWriteList") {
-                                        obj.options = scope.configurableWidget.getConfiguration(obj.listName);
-                                    } else if (obj.type === "list") {
-                                        obj.pickedOption = scope.configurableWidget.getConfiguration(key);
-                                    } else if (obj.type === "multilevel-list") {
-                                        obj.pickedOption = scope.configurableWidget.getConfiguration(key);
-                                    } else if (obj.type === "size") {
-                                        obj.sizeValue = scope.configurableWidget.getConfiguration(key);
-                                    } else if (obj.type === "boolean") {
-                                        obj.booleanValue = scope.configurableWidget.getConfiguration(key);
-                                    } else if (obj.type === "text") {
-                                        obj.textValue = scope.configurableWidget.getConfiguration(key);
-                                    } else if (obj.type === "color") {
-                                        obj.colorValue = scope.configurableWidget.getConfiguration(key);
+                                        obj.options = scope.configurableWidget.getScopedValue(obj.listName);
+                                    } else {
+                                        obj.pickedValue = scope.configurableWidget.getConfiguration(key);
                                     }
 
                                     return obj;
@@ -103,41 +93,31 @@ define(
 
                                 scope.initHandDownColorStyle = function (item) {
                                     $("#handDownConfiguration-" + item.index + " .configurationColorPickerPane").css({
-                                        'color': uiUtilService.contrastColor(item.colorValue),
-                                        'background-color': item.colorValue
+                                        'color': uiUtilService.contrastColor(item.pickedValue),
+                                        'background-color': item.pickedValue
                                     });
                                 }
 
                                 scope.setItem = function (item) {
-                                    var widgetObj = scope.configurableWidget,
-                                        setterFn = item.handDown && widgetObj.setHandDownConfiguration || widgetObj.setConfiguration;
+                                    var widgetObj = scope.configurableWidget;
 
-                                    if (item.type === "list") {
-                                        setterFn.apply(widgetObj, [item.key, item.pickedOption]);
-                                    } else if (item.type === "multilevel-list") {
-                                        setterFn.apply(widgetObj, [item.key, item.pickedOption]);
-                                    } else if (item.type === "number") {
-                                        var m = (item.numberValue || "").match(/([-\d\.]+)(px|%)+$/)
+                                    if (item.type === "number") {
+                                        var m = (item.pickedValue || "").match(/([-\d\.]+)(px|%)+$/)
                                         if (m && m.length == 3) {
-                                            setterFn.apply(widgetObj, [item.key, item.numberValue]);
+                                            widgetObj.setConfiguration(item.key, item.pickedValue);
                                         }
-                                    } else if (item.type === "boolean") {
-                                        setterFn.apply(widgetObj, [item.key, item.booleanValue]);
-                                    } else if (item.type === "text") {
-                                        setterFn.apply(widgetObj, [item.key, item.textValue]);
                                     } else if (item.type === "color") {
-                                        setterFn.apply(widgetObj, [item.key, item.colorValue]);
+                                        widgetObj.setConfiguration(item.key, item.pickedValue);
                                         item.handDown && scope.initHandDownColorStyle(item);
-                                    } else if (item.type === "boundReadList") {
-                                        setterFn.apply(widgetObj, [item.key, item.pickedOption]);
+                                    } else {
+                                        widgetObj.setConfiguration(item.key, item.pickedValue);
                                     }
                                 }
 
                                 scope.createConfigurationItemOption = function (item, event) {
                                     event && event.stopPropagation();
 
-                                    var widgetObj = scope.configurableWidget,
-                                        $el = $(event.target).siblings("input"),
+                                    var $el = $(event.target).siblings("input"),
                                         optionName = $el.val();
 
                                     if (optionName) {
@@ -163,7 +143,7 @@ define(
                                         })) {
                                         item.options.splice(index, 1);
                                         if (!item.options.length) {
-                                            item.pickedOption = "";
+                                            item.pickedValue = "";
                                         }
                                     }
                                 }
@@ -208,8 +188,7 @@ define(
                                     return fn;
                                 }
 
-                                createConfigurationItemAssign("configurationItem.sizeValue");
-                                createConfigurationItemAssign("configurationItem.textValue");
+                                createConfigurationItemAssign("configurationItem.pickedValue");
                             },
                             post: function (scope, element, attrs) {
                                 scope.togglePalette = function (event) {

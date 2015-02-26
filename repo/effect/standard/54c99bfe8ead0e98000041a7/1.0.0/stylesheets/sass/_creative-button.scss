@@ -6,21 +6,15 @@
 @mixin creative-button($artifactName, $version, $pseudo: "") {
     [#{$artifactName}-#{str_replace($version, '.', '-')}] {
         &[effect=sonar] {
-            &#{$pseudo} {
-                @extend %_effect_creativeButton_sonarEffect;
-            }
+            @extend %_effect_creativeButton_sonarEffect;
         }
 
         &[effect=shake] {
-            &#{$pseudo} {
-                @extend %_effect_creativeButton_shake;
-            }
+            @extend %_effect_creativeButton_shake;
         }
 
         &[effect=shrink] {
-            &#{$pseudo} {
-                @extend %_effect_creativeButton_shrink;
-            }
+            @extend %_effect_creativeButton_shrink;
         }
 
         &[effect=sunken] {

@@ -1,0 +1,360 @@
+@font-face {
+    font-family: 'icon-standard-regular';
+    src: url('icon-standard-regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.icon-standard-regular:before {
+    font-family: 'icon-standard-regular';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-standard-regular-before:before {
+    font-family: 'icon-standard-regular';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-standard-regular-after:after {
+    font-family: 'icon-standard-regular';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-standard-regular-arrow-left:before {
+    content: "\e600";
+}
+
+.icon-standard-regular-arrow-right:before {
+    content: "\e601";
+}
+
+.icon-standard-regular-arrow-up:before {
+    content: "\e602";
+}
+
+.icon-standard-regular-arrow-down:before {
+    content: "\e603";
+}
+
+.icon-standard-regular-circle-shape:before {
+    content: "\e604";
+}
+
+.icon-standard-regular-square-shape:before {
+    content: "\e605";
+}
+
+.icon-standard-regular-simple-arrow-left:before {
+    content: "\e606";
+}
+
+.icon-standard-regular-simple-arrow-down:before {
+    content: "\e607";
+}
+
+.icon-standard-regular-simple-arrow-up:before {
+    content: "\e608";
+}
+
+.icon-standard-regular-simple-arrow-right:before {
+    content: "\e609";
+}
+
+.icon-standard-regular-thick-arrow-left:before {
+    content: "\e60a";
+}
+
+.icon-standard-regular-thick-arrow-down:before {
+    content: "\e60b";
+}
+
+.icon-standard-regular-thick-arrow-up:before {
+    content: "\e60c";
+}
+
+.icon-standard-regular-thick-arrow-right:before {
+    content: "\e60d";
+}
+
+.icon-standard-regular-inner-arrow-up:before {
+    content: "\e60e";
+}
+
+.icon-standard-regular-inner-arrow-right:before {
+    content: "\e60f";
+}
+
+.icon-standard-regular-inner-arrow-down:before {
+    content: "\e610";
+}
+
+.icon-standard-regular-inner-arrow-left:before {
+    content: "\e611";
+}
+
+.icon-standard-regular-nav-arrow-nw:before {
+    content: "\e612";
+}
+
+.icon-standard-regular-nav-arrow-ne:before {
+    content: "\e613";
+}
+
+.icon-standard-regular-nav-arrow-se:before {
+    content: "\e614";
+}
+
+.icon-standard-regular-nav-arrow-sw:before {
+    content: "\e615";
+}
+
+.icon-standard-regular-angle-double-left:before {
+    content: "\e616";
+}
+
+.icon-standard-regular-angle-double-right:before {
+    content: "\e617";
+}
+
+.icon-standard-regular-angle-double-up:before {
+    content: "\e618";
+}
+
+.icon-standard-regular-angle-double-down:before {
+    content: "\e619";
+}
+
+.icon-standard-regular-arrow-left-before:before {
+    content: "\e600";
+}
+
+.icon-standard-regular-arrow-right-before:before {
+    content: "\e601";
+}
+
+.icon-standard-regular-arrow-up-before:before {
+    content: "\e602";
+}
+
+.icon-standard-regular-arrow-down-before:before {
+    content: "\e603";
+}
+
+.icon-standard-regular-circle-shape-before:before {
+    content: "\e604";
+}
+
+.icon-standard-regular-square-shape-before:before {
+    content: "\e605";
+}
+
+.icon-standard-regular-simple-arrow-left-before:before {
+    content: "\e606";
+}
+
+.icon-standard-regular-simple-arrow-down-before:before {
+    content: "\e607";
+}
+
+.icon-standard-regular-simple-arrow-up-before:before {
+    content: "\e608";
+}
+
+.icon-standard-regular-simple-arrow-right-before:before {
+    content: "\e609";
+}
+
+.icon-standard-regular-thick-arrow-left-before:before {
+    content: "\e60a";
+}
+
+.icon-standard-regular-thick-arrow-down-before:before {
+    content: "\e60b";
+}
+
+.icon-standard-regular-thick-arrow-up-before:before {
+    content: "\e60c";
+}
+
+.icon-standard-regular-thick-arrow-right-before:before {
+    content: "\e60d";
+}
+
+.icon-standard-regular-inner-arrow-up-before:before {
+    content: "\e60e";
+}
+
+.icon-standard-regular-inner-arrow-right-before:before {
+    content: "\e60f";
+}
+
+.icon-standard-regular-inner-arrow-down-before:before {
+    content: "\e610";
+}
+
+.icon-standard-regular-inner-arrow-left-before:before {
+    content: "\e611";
+}
+
+.icon-standard-regular-nav-arrow-nw-before:before {
+    content: "\e612";
+}
+
+.icon-standard-regular-nav-arrow-ne-before:before {
+    content: "\e613";
+}
+
+.icon-standard-regular-nav-arrow-se-before:before {
+    content: "\e614";
+}
+
+.icon-standard-regular-nav-arrow-sw-before:before {
+    content: "\e615";
+}
+
+.icon-standard-regular-angle-double-left-before:before {
+    content: "\e616";
+}
+
+.icon-standard-regular-angle-double-right-before:before {
+    content: "\e617";
+}
+
+.icon-standard-regular-angle-double-up-before:before {
+    content: "\e618";
+}
+
+.icon-standard-regular-angle-double-down-before:before {
+    content: "\e619";
+}
+
+.icon-standard-regular-arrow-left-after:after {
+    content: "\e600";
+}
+
+.icon-standard-regular-arrow-right-after:after {
+    content: "\e601";
+}
+
+.icon-standard-regular-arrow-up-after:after {
+    content: "\e602";
+}
+
+.icon-standard-regular-arrow-down-after:after {
+    content: "\e603";
+}
+
+.icon-standard-regular-circle-shape-after:after {
+    content: "\e604";
+}
+
+.icon-standard-regular-square-shape-after:after {
+    content: "\e605";
+}
+
+.icon-standard-regular-simple-arrow-left-after:after {
+    content: "\e606";
+}
+
+.icon-standard-regular-simple-arrow-down-after:after {
+    content: "\e607";
+}
+
+.icon-standard-regular-simple-arrow-up-after:after {
+    content: "\e608";
+}
+
+.icon-standard-regular-simple-arrow-right-after:after {
+    content: "\e609";
+}
+
+.icon-standard-regular-thick-arrow-left-after:after {
+    content: "\e60a";
+}
+
+.icon-standard-regular-thick-arrow-down-after:after {
+    content: "\e60b";
+}
+
+.icon-standard-regular-thick-arrow-up-after:after {
+    content: "\e60c";
+}
+
+.icon-standard-regular-thick-arrow-right-after:after {
+    content: "\e60d";
+}
+
+.icon-standard-regular-inner-arrow-up-after:after {
+    content: "\e60e";
+}
+
+.icon-standard-regular-inner-arrow-right-after:after {
+    content: "\e60f";
+}
+
+.icon-standard-regular-inner-arrow-down-after:after {
+    content: "\e610";
+}
+
+.icon-standard-regular-inner-arrow-left-after:after {
+    content: "\e611";
+}
+
+.icon-standard-regular-nav-arrow-nw-after:after {
+    content: "\e612";
+}
+
+.icon-standard-regular-nav-arrow-ne-after:after {
+    content: "\e613";
+}
+
+.icon-standard-regular-nav-arrow-se-after:after {
+    content: "\e614";
+}
+
+.icon-standard-regular-nav-arrow-sw-after:after {
+    content: "\e615";
+}
+
+.icon-standard-regular-angle-double-left-after:after {
+    content: "\e616";
+}
+
+.icon-standard-regular-angle-double-right-after:after {
+    content: "\e617";
+}
+
+.icon-standard-regular-angle-double-up-after:after {
+    content: "\e618";
+}
+
+.icon-standard-regular-angle-double-down-after:after {
+    content: "\e619";
+}

@@ -10787,6 +10787,14 @@
   -webkit-transition: all, 0.3s;
   transition: all, 0.3s;
 }
+.sketchWidget .widgetText {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  heigh: 100%;
+  background: transparent;
+}
 
 #pageDetailsTree .angular-ui-tree-empty {
   border: 1px dashed #bbb;
@@ -11203,13 +11211,13 @@
   color: #fff;
 }
 
-#animationMultilevelMenu.multilevelMenuContainer.select > .openButton:after {
+#effectMultilevelMenu.multilevelMenuContainer.select > .openButton:after {
   content: '\25B2';
 }
-#animationMultilevelMenu.multilevelMenuContainer.select > .barContent {
+#effectMultilevelMenu.multilevelMenuContainer.select > .barContent {
   visibility: visible;
 }
-#animationMultilevelMenu.multilevelMenuContainer > .openButton {
+#effectMultilevelMenu.multilevelMenuContainer > .openButton {
   position: relative;
   width: 100%;
   height: 2em;
@@ -11230,7 +11238,7 @@
   box-shadow: 0 1px 4px #A4A4A4;
   -webkit-touch-callout: none;
 }
-#animationMultilevelMenu.multilevelMenuContainer > .openButton span {
+#effectMultilevelMenu.multilevelMenuContainer > .openButton span {
   position: relative;
   float: left;
   width: calc(100% - 0.25em);
@@ -11238,7 +11246,7 @@
   height: 2em;
   line-height: 2;
 }
-#animationMultilevelMenu.multilevelMenuContainer > .openButton:after {
+#effectMultilevelMenu.multilevelMenuContainer > .openButton:after {
   position: absolute;
   content: '\25BC';
   right: 0;
@@ -11247,7 +11255,7 @@
   text-align: center;
   border-left: 1px solid #ddd;
 }
-#animationMultilevelMenu.multilevelMenuContainer > .barContent {
+#effectMultilevelMenu.multilevelMenuContainer > .barContent {
   position: relative;
   float: left;
   width: 100%;
@@ -11255,7 +11263,7 @@
   z-index: 100;
   visibility: hidden;
 }
-#animationMultilevelMenu.multilevelMenuContainer > .barContent .mp-menu {
+#effectMultilevelMenu.multilevelMenuContainer > .barContent .mp-menu {
   position: relative;
   float: left;
   width: 100%;
@@ -11263,16 +11271,16 @@
   top: 5px;
   /* content style */
 }
-#animationMultilevelMenu.multilevelMenuContainer > .barContent .mp-menu ul {
+#effectMultilevelMenu.multilevelMenuContainer > .barContent .mp-menu ul {
   margin: 0;
   padding: 0;
   list-style: none;
 }
-#animationMultilevelMenu.multilevelMenuContainer > .barContent .mp-menu ul li a:hover {
+#effectMultilevelMenu.multilevelMenuContainer > .barContent .mp-menu ul li a:hover {
   color: #fff;
   background: #669933;
 }
-#animationMultilevelMenu.multilevelMenuContainer > .barContent .mp-menu ul li > a {
+#effectMultilevelMenu.multilevelMenuContainer > .barContent .mp-menu ul li > a {
   position: relative;
   float: left;
   padding-left: 0.5em;
@@ -11286,7 +11294,7 @@
   -webkit-transition: background 0.3s, box-shadow 0.3s;
   transition: background 0.3s, box-shadow 0.3s;
 }
-#animationMultilevelMenu.multilevelMenuContainer > .barContent .mp-menu ul li > a:after {
+#effectMultilevelMenu.multilevelMenuContainer > .barContent .mp-menu ul li > a:after {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -11297,7 +11305,7 @@
   border-top: 1px solid #CACDC0;
   border-bottom: 1px solid #FFF;
 }
-#animationMultilevelMenu.multilevelMenuContainer > .barContent .mp-menu .mp-level {
+#effectMultilevelMenu.multilevelMenuContainer > .barContent .mp-menu .mp-level {
   position: absolute;
   left: 0;
   top: 0;
@@ -11309,21 +11317,21 @@
   -webkit-transition: -webkit-transform 0.3s;
   transition: transform 0.3s;
 }
-#animationMultilevelMenu.multilevelMenuContainer > .barContent .mp-menu .mp-level .mp-level {
+#effectMultilevelMenu.multilevelMenuContainer > .barContent .mp-menu .mp-level .mp-level {
   -moz-transform: translate3d(-100%, 0, 0);
   -webkit-transform: translate3d(-100%, 0, 0);
   transform: translate3d(-100%, 0, 0);
 }
-#animationMultilevelMenu.multilevelMenuContainer > .barContent .mp-menu .mp-level.mp-level-overlay {
+#effectMultilevelMenu.multilevelMenuContainer > .barContent .mp-menu .mp-level.mp-level-overlay {
   cursor: pointer;
 }
-#animationMultilevelMenu.multilevelMenuContainer > .barContent .mp-menu .mp-level.mp-level-overlay > ul > li:not(.item-open) {
+#effectMultilevelMenu.multilevelMenuContainer > .barContent .mp-menu .mp-level.mp-level-overlay > ul > li:not(.item-open) {
   display: none;
 }
-#animationMultilevelMenu.multilevelMenuContainer > .barContent .mp-menu .mp-level.mp-level-overlay .mp-level:not(.mp-level-open) > ul > li {
+#effectMultilevelMenu.multilevelMenuContainer > .barContent .mp-menu .mp-level.mp-level-overlay .mp-level:not(.mp-level-open) > ul > li {
   display: none;
 }
-#animationMultilevelMenu.multilevelMenuContainer > .barContent .mp-menu .mp-level.mp-level-overlay:after {
+#effectMultilevelMenu.multilevelMenuContainer > .barContent .mp-menu .mp-level.mp-level-overlay:after {
   width: 100%;
   height: 100%;
   opacity: 1;
@@ -11332,19 +11340,19 @@
   -webkit-transition: opacity 0.3s;
   transition: opacity 0.3s;
 }
-#animationMultilevelMenu.multilevelMenuContainer > .barContent .mp-menu > .mp-level, #animationMultilevelMenu.multilevelMenuContainer > .barContent .mp-menu .mp-level.mp-level-open {
+#effectMultilevelMenu.multilevelMenuContainer > .barContent .mp-menu > .mp-level, #effectMultilevelMenu.multilevelMenuContainer > .barContent .mp-menu .mp-level.mp-level-open {
   opacity: 1;
   -moz-transform: translate3d(0, 0, 0);
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
 }
-#animationMultilevelMenu.multilevelMenuContainer > .barContent .mp-menu .mp-level.mp-level-open > ul > li > .mp-level:not(.mp-level-open) {
+#effectMultilevelMenu.multilevelMenuContainer > .barContent .mp-menu .mp-level.mp-level-open > ul > li > .mp-level:not(.mp-level-open) {
   opacity: 0;
   -moz-transform: translate3d(-100%, 0, 0);
   -webkit-transform: translate3d(-100%, 0, 0);
   transform: translate3d(-100%, 0, 0);
 }
-#animationMultilevelMenu.multilevelMenuContainer > .barContent .mp-back {
+#effectMultilevelMenu.multilevelMenuContainer > .barContent .mp-back {
   position: relative;
   float: left;
   width: 100%;
@@ -11363,9 +11371,301 @@
   -webkit-transition: background 0.3s;
   transition: background 0.3s;
 }
-#animationMultilevelMenu.multilevelMenuContainer > .barContent .mp-back:hover {
+#effectMultilevelMenu.multilevelMenuContainer > .barContent .mp-back:hover {
   color: #fff;
   background: #669933;
+}
+
+.effectArtifactDropdown {
+  /* Stack the items with a slight offset */
+  /* Stack the items with a slight offset, and expand them with a slight random angle/left values.
+     Each item will have a different animation delay. */
+  /* Stack the items with a slight offset, and spread them as a fan.
+     Each item will have a different animation delay. */
+  /* Stack the items with a slight offset, and rotate the select label while clicking it. */
+  /*  Show the items by sliding them from the sides. */
+}
+.effectArtifactDropdown .cd-dropdown {
+  position: relative;
+  width: 100%;
+  display: block;
+}
+.effectArtifactDropdown .cd-dropdown > span {
+  position: relative;
+  float: left;
+  width: 100%;
+  height: 2em;
+  line-height: 2;
+  color: #999;
+  font-weight: 700;
+  background: #fff;
+  padding-left: 1em;
+  cursor: pointer;
+  -moz-backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -moz-user-select: -moz-none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+.effectArtifactDropdown .cd-dropdown > span:after {
+  content: '\25BC';
+  position: absolute;
+  right: 0px;
+  width: 2em;
+  line-height: 2;
+  text-align: center;
+  border-left: 1px solid #ddd;
+}
+.effectArtifactDropdown .cd-dropdown > span:before {
+  position: absolute;
+  width: 100%;
+  line-height: 2;
+  text-align: center;
+}
+.effectArtifactDropdown .cd-dropdown > span > span {
+  position: absolute;
+  width: calc(100% - 3em);
+  height: 100%;
+  line-height: 2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.effectArtifactDropdown .cd-dropdown.cd-active > span:after {
+  content: '\25B2';
+}
+.effectArtifactDropdown .cd-dropdown ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: block;
+  position: relative;
+  pointer-events: none;
+}
+.effectArtifactDropdown .cd-dropdown ul li {
+  display: block;
+}
+.effectArtifactDropdown .cd-dropdown ul li span {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 100%;
+  height: 2em;
+  line-height: 2;
+  padding-left: 1em;
+  color: #bcbcbc;
+  background: #eee;
+  cursor: pointer;
+  font-weight: 700;
+  -moz-backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -moz-user-select: -moz-none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+.effectArtifactDropdown .cd-dropdown ul li span:before {
+  position: absolute;
+  width: 100%;
+  line-height: 2;
+  text-align: center;
+}
+.effectArtifactDropdown .cd-dropdown.cd-active ul {
+  pointer-events: auto;
+}
+.effectArtifactDropdown.stackWithOffset .cd-dropdown > span,
+.effectArtifactDropdown.stackWithOffset .cd-dropdown ul li:nth-last-child(-n+3) span {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+.effectArtifactDropdown.stackWithOffset .cd-dropdown ul {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+}
+.effectArtifactDropdown.stackWithOffset .cd-dropdown ul li {
+  position: absolute;
+  width: 100%;
+}
+.effectArtifactDropdown.stackWithOffset .cd-dropdown.cd-active > span {
+  color: #669933;
+}
+.effectArtifactDropdown.stackWithOffset .cd-dropdown.cd-active > span,
+.effectArtifactDropdown.stackWithOffset .cd-dropdown.cd-active ul li span {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+.effectArtifactDropdown.stackWithOffset .cd-dropdown.cd-active ul li span {
+  -moz-transition: all 0.2s linear 0s;
+  -o-transition: all 0.2s linear 0s;
+  -webkit-transition: all 0.2s linear;
+  -webkit-transition-delay: 0s;
+  transition: all 0.2s linear 0s;
+}
+.effectArtifactDropdown.stackWithOffset .cd-dropdown.cd-active ul li span:hover {
+  background: #669933;
+  color: #fff;
+}
+.effectArtifactDropdown.stackAndExpand .cd-dropdown > span,
+.effectArtifactDropdown.stackAndExpand .cd-dropdown ul li:nth-last-child(-n+3) span {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+.effectArtifactDropdown.stackAndExpand .cd-dropdown ul {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+}
+.effectArtifactDropdown.stackAndExpand .cd-dropdown ul li {
+  position: absolute;
+  width: 100%;
+}
+.effectArtifactDropdown.stackAndExpand .cd-dropdown.cd-active > span {
+  color: #669933;
+}
+.effectArtifactDropdown.stackAndExpand .cd-dropdown.cd-active > span,
+.effectArtifactDropdown.stackAndExpand .cd-dropdown.cd-active ul li span {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+.effectArtifactDropdown.stackAndExpand .cd-dropdown.cd-active ul li span {
+  -moz-transition: all 0.2s linear 0s;
+  -o-transition: all 0.2s linear 0s;
+  -webkit-transition: all 0.2s linear;
+  -webkit-transition-delay: 0s;
+  transition: all 0.2s linear 0s;
+}
+.effectArtifactDropdown.stackAndExpand .cd-dropdown.cd-active ul li span:hover {
+  background: #669933;
+  color: #fff;
+}
+.effectArtifactDropdown.stackAndExpandFan .cd-dropdown > span,
+.effectArtifactDropdown.stackAndExpandFan .cd-dropdown ul li:nth-last-child(-n+3) span {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+.effectArtifactDropdown.stackAndExpandFan .cd-dropdown ul {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+}
+.effectArtifactDropdown.stackAndExpandFan .cd-dropdown ul li {
+  position: absolute;
+  width: 100%;
+}
+.effectArtifactDropdown.stackAndExpandFan .cd-dropdown.cd-active > span {
+  color: #669933;
+}
+.effectArtifactDropdown.stackAndExpandFan .cd-dropdown.cd-active > span,
+.effectArtifactDropdown.stackAndExpandFan .cd-dropdown.cd-active ul li span {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+.effectArtifactDropdown.stackAndExpandFan .cd-dropdown.cd-active ul li {
+  -moz-transform-origin: -200% 50% 50%;
+  -ms-transform-origin: -200% 50% 50%;
+  -webkit-transform-origin: -200% 50% 50%;
+  transform-origin: -200% 50% 50%;
+}
+.effectArtifactDropdown.stackAndExpandFan .cd-dropdown.cd-active ul li span {
+  -moz-transition: all 0.2s linear 0s;
+  -o-transition: all 0.2s linear 0s;
+  -webkit-transition: all 0.2s linear;
+  -webkit-transition-delay: 0s;
+  transition: all 0.2s linear 0s;
+}
+.effectArtifactDropdown.stackAndExpandFan .cd-dropdown.cd-active ul li span:hover {
+  background: #669933;
+  color: #fff;
+}
+.effectArtifactDropdown.stackAndRotateSelect .cd-dropdown {
+  -moz-perspective: 800px;
+  -webkit-perspective: 800px;
+  perspective: 800px;
+}
+.effectArtifactDropdown.stackAndRotateSelect .cd-dropdown > span {
+  -moz-transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -moz-transform-origin: 50% 0% 50%;
+  -ms-transform-origin: 50% 0% 50%;
+  -webkit-transform-origin: 50% 0% 50%;
+  transform-origin: 50% 0% 50%;
+  -moz-transition: -moz-transform 0.3s;
+  -o-transition: -o-transform 0.3s;
+  -webkit-transition: -webkit-transform 0.3s;
+  transition: transform 0.3s;
+}
+.effectArtifactDropdown.stackAndRotateSelect .cd-dropdown > span:active {
+  -moz-transform: rotateX(60deg);
+  -ms-transform: rotateX(60deg);
+  -webkit-transform: rotateX(60deg);
+  transform: rotateX(60deg);
+}
+.effectArtifactDropdown.stackAndRotateSelect .cd-dropdown > span,
+.effectArtifactDropdown.stackAndRotateSelect .cd-dropdown ul li:nth-last-child(-n+3) span {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+.effectArtifactDropdown.stackAndRotateSelect .cd-dropdown ul {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+}
+.effectArtifactDropdown.stackAndRotateSelect .cd-dropdown ul li {
+  position: absolute;
+  width: 100%;
+}
+.effectArtifactDropdown.stackAndRotateSelect .cd-dropdown.cd-active > span {
+  color: #669933;
+}
+.effectArtifactDropdown.stackAndRotateSelect .cd-dropdown.cd-active > span,
+.effectArtifactDropdown.stackAndRotateSelect .cd-dropdown.cd-active ul li span {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+.effectArtifactDropdown.stackAndRotateSelect .cd-dropdown.cd-active ul li span {
+  -moz-transition: all 0.2s linear 0s;
+  -o-transition: all 0.2s linear 0s;
+  -webkit-transition: all 0.2s linear;
+  -webkit-transition-delay: 0s;
+  transition: all 0.2s linear 0s;
+}
+.effectArtifactDropdown.stackAndRotateSelect .cd-dropdown.cd-active ul li span:hover {
+  background: #669933;
+  color: #fff;
+}
+.effectArtifactDropdown.slide .cd-dropdown ul {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+}
+.effectArtifactDropdown.slide .cd-dropdown > span,
+.effectArtifactDropdown.slide .cd-dropdown ul li {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+.effectArtifactDropdown.slide .cd-dropdown ul li {
+  position: absolute;
+  width: 100%;
+  pointer-events: none;
+}
+.effectArtifactDropdown.slide .cd-dropdown.cd-active > span {
+  color: #669933;
+}
+.effectArtifactDropdown.slide .cd-dropdown.cd-active ul li {
+  pointer-events: auto;
+}
+.effectArtifactDropdown.slide .cd-dropdown.cd-active ul li span {
+  -moz-transition: all 0.2s linear 0s;
+  -o-transition: all 0.2s linear 0s;
+  -webkit-transition: all 0.2s linear;
+  -webkit-transition-delay: 0s;
+  transition: all 0.2s linear 0s;
+}
+.effectArtifactDropdown.slide .cd-dropdown.cd-active ul li span:hover {
+  background: #669933;
+  color: #fff;
 }
 
 .widgetObjStateDropdown {
@@ -14847,8 +15147,7 @@
   opacity: 1;
   pointer-events: auto;
   height: auto;
-  margin-top: 1em;
-  margin-right: 1em;
+  margin-top: .5em;
   overflow: visible;
 }
 #shape-control .shapeContent > .shapePalette .shapeLibrary .accordianGroup.select > .accordianBody .shapePane:before {
@@ -15810,20 +16109,25 @@
   height: calc(100% - 40px);
   z-index: 5;
 }
-#sketchControls.align-right > .dockContent .dockDetail .ui-control-groups .ui-control-group .structureContent > .tabs > .content > div, #sketchControls.align-left > .dockContent .dockDetail .ui-control-groups .ui-control-group .structureContent > .tabs > .content > div {
+#sketchControls.align-right > .dockContent .dockDetail .ui-control-groups .ui-control-group .structureContent > .tabs > .content .contentSlidee, #sketchControls.align-left > .dockContent .dockDetail .ui-control-groups .ui-control-group .structureContent > .tabs > .content .contentSlidee {
   position: absolute;
   width: 100%;
   z-index: 6;
-  opacity: 0;
   height: 300%;
+}
+#sketchControls.align-right > .dockContent .dockDetail .ui-control-groups .ui-control-group .structureContent > .tabs > .content .contentSlidee > div, #sketchControls.align-left > .dockContent .dockDetail .ui-control-groups .ui-control-group .structureContent > .tabs > .content .contentSlidee > div {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
   -moz-transition: opacity 0.3s linear;
   -o-transition: opacity 0.3s linear;
   -webkit-transition: opacity 0.3s linear;
   transition: opacity 0.3s linear;
 }
-#sketchControls.align-right > .dockContent .dockDetail .ui-control-groups .ui-control-group .structureContent > .tabs > input.tab-selector-1:checked ~ .content > .content-1,
-#sketchControls.align-right > .dockContent .dockDetail .ui-control-groups .ui-control-group .structureContent > .tabs > input.tab-selector-2:checked ~ .content > .content-2, #sketchControls.align-left > .dockContent .dockDetail .ui-control-groups .ui-control-group .structureContent > .tabs > input.tab-selector-1:checked ~ .content > .content-1,
-#sketchControls.align-left > .dockContent .dockDetail .ui-control-groups .ui-control-group .structureContent > .tabs > input.tab-selector-2:checked ~ .content > .content-2 {
+#sketchControls.align-right > .dockContent .dockDetail .ui-control-groups .ui-control-group .structureContent > .tabs > input.tab-selector-1:checked ~ .content .content-1,
+#sketchControls.align-right > .dockContent .dockDetail .ui-control-groups .ui-control-group .structureContent > .tabs > input.tab-selector-2:checked ~ .content .content-2, #sketchControls.align-left > .dockContent .dockDetail .ui-control-groups .ui-control-group .structureContent > .tabs > input.tab-selector-1:checked ~ .content .content-1,
+#sketchControls.align-left > .dockContent .dockDetail .ui-control-groups .ui-control-group .structureContent > .tabs > input.tab-selector-2:checked ~ .content .content-2 {
   z-index: 10;
   opacity: 1;
   -moz-transition: opacity 0.3s ease-out 0.2s;
@@ -16290,6 +16594,7 @@
   width: 100%;
   height: 2em;
   line-height: 2;
+  margin: 0.5em 0;
 }
 #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details .transition-action-wrapper .accordianGroup > .accordianSubTitle > span {
   margin: 0;
@@ -16299,7 +16604,7 @@
   margin-top: 2px;
   text-shadow: 1px 0px 0px ghostwhite, -1px 0px 0px ghostwhite, 0px 1px 0px ghostwhite, 0px -1px 0px ghostwhite, 1px 1px 0px ghostwhite, -1px -1px 0px ghostwhite, -1px 1px 0px ghostwhite, 1px -1px 0px ghostwhite, 0px 6px 1px silver;
 }
-#state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details .transition-action-wrapper .accordianGroup > .accordianSubTitle #animationMultilevelMenu {
+#state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details .transition-action-wrapper .accordianGroup > .accordianSubTitle #effectMultilevelMenu {
   z-index: 10;
 }
 #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details .transition-action-wrapper .accordianGroup > .accordianBody {
@@ -17177,11 +17482,6 @@
 }
 #sketchContainer #sketchHolder .deviceBackground .deviceScreenBackground .deviceScreen .deviceHolder .pageHolder .resize {
   position: absolute;
-}
-#sketchContainer #sketchHolder .deviceBackground .deviceScreenBackground .deviceScreen .deviceHolder .pageHolder .widgetIncludeAnchor {
-  position: absolute;
-  width: 100%;
-  height: 100%;
 }
 #sketchContainer #sketchHolder .deviceBackground .deviceScreenBackground .deviceScreen .deviceHolder .pageHolder .widgetIncludeAnchor .widgetContainer {
   position: absolute;

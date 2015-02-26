@@ -54,6 +54,15 @@ $deepShadow: #555;
         border: none !important;
         @include transition(all, 0.3s);
     }
+
+    .widgetText {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        heigh: 100%;
+        background: transparent;
+    }
 }
 
 @mixin sketch-widget($widgetContainerId) {

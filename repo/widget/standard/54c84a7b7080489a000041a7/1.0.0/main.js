@@ -37,38 +37,45 @@ define(
                         {name: "fadeOut", value: "fadeOut"},
                         {name: "flipUp", value: "flipUp"},
                         {name: "slightTranslate", value: "slightTranslate"}
-                    ]
+                    ],
+                    defaultValue: "brackets"
                 },
                 handDownConfiguration: {
                     color: {
                         name: "Color",
                         type: "color",
-                        handDown: true
+                        handDown: true,
+                        defaultValue: "#ffffff"
                     },
                     inactiveColor: {
                         name: "Inactive Color",
                         type: "color",
-                        handDown: true
+                        handDown: true,
+                        defaultValue: "#95a5a6"
                     },
                     backgroundColor: {
                         name: "Background Color",
                         type: "color",
-                        handDown: true
+                        handDown: true,
+                        defaultValue: "#ffffff"
                     },
                     inactiveBackgroundColor: {
                         name: "Inactive Background Color",
                         type: "color",
-                        handDown: true
+                        handDown: true,
+                        defaultValue: "#000000"
                     },
                     lineColor: {
                         name: "Line Color",
                         type: "color",
-                        handDown: true
+                        handDown: true,
+                        defaultValue: "#ffffff"
                     },
                     inactiveLineColor: {
                         name: "Inactive Line Color",
                         type: "color",
-                        handDown: true
+                        handDown: true,
+                        defaultValue: "#95a5a6"
                     }
                 }
             }

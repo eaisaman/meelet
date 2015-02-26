@@ -26,6 +26,8 @@ define(
 
         appService.prototype.loadRepoArtifact = appService.prototype.NOOP;
 
+        appService.prototype.loadEffectArtifactList = appService.prototype.NOOP;
+
         appService.prototype.loadIconArtifactList = appService.prototype.NOOP;
 
         appService.prototype.loadWidgetArtifactList = appService.prototype.NOOP;

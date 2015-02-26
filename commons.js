@@ -364,9 +364,9 @@ Commons.prototype.addConfigurableArtifact = function (projectId, widgetId, libra
             widgetScssPath = path.join(configPath, _.string.sprintf("configurable-widget-%s.scss", widgetId)),
             widgetCssPath = path.join(cssPath, _.string.sprintf("configurable-widget-%s.css", widgetId));
 
-        fs.exists(widgetScssPath, function (exist) {
+        fs.exists(widgetCssPath, function (exist) {
             if (exist) {
-                callback(null);
+                callback(null, path.basename(widgetCssPath));
             } else {
                 async.waterfall(
                     [

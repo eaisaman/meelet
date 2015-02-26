@@ -2,21 +2,20 @@ define(
     ["angular", "jquery"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$http", "$timeout", "$q", "uiUtilService", "uiService"];
+            var inject = ["$http", "$timeout", "$q", "uiUtilService", "uiService", "appService"];
 
-            appModule.directive("uiStateTransition", _.union(inject, [function ($http, $timeout, $q, uiUtilService, uiService) {
+            appModule.directive("uiStateTransition", _.union(inject, [function ($http, $timeout, $q, uiUtilService, uiService, appService) {
                 'use strict';
 
                 var defaults = {
-                        triggerJson: "",
-                        animationJson: ""
+                        triggerJson: ""
                     },
                     options = angular.extend(defaults, opts),
                     injectObj = _.object(inject, Array.prototype.slice.call(arguments));
 
                 return {
                     restrict: "A",
-                    scope: {pickedWidget: "=", pickedPage: "=", dockAlign: "="},
+                    scope: {pickedWidget: "=", pickedPage: "=", dockAlign: "=", effectLibraryList: "="},
                     replace: false,
                     templateUrl: "include/_state_transition.html",
                     compile: function (element, attrs) {
@@ -34,8 +33,33 @@ define(
                                     }
                                 });
 
+                                scope.pickEffectArtifact = function (action, artifactId) {
+                                    scope.effectArtifactList.every(function (artifact) {
+                                        if (artifact._id === artifactId) {
+                                            scope.effectList = artifact.json.slice(0, artifact.json.length);
+                                            action.artifactSpec = {
+                                                _id: artifact._id,
+                                                directiveName: artifact.directiveName,
+                                                version: artifact.versionList[artifact.versionList.length - 1].name
+                                            }
+                                            return false;
+                                        }
+
+                                        return true;
+                                    });
+                                }
+
+                                appService.loadEffectArtifactList().then(function () {
+                                    var libraryList = _.where(scope.effectLibraryList, {name: "standard"});
+                                    if (libraryList && libraryList.length) {
+                                        scope.effectArtifactList = libraryList[0].artifactList.slice(0, libraryList[0].artifactList.length);
+
+                                    }
+                                });
+
                                 scope.triggers = {};
-                                scope.animations = [];
+                                scope.effectArtifactList = [];
+                                scope.effectList = [];
                                 scope._ = _;
                             },
                             post: function (scope, element, attrs) {
@@ -209,8 +233,12 @@ define(
                                     return stateOptions;
                                 }
 
-                                scope.setAnimation = function (item, name) {
-                                    item.animation = {name: name, options: {}};
+                                scope.createEffectObj = function (effectValue) {
+                                    return {
+                                        name: effectValue.replace(/\+.+$/g, ''),
+                                        type: effectValue.replace(/^.+\+/g, ''),
+                                        options: {}
+                                    };
                                 }
 
                                 if (options.triggerJson) {

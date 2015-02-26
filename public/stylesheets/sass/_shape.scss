@@ -133,8 +133,7 @@ $underlineLinearGradient: (rgb(235, 235, 235) 0%, rgb(235, 235, 235) 50%, #fff 1
                                     opacity: 1;
                                     pointer-events: auto;
                                     height: auto;
-                                    margin-top: 1em;
-                                    margin-right: 1em;
+                                    margin-top: .5em;
                                     overflow: visible;
 
                                     @include emboss-title(':before');

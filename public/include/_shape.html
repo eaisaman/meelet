@@ -1,7 +1,7 @@
 <div class="shapeContent ui-control-wrapper" ng-class="dockAlign">
     <div class="shapeBar ui-control-bar fs-x-large">
-        <div class="pickerPane fs-x-large fs-x-large-before" ng-class="pickerPaneShape.thumbnailStyle.classList"
-             ng-style="pickerPaneShape.thumbnailStyle.style"></div>
+        <div class="pickerPane fs-x-large fs-x-large-before"
+             ng-class="getIconClassList(pickerPaneShape.iconLibrary.name, pickerPaneShape.artifact.name, pickerPaneShape.icon, 'before')"></div>
     </div>
     <div class="shapePalette ui-control-panel">
         <div class="shapeLibrary" ng-repeat="iconLibrary in iconLibraryList">
@@ -14,8 +14,8 @@
                 <div class="accordianBody col-as-12 no-padding">
                     <div class="shapePane fs-x-large fs-x-large-before col-as-3 no-padding"
                          ng-repeat="pane in artifact.json"
-                         ng-click="pickShape(pane) && $event.stopPropagation()"
-                         ng-class="pane.thumbnailStyle.classList" ng-style="pane.thumbnailStyle.style">
+                         ng-click="pickShape(iconLibrary, artifact, pane) && $event.stopPropagation()"
+                         ng-class="getIconClassList(iconLibrary.name, artifact.name, pane, 'before')">
                     </div>
                 </div>
             </div>

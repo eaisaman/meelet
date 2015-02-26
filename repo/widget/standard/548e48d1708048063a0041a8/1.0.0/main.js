@@ -37,7 +37,8 @@ define(
                         {name: "rotateIn3D", value: "rotateIn3D"},
                         {name: "rotateOut3D", value: "rotateOut3D"},
                         {name: "delayed3DRotate", value: "delayed3DRotate"}
-                    ]
+                    ],
+                    defaultValue: "slideInOnTop"
                 },
                 side: {
                     name: "Side",
@@ -45,7 +46,8 @@ define(
                     options: [
                         {name: "leftSide", value: "leftSide"},
                         {name: "rightSide", value: "rightSide"}
-                    ]
+                    ],
+                    defaultValue: "leftSide"
                 },
                 overlay: {
                     name: "Overlay",
@@ -53,28 +55,39 @@ define(
                     options: [
                         {name: "overlay", value: "overlay"},
                         {name: "transparent", value: ""}
-                    ]
+                    ],
+                    defaultValue: "overlay"
                 },
                 handDownConfiguration: {
                     barContentWidth: {
                         name: "Bar Width",
                         type: "size",
-                        handDown: true
+                        handDown: true,
+                        defaultValue: "30%"
                     },
                     overlayColor: {
                         name: "Overlay Color",
                         type: "color",
-                        handDown: true
+                        handDown: true,
+                        defaultValue: "#d4d4d4"
+                    },
+                    overlayOpacity: {
+                        name: "Overlay Opacity",
+                        type: "number",
+                        handDown: true,
+                        defaultValue: 0.5
                     },
                     mainColor: {
                         name: "Main Color",
                         type: "color",
-                        handDown: true
+                        handDown: true,
+                        defaultValue: "#ffffff"
                     },
                     barColor: {
                         name: "Bar Color",
                         type: "color",
-                        handDown: true
+                        handDown: true,
+                        defaultValue: "#cccccc"
                     }
                 }
             }

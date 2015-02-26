@@ -24,6 +24,28 @@ define(
             return defer.promise;
         };
 
+        appService.prototype.getResolveDefer = function () {
+            var self = this,
+                defer = self.$q.defer();
+
+            self.$timeout(function () {
+                defer.resolve();
+            });
+
+            return defer.promise;
+        }
+
+        appService.prototype.getRejectDefer = function (err) {
+            var self = this,
+                errorDefer = self.$q.defer();
+
+            self.$timeout(function () {
+                errorDefer.reject(err);
+            });
+
+            return errorDefer.promise;
+        }
+
         appService.prototype.loadRepoArtifact = function (repoArtifact, repoLibName, version, demoSelector) {
             version = version || repoArtifact.versionList[repoArtifact.versionList.length - 1].name;
 
@@ -60,6 +82,9 @@ define(
 
                         if (artifact.template)
                             loadedSpec.template = "{0}/{1}".format(repoUrl, artifact.template);
+
+                        if (artifact.directiveName)
+                            repoArtifact.directiveName = artifact.directiveName;
 
                         loadedSpec.configuration = artifact.configuration;
 
@@ -244,123 +269,142 @@ define(
                 libraryFilter.updateTime = {$gte: updateTime};
             }
 
-            return self.getRepoLibrary(libraryFilter).then(function (result) {
-                var libraryList = result.data.result == "OK" && result.data.resultValue || [],
-                    reloadCount = 0,
-                    defer = self.$q.defer();
+            return self.getRepoLibrary(libraryFilter).then(
+                function (result) {
+                    var libraryList = result.data.result == "OK" && result.data.resultValue || [],
+                        reloadCount = 0,
+                        defer = self.$q.defer();
 
-                //Update already loaded library, append recent library
-                artifactLibraryList.forEach(function (loadedLibrary) {
-                    var index;
-                    if (!libraryList.every(function (library, i) {
-                            if (library._id === loadedLibrary._id) {
-                                index = i;
-                                return false;
-                            }
-
-                            return true;
-                        })) {
-                        _.extend(loadedLibrary, libraryList[index]);
-                        libraryList.splice(index, 1);
-                        reloadCount++;
-                        libraryList.splice(0, 0, loadedLibrary);
-                    }
-                });
-                if (libraryList.length > reloadCount) {
-                    var recentLoadedList = libraryList.slice(reloadCount, libraryList.length - reloadCount);
-                    recentLoadedList.splice(0, 0, artifactLibraryList.length, 0);
-                    Array.prototype.splice.apply(artifactLibraryList, recentLoadedList);
-                }
-
-                //Load each library's artifacts
-                var promiseArr = [];
-                libraryList.forEach(function (library) {
-                    var artifactFilter = {library: library._id};
-                    if (library.artifactList && library.artifactList.length) {
-                        var updateTime = _.max(library.artifactList, function (artifact) {
-                            return artifact.updateTime;
-                        });
-
-                        artifactFilter.updateTime = {$gte: updateTime};
-                    }
-
-                    promiseArr.push(self.getRepoArtifact(artifactFilter));
-                });
-                promiseArr.length && self.$q.all(promiseArr).then(
-                    function (result) {
-                        var artifactArr = [];
-
-                        for (var i = 0; i < reloadCount; i++) {
-                            var artifactList = result[i].data.result == "OK" && result[i].data.resultValue || [],
-                                recentArtifactList = [];
-                            artifactList.forEach(function (artifact) {
-                                artifactArr.push({artifact: artifact, libraryName: libraryList[i].name});
-
-                                if (libraryList[i].artifactList.every(function (loadedArtifact) {
-                                        if (artifact._id === loadedArtifact._id) {
-                                            _.extend(loadedArtifact, artifact);
-                                            return false;
-                                        }
-
-                                        return true;
-                                    })) {
-                                    recentArtifactList.push(artifact);
+                    //Update already loaded library, append recent library
+                    artifactLibraryList.forEach(function (loadedLibrary) {
+                        var index;
+                        if (!libraryList.every(function (library, i) {
+                                if (library._id === loadedLibrary._id) {
+                                    index = i;
+                                    return false;
                                 }
+
+                                return true;
+                            })) {
+                            _.extend(loadedLibrary, libraryList[index]);
+                            libraryList.splice(index, 1);
+                            reloadCount++;
+                            libraryList.splice(0, 0, loadedLibrary);
+                        }
+                    });
+                    if (libraryList.length > reloadCount) {
+                        var recentLoadedList = libraryList.slice(reloadCount, libraryList.length - reloadCount);
+                        recentLoadedList.splice(0, 0, artifactLibraryList.length, 0);
+                        Array.prototype.splice.apply(artifactLibraryList, recentLoadedList);
+                    }
+
+                    //Load each library's artifacts
+                    var promiseArr = [];
+                    libraryList.forEach(function (library) {
+                        var artifactFilter = {library: library._id};
+                        if (library.artifactList && library.artifactList.length) {
+                            var updateTime = _.max(library.artifactList, function (artifact) {
+                                return artifact.updateTime;
                             });
 
-                            if (recentArtifactList.length) {
-                                recentArtifactList.splice(0, 0, libraryList[i].artifactList.length, 0);
-                                Array.prototype.apply(libraryList[i].artifactList, recentArtifactList);
+                            artifactFilter.updateTime = {$gte: updateTime};
+                        }
+
+                        promiseArr.push(self.getRepoArtifact(artifactFilter));
+                    });
+                    promiseArr.length && self.$q.all(promiseArr).then(
+                        function (result) {
+                            var artifactArr = [];
+
+                            for (var i = 0; i < reloadCount; i++) {
+                                var artifactList = result[i].data.result == "OK" && result[i].data.resultValue || [],
+                                    recentArtifactList = [];
+                                artifactList.forEach(function (artifact) {
+                                    artifactArr.push({artifact: artifact, libraryName: libraryList[i].name});
+
+                                    if (libraryList[i].artifactList.every(function (loadedArtifact) {
+                                            if (artifact._id === loadedArtifact._id) {
+                                                _.extend(loadedArtifact, artifact);
+                                                return false;
+                                            }
+
+                                            return true;
+                                        })) {
+                                        recentArtifactList.push(artifact);
+                                    }
+                                });
+
+                                if (recentArtifactList.length) {
+                                    recentArtifactList.splice(0, 0, libraryList[i].artifactList.length, 0);
+                                    Array.prototype.apply(libraryList[i].artifactList, recentArtifactList);
+                                }
                             }
+                            for (var i = reloadCount; i < result.length; i++) {
+                                libraryList[i].artifactList = result[i].data.result == "OK" && result[i].data.resultValue || [];
+
+                                libraryList[i].artifactList.forEach(function (artifact) {
+                                    artifactArr.push({artifact: artifact, libraryName: libraryList[i].name});
+                                });
+                            }
+
+                            defer.resolve(artifactArr);
+                        }, function () {
+                            defer.reject();
                         }
-                        for (var i = reloadCount; i < result.length; i++) {
-                            libraryList[i].artifactList = result[i].data.result == "OK" && result[i].data.resultValue || [];
+                    ) || self.$timeout(function () {
+                        defer.resolve();
+                    });
 
-                            libraryList[i].artifactList.forEach(function (artifact) {
-                                artifactArr.push({artifact: artifact, libraryName: libraryList[i].name});
-                            });
-                        }
+                    return defer.promise;
+                },
+                function (err) {
+                    var errorDefer = self.$q.defer();
 
-                        defer.resolve(artifactArr);
-                    }, function () {
-                        defer.reject();
-                    }
-                ) || self.$timeout(function () {
-                    defer.resolve();
-                });
+                    self.$timeout(function () {
+                        errorDefer.reject(err);
+                    });
 
-                return defer.promise;
-            }).then(function (artifactArr) {
-                var artifactPromiseArr = [],
-                    aDefer = self.$q.defer();
+                    return errorDefer.promise;
+                }
+            );
+        }
 
-                artifactArr && artifactArr.forEach(function (item) {
-                    artifactPromiseArr.push(self.loadRepoArtifact(item.artifact, item.libraryName));
-                });
-                artifactPromiseArr && self.$q.all(artifactPromiseArr).then(
-                    function () {
-                        aDefer.resolve();
-                    }, function () {
-                        aDefer.reject();
-                    }
-                ) || self.$timeout(function () {
-                    aDefer.resolve();
-                });
+        appService.prototype.loadEffectArtifactList = function () {
+            var self = this;
 
-                return aDefer.promise;
-            }, function () {
-                var errorDefer = self.$q.defer();
+            return this.loadArtifactList("effect").then(function (artifactArr) {
+                    //Load each artifact's stylesheets
+                    var promiseArr = [];
+                    artifactArr && artifactArr.forEach(function (artifactObj) {
+                        promiseArr.push(self.loadRepoArtifact(artifactObj.artifact, artifactObj.libraryName));
+                    });
 
-                self.$timeout(function () {
-                    errorDefer.reject();
-                });
 
-                return errorDefer.promise;
-            });
+                    return promiseArr.length && self.$q.all(promiseArr) || self.getResolveDefer();
+                },
+                function (err) {
+                    return self.getRejectDefer(err);
+                }
+            );
         }
 
         appService.prototype.loadIconArtifactList = function () {
-            return this.loadArtifactList("icon");
+            var self = this;
+
+            return this.loadArtifactList("icon").then(function (artifactArr) {
+                    //Load each artifact's stylesheets
+                    var promiseArr = [];
+                    artifactArr && artifactArr.forEach(function (artifactObj) {
+                        promiseArr.push(self.loadRepoArtifact(artifactObj.artifact, artifactObj.libraryName));
+                    });
+
+
+                    return promiseArr.length && self.$q.all(promiseArr) || self.getResolveDefer();
+                },
+                function (err) {
+                    return self.getRejectDefer(err);
+                }
+            );
         }
 
         appService.prototype.loadWidgetArtifactList = function () {
@@ -387,16 +431,18 @@ define(
                 if (result.data.result === "OK") {
                     $("head link[type='text/css'][widget='{0}']".format(widgetId)).remove();
 
-                    var link = document.createElement("link");
-                    link.type = "text/css";
-                    link.rel = "stylesheet";
-                    link.href = "project/{0}/stylesheets/{1}".format(projectId, result.data.resultValue.css);
-                    link.setAttribute("artifact", artifactId);
-                    link.setAttribute("widget", widgetId);
+                    self.$timeout(function () {
+                        var link = document.createElement("link");
+                        link.type = "text/css";
+                        link.rel = "stylesheet";
+                        link.href = "project/{0}/stylesheets/{1}".format(projectId, result.data.resultValue.css);
+                        link.setAttribute("artifact", artifactId);
+                        link.setAttribute("widget", widgetId);
 
-                    document.getElementsByTagName("head")[0].appendChild(link);
+                        document.getElementsByTagName("head")[0].appendChild(link);
 
-                    defer.resolve();
+                        defer.resolve();
+                    });
                 } else {
                     self.$timeout(function () {
                         defer.reject();
@@ -474,17 +520,19 @@ define(
                 if (result.data.result === "OK") {
                     $("head link[type='text/css'][widget='{0}']".format(widgetId)).remove();
 
-                    var link = document.createElement("link");
-                    link.type = "text/css";
-                    link.rel = "stylesheet";
-                    link.href = "project/{0}/stylesheets/{1}".format(projectId, result.data.resultValue.css);
-                    link.setAttribute("artifact", artifactId);
-                    link.setAttribute("widget", widgetId);
+                    self.$timeout(function () {
+                        var link = document.createElement("link");
+                        link.type = "text/css";
+                        link.rel = "stylesheet";
+                        link.href = "project/{0}/stylesheets/{1}".format(projectId, result.data.resultValue.css);
+                        link.setAttribute("artifact", artifactId);
+                        link.setAttribute("widget", widgetId);
 
-                    document.getElementsByTagName("head")[0].appendChild(link);
+                        document.getElementsByTagName("head")[0].appendChild(link);
 
-                    configurationArray && configurationArray.splice(0, configurationArray.length);
-                    defer.resolve();
+                        configurationArray && configurationArray.splice(0, configurationArray.length);
+                        defer.resolve();
+                    });
                 } else {
                     self.$timeout(function () {
                         defer.reject();

@@ -10,7 +10,8 @@ $underlineLinearGradient: (rgb(235, 235, 235) 0%, rgb(235, 235, 235) 50%, #fff 1
 $tabHeaderWidth: 6em;
 $maxNumOfConfigurationItems: 10;
 
-@include multilevel-menu(animationMultilevelMenu, null, $activeColor);
+@include multilevel-menu(effectMultilevelMenu, null, $activeColor);
+@include simple-dropdown(null, effectArtifactDropdown, $activeColor);
 @include simple-dropdown(null, widgetObjStateDropdown, $activeColor);
 @include simple-dropdown(null, configurationItemList, $activeColor);
 @include angular-ui-tree(actionWidgetTree);
@@ -284,13 +285,14 @@ $maxNumOfConfigurationItems: 10;
                                                                 width: 100%;
                                                                 height: 2em;
                                                                 line-height: 2;
+                                                                margin: 0.5em 0;
                                                             }
 
                                                             > span {
                                                                 @include emboss-title('', true);
                                                             }
 
-                                                            #animationMultilevelMenu {
+                                                            #effectMultilevelMenu {
                                                                 z-index: 10;
                                                             }
                                                         }

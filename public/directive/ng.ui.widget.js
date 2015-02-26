@@ -80,9 +80,17 @@ define(
                                             if (!scope.isPlaying && ($to.hasClass(options.holderClass) || $to.hasClass(options.widgetClass))) {
                                                 var version = scope.pickedArtifact.versionList[scope.pickedArtifact.versionList.length - 1].name;
 
-                                                appService.loadRepoArtifact(scope.pickedArtifact, scope.pickedLibrary.name, version).then(function (widgetSpec) {
-                                                    uiService.createRepoWidget($to, scope.project._id, widgetSpec);
-                                                });
+                                                uiService.createRepoWidget(
+                                                    $to,
+                                                    {
+                                                        artifactId: scope.pickedArtifact._id,
+                                                        name: scope.pickedArtifact.name,
+                                                        type: scope.pickedArtifact.type,
+                                                        libraryName: self.pickedLibrary.libraryName,
+                                                        version: version,
+                                                        projectId: scope.project._id
+                                                    }
+                                                );
                                             }
 
                                             $widgetElement.remove();

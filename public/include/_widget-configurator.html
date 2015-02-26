@@ -14,33 +14,33 @@
                      class="configurationItemList col-as-7 no-padding stackAndRotateSelect"
                      ui-simple-dropdown
                      ui-simple-dropdown-opts="{dataField:'value', labelField:'name', zIndex:100, gutter: 5, showTitle: true, displayUnsetOption: false}"
-                     selection-list="configurationItem.options" select-item="configurationItem.pickedOption"
+                     selection-list="configurationItem.options" select-item="configurationItem.pickedValue"
                      on-option-select="setItem(configurationItem)">
                 </div>
                 <div ng-if="configurationItem.type === 'multilevel-list'"
                      class="configurationItemMultilevelList col-as-7 no-padding" ui-multilevel-menu
                      menu-list="configurationItem.options"
                      ui-multilevel-menu-opts="{dataField:'value', labelField:'name', zIndex:101}"
-                     picked-menu-item="configurationItem.pickedOption"
+                     picked-menu-item="configurationItem.pickedValue"
                      on-menu-select="setItem(configurationItem)">
-                    {{configurationItem.pickedOption || 'Choose a transition'}}
+                    {{configurationItem.pickedValue || 'Choose a transition'}}
                 </div>
                 <div ng-if="configurationItem.type === 'boundReadList'"
                      class="configurationItemList col-as-7 no-padding stackAndRotateSelect"
                      ui-simple-dropdown
                      ui-simple-dropdown-opts="{dataField:'name', labelField:'name', zIndex:102, gutter: 5, showTitle: true, displayUnsetOption: false}"
-                     selection-list="configurationItem.options" select-item="configurationItem.pickedOption"
+                     selection-list="configurationItem.options" select-item="configurationItem.pickedValue"
                      on-option-select="setItem(configurationItem)">
                 </div>
                 <div ng-if="configurationItem.type === 'size'" class="configurationItemNumber col-as-7 no-padding-left">
-                    <input type="text" class="form-control" ng-model="configurationItem.sizeValue"/>
+                    <input type="text" class="form-control" ng-model="configurationItem.pickedValue"/>
                 </div>
                 <div ng-if="configurationItem.type === 'text'" class="configurationItemNumber col-as-7 no-padding-left">
-                    <input type="text" class="form-control" ng-model="configurationItem.textValue"/>
+                    <input type="text" class="form-control" ng-model="configurationItem.pickedValue"/>
                 </div>
                 <div ng-if="configurationItem.type === 'boolean'"
                      class="configurationItemCheckBox col-as-7 no-padding-left">
-                    <input type="checkbox" ng-checked="configurationItem.booleanValue" ng-attr-item-order="{{$index}}"/>
+                    <input type="checkbox" ng-checked="configurationItem.pickedValue" ng-attr-item-order="{{$index}}"/>
                 </div>
                 <div ng-if="configurationItem.type === 'boundWriteList'"
                      class="configurationItemWritableList col-as-7 no-padding"
@@ -90,24 +90,24 @@
                          class="configurationItemList col-as-7 no-padding stackAndRotateSelect"
                          ui-simple-dropdown
                          ui-simple-dropdown-opts="{dataField:'value', labelField:'name', zIndex:200, gutter: 5, showTitle: true, displayUnsetOption: false}"
-                         selection-list="configurationItem.options" select-item="configurationItem.pickedOption"
+                         selection-list="configurationItem.options" select-item="configurationItem.pickedValue"
                          on-option-select="setItem(configurationItem)">
                     </div>
                     <div ng-if="configurationItem.type === 'size'"
                          class="configurationItemNumber col-as-7 no-padding-left">
-                        <input type="text" class="form-control" ng-model="configurationItem.sizeValue"/>
+                        <input type="text" class="form-control" ng-model="configurationItem.pickedValue"/>
                     </div>
                     <div ng-if="configurationItem.type === 'color'" ng-init="initHandDownColorStyle(configurationItem)"
                          class="configurationItemColor col-as-7 no-padding-left">
                         <div class="configurationColorBar fs-x-smaller"
                              ng-click="toggleSelectConfigurationColor(configurationItem, $event)">
                             <div class="configurationColorPickerPane">
-                                {{configurationItem.colorValue}}
+                                {{configurationItem.pickedValue}}
                             </div>
                         </div>
 
                         <div class="configurationColorPalette" ui-color-editor-palette
-                             selected-color="pickedItem.colorValue" on-color-select="setItem(pickedItem)"></div>
+                             selected-color="pickedItem.pickedValue" on-color-select="setItem(pickedItem)"></div>
                     </div>
                 </div>
             </div>

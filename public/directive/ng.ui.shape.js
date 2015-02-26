@@ -7,9 +7,7 @@ define(
             appModule.directive("uiShape", _.union(inject, [function ($http, $timeout, $q, $parse, $compile, angularConstants, angularEventTypes, appService, uiUtilService, uiService) {
                 'use strict';
 
-                var defaults = {
-                        elementZIndex: 99
-                    },
+                var defaults = {},
                     options = _.extend(defaults, opts),
                     injectObj = _.object(inject, Array.prototype.slice.call(arguments));
 
@@ -30,11 +28,14 @@ define(
                                     scope: scope
                                 }));
 
+                                appService.loadIconArtifactList();
+
                                 options = _.extend(_.clone(options), $parse(attrs['uiShapeOpts'])(scope, {}));
                                 options.containerClass = angularConstants.widgetClasses.containerClass;
                                 options.holderClass = angularConstants.widgetClasses.holderClass;
                                 options.widgetClass = angularConstants.widgetClasses.widgetClass;
                                 options.hoverClass = angularConstants.widgetClasses.hoverClass;
+                                options.elementZIndex = angularConstants.draggingShapeZIndex;
                             },
                             post: function (scope, element, attrs) {
                                 var $shapeElement;
@@ -47,7 +48,9 @@ define(
 
                                             $shapeElement = $("<div />");
 
-                                            $shapeElement.addClass("pickerPaneShape fs-x-medium-before squarePane").addClass(scope.pickerPaneShape.shapeStyle.classList.join(" ")).css(scope.pickerPaneShape.shapeStyle.style).css("z-index", options.elementZIndex);
+                                            $shapeElement.addClass("pickerPaneShape fs-x-medium-before squarePane")
+                                                .addClass(scope.getIconClassList(scope.pickerPaneShape.iconLibrary.name, scope.pickerPaneShape.artifact.name, scope.pickerPaneShape.icon, 'before').join(" "))
+                                                .css("z-index", options.elementZIndex);
                                             $shapeElement.css("left", event.srcEvent.clientX - $container.offset().left);
                                             $shapeElement.css("top", event.srcEvent.clientY - $container.offset().top);
                                             $shapeElement.appendTo($("." + options.containerClass));
@@ -69,28 +72,31 @@ define(
                                             $shapeElement.remove();
                                             $("." + options.holderClass).find("." + options.hoverClass).removeClass(options.hoverClass);
 
-                                            var $to = $(event.srcEvent.toElement),
-                                                x = event.srcEvent.clientX - $to.offset().left,
-                                                y = event.srcEvent.clientY - $to.offset().top;
+                                            var $to = $(event.srcEvent.toElement);
 
-                                            x = Math.floor(x * angularConstants.precision) / angularConstants.precision;
-                                            y = Math.floor(y * angularConstants.precision) / angularConstants.precision;
+                                            if ($to.hasClass(options.widgetClass) || $to.hasClass(options.holderClass)) {
+                                                var x = event.srcEvent.clientX - $to.offset().left,
+                                                    y = event.srcEvent.clientY - $to.offset().top;
 
-                                            if (!scope.isPlaying) {
-                                                uiUtilService.broadcast(scope,
-                                                    angularEventTypes.beforeWidgetCreationEvent,
-                                                    function (name) {
-                                                        if (name) {
-                                                            var widgetObj = createWidget($to);
-                                                            widgetObj.name = name;
+                                                x = Math.floor(x * angularConstants.precision) / angularConstants.precision;
+                                                y = Math.floor(y * angularConstants.precision) / angularConstants.precision;
 
-                                                            if (widgetObj) {
-                                                                widgetObj.css("left", x + "px");
-                                                                widgetObj.css("top", y + "px");
+                                                if (!scope.isPlaying) {
+                                                    uiUtilService.broadcast(scope,
+                                                        angularEventTypes.beforeWidgetCreationEvent,
+                                                        function (name) {
+                                                            if (name) {
+                                                                var widgetObj = createWidget($to);
+                                                                widgetObj.name = name;
+
+                                                                if (widgetObj) {
+                                                                    widgetObj.css("left", x + "px");
+                                                                    widgetObj.css("top", y + "px");
+                                                                }
                                                             }
                                                         }
-                                                    }
-                                                );
+                                                    );
+                                                }
                                             }
                                         }
                                     }
@@ -100,24 +106,22 @@ define(
                                     var widgetObj = uiService.createWidget(containerElement);
 
                                     if (widgetObj) {
-                                        widgetObj.addClass(scope.pickerPaneShape.shapeStyle.classList.join(" "));
-                                        widgetObj.css(scope.pickerPaneShape.shapeStyle.style);
+                                        widgetObj.addOmniClass("pseudoShape")
+                                            .addOmniClass(scope.getIconClassList(scope.pickerPaneShape.iconLibrary.name, scope.pickerPaneShape.artifact.name, scope.pickerPaneShape.icon, 'before').join(" "));
                                     }
 
                                     return widgetObj;
                                 }
 
-                                scope.pickShape = function (value) {
+                                scope.pickShape = function (iconLibrary, artifact, icon) {
                                     scope.pickerPaneShape = null;
-                                    scope.pickedPane = value;
+                                    scope.pickedPane = {iconLibrary: iconLibrary, artifact: artifact, icon: icon};
                                     $timeout(function () {
                                         scope.pickerPaneShape = scope.pickedPane;
                                     });
 
                                     return true;
                                 };
-
-                                appService.loadIconArtifactList();
 
                                 var mc = new Hammer.Manager(element.find(".pickerPane").get(0));
                                 mc.add(new Hammer.Pan({threshold: 0, pointers: 0}));

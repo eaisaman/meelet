@@ -43,7 +43,8 @@ define(
                         {name: "slideFromBottomPerspective", value: "slideFromBottomPerspective"},
                         {name: "slideFromRightPerspective", value: "slideFromRightPerspective"},
                         {name: "slipFromTopPerspective", value: "slipFromTopPerspective"}
-                    ]
+                    ],
+                    defaultValue: "fadeInScaleUp"
                 },
                 setPerspective: {
                     name: "Perspective",
@@ -53,27 +54,32 @@ define(
                     modalContentWidth: {
                         name: "Modal Width",
                         type: "size",
-                        handDown: true
+                        handDown: true,
+                        defaultValue: "50%"
                     },
                     modalContentHeight: {
                         name: "Modal Height",
                         type: "size",
-                        handDown: true
+                        handDown: true,
+                        defaultValue: "50%"
                     },
                     overlayColor: {
                         name: "Overlay Color",
                         type: "color",
-                        handDown: true
+                        handDown: true,
+                        defaultValue: "#d4d4d4"
                     },
                     mainColor: {
                         name: "Main Color",
                         type: "color",
-                        handDown: true
+                        handDown: true,
+                        defaultValue: "#ffffff"
                     },
                     modalColor: {
                         name: "Modal Color",
                         type: "color",
-                        handDown: true
+                        handDown: true,
+                        defaultValue: "#cccccc"
                     }
                 }
             }

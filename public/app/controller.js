@@ -10,6 +10,7 @@ define(
                 urlService.project();
             });
             $rootScope.repoLibraryList = [];
+            $rootScope.effectLibraryList = [];
             $rootScope.iconLibraryList = [];
             $rootScope.widgetLibraryList = [];
             $rootScope.myRepoList = [];
@@ -95,6 +96,80 @@ define(
                 }
             }
 
+            $scope.enableAddWidget = function (event) {
+                function addWidgetHandler(event) {
+                    var $container = $("." + angularConstants.widgetClasses.containerClass);
+
+                    if (event.type === "panstart") {
+
+                        $shapeElement = $("<div />");
+
+                        $shapeElement.addClass("pickerPaneShape squarePane")
+                            .css("z-index", angularConstants.draggingShapeZIndex);
+                        $shapeElement.css("left", event.srcEvent.clientX - $container.offset().left);
+                        $shapeElement.css("top", event.srcEvent.clientY - $container.offset().top);
+                        $shapeElement.appendTo($("." + angularConstants.widgetClasses.containerClass));
+                    } else if (event.type === "panmove") {
+                        var $to = $(event.srcEvent.toElement);
+
+                        $shapeElement.css("left", event.srcEvent.clientX - $container.offset().left);
+                        $shapeElement.css("top", event.srcEvent.clientY - $container.offset().top);
+
+                        if ($to.hasClass(angularConstants.widgetClasses.widgetClass)) {
+                            if (!$to.hasClass(angularConstants.widgetClasses.hoverClass)) {
+                                $("." + angularConstants.widgetClasses.holderClass).find("." + angularConstants.widgetClasses.hoverClass).removeClass(angularConstants.widgetClasses.hoverClass);
+                                $to.addClass(angularConstants.widgetClasses.hoverClass);
+                            }
+                        } else if ($to.hasClass(angularConstants.widgetClasses.holderClass)) {
+                            $("." + angularConstants.widgetClasses.holderClass).find("." + angularConstants.widgetClasses.hoverClass).removeClass(angularConstants.widgetClasses.hoverClass);
+                        }
+                    } else if (event.type === "panend") {
+                        $shapeElement.remove();
+                        $("." + angularConstants.widgetClasses.holderClass).find("." + angularConstants.widgetClasses.hoverClass).removeClass(angularConstants.widgetClasses.hoverClass);
+
+                        var $to = $(event.srcEvent.toElement);
+
+                        if ($to.hasClass(angularConstants.widgetClasses.widgetClass) || $to.hasClass(angularConstants.widgetClasses.holderClass)) {
+                            var x = event.srcEvent.clientX - $to.offset().left,
+                                y = event.srcEvent.clientY - $to.offset().top;
+
+                            x = Math.floor(x * angularConstants.precision) / angularConstants.precision;
+                            y = Math.floor(y * angularConstants.precision) / angularConstants.precision;
+
+                            if (!$scope.sketchWidgetSetting.isPlaying) {
+                                uiUtilService.broadcast($scope,
+                                    angularEventTypes.beforeWidgetCreationEvent,
+                                    function (name) {
+                                        if (name) {
+                                            var widgetObj = uiService.createWidget($to);
+                                            widgetObj.name = name;
+
+                                            if (widgetObj) {
+                                                widgetObj.css("left", x + "px");
+                                                widgetObj.css("top", y + "px");
+                                            }
+                                        }
+                                    }
+                                );
+                            }
+                        }
+                    }
+                }
+
+                event && event.stopPropagation && event.stopPropagation();
+
+                var $el = $(event.target),
+                    mc = $el.data("hammer"),
+                    $shapeElement;
+
+                if (!mc) {
+                    mc = new Hammer.Manager(event.target);
+                    mc.add(new Hammer.Pan({threshold: 0, pointers: 0}));
+                    mc.on("panstart panmove panend", addWidgetHandler);
+                    $el.data("hammer", mc);
+                }
+            }
+
             $scope.locateWidget = function (event) {
                 event && event.stopPropagation && event.stopPropagation();
 
@@ -171,7 +246,7 @@ define(
 
                 var widgetObj = $scope.sketchObject.pickedWidget;
 
-                if (widgetObj && widgetObj.isElement && !widgetObj.isTemporary) {
+                if (widgetObj && !widgetObj.isTemporary) {
                     widgetObj.fillParent && widgetObj.fillParent();
                 }
             }
@@ -415,6 +490,7 @@ define(
             };
             $scope.dockAlign = "align-left";
             $scope.iconLibraryList = $rootScope.iconLibraryList;
+            $scope.effectLibraryList = $rootScope.effectLibraryList;
 
             $rootScope.visiblePseudoEnabledWidgets = [];
         }
@@ -616,7 +692,7 @@ define(
                     });
                 } else {
                     var artifact = _.clone(repoArtifact);
-                    artifact.version = (repoArtifact.versionList.length && repoArtifact.versionList[0].name);
+                    artifact.version = (repoArtifact.versionList.length && repoArtifact.versionList[repoArtifact.versionList.length - 1].name);
                     artifact.version && appService.selectRepoArtifact([artifact], {_id: $scope.project._id}).then(function () {
                         $scope.project.artifactList.push(artifact);
                         repoArtifact._version = artifact.version;

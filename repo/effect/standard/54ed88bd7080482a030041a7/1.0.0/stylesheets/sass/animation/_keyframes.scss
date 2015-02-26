@@ -1,3 +1,5 @@
+@import "base";
+
 @mixin puffInKeyframes($keyframe: puffIn) {
 
     @-moz-keyframes #{$keyframe} {
@@ -1948,7 +1950,7 @@
     }
 }
 
-@mixin slideUpKeyframes($keyframe:slideUp) {
+@mixin slideUpKeyframes($keyframe: slideUp) {
     @-moz-keyframes #{$keyframe} {
         0% {
             -moz-transform-origin: 0 0;
@@ -2005,7 +2007,7 @@
     }
 }
 
-@mixin slideLeftKeyframes($keyframe:slideLeft, $offset: 0%) {
+@mixin slideLeftKeyframes($keyframe: slideLeft, $offset: 0%) {
     @-moz-keyframes #{$keyframe} {
         0% {
             -moz-transform-origin: 0 0;
@@ -2233,7 +2235,7 @@
     }
 }
 
-@mixin slideLeftRetournKeyframes($keyframe:slideLeftRetourn) {
+@mixin slideLeftRetournKeyframes($keyframe: slideLeftRetourn) {
     @-moz-keyframes #{$keyframe} {
         0% {
             -moz-transform-origin: 0 0;
@@ -3813,3 +3815,141 @@
         }
     }
 }
+
+//Bling
+@include puffInKeyframes(_effect_magicAnimation_puffIn);
+@include puffOutKeyframes(_effect_magicAnimation_puffOut);
+@include vanishInKeyframes(_effect_magicAnimation_vanishIn);
+@include vanishOutKeyframes(_effect_magicAnimation_vanishOut);
+
+//Static Effects
+@include openDownLeftKeyframes(_effect_magicAnimation_openDownLeft);
+@include openDownRightKeyframes(_effect_magicAnimation_openDownRight);
+@include openUpLeftKeyframes(_effect_magicAnimation_openUpLeft);
+@include openUpRightKeyframes(_effect_magicAnimation_openUpRight);
+@include openDownLeftRetournKeyframes(_effect_magicAnimation_openDownLeftRetourn);
+@include openDownRightRetournKeyframes(_effect_magicAnimation_openDownRightRetourn);
+@include openUpLeftRetournKeyframes(_effect_magicAnimation_openUpLeftRetourn);
+@include openUpRightRetournKeyframes(_effect_magicAnimation_openUpRightRetourn);
+
+//Static Effects Out
+@include openDownLeftOutKeyframes(_effect_magicAnimation_openDownLeftOut);
+@include openDownRightOutKeyframes(_effect_magicAnimation_openDownRightOut);
+@include openUpLeftOutKeyframes(_effect_magicAnimation_openUpLeftOut);
+@include openUpRightOutKeyframes(_effect_magicAnimation_openUpRightOut);
+
+//Perspective
+@include perspectiveDownKeyframes(_effect_magicAnimation_perspectiveDown);
+@include perspectiveUpKeyframes(_effect_magicAnimation_perspectiveUp);
+@include perspectiveLeftKeyframes(_effect_magicAnimation_perspectiveLeft);
+@include perspectiveRightKeyframes(_effect_magicAnimation_perspectiveRight);
+@include perspectiveDownRetournKeyframes(_effect_magicAnimation_perspectiveDownRetourn);
+@include perspectiveUpRetournKeyframes(_effect_magicAnimation_perspectiveUpRetourn);
+@include perspectiveLeftRetournKeyframes(_effect_magicAnimation_perspectiveLeftRetourn);
+@include perspectiveRightRetournKeyframes(_effect_magicAnimation_perspectiveRightRetourn);
+
+//Rotate
+@include rotateDownKeyframes(_effect_magicAnimation_rotateDown);
+@include rotateUpKeyframes(_effect_magicAnimation_rotateUp);
+@include rotateLeftKeyframes(_effect_magicAnimation_rotateLeft);
+@include rotateRightKeyframes(_effect_magicAnimation_rotateRight);
+
+//Slide
+@include slideDownKeyframes(_effect_magicAnimation_slideDown);
+@include slideUpKeyframes(_effect_magicAnimation_slideUp);
+@include slideLeftKeyframes(_effect_magicAnimation_slideLeft);
+@include slideRightKeyframes(_effect_magicAnimation_slideRight);
+@include slideDownRetournKeyframes(_effect_magicAnimation_slideDownRetourn);
+@include slideUpRetournKeyframes(_effect_magicAnimation_slideUpRetourn);
+@include slideLeftRetournKeyframes(_effect_magicAnimation_slideLeftRetourn);
+@include slideRightRetournKeyframes(_effect_magicAnimation_slideRightRetourn);
+
+//Math
+@include swashOutKeyframes(_effect_magicAnimation_swashOut);
+@include swashInKeyframes(_effect_magicAnimation_swashIn);
+@include foolishOutKeyframes(_effect_magicAnimation_foolishOut);
+@include foolishInKeyframes(_effect_magicAnimation_foolishIn);
+@include holeOutKeyframes(_effect_magicAnimation_holeOut);
+
+//Tin
+@include tinRightOutKeyframes(_effect_magicAnimation_tinRightOut);
+@include tinLeftOutKeyframes(_effect_magicAnimation_tinLeftOut);
+@include tinUpOutKeyframes(_effect_magicAnimation_tinUpOut);
+@include tinDownOutKeyframes(_effect_magicAnimation_tinDownOut);
+@include tinRightInKeyframes(_effect_magicAnimation_tinRightIn);
+@include tinLeftInKeyframes(_effect_magicAnimation_tinLeftIn);
+@include tinUpInKeyframes(_effect_magicAnimation_tinUpIn);
+@include tinDownInKeyframes(_effect_magicAnimation_tinDownIn);
+
+//Bomb
+@include bombRightOutKeyframes(_effect_magicAnimation_bombRightOut);
+@include bombLeftOutKeyframes(_effect_magicAnimation_bombLeftOut);
+
+//Bling
+@include baseAnimation(_effect_magicAnimation_puffIn);
+@include baseAnimation(_effect_magicAnimation_puffOut);
+@include baseAnimation(_effect_magicAnimation_vanishIn);
+@include baseAnimation(_effect_magicAnimation_vanishOut);
+
+//Static Effects
+@include baseAnimation(_effect_magicAnimation_openDownLeft);
+@include baseAnimation(_effect_magicAnimation_openDownRight);
+@include baseAnimation(_effect_magicAnimation_openUpLeft);
+@include baseAnimation(_effect_magicAnimation_openUpRight);
+@include baseAnimation(_effect_magicAnimation_openDownLeftRetourn);
+@include baseAnimation(_effect_magicAnimation_openDownRightRetourn);
+@include baseAnimation(_effect_magicAnimation_openUpLeftRetourn);
+@include baseAnimation(_effect_magicAnimation_openUpRightRetourn);
+
+//Static Effects Out
+@include baseAnimation(_effect_magicAnimation_openDownLeftOut);
+@include baseAnimation(_effect_magicAnimation_openDownRightOut);
+@include baseAnimation(_effect_magicAnimation_openUpLeftOut);
+@include baseAnimation(_effect_magicAnimation_openUpRightOut);
+
+//Perspective
+@include baseAnimation(_effect_magicAnimation_perspectiveDown);
+@include baseAnimation(_effect_magicAnimation_perspectiveUp);
+@include baseAnimation(_effect_magicAnimation_perspectiveLeft);
+@include baseAnimation(_effect_magicAnimation_perspectiveRight);
+@include baseAnimation(_effect_magicAnimation_perspectiveDownRetourn);
+@include baseAnimation(_effect_magicAnimation_perspectiveUpRetourn);
+@include baseAnimation(_effect_magicAnimation_perspectiveLeftRetourn);
+@include baseAnimation(_effect_magicAnimation_perspectiveRightRetourn);
+
+//Rotate
+@include baseAnimation(_effect_magicAnimation_rotateDown);
+@include baseAnimation(_effect_magicAnimation_rotateUp);
+@include baseAnimation(_effect_magicAnimation_rotateLeft);
+@include baseAnimation(_effect_magicAnimation_rotateRight);
+
+//Slide
+@include baseAnimation(_effect_magicAnimation_slideDown);
+@include baseAnimation(_effect_magicAnimation_slideUp);
+@include baseAnimation(_effect_magicAnimation_slideLeft);
+@include baseAnimation(_effect_magicAnimation_slideRight);
+@include baseAnimation(_effect_magicAnimation_slideDownRetourn);
+@include baseAnimation(_effect_magicAnimation_slideUpRetourn);
+@include baseAnimation(_effect_magicAnimation_slideLeftRetourn);
+@include baseAnimation(_effect_magicAnimation_slideRightRetourn);
+
+//Math
+@include baseAnimation(_effect_magicAnimation_swashOut);
+@include baseAnimation(_effect_magicAnimation_swashIn);
+@include baseAnimation(_effect_magicAnimation_foolishOut);
+@include baseAnimation(_effect_magicAnimation_foolishIn);
+@include baseAnimation(_effect_magicAnimation_holeOut);
+
+//Tin
+@include baseAnimation(_effect_magicAnimation_tinRightOut);
+@include baseAnimation(_effect_magicAnimation_tinLeftOut);
+@include baseAnimation(_effect_magicAnimation_tinUpOut);
+@include baseAnimation(_effect_magicAnimation_tinDownOut);
+@include baseAnimation(_effect_magicAnimation_tinRightIn);
+@include baseAnimation(_effect_magicAnimation_tinLeftIn);
+@include baseAnimation(_effect_magicAnimation_tinUpIn);
+@include baseAnimation(_effect_magicAnimation_tinDownIn);
+
+//Bomb
+@include baseAnimation(_effect_magicAnimation_bombRightOut);
+@include baseAnimation(_effect_magicAnimation_bombLeftOut);

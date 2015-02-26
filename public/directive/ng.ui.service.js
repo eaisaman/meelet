@@ -223,7 +223,17 @@ define(
                         trigger;
 
                     function triggerCallback() {
-                        self.actionObj && self.actionObj.doAction();
+                        function doActionHandler() {
+                            if (self.actionObj) {
+                                return self.actionObj.doAction();
+                            } else {
+                                return $inject.uiUtilService.getResolveDefer();
+                            }
+                        }
+
+                        doActionHandler.onceId = "Transition.setTrigger.triggerCallback.doActionHandler";
+
+                        $inject.uiUtilService.once(doActionHandler, null, 100)();
                     }
 
                     if (triggerType === "Gesture") {
@@ -305,7 +315,7 @@ define(
 
                     SequenceTransitionAction.prototype.__proto__.fromObject.apply(ret, [obj]);
 
-                    var classes = ["AnimationTransitionAction", "StateTransitionAction", "ConfigurationTransitionAction"];
+                    var classes = ["EffectTransitionAction", "StateTransitionAction", "ConfigurationTransitionAction"];
                     obj.childActions && obj.childActions.forEach(function (action) {
                         var className = action.CLASS_NAME,
                             actionObj;
@@ -341,9 +351,7 @@ define(
                 addAction: function (actionType) {
                     var action;
 
-                    if (actionType === "Animation") {
-                        action = new AnimationTransitionAction(this.widgetObj);
-                    } else if (actionType === "Effect") {
+                    if (actionType === "Effect") {
                         action = new EffectTransitionAction(this.widgetObj);
                     } else if (actionType === "State") {
                         action = new StateTransitionAction(this.widgetObj, this.widgetObj.initialStateOption.name);
@@ -357,25 +365,27 @@ define(
             EffectTransitionAction = Class(BaseTransitionAction, {
                 CLASS_NAME: "EffectTransitionAction",
                 MEMBERS: {
+                    artifactSpec: {},
                     effect: {}
                 },
-                initialize: function (widgetObj, effect, id) {
+                initialize: function (widgetObj, artifactSpec, effect, id) {
                     this.initialize.prototype.__proto__.initialize.apply(this, [widgetObj, "Effect", id]);
                     var MEMBERS = arguments.callee.prototype.MEMBERS;
 
                     for (var member in MEMBERS) {
                         this[member] = angular.copy(MEMBERS[member]);
                     }
+                    this.artifactSpec = artifactSpec || this.artifactSpec;
                     this.effect = effect || this.effect;
                 },
                 toJSON: function () {
-                    var jsonObj = AnimationTransitionAction.prototype.__proto__.toJSON.apply(this);
-                    _.extend(jsonObj, _.pick(this, ["effect", "CLASS_NAME"]));
+                    var jsonObj = EffectTransitionAction.prototype.__proto__.toJSON.apply(this);
+                    _.extend(jsonObj, _.pick(this, ["artifactSpec", "effect", "CLASS_NAME"]));
 
                     return jsonObj;
                 },
                 fromObject: function (obj) {
-                    var ret = new EffectTransitionAction(obj.widgetObj, obj.effect, obj.id);
+                    var ret = new EffectTransitionAction(obj.widgetObj, obj.artifactSpec, obj.effect, obj.id);
 
                     EffectTransitionAction.prototype.__proto__.fromObject.apply(ret, [obj]);
 
@@ -385,73 +395,27 @@ define(
                     var self = this,
                         defer = $inject.$q.defer();
 
-                    if (self.widgetObj.$element && self.effect.name && self.widgetObj.$element.parent().length) {
-                        self.widgetObj.$element.addClass(self.effect.name);
-
-                        if (self.effect.duration) {
-                            $inject.$timeout(function () {
-                                self.restoreWidget();
-                                defer.resolve(self);
-                            }, self.effect.duration);
-
-                            return defer.promise;
-                        }
-                    }
-
-                    $inject.$timeout(function () {
-                        defer.resolve(self);
-                    });
-
-                    return defer.promise;
-                },
-                restoreWidget: function () {
-                    var self = this;
-
-                    if (self.widgetObj && self.effect.name) {
-                        self.widgetObj.$element.removeClass(self.effect.name);
-                    }
-                }
-            }),
-            AnimationTransitionAction = Class(BaseTransitionAction, {
-                CLASS_NAME: "AnimationTransitionAction",
-                MEMBERS: {
-                    animation: {}
-                },
-                initialize: function (widgetObj, animation, id) {
-                    this.initialize.prototype.__proto__.initialize.apply(this, [widgetObj, "Animation", id]);
-                    var MEMBERS = arguments.callee.prototype.MEMBERS;
-
-                    for (var member in MEMBERS) {
-                        this[member] = angular.copy(MEMBERS[member]);
-                    }
-                    this.animation = animation || this.animation;
-                },
-                toJSON: function () {
-                    var jsonObj = AnimationTransitionAction.prototype.__proto__.toJSON.apply(this);
-                    _.extend(jsonObj, _.pick(this, ["animation", "CLASS_NAME"]));
-
-                    return jsonObj;
-                },
-                fromObject: function (obj) {
-                    var ret = new AnimationTransitionAction(obj.widgetObj, obj.animation, obj.id);
-
-                    AnimationTransitionAction.prototype.__proto__.fromObject.apply(ret, [obj]);
-
-                    return ret;
-                },
-                doAction: function () {
-                    var self = this,
-                        defer = $inject.$q.defer();
-
                     if (self.widgetObj.$element && self.widgetObj.$element.parent().length) {
-                        self.cssAnimation = _.extend(
-                            $inject.uiUtilService.prefixedStyle("animation", "{0} {1}s {2}", self.animation.name, self.animation.options.duration || 1, self.animation.options.timing || "")
-                        );
+                        var fullName = self.artifactSpec.directiveName + "-" + self.artifactSpec.version.replace(/\./g, "-");
+                        self.widgetObj.$element.attr(fullName, "");
+                        self.widgetObj.$element.attr("effect", self.effect.name);
 
-                        self.widgetObj.$element.css(self.cssAnimation);
+                        if (self.effect.type === "Animation") {
+                            self.cssAnimation = {};
 
-                        var animationName = self.widgetObj.$element.css("animation-name");
-                        if (animationName && animationName !== "none") {
+                            if (self.effect.options.duration) {
+                                _.extend(
+                                    self.cssAnimation, $inject.uiUtilService.prefixedStyle("animation-duration", "{0}s", self.effect.options.duration)
+                                );
+                            }
+                            if (self.effect.options.timing) {
+                                _.extend(
+                                    self.cssAnimation, $inject.uiUtilService.prefixedStyle("timing-function", "{0}", self.effect.options.timing)
+                                );
+                            }
+
+                            self.widgetObj.$element.css(self.cssAnimation);
+
                             $inject.uiUtilService.onAnimationEnd(self.widgetObj.$element).then(function () {
                                 self.restoreWidget();
                                 defer.resolve(self);
@@ -470,9 +434,16 @@ define(
                 restoreWidget: function () {
                     var self = this;
 
-                    if (self.widgetObj && self.cssAnimation) {
-                        for (var key in self.cssAnimation) {
-                            self.widgetObj.$element.css(key, "");
+                    if (self.widgetObj.$element && self.widgetObj.$element.parent().length) {
+                        var fullName = self.artifactSpec.directiveName + "-" + self.artifactSpec.version.replace(/\./g, "-");
+                        self.widgetObj.$element.removeAttr(fullName);
+                        self.widgetObj.$element.removeAttr("effect");
+
+                        if (self.effect.type === "Animation") {
+                            for (var key in self.cssAnimation) {
+                                self.widgetObj.$element.css(key, "");
+                            }
+                            self.cssAnimation = null;
                         }
                     }
                 }
@@ -652,9 +623,6 @@ define(
                         self.hammer = new Hammer(widgetObj.$element.get(0), _.clone(self.options));
                         self.hammer.on(self.eventName, function (event) {
                             self.callback && self.callback();
-                            $inject.$timeout(function () {
-                                self.off();
-                            });
                         });
                     }
                 },
@@ -2347,7 +2315,7 @@ define(
                     var ret = new ElementSketchWidgetClass(obj.id);
 
                     ElementSketchWidgetClass.prototype.__proto__.fromObject.apply(ret, [obj]);
-                    ret.html = obj.html;
+                    ret.setHtml(obj.html);
 
                     return ret;
                 },
@@ -2355,6 +2323,14 @@ define(
                     var self = this;
 
                     return ElementSketchWidgetClass.prototype.CLASS_NAME == className || ElementSketchWidgetClass.prototype.__proto__.isKindOf.apply(self, [className]);
+                },
+                appendTo: function (container) {
+                    var self = this;
+
+                    ElementSketchWidgetClass.prototype.__proto__.appendTo.apply(self, [container]);
+                    self.setHtml(self.html);
+
+                    return self;
                 },
                 levelUp: function (widgetObj, doCompile, waiveDisassemble) {
                     var self = this;
@@ -2615,7 +2591,21 @@ define(
                     }
                 },
                 setHtml: function (value) {
-                    this.html = value;
+                    var self = this;
+
+                    self.html = value || "";
+                    if (self.$element) {
+                        var $textNode = self.$element.find(".widgetText");
+                        if (self.html) {
+                            if (!$textNode.length) {
+                                $textNode = $("<div />").addClass("widgetText").prependTo(self.$element);
+                            }
+                            $textNode.empty();
+                            $textNode.html(self.html);
+                        } else {
+                            $textNode.remove();
+                        }
+                    }
                 }
             }),
             IncludeSketchWidgetClass = Class(BaseSketchWidgetClass, {
@@ -2789,6 +2779,10 @@ define(
                                     type: self.widgetSpec.type
                                 }, self.widgetSpec.libraryName, self.widgetSpec.version).then(
                                     function (loadedSpec) {
+                                        if (_.isEmpty(self.widgetSpec.configuration)) {
+                                            _.extend(self.widgetSpec, loadedSpec);
+                                        }
+
                                         var defer = $inject.$q.defer();
 
                                         $inject.$timeout(function () {
@@ -2826,6 +2820,18 @@ define(
                                 )
                             ]).then(
                                 function () {
+                                    //Apply default value to widget's configuration.
+                                    _.without(_.keys(self.widgetSpec.configuration), ["state", "handDownConfiguration"]).forEach(
+                                        function (key) {
+                                            var config = self.widgetSpec.configuration[key],
+                                                value = config.pickedValue || config.defaultValue;
+
+                                            if (value != null) {
+                                                self.setScopedValue(key, value);
+                                            }
+                                        }
+                                    );
+
                                     return $inject.uiUtilService.getResolveDefer();
                                 }, function (err) {
                                     return $inject.uiUtilService.getRejectDefer(err);
@@ -2837,7 +2843,7 @@ define(
                         }
                     );
                 },
-                getConfiguration: function (key) {
+                getScopedValue: function (key) {
                     var self = this;
 
                     if (self.$element && self.$element.parent().length) {
@@ -2848,7 +2854,7 @@ define(
 
                     return null;
                 },
-                setConfiguration: function (key, value) {
+                setScopedValue: function (key, value) {
                     var self = this;
 
                     if (self.$element && self.$element.parent().length) {
@@ -2856,23 +2862,13 @@ define(
 
                         if (typeof key === "object") {
                             _.each(key, function (item) {
-                                if (item.type === "list") {
-                                    scope[item.key] = item.pickedOption;
-                                } else if (item.type === "multilevel-list") {
-                                    scope[item.key] = item.pickedOption;
-                                } else if (item.type === "size") {
-                                    var m = (item.sizeValue || "").match(/([-\d\.]+)(px|%)+$/)
+                                if (item.type === "size") {
+                                    var m = (item.pickedValue || "").match(/([-\d\.]+)(px|%)+$/)
                                     if (m && m.length == 3) {
-                                        scope[item.key] = item.sizeValue;
+                                        scope[item.key] = item.pickedValue;
                                     }
-                                } else if (item.type === "boolean") {
-                                    scope[item.key] = item.booleanValue;
-                                } else if (item.type === "text") {
-                                    scope[item.key] = item.textValue;
-                                } else if (item.type === "color") {
-                                    scope[item.key] = item.colorValue;
-                                } else if (item.type === "readableList") {
-                                    scope[item.key] = item.pickedOption;
+                                } else {
+                                    scope[item.key] = item.pickedValue;
                                 }
                             });
                         }
@@ -2881,33 +2877,51 @@ define(
                         }
                     }
                 },
+                getConfiguration: function (key) {
+                    var self = this,
+                        config = self.widgetSpec.configuration[key] || self.widgetSpec.configuration.handDownConfiguration[key];
+
+                    return config.pickedValue || config.defaultValue;
+                },
+                setConfiguration: function (key, value) {
+                    var self = this,
+                        config = self.widgetSpec.configuration[key] || self.widgetSpec.configuration.handDownConfiguration[key];
+
+                    if (value != null) {
+                        config.pickedValue = value;
+                    } else {
+                        delete config.pickedValue;
+                    }
+
+                    config.handDown && self.setHandDownConfiguration(key, value) || self.setScopedValue(key, value || config.defaultValue);
+                },
                 setHandDownConfiguration: function (key, value) {
-                    //FIXME Read default hand down configuration from main.js
-
-                    var self = this;
-
-                    self.setConfiguration(key, value);
+                    var self = this,
+                        index;
 
                     //handDownList will be flushed after sending back configuration items to server
                     self.handDownConfigurationList = self.handDownConfigurationList || [];
-                    if (self.handDownConfigurationList.every(function (item) {
-                            if (item.key === key) {
-                                item.value = value;
-                                return false;
-                            }
+                    self.handDownConfigurationList.every(function (item, i) {
+                        if (item.key === key) {
+                            index = i;
+                            return false;
+                        }
 
-                            return true;
-                        })) {
+                        return true;
+                    });
+                    if (index == null) {
                         self.handDownConfigurationList.push({
                             key: key,
                             value: value
                         });
+                    } else {
+                        value == null && self.handDownConfigurationList.splice(index, 1);
                     }
                 },
                 applyHandDownConfiguration: function () {
                     var self = this;
 
-                    if (self.handDownConfigurationList.length) {
+                    if (self.handDownConfigurationList && self.handDownConfigurationList.length) {
                         return $inject.appService.updateConfigurableArtifact(self.widgetSpec.projectId, self.id, self.widgetSpec.artifactId, self.handDownConfigurationList);
                     } else {
                         return $inject.uiUtilService.getResolveDefer();
@@ -3109,9 +3123,9 @@ define(
             }
         }
 
-        Service.prototype.createRepoWidget = function (containerElement, projectId, widgetSpec) {
+        Service.prototype.createRepoWidget = function (containerElement, widgetSpec) {
             var self = this,
-                widgetObj = new RepoSketchWidgetClass(null, _.extend(angular.copy(widgetSpec), {projectId: projectId}));
+                widgetObj = new RepoSketchWidgetClass(null, widgetSpec);
             widgetObj.attr["ui-sketch-widget"] = "";
             widgetObj.attr["is-playing"] = "sketchWidgetSetting.isPlaying";
             widgetObj.attr["sketch-object"] = "sketchObject";

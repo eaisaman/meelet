@@ -58,6 +58,7 @@ require(["jquery-lib", "jquery-plugins-lib", "hammer-lib", "jquery-ui-lib", "jqu
             activeClass: "pickedWidget",
             widgetContainerClass: "widgetContainer"
         },
+        draggingShapeZIndex: 99,
         actionDelay: 100,
         checkInterval: 10,
         renderTimeout: 3000,

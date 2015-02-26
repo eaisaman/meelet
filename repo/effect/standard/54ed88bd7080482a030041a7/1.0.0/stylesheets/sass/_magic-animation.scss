@@ -1,0 +1,176 @@
+@import "animation/keyframes";
+
+@mixin magic-animation($artifactName, $version) {
+    [#{$artifactName}-#{str_replace($version, '.', '-')}] {
+        //Bling
+        &[effect=puffIn] {
+            @extend %_effect_magicAnimation_puffIn;
+        }
+        &[effect=puffOut] {
+            @extend %_effect_magicAnimation_puffOut;
+        }
+        &[effect=vanishIn] {
+            @extend %_effect_magicAnimation_vanishIn;
+        }
+        &[effect=vanishOut] {
+            @extend %_effect_magicAnimation_vanishOut;
+        }
+
+        //Static Effects
+        &[effect=openDownLeft] {
+            @extend %_effect_magicAnimation_openDownLeft;
+        }
+        &[effect=openDownRight] {
+            @extend %_effect_magicAnimation_openDownRight;
+        }
+        &[effect=openUpLeft] {
+            @extend %_effect_magicAnimation_openUpLeft;
+        }
+        &[effect=openUpRight] {
+            @extend %_effect_magicAnimation_openUpRight;
+        }
+        &[effect=openDownLeftRetourn] {
+            @extend %_effect_magicAnimation_openDownLeftRetourn;
+        }
+        &[effect=openDownRightRetourn] {
+            @extend %_effect_magicAnimation_openDownRightRetourn;
+        }
+        &[effect=openUpLeftRetourn] {
+            @extend %_effect_magicAnimation_openUpLeftRetourn;
+        }
+        &[effect=openUpRightRetourn] {
+            @extend %_effect_magicAnimation_openUpRightRetourn;
+        }
+
+        //Static Effects Out
+        &[effect=openDownLeftOut] {
+            @extend %_effect_magicAnimation_openDownLeftOut;
+        }
+        &[effect=openDownRightOut] {
+            @extend %_effect_magicAnimation_openDownRightOut;
+        }
+        &[effect=openUpLeftOut] {
+            @extend %_effect_magicAnimation_openUpLeftOut;
+        }
+        &[effect=openUpRightOut] {
+            @extend %_effect_magicAnimation_openUpRightOut;
+        }
+
+        //Perspective
+        &[effect=perspectiveDown] {
+            @extend %_effect_magicAnimation_perspectiveDown;
+        }
+        &[effect=perspectiveUp] {
+            @extend %_effect_magicAnimation_perspectiveUp;
+        }
+        &[effect=perspectiveLeft] {
+            @extend %_effect_magicAnimation_perspectiveLeft;
+        }
+        &[effect=perspectiveRight] {
+            @extend %_effect_magicAnimation_perspectiveRight;
+        }
+        &[effect=perspectiveDownRetourn] {
+            @extend %_effect_magicAnimation_perspectiveDownRetourn;
+        }
+        &[effect=perspectiveUpRetourn] {
+            @extend %_effect_magicAnimation_perspectiveUpRetourn;
+        }
+        &[effect=perspectiveLeftRetourn] {
+            @extend %_effect_magicAnimation_perspectiveLeftRetourn;
+        }
+        &[effect=perspectiveRightRetourn] {
+            @extend %_effect_magicAnimation_perspectiveRightRetourn;
+        }
+
+        //Rotate
+        &[effect=rotateDown] {
+            @extend %_effect_magicAnimation_rotateDown;
+        }
+        &[effect=rotateUp] {
+            @extend %_effect_magicAnimation_rotateUp;
+        }
+        &[effect=rotateLeft] {
+            @extend %_effect_magicAnimation_rotateLeft;
+        }
+        &[effect=rotateRight] {
+            @extend %_effect_magicAnimation_rotateRight;
+        }
+
+        //Slide
+        &[effect=slideDown] {
+            @extend %_effect_magicAnimation_slideDown;
+        }
+        &[effect=slideUp] {
+            @extend %_effect_magicAnimation_slideUp;
+        }
+        &[effect=slideLeft] {
+            @extend %_effect_magicAnimation_slideLeft;
+        }
+        &[effect=slideRight] {
+            @extend %_effect_magicAnimation_slideRight;
+        }
+        &[effect=slideDownRetourn] {
+            @extend %_effect_magicAnimation_slideDownRetourn;
+        }
+        &[effect=slideUpRetourn] {
+            @extend %_effect_magicAnimation_slideUpRetourn;
+        }
+        &[effect=slideLeftRetourn] {
+            @extend %_effect_magicAnimation_slideLeftRetourn;
+        }
+        &[effect=slideRightRetourn] {
+            @extend %_effect_magicAnimation_slideRightRetourn;
+        }
+
+        //Math
+        &[effect=swashOut] {
+            @extend %_effect_magicAnimation_swashOut;
+        }
+        &[effect=swashIn] {
+            @extend %_effect_magicAnimation_swashIn;
+        }
+        &[effect=foolishOut] {
+            @extend %_effect_magicAnimation_foolishOut;
+        }
+        &[effect=foolishIn] {
+            @extend %_effect_magicAnimation_foolishIn;
+        }
+        &[effect=holeOut] {
+            @extend %_effect_magicAnimation_holeOut;
+        }
+
+        //Tin
+        &[effect=tinRightOut] {
+            @extend %_effect_magicAnimation_tinRightOut;
+        }
+        &[effect=tinLeftOut] {
+            @extend %_effect_magicAnimation_tinLeftOut;
+        }
+        &[effect=tinUpOut] {
+            @extend %_effect_magicAnimation_tinUpOut;
+        }
+        &[effect=tinDownOut] {
+            @extend %_effect_magicAnimation_tinDownOut;
+        }
+        &[effect=tinRightIn] {
+            @extend %_effect_magicAnimation_tinRightIn;
+        }
+        &[effect=tinLeftIn] {
+            @extend %_effect_magicAnimation_tinLeftIn;
+        }
+        &[effect=tinUpIn] {
+            @extend %_effect_magicAnimation_tinUpIn;
+        }
+        &[effect=tinDownIn] {
+            @extend %_effect_magicAnimation_tinDownIn;
+        }
+
+        //Bomb
+        &[effect=bombRightOut] {
+            @extend %_effect_magicAnimation_bombRightOut;
+        }
+        &[effect=bombLeftOut] {
+            @extend %_effect_magicAnimation_bombLeftOut;
+        }
+    }
+}

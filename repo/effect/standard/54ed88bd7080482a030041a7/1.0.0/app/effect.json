@@ -1,0 +1,251 @@
+[
+  {
+    "name": "Bling",
+    "list": [
+      {
+        "name": "puffIn",
+        "value": "puffIn+Animation"
+      },
+      {
+        "name": "puffOut",
+        "value": "puffOut+Animation"
+      },
+      {
+        "name": "vanishIn",
+        "value": "vanishIn+Animation"
+      },
+      {
+        "name": "vanishOut",
+        "value": "vanishOut+Animation"
+      }
+    ]
+  },
+  {
+    "name": "Static Effects",
+    "list": [
+      {
+        "name": "openDownLeft",
+        "value": "openDownLeft+Animation"
+      },
+      {
+        "name": "openDownRight",
+        "value": "openDownRight+Animation"
+      },
+      {
+        "name": "openUpLeft",
+        "value": "openUpLeft+Animation"
+      },
+      {
+        "name": "openUpRight",
+        "value": "openUpRight+Animation"
+      },
+      {
+        "name": "openDownLeftRetourn",
+        "value": "openDownLeftRetourn+Animation"
+      },
+      {
+        "name": "openDownRightRetourn",
+        "value": "openDownRightRetourn+Animation"
+      },
+      {
+        "name": "openUpLeftRetourn",
+        "value": "openUpLeftRetourn+Animation"
+      },
+      {
+        "name": "openUpRightRetourn",
+        "value": "openUpRightRetourn+Animation"
+      }
+    ]
+  },
+  {
+    "name": "Static Effects/Out",
+    "list": [
+      {
+        "name": "openDownLeftOut",
+        "value": "openDownLeftOut+Animation"
+      },
+      {
+        "name": "openDownRightOut",
+        "value": "openDownRightOut+Animation"
+      },
+      {
+        "name": "openUpLeftOut",
+        "value": "openUpLeftOut+Animation"
+      },
+      {
+        "name": "openUpRightOut",
+        "value": "openUpRightOut+Animation"
+      }
+    ]
+  },
+  {
+    "name": "Perspective",
+    "list": [
+      {
+        "name": "perspectiveDown",
+        "value": "perspectiveDown+Animation"
+      },
+      {
+        "name": "perspectiveUp",
+        "value": "perspectiveUp+Animation"
+      },
+      {
+        "name": "perspectiveLeft",
+        "value": "perspectiveLeft+Animation"
+      },
+      {
+        "name": "perspectiveRight",
+        "value": "perspectiveRight+Animation"
+      },
+      {
+        "name": "perspectiveDownRetourn",
+        "value": "perspectiveDownRetourn+Animation"
+      },
+      {
+        "name": "perspectiveUpRetourn",
+        "value": "perspectiveUpRetourn+Animation"
+      },
+      {
+        "name": "perspectiveLeftRetourn",
+        "value": "perspectiveLeftRetourn+Animation"
+      },
+      {
+        "name": "perspectiveRightRetourn",
+        "value": "perspectiveRightRetourn+Animation"
+      }
+    ]
+  },
+  {
+    "name": "Rotate",
+    "list": [
+      {
+        "name": "rotateDown",
+        "value": "rotateDown+Animation"
+      },
+      {
+        "name": "rotateUp",
+        "value": "rotateUp+Animation"
+      },
+      {
+        "name": "rotateLeft",
+        "value": "rotateLeft+Animation"
+      },
+      {
+        "name": "rotateRight",
+        "value": "rotateRight+Animation"
+      }
+    ]
+  },
+  {
+    "name": "Slide",
+    "list": [
+      {
+        "name": "slideDown",
+        "value": "slideDown+Animation"
+      },
+      {
+        "name": "slideUp",
+        "value": "slideUp+Animation"
+      },
+      {
+        "name": "slideLeft",
+        "value": "slideLeft+Animation"
+      },
+      {
+        "name": "slideRight",
+        "value": "slideRight+Animation"
+      },
+      {
+        "name": "slideDownRetourn",
+        "value": "slideDownRetourn+Animation"
+      },
+      {
+        "name": "slideUpRetourn",
+        "value": "slideUpRetourn+Animation"
+      },
+      {
+        "name": "slideLeftRetourn",
+        "value": "slideLeftRetourn+Animation"
+      },
+      {
+        "name": "slideRightRetourn",
+        "value": "slideRightRetourn+Animation"
+      }
+    ]
+  },
+  {
+    "name": "Math",
+    "list": [
+      {
+        "name": "swashOut",
+        "value": "swashOut+Animation"
+      },
+      {
+        "name": "swashIn",
+        "value": "swashIn+Animation"
+      },
+      {
+        "name": "foolishOut",
+        "value": "foolishOut+Animation"
+      },
+      {
+        "name": "foolishIn",
+        "value": "foolishIn+Animation"
+      },
+      {
+        "name": "holeOut",
+        "value": "holeOut+Animation"
+      }
+    ]
+  },
+  {
+    "name": "Tin",
+    "list": [
+      {
+        "name": "tinRightOut",
+        "value": "tinRightOut+Animation"
+      },
+      {
+        "name": "tinLeftOut",
+        "value": "tinLeftOut+Animation"
+      },
+      {
+        "name": "tinUpOut",
+        "value": "tinUpOut+Animation"
+      },
+      {
+        "name": "tinDownOut",
+        "value": "tinDownOut+Animation"
+      },
+      {
+        "name": "tinRightIn",
+        "value": "tinRightIn+Animation"
+      },
+      {
+        "name": "tinLeftIn",
+        "value": "tinLeftIn+Animation"
+      },
+      {
+        "name": "tinUpIn",
+        "value": "tinUpIn+Animation"
+      },
+      {
+        "name": "tinDownIn",
+        "value": "tinDownIn+Animation"
+      }
+    ]
+  },
+  {
+    "name": "Bomb",
+    "list": [
+      {
+        "name": "bombRightOut",
+        "value": "bombRightOut+Animation"
+      },
+      {
+        "name": "bombLeftOut",
+        "value": "bombLeftOut+Animation"
+      }
+    ]
+  }
+]

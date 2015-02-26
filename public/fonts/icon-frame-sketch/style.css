@@ -127,6 +127,10 @@
     content: "\e613";
 }
 
+.icon-frame-sketch-insert:before {
+    content: "\e614";
+}
+
 .icon-frame-sketch-exit-before:before {
     content: "\e600";
 }
@@ -207,6 +211,10 @@
     content: "\e613";
 }
 
+.icon-frame-sketch-insert-before:before {
+    content: "\e614";
+}
+
 .icon-frame-sketch-exit-after:after {
     content: "\e600";
 }
@@ -285,5 +293,9 @@
 
 .icon-frame-sketch-remove-after:after {
     content: "\e613";
+}
+
+.icon-frame-sketch-insert-after:after {
+    content: "\e614";
 }
 

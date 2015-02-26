@@ -621,6 +621,28 @@ define(
             }
         }
 
+        Extension.prototype.getIconClassListService = function () {
+            return function (libraryName, artifactName, iconName, pseudo) {
+                if (libraryName && artifactName && iconName) {
+                    libraryName = libraryName.replace(/^ +/g, "").replace(/ +$/g, "").replace(/ /g, "-").replace(/[A-Z]/g, function ($0) {
+                        return $0.toLowerCase();
+                    }), artifactName = artifactName.replace(/^ +/g, "").replace(/ +$/g, "").replace(/ /g, "-").replace(/[A-Z]/g, function ($0) {
+                        return $0.toLowerCase();
+                    }), iconName = iconName.replace(/^ +/g, "").replace(/ +$/g, "").replace(/ /g, "-").replace(/[A-Z]/g, function ($0) {
+                        return $0.toLowerCase();
+                    }), pseudo = pseudo || "";
+
+                    var className = "icon-" + libraryName + " " + artifactName + " " + pseudo,
+                        iconClassName = "icon-" + libraryName + " " + artifactName + " " + iconName + " " + pseudo;
+
+                    return [
+                        className.replace(/ +$/g, "").replace(/ /g, "-"),
+                        iconClassName.replace(/ +$/g, "").replace(/ /g, "-")
+                    ];
+                }
+            }
+        }
+
         return e;
     }
 );

@@ -1,0 +1,79 @@
+<div class="widgetDemoContainer" ng-controller="MagicAnimationDemoController">
+    <div id="testbox">
+        <div id="retrobox"></div>
+        <div id="timing" class="perspective" ui-effect-magic-animation-1-0-0><span class="icon-diamond"></span>
+        </div>
+    </div>
+    <div id="cssoptions">
+        <h3>Bling</h3>
+        <a rel="nofollow" class="btn" ng-click="doAnimation('puffIn')">puffIn</a>
+        <a rel="nofollow" class="btn" ng-click="doAnimation('puffOut')">puffOut</a>
+        <a rel="nofollow" class="btn" ng-click="doAnimation('vanishIn')">vanishIn</a>
+        <a rel="nofollow" class="btn" ng-click="doAnimation('vanishOut')">vanishOut</a>
+
+        <h3>Static Effects</h3>
+        <a rel="nofollow" class="btn" ng-click="doAnimation('openDownLeft')">openDownLeft</a>
+        <a rel="nofollow" class="btn" ng-click="doAnimation('openDownRight')">openDownRight</a>
+        <a rel="nofollow" class="btn" ng-click="doAnimation('openUpLeft')">openUpLeft</a>
+        <a rel="nofollow" class="btn" ng-click="doAnimation('openUpRight')">openUpRight</a>
+        <a rel="nofollow" class="btn" ng-click="doAnimation('openDownLeftRetourn')">openDownLeftRetourn</a>
+        <a rel="nofollow" class="btn" ng-click="doAnimation('openDownRightRetourn')">openDownRightRetourn</a>
+        <a rel="nofollow" class="btn" ng-click="doAnimation('openUpLeftRetourn')">openUpLeftRetourn</a>
+        <a rel="nofollow" class="btn" ng-click="doAnimation('openUpRightRetourn')">openUpRightRetourn</a>
+
+        <h3>Static Effects Out</h3>
+        <a rel="nofollow" class="btn" ng-click="doAnimation('openDownLeftOut')">openDownLeftOut</a>
+        <a rel="nofollow" class="btn" ng-click="doAnimation('openDownRightOut')">openDownRightOut</a>
+        <a rel="nofollow" class="btn" ng-click="doAnimation('openUpLeftOut')">openUpLeftOut</a>
+        <a rel="nofollow" class="btn" ng-click="doAnimation('openUpRightOut')">openUpRightOut</a>
+
+        <h3>Perspective</h3>
+        <a rel="nofollow" class="btn" ng-click="doAnimation('perspectiveDown')">perspectiveDown</a>
+        <a rel="nofollow" class="btn" ng-click="doAnimation('perspectiveUp')">perspectiveUp</a>
+        <a rel="nofollow" class="btn" ng-click="doAnimation('perspectiveLeft')">perspectiveLeft</a>
+        <a rel="nofollow" class="btn" ng-click="doAnimation('perspectiveRight')">perspectiveRight</a>
+        <a rel="nofollow" class="btn" ng-click="doAnimation('perspectiveDownRetourn')">perspectiveDownRetourn</a>
+        <a rel="nofollow" class="btn" ng-click="doAnimation('perspectiveUpRetourn')">perspectiveUpRetourn</a>
+        <a rel="nofollow" class="btn" ng-click="doAnimation('perspectiveLeftRetourn')">perspectiveLeftRetourn</a>
+        <a rel="nofollow" class="btn" ng-click="doAnimation('perspectiveRightRetourn')">perspectiveRightRetourn</a>
+
+        <h3>Rotate</h3>
+        <a rel="nofollow" class="btn" ng-click="doAnimation('rotateDown')">rotateDown</a>
+        <a rel="nofollow" class="btn" ng-click="doAnimation('rotateUp')">rotateUp</a>
+        <a rel="nofollow" class="btn" ng-click="doAnimation('rotateLeft')">rotateLeft</a>
+        <a rel="nofollow" class="btn" ng-click="doAnimation('rotateRight')">rotateRight</a>
+
+        <h3>Slide</h3>
+        <a rel="nofollow" class="btn" ng-click="doAnimation('slideDown')">slideDown</a>
+        <a rel="nofollow" class="btn" ng-click="doAnimation('slideUp')">slideUp</a>
+        <a rel="nofollow" class="btn" ng-click="doAnimation('slideLeft')">slideLeft</a>
+        <a rel="nofollow" class="btn" ng-click="doAnimation('slideRight')">slideRight</a>
+        <a rel="nofollow" class="btn" ng-click="doAnimation('slideDownRetourn')">slideDownRetourn</a>
+        <a rel="nofollow" class="btn" ng-click="doAnimation('slideUpRetourn')">slideUpRetourn</a>
+        <a rel="nofollow" class="btn" ng-click="doAnimation('slideLeftRetourn')">slideLeftRetourn</a>
+        <a rel="nofollow" class="btn" ng-click="doAnimation('slideRightRetourn')">slideRightRetourn</a>
+
+        <h3>Math</h3>
+        <a rel="nofollow" class="btn" ng-click="doAnimation('swashOut')">swashOut</a>
+        <a rel="nofollow" class="btn" ng-click="doAnimation('swashIn')">swashIn</a>
+        <a rel="nofollow" class="btn" ng-click="doAnimation('foolishOut')">foolishOut</a>
+        <a rel="nofollow" class="btn" ng-click="doAnimation('foolishIn')">foolishIn</a>
+        <a rel="nofollow" class="btn" ng-click="doAnimation('holeOut')">holeOut</a>
+
+        <h3>Tin</h3>
+        <a rel="nofollow" class="btn" ng-click="doAnimation('tinRightOut')">tinRightOut</a>
+        <a rel="nofollow" class="btn" ng-click="doAnimation('tinLeftOut')">tinLeftOut</a>
+        <a rel="nofollow" class="btn" ng-click="doAnimation('tinUpOut')">tinUpOut</a>
+        <a rel="nofollow" class="btn" ng-click="doAnimation('tinDownOut')">tinDownOut</a>
+
+        <a rel="nofollow" class="btn" ng-click="doAnimation('tinRightIn')">tinRightIn</a>
+        <a rel="nofollow" class="btn" ng-click="doAnimation('tinLeftIn')">tinLeftIn</a>
+        <a rel="nofollow" class="btn" ng-click="doAnimation('tinUpIn')">tinUpIn</a>
+        <a rel="nofollow" class="btn" ng-click="doAnimation('tinDownIn')">tinDownIn</a>
+
+        <h3>Bomb</h3>
+        <a rel="nofollow" class="btn" ng-click="doAnimation('bombRightOut')">bombRightOut</a>
+        <a rel="nofollow" class="btn" ng-click="doAnimation('bombLeftOut')">bombLeftOut</a>
+
+    </div>
+</div>

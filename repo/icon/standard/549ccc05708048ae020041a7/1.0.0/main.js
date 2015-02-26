@@ -4,7 +4,7 @@ define(
 
         return {
             js: [],
-            stylesheets: ["fonts/icon-standard/style.css"],
+            stylesheets: ["fonts/icon-standard-regular/style.css"],
             demo: {
                 js: [],
                 stylesheets: ["stylesheets/demo.css"],
