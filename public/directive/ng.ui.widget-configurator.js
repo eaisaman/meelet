@@ -102,6 +102,11 @@ define(
                                     var widgetObj = scope.configurableWidget;
 
                                     if (item.type === "number") {
+                                        var m = (item.pickedValue || "").match(/([-\d\.]+)$/)
+                                        if (m && m.length == 2) {
+                                            widgetObj.setConfiguration(item.key, Number(item.pickedValue));
+                                        }
+                                    } else if (item.type === "size") {
                                         var m = (item.pickedValue || "").match(/([-\d\.]+)(px|%)+$/)
                                         if (m && m.length == 3) {
                                             widgetObj.setConfiguration(item.key, item.pickedValue);

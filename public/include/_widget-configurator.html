@@ -35,7 +35,10 @@
                 <div ng-if="configurationItem.type === 'size'" class="configurationItemNumber col-as-7 no-padding-left">
                     <input type="text" class="form-control" ng-model="configurationItem.pickedValue"/>
                 </div>
-                <div ng-if="configurationItem.type === 'text'" class="configurationItemNumber col-as-7 no-padding-left">
+                <div ng-if="configurationItem.type === 'number'" class="configurationItemNumber col-as-7 no-padding-left">
+                    <input type="text" class="form-control" ng-model="configurationItem.pickedValue"/>
+                </div>
+                <div ng-if="configurationItem.type === 'text'" class="configurationItemText col-as-7 no-padding-left">
                     <input type="text" class="form-control" ng-model="configurationItem.pickedValue"/>
                 </div>
                 <div ng-if="configurationItem.type === 'boolean'"
@@ -95,6 +98,14 @@
                     </div>
                     <div ng-if="configurationItem.type === 'size'"
                          class="configurationItemNumber col-as-7 no-padding-left">
+                        <input type="text" class="form-control" ng-model="configurationItem.pickedValue"/>
+                    </div>
+                    <div ng-if="configurationItem.type === 'number'"
+                         class="configurationItemNumber col-as-7 no-padding-left">
+                        <input type="text" class="form-control" ng-model="configurationItem.pickedValue"/>
+                    </div>
+                    <div ng-if="configurationItem.type === 'text'"
+                         class="configurationItemText col-as-7 no-padding-left">
                         <input type="text" class="form-control" ng-model="configurationItem.pickedValue"/>
                     </div>
                     <div ng-if="configurationItem.type === 'color'" ng-init="initHandDownColorStyle(configurationItem)"

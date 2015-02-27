@@ -7810,23 +7810,6 @@ button.close {
   -webkit-user-select: none;
 }
 
-#rootBody #bg #main.pop.ng-enter, #rootBody #bg #main.pop.ng-leave {
-  -webkit-transition: all 0.5s ease;
-  -moz-transition: all 0.5s ease;
-  -o-transition: all 0.5s ease;
-  transition: all 0.5s ease;
-}
-#rootBody #bg #main.pop.ng-enter {
-  -webkit-transform: scale(0);
-  -moz-transform: scale(0);
-  -ms-transform: scale(0);
-  -o-transform: scale(0);
-  transform: scale(0);
-}
-#rootBody #bg #main.pop.ng-enter-active, #rootBody #bg #main.pop.ng-leave, #rootBody #bg #main.pop.ng-leave-active {
-  -webkit-transform: scale(1);
-  -moz-transform: scale(1);
-  -ms-transform: scale(1);
-  -o-transform: scale(1);
-  transform: scale(1);
+#rootBody {
+  zoom: 0.67;
 }

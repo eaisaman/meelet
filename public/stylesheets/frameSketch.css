@@ -10737,15 +10737,6 @@
   animation-iteration-count: infinite;
 }
 
-.sketchWidget {
-  width: 100px;
-  height: 100px;
-  color: #000;
-  border-color: #000;
-  background: #fff;
-  border-width: 1px;
-  border-style: solid;
-}
 .sketchWidget:not(.zoom):not(.isPlaying).pickedWidget {
   -moz-box-shadow: 0 0 20px #555;
   -webkit-box-shadow: 0 0 20px #555;

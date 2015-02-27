@@ -7,13 +7,6 @@
 $deepShadow: #555;
 
 .sketchWidget {
-    width: 100px;
-    height: 100px;
-    color: #000;
-    border-color: #000;
-    background: #fff;
-    border-width: 1px;
-    border-style: solid;
 
     &:not(.zoom):not(.isPlaying) {
         &.pickedWidget {

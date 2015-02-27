@@ -4,20 +4,38 @@
     "list": [
       {
         "id": "9ED12F03-8A38-4A17-950C-239040F61A78",
-        "name": "Touch Start",
-        "eventName": "touchstart",
+        "name": "Touch",
+        "eventName": "touch",
         "options": {}
       },
       {
         "id": "A4AFEF2A-F742-4573-8C56-C540E43A4E03",
-        "name": "Touch End",
-        "eventName": "touchend",
+        "name": "Press",
+        "eventName": "press",
+        "options": {}
+      },
+      {
+        "id": "53164B7F-A5D7-4DC3-B4AD-2296EBB236C3",
+        "name": "Pinch In",
+        "eventName": "pinchin",
+        "options": {}
+      },
+      {
+        "id": "AEF1BC46-1BF3-4F71-8AE2-1DE3CA71E48B",
+        "name": "Pinch Out",
+        "eventName": "pinchout",
         "options": {}
       },
       {
         "id": "D54B8BC4-4655-4D34-82F1-0B94BBDC5C90",
         "name": "Tap",
         "eventName": "tap",
+        "options": {}
+      },
+      {
+        "id": "2641E570-0CF4-4A8A-9A46-C374CE5BC319",
+        "name": "Double Tap",
+        "eventName": "doubletap",
         "options": {}
       },
       {

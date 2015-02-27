@@ -242,9 +242,7 @@
                     <span>New Transition</span>
 
                     <div class="transitionNameInput input-group" ng-click="$event.stopPropagation()">
-                        <input autocorrect="off" class="form-control fs-x-medium" autocapitalize="off" placeholder=""
-                               id="transitionNameInput"
-                               required="required"/>
+                        <input class="form-control fs-x-medium" id="transitionNameInput"/>
                         <span class="input-group-addon fs-x-medium-before icon-state-transition-before icon-state-transition-plus-before"
                               ng-click="createTransition(state, $event);toggleSelect('.emptyTransition', $event)"></span>
                     </div>
@@ -268,9 +266,7 @@
             <span>New State Option</span>
 
             <div class="stateOptionInput input-group" ng-click="$event.stopPropagation()">
-                <input autocorrect="off" class="form-control fs-x-medium" autocapitalize="off" placeholder=""
-                       id="stateOptionInput"
-                       required="required"/>
+                <input class="form-control fs-x-medium" id="stateOptionInput"/>
                 <span class="input-group-addon fs-x-medium-before icon-state-transition-before icon-state-transition-plus-before"
                       ng-click="createStateOption($event);toggleSelect('.emptyStateOption', $event)"></span>
             </div>

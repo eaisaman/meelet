@@ -87,12 +87,10 @@ define(
                                                         function (name) {
                                                             if (name) {
                                                                 var widgetObj = createWidget($to);
-                                                                widgetObj.name = name;
 
-                                                                if (widgetObj) {
-                                                                    widgetObj.css("left", x + "px");
-                                                                    widgetObj.css("top", y + "px");
-                                                                }
+                                                                widgetObj.name = name;
+                                                                widgetObj.css("left", x + "px");
+                                                                widgetObj.css("top", y + "px");
                                                             }
                                                         }
                                                     );

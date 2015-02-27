@@ -2282,6 +2282,11 @@ define(
             ),
             ElementSketchWidgetClass = Class(BaseSketchWidgetClass, {
                 CLASS_NAME: "ElementSketchWidget",
+                DEFAULT_STYLE: {
+                    "width": "100px",
+                    "height": "100px",
+                    "background": "#ffffff"
+                },
                 MEMBERS: {},
                 initialize: function (id, widgetsArr, isTemporary) {
                     this.initialize.prototype.__proto__.initialize.apply(this, [id]);
@@ -2304,6 +2309,8 @@ define(
                             childWidget.appendTo(self);
                         });
                     }
+
+                    this.css(ElementSketchWidgetClass.prototype.DEFAULT_STYLE);
                 },
                 toJSON: function () {
                     var jsonObj = ElementSketchWidgetClass.prototype.__proto__.toJSON.apply(this);
@@ -2725,6 +2732,11 @@ define(
             }),
             RepoSketchWidgetClass = Class(IncludeSketchWidgetClass, {
                 CLASS_NAME: "RepoSketchWidget",
+                DEFAULT_STYLE: {
+                    "width": "100px",
+                    "height": "100px",
+                    "background": "#ffffff"
+                },
                 MEMBERS: {
                     widgetSpec: null
                 },
@@ -2738,6 +2750,8 @@ define(
 
                     this.resizable = false;
                     this.widgetSpec = widgetSpec;
+
+                    this.css(RepoSketchWidgetClass.prototype.DEFAULT_STYLE);
                 },
                 dispose: function () {
                     var self = this;
@@ -2769,79 +2783,95 @@ define(
                 appendTo: function (container) {
                     var self = this;
 
-                    //FIXME loadRepoArtifact should be invoked before appendTo?
-                    return RepoSketchWidgetClass.prototype.__proto__.appendTo.apply(self, [container]).then(
+                    return $inject.$q.all([
+                        $inject.appService.loadRepoArtifact({
+                            _id: self.widgetSpec.artifactId,
+                            name: self.widgetSpec.name,
+                            type: self.widgetSpec.type
+                        }, self.widgetSpec.libraryName, self.widgetSpec.version),
+                        $inject.appService.addConfigurableArtifact(
+                            self.widgetSpec.projectId,
+                            self.id,
+                            self.widgetSpec.libraryName,
+                            self.widgetSpec.artifactId,
+                            self.widgetSpec.type,
+                            self.widgetSpec.version
+                        )
+                    ]).then(
+                        function (result) {
+                            var loadedSpec = result[0];
+
+                            self.template = loadedSpec.template;
+
+                            if (_.isEmpty(self.widgetSpec.configuration)) {
+                                _.extend(self.widgetSpec, loadedSpec);
+                            }
+
+                            var defer = $inject.$q.defer();
+
+                            $inject.$timeout(function () {
+                                var stateConfiguration = loadedSpec.configuration.state;
+                                if (stateConfiguration) {
+                                    var stateOptions = stateConfiguration.options;
+                                    stateOptions.forEach(function (option) {
+                                        RepoSketchWidgetClass.prototype.__proto__.addStateOption.apply(self, [{name: option.name}]);
+
+                                        if (self.states.every(function (s) {
+                                                return s.context.id != self.stateContext.id || s.name != option.name;
+                                            })) {
+                                            self.states.push(new State(self, option.name, self.stateContext));
+                                        }
+                                    });
+                                }
+
+                                self.$element && self.$element.addClass("widgetIncludeAnchor");
+                                defer.resolve();
+                            });
+
+                            return defer.promise;
+                        },
+                        function (err) {
+                            return $inject.uiUtilService.getRejectDefer(err);
+                        }
+                    ).then(
                         function () {
-                            return $inject.$q.all([
-                                $inject.appService.loadRepoArtifact({
-                                    _id: self.widgetSpec.artifactId,
-                                    name: self.widgetSpec.name,
-                                    type: self.widgetSpec.type
-                                }, self.widgetSpec.libraryName, self.widgetSpec.version).then(
-                                    function (loadedSpec) {
-                                        if (_.isEmpty(self.widgetSpec.configuration)) {
-                                            _.extend(self.widgetSpec, loadedSpec);
-                                        }
+                            return RepoSketchWidgetClass.prototype.__proto__.appendTo.apply(self, [container]);
+                        },
+                        function (err) {
+                            return $inject.uiUtilService.getRejectDefer(err);
+                        }
+                    ).then(
+                        function () {
+                            //Apply default value to widget's configuration.
+                            _.without(_.keys(self.widgetSpec.configuration), ["state", "handDownConfiguration"]).forEach(
+                                function (key) {
+                                    var config = self.widgetSpec.configuration[key],
+                                        value = config.pickedValue || config.defaultValue;
 
-                                        var defer = $inject.$q.defer();
-
-                                        $inject.$timeout(function () {
-                                            var stateConfiguration = loadedSpec.configuration.state;
-                                            if (stateConfiguration) {
-                                                var stateOptions = stateConfiguration.options;
-                                                stateOptions.forEach(function (option) {
-                                                    RepoSketchWidgetClass.prototype.__proto__.addStateOption.apply(self, [{name: option.name}]);
-
-                                                    if (self.states.every(function (s) {
-                                                            return s.context.id != self.stateContext.id || s.name != option.name;
-                                                        })) {
-                                                        self.states.push(new State(self, option.name, self.stateContext));
-                                                    }
-                                                });
-                                            }
-
-                                            self.$element && self.$element.addClass("widgetIncludeAnchor");
-                                            defer.resolve();
-                                        });
-
-                                        return defer.promise;
-                                    },
-                                    function (err) {
-                                        return $inject.uiUtilService.getRejectDefer(err);
+                                    if (value != null) {
+                                        self.setScopedValue(key, value);
                                     }
-                                ),
-                                $inject.appService.addConfigurableArtifact(
-                                    self.widgetSpec.projectId,
-                                    self.id,
-                                    self.widgetSpec.libraryName,
-                                    self.widgetSpec.artifactId,
-                                    self.widgetSpec.type,
-                                    self.widgetSpec.version
-                                )
-                            ]).then(
-                                function () {
-                                    //Apply default value to widget's configuration.
-                                    _.without(_.keys(self.widgetSpec.configuration), ["state", "handDownConfiguration"]).forEach(
-                                        function (key) {
-                                            var config = self.widgetSpec.configuration[key],
-                                                value = config.pickedValue || config.defaultValue;
-
-                                            if (value != null) {
-                                                self.setScopedValue(key, value);
-                                            }
-                                        }
-                                    );
-
-                                    return $inject.uiUtilService.getResolveDefer();
-                                }, function (err) {
-                                    return $inject.uiUtilService.getRejectDefer(err);
                                 }
                             );
+
+                            return $inject.uiUtilService.getResolveDefer();
                         },
                         function (err) {
                             return $inject.uiUtilService.getRejectDefer(err);
                         }
                     );
+                },
+                fillParent: function () {
+                    var self = this,
+                        $parent = self.$element && self.$element.parent();
+
+                    if ($parent.length) {
+                        RepoSketchWidgetClass.prototype.__proto__.fillParent.apply(self);
+
+                        self.childWidgets.forEach(function (child) {
+                            child.fillParent();
+                        });
+                    }
                 },
                 getScopedValue: function (key) {
                     var self = this;
@@ -2858,23 +2888,35 @@ define(
                     var self = this;
 
                     if (self.$element && self.$element.parent().length) {
-                        var scope = angular.element(self.$element.find(".ui-widget:nth-of-type(1) :first-child")).scope();
+                        $inject.uiUtilService.whilst(function () {
+                                return !angular.element(self.$element.find(".ui-widget:nth-of-type(1) :first-child")).scope();
+                            }, function (callback) {
+                                callback();
+                            }, function (err) {
+                                if (!err) {
+                                    var scope = angular.element(self.$element.find(".ui-widget:nth-of-type(1) :first-child")).scope();
 
-                        if (typeof key === "object") {
-                            _.each(key, function (item) {
-                                if (item.type === "size") {
-                                    var m = (item.pickedValue || "").match(/([-\d\.]+)(px|%)+$/)
-                                    if (m && m.length == 3) {
-                                        scope[item.key] = item.pickedValue;
+                                    if (typeof key === "object") {
+                                        _.each(key, function (item) {
+                                            if (item.type === "size") {
+                                                var m = (item.pickedValue || "").match(/([-\d\.]+)(px|%)+$/)
+                                                if (m && m.length == 3) {
+                                                    scope[item.key] = item.pickedValue;
+                                                }
+                                            } else {
+                                                scope[item.key] = item.pickedValue;
+                                            }
+                                        });
                                     }
-                                } else {
-                                    scope[item.key] = item.pickedValue;
+                                    else if (typeof key === "string") {
+                                        scope[key] = value;
+                                    }
                                 }
-                            });
-                        }
-                        else if (typeof key === "string") {
-                            scope[key] = value;
-                        }
+                            },
+                            $inject.angularConstants.checkInterval,
+                            "RepoSketchWidgetClass.setScopedValue",
+                            $inject.angularConstants.renderTimeout
+                        )
                     }
                 },
                 getConfiguration: function (key) {

@@ -78,17 +78,28 @@ define(
                                             y = Math.floor(y * angularConstants.precision) / angularConstants.precision;
 
                                             if (!scope.isPlaying && ($to.hasClass(options.holderClass) || $to.hasClass(options.widgetClass))) {
-                                                var version = scope.pickedArtifact.versionList[scope.pickedArtifact.versionList.length - 1].name;
+                                                uiUtilService.broadcast(scope,
+                                                    angularEventTypes.beforeWidgetCreationEvent,
+                                                    function (name) {
+                                                        if (name) {
+                                                            var version = scope.pickedArtifact.versionList[scope.pickedArtifact.versionList.length - 1].name;
 
-                                                uiService.createRepoWidget(
-                                                    $to,
-                                                    {
-                                                        artifactId: scope.pickedArtifact._id,
-                                                        name: scope.pickedArtifact.name,
-                                                        type: scope.pickedArtifact.type,
-                                                        libraryName: self.pickedLibrary.libraryName,
-                                                        version: version,
-                                                        projectId: scope.project._id
+                                                            var widgetObj = uiService.createRepoWidget(
+                                                                $to,
+                                                                {
+                                                                    artifactId: scope.pickedArtifact._id,
+                                                                    name: scope.pickedArtifact.name,
+                                                                    type: scope.pickedArtifact.type,
+                                                                    libraryName: scope.pickedLibrary.name,
+                                                                    version: version,
+                                                                    projectId: scope.project._id
+                                                                }
+                                                            );
+
+                                                            widgetObj.name = name;
+                                                            widgetObj.css("left", x + "px");
+                                                            widgetObj.css("top", y + "px");
+                                                        }
                                                     }
                                                 );
                                             }
