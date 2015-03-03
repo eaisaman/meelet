@@ -569,20 +569,55 @@ define(
                 url: '/api/public/sketch',
                 params: {projectId: projectId}
             }).then(function (result) {
-                var defer = self.$q.defer();
+                    var defer = self.$q.defer();
 
-                if (result.data.result === "OK") {
-                    var resultValue = JSON.parse(result.data.resultValue);
-                    self.$timeout(function () {
-                        defer.resolve(resultValue.pages);
-                    });
-                } else {
-                    self.$timeout(function () {
-                        defer.reject();
-                    });
+                    if (result.data.result === "OK") {
+                        var resultValue = JSON.parse(result.data.resultValue);
+                        self.$timeout(function () {
+                            defer.resolve(resultValue.pages);
+                        });
+                    } else {
+                        self.$timeout(function () {
+                            defer.reject();
+                        });
+                    }
+
+                    return defer.promise;
+                },
+                function (err) {
+                    return self.getRejectDefer(err);
                 }
+            );
+        }
 
-                return defer.promise;
+        appService.prototype.lockProject = function (userId, projectId) {
+            var self = this;
+
+            return self.$http({
+                method: 'PUT',
+                url: '/api/public/project',
+                params: {projectFilter: {_id: projectId, lock: false}, project: {lock: true, lockUser: userId}}
+            }).then(
+                function (result) {
+                    if (result.data.result === "OK") {
+                        return self.getResolveDefer();
+                    } else {
+                        return self.getRejectDefer(result.data.reason);
+                    }
+                },
+                function (err) {
+                    return self.getRejectDefer(err);
+                }
+            );
+        }
+
+        appService.prototype.unlockProject = function (userId, projectId) {
+            var self = this;
+
+            return self.$http({
+                method: 'PUT',
+                url: '/api/public/project',
+                params: {projectFilter: {_id: projectId, lockUser: userId}, project: {lock: false}}
             });
         }
 
@@ -601,7 +636,6 @@ define(
                 url: '/api/public/user',
                 params: {userFilter: JSON.stringify(userFilter || {})}
             });
-
         }
 
         appService.prototype.getRepoLibrary = function (libraryFilter) {
@@ -631,10 +665,37 @@ define(
 
         }
 
-        appService.prototype.getProjectDetail = function (projectFilter) {
+        appService.prototype.getProjectDependency = function (xrefFilter) {
             return this.$http({
                 method: 'GET',
-                url: '/api/public/projectDetail',
+                url: '/api/public/projectArtifactXref',
+                params: {projectFilter: JSON.stringify(xrefFilter || {})}
+            });
+
+        }
+
+        appService.prototype.updateProjectDependency = function (projectId, libraryId, artifactList) {
+            return this.$http({
+                method: 'POST',
+                url: '/api/public/projectArtifactXref',
+                params: {projectId: projectId, libraryId: libraryId, artifactList: JSON.stringify(artifactList || [])}
+            });
+
+        }
+
+        appService.prototype.deleteProjectDependency = function (xrefFilter) {
+            return this.$http({
+                method: 'DELETE',
+                url: '/api/public/projectArtifactXref',
+                params: {projectFilter: JSON.stringify(xrefFilter || {})}
+            });
+
+        }
+
+        appService.prototype.getProject = function (projectFilter) {
+            return this.$http({
+                method: 'GET',
+                url: '/api/public/project',
                 params: {projectFilter: JSON.stringify(projectFilter || {})}
             });
 

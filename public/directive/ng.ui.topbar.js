@@ -2,9 +2,9 @@ define(
     ["angular", "jquery"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$timeout", "$q", "urlService", "uiUtilService"];
+            var inject = ["$rootScope", "$timeout", "$q", "urlService", "uiUtilService"];
 
-            appModule.directive("uiTopbar", _.union(inject, [function ($timeout, $q, urlService, uiUtilService) {
+            appModule.directive("uiTopbar", _.union(inject, [function ($rootScope, $timeout, $q, urlService, uiUtilService) {
                 'use strict';
 
                 var defaults = {},
@@ -15,8 +15,7 @@ define(
                     restrict: "A",
                     scope: {
                         displayProjectCreation: "&",
-                        loadProject: "&",
-                        pickedProject: "=?"
+                        loadProject: "&"
                     },
                     replace: false,
                     transclude: true,
@@ -59,7 +58,7 @@ define(
                                     scope.hideTopMenu();
 
                                     if (projectId) {
-                                        var _id = scope.pickedProject && scope.pickedProject._id || "";
+                                        var _id = $rootScope.loadedProject && $rootScope.loadedProject.projectRecrod._id || "";
 
                                         if (projectId !== _id) {
                                             var projectItem;

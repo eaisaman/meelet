@@ -41,6 +41,7 @@ define(
                              * Valid states include '*', 'select'.
                              */
                             state: "=?",
+                            isPlaying: "=?",
                             /**
                              * Valid effect values include 'brackets', 'slideUpLine', 'slideDownLine', 'slideUpSecondLine',
                              * 'translateLine', 'slightTranslateLine', 'reveal', 'switchLine',
@@ -62,7 +63,9 @@ define(
                                     scope.toggleState = function (event) {
                                         event && event.stopPropagation && event.stopPropagation();
 
-                                        scope.state = scope.state === scope.activeState && "*" || scope.activeState;
+                                        if (scope.isPlaying == null || scope.isPlaying) {
+                                            scope.state = scope.state === scope.activeState && "*" || scope.activeState;
+                                        }
                                     }
 
                                     scope.sketchWidgetSetting = scope.$parent.sketchWidgetSetting || {isPlaying: true};

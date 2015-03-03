@@ -21,6 +21,7 @@ define(
                              * Valid states include '*', 'show'.
                              */
                             state: "@",
+                            isPlaying: "=",
                             /**
                              * Valid transitions include 'fadeInScaleUp', 'slideFromRight', 'slideFromBottom', 'newspaper', 'fall', 'sideFall',
                              * 'slideStickTop', 'flipHorizontal3D', 'flipVertical3D', 'sign3D', 'superScaled', 'justMe', 'slit3D', 'rotateFromBottom3D',

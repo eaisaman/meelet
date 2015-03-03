@@ -12,6 +12,7 @@ define(
                 return {
                     restrict: "A",
                     scope: {
+                        isPlaying: "=?",
                         /**
                          * Valid transitions include 'fadeInScaleUp', 'slideFromRight', 'slideFromBottom', 'newspaper', 'fall', 'sideFall',
                          * 'slideStickTop', 'flipHorizontal3D', 'flipVertical3D', 'sign3D', 'superScaled', 'justMe', 'slit3D', 'rotateFromBottom3D',
@@ -33,18 +34,24 @@ define(
                                 }));
 
                                 scope.toggleModalWindow = function (event) {
-                                    return scope.toggleDisplay('.md-modal', event).then(function () {
-                                        var defer = $q.defer();
-                                        $timeout(function () {
-                                            if (!element.find(".md-modal").hasClass("show")) {
-                                                scope.onWindowClose && scope.onWindowClose();
-                                            }
+                                    event && event.stopPropagation();
 
-                                            defer.resolve();
+                                    if (scope.isPlaying == null || scope.isPlaying) {
+                                        return scope.toggleDisplay('.md-modal', event).then(function () {
+                                            var defer = $q.defer();
+                                            $timeout(function () {
+                                                if (!element.find(".md-modal").hasClass("show")) {
+                                                    scope.onWindowClose && scope.onWindowClose();
+                                                }
+
+                                                defer.resolve();
+                                            });
+
+                                            return defer.promise;
                                         });
-
-                                        return defer.promise;
-                                    });
+                                    } else {
+                                        return uiUtilService.getResolveDefer();
+                                    }
                                 }
                             },
                             post: function (scope, element, attrs) {

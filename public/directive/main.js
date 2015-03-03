@@ -24,7 +24,6 @@ require.config(
             "ng.ui.page": DIRECTIVE_LIB_PATH + "ng.ui.page",
             "ng.ui.dock": DIRECTIVE_LIB_PATH + "ng.ui.dock",
             "ng.ui.topbar": DIRECTIVE_LIB_PATH + "ng.ui.topbar",
-            "ng.ui.toolbar": DIRECTIVE_LIB_PATH + "ng.ui.toolbar",
             "ng.ui.simple-dropdown": DIRECTIVE_LIB_PATH + "ng.ui.simple-dropdown",
             "ng.ui.state-transition": DIRECTIVE_LIB_PATH + "ng.ui.state-transition",
             "ng.ui.modal-window": DIRECTIVE_LIB_PATH + "ng.ui.modal-window"
@@ -59,7 +58,6 @@ define([
         "ng.ui.page",
         "ng.ui.dock",
         "ng.ui.topbar",
-        "ng.ui.toolbar",
         "ng.ui.state-transition",
         "ng.ui.modal-window"
     ],
@@ -147,17 +145,14 @@ define([
             //Topbar
             directiveConfigs[20](appModule, extension);
 
-            //Toolbar
-            directiveConfigs[21](appModule, extension);
-
             //State transition
-            directiveConfigs[22](appModule, extension, {
+            directiveConfigs[21](appModule, extension, {
                 triggerJson: "directive/trigger.json",
                 animationJson: "directive/animation.json"
             });
 
             //Modal window
-            directiveConfigs[23](appModule, extension);
+            directiveConfigs[22](appModule, extension);
         }
     }
 );

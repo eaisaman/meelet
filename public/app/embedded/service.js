@@ -42,6 +42,10 @@ define(
 
         appService.prototype.loadSketch = appService.prototype.NOOP;
 
+        appService.prototype.unlockProject = appService.prototype.NOOP;
+
+        appService.prototype.lockProject = appService.prototype.NOOP;
+
         appService.prototype.removeProjectImage = appService.prototype.NOOP;
 
         appService.prototype.getUser = appService.prototype.NOOP;
@@ -52,7 +56,13 @@ define(
 
         appService.prototype.getUserDetail = appService.prototype.NOOP;
 
-        appService.prototype.getProjectDetail = appService.prototype.NOOP;
+        appService.prototype.getProjectDependency = appService.prototype.NOOP;
+
+        appService.prototype.updateProjectDependency = appService.prototype.NOOP;
+
+        appService.prototype.deleteProjectDependency = appService.prototype.NOOP;
+
+        appService.prototype.getProject = appService.prototype.NOOP;
 
         appService.prototype.createProject = appService.prototype.NOOP;
 

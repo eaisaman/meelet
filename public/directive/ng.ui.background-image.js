@@ -2,9 +2,9 @@ define(
     ["angular", "jquery"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$http", "$timeout", "$q", "angularConstants", "angularEventTypes", "appService", "uiUtilService"];
+            var inject = ["$rootScope", "$http", "$timeout", "$q", "angularConstants", "angularEventTypes", "appService", "uiUtilService"];
 
-            appModule.directive("uiBackgroundImage", _.union(inject, [function ($http, $timeout, $q, angularConstants, angularEventTypes, appService, uiUtilService) {
+            appModule.directive("uiBackgroundImage", _.union(inject, [function ($rootScope, $http, $timeout, $q, angularConstants, angularEventTypes, appService, uiUtilService) {
                 'use strict';
 
                 var boundProperties = {backgroundImage: "="},
@@ -16,7 +16,7 @@ define(
 
                 return {
                     restrict: "A",
-                    scope: angular.extend({dockAlign: "=", project: "="}, boundProperties),
+                    scope: angular.extend({dockAlign: "="}, boundProperties),
                     replace: false,
                     transclude: true,
                     templateUrl: "include/_background-image.html",
@@ -306,7 +306,7 @@ define(
                                         var ret = JSON.parse($message);
                                         if (ret.result && ret.result === "OK") {
                                             var finalName = ret.resultValue;
-                                            scope.setBackgroundImageUrl("project/{0}/images/{1}".format(scope.project._id, finalName));
+                                            scope.setBackgroundImageUrl("project/{0}/images/{1}".format($rootScope.loadedProject.projectRecord._id, finalName));
                                         }
                                     }
 
@@ -317,7 +317,7 @@ define(
                                     event && event.stopPropagation();
 
                                     if (scope.pickedBackgroundImageUrl) {
-                                        appService.removeProjectImage(scope.project._id, scope.pickedBackgroundImageUrl).then(function (ret) {
+                                        appService.removeProjectImage($rootScope.loadedProject.projectRecord._id, scope.pickedBackgroundImageUrl).then(function (ret) {
                                             if (ret && ret.data.result === "OK") {
                                                 scope.setBackgroundImageUrl("");
                                             }

@@ -49,6 +49,272 @@ define(
                 }
                 return C;
             },
+            Project = Class({
+                CLASS_NAME: "Project",
+                MEMBERS: {
+                    projectRecord: {},
+                    xrefRecord: [],
+                    artifactSpecs: [],
+                    sketchWorks: {
+                        pages: []
+                    }
+                },
+                initialize: function (projectRecord) {
+                    //Wrap operations in object, data come from persisted db object.
+
+                    var MEMBERS = arguments.callee.prototype.MEMBERS;
+
+                    for (var member in MEMBERS) {
+                        this[member] = angular.copy(MEMBERS[member]);
+                    }
+                    _.extend(this.projectRecord, projectRecord);
+                },
+                loadDependencies: function () {
+                    var self = this;
+
+                    if (self.projectRecord._id) {
+                        self.xrefRecord.splice(0, self.xrefRecord.length);
+                        self.artifactSpecs.splice(0, self.artifactSpecs.length);
+                        return $inject.appService.getProjectDependency({projectId: self.projectRecord._id}).then(
+                            function (result) {
+                                if (result.data.result == "OK") {
+                                    var arr = result.data.resultValue;
+                                    arr.splice(0, 0, 0, 0);
+                                    Array.prototype.splice.apply(self.xrefRecord, arr);
+
+                                    //Load artifact spec
+                                    var promiseArr = [];
+                                    self.xrefRecord.forEach(function (xref) {
+                                        xref.artifactList.forEach(function (a) {
+                                            promiseArr.push(
+                                                $inject.appService.loadRepoArtifact({
+                                                    _id: a.artifactId,
+                                                    name: a.name,
+                                                    type: xref.type
+                                                }, xref.libraryName, a.version)
+                                            );
+                                        });
+                                    });
+
+                                    return $inject.$q.all(promiseArr).then(
+                                        function (result) {
+                                            result.splice(0, 0, 0, 0);
+                                            Array.prototype.splice(self.artifactSpecs, result);
+
+                                            return $inject.uiUtilService.getResolveDefer();
+                                        },
+                                        function (err) {
+                                            return $inject.uiUtilService.getRejectDefer(err);
+                                        }
+                                    );
+                                } else {
+                                    return $inject.uiUtilService.getRejectDefer(result.data.reason);
+                                }
+                            },
+                            function (err) {
+                                return $inject.uiUtilService.getRejectDefer(err);
+                            }
+                        );
+                    } else {
+                        return $inject.uiUtilService.getRejectDefer();
+                    }
+                },
+                addLibrary: function (libraryId, artifactList) {
+                    artifactList = artifactList || [];
+
+                    var xref = _.find(this.xrefRecord, {libraryId: libraryId});
+                    if (xref) {
+                        var arr = _.filter(xref.artifactList, function (a) {
+                            return a.refCount > 0;
+                        });
+                        artifactList = _.reject(artifactList, function (a) {
+                            return _.find(arr, function (b) {
+                                return a.artifactId == b.artifactId;
+                            });
+                        })
+                        if (artifactList.length) {
+                            artifactList.splice(0, 0, arr.length, 0);
+                            Array.prototype.splice.apply(arr, artifactList);
+                        }
+                        xref.artifactList.splice(0, xref.artifactList.length);
+                        if (arr.length) {
+                            arr.splice(0, 0, 0, 0);
+                            Array.prototype.splice.apply(xref.artifactList, arr);
+                        }
+                    } else {
+                        this.xrefRecord.push({
+                            projectId: this.projectRecord._id,
+                            libraryId: libraryId,
+                            artifactList: artifactList
+                        });
+                    }
+                },
+                removeLibrary: function (libraryId) {
+                    var index;
+                    this.xrefRecord.every(function (xref, i) {
+                        if (xref.libraryId == libraryId) {
+                            if (!_.find(xref.artifactList, function (a) {
+                                    return a.refCount > 0;
+                                })) {
+                                index = i;
+                            }
+
+                            return false;
+                        }
+
+                        return true;
+                    });
+                    if (index != null) {
+                        this.xrefRecord.splice(index, 1);
+                    }
+                },
+                loadArtifact: function (artifactId, version) {
+                    return _.findWhere(this.artifactSpecs, {artifactId: artifactId, version: version});
+                },
+                refArtifact: function (libraryId, artifactId, version) {
+                    var self = this;
+
+                    if (self.projectRecord._id) {
+                        var xref = _.find(this.xrefRecord, {libraryId: libraryId});
+                        if (xref) {
+                            xref.artifactList.every(function (a) {
+                                if (a.artifactId == artifactId && a.version == version) {
+                                    a.refCount = (a.refCount || 0) + 1;
+                                    return false;
+                                }
+                                return true;
+                            });
+                        }
+                    }
+                },
+                unrefArtifact: function (artifactId) {
+                    var self = this;
+
+                    if (self.projectRecord._id) {
+                        var xref = _.find(this.xrefRecord, {libraryId: libraryId});
+                        if (xref) {
+                            xref.artifactList.every(function (a) {
+                                if (a.artifactId == artifactId) {
+                                    if (a.refCount) {
+                                        a.refCount--;
+                                    }
+                                    return false;
+                                }
+                                return true;
+                            });
+                        }
+                    }
+                },
+                tryLock: function () {
+                    var self = this;
+
+                    if (self.dbObject._id && !self.dbObject.lock) {
+                        return $inject.appService.lockProject(self.dbObject._id).then(
+                            function () {
+                                self.dbObject.lock = true;
+
+                                return $inject.uiUtilService.getResolveDefer(self);
+                            },
+                            function (err) {
+                                return $inject.uiUtilService.getResolveDefer(self);
+                            }
+                        );
+                    } else {
+                        return $inject.uiUtilService.getResolveDefer(self);
+                    }
+                },
+                unlock: function () {
+                    var self = this;
+
+                    if (self.dbObject._id) {
+                        return $inject.appService.unlockProject(self.dbObject._id);
+                    } else {
+                        return $inject.uiUtilService.getResolveDefer(self);
+                    }
+                },
+                load: function () {
+                    var self = this;
+
+                    if (self.dbObject._id) {
+                        return $inject.$q.all([
+                            function () {
+                                return $inject.appService.getProject({_id: self.dbObject._id});
+                            },
+                            function () {
+                                return self.loadDependencies();
+                            },
+                            function () {
+                                return self.loadSketch();
+                            }
+                        ]).then(function (result) {
+                            if (result[0].data.result === "OK") {
+                                var arr = result[0].data.resultValue;
+
+                                arr.length && _.extend(self.dbObject, arr[0]);
+
+                                return $inject.uiUtilService.getResolveDefer(self);
+                            } else {
+                                return $inject.uiUtilService.getRejectDefer(result[0].data.reason);
+                            }
+                        }, function (err) {
+                            return $inject.uiUtilService.getRejectDefer(err);
+                        });
+                    } else {
+                        return $inject.uiUtilService.getResolveDefer(self);
+                    }
+                },
+                save: function () {
+                    var self = this;
+
+                    if (self.projectRecord._id) {
+                        self.saveSketch().then(function () {
+                            var promiseArr = [];
+                            self.xrefRecord.forEach(
+                                function (xref) {
+                                    promiseArr.push($inject.appService.updateProjectDependency(self.projectRecord._id, xref.libraryId, xref.artifactList));
+                                }
+                            );
+
+                            return promiseArr.length && $inject.$q.all(promiseArr) || $inject.uiUtilService.getResolveDefer();
+                        }, function (err) {
+                            return $inject.uiUtilService.getRejectDefer(err);
+                        });
+                    }
+                },
+                loadSketch: function () {
+                    var self = this;
+
+                    if (self.projectRecord._id) {
+                        self.sketchWorks.pages.splice(0, self.sketchWorks.pages.length);
+                        return $inject.appService.loadSketch(self.projectRecord._id).then(function (pages) {
+                            if (pages && pages.length) {
+                                pages.forEach(function (pageObj) {
+                                    var page = Service.prototype.fromObject(pageObj);
+                                    page && self.sketchWorks.pages.push(page);
+                                });
+                            }
+
+                            return $inject.uiUtilService.getResolveDefer(self);
+                        }, function (err) {
+                            return $inject.uiUtilService.getRejectDefer(err);
+                        });
+                    } else {
+                        return $inject.uiUtilService.getResolveDefer(self);
+                    }
+                },
+                saveSketch: function () {
+                    var self = this;
+
+                    if (self.projectRecord._id && self.sketchWorks.pages.length) {
+                        return $inject.appService.saveSketch(self.projectRecord._id, self.sketchWorks);
+                    } else {
+                        return $inject.uiUtilService.getResolveDefer();
+                    }
+                },
+                covertToHTML: function () {
+
+                }
+            }),
             State = Class({
                 CLASS_NAME: "State",
                 MEMBERS: {
@@ -172,48 +438,6 @@ define(
                     }
 
                     return ret;
-                },
-                createTriggerSetter: function (triggerType) {
-                    var self = this,
-                        fn = $inject.$parse("transition." + triggerType.charAt(0).toLowerCase() + triggerType.substr(1) + "EventName"),
-                        assign = fn.assign;
-
-                    if (!fn.assign.customizedForTrigger) {
-                        fn.assign = function (scope, eventId) {
-                            function triggerSetterHandler(transition, eventId, triggerType, eventName, options) {
-                                var defer = $inject.$q.defer();
-
-                                $inject.$timeout(function () {
-                                    transition.setTrigger(eventId, triggerType, eventName, options);
-
-                                    defer.resolve();
-                                });
-
-                                return defer.promise;
-                            }
-
-                            triggerSetterHandler.onceId = "Transition.createTriggerSetter.triggerSetterHandler";
-
-                            if (eventId) {
-                                var args = Array.prototype.slice.call(arguments),
-                                    result = assign.apply(fn, args),
-                                    triggerInfo = _.where(scope.triggers[triggerType], {id: eventId}),
-                                    transition = scope.transition;
-
-                                if (triggerInfo.length) {
-                                    var options = triggerInfo[0].options,
-                                        eventName = triggerInfo[0].eventName;
-
-                                    $inject.uiUtilService.once(triggerSetterHandler, null, 20)(transition, eventId, triggerType, eventName, options);
-                                }
-
-                                return result;
-                            }
-                        }
-
-                        fn.assign.customizedForTrigger = true;
-                    }
-                    return fn;
                 },
                 setAction: function (actionObj) {
                     this.actionObj = actionObj;
@@ -2738,7 +2962,8 @@ define(
                     "background": "#ffffff"
                 },
                 MEMBERS: {
-                    widgetSpec: null
+                    widgetSpec: null,
+                    project: null
                 },
                 initialize: function (id, widgetSpec) {
                     arguments.callee.prototype.__proto__.initialize.apply(this, [id, widgetSpec && widgetSpec.template || ""]);
@@ -2781,58 +3006,35 @@ define(
                     return RepoSketchWidgetClass.prototype.CLASS_NAME == className || RepoSketchWidgetClass.prototype.__proto__.isKindOf.apply(self, [className]);
                 },
                 appendTo: function (container) {
-                    var self = this;
+                    var self = this,
+                        loadedSpec = $inject.$rootScope.loadedProject.loadArtifact(self.widgetSpec.artifactId, self.widgetSpec.version);
 
-                    return $inject.$q.all([
-                        $inject.appService.loadRepoArtifact({
-                            _id: self.widgetSpec.artifactId,
-                            name: self.widgetSpec.name,
-                            type: self.widgetSpec.type
-                        }, self.widgetSpec.libraryName, self.widgetSpec.version),
-                        $inject.appService.addConfigurableArtifact(
-                            self.widgetSpec.projectId,
-                            self.id,
-                            self.widgetSpec.libraryName,
-                            self.widgetSpec.artifactId,
-                            self.widgetSpec.type,
-                            self.widgetSpec.version
-                        )
-                    ]).then(
-                        function (result) {
-                            var loadedSpec = result[0];
+                    self.template = loadedSpec.template;
+                    if (_.isEmpty(self.widgetSpec.configuration)) {
+                        _.extend(self.widgetSpec, loadedSpec);
+                    }
 
-                            self.template = loadedSpec.template;
+                    var stateConfiguration = loadedSpec.configuration.state;
+                    if (stateConfiguration) {
+                        var stateOptions = stateConfiguration.options;
+                        stateOptions.forEach(function (option) {
+                            RepoSketchWidgetClass.prototype.__proto__.addStateOption.apply(self, [{name: option.name}]);
 
-                            if (_.isEmpty(self.widgetSpec.configuration)) {
-                                _.extend(self.widgetSpec, loadedSpec);
+                            if (self.states.every(function (s) {
+                                    return s.context.id != self.stateContext.id || s.name != option.name;
+                                })) {
+                                self.states.push(new State(self, option.name, self.stateContext));
                             }
+                        });
+                    }
 
-                            var defer = $inject.$q.defer();
-
-                            $inject.$timeout(function () {
-                                var stateConfiguration = loadedSpec.configuration.state;
-                                if (stateConfiguration) {
-                                    var stateOptions = stateConfiguration.options;
-                                    stateOptions.forEach(function (option) {
-                                        RepoSketchWidgetClass.prototype.__proto__.addStateOption.apply(self, [{name: option.name}]);
-
-                                        if (self.states.every(function (s) {
-                                                return s.context.id != self.stateContext.id || s.name != option.name;
-                                            })) {
-                                            self.states.push(new State(self, option.name, self.stateContext));
-                                        }
-                                    });
-                                }
-
-                                self.$element && self.$element.addClass("widgetIncludeAnchor");
-                                defer.resolve();
-                            });
-
-                            return defer.promise;
-                        },
-                        function (err) {
-                            return $inject.uiUtilService.getRejectDefer(err);
-                        }
+                    return $inject.appService.addConfigurableArtifact(
+                        self.widgetSpec.projectId,
+                        self.id,
+                        self.widgetSpec.libraryName,
+                        self.widgetSpec.artifactId,
+                        self.widgetSpec.type,
+                        self.widgetSpec.version
                     ).then(
                         function () {
                             return RepoSketchWidgetClass.prototype.__proto__.appendTo.apply(self, [container]);
@@ -2842,6 +3044,8 @@ define(
                         }
                     ).then(
                         function () {
+                            self.$element && self.$element.addClass("widgetIncludeAnchor");
+
                             //Apply default value to widget's configuration.
                             _.without(_.keys(self.widgetSpec.configuration), ["state", "handDownConfiguration"]).forEach(
                                 function (key) {
@@ -3240,12 +3444,14 @@ define(
         Service.prototype.createPage = function (holderElement, pageObj) {
             var self = this;
 
-            pageObj = pageObj || new PageSketchWidgetClass();
-            pageObj.attr["ui-sketch-widget"] = "";
-            pageObj.attr["is-playing"] = "sketchWidgetSetting.isPlaying";
-            pageObj.attr["sketch-object"] = "sketchObject";
-            pageObj.attr["ng-class"] = "{'isPlaying': sketchWidgetSetting.isPlaying}";
-            pageObj.addOmniClass(self.angularConstants.widgetClasses.holderClass);
+            if (!pageObj) {
+                pageObj = new PageSketchWidgetClass();
+                pageObj.attr["ui-sketch-widget"] = "";
+                pageObj.attr["is-playing"] = "sketchWidgetSetting.isPlaying";
+                pageObj.attr["sketch-object"] = "sketchObject";
+                pageObj.attr["ng-class"] = "{'isPlaying': sketchWidgetSetting.isPlaying}";
+                pageObj.addOmniClass(self.angularConstants.widgetClasses.holderClass);
+            }
             pageObj.appendTo(holderElement);
 
             return self.uiUtilService.whilst(function () {
@@ -3292,8 +3498,7 @@ define(
         }
 
         Service.prototype.fromObject = function (obj) {
-            var self = this,
-                className = obj.CLASS_NAME,
+            var className = obj.CLASS_NAME,
                 classes = ["PageSketchWidgetClass"],
                 ret;
 
@@ -3370,28 +3575,23 @@ define(
             $element.remove();
         }
 
-        Service.prototype.loadSketch = function (projectId, sketchWorks) {
+        Service.prototype.loadProject = function (dbObject) {
             var self = this;
 
-            return self.appService.loadSketch(projectId, sketchWorks).then(function (pages) {
-                var defer = self.$q.defer();
-
-                self.$timeout(function () {
-                    if (pages && pages.length) {
-                        sketchWorks.pages = [];
-                        pages.forEach(function (pageObj) {
-                            var page = self.fromObject(pageObj);
-                            page && sketchWorks.pages.push(page);
-                        });
+            self.$rootScope.loadedProject = new Project(dbObject);
+            return this.uiUtilService.chain(
+                [
+                    function () {
+                        return self.$rootScope.loadedProject.loadDependencies();
+                    },
+                    function () {
+                        return self.$rootScope.loadedProject.loadSketch();
+                    },
+                    function () {
+                        return self.$rootScope.loadedProject.tryLock();
                     }
-
-                    defer.resolve(sketchWorks);
-                }, function () {
-                    defer.reject();
-                });
-
-                return defer.promise;
-            });
+                ]
+            );
         }
 
         return function (appModule) {

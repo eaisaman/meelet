@@ -21,6 +21,7 @@ define(
                              * Valid states include '*', 'select'.
                              */
                             state: "@",
+                            isPlaying: "=?",
                             /* Valid transitions include 'slideInOnTop', 'reveal', 'slideAlong', 'reverseSlideOut', 'scaleDownPusher',
                              * 'scaleUp', 'scaleRotatePusher', 'openDoor', 'fallDown', 'rotatePusher', 'rotateIn3D', 'rotateOut3D', 'delayed3DRotate'
                              * */
@@ -74,15 +75,19 @@ define(
                                     }
 
                                     scope.toggleSideBar = function (event) {
-                                        scope.toggleSelect("._widget_sideBarContainer", event).then(function () {
-                                            return checkState();
-                                        });
+                                        if (scope.isPlaying == null || scope.isPlaying) {
+                                            scope.toggleSelect("._widget_sideBarContainer", event).then(function () {
+                                                return checkState();
+                                            });
+                                        }
                                     }
 
                                     scope.hideSideBar = function (event) {
-                                        scope.toggleSelect("._widget_sideBarContainer", event, false).then(function () {
-                                            return checkState();
-                                        });
+                                        if (scope.isPlaying == null || scope.isPlaying) {
+                                            scope.toggleSelect("._widget_sideBarContainer", event, false).then(function () {
+                                                return checkState();
+                                            });
+                                        }
                                     }
 
                                     scope.transition = "slideInOnTop";

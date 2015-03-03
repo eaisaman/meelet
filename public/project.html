@@ -20,7 +20,7 @@
             </div>
             <div class="projectContent col-as-12">
                 <div class="fs-x-small projectItem" ng-repeat="projectItem in userDetail.projectList"
-                     ng-click="toggleEditMode && displayProjectEdit(projectItem, $event) || urlService.frameSketch(false, {project:projectItem})"
+                     ng-click="toggleEditMode && displayProjectEdit(projectItem, $event) || selectProject(projectItem, $event)"
                      ng-style="{'cursor':toggleEditMode?'pointer':'default'}">
                     <div class="projectItemCheck fs-x-large icon-project-before"
                          ng-class="{'icon-project-uncheck-before':!projectItem.checked, 'icon-project-check-before':projectItem.checked}"

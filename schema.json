@@ -29,7 +29,9 @@
     "name": "string",
     "desc": "string",
     "userId": "ObjectId",
-    "forbidden": "boolean"
+    "forbidden": "boolean",
+    "lock": "boolean",
+    "lockUser": "ObjectId"
   },
   "RepoLibrary": {
     "updateTime": "date",
@@ -51,12 +53,12 @@
     "version": "string",
     "versionList": ["object"]
   },
-  "UserArtifactXref": {
+  "ProjectArtifactXref": {
     "updateTime": "date",
     "createTime": "date",
-    "userId": "ObjectId",
     "projectId": "ObjectId",
-    "artifactId": "ObjectId",
+    "libraryId": "ObjectId",
+    "artifactList": ["object"],
     "version": "string"
   }
 }

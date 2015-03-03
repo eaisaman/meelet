@@ -152,7 +152,9 @@
             <div class="accordianBody col-as-12 no-padding">
                 <div ng-attr-id="{{transition.id}}"
                      class="transition fs-x-small"
-                     ng-repeat="transition in state.transitions" ng-click="$event.stopPropagation()">
+                     ng-repeat="transition in state.transitions"
+                     ng-init="pickedTriggerEventId = transition.trigger && transition.trigger.id || ''"
+                     ng-click="$event.stopPropagation()">
                     <div class="transitionBar">
                         <div class="toggleTransitionButton fs-x-small icon-state-transition-before icon-state-transition-arrow-right-before"
                              ng-click="toggleTransitionDetails('#' + transition.id, $event)"></div>
@@ -182,13 +184,14 @@
                                                checked>
                                         <label for="input-gesture-radio">Gesture</label>
 
-                                        <div class="triggerInput input-group"
-                                             ng-init="transition.createTriggerSetter('Gesture', triggers)">
-                                            <select ng-model="transition.gestureEventName" class="form-control">
-                                                <option value="{{t.id}}" ng-repeat="t in triggers['Gesture']">
-                                                    {{t.name}}
-                                                </option>
-                                            </select>
+                                        <div class="triggerEventDropdown stackAndRotateSelect col-as-12 input-group"
+                                             ui-simple-dropdown
+                                             ui-simple-dropdown-opts="{dataField:'id', labelField:'name', zIndex:100, gutter: 5, showTitle: true, displayUnsetOption: false}"
+                                             selection-list="triggers['Gesture']"
+                                             select-item="pickedTriggerEventId"
+                                             on-option-select="pickTriggerEvent('Gesture', transition, pickedTriggerEventId)">
+                                            {{transition.trigger && transition.trigger.eventName || "Choose Trigger
+                                            Event"}}
                                         </div>
                                     </li>
                                     <li>

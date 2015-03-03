@@ -14,6 +14,7 @@ $maxNumOfConfigurationItems: 10;
 @include simple-dropdown(null, effectArtifactDropdown, $activeColor);
 @include simple-dropdown(null, widgetObjStateDropdown, $activeColor);
 @include simple-dropdown(null, configurationItemList, $activeColor);
+@include simple-dropdown(null, triggerEventDropdown, $activeColor);
 @include angular-ui-tree(actionWidgetTree);
 
 @mixin state-transition($stateEditorId) {
@@ -202,16 +203,16 @@ $maxNumOfConfigurationItems: 10;
                                                     -webkit-margin-before: 0.5em;
                                                     -webkit-margin-start: 5px;
 
-                                                    > li > div.triggerInput {
+                                                    > li > div.triggerEventDropdown {
                                                         padding-left: 0.5em;
                                                         padding-bottom: 0.5em;
-                                                        height: auto;
+                                                        height: 2em;
                                                     }
 
-                                                    > li > div:not(.checked) ~ .triggerInput {
+                                                    > li > div:not(.checked) ~ .triggerEventDropdown {
                                                         cursor: not-allowed;
 
-                                                        input, select {
+                                                        input, select, div {
                                                             pointer-events: none;
                                                         }
                                                     }

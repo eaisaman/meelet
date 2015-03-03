@@ -241,6 +241,20 @@ define(
                                     };
                                 }
 
+                                scope.pickTriggerEvent = function (triggerType, transition, triggerEventId) {
+                                    var triggerList = scope.triggers[triggerType];
+
+                                    triggerList && triggerList.every(function (triggerEvent) {
+                                        if (triggerEvent.id === triggerEventId) {
+                                            transition.setTrigger(triggerEventId, triggerType, triggerEvent.eventName, triggerEvent.options);
+
+                                            return false;
+                                        }
+
+                                        return true;
+                                    });
+                                }
+
                                 if (options.triggerJson) {
                                     $http.get(options.triggerJson).then(function (result) {
                                         result.data.forEach(function (triggerGroup) {

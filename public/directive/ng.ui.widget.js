@@ -1,10 +1,10 @@
 define(
     ["angular", "jquery", "hammer"],
     function () {
-        var inject = ["$http", "$timeout", "$q", "$parse", "$compile", "angularConstants", "angularEventTypes", "appService", "uiUtilService", "uiService"];
+        var inject = ["$rootScope", "$http", "$timeout", "$q", "$parse", "$compile", "angularConstants", "angularEventTypes", "appService", "uiUtilService", "uiService"];
 
         return function (appModule, extension, opts) {
-            appModule.directive("uiWidget", _.union(inject, [function ($http, $timeout, $q, $parse, $compile, angularConstants, angularEventTypes, appService, uiUtilService, uiService) {
+            appModule.directive("uiWidget", _.union(inject, [function ($rootScope, $http, $timeout, $q, $parse, $compile, angularConstants, angularEventTypes, appService, uiUtilService, uiService) {
                 'use strict';
 
                 var defaults = {
@@ -21,7 +21,6 @@ define(
                         widgetLibraryList: "=",
                         pickedArtifact: "=",
                         pickedLibrary: "=",
-                        project: "=",
                         showDemo: "&"
                     },
                     replace: false,
@@ -92,7 +91,7 @@ define(
                                                                     type: scope.pickedArtifact.type,
                                                                     libraryName: scope.pickedLibrary.name,
                                                                     version: version,
-                                                                    projectId: scope.project._id
+                                                                    projectId: $rootScope.loadedProject.projectRecord._id
                                                                 }
                                                             );
 

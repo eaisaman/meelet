@@ -929,12 +929,12 @@ define(
             return defer.promise;
         }
 
-        Util.prototype.getResolveDefer = function () {
+        Util.prototype.getResolveDefer = function (result) {
             var self = this,
                 defer = self.$q.defer();
 
             self.$timeout(function () {
-                defer.resolve();
+                defer.resolve(result);
             });
 
             return defer.promise;

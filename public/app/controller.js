@@ -16,6 +16,7 @@ define(
             $rootScope.myRepoList = [];
             $rootScope.loginUser = {};
             $rootScope.userDetail = {projectList: []};
+            $rootScope.loadedProject = null;
             $scope.urlService = urlService;
 
             $scope.markSelection = function (array, others, props) {
@@ -286,13 +287,13 @@ define(
             $scope.saveSketch = function (event) {
                 event && event.stopPropagation && event.stopPropagation();
 
-                return appService.saveSketch($scope.project._id, $scope.sketchObject.sketchWorks);
+                return $scope.project.saveSketch();
             }
 
-            $scope.loadSketch = function (event) {
+            $scope.loadProject = function (event) {
                 event && event.stopPropagation && event.stopPropagation();
 
-                return uiService.loadSketch($scope.project._id, $scope.sketchObject.sketchWorks);
+                return $scope.project.load();
             }
 
             $scope.showDemo = function (event) {
@@ -396,27 +397,10 @@ define(
             $scope.$watch("sketchObject.pickedPage", function (to) {
                 if (to) {
                     $scope.sketchObject.pickedWidget = to;
-                    $scope.sketchObject.sketchWorks.pages.forEach(function (p) {
+                    $scope.project.sketchWorks.pages.forEach(function (p) {
                         p.id != to.id && p.showHide(false);
                     });
                     to.showHide(true);
-                }
-            });
-
-            $scope.$watch("sketchObject.sketchWorks.pages", function (to, from) {
-                if (from !== to) {
-                    from && from.forEach(function (oldPageObj) {
-                        oldPageObj.remove();
-                    });
-
-                    if (to && to.length) {
-                        var $deviceHolder = $(".deviceHolder");
-                        to.forEach(function (pageObj) {
-                            uiService.createPage($deviceHolder, pageObj);
-                        });
-
-                        $scope.sketchObject.pickedPage = to[0];
-                    }
                 }
             });
 
@@ -442,37 +426,29 @@ define(
             });
 
             function initMaster() {
-                var urlParams = $rootScope.urlParams && $rootScope.urlParams["frameSketch"] || null,
-                    project = urlParams && urlParams.project || null;
-
-                $scope.project = project;
-            }
-
-            initMaster();
-
-            function initSketch() {
-                return uiUtilService.whilst(function () {
+                uiUtilService.whilst(function () {
                     return !$(".deviceHolder").length;
                 }, function (callback) {
                     callback();
                 }, function () {
-                    var defer = $q.defer();
+                    if ($rootScope.loadedProject.sketchWorks.pages.length) {
+                        uiService.createPage(".deviceHolder", $rootScope.loadedProject.sketchWorks.pages[0]).then(function (pageObj) {
+                            $scope.sketchObject.pickedPage = pageObj;
 
-                    uiService.createPage(".deviceHolder").then(function (pageObj) {
-                        $scope.sketchObject.pickedPage = pageObj;
-                        $scope.sketchObject.sketchWorks.pages.push(pageObj);
+                            CKEDITOR.inline('widgetText');
+                        });
+                    } else {
+                        uiService.createPage(".deviceHolder").then(function (pageObj) {
+                            $scope.sketchObject.pickedPage = pageObj;
+                            $rootScope.loadedProject.sketchWorks.pages.push(pageObj);
 
-                        CKEDITOR.inline('widgetText');
-                        defer.resolve();
-                    });
-
-                    return defer.promise;
-                }, angularConstants.checkInterval, "FrameSketchController.initSketch");
+                            CKEDITOR.inline('widgetText');
+                        });
+                    }
+                }, angularConstants.checkInterval, "FrameSketchController.initMaster");
             }
 
-            $scope.$on("$routeChangeSuccess", function (scope, next, current) {
-                $q.all([initSketch()]);
-            });
+            initMaster();
 
             var widgetSettingList = [];
 
@@ -480,7 +456,7 @@ define(
             $scope.Math = Math;
             $scope.sketchWidgetSetting = {};
             $scope.sketchPageSetting = {};
-            $scope.sketchObject = {sketchWorks: {pages: []}};
+            $scope.sketchObject = {};
             $scope.sketchDevice = {
                 type: "desktop",
                 width: 1024,
@@ -495,7 +471,7 @@ define(
             $rootScope.visiblePseudoEnabledWidgets = [];
         }
 
-        function ProjectController($scope, $rootScope, $timeout, $q, angularConstants, appService, urlService) {
+        function ProjectController($scope, $rootScope, $timeout, $q, angularConstants, appService, uiService, urlService) {
             $scope.displayProjectCreation = function (event) {
                 event && event.stopPropagation();
 
@@ -599,6 +575,14 @@ define(
                 });
             }
 
+            $scope.selectProject = function (project, event) {
+                event && event.stopPropagation();
+
+                uiService.loadProject(project).then(function (projectObj) {
+                    urlService.frameSketch(false, {project:projectObj});
+                });
+            }
+
             function initMaster() {
                 var urlParams = $rootScope.urlParams && $rootScope.urlParams["project"] || null,
                     projectAction = urlParams && urlParams.projectAction || "";
@@ -662,7 +646,7 @@ define(
         function RepoLibController($scope, $rootScope, $timeout, $q, angularConstants, appService, urlService) {
             $scope.getCurrentVersion = function (repoArtifact) {
                 if (repoArtifact._selected) {
-                    $scope.project.artifactList.every(function (a) {
+                    $rootScope.loadedProject.artifactList.every(function (a) {
                         if (a._id === repoArtifact._id) {
                             repoArtifact._version = a.version;
                             return false;
@@ -678,7 +662,7 @@ define(
                 event && event.stopPropagation();
 
                 var index;
-                if (!$scope.project.artifactList.every(function (a, i) {
+                if (!$rootScope.loadedProject.artifactList.every(function (a, i) {
                         if (a._id === repoArtifact._id) {
                             index = i;
                             return false;
@@ -686,15 +670,15 @@ define(
 
                         return true;
                     })) {
-                    appService.unselectRepoArtifact([repoArtifact._id], {_id: $scope.project._id}).then(function () {
-                        $scope.project.artifactList.splice(index, 1);
+                    appService.unselectRepoArtifact([repoArtifact._id], {_id: $rootScope.loadedProject.projectRecord._id}).then(function () {
+                        $rootScope.loadedProject.artifactList.splice(index, 1);
                         delete repoArtifact._version;
                     });
                 } else {
                     var artifact = _.clone(repoArtifact);
                     artifact.version = (repoArtifact.versionList.length && repoArtifact.versionList[repoArtifact.versionList.length - 1].name);
-                    artifact.version && appService.selectRepoArtifact([artifact], {_id: $scope.project._id}).then(function () {
-                        $scope.project.artifactList.push(artifact);
+                    artifact.version && appService.selectRepoArtifact([artifact], {_id: $rootScope.loadedProject.projectRecord._id}).then(function () {
+                        $rootScope.loadedProject.artifactList.push(artifact);
                         repoArtifact._version = artifact.version;
                     });
                 }
@@ -721,9 +705,9 @@ define(
             $scope.setArtifactVersion = function (repoArtifact) {
                 var version = repoArtifact._version;
 
-                if (version && $scope.project) {
+                if (version && $rootScope.loadedProject) {
                     var artifact;
-                    if (!$scope.project.artifactList.every(function (a, i) {
+                    if (!$rootScope.loadedProject.artifactList.every(function (a, i) {
                             if (a._id == repoArtifact._id) {
                                 artifact = a;
                                 return false;
@@ -733,8 +717,8 @@ define(
                         })) {
                         if (artifact.version !== version) {
                             artifact.version = version;
-                            appService.unselectRepoArtifact({_id: artifact._id}, {_id: $scope.project._id}).then(function () {
-                                return appService.selectRepoArtifact([artifact], {_id: $scope.project._id});
+                            appService.unselectRepoArtifact({_id: artifact._id}, {_id: $rootScope.loadedProject.projectRecord._id}).then(function () {
+                                return appService.selectRepoArtifact([artifact], {_id: $rootScope.loadedProject.projectRecord._id});
                             });
                         }
                     }
@@ -749,7 +733,6 @@ define(
                     project = urlParams && urlParams.project || null;
 
                 $scope.repoLib = repoLib;
-                $scope.project = project;
 
                 if (repoLib) {
                     var artifactFilter, projectFilter,
@@ -766,21 +749,9 @@ define(
 
                     promiseArr.push(appService.getRepoArtifact(artifactFilter));
 
-                    if (project) {
-                        projectFilter = {_id: project._id};
-                        if (project.updateTime) {
-                            projectFilter.updateTime = {$gte: project.updateTime}
-                        }
-                        promiseArr.push(appService.getProjectDetail(projectFilter));
-                    }
-
                     $q.all(promiseArr).then(function (result) {
                         if (result[0].data.result == "OK") {
                             repoLib.artifactList = result[0].data.resultValue;
-                        }
-
-                        if (result.length > 1) {
-                            result[1].data.result == "OK" && _.extend(project, result[1].data.resultValue[0]);
                         }
                     });
                 }
@@ -796,7 +767,7 @@ define(
             appModule.
                 controller('RootController', ["$scope", "$rootScope", "$q", "appService", "urlService", RootController]).
                 controller('FrameSketchController', ["$scope", "$rootScope", "$timeout", "$q", "angularEventTypes", "angularConstants", "appService", "uiService", "uiUtilService", FrameSketchController]).
-                controller('ProjectController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "urlService", ProjectController]).
+                controller('ProjectController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "uiService", "urlService", ProjectController]).
                 controller('RepoController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "urlService", RepoController]).
                 controller('RepoLibController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "urlService", RepoLibController]);
         }
