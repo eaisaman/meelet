@@ -13,40 +13,33 @@ define(
             $rootScope.effectLibraryList = [];
             $rootScope.iconLibraryList = [];
             $rootScope.widgetLibraryList = [];
-            $rootScope.myRepoList = [];
             $rootScope.loginUser = {};
             $rootScope.userDetail = {projectList: []};
             $rootScope.loadedProject = null;
             $scope.urlService = urlService;
 
-            $scope.markSelection = function (array, others, props) {
-                if (toString.call(array) === '[object Array]' && array.length) {
-                    array.forEach(function (item) {
+            $scope.markSelection = function (target, source, props) {
+                if (toString.call(target) === '[object Array]' && target.length) {
+                    target.forEach(function (item) {
                         item._selected = false;
                     });
 
-                    if (others && others.length) {
+                    if (source && source.length) {
                         if (props) {
-                            if (typeof props === "string") {
-                                props = [props];
-                            }
-
-                            if (toString.call(props) === '[object Array]') {
-                                array.forEach(function (item) {
-                                    if (!others.every(function (o) {
-                                            return !props.every(function (prop) {
-                                                return o[prop] === item[prop];
-                                            });
-                                        })) {
-                                        item._selected = true;
-                                    }
-                                });
-                            }
+                            target.forEach(function (item) {
+                                if (!source.every(function (o) {
+                                        return !props.every(function (prop) {
+                                            return o[prop.source] === item[prop.target];
+                                        });
+                                    })) {
+                                    item._selected = true;
+                                }
+                            });
                         } else {
-                            array.forEach(function (item) {
+                            target.forEach(function (item) {
                                 item._selected = false;
 
-                                if (!others.every(function (o) {
+                                if (!source.every(function (o) {
                                         return o !== item;
                                     })) {
                                     item._selected = true;
@@ -56,7 +49,7 @@ define(
                     }
                 }
 
-                return array;
+                return target;
             };
         }
 
@@ -287,13 +280,13 @@ define(
             $scope.saveSketch = function (event) {
                 event && event.stopPropagation && event.stopPropagation();
 
-                return $scope.project.saveSketch();
+                return $rootScope.loadedProject.saveSketch();
             }
 
             $scope.loadProject = function (event) {
                 event && event.stopPropagation && event.stopPropagation();
 
-                return $scope.project.load();
+                return $rootScope.loadedProject.load();
             }
 
             $scope.showDemo = function (event) {
@@ -397,7 +390,7 @@ define(
             $scope.$watch("sketchObject.pickedPage", function (to) {
                 if (to) {
                     $scope.sketchObject.pickedWidget = to;
-                    $scope.project.sketchWorks.pages.forEach(function (p) {
+                    $rootScope.loadedProject.sketchWorks.pages.forEach(function (p) {
                         p.id != to.id && p.showHide(false);
                     });
                     to.showHide(true);
@@ -579,7 +572,7 @@ define(
                 event && event.stopPropagation();
 
                 uiService.loadProject(project).then(function (projectObj) {
-                    urlService.frameSketch(false, {project:projectObj});
+                    urlService.frameSketch(false, {project: projectObj});
                 });
             }
 
@@ -612,28 +605,42 @@ define(
             $scope.toggleRepoLibSelection = function (repoLib, event) {
                 event && event.stopPropagation();
 
-                var index;
-                if (!$rootScope.myRepoList.every(function (r, i) {
-                        if (r._id === repoLib._id) {
-                            index = i;
-                            return false;
-                        }
-
-                        return true;
-                    })) {
-                    $rootScope.myRepoList.splice(index, 1);
+                var library = _.findWhere($scope.project.xrefRecord, {libraryId: repoLib._id});
+                if (library) {
+                    if ($scope.project.removeLibrary(repoLib._id)) {
+                        delete repoLib._selected;
+                    }
                 } else {
-                    $rootScope.myRepoList.push(repoLib);
+                    var artifactFilter = {
+                        library: repoLib._id,
+                        forbidden: false
+                    };
+
+                    appService.getRepoArtifact(artifactFilter).then(function (result) {
+                        if (result.data.result == "OK") {
+                            var artifactList = [];
+                            result.data.resultValue.forEach(function (artifact) {
+                                var version = artifact.versionList.length && artifact.versionList[artifact.versionList.length - 1].name || "";
+
+                                version && artifactList.push({
+                                    artifactId: artifact._id,
+                                    name: artifact.name,
+                                    version: version
+                                });
+                            });
+
+                            if (artifactList.length && $scope.project.addLibrary(repoLib._id, repoLib.name, repoLib.type, artifactList)) {
+                                repoLib._selected = true;
+                            }
+                        }
+                    });
                 }
 
                 return true;
             }
 
             function initMaster() {
-                var urlParams = $rootScope.urlParams && $rootScope.urlParams["repo"] || null,
-                    project = urlParams && urlParams.project || null;
-
-                $scope.project = project;
+                $scope.project = $rootScope.loadedProject;
             };
 
             initMaster();
@@ -645,42 +652,52 @@ define(
 
         function RepoLibController($scope, $rootScope, $timeout, $q, angularConstants, appService, urlService) {
             $scope.getCurrentVersion = function (repoArtifact) {
-                if (repoArtifact._selected) {
-                    $rootScope.loadedProject.artifactList.every(function (a) {
-                        if (a._id === repoArtifact._id) {
-                            repoArtifact._version = a.version;
-                            return false;
-                        }
-                        return true;
-                    });
-                } else {
-                    delete repoArtifact._version;
+                if ($scope.dependencyRecord) {
+                    var artifact = _.findWhere($scope.dependencyRecord.artifactList, {artifactId: repoArtifact._id});
+
+                    if (artifact) {
+                        repoArtifact._version = artifact.version;
+                        return;
+                    }
                 }
+
+                delete repoArtifact._version;
             }
 
             $scope.toggleRepoArtifactSelection = function (repoArtifact, event) {
                 event && event.stopPropagation();
 
-                var index;
-                if (!$rootScope.loadedProject.artifactList.every(function (a, i) {
-                        if (a._id === repoArtifact._id) {
-                            index = i;
-                            return false;
-                        }
+                repoArtifact._version = repoArtifact._version || (repoArtifact.versionList.length && repoArtifact.versionList[repoArtifact.versionList.length - 1].name || "");
 
-                        return true;
-                    })) {
-                    appService.unselectRepoArtifact([repoArtifact._id], {_id: $rootScope.loadedProject.projectRecord._id}).then(function () {
-                        $rootScope.loadedProject.artifactList.splice(index, 1);
-                        delete repoArtifact._version;
-                    });
-                } else {
-                    var artifact = _.clone(repoArtifact);
-                    artifact.version = (repoArtifact.versionList.length && repoArtifact.versionList[repoArtifact.versionList.length - 1].name);
-                    artifact.version && appService.selectRepoArtifact([artifact], {_id: $rootScope.loadedProject.projectRecord._id}).then(function () {
-                        $rootScope.loadedProject.artifactList.push(artifact);
-                        repoArtifact._version = artifact.version;
-                    });
+                if (repoArtifact._version) {
+                    if ($scope.dependencyRecord) {
+                        var artifact = _.findWhere($scope.dependencyRecord.artifactList, {artifactId: repoArtifact._id});
+                        if (artifact) {
+                            if ($rootScope.loadedProject.unselectArtifact($scope.repoLib._id, repoArtifact._id)) {
+                                delete repoArtifact._selected;
+                                delete repoArtifact._version;
+                            }
+                        } else {
+                            if ($rootScope.loadedProject.selectArtifact($scope.repoLib._id, repoArtifact._id, repoArtifact.name, repoArtifact._version)) {
+                                repoArtifact._selected = true;
+                            }
+                        }
+                    } else {
+                        $scope.dependencyRecord = $rootScope.loadedProject.addLibrary(
+                            $scope.repoLib._id,
+                            $scope.repoLib.name,
+                            $scope.repoLib.type,
+                            [
+                                {
+                                    artifactId: repoArtifact._id,
+                                    name: repoArtifact.name,
+                                    version: repoArtifact._version
+                                }
+                            ]
+                        );
+
+                        repoArtifact._selected = true;
+                    }
                 }
 
                 return true;
@@ -702,56 +719,44 @@ define(
                 scope.toggleModalWindow();
             }
 
-            $scope.setArtifactVersion = function (repoArtifact) {
-                var version = repoArtifact._version;
-
-                if (version && $rootScope.loadedProject) {
-                    var artifact;
-                    if (!$rootScope.loadedProject.artifactList.every(function (a, i) {
-                            if (a._id == repoArtifact._id) {
-                                artifact = a;
-                                return false;
-                            }
-
-                            return true;
-                        })) {
-                        if (artifact.version !== version) {
-                            artifact.version = version;
-                            appService.unselectRepoArtifact({_id: artifact._id}, {_id: $rootScope.loadedProject.projectRecord._id}).then(function () {
-                                return appService.selectRepoArtifact([artifact], {_id: $rootScope.loadedProject.projectRecord._id});
-                            });
-                        }
-                    }
-                }
-
-                $("#artifactVersionDropdown").toggleClass("select");
-            }
-
             function initMaster() {
                 var urlParams = $rootScope.urlParams && $rootScope.urlParams["repoLib"] || null,
-                    repoLib = urlParams && urlParams.repoLib || null,
-                    project = urlParams && urlParams.project || null;
+                    repoLib = urlParams && urlParams.repoLib || null;
 
                 $scope.repoLib = repoLib;
+                $scope.project = $rootScope.loadedProject;
+                $scope.dependencyRecord = _.findWhere($rootScope.loadedProject.xrefRecord, {libraryId: repoLib._id})
 
                 if (repoLib) {
-                    var artifactFilter, projectFilter,
-                        promiseArr = [];
-
-                    repoLib.artifactList = repoLib.artifactList || [];
-                    artifactFilter = {
+                    var artifactFilter = {
                         library: repoLib._id,
                         forbidden: false
                     };
+
+                    repoLib.artifactList = repoLib.artifactList || [];
                     if (repoLib.updateTime) {
                         artifactFilter.updateTime = {$gte: repoLib.updateTime}
                     }
 
-                    promiseArr.push(appService.getRepoArtifact(artifactFilter));
+                    appService.getRepoArtifact(artifactFilter).then(function (result) {
+                        if (result.data.result == "OK") {
+                            var recentArtifactList = [];
 
-                    $q.all(promiseArr).then(function (result) {
-                        if (result[0].data.result == "OK") {
-                            repoLib.artifactList = result[0].data.resultValue;
+                            result.data.resultValue.forEach(function (artifact) {
+                                if (repoLib.artifactList.every(function (loadedArtifact) {
+                                        if (artifact._id === loadedArtifact._id) {
+                                            _.extend(loadedArtifact, artifact);
+                                            return false;
+                                        }
+
+                                        return true;
+                                    })) {
+                                    recentArtifactList.push(artifact);
+                                }
+                            });
+
+                            recentArtifactList.splice(0, 0, 0, 0);
+                            Array.prototype.splice.apply(repoLib.artifactList, recentArtifactList);
                         }
                     });
                 }

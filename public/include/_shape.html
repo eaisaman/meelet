@@ -1,12 +1,18 @@
 <div class="shapeContent ui-control-wrapper" ng-class="dockAlign">
     <div class="shapeBar ui-control-bar fs-x-large">
-        <div class="pickerPane fs-x-large fs-x-large-before"
+        <div class="pickerPane col-as-9 no-padding fs-x-large fs-x-large-before"
              ng-class="getIconClassList(pickerPaneShape.iconLibrary.name, pickerPaneShape.artifact.name, pickerPaneShape.icon, 'before')"></div>
+        <div class="toggleLibraryButton col-as-3 no-padding-right">
+            <span class="fs-x-large-before icon-shape-before icon-shape-library-before"
+                  ng-click="toggleSelectLibraryList($event)"></span>
+        </div>
     </div>
     <div class="shapePalette ui-control-panel">
-        <div class="shapeLibrary" ng-repeat="iconLibrary in iconLibraryList">
+        <div class="shapeLibrary"
+             ng-repeat="iconLibrary in filterLibraryList(iconLibraryList, project.xrefRecord)">
             <div class="libraryTitle icon-shape-before icon-shape-glyphs-before">{{iconLibrary.name}}</div>
-            <div class="accordianGroup" ng-repeat="artifact in iconLibrary.artifactList"
+            <div class="accordianGroup"
+                 ng-repeat="artifact in filterArtifactList(iconLibrary, project.xrefRecord)"
                  ng-click="toggleSelect($event.currentTarget, $event)">
                 <div class="accordianTitle col-as-12 fs-x-medium icon-shape-before icon-shape-angle-double-up-before">
                     {{artifact.name}}
@@ -16,6 +22,30 @@
                          ng-repeat="pane in artifact.json"
                          ng-click="pickShape(iconLibrary, artifact, pane) && $event.stopPropagation()"
                          ng-class="getIconClassList(iconLibrary.name, artifact.name, pane, 'before')">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="iconLibraryList fs-x-medium">
+            <div class="accordianGroup"
+                 ng-repeat="iconLibrary in markLibrarySelection(iconLibraryList, project.xrefRecord)"
+                 ng-click="toggleSelect($event.currentTarget, $event)">
+                <div class="accordianTitle col-as-12 icon-shape-before icon-shape-angle-double-up-before">
+                    <span class="col-as-9 no-padding">{{iconLibrary.name}}</span>
+
+                    <div class="toggleSelectionButton col-as-3 no-padding-right icon-shape-before"
+                         ng-class="{'icon-shape-square-before':!iconLibrary._selected, 'icon-shape-square-check-before':iconLibrary._selected, 'partialSelect':isPartialSelection(iconLibrary, project.xrefRecord)}"
+                         ng-click="toggleLibrarySelection(iconLibrary, $event)"></div>
+                </div>
+                <div class="accordianBody fs-x-small col-as-12 no-padding">
+                    <div class="artifactPane col-as-12 no-padding"
+                         ng-repeat="artifact in markArtifactSelection(iconLibrary, project.xrefRecord)"
+                         ng-click="$event.stopPropagation()">
+                        <span>{{artifact.name}}</span>
+
+                        <div class="toggleSelectionButton icon-shape-before"
+                             ng-class="{'icon-shape-square-before':!artifact._selected, 'icon-shape-square-check-before':artifact._selected}"
+                             ng-click="toggleIconSelection(artifact, iconLibrary, $event)"></div>
                     </div>
                 </div>
             </div>

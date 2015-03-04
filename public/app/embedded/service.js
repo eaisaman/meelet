@@ -70,10 +70,6 @@ define(
 
         appService.prototype.deleteProject = appService.prototype.NOOP;
 
-        appService.prototype.selectRepoArtifact = appService.prototype.NOOP;
-
-        appService.prototype.unselectRepoArtifact = appService.prototype.NOOP;
-
         return function (appModule) {
             appModule.
                 config(['$httpProvider',

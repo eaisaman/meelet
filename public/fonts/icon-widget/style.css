@@ -47,24 +47,87 @@
 	-moz-osx-font-smoothing: grayscale;
 }
 
-.icon-widget-show-demo:before {
-	content: "\e602";
+.icon-widget-square-check:before {
+    content: "\e600";
 }
+
+.icon-widget-square:before {
+    content: "\e601";
+}
+
+.icon-widget-library:before {
+    content: "\e602";
+}
+
+.icon-widget-exit:before {
+    content: "\e603";
+}
+
+.icon-widget-show-demo:before {
+    content: "\e604";
+}
+
 .icon-widget-cog:before {
-	content: "\e601";
+    content: "\e605";
+}
+
+.icon-widget-angle-double-up:before {
+    content: "\e606";
+}
+
+.icon-widget-square-check-before:before {
+    content: "\e600";
+}
+
+.icon-widget-square-before:before {
+    content: "\e601";
+}
+
+.icon-widget-library-before:before {
+    content: "\e602";
+}
+
+.icon-widget-exit-before:before {
+    content: "\e603";
 }
 
 .icon-widget-show-demo-before:before {
-	content: "\e602";
+    content: "\e604";
 }
+
 .icon-widget-cog-before:before {
-	content: "\e601";
+    content: "\e605";
+}
+
+.icon-widget-angle-double-up-before:before {
+    content: "\e606";
+}
+
+.icon-widget-square-check-after:after {
+    content: "\e600";
+}
+
+.icon-widget-square-after:after {
+    content: "\e601";
+}
+
+.icon-widget-library-after:after {
+    content: "\e602";
+}
+
+.icon-widget-exit-after:after {
+    content: "\e603";
 }
 
 .icon-widget-show-demo-after:after {
-	content: "\e602";
+    content: "\e604";
 }
+
 .icon-widget-cog-after:after {
-	content: "\e601";
+    content: "\e605";
+}
+
+.icon-widget-angle-double-up-after:after {
+    content: "\e606";
 }
 

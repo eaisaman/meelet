@@ -99,7 +99,7 @@ define(
                                     return $inject.$q.all(promiseArr).then(
                                         function (result) {
                                             result.splice(0, 0, 0, 0);
-                                            Array.prototype.splice(self.artifactSpecs, result);
+                                            Array.prototype.splice.apply(self.artifactSpecs, result);
 
                                             return $inject.uiUtilService.getResolveDefer();
                                         },
@@ -119,18 +119,16 @@ define(
                         return $inject.uiUtilService.getRejectDefer();
                     }
                 },
-                addLibrary: function (libraryId, artifactList) {
+                addLibrary: function (libraryId, libraryName, type, artifactList) {
                     artifactList = artifactList || [];
 
-                    var xref = _.find(this.xrefRecord, {libraryId: libraryId});
+                    var xref = _.findWhere(this.xrefRecord, {libraryId: libraryId});
                     if (xref) {
                         var arr = _.filter(xref.artifactList, function (a) {
                             return a.refCount > 0;
                         });
                         artifactList = _.reject(artifactList, function (a) {
-                            return _.find(arr, function (b) {
-                                return a.artifactId == b.artifactId;
-                            });
+                            return _.findWhere(arr, {artifactId: a.artifactId});
                         })
                         if (artifactList.length) {
                             artifactList.splice(0, 0, arr.length, 0);
@@ -142,12 +140,17 @@ define(
                             Array.prototype.splice.apply(xref.artifactList, arr);
                         }
                     } else {
-                        this.xrefRecord.push({
+                        xref = {
                             projectId: this.projectRecord._id,
                             libraryId: libraryId,
+                            libraryName: libraryName,
+                            type: type,
                             artifactList: artifactList
-                        });
+                        };
+                        this.xrefRecord.push(xref);
                     }
+
+                    return xref;
                 },
                 removeLibrary: function (libraryId) {
                     var index;
@@ -166,32 +169,44 @@ define(
                     });
                     if (index != null) {
                         this.xrefRecord.splice(index, 1);
+                        return true;
                     }
+
+                    return false;
                 },
                 loadArtifact: function (artifactId, version) {
                     return _.findWhere(this.artifactSpecs, {artifactId: artifactId, version: version});
                 },
-                refArtifact: function (libraryId, artifactId, version) {
+                refArtifact: function (libraryId, artifactId, name, version) {
                     var self = this;
 
                     if (self.projectRecord._id) {
-                        var xref = _.find(this.xrefRecord, {libraryId: libraryId});
+                        var xref = _.findWhere(this.xrefRecord, {libraryId: libraryId});
                         if (xref) {
-                            xref.artifactList.every(function (a) {
-                                if (a.artifactId == artifactId && a.version == version) {
-                                    a.refCount = (a.refCount || 0) + 1;
-                                    return false;
-                                }
-                                return true;
-                            });
+                            if (xref.artifactList.every(function (a) {
+                                    if (a.artifactId == artifactId) {
+                                        if (a.version == version) {
+                                            a.refCount = (a.refCount || 0) + 1;
+                                        }
+                                        return false;
+                                    }
+                                    return true;
+                                })) {
+                                xref.artifactList.push({
+                                    artifactId: artifactId,
+                                    name: name,
+                                    version: version,
+                                    refCount: 1
+                                });
+                            }
                         }
                     }
                 },
-                unrefArtifact: function (artifactId) {
+                unrefArtifact: function (libraryId, artifactId) {
                     var self = this;
 
                     if (self.projectRecord._id) {
-                        var xref = _.find(this.xrefRecord, {libraryId: libraryId});
+                        var xref = _.findWhere(this.xrefRecord, {libraryId: libraryId});
                         if (xref) {
                             xref.artifactList.every(function (a) {
                                 if (a.artifactId == artifactId) {
@@ -205,13 +220,66 @@ define(
                         }
                     }
                 },
+                selectArtifact: function (libraryId, artifactId, name, version) {
+                    var self = this;
+
+                    if (self.projectRecord._id) {
+                        var xref = _.findWhere(this.xrefRecord, {libraryId: libraryId});
+                        if (xref) {
+                            if (xref.artifactList.every(function (a) {
+                                    if (a.artifactId == artifactId) {
+                                        return false;
+                                    }
+                                    return true;
+                                })) {
+                                xref.artifactList.push({
+                                    artifactId: artifactId,
+                                    name: name,
+                                    version: version
+                                });
+                            }
+
+                            return true;
+                        }
+                    }
+
+                    return false;
+                },
+                unselectArtifact: function (libraryId, artifactId) {
+                    var self = this;
+
+                    if (self.projectRecord._id) {
+                        var xref = _.findWhere(this.xrefRecord, {libraryId: libraryId});
+                        if (xref) {
+                            var index;
+
+                            xref.artifactList.every(function (a, i) {
+                                if (a.artifactId == artifactId) {
+                                    if (!a.refCount) {
+                                        index = i;
+                                    }
+                                    return false;
+                                }
+                                return true;
+                            });
+
+                            if (index != null) {
+                                xref.artifactList.splice(index, 1);
+
+                                return true;
+                            }
+                        }
+                    }
+
+                    return false;
+                },
                 tryLock: function () {
                     var self = this;
 
-                    if (self.dbObject._id && !self.dbObject.lock) {
-                        return $inject.appService.lockProject(self.dbObject._id).then(
-                            function () {
-                                self.dbObject.lock = true;
+                    if (self.projectRecord._id && !self.projectRecord.lock) {
+                        return $inject.appService.lockProject(self.projectRecord._id).then(
+                            function (result) {
+                                self.projectRecord.lock = true;
 
                                 return $inject.uiUtilService.getResolveDefer(self);
                             },
@@ -226,8 +294,8 @@ define(
                 unlock: function () {
                     var self = this;
 
-                    if (self.dbObject._id) {
-                        return $inject.appService.unlockProject(self.dbObject._id);
+                    if (self.projectRecord._id) {
+                        return $inject.appService.unlockProject(self.projectRecord._id);
                     } else {
                         return $inject.uiUtilService.getResolveDefer(self);
                     }
@@ -235,10 +303,10 @@ define(
                 load: function () {
                     var self = this;
 
-                    if (self.dbObject._id) {
+                    if (self.projectRecord._id) {
                         return $inject.$q.all([
                             function () {
-                                return $inject.appService.getProject({_id: self.dbObject._id});
+                                return $inject.appService.getProject({_id: self.projectRecord._id});
                             },
                             function () {
                                 return self.loadDependencies();
@@ -250,7 +318,7 @@ define(
                             if (result[0].data.result === "OK") {
                                 var arr = result[0].data.resultValue;
 
-                                arr.length && _.extend(self.dbObject, arr[0]);
+                                arr.length && _.extend(self.projectRecord, arr[0]);
 
                                 return $inject.uiUtilService.getResolveDefer(self);
                             } else {

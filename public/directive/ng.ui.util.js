@@ -929,6 +929,73 @@ define(
             return defer.promise;
         }
 
+        Util.prototype.markSelection = function (target, source, props) {
+            if (toString.call(target) === '[object Array]' && target.length) {
+                target.forEach(function (item) {
+                    item._selected = false;
+                });
+
+                if (source && source.length) {
+                    if (props) {
+                        target.forEach(function (item) {
+                            if (!source.every(function (o) {
+                                    return !props.every(function (prop) {
+                                        return o[prop.source] === item[prop.target];
+                                    });
+                                })) {
+                                item._selected = true;
+                            }
+                        });
+                    } else {
+                        target.forEach(function (item) {
+                            item._selected = false;
+
+                            if (!source.every(function (o) {
+                                    return o !== item;
+                                })) {
+                                item._selected = true;
+                            }
+                        });
+                    }
+                }
+            }
+
+            return target;
+        }
+
+        Util.prototype.filterSelection = function (target, source, props) {
+            var arr = [];
+
+            if (toString.call(target) === '[object Array]' && target.length) {
+                if (source && source.length) {
+
+                    if (props) {
+                        target.forEach(function (item) {
+                            if (!source.every(function (o) {
+                                    return !props.every(function (prop) {
+                                        return o[prop.source] === item[prop.target];
+                                    });
+                                })) {
+                                arr.push(item);
+                            }
+                        });
+                    } else {
+                        target.forEach(function (item) {
+                            if (!source.every(function (o) {
+                                    return o !== item;
+                                })) {
+                                arr.push(item);
+                            }
+                        });
+                    }
+
+                    return arr;
+                }
+            }
+
+            return arr;
+        }
+
         Util.prototype.getResolveDefer = function (result) {
             var self = this,
                 defer = self.$q.defer();

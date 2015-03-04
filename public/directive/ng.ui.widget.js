@@ -18,7 +18,6 @@ define(
                     scope: {
                         dockAlign: "=",
                         isPlaying: "=",
-                        widgetLibraryList: "=",
                         pickedArtifact: "=",
                         pickedLibrary: "=",
                         showDemo: "&"
@@ -38,6 +37,47 @@ define(
                                 options.holderClass = angularConstants.widgetClasses.holderClass;
                                 options.widgetClass = angularConstants.widgetClasses.widgetClass;
                                 options.hoverClass = angularConstants.widgetClasses.hoverClass;
+
+                                scope.filterLibraryList = function (libraryList, xrefList) {
+                                    return uiUtilService.filterSelection(libraryList, xrefList, [{
+                                        target: '_id',
+                                        source: 'libraryId'
+                                    }]);
+                                }
+
+                                scope.filterArtifactList = function (widgetLibrary, xrefList) {
+                                    return uiUtilService.filterSelection(widgetLibrary.artifactList, _.findWhere(xrefList, {libraryId: widgetLibrary._id}).artifactList, [{
+                                        target: '_id',
+                                        source: 'artifactId'
+                                    }]);
+                                }
+
+                                scope.markLibrarySelection = function (libraryList, xrefList) {
+                                    return uiUtilService.markSelection(libraryList, xrefList, [{
+                                        target: '_id',
+                                        source: 'libraryId'
+                                    }]);
+                                }
+
+                                scope.markArtifactSelection = function (widgetLibrary, xrefList) {
+                                    var xref = _.findWhere(xrefList, {libraryId: widgetLibrary._id}) || {},
+                                        artifactList = xref.artifactList;
+
+                                    return uiUtilService.markSelection(widgetLibrary.artifactList, artifactList, [{
+                                        target: '_id',
+                                        source: 'artifactId'
+                                    }]);
+                                }
+
+                                scope.isPartialSelection = function (widgetLibrary, xrefList) {
+                                    var xref = _.findWhere(xrefList, {libraryId: widgetLibrary._id});
+
+                                    return xref && widgetLibrary.artifactList && widgetLibrary.artifactList.length > xref.artifactList.length;
+                                }
+
+                                scope._ = _;
+                                scope.widgetLibraryList = $rootScope.widgetLibraryList;
+                                scope.project = $rootScope.loadedProject;
                             },
                             post: function (scope, element, attrs) {
                                 var $widgetElement;
@@ -149,6 +189,84 @@ define(
                                     });
 
                                     return true;
+                                }
+
+                                scope.toggleSelectLibraryList = function (event) {
+                                    event && event.stopPropagation && event.stopPropagation();
+
+                                    scope.toggleSelect(".widgetLibraryList").then(function () {
+                                        if (element.find(".widgetLibraryList").hasClass("select")) {
+                                            element.find(".widgetLibraryList").siblings(".accordianGroup").css("opacity", 0);
+                                        } else {
+                                            element.find(".widgetLibraryList").siblings(".accordianGroup").css("opacity", 1);
+                                        }
+                                    });
+                                }
+
+                                scope.toggleWidgetSelection = function (repoArtifact, widgetLibrary, event) {
+                                    event && event.stopPropagation();
+
+                                    repoArtifact._version = (repoArtifact.versionList.length && repoArtifact.versionList[repoArtifact.versionList.length - 1].name || "");
+
+                                    if (repoArtifact._version) {
+                                        var xref = _.findWhere(scope.project.xrefRecord, {libraryId: widgetLibrary._id});
+
+                                        if (xref) {
+                                            var artifact = _.findWhere(xref.artifactList, {artifactId: repoArtifact._id});
+                                            if (artifact) {
+                                                if (scope.project.unselectArtifact(widgetLibrary._id, repoArtifact._id)) {
+                                                    delete repoArtifact._selected;
+                                                    delete repoArtifact._version;
+                                                }
+                                            } else {
+                                                if (scope.project.selectArtifact(widgetLibrary._id, repoArtifact._id, repoArtifact.name, repoArtifact._version)) {
+                                                    repoArtifact._selected = true;
+                                                }
+                                            }
+                                        } else {
+                                            scope.project.addLibrary(
+                                                widgetLibrary._id,
+                                                widgetLibrary.name,
+                                                widgetLibrary.type,
+                                                [
+                                                    {
+                                                        artifactId: repoArtifact._id,
+                                                        name: repoArtifact.name,
+                                                        version: repoArtifact._version
+                                                    }
+                                                ]
+                                            );
+
+                                            repoArtifact._selected = true;
+                                        }
+
+                                    }
+                                }
+
+                                scope.toggleLibrarySelection = function (widgetLibrary, event) {
+                                    event && event.stopPropagation();
+
+                                    var library = _.findWhere(scope.project.xrefRecord, {libraryId: widgetLibrary._id});
+                                    if (library) {
+                                        if (scope.project.removeLibrary(widgetLibrary._id)) {
+                                            delete widgetLibrary._selected;
+                                        }
+                                    } else {
+                                        var artifactList = [];
+                                        widgetLibrary.artifactList.forEach(function (artifact) {
+                                            var version = artifact.versionList.length && artifact.versionList[artifact.versionList.length - 1].name || "";
+
+                                            version && artifactList.push({
+                                                artifactId: artifact._id,
+                                                name: artifact.name,
+                                                version: version
+                                            });
+                                        });
+
+                                        if (artifactList.length && scope.project.addLibrary(widgetLibrary._id, widgetLibrary.name, widgetLibrary.type, artifactList)) {
+                                            widgetLibrary._selected = true;
+                                        }
+                                    }
                                 }
 
                                 appService.loadWidgetArtifactList();

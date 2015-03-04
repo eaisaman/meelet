@@ -50,21 +50,71 @@
 .icon-shape-glyphs:before {
     content: "\e601";
 }
+
 .icon-shape-angle-double-up:before {
     content: "\e600";
+}
+
+.icon-shape-library:before {
+    content: "\e602";
+}
+
+.icon-shape-exit:before {
+    content: "\e603";
+}
+
+.icon-shape-square:before {
+    content: "\e604";
+}
+
+.icon-shape-square-check:before {
+    content: "\e605";
 }
 
 .icon-shape-glyphs-before:before {
     content: "\e601";
 }
+
 .icon-shape-angle-double-up-before:before {
     content: "\e600";
+}
+
+.icon-shape-library-before:before {
+    content: "\e602";
+}
+
+.icon-shape-exit-before:before {
+    content: "\e603";
+}
+
+.icon-shape-square-before:before {
+    content: "\e604";
+}
+
+.icon-shape-square-check-before:before {
+    content: "\e605";
 }
 
 .icon-shape-glyphs-after:after {
     content: "\e601";
 }
+
 .icon-shape-angle-double-up-after:after {
     content: "\e600";
 }
 
+.icon-shape-library-after:after {
+    content: "\e602";
+}
+
+.icon-shape-exit-after:after {
+    content: "\e603";
+}
+
+.icon-shape-square-after:after {
+    content: "\e604";
+}
+
+.icon-shape-square-check-after:after {
+    content: "\e605";
+}

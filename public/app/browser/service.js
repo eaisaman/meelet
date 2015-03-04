@@ -731,36 +731,6 @@ define(
 
         }
 
-        appService.prototype.selectRepoArtifact = function (artifactList, projectFilter) {
-            if (!artifactList.length) {
-                return appService.prototype.NOOP;
-            } else {
-                return this.$http({
-                    method: 'POST',
-                    url: '/api/public/userArtifactXref',
-                    params: {
-                        artifactList: JSON.stringify(artifactList),
-                        projectFilter: JSON.stringify(projectFilter || {})
-                    }
-                });
-            }
-        }
-
-        appService.prototype.unselectRepoArtifact = function (artifactIds, projectFilter) {
-            if (!artifactIds.length || _.isEmpty(projectFilter)) {
-                return appService.prototype.NOOP;
-            } else {
-                return this.$http({
-                    method: 'DELETE',
-                    url: '/api/public/userArtifactXref',
-                    params: {
-                        artifactIds: JSON.stringify(artifactIds),
-                        projectFilter: JSON.stringify(projectFilter || {})
-                    }
-                });
-            }
-        }
-
         return function (appModule) {
             appModule.
                 config(['$httpProvider',

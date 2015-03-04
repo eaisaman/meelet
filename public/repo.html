@@ -16,8 +16,9 @@
         </div>
     </div>
     <div class="repoContent col-as-12">
-        <div class="fs-x-small repoLib" ng-repeat="repoLib in markSelection(repoLibraryList, myRepoList, ['_id'])"
-             ng-click="urlService.repoLib(false, {repoLib:repoLib, project:project})">
+        <div class="fs-x-small repoLib"
+             ng-repeat="repoLib in markSelection(repoLibraryList, project.xrefRecord, [{target:'_id',source:'libraryId'}])"
+             ng-click="urlService.repoLib(false, {repoLib:repoLib})">
             <div class="repoImg fs-x-huge">
                 <img onerror="classie.addClass(this.parentNode, 'imgLoadError')"
                      onload="classie.removeClass(this.parentNode, 'imgLoadError')"

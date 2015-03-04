@@ -1,20 +1,49 @@
 <div class="widgetContent ui-control-wrapper" ng-class="dockAlign">
     <div class="widgetBar ui-control-bar fs-x-large">
-        <div class="pickerPane fs-x-medium">{{pickerPaneWidget.name}}</div>
+        <div class="pickerPane col-as-9 no-padding fs-x-medium">{{pickerPaneWidget.name}}</div>
+        <div class="toggleLibraryButton col-as-3 no-padding-right">
+            <span class="fs-x-medium-before icon-widget-before icon-widget-library-before"
+                  ng-click="toggleSelectLibraryList($event)"></span>
+        </div>
     </div>
     <div class="widgetPalette ui-control-panel">
-        <div class="accordianGroup" ng-repeat="widgetLibrary in widgetLibraryList"
+        <div class="accordianGroup"
+             ng-repeat="widgetLibrary in filterLibraryList(widgetLibraryList, project.xrefRecord)"
              ng-click="toggleSelect($event.currentTarget, $event)">
             <div class="accordianTitle col-as-12 icon-widget-before icon-widget-cog-before">
                 {{widgetLibrary.name}}
             </div>
             <div class="accordianBody fs-x-small col-as-12 no-padding">
                 <div class="widgetPane col-as-12 no-padding"
-                     ng-repeat="artifact in widgetLibrary.artifactList"
+                     ng-repeat="artifact in filterArtifactList(widgetLibrary, project.xrefRecord)"
                      ng-click="pickWidget(artifact, widgetLibrary, $event)">
                     <div class="demoButton fs-x-large-before icon-widget-before icon-widget-show-demo-before"
                          ng-click="showArtifactDemo(artifact, widgetLibrary, $event)"></div>
                     <span>{{artifact.name}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="widgetLibraryList fs-x-medium">
+            <div class="accordianGroup"
+                 ng-repeat="widgetLibrary in markLibrarySelection(widgetLibraryList, project.xrefRecord)"
+                 ng-click="toggleSelect($event.currentTarget, $event)">
+                <div class="accordianTitle col-as-12 icon-widget-before icon-widget-angle-double-up-before">
+                    <span class="col-as-9 no-padding">{{widgetLibrary.name}}</span>
+
+                    <div class="toggleSelectionButton col-as-3 no-padding-right icon-widget-before"
+                         ng-class="{'icon-widget-square-before':!widgetLibrary._selected, 'icon-widget-square-check-before':widgetLibrary._selected, 'partialSelect':isPartialSelection(widgetLibrary, project.xrefRecord)}"
+                         ng-click="toggleLibrarySelection(widgetLibrary, $event)"></div>
+                </div>
+                <div class="accordianBody fs-x-small col-as-12 no-padding">
+                    <div class="widgetPane col-as-12 no-padding"
+                         ng-repeat="artifact in markArtifactSelection(widgetLibrary, project.xrefRecord)"
+                         ng-click="$event.stopPropagation()">
+                        <span>{{artifact.name}}</span>
+
+                        <div class="toggleSelectionButton icon-widget-before"
+                             ng-class="{'icon-widget-square-before':!artifact._selected, 'icon-widget-square-check-before':artifact._selected}"
+                             ng-click="toggleWidgetSelection(artifact, widgetLibrary, $event)"></div>
+                    </div>
                 </div>
             </div>
         </div>
