@@ -10,8 +10,8 @@ $underlineLinearGradient: (rgb(235, 235, 235) 0%, rgb(235, 235, 235) 50%, #fff 1
 $tabHeaderWidth: 6em;
 $maxNumOfConfigurationItems: 10;
 
-@include multilevel-menu(effectMultilevelMenu, null, $activeColor);
-@include simple-dropdown(null, effectArtifactDropdown, $activeColor);
+@include multilevel-menu(null, effectMultilevelMenu, $activeColor);
+@include multilevel-menu(null, effectArtifactMultilevelMenu, $activeColor);
 @include simple-dropdown(null, widgetObjStateDropdown, $activeColor);
 @include simple-dropdown(null, configurationItemList, $activeColor);
 @include simple-dropdown(null, triggerEventDropdown, $activeColor);
@@ -293,7 +293,19 @@ $maxNumOfConfigurationItems: 10;
                                                                 @include emboss-title('', true);
                                                             }
 
-                                                            #effectMultilevelMenu {
+                                                            .toggleLibraryButton {
+                                                                span {
+                                                                    position: relative;
+                                                                    float: left;
+                                                                    line-height: 1;
+                                                                    width: 100%;
+                                                                    text-align: center;
+
+                                                                    @include emboss-title(':before', true);
+                                                                }
+                                                            }
+
+                                                            .effectMultilevelMenu {
                                                                 z-index: 10;
                                                             }
                                                         }
@@ -495,8 +507,152 @@ $maxNumOfConfigurationItems: 10;
                                                     }
 
                                                 }
-                                            }
 
+                                                > .effectLibraryList {
+                                                    z-index: 101;
+                                                    position: absolute;
+                                                    width: 100%;
+                                                    height: auto;
+                                                    left: 0;
+                                                    opacity: 0;
+                                                    pointer-events: none;
+                                                    background: #fff;
+
+                                                    @extend %slideLeft;
+                                                    @include animation-duration(0.3s);
+
+                                                    &.select {
+                                                        opacity: 1;
+                                                        pointer-events: auto;
+
+                                                        @extend %slideLeftRetourn;
+                                                        @include animation-duration(0.3s);
+                                                    }
+
+                                                    .toggleSelectionButton {
+                                                        height: 2em;
+
+                                                        &:before {
+                                                            position: absolute;
+                                                            left: 0;
+                                                            top: 0;
+                                                            width: 100%;
+                                                            height: 2em;
+                                                            line-height: 2;
+                                                            text-align: center;
+                                                        }
+
+                                                        &.partialSelect:before {
+                                                            color: darken(#fff, $activeDarkenPercent);
+                                                        }
+                                                    }
+
+                                                    .hideLibraryListButton {
+                                                        position: absolute;
+                                                        top: 0.5em;
+                                                        width: 2em;
+                                                        height: 2em;
+                                                        background-color: #ddd;
+                                                        box-shadow: inset 0 -2px 0 rgba(0, 0, 0, .135);
+                                                        border-radius: 0.2em;
+                                                        display: inline-block;
+                                                        margin: 0 0.5em;
+
+                                                        &:active {
+                                                            background-color: #555;
+                                                            color: $activeColor;
+                                                            box-shadow: none;
+                                                        }
+
+                                                        &:before {
+                                                            position: absolute;
+                                                            width: 100%;
+                                                            height: 100%;
+                                                            text-align: center;
+                                                            line-height: 2;
+                                                        }
+                                                    }
+
+                                                    .hideLibraryListButton+.accordianGroup {
+                                                        top: 2.5em;
+                                                    }
+
+                                                    .accordianGroup {
+                                                        position: relative;
+                                                        float: left;
+                                                        width: 100%;
+                                                        overflow: hidden;
+
+                                                        > .accordianTitle {
+                                                            z-index: 1;
+                                                            position: relative;
+                                                            float: left;
+                                                            width: 100%;
+                                                            line-height: 2;
+                                                            font-weight: 900;
+                                                            text-shadow: 0px 3px 4px rgba(0, 0, 0, 0.4);
+                                                            background: #fff;
+
+                                                            &:before {
+                                                                @include transform(rotateZ(0deg));
+                                                                @include transition(transform 0.3s);
+                                                            }
+                                                        }
+
+                                                        > .accordianBody {
+                                                            width: 100%;
+                                                            margin-top: 0.5em;
+                                                            margin-bottom: 0.5em;
+
+                                                            @include transition(transform 0.3s);
+
+                                                            .effectPane {
+                                                                opacity: 0;
+                                                                pointer-events: none;
+                                                                height: 0px;
+                                                                overflow: hidden;
+                                                            }
+                                                        }
+
+                                                        &.select {
+                                                            > .accordianTitle:before {
+                                                                @extend %rotateUpSideDown;
+                                                                @include animation-duration(0.3s);
+                                                            }
+
+                                                            > .accordianBody {
+
+                                                                .effectPane {
+                                                                    opacity: 1;
+                                                                    pointer-events: auto;
+                                                                    height: 2em;
+                                                                    line-height: 2;
+                                                                    margin-top: 1em;
+                                                                    margin-right: 1em;
+                                                                    overflow: visible;
+
+                                                                    span {
+                                                                        position: relative;
+                                                                        float: left;
+                                                                        width: calc(100% - 3em);
+                                                                        line-height: 2;
+                                                                        height: 100%;
+
+                                                                        @include emboss-title('');
+                                                                    }
+
+                                                                    .toggleSelectionButton {
+                                                                        position: relative;
+                                                                        float: left;
+                                                                        width: 2em;
+                                                                        height: 2em;
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         }
                                     }
                                 }
@@ -813,6 +969,51 @@ $maxNumOfConfigurationItems: 10;
                             display: block;
                         }
                     }
+
+                    .effectLibraryList {
+                        .accordianGroup {
+                            position: relative;
+                            float: right;
+
+                            > .accordianTitle {
+                                position: relative;
+                                float: right;
+                                text-align: right;
+
+                                &:after {
+                                    position: absolute;
+                                    right: 0;
+                                    bottom: 0;
+                                    content: '';
+                                    width: 100%;
+                                    height: 2px;
+                                    @include background(linear-gradient(right, $underlineLinearGradient));
+                                }
+
+                                &:before {
+                                    position: absolute;
+                                    left: 0;
+                                    top: 0;
+                                    line-height: 2;
+                                    text-align: center;
+                                    width: 1em;
+                                    height: 2em;
+                                }
+                            }
+
+                            > .accordianBody {
+                                position: relative;
+                                float: right;
+
+                                .effectPane {
+
+                                    span {
+                                        text-align: right;
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -829,6 +1030,51 @@ $maxNumOfConfigurationItems: 10;
 
                         &.select {
                             display: block;
+                        }
+                    }
+
+                    .effectLibraryList {
+                        .accordianGroup {
+                            position: relative;
+                            float: left;
+
+                            > .accordianTitle {
+                                position: relative;
+                                float: left;
+                                text-align: left;
+
+                                &:after {
+                                    position: absolute;
+                                    left: 0;
+                                    bottom: 0;
+                                    content: '';
+                                    width: 100%;
+                                    height: 2px;
+                                    @include background(linear-gradient(left, $underlineLinearGradient));
+                                }
+
+                                &:before {
+                                    position: absolute;
+                                    right: 0;
+                                    top: 0;
+                                    line-height: 2;
+                                    text-align: center;
+                                    width: 2em;
+                                    height: 2em;
+                                }
+                            }
+
+                            > .accordianBody {
+                                position: relative;
+                                float: left;
+
+                                .effectPane {
+
+                                    span {
+                                        text-align: left;
+                                    }
+                                }
+                            }
                         }
                     }
                 }

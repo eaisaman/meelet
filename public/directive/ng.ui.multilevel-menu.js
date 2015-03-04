@@ -9,7 +9,8 @@ define(
 
                 var injectObj = _.object(inject, Array.prototype.slice.call(arguments)),
                     defaults = {
-                        zIndex: 1000
+                        zIndex: 1000,
+                        listField: "list"
                     },
                     options = _.extend(defaults, opts);
 
@@ -95,6 +96,14 @@ define(
 
                                         return level;
                                     }
+                                }
+
+                                scope.filterItem = function (item) {
+                                    if (scope.options.listFilter && typeof scope.options.listFilter === "object") {
+                                        return _.findWhere([item], scope.options.listFilter);
+                                    }
+
+                                    return true;
                                 }
 
                                 scope.toggleMenu = function (event) {

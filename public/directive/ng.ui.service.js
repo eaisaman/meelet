@@ -278,7 +278,7 @@ define(
 
                     if (self.projectRecord._id && !self.projectRecord.lock) {
                         return $inject.appService.lockProject(self.projectRecord._id).then(
-                            function (result) {
+                            function () {
                                 self.projectRecord.lock = true;
 
                                 return $inject.uiUtilService.getResolveDefer(self);
@@ -295,7 +295,16 @@ define(
                     var self = this;
 
                     if (self.projectRecord._id) {
-                        return $inject.appService.unlockProject(self.projectRecord._id);
+                        return $inject.appService.unlockProject(self.projectRecord._id).then(
+                            function () {
+                                self.projectRecord.lock = false;
+
+                                return $inject.uiUtilService.getResolveDefer(self);
+                            },
+                            function (err) {
+                                return $inject.uiUtilService.getResolveDefer(self);
+                            }
+                        );
                     } else {
                         return $inject.uiUtilService.getResolveDefer(self);
                     }

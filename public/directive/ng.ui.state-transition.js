@@ -2,9 +2,9 @@ define(
     ["angular", "jquery"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$http", "$timeout", "$q", "uiUtilService", "uiService", "appService"];
+            var inject = ["$rootScope", "$http", "$timeout", "$q", "angularConstants", "uiUtilService", "uiService", "appService"];
 
-            appModule.directive("uiStateTransition", _.union(inject, [function ($http, $timeout, $q, uiUtilService, uiService, appService) {
+            appModule.directive("uiStateTransition", _.union(inject, [function ($rootScope, $http, $timeout, $q, angularConstants, uiUtilService, uiService, appService) {
                 'use strict';
 
                 var defaults = {
@@ -15,7 +15,7 @@ define(
 
                 return {
                     restrict: "A",
-                    scope: {pickedWidget: "=", pickedPage: "=", dockAlign: "=", effectLibraryList: "="},
+                    scope: {pickedWidget: "=", pickedPage: "=", dockAlign: "="},
                     replace: false,
                     templateUrl: "include/_state_transition.html",
                     compile: function (element, attrs) {
@@ -34,33 +34,74 @@ define(
                                 });
 
                                 scope.pickEffectArtifact = function (action, artifactId) {
-                                    scope.effectArtifactList.every(function (artifact) {
-                                        if (artifact._id === artifactId) {
-                                            scope.effectList = artifact.json.slice(0, artifact.json.length);
-                                            action.artifactSpec = {
-                                                _id: artifact._id,
-                                                directiveName: artifact.directiveName,
-                                                version: artifact.versionList[artifact.versionList.length - 1].name
-                                            }
-                                            return false;
-                                        }
+                                    scope.effectList.splice(0, scope.effectList.length);
 
-                                        return true;
+                                    scope.filterEffectLibraryList.every(function (library) {
+                                        return library.artifactList.every(function (artifact) {
+                                            if (artifact._id === artifactId) {
+                                                scope.pickedEffectArtifact = artifact;
+
+                                                var arr = artifact.json.slice(0, artifact.json.length);
+                                                arr.splice(0, 0, 0, 0);
+                                                Array.prototype.splice.apply(scope.effectList, arr);
+
+                                                action.artifactSpec = {
+                                                    _id: artifact._id,
+                                                    directiveName: artifact.directiveName,
+                                                    version: artifact._version
+                                                }
+                                                return false;
+                                            }
+
+                                            return true;
+                                        });
+
                                     });
                                 }
 
-                                appService.loadEffectArtifactList().then(function () {
-                                    var libraryList = _.where(scope.effectLibraryList, {name: "standard"});
-                                    if (libraryList && libraryList.length) {
-                                        scope.effectArtifactList = libraryList[0].artifactList.slice(0, libraryList[0].artifactList.length);
+                                scope.filterLibraryList = function (libraryList, xrefList) {
+                                    return uiUtilService.filterSelection(libraryList, xrefList, [{
+                                        target: '_id',
+                                        source: 'libraryId'
+                                    }]);
+                                }
 
-                                    }
-                                });
+                                scope.filterArtifactList = function (effectLibrary, xrefList) {
+                                    return uiUtilService.filterSelection(effectLibrary.artifactList, _.findWhere(xrefList, {libraryId: effectLibrary._id}).artifactList, [{
+                                        target: '_id',
+                                        source: 'artifactId'
+                                    }]);
+                                }
 
-                                scope.triggers = {};
-                                scope.effectArtifactList = [];
-                                scope.effectList = [];
+                                scope.markLibrarySelection = function (libraryList, xrefList) {
+                                    return uiUtilService.markSelection(libraryList, xrefList, [{
+                                        target: '_id',
+                                        source: 'libraryId'
+                                    }]);
+                                }
+
+                                scope.markArtifactSelection = function (effectLibrary, xrefList) {
+                                    var xref = _.findWhere(xrefList, {libraryId: effectLibrary._id}) || {},
+                                        artifactList = xref.artifactList;
+
+                                    return uiUtilService.markSelection(effectLibrary.artifactList, artifactList, [{
+                                        target: '_id',
+                                        source: 'artifactId'
+                                    }]);
+                                }
+
+                                scope.isPartialSelection = function (effectLibrary, xrefList) {
+                                    var xref = _.findWhere(xrefList, {libraryId: effectLibrary._id});
+
+                                    return xref && effectLibrary.artifactList && effectLibrary.artifactList.length > xref.artifactList.length;
+                                }
+
                                 scope._ = _;
+                                scope.triggers = {};
+                                scope.effectList = [];
+                                scope.effectLibraryList = $rootScope.effectLibraryList;
+                                scope.filterEffectLibraryList = [];
+                                scope.project = $rootScope.loadedProject;
                             },
                             post: function (scope, element, attrs) {
                                 scope.toggleTransitionDetails = function (selector, event) {
@@ -255,6 +296,108 @@ define(
                                     });
                                 }
 
+                                scope.toggleSelectLibraryList = function (event) {
+                                    event && event.stopPropagation && event.stopPropagation();
+
+                                    scope.toggleSelect(".effectLibraryList").then(function () {
+                                        if (element.find(".effectLibraryList").hasClass("select")) {
+                                            element.find(".effectLibraryList").siblings("div").css("opacity", 0);
+                                        } else {
+                                            element.find(".effectLibraryList").siblings("div").css("opacity", 1);
+                                        }
+                                    });
+                                }
+
+                                scope.toggleArtifactSelection = function (repoArtifact, effectLibrary, event) {
+                                    event && event.stopPropagation();
+
+                                    repoArtifact._version = (repoArtifact.versionList.length && repoArtifact.versionList[repoArtifact.versionList.length - 1].name || "");
+
+                                    if (repoArtifact._version) {
+                                        var xref = _.findWhere(scope.project.xrefRecord, {libraryId: effectLibrary._id});
+
+                                        if (xref) {
+                                            var artifact = _.findWhere(xref.artifactList, {artifactId: repoArtifact._id});
+                                            if (artifact) {
+                                                if (scope.project.unselectArtifact(effectLibrary._id, repoArtifact._id)) {
+                                                    delete repoArtifact._selected;
+                                                    delete repoArtifact._version;
+                                                }
+                                            } else {
+                                                if (scope.project.selectArtifact(effectLibrary._id, repoArtifact._id, repoArtifact.name, repoArtifact._version)) {
+                                                    repoArtifact._selected = true;
+                                                }
+                                            }
+                                        } else {
+                                            scope.project.addLibrary(
+                                                effectLibrary._id,
+                                                effectLibrary.name,
+                                                effectLibrary.type,
+                                                [
+                                                    {
+                                                        artifactId: repoArtifact._id,
+                                                        name: repoArtifact.name,
+                                                        version: repoArtifact._version
+                                                    }
+                                                ]
+                                            );
+
+                                            repoArtifact._selected = true;
+
+                                            if (scope.filterEffectLibraryList.every(function (lib) {
+                                                    return lib._id !== effectLibrary._id;
+                                                })) {
+                                                scope.filterEffectLibraryList.push(effectLibrary);
+                                            }
+                                        }
+
+                                    }
+                                }
+
+                                scope.toggleLibrarySelection = function (effectLibrary, event) {
+                                    event && event.stopPropagation();
+
+                                    var library = _.findWhere(scope.project.xrefRecord, {libraryId: effectLibrary._id});
+                                    if (library) {
+                                        if (scope.project.removeLibrary(effectLibrary._id)) {
+                                            delete effectLibrary._selected;
+
+                                            var index;
+                                            if (!scope.filterEffectLibraryList.every(function (lib, i) {
+                                                    if (lib._id === effectLibrary._id) {
+                                                        index = i;
+                                                        return false;
+                                                    }
+
+                                                    return true;
+                                                })) {
+                                                scope.filterEffectLibraryList.splice(index, 1);
+                                            }
+                                        }
+                                    } else {
+                                        var artifactList = [];
+                                        effectLibrary.artifactList.forEach(function (artifact) {
+                                            var version = artifact.versionList.length && artifact.versionList[artifact.versionList.length - 1].name || "";
+
+                                            version && artifactList.push({
+                                                artifactId: artifact._id,
+                                                name: artifact.name,
+                                                version: version
+                                            });
+                                        });
+
+                                        if (artifactList.length && scope.project.addLibrary(effectLibrary._id, effectLibrary.name, effectLibrary.type, artifactList)) {
+                                            effectLibrary._selected = true;
+
+                                            if (scope.filterEffectLibraryList.every(function (lib) {
+                                                    return lib._id !== effectLibrary._id;
+                                                })) {
+                                                scope.filterEffectLibraryList.push(effectLibrary);
+                                            }
+                                        }
+                                    }
+                                }
+
                                 if (options.triggerJson) {
                                     $http.get(options.triggerJson).then(function (result) {
                                         result.data.forEach(function (triggerGroup) {
@@ -278,6 +421,27 @@ define(
 
                                     $wrapper.addClass("expanded");
                                     $panel.addClass("show");
+
+                                    uiUtilService.whilst(
+                                        function () {
+                                            return !scope.project;
+                                        },
+                                        function (callback) {
+                                            callback();
+                                        },
+                                        function (err) {
+                                            return appService.loadEffectArtifactList().then(function () {
+                                                var arr = scope.filterLibraryList(scope.effectLibraryList, scope.project.xrefRecord);
+                                                arr.splice(0, 0, 0, 0);
+                                                scope.filterEffectLibraryList.splice(0, scope.filterEffectLibraryList.length);
+                                                Array.prototype.splice.apply(scope.filterEffectLibraryList, arr);
+
+                                                return uiUtilService.getResolveDefer();
+                                            }, function (err) {
+                                                return uiUtilService.getRejectDefer(err);
+                                            });
+                                        }, angularConstants.checkInterval
+                                    );
                                 });
                             }
                         }

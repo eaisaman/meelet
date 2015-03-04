@@ -47,10 +47,13 @@
                          class="topbarButton icon-frame-sketch-before icon-frame-sketch-ruler-before"></div>
                     <div ng-click="togglePlayWidget($event)" class="topbarButton icon-frame-sketch-before"
                          ng-class="{'icon-frame-sketch-play-before':!sketchWidgetSetting.isPlaying, 'icon-frame-sketch-pause-before':sketchWidgetSetting.isPlaying}"></div>
-                    <div ng-click="saveSketch($event)" ng-if="project.dbObject.lock"
+                    <div ng-click="saveProject($event)" ng-if="project.projectRecord.lock"
                          class="topbarButton icon-frame-sketch-before icon-frame-sketch-save-before"></div>
                     <div ng-click="loadProject($event)"
                          class="topbarButton icon-frame-sketch-before icon-frame-sketch-load-before"></div>
+                    <div ng-click="toggleLockProject($event)"
+                         class="topbarButton icon-frame-sketch-before"
+                         ng-class="{'icon-frame-sketch-unlock-before':project.projectRecord.lock, 'icon-frame-sketch-lock-before':!project.projectRecord.lock}"></div>
                 </div>
             </div>
 
@@ -181,8 +184,7 @@
                                             <div id="state-transition-control"
                                                  class="ui-control ui-control-inline enable"
                                                  ui-state-transition picked-widget="sketchObject.pickedWidget"
-                                                 picked-page="sketchObject.pickedPage" dock-align="dockAlign"
-                                                 effect-library-list="effectLibraryList"></div>
+                                                 picked-page="sketchObject.pickedPage" dock-align="dockAlign"></div>
                                         </div>
                                     </div>
                                 </div>

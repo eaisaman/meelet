@@ -25,16 +25,22 @@
         <div class="accordianSubTitle fs-x-smaller col-as-12">
             <span ng-click="toggleActionWidgetTree(item, $event)">{{item.widgetObj.name}}</span>
 
-            <div class="effectArtifactDropdown stackAndRotateSelect"
-                 ui-simple-dropdown
-                 ui-simple-dropdown-opts="{dataField:'_id', labelField:'name', zIndex:100, gutter: 5, showTitle: true, displayUnsetOption: true}"
-                 selection-list="effectArtifactList"
-                 select-item="pickedEffectArtifactId"
-                 on-option-select="pickEffectArtifact(item, pickedEffectArtifactId)">
-                {{pickedEffectArtifact && pickedEffectArtifact.name || "Choose an Effect Artifact"}}
+            <div class="effectArtifactContainer">
+                <div class="effectArtifactMultilevelMenu col-as-9 no-padding" ui-multilevel-menu
+                     menu-list="filterEffectLibraryList"
+                     ui-multilevel-menu-opts="{dataField:'_id', labelField:'name', listField:'artifactList', listFilter:{_selected:true}, zIndex:100}"
+                     picked-menu-item="pickedEffectArtifactId"
+                     on-menu-select="pickEffectArtifact(item, pickedEffectArtifactId)">
+                    {{pickedEffectArtifact && pickedEffectArtifact.name || "Choose an Artifact"}}
+                </div>
+                <div class="toggleLibraryButton col-as-3 no-padding-right">
+                    <span class="fs-x-medium-before icon-state-transition-before icon-state-transition-library-before"
+                          ng-click="toggleSelectLibraryList($event)">
+                    </span>
+                </div>
             </div>
 
-            <div id="effectMultilevelMenu" ui-multilevel-menu menu-list="effectList"
+            <div class="effectMultilevelMenu" ui-multilevel-menu menu-list="effectList"
                  ui-multilevel-menu-opts="{dataField:'value', labelField:'name', zIndex:101}"
                  picked-menu-item="pickedEffect"
                  on-menu-select="item.effect = createEffectObj(pickedEffect)">
@@ -190,8 +196,7 @@
                                              selection-list="triggers['Gesture']"
                                              select-item="pickedTriggerEventId"
                                              on-option-select="pickTriggerEvent('Gesture', transition, pickedTriggerEventId)">
-                                            {{transition.trigger && transition.trigger.eventName || "Choose Trigger
-                                            Event"}}
+                                            {{transition.trigger && transition.trigger.eventName || "Choose Trigger Event"}}
                                         </div>
                                     </li>
                                     <li>
@@ -236,6 +241,35 @@
                                         </ol>
                                     </ui-tree>
                                 </div>
+
+                                <div class="effectLibraryList">
+                                    <div class="hideLibraryListButton icon-state-transition-before icon-state-transition-exit-before"
+                                         ng-click="toggleSelectLibraryList($event)"></div>
+
+                                    <div class="accordianGroup"
+                                         ng-repeat="effectLibrary in markLibrarySelection(effectLibraryList, project.xrefRecord)"
+                                         ng-click="toggleSelect($event.currentTarget, $event)">
+                                        <div class="accordianTitle col-as-12 icon-widget-before icon-widget-angle-double-up-before">
+                                            <span class="col-as-9 no-padding">{{effectLibrary.name}}</span>
+
+                                            <div class="toggleSelectionButton col-as-3 no-padding-right icon-widget-before"
+                                                 ng-class="{'icon-widget-square-before':!effectLibrary._selected, 'icon-widget-square-check-before':effectLibrary._selected, 'partialSelect':isPartialSelection(effectLibrary, project.xrefRecord)}"
+                                                 ng-click="toggleLibrarySelection(effectLibrary, $event)"></div>
+                                        </div>
+                                        <div class="accordianBody fs-x-small col-as-12 no-padding">
+                                            <div class="effectPane col-as-12 no-padding"
+                                                 ng-repeat="artifact in markArtifactSelection(effectLibrary, project.xrefRecord)"
+                                                 ng-click="$event.stopPropagation()">
+                                                <span>{{artifact.name}}</span>
+
+                                                <div class="toggleSelectionButton icon-widget-before"
+                                                     ng-class="{'icon-widget-square-before':!artifact._selected, 'icon-widget-square-check-before':artifact._selected}"
+                                                     ng-click="toggleArtifactSelection(artifact, effectLibrary, $event)"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>

@@ -618,7 +618,18 @@ define(
                 method: 'PUT',
                 url: '/api/public/project',
                 params: {projectFilter: {_id: projectId, lockUser: userId}, project: {lock: false}}
-            });
+            }).then(
+                function (result) {
+                    if (result.data.result === "OK") {
+                        return self.getResolveDefer();
+                    } else {
+                        return self.getRejectDefer(result.data.reason);
+                    }
+                },
+                function (err) {
+                    return self.getRejectDefer(err);
+                }
+            )
         }
 
         appService.prototype.removeProjectImage = function (projectId, fileName) {

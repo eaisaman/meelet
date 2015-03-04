@@ -47,7 +47,7 @@
 	-moz-osx-font-smoothing: grayscale;
 }
 
-.icon-frame-sketch-exit:before {
+.icon-frame-sketch-insert:before {
     content: "\e600";
 }
 
@@ -127,11 +127,19 @@
     content: "\e613";
 }
 
-.icon-frame-sketch-insert:before {
+.icon-frame-sketch-lock:before {
     content: "\e614";
 }
 
-.icon-frame-sketch-exit-before:before {
+.icon-frame-sketch-unlock:before {
+    content: "\e615";
+}
+
+.icon-frame-sketch-exit:before {
+    content: "\e616";
+}
+
+.icon-frame-sketch-insert-before:before {
     content: "\e600";
 }
 
@@ -211,11 +219,19 @@
     content: "\e613";
 }
 
-.icon-frame-sketch-insert-before:before {
+.icon-frame-sketch-lock-before:before {
     content: "\e614";
 }
 
-.icon-frame-sketch-exit-after:after {
+.icon-frame-sketch-unlock-before:before {
+    content: "\e615";
+}
+
+.icon-frame-sketch-exit-before:before {
+    content: "\e616";
+}
+
+.icon-frame-sketch-insert-after:after {
     content: "\e600";
 }
 
@@ -295,7 +311,15 @@
     content: "\e613";
 }
 
-.icon-frame-sketch-insert-after:after {
+.icon-frame-sketch-lock-after:after {
     content: "\e614";
+}
+
+.icon-frame-sketch-unlock-after:after {
+    content: "\e615";
+}
+
+.icon-frame-sketch-exit-after:after {
+    content: "\e616";
 }
 

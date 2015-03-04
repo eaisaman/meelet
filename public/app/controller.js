@@ -51,6 +51,7 @@ define(
 
                 return target;
             };
+
         }
 
         function FrameSketchController($scope, $rootScope, $timeout, $q, angularEventTypes, angularConstants, appService, uiService, uiUtilService) {
@@ -277,16 +278,26 @@ define(
                 $scope.sketchWidgetSetting.isPlaying = !$scope.sketchWidgetSetting.isPlaying;
             }
 
-            $scope.saveSketch = function (event) {
+            $scope.saveProject = function (event) {
                 event && event.stopPropagation && event.stopPropagation();
 
-                return $rootScope.loadedProject.saveSketch();
+                return $rootScope.loadedProject.save();
             }
 
             $scope.loadProject = function (event) {
                 event && event.stopPropagation && event.stopPropagation();
 
                 return $rootScope.loadedProject.load();
+            }
+
+            $scope.toggleLockProject  = function (event) {
+                event && event.stopPropagation && event.stopPropagation();
+
+                if ($rootScope.loadedProject.projectRecord.lock) {
+                    return $rootScope.loadedProject.unlock();
+                } else {
+                    return $rootScope.loadedProject.tryLock();
+                }
             }
 
             $scope.showDemo = function (event) {
@@ -419,6 +430,8 @@ define(
             });
 
             function initMaster() {
+                $scope.project = $rootScope.loadedProject;
+
                 uiUtilService.whilst(function () {
                     return !$(".deviceHolder").length;
                 }, function (callback) {
@@ -683,20 +696,22 @@ define(
                             }
                         }
                     } else {
-                        $scope.dependencyRecord = $rootScope.loadedProject.addLibrary(
-                            $scope.repoLib._id,
-                            $scope.repoLib.name,
-                            $scope.repoLib.type,
-                            [
-                                {
-                                    artifactId: repoArtifact._id,
-                                    name: repoArtifact.name,
-                                    version: repoArtifact._version
-                                }
-                            ]
-                        );
+                        if (repoArtifact._version) {
+                            $scope.dependencyRecord = $rootScope.loadedProject.addLibrary(
+                                $scope.repoLib._id,
+                                $scope.repoLib.name,
+                                $scope.repoLib.type,
+                                [
+                                    {
+                                        artifactId: repoArtifact._id,
+                                        name: repoArtifact.name,
+                                        version: repoArtifact._version
+                                    }
+                                ]
+                            );
 
-                        repoArtifact._selected = true;
+                            repoArtifact._selected = true;
+                        }
                     }
                 }
 

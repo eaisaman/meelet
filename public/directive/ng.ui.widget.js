@@ -131,7 +131,7 @@ define(
                                                                     type: scope.pickedArtifact.type,
                                                                     libraryName: scope.pickedLibrary.name,
                                                                     version: version,
-                                                                    projectId: $rootScope.loadedProject.projectRecord._id
+                                                                    projectId: scope.project.projectRecord._id
                                                                 }
                                                             );
 
