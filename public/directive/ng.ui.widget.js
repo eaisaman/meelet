@@ -150,7 +150,7 @@ define(
                                 }
 
                                 scope.pickWidget = function (artifact, widgetLibrary, event) {
-                                    event && event.stopPropagation();
+                                    event && event.stopPropagation && event.stopPropagation();
 
                                     scope.pickerPaneWidget = null;
                                     scope.pickedPane = artifact;
@@ -164,7 +164,7 @@ define(
                                 };
 
                                 scope.togglePalette = function (event) {
-                                    event && event.stopPropagation();
+                                    event && event.stopPropagation && event.stopPropagation();
 
                                     var $wrapper = element.find(".ui-control-wrapper"),
                                         $panel = element.find(".ui-control-panel");
@@ -181,7 +181,7 @@ define(
                                 }
 
                                 scope.showArtifactDemo = function (artifact, widgetLibrary, event) {
-                                    event && event.stopPropagation();
+                                    event && event.stopPropagation && event.stopPropagation();
 
                                     scope.pickWidget(artifact, widgetLibrary);
                                     $timeout(function () {
@@ -204,7 +204,7 @@ define(
                                 }
 
                                 scope.toggleWidgetSelection = function (repoArtifact, widgetLibrary, event) {
-                                    event && event.stopPropagation();
+                                    event && event.stopPropagation && event.stopPropagation();
 
                                     repoArtifact._version = (repoArtifact.versionList.length && repoArtifact.versionList[repoArtifact.versionList.length - 1].name || "");
 
@@ -244,7 +244,7 @@ define(
                                 }
 
                                 scope.toggleLibrarySelection = function (widgetLibrary, event) {
-                                    event && event.stopPropagation();
+                                    event && event.stopPropagation && event.stopPropagation();
 
                                     var library = _.findWhere(scope.project.xrefRecord, {libraryId: widgetLibrary._id});
                                     if (library) {

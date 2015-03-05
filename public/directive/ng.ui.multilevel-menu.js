@@ -107,7 +107,7 @@ define(
                                 }
 
                                 scope.toggleMenu = function (event) {
-                                    event && event.stopPropagation();
+                                    event && event.stopPropagation && event.stopPropagation();
 
                                     scope.toggleSelect().then(function () {
                                         if (element.hasClass("select")) {
@@ -123,7 +123,7 @@ define(
                                 }
 
                                 scope.goBack = function (event) {
-                                    event && event.stopPropagation();
+                                    event && event.stopPropagation && event.stopPropagation();
 
                                     var $el = $(event.target),
                                         $mpLevel = $el.closest('.mp-level'),
@@ -146,7 +146,7 @@ define(
                                 }
 
                                 scope.onSelect = function (event) {
-                                    event && event.stopPropagation();
+                                    event && event.stopPropagation && event.stopPropagation();
 
                                     var $el = $(event.currentTarget),
                                         $subLevel = $el.find("> div.mp-level");

@@ -273,11 +273,11 @@ define(
 
                     return false;
                 },
-                tryLock: function () {
+                tryLock: function (userId) {
                     var self = this;
 
                     if (self.projectRecord._id && !self.projectRecord.lock) {
-                        return $inject.appService.lockProject(self.projectRecord._id).then(
+                        return $inject.appService.lockProject(userId, self.projectRecord._id).then(
                             function () {
                                 self.projectRecord.lock = true;
 
@@ -291,11 +291,11 @@ define(
                         return $inject.uiUtilService.getResolveDefer(self);
                     }
                 },
-                unlock: function () {
+                unlock: function (userId) {
                     var self = this;
 
-                    if (self.projectRecord._id) {
-                        return $inject.appService.unlockProject(self.projectRecord._id).then(
+                    if (self.projectRecord._id && self.projectRecord.lock) {
+                        return $inject.appService.unlockProject(userId, self.projectRecord._id).then(
                             function () {
                                 self.projectRecord.lock = false;
 
@@ -314,15 +314,9 @@ define(
 
                     if (self.projectRecord._id) {
                         return $inject.$q.all([
-                            function () {
-                                return $inject.appService.getProject({_id: self.projectRecord._id});
-                            },
-                            function () {
-                                return self.loadDependencies();
-                            },
-                            function () {
-                                return self.loadSketch();
-                            }
+                            $inject.appService.getProject({_id: self.projectRecord._id}),
+                            self.loadDependencies(),
+                            self.loadSketch()
                         ]).then(function (result) {
                             if (result[0].data.result === "OK") {
                                 var arr = result[0].data.resultValue;
@@ -338,6 +332,15 @@ define(
                         });
                     } else {
                         return $inject.uiUtilService.getResolveDefer(self);
+                    }
+                },
+                unload: function () {
+                    var self = this;
+
+                    if (self.projectRecord._id) {
+                        self.sketchWorks.pages.forEach(function (pageObj) {
+                            pageObj.remove();
+                        });
                     }
                 },
                 save: function () {
@@ -3655,6 +3658,9 @@ define(
         Service.prototype.loadProject = function (dbObject) {
             var self = this;
 
+            if (self.$rootScope.loadedProject) {
+                self.$rootScope.loadedProject.unload();
+            }
             self.$rootScope.loadedProject = new Project(dbObject);
             return this.uiUtilService.chain(
                 [
@@ -3665,10 +3671,14 @@ define(
                         return self.$rootScope.loadedProject.loadSketch();
                     },
                     function () {
-                        return self.$rootScope.loadedProject.tryLock();
+                        return self.$rootScope.loadedProject.tryLock(self.$rootScope.loginUser._id);
                     }
                 ]
             );
+        }
+
+        Service.prototype.populateProject = function (dbObject) {
+            this.$rootScope.loadedProject = new Project(dbObject);
         }
 
         return function (appModule) {

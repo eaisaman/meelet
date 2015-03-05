@@ -600,7 +600,11 @@ define(
             }).then(
                 function (result) {
                     if (result.data.result === "OK") {
-                        return self.getResolveDefer();
+                        if (result.data.resultValue > 0) {
+                            return self.getResolveDefer();
+                        } else {
+                            return self.getRejectDefer();
+                        }
                     } else {
                         return self.getRejectDefer(result.data.reason);
                     }
@@ -617,11 +621,15 @@ define(
             return self.$http({
                 method: 'PUT',
                 url: '/api/public/project',
-                params: {projectFilter: {_id: projectId, lockUser: userId}, project: {lock: false}}
+                params: {projectFilter: {_id: projectId, lockUser: userId}, project: {lock: false, lockUser: null}}
             }).then(
                 function (result) {
                     if (result.data.result === "OK") {
-                        return self.getResolveDefer();
+                        if (result.data.resultValue > 0) {
+                            return self.getResolveDefer();
+                        } else {
+                            return self.getRejectDefer();
+                        }
                     } else {
                         return self.getRejectDefer(result.data.reason);
                     }
@@ -712,34 +720,70 @@ define(
 
         }
 
-        appService.prototype.createProject = function (project) {
+        appService.prototype.createProject = function (project, sketchWorks) {
             return this.$http({
                 method: 'POST',
                 url: '/api/public/project',
-                params: {project: JSON.stringify(_.omit(project, "$$hashKey", "artifactList"))}
+                params: {
+                    project: JSON.stringify(_.omit(project, "$$hashKey", "artifactList")),
+                    sketchWorks: JSON.stringify(sketchWorks)
+                }
             });
 
         }
 
         appService.prototype.modifyProject = function (project) {
-            return this.$http({
+            var self = this;
+
+            return self.$http({
                 method: 'PUT',
                 url: '/api/public/project',
                 params: {
                     projectFilter: JSON.stringify({_id: project._id}),
                     project: JSON.stringify(_.omit(project, "$$hashKey", "artifactList"))
                 }
-            });
+            }).then(
+                function (result) {
+                    if (result.data.result === "OK") {
+                        if (result.data.resultValue > 0) {
+                            return self.getResolveDefer();
+                        } else {
+                            return self.getRejectDefer();
+                        }
+                    } else {
+                        return self.getRejectDefer(result.data.reason);
+                    }
+                },
+                function (err) {
+                    return self.getRejectDefer(err);
+                }
+            )
 
         }
 
-        appService.prototype.deleteProject = function (project) {
-            return this.$http({
+        appService.prototype.deleteProject = function (userId, project) {
+            var self = this;
+
+            return self.$http({
                 method: 'DELETE',
                 url: '/api/public/project',
-                params: {projectFilter: JSON.stringify({_id: project._id})}
-            });
-
+                params: {projectFilter: JSON.stringify({userId: userId, _id: project._id, lock: false})}
+            }).then(
+                function (result) {
+                    if (result.data.result === "OK") {
+                        if (result.data.resultValue > 0) {
+                            return self.getResolveDefer();
+                        } else {
+                            return self.getRejectDefer();
+                        }
+                    } else {
+                        return self.getRejectDefer(result.data.reason);
+                    }
+                },
+                function (err) {
+                    return self.getRejectDefer(err);
+                }
+            )
         }
 
         return function (appModule) {

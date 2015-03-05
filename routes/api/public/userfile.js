@@ -1,5 +1,6 @@
 var path = require('path');
 var fs = require('fs');
+var rimraf = require('rimraf');
 var async = require('async');
 var _ = require('underscore');
 var bson = require('bson');
@@ -456,7 +457,7 @@ UserFileController.prototype.getProject = function (projectFilter, success, fail
         });
 }
 
-UserFileController.prototype.postProject = function (project, success, fail) {
+UserFileController.prototype.postProject = function (project, sketchWorks, success, fail) {
     var self = this;
 
     project = (project && JSON.parse(project)) || {};
@@ -466,16 +467,52 @@ UserFileController.prototype.postProject = function (project, success, fail) {
     if (!project.createTime) {
         project.updateTime = project.createTime = new Date();
     }
-    project.lock = true;
-    project.lockUser = project.userId;
+    project.lock = false;
+    project.lockUser = null;
 
-    (!self.isDBReady && fail(new Error('DB not initialized'))) || self.schema.UserProject.create(project, function (err, data) {
-        if (!err) {
-            success(data);
-        } else {
-            fail(err);
-        }
-    })
+    (!self.isDBReady && fail(new Error('DB not initialized'))) || async.waterfall(
+        [
+            function (next) {
+                self.schema.UserProject.create(project, function (err, data) {
+                    if (!err) {
+                        next(null, data);
+                    } else {
+                        next(err);
+                    }
+                })
+            },
+            function (data, next) {
+                var projectId = data._id.toString(),
+                    projectPath = path.join(self.config.userFile.sketchFolder, projectId);
+
+                fs.mkdir(projectPath, 0777, function (fsError) {
+                    if (!fsError || fsError.code === "EEXIST") {
+                        var filePath = path.join(projectPath, "meelet.json"),
+                            out = fs.createWriteStream(filePath);
+
+                        out.on('finish', function () {
+                            next(null, data);
+                        });
+
+                        out.on('error', function (err) {
+                            next(err);
+                        });
+
+                        out.write(sketchWorks);
+                        out.end();
+                    } else {
+                        next(fsError);
+                    }
+                });
+
+            }
+        ], function (err, data) {
+            if (!err) {
+                success(data);
+            } else {
+                fail(err);
+            }
+        });
 }
 
 UserFileController.prototype.putProject = function (projectFilter, project, success, fail) {
@@ -507,9 +544,9 @@ UserFileController.prototype.putProject = function (projectFilter, project, succ
     }
     project.updateTime = new Date();
 
-    (!self.isDBReady && fail(new Error('DB not initialized'))) || self.schema.UserProject.update(projectFilter, {$set: _.omit(project, "_id")}, function (err) {
+    (!self.isDBReady && fail(new Error('DB not initialized'))) || self.schema.UserProject.findOneAndUpdate(projectFilter, {$set: _.omit(project, "_id")}, function (err, data) {
         if (!err) {
-            success();
+            success(data ? 1 : 0);
         } else {
             fail(err);
         }
@@ -536,13 +573,46 @@ UserFileController.prototype.deleteProject = function (projectFilter, success, f
         }
     }
 
-    (!self.isDBReady && fail(new Error('DB not initialized'))) || self.schema.UserProject.remove(projectFilter, function (err, data) {
-        if (!err) {
-            success(data);
-        } else {
-            fail(err);
+    (!self.isDBReady && fail(new Error('DB not initialized'))) || async.waterfall(
+        [
+            function (next) {
+                self.schema.UserProject.find(projectFilter, function (err, data) {
+                    next(err, data);
+                });
+            },
+            function (data, next) {
+                if (data && data.length) {
+                    async.each(data, function (item, callback) {
+                        var projectId = item._id.toString(),
+                            projectPath = path.join(self.config.userFile.sketchFolder, projectId);
+
+                        rimraf(projectPath, function (err) {
+                            callback(err);
+                        });
+                    }, function (err) {
+                        next(err, data.length);
+                    });
+                } else {
+                    next(null, 0);
+                }
+            },
+            function (data, next) {
+                if (data) {
+                    self.schema.UserProject.remove(projectFilter, function (err, count) {
+                        next(err, count);
+                    });
+                } else {
+                    next(null, 0);
+                }
+            }
+        ], function (err, data) {
+            if (!err) {
+                success(data);
+            } else {
+                fail(err);
+            }
         }
-    });
+    );
 }
 
 UserFileController.prototype.getProjectArtifactXref = function (xrefFilter, success, fail) {

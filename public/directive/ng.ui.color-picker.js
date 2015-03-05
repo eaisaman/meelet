@@ -109,7 +109,7 @@ define(
                             },
                             post: function (scope, element, attrs) {
                                 scope.togglePalette = function (event) {
-                                    event && event.stopPropagation();
+                                    event && event.stopPropagation && event.stopPropagation();
 
                                     var $wrapper = element.find(".ui-control-wrapper"),
                                         $panel = element.find(".ui-control-panel"),

@@ -83,7 +83,7 @@ define(
                                 }
 
                                 scope.applyHandDownConfiguration = function (event) {
-                                    event && event.stopPropagation();
+                                    event && event.stopPropagation && event.stopPropagation();
 
                                     scope.widgetSpec.isApplyingHandDown = true;
                                     scope.pickedWidget.applyHandDownConfiguration().then(function () {
@@ -120,7 +120,7 @@ define(
                                 }
 
                                 scope.createConfigurationItemOption = function (item, event) {
-                                    event && event.stopPropagation();
+                                    event && event.stopPropagation && event.stopPropagation();
 
                                     var $el = $(event.target).siblings("input"),
                                         optionName = $el.val();
@@ -135,7 +135,7 @@ define(
                                 }
 
                                 scope.deleteConfigurationItemOption = function (item, option, event) {
-                                    event && event.stopPropagation();
+                                    event && event.stopPropagation && event.stopPropagation();
 
                                     var index;
                                     if (!item.options.every(function (opt, i) {

@@ -2,9 +2,9 @@ define(
     ["angular", "jquery"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$rootScope", "$timeout", "$q", "urlService", "uiUtilService"];
+            var inject = ["$rootScope", "$timeout", "$q", "urlService", "uiService", "uiUtilService"];
 
-            appModule.directive("uiTopbar", _.union(inject, [function ($rootScope, $timeout, $q, urlService, uiUtilService) {
+            appModule.directive("uiTopbar", _.union(inject, [function ($rootScope, $timeout, $q, urlService, uiService, uiUtilService) {
                 'use strict';
 
                 var defaults = {},
@@ -15,7 +15,7 @@ define(
                     restrict: "A",
                     scope: {
                         displayProjectCreation: "&",
-                        loadProject: "&"
+                        renderProject: "&"
                     },
                     replace: false,
                     transclude: true,
@@ -29,36 +29,37 @@ define(
                                 }));
 
                                 scope.urlService = urlService;
+                                scope.pickedProjectId = $rootScope.loadedProject && $rootScope.loadedProject.projectRecord._id || "";
                             },
                             post: function (scope, element, attrs) {
                                 scope.hideTopMenu = function (event) {
-                                    event && event.stopPropagation();
+                                    event && event.stopPropagation && event.stopPropagation();
 
                                     scope.toggleSelect(".topbarMenu");
                                 }
 
                                 scope.onNewProject = function (event) {
-                                    event && event.stopPropagation();
+                                    event && event.stopPropagation && event.stopPropagation();
 
                                     scope.hideTopMenu();
 
-                                    if (scope.urlService.currentLocation() === "project") {
+                                    if (urlService.currentLocation() === "project") {
                                         scope.displayProjectCreation();
                                     } else {
                                         $timeout(function () {
-                                            scope.urlService.home(false);
-                                            scope.urlService.project(false, {projectAction: "create"});
+                                            urlService.home(false);
+                                            urlService.project(false, {projectAction: "create"});
                                         })
                                     }
                                 }
 
                                 scope.onSelectProject = function (projectId, event) {
-                                    event && event.stopPropagation();
+                                    event && event.stopPropagation && event.stopPropagation();
 
                                     scope.hideTopMenu();
 
                                     if (projectId) {
-                                        var _id = $rootScope.loadedProject && $rootScope.loadedProject.projectRecrod._id || "";
+                                        var _id = $rootScope.loadedProject && $rootScope.loadedProject.projectRecord._id || "";
 
                                         if (projectId !== _id) {
                                             var projectItem;
@@ -70,15 +71,26 @@ define(
 
                                                     return true;
                                                 })) {
-                                                if (scope.urlService.currentLocation() === "frameSketch") {
-                                                    scope.pickedProject = projectItem;
+
+                                                if (urlService.currentLocation() === "frameSketch") {
                                                     $timeout(function () {
-                                                        scope.loadProject();
+                                                        uiUtilService.chain(
+                                                            [
+                                                                function () {
+                                                                    return uiService.loadProject(projectItem);
+                                                                },
+                                                                function () {
+                                                                    return scope.renderProject();
+                                                                }
+                                                            ]
+                                                        );
                                                     })
                                                 } else {
                                                     $timeout(function () {
-                                                        scope.urlService.home(false);
-                                                        scope.urlService.frameSketch(false, {project: projectItem})
+                                                        urlService.home(false);
+                                                        uiService.loadProject(projectItem).then(function (projectObj) {
+                                                            urlService.frameSketch(false, {project: projectObj});
+                                                        });
                                                     })
                                                 }
                                             }
@@ -87,22 +99,15 @@ define(
                                 }
 
                                 scope.onVisitRepoLibrary = function (event) {
-                                    event && event.stopPropagation();
+                                    event && event.stopPropagation && event.stopPropagation();
 
-                                    if (scope.urlService.currentLocation() !== "repo") {
+                                    if (urlService.currentLocation() !== "repo") {
                                         $timeout(function () {
-                                            scope.urlService.home(false);
-                                            scope.urlService.repo(false, {project: scope.pickedProject})
+                                            urlService.home(false);
+                                            urlService.repo(false)
                                         })
                                     }
                                 }
-
-                                scope.$watch("pickedProject", function (p) {
-                                    var _id = p && p._id || null;
-
-                                    if (scope.pickedProjectId != _id)
-                                        scope.pickedProjectId = _id;
-                                })
                             }
                         }
                     }

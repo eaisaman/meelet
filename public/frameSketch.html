@@ -19,7 +19,7 @@
      ng-controller="FrameSketchController">
     <div ui-modal-window transition="fadeInScaleUp">
         <div id="sketchContainer" class="fs-x-medium" name="mainContent">
-            <div ui-topbar load-project="loadProject()">
+            <div ui-topbar render-project="renderProject()">
                 <div name="extraButtons">
                     <div ng-hide="true" ng-click="zoomWidget($event)" class="topbarButton icon-toolbar-before"
                          ng-class="{'icon-frame-sketch-expand-before':!zoomId, 'icon-frame-sketch-collapse-before':zoomId}"></div>

@@ -52,6 +52,7 @@ require(["jquery-lib", "jquery-plugins-lib", "hammer-lib", "jquery-ui-lib", "jqu
         ],
         widgetClasses: {
             containerClass: "sketchHolder",
+            deviceHolderClass: "deviceHolder",
             holderClass: "pageHolder",
             widgetClass: "sketchWidget",
             hoverClass: "widgetHover",

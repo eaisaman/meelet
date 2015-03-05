@@ -287,21 +287,53 @@ define(
             $scope.loadProject = function (event) {
                 event && event.stopPropagation && event.stopPropagation();
 
-                return $rootScope.loadedProject.load();
+                return this.uiUtilService.chain(
+                    [
+                        function () {
+                            return $rootScope.loadedProject.load();
+                        },
+                        function () {
+                            return $scope.renderProject();
+                        }
+                    ]
+                );
             }
 
-            $scope.toggleLockProject  = function (event) {
+            $scope.renderProject = function () {
+                uiUtilService.whilst(function () {
+                    return !$("." + angularConstants.deviceHolderClass).length;
+                }, function (callback) {
+                    callback();
+                }, function () {
+                    if ($rootScope.loadedProject.sketchWorks.pages.length) {
+                        uiService.createPage("." + angularConstants.deviceHolderClass, $rootScope.loadedProject.sketchWorks.pages[0]).then(function (pageObj) {
+                            $scope.sketchObject.pickedPage = pageObj;
+
+                            CKEDITOR.inline('widgetText');
+                        });
+                    } else {
+                        uiService.createPage("." + angularConstants.deviceHolderClass).then(function (pageObj) {
+                            $scope.sketchObject.pickedPage = pageObj;
+                            $rootScope.loadedProject.sketchWorks.pages.push(pageObj);
+
+                            CKEDITOR.inline('widgetText');
+                        });
+                    }
+                }, angularConstants.checkInterval, "FrameSketchController.initMaster");
+            }
+
+            $scope.toggleLockProject = function (event) {
                 event && event.stopPropagation && event.stopPropagation();
 
                 if ($rootScope.loadedProject.projectRecord.lock) {
-                    return $rootScope.loadedProject.unlock();
+                    return $rootScope.loadedProject.unlock($rootScope.loginUser._id);
                 } else {
-                    return $rootScope.loadedProject.tryLock();
+                    return $rootScope.loadedProject.tryLock($rootScope.loginUser._id);
                 }
             }
 
             $scope.showDemo = function (event) {
-                event && event.stopPropagation();
+                event && event.stopPropagation && event.stopPropagation();
 
                 $scope.modalUsage = "Demo";
                 appService.loadRepoArtifact($scope.sketchWidgetSetting.pickedArtifact, $scope.sketchWidgetSetting.pickedLibrary.name, "", "#frameSketchWidgetDemoArea").then(function () {
@@ -311,7 +343,7 @@ define(
             }
 
             $scope.showWidgetName = function (callback, event) {
-                event && event.stopPropagation();
+                event && event.stopPropagation && event.stopPropagation();
 
                 $scope.modalUsage = "WidgetName";
                 $("#newWidgetName").val("");
@@ -325,7 +357,7 @@ define(
             }
 
             $scope.hideModal = function (event) {
-                event && event.stopPropagation();
+                event && event.stopPropagation && event.stopPropagation();
 
                 var scope = angular.element($("#frameSketchContainer .md-modal")).scope();
                 scope.toggleModalWindow().then(function () {
@@ -334,7 +366,7 @@ define(
             }
 
             $scope.confirmWidgetName = function (event) {
-                event && event.stopPropagation();
+                event && event.stopPropagation && event.stopPropagation();
 
                 var scope = angular.element($("#frameSketchContainer .md-modal")).scope();
                 scope.toggleModalWindow().then(function () {
@@ -431,27 +463,7 @@ define(
 
             function initMaster() {
                 $scope.project = $rootScope.loadedProject;
-
-                uiUtilService.whilst(function () {
-                    return !$(".deviceHolder").length;
-                }, function (callback) {
-                    callback();
-                }, function () {
-                    if ($rootScope.loadedProject.sketchWorks.pages.length) {
-                        uiService.createPage(".deviceHolder", $rootScope.loadedProject.sketchWorks.pages[0]).then(function (pageObj) {
-                            $scope.sketchObject.pickedPage = pageObj;
-
-                            CKEDITOR.inline('widgetText');
-                        });
-                    } else {
-                        uiService.createPage(".deviceHolder").then(function (pageObj) {
-                            $scope.sketchObject.pickedPage = pageObj;
-                            $rootScope.loadedProject.sketchWorks.pages.push(pageObj);
-
-                            CKEDITOR.inline('widgetText');
-                        });
-                    }
-                }, angularConstants.checkInterval, "FrameSketchController.initMaster");
+                $scope.renderProject();
             }
 
             initMaster();
@@ -479,13 +491,13 @@ define(
 
         function ProjectController($scope, $rootScope, $timeout, $q, angularConstants, appService, uiService, urlService) {
             $scope.displayProjectCreation = function (event) {
-                event && event.stopPropagation();
+                event && event.stopPropagation && event.stopPropagation();
 
                 $(".topbarToggleButton.select").removeClass("select");
                 $(".projectActionConfirmBar").removeClass("select");
                 $scope.toggleCheckMode = false;
                 $scope.toggleEditMode = false;
-                $scope.pickedProject = {forbidden: false, userId: $scope.loginUser._id};
+                $scope.pickedProject = {forbidden: false, userId: $rootScope.loginUser._id, lock: true};
 
                 var scope = angular.element($(".projectContainer > .modalWindowContainer > .md-modal")).scope();
                 scope.toggleModalWindow();
@@ -494,7 +506,7 @@ define(
             }
 
             $scope.displayProjectEdit = function (project, event) {
-                event && event.stopPropagation();
+                event && event.stopPropagation && event.stopPropagation();
 
                 $scope.selectedProject = project;
                 $scope.pickedProject = _.clone($scope.selectedProject);
@@ -506,14 +518,14 @@ define(
             }
 
             $scope.hideProjectModal = function (event) {
-                event && event.stopPropagation();
+                event && event.stopPropagation && event.stopPropagation();
 
                 var scope = angular.element($(".projectContainer .md-modal")).scope();
                 scope.toggleModalWindow();
             }
 
             $scope.toggleProjectButton = function (event) {
-                event && event.stopPropagation();
+                event && event.stopPropagation && event.stopPropagation();
 
                 var $el = $(event.target);
                 !$el.hasClass("select") && $(".topbarToggleButton.select").removeClass("select");
@@ -523,7 +535,7 @@ define(
             }
 
             $scope.toggleProjectEditButton = function (event) {
-                event && event.stopPropagation();
+                event && event.stopPropagation && event.stopPropagation();
 
                 var $el = $(event.target);
                 !$el.hasClass("select") && $(".topbarToggleButton.select").removeClass("select");
@@ -533,56 +545,69 @@ define(
             }
 
             $scope.toggleCheck = function (project, event) {
-                event && event.stopPropagation();
+                event && event.stopPropagation && event.stopPropagation();
 
                 project.checked = !project.checked;
                 !project.checked && delete project.checked;
             }
 
             $scope.addProject = function (project, event) {
-                event && event.stopPropagation();
+                event && event.stopPropagation && event.stopPropagation();
 
-                appService.createProject(project).then(function (result) {
-                    result && result.data.result == "OK" && _.extend(project, result.data.resultValue);
+                appService.createProject(
+                    project,
+                    {
+                        pages: []
+                    }
+                ).then(
+                    function (result) {
+                        if (result.data.result == "OK") {
+                            _.extend(project, result.data.resultValue);
+                            $rootScope.userDetail.projectList.push(project);
+                        }
 
-                    $rootScope.userDetail.projectList.push(project);
-                    $scope.hideProjectModal();
-                });
+                        $scope.hideProjectModal();
+                    }, function () {
+                        $scope.hideProjectModal();
+                    }
+                );
+
+                return true;
             }
 
             $scope.modifyProject = function (project, event) {
-                event && event.stopPropagation();
+                event && event.stopPropagation && event.stopPropagation();
 
                 appService.modifyProject(project).then(function (result) {
-                    result && result.data.result == "OK" && _.extend($scope.selectedProject, result.data.resultValue[0]);
+                    _.extend($scope.selectedProject, project);
 
                     $scope.hideProjectModal();
                 });
+
+                return true;
             }
 
             $scope.removeProject = function (project, event) {
-                event && event.stopPropagation();
+                event && event.stopPropagation && event.stopPropagation();
 
                 $(".topbarToggleButton.select").removeClass("select");
 
-                appService.deleteProject(project).then(function (result) {
-                    if (result && result.data.result == "OK") {
-                        var index;
-                        if (!$rootScope.userDetail.projectList.every(function (p, i) {
-                                if (p._id === project._id) {
-                                    index = i;
-                                    return false;
-                                }
-                                return true;
-                            })) {
-                            $rootScope.userDetail.projectList.splice(index, 1);
-                        }
+                appService.deleteProject($rootScope.loginUser._id, project).then(function (result) {
+                    var index;
+                    if (!$rootScope.userDetail.projectList.every(function (p, i) {
+                            if (p._id === project._id) {
+                                index = i;
+                                return false;
+                            }
+                            return true;
+                        })) {
+                        $rootScope.userDetail.projectList.splice(index, 1);
                     }
                 });
             }
 
             $scope.selectProject = function (project, event) {
-                event && event.stopPropagation();
+                event && event.stopPropagation && event.stopPropagation();
 
                 uiService.loadProject(project).then(function (projectObj) {
                     urlService.frameSketch(false, {project: projectObj});
@@ -616,7 +641,7 @@ define(
             }
 
             $scope.toggleRepoLibSelection = function (repoLib, event) {
-                event && event.stopPropagation();
+                event && event.stopPropagation && event.stopPropagation();
 
                 var library = _.findWhere($scope.project.xrefRecord, {libraryId: repoLib._id});
                 if (library) {
@@ -678,7 +703,7 @@ define(
             }
 
             $scope.toggleRepoArtifactSelection = function (repoArtifact, event) {
-                event && event.stopPropagation();
+                event && event.stopPropagation && event.stopPropagation();
 
                 repoArtifact._version = repoArtifact._version || (repoArtifact.versionList.length && repoArtifact.versionList[repoArtifact.versionList.length - 1].name || "");
 
@@ -719,7 +744,7 @@ define(
             }
 
             $scope.showDemo = function (repoArtifact, event) {
-                event && event.stopPropagation();
+                event && event.stopPropagation && event.stopPropagation();
 
                 appService.loadRepoArtifact(repoArtifact, $scope.repoLib.name, "", "#demoArea").then(function () {
                     var scope = angular.element($(".repoLibContainer .md-modal")).scope();
@@ -728,7 +753,7 @@ define(
             }
 
             $scope.hideDemo = function (repoArtifact, event) {
-                event && event.stopPropagation();
+                event && event.stopPropagation && event.stopPropagation();
 
                 var scope = angular.element($(".repoLibContainer .md-modal")).scope();
                 scope.toggleModalWindow();

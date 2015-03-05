@@ -172,7 +172,7 @@ define(
                                 }
 
                                 scope.toggleIconSelection = function (repoArtifact, iconLibrary, event) {
-                                    event && event.stopPropagation();
+                                    event && event.stopPropagation && event.stopPropagation();
 
                                     repoArtifact._version = (repoArtifact.versionList.length && repoArtifact.versionList[repoArtifact.versionList.length - 1].name || "");
 
@@ -212,7 +212,7 @@ define(
                                 }
 
                                 scope.toggleLibrarySelection = function (iconLibrary, event) {
-                                    event && event.stopPropagation();
+                                    event && event.stopPropagation && event.stopPropagation();
 
                                     var library = _.findWhere(scope.project.xrefRecord, {libraryId: iconLibrary._id});
                                     if (library) {

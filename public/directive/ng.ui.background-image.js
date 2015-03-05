@@ -261,7 +261,7 @@ define(
                                 }
 
                                 scope.togglePalette = function (event) {
-                                    event && event.stopPropagation();
+                                    event && event.stopPropagation && event.stopPropagation();
 
                                     var $wrapper = element.find(".ui-control-wrapper"),
                                         $panel = element.find(".ui-control-panel");
@@ -314,7 +314,7 @@ define(
                                 }
 
                                 scope.clearBackgroundImageUrl = function (event) {
-                                    event && event.stopPropagation();
+                                    event && event.stopPropagation && event.stopPropagation();
 
                                     if (scope.pickedBackgroundImageUrl) {
                                         appService.removeProjectImage($rootScope.loadedProject.projectRecord._id, scope.pickedBackgroundImageUrl).then(function (ret) {

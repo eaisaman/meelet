@@ -34,7 +34,7 @@ define(
                                 }));
 
                                 scope.toggleModalWindow = function (event) {
-                                    event && event.stopPropagation();
+                                    event && event.stopPropagation && event.stopPropagation();
 
                                     if (scope.isPlaying == null || scope.isPlaying) {
                                         return scope.toggleDisplay('.md-modal', event).then(function () {
