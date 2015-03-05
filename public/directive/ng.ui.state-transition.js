@@ -2,9 +2,9 @@ define(
     ["angular", "jquery"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$rootScope", "$http", "$timeout", "$q", "angularConstants", "uiUtilService", "uiService", "appService"];
+            var inject = ["$rootScope", "$http", "$timeout", "$q", "angularEventTypes", "angularConstants", "uiUtilService", "uiService", "appService"];
 
-            appModule.directive("uiStateTransition", _.union(inject, [function ($rootScope, $http, $timeout, $q, angularConstants, uiUtilService, uiService, appService) {
+            appModule.directive("uiStateTransition", _.union(inject, [function ($rootScope, $http, $timeout, $q, angularEventTypes, angularConstants, uiUtilService, uiService, appService) {
                 'use strict';
 
                 var defaults = {
@@ -67,7 +67,9 @@ define(
                                 }
 
                                 scope.filterArtifactList = function (effectLibrary, xrefList) {
-                                    return uiUtilService.filterSelection(effectLibrary.artifactList, _.findWhere(xrefList, {libraryId: effectLibrary._id}).artifactList, [{
+                                    var artifactList = (_.findWhere(xrefList, {libraryId: effectLibrary._id}) || {}).artifactList;
+
+                                    return uiUtilService.filterSelection(effectLibrary.artifactList, artifactList, [{
                                         target: '_id',
                                         source: 'artifactId'
                                     }]);
@@ -414,6 +416,15 @@ define(
                                         });
                                     });
                                 }
+
+                                scope.$on(angularEventTypes.switchProjectEvent, function (event, data) {
+                                    if (data) {
+                                        var arr = scope.filterLibraryList(scope.effectLibraryList, scope.project.xrefRecord);
+                                        arr.splice(0, 0, 0, 0);
+                                        scope.filterEffectLibraryList.splice(0, scope.filterEffectLibraryList.length);
+                                        Array.prototype.splice.apply(scope.filterEffectLibraryList, arr);
+                                    }
+                                });
 
                                 $timeout(function () {
                                     var $wrapper = element.find(".ui-control-wrapper"),

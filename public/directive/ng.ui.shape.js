@@ -42,7 +42,9 @@ define(
                                 }
 
                                 scope.filterArtifactList = function (iconLibrary, xrefList) {
-                                    return uiUtilService.filterSelection(iconLibrary.artifactList, _.findWhere(xrefList, {libraryId: iconLibrary._id}).artifactList, [{
+                                    var artifactList = (_.findWhere(xrefList, {libraryId: iconLibrary._id}) || {}).artifactList;
+
+                                    return uiUtilService.filterSelection(iconLibrary.artifactList, artifactList, [{
                                         target: '_id',
                                         source: 'artifactId'
                                     }]);
@@ -73,6 +75,7 @@ define(
 
                                 scope._ = _;
                                 scope.iconLibraryList = $rootScope.iconLibraryList;
+                                scope.filterIconLibraryList = [];
                                 scope.project = $rootScope.loadedProject;
                             },
                             post: function (scope, element, attrs) {
@@ -206,6 +209,12 @@ define(
                                             );
 
                                             repoArtifact._selected = true;
+
+                                            if (scope.filterIconLibraryList.every(function (lib) {
+                                                    return lib._id !== iconLibrary._id;
+                                                })) {
+                                                scope.filterIconLibraryList.push(iconLibrary);
+                                            }
                                         }
 
                                     }
@@ -218,6 +227,18 @@ define(
                                     if (library) {
                                         if (scope.project.removeLibrary(iconLibrary._id)) {
                                             delete iconLibrary._selected;
+
+                                            var index;
+                                            if (!scope.filterIconLibraryList.every(function (lib, i) {
+                                                    if (lib._id === iconLibrary._id) {
+                                                        index = i;
+                                                        return false;
+                                                    }
+
+                                                    return true;
+                                                })) {
+                                                scope.filterIconLibraryList.splice(index, 1);
+                                            }
                                         }
                                     } else {
                                         var artifactList = [];
@@ -233,11 +254,15 @@ define(
 
                                         if (artifactList.length && scope.project.addLibrary(iconLibrary._id, iconLibrary.name, iconLibrary.type, artifactList)) {
                                             iconLibrary._selected = true;
+
+                                            if (scope.filterIconLibraryList.every(function (lib) {
+                                                    return lib._id !== iconLibrary._id;
+                                                })) {
+                                                scope.filterIconLibraryList.push(iconLibrary);
+                                            }
                                         }
                                     }
                                 }
-
-                                appService.loadIconArtifactList();
 
                                 var mc = new Hammer.Manager(element.find(".pickerPane").get(0));
                                 mc.add(new Hammer.Pan({threshold: 0, pointers: 0}));
@@ -247,12 +272,42 @@ define(
                                     mc.off("panstart panmove panend", addWidgetHandler);
                                 });
 
+                                scope.$on(angularEventTypes.switchProjectEvent, function (event, data) {
+                                    if (data) {
+                                        var arr = scope.filterLibraryList(scope.iconLibraryList, scope.project.xrefRecord);
+                                        arr.splice(0, 0, 0, 0);
+                                        scope.filterIconLibraryList.splice(0, scope.filterIconLibraryList.length);
+                                        Array.prototype.splice.apply(scope.filterIconLibraryList, arr);
+                                    }
+                                });
+
                                 $timeout(function () {
                                     var $wrapper = element.find(".ui-control-wrapper"),
                                         $panel = element.find(".ui-control-panel");
 
                                     $wrapper.addClass("expanded");
                                     $panel.addClass("show");
+
+                                    uiUtilService.whilst(
+                                        function () {
+                                            return !scope.project;
+                                        },
+                                        function (callback) {
+                                            callback();
+                                        },
+                                        function (err) {
+                                            return appService.loadIconArtifactList().then(function () {
+                                                var arr = scope.filterLibraryList(scope.iconLibraryList, scope.project.xrefRecord);
+                                                arr.splice(0, 0, 0, 0);
+                                                scope.filterIconLibraryList.splice(0, scope.filterIconLibraryList.length);
+                                                Array.prototype.splice.apply(scope.filterIconLibraryList, arr);
+
+                                                return uiUtilService.getResolveDefer();
+                                            }, function (err) {
+                                                return uiUtilService.getRejectDefer(err);
+                                            });
+                                        }, angularConstants.checkInterval
+                                    );
                                 });
                             }
                         }

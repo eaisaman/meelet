@@ -9,7 +9,7 @@
     </div>
     <div class="shapePalette ui-control-panel">
         <div class="shapeLibrary"
-             ng-repeat="iconLibrary in filterLibraryList(iconLibraryList, project.xrefRecord)">
+             ng-repeat="iconLibrary in filterIconLibraryList">
             <div class="libraryTitle icon-shape-before icon-shape-glyphs-before">{{iconLibrary.name}}</div>
             <div class="accordianGroup"
                  ng-repeat="artifact in filterArtifactList(iconLibrary, project.xrefRecord)"

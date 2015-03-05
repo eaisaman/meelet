@@ -39,7 +39,8 @@ require(["jquery-lib", "jquery-plugins-lib", "hammer-lib", "jquery-ui-lib", "jqu
     window.appModule = angular.module(APP_MODULE_NAME, APP_MODULE_DEPS);
     window.appModule.value("angularEventTypes", {
         boundPropertiesEvent: "boundPropertiesEvent",
-        beforeWidgetCreationEvent: "beforeWidgetCreationEvent"
+        beforeWidgetCreationEvent: "beforeWidgetCreationEvent",
+        switchProjectEvent: "switchProjectEvent"
     });
     window.appModule.value("angularConstants", {
         precision: 1000,

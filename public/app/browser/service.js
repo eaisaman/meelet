@@ -438,6 +438,7 @@ define(
                         link.href = "project/{0}/stylesheets/{1}".format(projectId, result.data.resultValue.css);
                         link.setAttribute("artifact", artifactId);
                         link.setAttribute("widget", widgetId);
+                        link.setAttribute("projectId", projectId);
 
                         document.getElementsByTagName("head")[0].appendChild(link);
 
@@ -688,7 +689,7 @@ define(
             return this.$http({
                 method: 'GET',
                 url: '/api/public/projectArtifactXref',
-                params: {projectFilter: JSON.stringify(xrefFilter || {})}
+                params: {xrefFilter: JSON.stringify(xrefFilter || {})}
             });
 
         }
@@ -706,7 +707,7 @@ define(
             return this.$http({
                 method: 'DELETE',
                 url: '/api/public/projectArtifactXref',
-                params: {projectFilter: JSON.stringify(xrefFilter || {})}
+                params: {xrefFilter: JSON.stringify(xrefFilter || {})}
             });
 
         }

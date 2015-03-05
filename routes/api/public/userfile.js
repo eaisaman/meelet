@@ -590,14 +590,27 @@ UserFileController.prototype.deleteProject = function (projectFilter, success, f
                             callback(err);
                         });
                     }, function (err) {
-                        next(err, data.length);
+                        next(err, data);
                     });
                 } else {
                     next(null, 0);
                 }
             },
             function (data, next) {
-                if (data) {
+                if (data && data.length) {
+                    async.each(data, function (item, callback) {
+                        self.schema.ProjectArtifactXref.remove({projectId: item._id}, function (err) {
+                            callback(err);
+                        });
+                    }, function (err) {
+                        next(err, data);
+                    });
+                } else {
+                    next(null, data);
+                }
+            },
+            function (data, next) {
+                if (data && data.length) {
                     self.schema.UserProject.remove(projectFilter, function (err, count) {
                         next(err, count);
                     });

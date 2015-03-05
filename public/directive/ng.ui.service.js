@@ -1,12 +1,13 @@
 define(
     ["angular", "jquery", "underscore", "ng.ui.util"],
     function () {
-        var Service = function ($parse, $timeout, $q, $compile, $rootScope, angularConstants, appService, uiUtilService) {
+        var Service = function ($parse, $timeout, $q, $compile, $rootScope, angularEventTypes, angularConstants, appService, uiUtilService) {
             this.$parse = $parse;
             this.$timeout = $timeout;
             this.$q = $q;
             this.$compile = $compile;
             this.$rootScope = $rootScope;
+            this.angularEventTypes = angularEventTypes;
             this.angularConstants = angularConstants;
             this.appService = appService;
             this.uiUtilService = uiUtilService;
@@ -14,7 +15,7 @@ define(
             _.extend($inject, _.pick(this, Service.$inject));
         };
 
-        Service.$inject = ["$parse", "$timeout", "$q", "$compile", "$rootScope", "angularConstants", "appService", "uiUtilService"];
+        Service.$inject = ["$parse", "$timeout", "$q", "$compile", "$rootScope", "angularEventTypes", "angularConstants", "appService", "uiUtilService"];
         var $inject = {};
 
         //Define sketch widget class
@@ -68,6 +69,13 @@ define(
                         this[member] = angular.copy(MEMBERS[member]);
                     }
                     _.extend(this.projectRecord, projectRecord);
+                },
+                populate: function (projectRecord) {
+                    this.xrefRecord.splice(0, this.xrefRecord.length);
+                    this.artifactSpecs.splice(0, this.artifactSpecs.length);
+                    this.sketchWorks.pages.splice(0, this.sketchWorks.pages.length);
+
+                    this.projectRecord = projectRecord;
                 },
                 loadDependencies: function () {
                     var self = this;
@@ -337,6 +345,8 @@ define(
                     var self = this;
 
                     if (self.projectRecord._id) {
+                        $("head link[type='text/css'][projectId='{0}']".format(self.projectRecord._id)).remove();
+
                         self.sketchWorks.pages.forEach(function (pageObj) {
                             pageObj.remove();
                         });
@@ -1568,7 +1578,6 @@ define(
                     dispose: function () {
                         var self = this,
                             promiseArr = [];
-                        l
 
                         self.childWidgets.forEach(function (obj) {
                             promiseArr.push(obj.dispose());
@@ -3470,9 +3479,16 @@ define(
             widgetObj.attr["ng-class"] = "{'isPlaying': sketchWidgetSetting.isPlaying}";
             widgetObj.addOmniClass(self.angularConstants.widgetClasses.widgetClass);
 
-            widgetObj.appendTo(containerElement);
+            return widgetObj.appendTo(containerElement).then(
+                function () {
+                    self.$rootScope.loadedProject.refArtifact(widgetSpec.libraryId, widgetSpec.artifactId, widgetSpec.name, widgetSpec.version);
 
-            return widgetObj;
+                    return self.uiUtilService.getResolveDefer(widgetObj);
+                },
+                function (err) {
+                    return self.uiUtilService.getRejectDefer(err);
+                }
+            );
         }
 
         Service.prototype.copyWidget = function (widgetObj, holderElement) {
@@ -3668,12 +3684,16 @@ define(
         }
 
         Service.prototype.loadProject = function (dbObject) {
-            var self = this;
+            var self = this,
+                newInstance;
 
             if (self.$rootScope.loadedProject) {
                 self.$rootScope.loadedProject.unload();
+                self.$rootScope.loadedProject.populate(dbObject);
+            } else {
+                self.$rootScope.loadedProject = newInstance = new Project(dbObject);
             }
-            self.$rootScope.loadedProject = new Project(dbObject);
+
             return this.uiUtilService.chain(
                 [
                     function () {
@@ -3683,14 +3703,12 @@ define(
                         return self.$rootScope.loadedProject.loadSketch();
                     },
                     function () {
+                        !newInstance && self.$rootScope.$broadcast(self.angularEventTypes.switchProjectEvent, self.$rootScope.loadedProject);
+
                         return self.$rootScope.loadedProject.tryLock(self.$rootScope.loginUser._id);
                     }
                 ]
             );
-        }
-
-        Service.prototype.populateProject = function (dbObject) {
-            this.$rootScope.loadedProject = new Project(dbObject);
         }
 
         return function (appModule) {

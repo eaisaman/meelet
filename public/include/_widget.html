@@ -8,7 +8,7 @@
     </div>
     <div class="widgetPalette ui-control-panel">
         <div class="accordianGroup"
-             ng-repeat="widgetLibrary in filterLibraryList(widgetLibraryList, project.xrefRecord)"
+             ng-repeat="widgetLibrary in filterWidgetLibraryList"
              ng-click="toggleSelect($event.currentTarget, $event)">
             <div class="accordianTitle col-as-12 icon-widget-before icon-widget-cog-before">
                 {{widgetLibrary.name}}
