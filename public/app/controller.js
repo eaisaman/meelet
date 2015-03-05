@@ -287,7 +287,7 @@ define(
             $scope.loadProject = function (event) {
                 event && event.stopPropagation && event.stopPropagation();
 
-                return this.uiUtilService.chain(
+                return uiUtilService.chain(
                     [
                         function () {
                             return $rootScope.loadedProject.load();
@@ -300,26 +300,26 @@ define(
             }
 
             $scope.renderProject = function () {
-                uiUtilService.whilst(function () {
-                    return !$("." + angularConstants.deviceHolderClass).length;
+                return uiUtilService.whilst(function () {
+                    return !$("." + angularConstants.widgetClasses.deviceHolderClass).length;
                 }, function (callback) {
                     callback();
                 }, function () {
                     if ($rootScope.loadedProject.sketchWorks.pages.length) {
-                        uiService.createPage("." + angularConstants.deviceHolderClass, $rootScope.loadedProject.sketchWorks.pages[0]).then(function (pageObj) {
+                        uiService.createPage("." + angularConstants.widgetClasses.deviceHolderClass, $rootScope.loadedProject.sketchWorks.pages[0]).then(function (pageObj) {
                             $scope.sketchObject.pickedPage = pageObj;
 
                             CKEDITOR.inline('widgetText');
                         });
                     } else {
-                        uiService.createPage("." + angularConstants.deviceHolderClass).then(function (pageObj) {
+                        uiService.createPage("." + angularConstants.widgetClasses.deviceHolderClass).then(function (pageObj) {
                             $scope.sketchObject.pickedPage = pageObj;
                             $rootScope.loadedProject.sketchWorks.pages.push(pageObj);
 
                             CKEDITOR.inline('widgetText');
                         });
                     }
-                }, angularConstants.checkInterval, "FrameSketchController.initMaster");
+                }, angularConstants.checkInterval, "FrameSketchController.renderProject");
             }
 
             $scope.toggleLockProject = function (event) {

@@ -202,13 +202,12 @@ define(
                         }
                     }
                 },
-                unrefArtifact: function (libraryId, artifactId) {
+                unrefArtifact: function (artifactId) {
                     var self = this;
 
                     if (self.projectRecord._id) {
-                        var xref = _.findWhere(this.xrefRecord, {libraryId: libraryId});
-                        if (xref) {
-                            xref.artifactList.every(function (a) {
+                        this.xrefRecord.every(function (xref) {
+                            return xref.artifactList.every(function (a) {
                                 if (a.artifactId == artifactId) {
                                     if (a.refCount) {
                                         a.refCount--;
@@ -217,7 +216,7 @@ define(
                                 }
                                 return true;
                             });
-                        }
+                        });
                     }
                 },
                 selectArtifact: function (libraryId, artifactId, name, version) {
@@ -1568,14 +1567,29 @@ define(
                     },
                     dispose: function () {
                         var self = this,
-                            defer = $inject.$q.defer();
+                            promiseArr = [];
+                        l
 
-                        $inject.$timeout(function () {
-                            self.remove();
-                            defer.resolve();
+                        self.childWidgets.forEach(function (obj) {
+                            promiseArr.push(obj.dispose());
                         });
 
-                        return defer.promise;
+                        if (promiseArr.length) {
+                            return $inject.uiUtilService.chain(
+                                [
+                                    function () {
+                                        return $inject.$q.all(promiseArr);
+                                    },
+                                    function () {
+                                        self.remove();
+                                        return $inject.uiUtilService.getResolveDefer();
+                                    }
+                                ]
+                            );
+                        } else {
+                            self.remove();
+                            return $inject.uiUtilService.getResolveDefer();
+                        }
                     },
                     startMatchReference: function () {
                         var proto = BaseSketchWidgetClass.prototype;
@@ -1760,40 +1774,34 @@ define(
 
                         if (wIndex != null && wIndex < self.childWidgets.length) {
                             child = self.childWidgets[wIndex];
-                            self.childWidgets.splice(wIndex, 1);
-                            if (child.$element) {
-                                child.$element.remove();
-                                child.styleManager.removePseudoStyle();
-                                child.$element = null;
-                            }
+                            child.remove();
 
                             return child;
                         }
                     },
                     remove: function () {
-                        var self = this;
+                        var self = this,
+                            parentWidgetObj = self.parent();
+
+                        if (parentWidgetObj) {
+                            var wIndex;
+                            if (!parentWidgetObj.childWidgets.every(function (obj, index) {
+                                    if (obj.id == self.id) {
+                                        wIndex = index;
+                                        return false;
+                                    }
+
+                                    return true;
+                                })) {
+                                parentWidgetObj.childWidgets.splice(wIndex, 1);
+                            }
+                        }
 
                         if (self.$element) {
-                            var parentWidgetObj = self.parent();
-
-                            if (parentWidgetObj) {
-                                var wIndex;
-                                if (!parentWidgetObj.childWidgets.every(function (obj, index) {
-                                        if (obj.id == self.id) {
-                                            wIndex = index;
-                                            return false;
-                                        }
-
-                                        return true;
-                                    })) {
-                                    parentWidgetObj.childWidgets.splice(wIndex, 1);
-                                }
-                            }
-
                             self.$element.remove();
-                            self.styleManager.removePseudoStyle();
                             self.$element = null;
                         }
+                        self.styleManager.removePseudoStyle();
                     },
                     attach: function (element) {
                         var self = this,
@@ -3060,6 +3068,10 @@ define(
                 },
                 dispose: function () {
                     var self = this;
+
+                    //Unreference artifact
+                    $("head link[type='text/css'][widget={0}]".format(self._id)).remove();
+                    $inject.$rootScope.loadedProject.unrefArtifact(self.widgetSpec.artifactId);
 
                     return RepoSketchWidgetClass.prototype.__proto__.dispose.apply(self).then(function () {
                         return $inject.appService.deleteConfigurableArtifact(self.widgetSpec.projectId, self.id, self.widgetSpec.artifactId);
