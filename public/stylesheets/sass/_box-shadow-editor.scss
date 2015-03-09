@@ -140,20 +140,14 @@ $activeBorderShadow: rgba(192, 192, 192, 0.8);
                     }
 
                     > .presetBoxShadow {
-                        > .accordianGroup {
-                            position: relative;
-                            float: right;
-                            width: 100%;
-                            overflow: hidden;
-
-                            > .accordianTitle {
+                        .effectLibrary {
+                            .libraryTitle {
                                 position: relative;
-                                float: right;
-                                text-align: right;
-                                z-index: 1;
+                                float: left;
                                 width: 100%;
                                 line-height: 2;
-                                background: #fff;
+                                font-weight: 900;
+                                text-shadow: 0px 3px 4px rgba(0, 0, 0, 0.4);
 
                                 &:before {
                                     position: absolute;
@@ -161,65 +155,92 @@ $activeBorderShadow: rgba(192, 192, 192, 0.8);
                                     top: 0;
                                     line-height: 2;
                                     text-align: center;
-                                    width: 2em;
+                                    width: 1em;
                                     height: 2em;
-
-                                    @include transform(rotateZ(0deg));
-                                    @include transition(transform 0.3s);
-                                }
-
-                                &:after {
-                                    position: absolute;
-                                    right: 0;
-                                    bottom: 0;
-                                    content: '';
-                                    width: 100%;
-                                    height: 2px;
-                                    @include background(linear-gradient(right, $underlineLinearGradient));
                                 }
                             }
 
-                            > .accordianBody {
+                            .accordianGroup {
                                 position: relative;
                                 float: right;
                                 width: 100%;
-                                margin-top: 0.5em;
-                                margin-bottom: 0.5em;
+                                overflow: hidden;
 
-                                @include transition(transform 0.3s);
+                                > .accordianTitle {
+                                    position: relative;
+                                    float: right;
+                                    text-align: right;
+                                    z-index: 1;
+                                    width: 100%;
+                                    line-height: 2;
+                                    background: #fff;
 
-                                .shadowPane {
-                                    opacity: 0;
-                                    height: 0px;
-                                    overflow: hidden;
-                                }
-                            }
+                                    &:before {
+                                        position: absolute;
+                                        left: 0;
+                                        top: 0;
+                                        line-height: 2;
+                                        text-align: center;
+                                        width: 2em;
+                                        height: 2em;
 
-                            &.select {
-                                > .accordianTitle:before {
-                                    @extend %rotateUpSideDown;
-                                    @include animation-duration(0.3s);
+                                        @include transform(rotateZ(0deg));
+                                        @include transition(transform 0.3s);
+                                    }
+
+                                    &:after {
+                                        position: absolute;
+                                        right: 0;
+                                        bottom: 0;
+                                        content: '';
+                                        width: 100%;
+                                        height: 2px;
+                                        @include background(linear-gradient(right, $underlineLinearGradient));
+                                    }
                                 }
 
                                 > .accordianBody {
+                                    position: relative;
+                                    float: right;
+                                    width: 100%;
+                                    margin-top: 0.5em;
+                                    margin-bottom: 0.5em;
+
+                                    @include transition(transform 0.3s);
 
                                     .shadowPane {
-                                        opacity: 1;
-                                        pointer-events: auto;
-                                        height: 2em;
-                                        line-height: 2;
-                                        margin-bottom: 1em;
-                                        margin-left: 1em;
-                                        overflow: visible;
-                                        background: #fff;
+                                        opacity: 0;
+                                        height: 0px;
+                                        overflow: hidden;
+                                    }
+                                }
 
-                                        span {
-                                            position: relative;
-                                            float: left;
-                                            width: 100%;
-                                            height: 1em;
-                                            line-height: 1;
-                                            text-align: center;
+                                &.select {
+                                    > .accordianTitle:before {
+                                        @extend %rotateUpSideDown;
+                                        @include animation-duration(0.3s);
+                                    }
+
+                                    > .accordianBody {
+
+                                        .shadowPane {
+                                            opacity: 1;
+                                            pointer-events: auto;
+                                            height: 2em;
+                                            line-height: 2;
+                                            margin-bottom: 1em;
+                                            margin-left: 1em;
+                                            overflow: visible;
+                                            background: #fff;
+
+                                            span {
+                                                position: relative;
+                                                float: left;
+                                                width: 100%;
+                                                height: 1em;
+                                                line-height: 1;
+                                                text-align: center;
+                                            }
                                         }
                                     }
                                 }
@@ -449,6 +470,95 @@ $activeBorderShadow: rgba(192, 192, 192, 0.8);
                                 > .accordianBody {
 
                                     .shadowStyle {
+                                        display: block;
+                                        width: 100%;
+                                        height: 3em;
+                                        margin-bottom: 0.5em;
+
+                                        @include box-shadow(0 2px 2px rgba(0, 0, 0, 0.3));
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    > .boxShadowArtifactPanes {
+
+                        > .accordianGroup {
+                            position: relative;
+                            float: right;
+                            width: 100%;
+
+                            > .accordianTitle {
+                                z-index: 2;
+                                position: relative;
+                                float: right;
+                                text-align: right;
+                                width: 100%;
+                                line-height: 2;
+                                background: #fff;
+
+                                &:before {
+                                    position: absolute;
+                                    left: 0;
+                                    top: 0;
+                                    line-height: 2;
+                                    text-align: center;
+                                    width: 2em;
+                                    height: 2em;
+
+                                    @include transform(rotateZ(0deg));
+                                    @include transition(transform 0.3s);
+                                }
+
+                                &:after {
+                                    position: absolute;
+                                    right: 0;
+                                    bottom: 0;
+                                    content: '';
+                                    width: 100%;
+                                    height: 2px;
+                                    @include background(linear-gradient(right, $underlineLinearGradient));
+                                }
+                            }
+
+                            > .accordianBody {
+                                position: relative;
+                                float: right;
+                                width: 100%;
+                                margin-top: 0.5em;
+                                margin-bottom: 0.5em;
+
+                                @include transition(transform 0.3s);
+
+                                .effectPane {
+                                    display: none;
+                                    position: relative;
+                                    float: left;
+                                    overflow: visible;
+                                    background: #fff;
+                                    border-radius: 10px;
+
+                                    > div {
+                                        float: left;
+                                        margin-top: 0.5em;
+
+                                        label {
+                                            text-align: center;
+                                        }
+                                    }
+                                }
+                            }
+
+                            &.select {
+                                > .accordianTitle:before {
+                                    @extend %rotateUpSideDown;
+                                    @include animation-duration(0.3s);
+                                }
+
+                                > .accordianBody {
+
+                                    .effectPane {
                                         display: block;
                                         width: 100%;
                                         height: 3em;

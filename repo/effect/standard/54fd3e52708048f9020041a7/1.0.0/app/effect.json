@@ -1,0 +1,282 @@
+[
+  {
+    "name": "Emboss",
+    "value": "emboss",
+    "style": {
+      "text-shadow": [
+        {
+          "color": "#F8F8FF",
+          "h-shadow": "1px",
+          "v-shadow": "0px",
+          "blur": "0px"
+        },
+        {
+          "color": "#F8F8FF",
+          "h-shadow": "-1px",
+          "v-shadow": "0px",
+          "blur": "0px"
+        },
+        {
+          "color": "#F8F8FF",
+          "h-shadow": "0px",
+          "v-shadow": "1px",
+          "blur": "0px"
+        },
+        {
+          "color": "#F8F8FF",
+          "h-shadow": "0px",
+          "v-shadow": "-1px",
+          "blur": "0px"
+        },
+        {
+          "color": "#F8F8FF",
+          "h-shadow": "1px",
+          "v-shadow": "1px",
+          "blur": "0px"
+        },
+        {
+          "color": "#F8F8FF",
+          "h-shadow": "-1px",
+          "v-shadow": "-1px",
+          "blur": "0px"
+        },
+        {
+          "color": "#F8F8FF",
+          "h-shadow": "-1px",
+          "v-shadow": "1px",
+          "blur": "0px"
+        },
+        {
+          "color": "#F8F8FF",
+          "h-shadow": "1px",
+          "v-shadow": "-1px",
+          "blur": "0px"
+        },
+        {
+          "color": "#C0C0C0",
+          "h-shadow": "0px",
+          "v-shadow": "6px",
+          "blur": "1px"
+        },
+        {
+          "color": "#808080",
+          "h-shadow": "2px",
+          "v-shadow": "6px",
+          "blur": "1px"
+        },
+        {
+          "color": "#808080",
+          "h-shadow": "-2px",
+          "v-shadow": "6px",
+          "blur": "1px"
+        },
+        {
+          "color": "#000000",
+          "h-shadow": "0px",
+          "v-shadow": "6px",
+          "blur": "7px"
+        }
+      ]
+    }
+  },
+  {
+    "name": "Vintage",
+    "value": "vintage",
+    "style": {
+      "text-shadow": [
+        {
+          "color": "#EEEEEE",
+          "h-shadow": "5px",
+          "v-shadow": "5px",
+          "blur": "0px"
+        },
+        {
+          "color": "#707070",
+          "h-shadow": "7px",
+          "v-shadow": "7px",
+          "blur": "0px"
+        }
+      ]
+    }
+  },
+  {
+    "name": "Neon",
+    "value": "neon",
+    "style": {
+      "text-shadow": [
+        {
+          "color": "#FFFFFF",
+          "h-shadow": "0px",
+          "v-shadow": "0px",
+          "blur": "10px"
+        },
+        {
+          "color": "#FFFFFF",
+          "h-shadow": "0px",
+          "v-shadow": "0px",
+          "blur": "20px"
+        },
+        {
+          "color": "#FFFFFF",
+          "h-shadow": "0px",
+          "v-shadow": "0px",
+          "blur": "30px"
+        },
+        {
+          "color": "#FF00DE",
+          "h-shadow": "0px",
+          "v-shadow": "0px",
+          "blur": "40px"
+        },
+        {
+          "color": "#FF00DE",
+          "h-shadow": "0px",
+          "v-shadow": "0px",
+          "blur": "70px"
+        },
+        {
+          "color": "#FF00DE",
+          "h-shadow": "0px",
+          "v-shadow": "0px",
+          "blur": "80px"
+        },
+        {
+          "color": "#FF00DE",
+          "h-shadow": "0px",
+          "v-shadow": "0px",
+          "blur": "100px"
+        },
+        {
+          "color": "#FF00DE",
+          "h-shadow": "0px",
+          "v-shadow": "0px",
+          "blur": "150px"
+        }
+      ]
+    }
+  },
+  {
+    "name": "Inset",
+    "value": "inset",
+    "style": {
+      "text-shadow": [
+        {
+          "color": "#666666",
+          "h-shadow": "0px",
+          "v-shadow": "2px",
+          "blur": "3px"
+        }
+      ]
+    }
+  },
+  {
+    "name": "Letter",
+    "value": "letter",
+    "style": {
+      "text-shadow": [
+        {
+          "color": "#2A2A2A",
+          "h-shadow": "0px",
+          "v-shadow": "3px",
+          "blur": "8px"
+        }
+      ]
+    }
+  },
+  {
+    "name": "Anaglyphic",
+    "value": "anaglyphic",
+    "style": {
+      "text-shadow": [
+        {
+          "color": "#FF00B4",
+          "h-shadow": "8px",
+          "v-shadow": "8px",
+          "blur": "0px"
+        }
+      ]
+    }
+  },
+  {
+    "name": "Fire",
+    "value": "fire",
+    "style": {
+      "text-shadow": [
+        {
+          "color": "#FEFCC9",
+          "h-shadow": "0px",
+          "v-shadow": "0px",
+          "blur": "20px"
+        },
+        {
+          "color": "#FEEC85",
+          "h-shadow": "10px",
+          "v-shadow": "-10px",
+          "blur": "30px"
+        },
+        {
+          "color": "#FFAE34",
+          "h-shadow": "-20px",
+          "v-shadow": "-20px",
+          "blur": "40px"
+        },
+        {
+          "color": "#EC760C",
+          "h-shadow": "20px",
+          "v-shadow": "-40px",
+          "blur": "50px"
+        },
+        {
+          "color": "#CD4606",
+          "h-shadow": "-20px",
+          "v-shadow": "-60px",
+          "blur": "60px"
+        },
+        {
+          "color": "#973716",
+          "h-shadow": "0px",
+          "v-shadow": "-80px",
+          "blur": "70px"
+        },
+        {
+          "color": "#451b0E",
+          "h-shadow": "10px",
+          "v-shadow": "-90px",
+          "blur": "80px"
+        }
+      ]
+    }
+  },
+  {
+    "name": "Boardgame",
+    "value": "boardgame",
+    "style": {
+      "text-shadow": [
+        {
+          "color": "#FFD217",
+          "h-shadow": "10px",
+          "v-shadow": "10px",
+          "blur": "0px"
+        },
+        {
+          "color": "#5AC7FF",
+          "h-shadow": "20px",
+          "v-shadow": "20px",
+          "blur": "0px"
+        },
+        {
+          "color": "#FFD217",
+          "h-shadow": "30px",
+          "v-shadow": "30px",
+          "blur": "0px"
+        },
+        {
+          "color": "#5AC7FF",
+          "h-shadow": "40px",
+          "v-shadow": "40px",
+          "blur": "0px"
+        }
+      ]
+    }
+  }
+]

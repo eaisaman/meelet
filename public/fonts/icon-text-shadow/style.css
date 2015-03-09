@@ -47,86 +47,147 @@
 	-moz-osx-font-smoothing: grayscale;
 }
 
-.icon-text-shadow-angle-double-up:before {
-	content: "\e600";
-}
-.icon-text-shadow-alphabet:before {
-	content: "\e601";
-}
-.icon-text-shadow-format-list-bulleted:before {
-	content: "\e602";
-}
-.icon-text-shadow-cross:before {
-	content: "\e603";
-}
-.icon-text-shadow-insert:before {
-	content: "\e604";
-}
-.icon-text-shadow-remove:before {
-	content: "\e605";
-}
-.icon-text-shadow-paste:before {
-	content: "\e606";
-}
 .icon-text-shadow-brush:before {
-	content: "\e607";
+    content: "\e600";
 }
+
+.icon-text-shadow-paste:before {
+    content: "\e601";
+}
+
+.icon-text-shadow-insert:before {
+    content: "\e602";
+}
+
+.icon-text-shadow-remove:before {
+    content: "\e603";
+}
+
 .icon-text-shadow-copy:before {
-	content: "\e608";
+    content: "\e604";
+}
+
+.icon-text-shadow-angle-double-up:before {
+    content: "\e605";
+}
+
+.icon-text-shadow-alphabet:before {
+    content: "\e606";
+}
+
+.icon-text-shadow-format-list-bulleted:before {
+    content: "\e607";
+}
+
+.icon-text-shadow-cross:before {
+    content: "\e608";
+}
+
+.icon-text-shadow-square-check:before {
+    content: "\e609";
+}
+
+.icon-text-shadow-square:before {
+    content: "\e60a";
+}
+
+.icon-text-shadow-library:before {
+    content: "\e60b";
+}
+
+.icon-text-shadow-brush-before:before {
+    content: "\e600";
+}
+
+.icon-text-shadow-paste-before:before {
+    content: "\e601";
+}
+
+.icon-text-shadow-insert-before:before {
+    content: "\e602";
+}
+
+.icon-text-shadow-remove-before:before {
+    content: "\e603";
+}
+
+.icon-text-shadow-copy-before:before {
+    content: "\e604";
 }
 
 .icon-text-shadow-angle-double-up-before:before {
-	content: "\e600";
+    content: "\e605";
 }
+
 .icon-text-shadow-alphabet-before:before {
-	content: "\e601";
+    content: "\e606";
 }
+
 .icon-text-shadow-format-list-bulleted-before:before {
-	content: "\e602";
+    content: "\e607";
 }
+
 .icon-text-shadow-cross-before:before {
-	content: "\e603";
+    content: "\e608";
 }
-.icon-text-shadow-insert-before:before {
-	content: "\e604";
+
+.icon-text-shadow-square-check-before:before {
+    content: "\e609";
 }
-.icon-text-shadow-remove-before:before {
-	content: "\e605";
+
+.icon-text-shadow-square-before:before {
+    content: "\e60a";
 }
-.icon-text-shadow-paste-before:before {
-	content: "\e606";
+
+.icon-text-shadow-library-before:before {
+    content: "\e60b";
 }
-.icon-text-shadow-brush-before:before {
-	content: "\e607";
+
+.icon-text-shadow-brush-after:after {
+    content: "\e600";
 }
-.icon-text-shadow-copy-before:before {
-	content: "\e608";
+
+.icon-text-shadow-paste-after:after {
+    content: "\e601";
+}
+
+.icon-text-shadow-insert-after:after {
+    content: "\e602";
+}
+
+.icon-text-shadow-remove-after:after {
+    content: "\e603";
+}
+
+.icon-text-shadow-copy-after:after {
+    content: "\e604";
 }
 
 .icon-text-shadow-angle-double-up-after:after {
-	content: "\e600";
+    content: "\e605";
 }
+
 .icon-text-shadow-alphabet-after:after {
-	content: "\e601";
+    content: "\e606";
 }
+
 .icon-text-shadow-format-list-bulleted-after:after {
-	content: "\e602";
+    content: "\e607";
 }
+
 .icon-text-shadow-cross-after:after {
-	content: "\e603";
+    content: "\e608";
 }
-.icon-text-shadow-insert-after:after {
-	content: "\e604";
+
+.icon-text-shadow-square-check-after:after {
+    content: "\e609";
 }
-.icon-text-shadow-remove-after:after {
-	content: "\e605";
+
+.icon-text-shadow-square-after:after {
+    content: "\e60a";
 }
-.icon-text-shadow-paste-after:after {
-	content: "\e606";
+
+.icon-text-shadow-library-after:after {
+    content: "\e60b";
 }
-.icon-text-shadow-brush-after:after {
-	content: "\e607";
-}
-.icon-text-shadow-copy-after:after {
-	content: "\e608";
-}
+

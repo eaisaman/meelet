@@ -1219,18 +1219,14 @@ define(
                         stylePseudoPrefix = ((pseudo || "") + "Style").replace(/^:(.+)/, "$1");
                     stylePseudoPrefix = stylePseudoPrefix.charAt(0).toLowerCase() + stylePseudoPrefix.substr(1);
 
-                    var styleSourceArr = _.where(stateValue.styleSource, {source: source}),
-                        styleSource;
-                    if (styleSourceArr.length) {
-                        styleSource = styleSourceArr[0];
-                    } else {
-                        styleSource = {
+                    var styleSource = _.findWhere(stateValue.styleSource, {source: source});
+                    if (!styleSource) {
+                        stateValue.styleSource.push(styleSource = {
                             source: source,
                             style: {},
                             beforeStyle: {},
                             afterStyle: {}
-                        };
-                        stateValue.styleSource.push(styleSource);
+                        });
                     }
                     var sourceStyle = styleSource[stylePseudoPrefix];
 

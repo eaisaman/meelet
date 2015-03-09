@@ -9,7 +9,14 @@ define(
 
                 var boundProperties = {backgroundImage: "="},
                     defaults = {
-                        deviation: 10
+                        deviation: 10,
+                        backgroundImageUrl: "",
+                        backgroundPosition: {
+                            unit: "%",
+                            left: "0",
+                            top: "0"
+                        },
+                        backgroundRepeat: "no-repeat"
                     },
                     options = angular.extend(defaults, opts),
                     injectObj = _.object(inject, Array.prototype.slice.call(arguments));
@@ -37,7 +44,7 @@ define(
                                             backgroundImage: function (value) {
                                                 if (value && scope.hasStyle(value)) {
                                                     scope.pickedBackgroundImageUrl = scope.pickBackgroundImageValue(value);
-                                                    //scope.pickedBackgroundPosition = scope.pickBackgroundPositionValue(value);
+                                                    scope.pickedBackgroundPosition = scope.pickBackgroundPositionValue(value);
                                                     scope.pickedBackgroundRepeat = scope.pickBackgroundRepeatValue(value);
                                                     scope.enableControl();
                                                 } else {
@@ -52,35 +59,35 @@ define(
                                 scope.toggleBackgroundImageControl = function () {
                                     scope.toggleEnableControl().then(function (enable) {
                                         if (enable) {
+                                            scope.setBackgroundImageUrl(options.backgroundImageUrl);
+                                            scope.setBackgroundPosition(options.backgroundPosition.x, options.backgroundPosition.y, options.backgroundPosition.unit);
+                                            scope.setBackgroundRepeatValue(options.backgroundRepeat);
                                         } else {
+                                            scope.backgroundImage = angular.copy(scope.unsetStyle(scope.backgroundImage, scope.pseudo));
                                         }
                                     });
                                 }
 
                                 scope.pickBackgroundImageValue = function (styles) {
-                                    return scope.pickStyle(styles, scope.pseudo)["background-image"];
+                                    return scope.pickStyle(styles, scope.pseudo)["background-image"] || options.backgroundImageUrl;
                                 }
 
                                 scope.pickBackgroundPositionValue = function (styles) {
-                                    return scope.pickStyle(styles, scope.pseudo)["background-position"];
+                                    return scope.pickStyle(styles, scope.pseudo)["background-position"] || options.backgroundPosition;
                                 }
 
                                 scope.pickBackgroundRepeatValue = function (styles) {
-                                    return scope.pickStyle(styles, scope.pseudo)["background-repeat"];
+                                    return scope.pickStyle(styles, scope.pseudo)["background-repeat"] || options.backgroundRepeat;
                                 }
 
                                 scope.pseudo = "";
+                                scope.project = $rootScope.loadedProject;
                                 scope.repeatList = [
                                     {name: "No Repeat", value: "no-repeat"},
                                     {name: "Repeat", value: "repeat"},
                                     {name: "Repeat X", value: "repeat-x"},
                                     {name: "Repeat Y", value: "repeat-y"}
                                 ];
-                                scope.pickedBackgroundPosition = {
-                                    unit: "%",
-                                    left: "0",
-                                    top: "0"
-                                };
                             },
                             post: function (scope, element, attrs) {
                                 var horizontalMoveMgr, horizontalMoveHandler,
@@ -274,7 +281,6 @@ define(
                                                 $timeout(function () {
                                                     scope.watchBackgroundImageValue(false);
                                                     scope.watchBackgroundPositionValue(false);
-                                                    scope.watchBackgroundRepeatValue(false);
 
                                                     defer.resolve();
                                                 });
@@ -290,7 +296,6 @@ define(
                                                 $timeout(function () {
                                                     scope.watchBackgroundImageValue(true);
                                                     scope.watchBackgroundPositionValue(true);
-                                                    scope.watchBackgroundRepeatValue(true);
 
                                                     defer.resolve();
                                                 });
@@ -374,7 +379,7 @@ define(
                                             //Trigger watcher on sketchWidgetSetting.backgroundImage to apply style to widget
                                             scope.backgroundImage = angular.copy(scope.backgroundImage);
 
-                                            scope.pickBackgroundRepeatValue = value;
+                                            scope.pickedBackgroundRepeat = value;
                                         }
                                     }
                                 }
@@ -460,19 +465,6 @@ define(
                                         scope.deregisterPositionXWatch = null;
                                         scope.deregisterPositionYWatch = null;
                                         scope.deregisterPositionUnitWatch = null;
-                                    }
-                                }
-
-                                scope.watchBackgroundRepeatValue = function (state) {
-                                    if (state) {
-                                        if (!scope.deregisterRepeatWatch) {
-                                            scope.deregisterRepeatWatch = scope.$watch("pickBackgroundRepeatValue", function (to) {
-                                                to && scope.setBackgroundRepeatValue(to);
-                                            });
-                                        }
-                                    } else {
-                                        scope.deregisterRepeatWatch && scope.deregisterRepeatWatch();
-                                        scope.deregisterRepeatWatch = null;
                                     }
                                 }
 

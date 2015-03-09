@@ -2,14 +2,24 @@ define(
     ["angular", "jquery"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$parse", "$http", "$timeout", "$q", "angularEventTypes", "uiUtilService"];
+            var inject = ["$parse", "$rootScope", "$http", "$timeout", "$q", "angularConstants", "angularEventTypes", "uiUtilService", "appService"];
 
-            appModule.directive("uiBoxShadowEditor", _.union(inject, [function ($parse, $http, $timeout, $q, angularEventTypes, uiUtilService) {
+            appModule.directive("uiBoxShadowEditor", _.union(inject, [function ($parse, $rootScope, $http, $timeout, $q, angularConstants, angularEventTypes, uiUtilService, appService) {
                 'use strict';
 
                 var boundProperties = {boxShadow: "="},
                     defaults = {
-                        boxShadowJson: ""
+                        boxShadow: {
+                            style: {
+                                'box-shadow': []
+                            },
+                            beforeStyle: {
+                                'box-shadow': []
+                            },
+                            afterStyle: {
+                                'box-shadow': []
+                            }
+                        }
                     },
                     options = angular.extend(defaults, opts),
                     injectObj = _.object(inject, Array.prototype.slice.call(arguments));
@@ -46,14 +56,6 @@ define(
                                         {boxShadow: "uiBoxShadowEditor"})
                                 );
 
-                                if (options.boxShadowJson) {
-                                    $http.get(options.boxShadowJson).then(function (result) {
-                                        scope.boxShadowList = result.data;
-                                    });
-                                }
-
-                                scope.styleNames = ['left', 'top', 'right', 'bottom', 'width', 'height'];
-
                                 function createBoxShadowValueInputAssign(name) {
                                     var fn = $parse(name),
                                         assign = fn.assign;
@@ -72,7 +74,7 @@ define(
                                                 return defer.promise;
                                             }
 
-                                            shadowHandler.onceId = "uiTextShadowEditor.createBoxShadowValueInputAssign.shadowHandler";
+                                            shadowHandler.onceId = "uiBoxShadowEditor.createBoxShadowValueInputAssign.shadowHandler";
 
                                             if (value) {
                                                 var args = Array.prototype.slice.call(arguments),
@@ -96,18 +98,59 @@ define(
 
                                 createBoxShadowValueInputAssign("pickedBoxShadow.beforeStyle[shadowStyle]");
                                 createBoxShadowValueInputAssign("pickedBoxShadow.afterStyle[shadowStyle]");
+
+                                scope.filterLibraryList = function (libraryList, xrefList) {
+                                    return uiUtilService.filterSelection(libraryList, xrefList, [{
+                                        target: '_id',
+                                        source: 'libraryId'
+                                    }]);
+                                }
+
+                                scope.filterArtifactList = function (effectLibrary, xrefList) {
+                                    var artifactList = (_.findWhere(xrefList, {libraryId: effectLibrary._id}) || {}).artifactList;
+
+                                    return uiUtilService.filterSelection(effectLibrary.artifactList, artifactList, [{
+                                        target: '_id',
+                                        source: 'artifactId'
+                                    }]);
+                                }
+
+                                scope.markLibrarySelection = function (libraryList, xrefList) {
+                                    return uiUtilService.markSelection(libraryList, xrefList, [{
+                                        target: '_id',
+                                        source: 'libraryId'
+                                    }]);
+                                }
+
+                                scope.markArtifactSelection = function (effectLibrary, xrefList) {
+                                    var xref = _.findWhere(xrefList, {libraryId: effectLibrary._id}) || {},
+                                        artifactList = xref.artifactList;
+
+                                    return uiUtilService.markSelection(effectLibrary.artifactList, artifactList, [{
+                                        target: '_id',
+                                        source: 'artifactId'
+                                    }]);
+                                }
+
+                                scope.isPartialSelection = function (effectLibrary, xrefList) {
+                                    var xref = _.findWhere(xrefList, {libraryId: effectLibrary._id});
+
+                                    return xref && effectLibrary.artifactList && effectLibrary.artifactList.length > xref.artifactList.length;
+                                }
+
+                                scope.styleNames = ['left', 'top', 'right', 'bottom', 'width', 'height'];
+                                scope.effectList = [];
+                                scope.effectLibraryList = $rootScope.effectLibraryList;
+                                scope.filterEffectLibraryList = [];
+                                scope.project = $rootScope.loadedProject;
                             },
                             post: function (scope, element, attrs) {
                                 scope.toggleBoxShadowControl = function () {
                                     scope.toggleEnableControl().then(function (enable) {
                                         if (enable) {
-                                            scope.setBoxShadow({
-                                                style: {},
-                                                beforeStyle: {},
-                                                afterStyle: {}
-                                            });
+                                            scope.setBoxShadow(_.clone(options.boxShadow));
                                         } else {
-                                            scope.boxShadow = {}
+                                            scope.boxShadow = angular.copy(scope.unsetStyles(scope.boxShadow));
                                         }
                                     });
                                 }
@@ -213,6 +256,7 @@ define(
                                     //Trigger watcher on sketchWidgetSetting.boxShadow to apply style to widget
                                     scope.setBoxShadow(scope.pickedBoxShadow);
                                 }
+
                                 scope.removeShadowStop = function (pseudo, index, event) {
                                     event && event.stopPropagation && event.stopPropagation();
 
@@ -230,6 +274,7 @@ define(
                                         scope.setBoxShadow(scope.pickedBoxShadow);
                                     }
                                 }
+
                                 scope.setShadowStopColor = function (pseudo, index, event) {
                                     event && event.stopPropagation && event.stopPropagation();
 
@@ -248,6 +293,7 @@ define(
                                         scope.toggleShadowStopColorPalette();
                                     }
                                 }
+
                                 scope.copyShadowStop = function (pseudo, index, event) {
                                     event && event.stopPropagation && event.stopPropagation();
 
@@ -262,6 +308,7 @@ define(
                                         scope.copiedShadowStopColor = pseudoShadowStyle['box-shadow'][index].color;
                                     }
                                 }
+
                                 scope.pasteShadowStop = function (pseudo, index, event) {
                                     event && event.stopPropagation && event.stopPropagation();
 
@@ -322,6 +369,117 @@ define(
                                     //Trigger watcher on sketchWidgetSetting.boxShadow to apply style to widget
                                     scope.boxShadow = angular.copy(value);
                                 }
+
+                                scope.toggleArtifactSelection = function (repoArtifact, effectLibrary, event) {
+                                    event && event.stopPropagation && event.stopPropagation();
+
+                                    repoArtifact._version = (repoArtifact.versionList.length && repoArtifact.versionList[repoArtifact.versionList.length - 1].name || "");
+
+                                    if (repoArtifact._version) {
+                                        var xref = _.findWhere(scope.project.xrefRecord, {libraryId: effectLibrary._id});
+
+                                        if (xref) {
+                                            var artifact = _.findWhere(xref.artifactList, {artifactId: repoArtifact._id});
+                                            if (artifact) {
+                                                if (scope.project.unselectArtifact(effectLibrary._id, repoArtifact._id)) {
+                                                    delete repoArtifact._selected;
+                                                    delete repoArtifact._version;
+                                                }
+                                            } else {
+                                                if (scope.project.selectArtifact(effectLibrary._id, repoArtifact._id, repoArtifact.name, repoArtifact._version)) {
+                                                    repoArtifact._selected = true;
+                                                }
+                                            }
+                                        } else {
+                                            scope.project.addLibrary(
+                                                effectLibrary._id,
+                                                effectLibrary.name,
+                                                effectLibrary.type,
+                                                [
+                                                    {
+                                                        artifactId: repoArtifact._id,
+                                                        name: repoArtifact.name,
+                                                        version: repoArtifact._version
+                                                    }
+                                                ]
+                                            );
+
+                                            repoArtifact._selected = true;
+
+                                            if (scope.filterEffectLibraryList.every(function (lib) {
+                                                    return lib._id !== effectLibrary._id;
+                                                })) {
+                                                scope.filterEffectLibraryList.push(effectLibrary);
+                                            }
+                                        }
+
+                                    }
+                                }
+
+                                scope.toggleLibrarySelection = function (effectLibrary, event) {
+                                    event && event.stopPropagation && event.stopPropagation();
+
+                                    var library = _.findWhere(scope.project.xrefRecord, {libraryId: effectLibrary._id});
+                                    if (library) {
+                                        if (scope.project.removeLibrary(effectLibrary._id)) {
+                                            delete effectLibrary._selected;
+
+                                            var index;
+                                            if (!scope.filterEffectLibraryList.every(function (lib, i) {
+                                                    if (lib._id === effectLibrary._id) {
+                                                        index = i;
+                                                        return false;
+                                                    }
+
+                                                    return true;
+                                                })) {
+                                                scope.filterEffectLibraryList.splice(index, 1);
+                                            }
+                                        }
+                                    } else {
+                                        var artifactList = [];
+                                        effectLibrary.artifactList.forEach(function (artifact) {
+                                            var version = artifact.versionList.length && artifact.versionList[artifact.versionList.length - 1].name || "";
+
+                                            version && artifactList.push({
+                                                artifactId: artifact._id,
+                                                name: artifact.name,
+                                                version: version
+                                            });
+                                        });
+
+                                        if (artifactList.length && scope.project.addLibrary(effectLibrary._id, effectLibrary.name, effectLibrary.type, artifactList)) {
+                                            effectLibrary._selected = true;
+
+                                            if (scope.filterEffectLibraryList.every(function (lib) {
+                                                    return lib._id !== effectLibrary._id;
+                                                })) {
+                                                scope.filterEffectLibraryList.push(effectLibrary);
+                                            }
+                                        }
+                                    }
+                                }
+
+                                uiUtilService.whilst(
+                                    function () {
+                                        return !scope.project;
+                                    },
+                                    function (callback) {
+                                        callback();
+                                    },
+                                    function (err) {
+                                        return appService.loadEffectArtifactList().then(function () {
+                                            var arr = scope.filterLibraryList(scope.effectLibraryList, scope.project.xrefRecord);
+                                            arr.splice(0, 0, 0, 0);
+                                            scope.filterEffectLibraryList.splice(0, scope.filterEffectLibraryList.length);
+                                            Array.prototype.splice.apply(scope.filterEffectLibraryList, arr);
+
+                                            return uiUtilService.getResolveDefer();
+                                        }, function (err) {
+                                            return uiUtilService.getRejectDefer(err);
+                                        });
+                                    }, angularConstants.checkInterval
+                                );
                             }
                         }
                     }

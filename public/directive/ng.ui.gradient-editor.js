@@ -7,9 +7,20 @@ define(
             appModule.directive("uiGradientEditor", _.union(inject, [function ($timeout, $q, angularEventTypes, uiUtilService) {
                 'use strict';
 
-                var boundProperties = {gradientColor: "="},
+                var boundProperties = {linearGradientColor: "="},
                     defaults = {
-                        angleStep: 5
+                        angleStep: 5,
+                        linearGradientColor: {
+                            angle: 0, colorStopList: [
+                                {
+                                    percent: 0,
+                                    color: "#000000",
+                                    minPercent: 0,
+                                    maxPercent: 100,
+                                    backgroundColor: uiUtilService.lighterColor("#000000", 0.5)
+                                }
+                            ]
+                        }
                     },
                     options = angular.extend(defaults, opts),
                     injectObj = _.object(inject, Array.prototype.slice.call(arguments));
@@ -33,7 +44,7 @@ define(
                                     angularEventTypes.boundPropertiesEvent,
                                     uiUtilService.createDirectiveBoundMap(boundProperties, attrs,
                                         {
-                                            gradientColor: function (value) {
+                                            linearGradientColor: function (value) {
                                                 if (value && scope.hasStyle(value)) {
                                                     scope.pickedGradientColor = scope.pickGradientColorValue(value);
                                                     scope.enableControl();
@@ -43,7 +54,7 @@ define(
                                             }
                                         },
                                         {
-                                            gradientColor: "uiGradientEditor"
+                                            linearGradientColor: "uiGradientEditor"
                                         }
                                     )
                                 );
@@ -51,23 +62,7 @@ define(
                                 scope.pickGradientColorValue = function (styles) {
                                     var styleValue = scope.pickStyle(styles, scope.pseudo)["linearGradientColor"];
 
-                                    if (styleValue && !_.isEmpty(styleValue)) {
-                                        return styleValue;
-                                    } else {
-                                        var color = scope.colors && scope.colors.length && scope.colors[0] || "#000000";
-
-                                        return {
-                                            angle: 0, colorStopList: [
-                                                {
-                                                    percent: 0,
-                                                    color: color,
-                                                    minPercent: 0,
-                                                    maxPercent: 100,
-                                                    backgroundColor: uiUtilService.contrastColor(color) === "#ffffff" ? uiUtilService.lighterColor(color, 0.5) : uiUtilService.lighterColor(color, -0.5)
-                                                }
-                                            ]
-                                        };
-                                    }
+                                    return !_.isEmpty(styleValue) && styleValue || options.linearGradientColor;
                                 }
 
                                 scope.Math = Math;
@@ -118,9 +113,9 @@ define(
                                 scope.toggleGradientControl = function () {
                                     scope.toggleEnableControl().then(function (enable) {
                                         if (enable) {
-                                            scope.setGradientColor(scope.pickGradientColorValue(scope.gradientColor))
+                                            scope.setGradientColor(options.linearGradientColor);
                                         } else {
-                                            scope.gradientColor = {};
+                                            scope.linearGradientColor = angular.copy(scope.unsetStyle(scope.linearGradientColor, scope.pseudo));
                                         }
                                     });
                                 }
@@ -134,7 +129,7 @@ define(
                                     angle %= 360;
                                     scope.pickedGradientColor.angle = angle;
 
-                                    //Trigger watcher on sketchWidgetSetting.gradientColor to apply style to widget
+                                    //Trigger watcher on sketchWidgetSetting.linearGradientColor to apply style to widget
                                     scope.setGradientColor(scope.pickedGradientColor);
                                 }
 
@@ -148,7 +143,7 @@ define(
                                     angle %= 360;
                                     scope.pickedGradientColor.angle = angle;
 
-                                    //Trigger watcher on sketchWidgetSetting.gradientColor to apply style to widget
+                                    //Trigger watcher on sketchWidgetSetting.linearGradientColor to apply style to widget
                                     scope.setGradientColor(scope.pickedGradientColor);
                                 }
 
@@ -246,7 +241,7 @@ define(
 
                                         scope.pickedGradientColor.colorStopList.splice(index + 1, 0, colorStop);
 
-                                        //Trigger watcher on sketchWidgetSetting.gradientColor to apply style to widget
+                                        //Trigger watcher on sketchWidgetSetting.linearGradientColor to apply style to widget
                                         scope.setGradientColor(scope.pickedGradientColor);
                                     }
                                 }
@@ -284,7 +279,7 @@ define(
                                                 function () {
                                                     scope.pickedGradientColor.colorStopList[0].percent = 0;
 
-                                                    //Trigger watcher on sketchWidgetSetting.gradientColor to apply style to widget
+                                                    //Trigger watcher on sketchWidgetSetting.linearGradientColor to apply style to widget
                                                     scope.setGradientColor(scope.pickedGradientColor);
                                                 }
                                             );
@@ -342,7 +337,7 @@ define(
                                                 colorStop.color = hex;
                                                 colorStop.backgroundColor = uiUtilService.contrastColor(hex) === "#ffffff" ? uiUtilService.lighterColor(hex, 0.5) : uiUtilService.lighterColor(hex, -0.5);
 
-                                                //Trigger watcher on sketchWidgetSetting.gradientColor to apply style to widget
+                                                //Trigger watcher on sketchWidgetSetting.linearGradientColor to apply style to widget
                                                 scope.setGradientColor(scope.pickedGradientColor);
                                             }).then($timeout(function () {
                                                 var $colorStop = element.find(".colorStop[color-order=" + index + "]");
@@ -366,12 +361,12 @@ define(
                                     var pseudoStylePrefix = (scope.pseudo || "") + "Style";
                                     pseudoStylePrefix = pseudoStylePrefix.charAt(0).toLowerCase() + pseudoStylePrefix.substr(1);
 
-                                    scope.gradientColor[pseudoStylePrefix] = scope.gradientColor[pseudoStylePrefix] || {};
-                                    var pseudoGradientStyle = scope.gradientColor[pseudoStylePrefix];
+                                    scope.linearGradientColor[pseudoStylePrefix] = scope.linearGradientColor[pseudoStylePrefix] || {};
+                                    var pseudoGradientStyle = scope.linearGradientColor[pseudoStylePrefix];
                                     pseudoGradientStyle['linearGradientColor'] = value;
 
-                                    //Trigger watcher on sketchWidgetSetting.gradientColor to apply style to widget
-                                    scope.gradientColor = angular.copy(scope.gradientColor);
+                                    //Trigger watcher on sketchWidgetSetting.linearGradientColor to apply style to widget
+                                    scope.linearGradientColor = angular.copy(scope.linearGradientColor);
                                 };
                             }
                         }

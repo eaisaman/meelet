@@ -621,6 +621,27 @@ define(
             }
         }
 
+        Extension.prototype.unsetStyleService = function () {
+            return function (styles, pseudo) {
+                var pseudoStylePrefix = (pseudo || "") + "Style";
+                pseudoStylePrefix = pseudoStylePrefix.charAt(0).toLowerCase() + pseudoStylePrefix.substr(1);
+
+                styles[pseudoStylePrefix] = {};
+
+                return styles;
+            }
+        }
+
+        Extension.prototype.unsetStylesService = function () {
+            return function (styles) {
+                ["style", "beforeStyle", "afterStyle"].forEach(function (pseudoStylePrefix) {
+                    styles[pseudoStylePrefix] = {};
+                });
+
+                return styles;
+            }
+        }
+
         Extension.prototype.getIconClassListService = function () {
             return function (libraryName, artifactName, iconName, pseudo) {
                 if (libraryName && artifactName && iconName) {

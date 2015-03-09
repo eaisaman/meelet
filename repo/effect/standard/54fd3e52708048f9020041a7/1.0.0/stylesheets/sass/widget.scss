@@ -1,0 +1,5 @@
+@import "compass/css3/transition";
+@import "compass/css3/transform";
+@import "standard-text-shadow";
+
+@include standard-text-shadow("ui-effect-standard-text-shadow", "1.0.0");

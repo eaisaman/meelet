@@ -1,10 +1,10 @@
 [
   {
-    "group": "Standard",
+    "name": "Standard",
     "list": [
       {
         "name": "Emboss",
-        "id": "9CC282A7-FEE9-474C-A43D-AD47C0FDC9B1",
+        "value": "emboss",
         "style": {
           "text-shadow": [
             {
@@ -84,7 +84,7 @@
       },
       {
         "name": "Vintage",
-        "id": "5153CA1F-AB52-4A4A-B525-43CF2CCAA7FA",
+        "value": "vintage",
         "style": {
           "text-shadow": [
             {
@@ -104,7 +104,7 @@
       },
       {
         "name": "Neon",
-        "id": "A3C96346-2253-43FF-8328-11B7A6F82E79",
+        "value": "neon",
         "style": {
           "text-shadow": [
             {
@@ -160,7 +160,7 @@
       },
       {
         "name": "Inset",
-        "id": "1CC7DE0A-A3CE-4DCD-AC7F-CBD98630C3E1",
+        "value": "inset",
         "style": {
           "text-shadow": [
             {
@@ -174,7 +174,7 @@
       },
       {
         "name": "Letter",
-        "id": "F0493CCE-4C7B-4347-B67D-59A28C9592DD",
+        "value": "letter",
         "style": {
           "text-shadow": [
             {
@@ -188,7 +188,7 @@
       },
       {
         "name": "Anaglyphic",
-        "id": "EEFFA082-CDF1-42AE-8D77-F6B063491CF7",
+        "value": "anaglyphic",
         "style": {
           "text-shadow": [
             {
@@ -202,7 +202,7 @@
       },
       {
         "name": "Fire",
-        "id": "AD04A2B0-6BFA-441D-B9A6-F12211F0AEEC",
+        "value": "fire",
         "style": {
           "text-shadow": [
             {
@@ -252,7 +252,7 @@
       },
       {
         "name": "Boardgame",
-        "id": "FA7C22C2-187A-4A4C-9424-EC3469595BF7",
+        "value": "boardgame",
         "style": {
           "text-shadow": [
             {

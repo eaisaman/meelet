@@ -1,0 +1,14 @@
+@import "compass/css3/box-shadow";
+@import "compass/css3/transform";
+@import "compass/css3/transition";
+@import "public/global";
+@import "standard-box-shadow";
+
+@include standard-box-shadow("ui-effect-standard-box-shadow-demo", "1.0.0");
+
+.widgetDemoContainer {
+    position: relative;
+    float: left;
+    width: 100%;
+    height: 100%;
+}

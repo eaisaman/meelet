@@ -2,15 +2,54 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e0c8aa76-af86-40a2-a1e4-f776d4689a71" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/include/_shape.html" afterPath="$PROJECT_DIR$/public/include/_shape.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/include/_widget.html" afterPath="$PROJECT_DIR$/public/include/_widget.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/main.js" afterPath="$PROJECT_DIR$/public/main.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/effect/standard/54fd3e497080488f000041a7/1.0.0/stylesheets/sass/_standard-box-shadow.scss" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/effect/standard/54fd3e52708048f9020041a7/1.0.0/stylesheets/sass/_standard-text-shadow.scss" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/effect/standard/54fd3e497080488f000041a7/1.0.0/demo/boxShadowDemo.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/effect/standard/54fd3e497080488f000041a7/1.0.0/stylesheets/sass/config.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/effect/standard/54fd3e52708048f9020041a7/1.0.0/stylesheets/sass/config.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/effect/standard/54fd3e497080488f000041a7/1.0.0/stylesheets/sass/demo.scss" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/effect/standard/54fd3e52708048f9020041a7/1.0.0/stylesheets/sass/demo.scss" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/effect/standard/54fd3e497080488f000041a7/1.0.0/app/effect.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/effect/standard/54fd3e52708048f9020041a7/1.0.0/app/effect.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/effect/standard/54fd3e497080488f000041a7/1.0.0/main.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/effect/standard/54fd3e52708048f9020041a7/main.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/effect/standard/54fd3e52708048f9020041a7/1.0.0/demo/textShadowDemo.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/effect/standard/54fd3e497080488f000041a7/1.0.0/stylesheets/sass/widget.scss" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/effect/standard/54fd3e52708048f9020041a7/1.0.0/stylesheets/sass/widget.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/fonts/icon-box-shadow/icon-box-shadow.eot" afterPath="$PROJECT_DIR$/public/fonts/icon-box-shadow/icon-box-shadow.eot" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/fonts/icon-box-shadow/icon-box-shadow.ttf" afterPath="$PROJECT_DIR$/public/fonts/icon-box-shadow/icon-box-shadow.ttf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/fonts/icon-box-shadow/icon-box-shadow.woff" afterPath="$PROJECT_DIR$/public/fonts/icon-box-shadow/icon-box-shadow.woff" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/fonts/icon-text-shadow/icon-text-shadow.eot" afterPath="$PROJECT_DIR$/public/fonts/icon-text-shadow/icon-text-shadow.eot" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/fonts/icon-text-shadow/icon-text-shadow.ttf" afterPath="$PROJECT_DIR$/public/fonts/icon-text-shadow/icon-text-shadow.ttf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/fonts/icon-text-shadow/icon-text-shadow.woff" afterPath="$PROJECT_DIR$/public/fonts/icon-text-shadow/icon-text-shadow.woff" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/include/_background-image.html" afterPath="$PROJECT_DIR$/public/include/_background-image.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/stylesheets/sass/_box-shadow-editor.scss" afterPath="$PROJECT_DIR$/public/stylesheets/sass/_box-shadow-editor.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/include/_box-shadow.html" afterPath="$PROJECT_DIR$/public/include/_box-shadow.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/stylesheets/sass/_gradient_editor.scss" afterPath="$PROJECT_DIR$/public/stylesheets/sass/_gradient_editor.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/stylesheets/sass/_text-shadow-editor.scss" afterPath="$PROJECT_DIR$/public/stylesheets/sass/_text-shadow-editor.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/include/_text-shadow.html" afterPath="$PROJECT_DIR$/public/include/_text-shadow.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/box-shadow.json" afterPath="$PROJECT_DIR$/public/directive/box-shadow.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/fonts/icon-box-shadow/demo.html" afterPath="$PROJECT_DIR$/public/fonts/icon-box-shadow/demo.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/fonts/icon-text-shadow/demo.html" afterPath="$PROJECT_DIR$/public/fonts/icon-text-shadow/demo.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/stylesheets/frameSketch.css" afterPath="$PROJECT_DIR$/public/stylesheets/frameSketch.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/frameSketch.html" afterPath="$PROJECT_DIR$/public/frameSketch.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/fonts/icon-box-shadow/icon-box-shadow.svg" afterPath="$PROJECT_DIR$/public/fonts/icon-box-shadow/icon-box-shadow.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/fonts/icon-text-shadow/icon-text-shadow.svg" afterPath="$PROJECT_DIR$/public/fonts/icon-text-shadow/icon-text-shadow.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/main.js" afterPath="$PROJECT_DIR$/public/directive/main.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.background-image.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.background-image.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.border-editor.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.border-editor.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.box-shadow-editor.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.box-shadow-editor.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.color-picker.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.color-picker.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.extension.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.extension.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.gradient-editor.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.gradient-editor.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.service.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.service.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.shape.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.shape.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.state-transition.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.state-transition.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.widget.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.widget.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/browser/service.js" afterPath="$PROJECT_DIR$/public/app/browser/service.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/api/public/userfile.js" afterPath="$PROJECT_DIR$/routes/api/public/userfile.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.text-shadow-editor.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.text-shadow-editor.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schema.json" afterPath="$PROJECT_DIR$/schema.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/fonts/icon-box-shadow/selection.json" afterPath="$PROJECT_DIR$/public/fonts/icon-box-shadow/selection.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/fonts/icon-text-shadow/selection.json" afterPath="$PROJECT_DIR$/public/fonts/icon-text-shadow/selection.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/fonts/icon-box-shadow/style.css" afterPath="$PROJECT_DIR$/public/fonts/icon-box-shadow/style.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/fonts/icon-text-shadow/style.css" afterPath="$PROJECT_DIR$/public/fonts/icon-text-shadow/style.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/text-shadow.json" afterPath="$PROJECT_DIR$/public/directive/text-shadow.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="meelet.iws" />
@@ -42,42 +81,8 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/public/stylesheets/sass/device/bootstrap_tablet.scss" />
-        <option value="$PROJECT_DIR$/public/stylesheets/sass/device/bootstrap_phone.scss" />
-        <option value="$PROJECT_DIR$/public/stylesheets/sass/device/bootstrap_desktop.scss" />
-        <option value="$PROJECT_DIR$/public/index.html" />
-        <option value="$PROJECT_DIR$/public/stylesheets/sass/index.scss" />
-        <option value="$PROJECT_DIR$/public/stylesheets/sass/_sketch_widget.scss" />
-        <option value="$PROJECT_DIR$/public/directive/trigger.json" />
-        <option value="$PROJECT_DIR$/repo/widget/standard/548e48d1708048063a0041a8/1.0.0/include/_widget_sidebar.html" />
-        <option value="$PROJECT_DIR$/repo/widget/standard/548e48d1708048063a0041a8/1.0.0/app/widget.html" />
-        <option value="$PROJECT_DIR$/repo/widget/standard/548e499a708048053a0041a7/1.0.0/directive/ng.ui.widget.modal-window.js" />
-        <option value="$PROJECT_DIR$/repo/widget/standard/548e499a708048053a0041a7/1.0.0/app/widget.html" />
-        <option value="$PROJECT_DIR$/repo/widget/standard/54c84a7b7080489a000041a7/1.0.0/include/_widget_creative_link.html" />
-        <option value="$PROJECT_DIR$/repo/widget/standard/54c84a7b7080489a000041a7/1.0.0/directive/ng.ui.widget.creative-link.js" />
-        <option value="$PROJECT_DIR$/repo/widget/standard/54c84a7b7080489a000041a7/1.0.0/app/widget.html" />
-        <option value="$PROJECT_DIR$/repo/widget/standard/548e48d1708048063a0041a8/1.0.0/directive/ng.ui.widget.sidebar.js" />
-        <option value="$PROJECT_DIR$/public/directive/main.js" />
-        <option value="$PROJECT_DIR$/schema.json" />
-        <option value="$PROJECT_DIR$/public/project.html" />
-        <option value="$PROJECT_DIR$/public/app/embedded/service.js" />
-        <option value="$PROJECT_DIR$/public/repoLib.html" />
-        <option value="$PROJECT_DIR$/public/repo.html" />
-        <option value="$PROJECT_DIR$/public/fonts/icon-shape/style.css" />
-        <option value="$PROJECT_DIR$/public/directive/ng.ui.util.js" />
-        <option value="$PROJECT_DIR$/public/fonts/icon-widget/style.css" />
-        <option value="$PROJECT_DIR$/public/stylesheets/sass/_widget.scss" />
-        <option value="$PROJECT_DIR$/public/stylesheets/sass/_shape.scss" />
-        <option value="$PROJECT_DIR$/public/fonts/icon-frame-sketch/style.css" />
-        <option value="$PROJECT_DIR$/public/fonts/icon-state-transition/style.css" />
-        <option value="$PROJECT_DIR$/public/stylesheets/sass/_state_transition.scss" />
-        <option value="$PROJECT_DIR$/public/include/_multilevel_menu.html" />
-        <option value="$PROJECT_DIR$/public/include/_state_transition.html" />
         <option value="$PROJECT_DIR$/project/54aa095281dea526028dd7fd/meelet.json" />
         <option value="$PROJECT_DIR$/project/54f6c8c36fcbeee008519034/meelet.json" />
-        <option value="$PROJECT_DIR$/public/frameSketch.html" />
-        <option value="$PROJECT_DIR$/public/directive/ng.ui.background-image.js" />
-        <option value="$PROJECT_DIR$/public/directive/ng.ui.color-picker.js" />
         <option value="$PROJECT_DIR$/public/directive/ng.ui.modal-window.js" />
         <option value="$PROJECT_DIR$/public/directive/ng.ui.multilevel-menu.js" />
         <option value="$PROJECT_DIR$/public/directive/ng.ui.widget-configurator.js" />
@@ -92,7 +97,41 @@
         <option value="$PROJECT_DIR$/public/directive/ng.ui.shape.js" />
         <option value="$PROJECT_DIR$/public/directive/ng.ui.widget.js" />
         <option value="$PROJECT_DIR$/public/directive/ng.ui.state-transition.js" />
+        <option value="$PROJECT_DIR$/public/include/_background-image.html" />
+        <option value="$PROJECT_DIR$/public/frameSketch.html" />
         <option value="$PROJECT_DIR$/public/directive/ng.ui.service.js" />
+        <option value="$PROJECT_DIR$/public/directive/ng.ui.extension.js" />
+        <option value="$PROJECT_DIR$/public/directive/ng.ui.border-editor.js" />
+        <option value="$PROJECT_DIR$/public/directive/ng.ui.color-picker.js" />
+        <option value="$PROJECT_DIR$/public/directive/ng.ui.gradient-editor.js" />
+        <option value="$PROJECT_DIR$/public/directive/ng.ui.background-image.js" />
+        <option value="$PROJECT_DIR$/public/stylesheets/sass/_gradient_editor.scss" />
+        <option value="$PROJECT_DIR$/public/fonts/icon-text-shadow/style.css" />
+        <option value="$PROJECT_DIR$/public/fonts/icon-box-shadow/style.css" />
+        <option value="$PROJECT_DIR$/schema.json" />
+        <option value="$PROJECT_DIR$/repo/effect/standard/54fd3e52708048f9020041a7/1.0.0/demo/textShadowDemo.html" />
+        <option value="$PROJECT_DIR$/repo/effect/standard/54fd3e497080488f000041a7/1.0.0/demo/boxShadowDemo.html" />
+        <option value="$PROJECT_DIR$/public/directive/box-shadow.json" />
+        <option value="$PROJECT_DIR$/public/directive/text-shadow.json" />
+        <option value="$PROJECT_DIR$/public/directive/ng.ui.box-shadow-editor.js" />
+        <option value="$PROJECT_DIR$/public/directive/main.js" />
+        <option value="$PROJECT_DIR$/public/directive/ng.ui.text-shadow-editor.js" />
+        <option value="$PROJECT_DIR$/repo/effect/standard/54fd3e497080488f000041a7/1.0.0/app/effect.json" />
+        <option value="$PROJECT_DIR$/repo/effect/standard/54fd3e52708048f9020041a7/1.0.0/app/effect.json" />
+        <option value="$PROJECT_DIR$/public/include/_text-shadow.html" />
+        <option value="$PROJECT_DIR$/public/include/_box-shadow.html" />
+        <option value="$PROJECT_DIR$/public/stylesheets/sass/_box-shadow-editor.scss" />
+        <option value="$PROJECT_DIR$/public/stylesheets/sass/_text-shadow-editor.scss" />
+        <option value="$PROJECT_DIR$/public/stylesheets/sass/_shape.scss" />
+        <option value="$PROJECT_DIR$/repo/effect/standard/54fd3e52708048f9020041a7/main.js" />
+        <option value="$PROJECT_DIR$/repo/effect/standard/54fd3e497080488f000041a7/1.0.0/main.js" />
+        <option value="$PROJECT_DIR$/repo/effect/standard/54fd3e52708048f9020041a7/1.0.0/stylesheets/sass/_text-shadow.scss" />
+        <option value="$PROJECT_DIR$/repo/effect/standard/54fd3e52708048f9020041a7/1.0.0/stylesheets/sass/widget.scss" />
+        <option value="$PROJECT_DIR$/repo/effect/standard/54fd3e52708048f9020041a7/1.0.0/stylesheets/sass/demo.scss" />
+        <option value="$PROJECT_DIR$/repo/effect/standard/54fd3e52708048f9020041a7/1.0.0/stylesheets/sass/_standard-text-shadow.scss" />
+        <option value="$PROJECT_DIR$/repo/effect/standard/54fd3e497080488f000041a7/1.0.0/stylesheets/sass/_standard-box-shadow.scss" />
+        <option value="$PROJECT_DIR$/repo/effect/standard/54fd3e497080488f000041a7/1.0.0/stylesheets/sass/demo.scss" />
+        <option value="$PROJECT_DIR$/repo/effect/standard/54fd3e497080488f000041a7/1.0.0/stylesheets/sass/widget.scss" />
       </list>
     </option>
   </component>
@@ -135,7 +174,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -164,7 +202,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
+              <option name="myItemId" value="repo" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -178,16 +216,137 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="project" />
+              <option name="myItemId" value="repo" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="54aa095281dea526028dd7fd" />
+              <option name="myItemId" value="effect" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="standard" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="meelet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="meelet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="repo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="effect" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="standard" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="54c99bfe8ead0e98000041a7" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="1.0.0" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="meelet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="meelet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="repo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="effect" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="standard" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="54c99bfe8ead0e98000041a7" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="1.0.0" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="stylesheets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="meelet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="meelet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="repo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="effect" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="standard" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="54c99bfe8ead0e98000041a7" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="1.0.0" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="stylesheets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sass" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="meelet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="meelet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -200,21 +359,26 @@
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="FullScreen" value="false" />
+    <property name="DefaultHtmlFileTemplate" value="Html5" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/public/fonts/icon-state-transition" />
-      <recent name="$PROJECT_DIR$/public/fonts/icon-frame-sketch" />
-      <recent name="$PROJECT_DIR$/public/fonts/icon-widget" />
-      <recent name="$PROJECT_DIR$/public/fonts/icon-shape" />
-      <recent name="$PROJECT_DIR$/repo/effect/standard/54ed88bd7080482a030041a7/1.0.0/demo" />
+      <recent name="$PROJECT_DIR$/repo/effect/standard/54fd3e497080488f000041a7/1.0.0/stylesheets/sass" />
+      <recent name="$PROJECT_DIR$/repo/effect/standard/54fd3e52708048f9020041a7/1.0.0/stylesheets/sass" />
+      <recent name="$PROJECT_DIR$/repo/effect/standard/54fd3e52708048f9020041a7/1.0.0/app" />
+      <recent name="$PROJECT_DIR$/repo/effect/standard/54fd3e497080488f000041a7/1.0.0/app" />
+      <recent name="$PROJECT_DIR$/repo/effect/standard/54fd3e52708048f9020041a7" />
     </key>
   </component>
   <component name="RunManager" selected="Node.js.meelet">
+    <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
+      <method />
+    </configuration>
     <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
       <method />
     </configuration>
-    <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
+    <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma" config-file="">
+      <envs />
       <method />
     </configuration>
     <configuration default="true" type="JSTestDriver:ConfigurationType" factoryName="JsTestDriver">
@@ -222,10 +386,6 @@
       <setting name="settingsFile" value="" />
       <setting name="serverType" value="INTERNAL" />
       <setting name="preferredDebugBrowser" value="Chrome" />
-      <method />
-    </configuration>
-    <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma" config-file="">
-      <envs />
       <method />
     </configuration>
     <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
@@ -297,8 +457,8 @@
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.329429" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32796487" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33333334" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39941263" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33235726" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39824304" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.22716442" sideWeight="0.50073206" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.329429" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -306,14 +466,14 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32892805" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.22716442" sideWeight="0.49926794" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32962668" sideWeight="0.49926794" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.329429" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39970717" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39970717" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -332,9 +492,9 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25496426" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.329429" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39970717" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.329429" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
     </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -363,417 +523,434 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/node_modules/mongoose/lib/schema/objectid.js">
+    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.horizontal-ruler.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.16030534" vertical-offset="0" max-vertical-offset="2880">
-          <caret line="7" column="7" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="7" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/mongodb/lib/mongodb/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7251908" vertical-offset="365" max-vertical-offset="1020">
-          <caret line="56" column="8" selection-start-line="56" selection-start-column="8" selection-end-line="56" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/repo.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.45166403" vertical-offset="0" max-vertical-offset="870">
-          <caret line="19" column="123" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="123" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/app/embedded/service.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="634" max-vertical-offset="1395">
-          <caret line="72" column="0" selection-start-line="72" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/repoLib.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="885">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="5475">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/include/_dock.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="655">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/stylesheets/sass/_global.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6796116" vertical-offset="0" max-vertical-offset="720">
-          <caret line="28" column="17" selection-start-line="28" selection-start-column="17" selection-end-line="28" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/fonts/icon-widget/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8854962" vertical-offset="1355" max-vertical-offset="2085">
-          <caret line="129" column="28" selection-start-line="129" selection-start-column="13" selection-end-line="129" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/fonts/icon-shape/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.610687" vertical-offset="1235" max-vertical-offset="1890">
-          <caret line="109" column="28" selection-start-line="109" selection-start-column="28" selection-end-line="109" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/stylesheets/sass/_shape.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.30903327" vertical-offset="165" max-vertical-offset="4365">
-          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/fonts/icon-frame-sketch/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.9541985" vertical-offset="4250" max-vertical-offset="4965">
-          <caret line="325" column="0" selection-start-line="325" selection-start-column="0" selection-end-line="325" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/fonts/icon-state-transition/style.css">
+    <entry file="file://$PROJECT_DIR$/public/javascripts/underscore/1.6.0/underscore.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33282444" vertical-offset="3157" max-vertical-offset="6585">
-          <caret line="225" column="0" selection-start-line="225" selection-start-column="0" selection-end-line="225" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.33282444" vertical-offset="14737" max-vertical-offset="20190">
+          <caret line="1000" column="4" selection-start-line="1000" selection-start-column="4" selection-end-line="1000" selection-end-column="4" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/stylesheets/sass/_widget.scss">
+    <entry file="file://$PROJECT_DIR$/public/app/controller.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7385103" vertical-offset="1979" max-vertical-offset="2610">
-          <caret line="243" column="26" selection-start-line="243" selection-start-column="0" selection-end-line="285" selection-end-column="0" />
-          <folding>
-            <element signature="e#4921#6175#0" expanded="false" />
-            <element signature="e#6300#7671#0" expanded="false" />
-            <element signature="e#7797#9162#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.simple-dropdown.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6728972" vertical-offset="4023" max-vertical-offset="4695">
-          <caret line="297" column="42" selection-start-line="274" selection-start-column="40" selection-end-line="297" selection-end-column="42" />
+        <state vertical-scroll-proportion="0.7071651" vertical-offset="5741" max-vertical-offset="12360">
+          <caret line="413" column="84" selection-start-line="413" selection-start-column="65" selection-end-line="413" selection-end-column="84" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/stylesheets/sass/_multilevel-menu.scss">
+    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.extension.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2730">
-          <caret line="0" column="7" selection-start-line="0" selection-start-column="7" selection-end-line="0" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/stylesheets/sass/_state_transition.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.503962" vertical-offset="4797" max-vertical-offset="15750">
-          <caret line="341" column="0" selection-start-line="341" selection-start-column="0" selection-end-line="341" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/include/_multilevel_menu.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.04754358" vertical-offset="0" max-vertical-offset="631">
-          <caret line="2" column="73" selection-start-line="2" selection-start-column="63" selection-end-line="2" selection-end-column="73" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/repo/widget/standard/54c84a7b7080489a000041a7/1.0.0/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.38931298" vertical-offset="0" max-vertical-offset="1335">
-          <caret line="17" column="30" selection-start-line="17" selection-start-column="30" selection-end-line="17" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/repo/effect/standard/54ed88bd7080482a030041a7/1.0.0/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.114503816" vertical-offset="0" max-vertical-offset="655">
-          <caret line="5" column="25" selection-start-line="5" selection-start-column="12" selection-end-line="5" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/include/_state_transition.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.26537216" vertical-offset="1561" max-vertical-offset="4770">
-          <caret line="115" column="24" selection-start-line="115" selection-start-column="24" selection-end-line="115" selection-end-column="24" />
+        <state vertical-scroll-proportion="0.4335878" vertical-offset="9271" max-vertical-offset="10110">
+          <caret line="637" column="51" selection-start-line="637" selection-start-column="51" selection-end-line="637" selection-end-column="51" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
+    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.gradient-editor.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4054054" vertical-offset="135" max-vertical-offset="915">
-          <caret line="26" column="11" selection-start-line="26" selection-start-column="5" selection-end-line="26" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/api/public/file.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.690625" vertical-offset="2318" max-vertical-offset="2985">
-          <caret line="184" column="18" selection-start-line="184" selection-start-column="18" selection-end-line="184" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/commons.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.6203125" vertical-offset="7228" max-vertical-offset="9780">
-          <caret line="551" column="23" selection-start-line="549" selection-start-column="20" selection-end-line="551" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/stylesheets/frameSketch.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.023364486" vertical-offset="0" max-vertical-offset="270585">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/mongodb/lib/mongodb/scope.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.13577023" vertical-offset="698" max-vertical-offset="1380">
-          <caret line="50" column="4" selection-start-line="50" selection-start-column="4" selection-end-line="50" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/mongoose/lib/collection.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.21409921" vertical-offset="2527" max-vertical-offset="2910">
-          <caret line="163" column="21" selection-start-line="163" selection-start-column="21" selection-end-line="163" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/mongodb/lib/mongodb/collection.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.73783785" vertical-offset="2202" max-vertical-offset="10230">
-          <caret line="165" column="0" selection-start-line="165" selection-start-column="0" selection-end-line="165" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/mongoose/lib/model.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.24637681" vertical-offset="18582" max-vertical-offset="39255">
-          <caret line="1234" column="6" selection-start-line="1234" selection-start-column="6" selection-end-line="1234" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/include/_topbar.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.47694755" vertical-offset="0" max-vertical-offset="629">
-          <caret line="20" column="99" selection-start-line="20" selection-start-column="84" selection-end-line="20" selection-end-column="99" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/project.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-16.208334" vertical-offset="691" max-vertical-offset="1320">
-          <caret line="72" column="59" selection-start-line="72" selection-start-column="59" selection-end-line="72" selection-end-column="59" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.widget-configurator.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2140625" vertical-offset="1138" max-vertical-offset="3690">
-          <caret line="85" column="36" selection-start-line="85" selection-start-column="36" selection-end-line="85" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.multilevel-menu.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.21745789" vertical-offset="1493" max-vertical-offset="3105">
-          <caret line="109" column="36" selection-start-line="109" selection-start-column="36" selection-end-line="109" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.modal-window.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.21898928" vertical-offset="397" max-vertical-offset="1050">
-          <caret line="36" column="36" selection-start-line="36" selection-start-column="36" selection-end-line="36" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.color-picker.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2140625" vertical-offset="1528" max-vertical-offset="2235">
-          <caret line="111" column="36" selection-start-line="111" selection-start-column="36" selection-end-line="111" selection-end-column="36" />
+        <state vertical-scroll-proportion="0.39252338" vertical-offset="5103" max-vertical-offset="5745">
+          <caret line="357" column="38" selection-start-line="357" selection-start-column="38" selection-end-line="357" selection-end-column="38" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.background-image.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2140625" vertical-offset="3808" max-vertical-offset="7470">
-          <caret line="263" column="36" selection-start-line="263" selection-start-column="36" selection-end-line="263" selection-end-column="36" />
+        <state vertical-scroll-proportion="-0.22741432" vertical-offset="5321" max-vertical-offset="7350">
+          <caret line="345" column="70" selection-start-line="345" selection-start-column="70" selection-end-line="345" selection-end-column="70" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/project/54aa095281dea526028dd7fd/meelet.json">
+    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.color-picker.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.047694754" vertical-offset="0" max-vertical-offset="7470">
-          <caret line="2" column="4" selection-start-line="2" selection-start-column="4" selection-end-line="2" selection-end-column="4" />
+        <state vertical-scroll-proportion="0.33333334" vertical-offset="716" max-vertical-offset="2265">
+          <caret line="62" column="38" selection-start-line="62" selection-start-column="38" selection-end-line="62" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.border-editor.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33282444" vertical-offset="2782" max-vertical-offset="4605">
+          <caret line="200" column="38" selection-start-line="200" selection-start-column="38" selection-end-line="200" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/fonts/icon-text-shadow/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.9541985" vertical-offset="2270" max-vertical-offset="2985">
+          <caret line="193" column="0" selection-start-line="193" selection-start-column="0" selection-end-line="193" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/fonts/icon-box-shadow/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.9541985" vertical-offset="2990" max-vertical-offset="3705">
+          <caret line="241" column="0" selection-start-line="241" selection-start-column="0" selection-end-line="241" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/stylesheets/sass/_gradient_editor.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.26624405" vertical-offset="3042" max-vertical-offset="5310">
+          <caret line="214" column="20" selection-start-line="214" selection-start-column="20" selection-end-line="214" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/include/_gradient-editor.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2614897" vertical-offset="0" max-vertical-offset="825">
+          <caret line="11" column="35" selection-start-line="11" selection-start-column="20" selection-end-line="11" selection-end-column="35" />
+          <folding>
+            <element signature="n#div#1;n#div#0;n#div#1;n#!!top" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/schema.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6196513" vertical-offset="404" max-vertical-offset="1050">
+          <caret line="53" column="24" selection-start-line="53" selection-start-column="24" selection-end-line="53" selection-end-column="24" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/frameSketch.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.916667" vertical-offset="287" max-vertical-offset="1980">
-          <caret line="35" column="55" selection-start-line="35" selection-start-column="55" selection-end-line="35" selection-end-column="55" />
+        <state vertical-scroll-proportion="0.5566343" vertical-offset="2176" max-vertical-offset="3750">
+          <caret line="168" column="58" selection-start-line="168" selection-start-column="58" selection-end-line="168" selection-end-column="58" />
           <folding>
-            <element signature="n#div#2;n#div#0;n#div#0;n#div#0;n#!!top" expanded="false" />
+            <marker date="1425872029000" expanded="true" signature="-1:-1" placeholder="{&quot;background-image&quot;: 'url(images/{{sketchDevice.img}})'...}" />
+            <marker date="1425872029000" expanded="true" signature="-1:-1" placeholder="{&quot;min-width&quot;: '{{sketchDevice.width + 90}}'...}" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/javascripts/underscore/1.6.0/underscore.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3598775" vertical-offset="19250" max-vertical-offset="20190">
-          <caret line="1302" column="75" selection-start-line="1302" selection-start-column="69" selection-end-line="1302" selection-end-column="75" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/include/_shape.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.875" vertical-offset="0" max-vertical-offset="900">
-          <caret line="11" column="45" selection-start-line="11" selection-start-column="39" selection-end-line="11" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/api/public/userfile.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="9388" max-vertical-offset="11505">
-          <caret line="640" column="0" selection-start-line="640" selection-start-column="0" selection-end-line="640" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/app/browser/service.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4287902" vertical-offset="8840" max-vertical-offset="12195">
-          <caret line="608" column="28" selection-start-line="608" selection-start-column="28" selection-end-line="608" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/app/route.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3782542" vertical-offset="398" max-vertical-offset="1770">
-          <caret line="43" column="42" selection-start-line="43" selection-start-column="29" selection-end-line="43" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.topbar.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6309342" vertical-offset="893" max-vertical-offset="1845">
-          <caret line="87" column="56" selection-start-line="87" selection-start-column="56" selection-end-line="87" selection-end-column="56" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/include/_widget.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.38961038" vertical-offset="0" max-vertical-offset="855">
-          <caret line="16" column="60" selection-start-line="16" selection-start-column="60" selection-end-line="16" selection-end-column="60" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.496875" vertical-offset="387" max-vertical-offset="1545">
-          <caret line="47" column="38" selection-start-line="47" selection-start-column="37" selection-end-line="47" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.util.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.378125" vertical-offset="5008" max-vertical-offset="15495">
-          <caret line="350" column="60" selection-start-line="350" selection-start-column="60" selection-end-line="350" selection-end-column="60" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/app/controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="6414" max-vertical-offset="12180">
-          <caret line="446" column="51" selection-start-line="446" selection-start-column="51" selection-end-line="446" selection-end-column="51" />
+        <state vertical-scroll-proportion="0.60679615" vertical-offset="0" max-vertical-offset="618">
+          <caret line="48" column="14" selection-start-line="9" selection-start-column="0" selection-end-line="48" selection-end-column="14" />
           <folding>
-            <element signature="e#30932#31694#0" expanded="false" />
+            <element signature="n#div#1;n#div#1;n#div#0;n#!!top" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.widget.js">
+    <entry file="file://$PROJECT_DIR$/public/app/browser/service.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0703125" vertical-offset="0" max-vertical-offset="5145">
-          <caret line="3" column="123" selection-start-line="3" selection-start-column="106" selection-end-line="3" selection-end-column="123" />
-          <folding>
-            <element signature="e#10926#11810#0" expanded="false" />
-          </folding>
+        <state vertical-scroll-proportion="0.0" vertical-offset="3851" max-vertical-offset="12195">
+          <caret line="257" column="29" selection-start-line="257" selection-start-column="29" selection-end-line="257" selection-end-column="29" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.shape.js">
+    <entry file="file://$PROJECT_DIR$/repo/effect/standard/54fd3e497080488f000041a7/1.0.0/demo/boxShadowDemo.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0703125" vertical-offset="0" max-vertical-offset="4860">
-          <caret line="3" column="123" selection-start-line="3" selection-start-column="106" selection-end-line="3" selection-end-column="123" />
+        <state vertical-scroll-proportion="0.21394612" vertical-offset="0" max-vertical-offset="631">
+          <caret line="9" column="7" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/repo/effect/standard/54fd3e52708048f9020041a7/1.0.0/demo/textShadowDemo.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="655">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.state-transition.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3375" vertical-offset="6054" max-vertical-offset="7035">
-          <caret line="418" column="0" selection-start-line="418" selection-start-column="0" selection-end-line="418" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.43146417" vertical-offset="683" max-vertical-offset="6375">
+          <caret line="64" column="47" selection-start-line="64" selection-start-column="47" selection-end-line="64" selection-end-column="47" />
+          <folding>
+            <element signature="e#17687#20525#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/boxShadow.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1260">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/directive/box-shadow.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="8760">
+          <caret line="0" column="1" selection-start-line="0" selection-start-column="1" selection-end-line="0" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/directive/text-shadow.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.21394612" vertical-offset="0" max-vertical-offset="4380">
+          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/textShadow.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="690">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/directive/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.10687023" vertical-offset="1730" max-vertical-offset="2385">
+          <caret line="120" column="53" selection-start-line="120" selection-start-column="53" selection-end-line="120" selection-end-column="53" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.service.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4140625" vertical-offset="45905" max-vertical-offset="46545">
-          <caret line="3701" column="33" selection-start-line="3701" selection-start-column="33" selection-end-line="3701" selection-end-column="33" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="38108" max-vertical-offset="55830">
+          <caret line="2556" column="69" selection-start-line="2556" selection-start-column="66" selection-end-line="2556" selection-end-column="69" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.box-shadow-editor.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.14018692" vertical-offset="0" max-vertical-offset="6135">
+          <caret line="6" column="183" selection-start-line="6" selection-start-column="80" selection-end-line="6" selection-end-column="183" />
           <folding>
-            <element signature="e#18471#19091#0" expanded="false" />
-            <element signature="e#21004#25011#0" expanded="false" />
-            <element signature="e#25055#26370#0" expanded="false" />
-            <element signature="e#33692#35768#0" expanded="false" />
-            <element signature="e#37626#38543#0" expanded="false" />
-            <element signature="e#38592#39777#0" expanded="false" />
-            <element signature="e#39828#41802#0" expanded="false" />
-            <element signature="e#125543#144084#0" expanded="false" />
+            <element signature="e#22819#25657#0" expanded="false" />
+            <element signature="e#25754#28424#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.text-shadow-editor.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.36915886" vertical-offset="5643" max-vertical-offset="6300">
+          <caret line="426" column="38" selection-start-line="426" selection-start-column="38" selection-end-line="426" selection-end-column="38" />
+          <folding>
+            <element signature="e#2884#4693#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/include/_state_transition.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.605178" vertical-offset="61" max-vertical-offset="4770">
+          <caret line="29" column="55" selection-start-line="29" selection-start-column="32" selection-end-line="29" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/repo/effect/standard/54c99bfe8ead0e98000041a7/1.0.0/app/effect.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.40412045" vertical-offset="0" max-vertical-offset="631">
+          <caret line="17" column="1" selection-start-line="17" selection-start-column="1" selection-end-line="17" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/repo/effect/standard/54ed88bd7080482a030041a7/1.0.0/app/effect.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.42789224" vertical-offset="0" max-vertical-offset="3840">
+          <caret line="18" column="38" selection-start-line="18" selection-start-column="38" selection-end-line="18" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/repo/effect/standard/54fd3e497080488f000041a7/1.0.0/app/effect.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.14263074" vertical-offset="0" max-vertical-offset="7110">
+          <caret line="111" column="18" selection-start-line="111" selection-start-column="18" selection-end-line="111" selection-end-column="18" />
+          <folding>
+            <element signature="e#4#2325#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/repo/effect/standard/54fd3e52708048f9020041a7/1.0.0/app/effect.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.28526148" vertical-offset="0" max-vertical-offset="3120">
+          <caret line="91" column="10" selection-start-line="91" selection-start-column="10" selection-end-line="91" selection-end-column="10" />
+          <folding>
+            <element signature="e#4#1708#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/stylesheets/sass/_state_transition.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.5" vertical-offset="7422" max-vertical-offset="16350">
+          <caret line="510" column="64" selection-start-line="510" selection-start-column="51" selection-end-line="510" selection-end-column="64" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/include/_shape.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.09546926" vertical-offset="91" max-vertical-offset="900">
+          <caret line="10" column="32" selection-start-line="10" selection-start-column="20" selection-end-line="10" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/include/_text-shadow.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4368932" vertical-offset="75" max-vertical-offset="1620">
+          <caret line="23" column="56" selection-start-line="23" selection-start-column="56" selection-end-line="23" selection-end-column="56" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/stylesheets/sass/_text-shadow-editor.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3171521" vertical-offset="1754" max-vertical-offset="4455">
+          <caret line="147" column="44" selection-start-line="147" selection-start-column="44" selection-end-line="147" selection-end-column="44" />
+          <folding>
+            <element signature="e#4291#5067#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/stylesheets/sass/_box-shadow-editor.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.36893204" vertical-offset="7032" max-vertical-offset="8775">
+          <caret line="484" column="45" selection-start-line="484" selection-start-column="23" selection-end-line="484" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/include/_box-shadow.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.0" vertical-offset="2397" max-vertical-offset="3075">
+          <caret line="304" column="87" selection-start-line="304" selection-start-column="65" selection-end-line="304" selection-end-column="87" />
+          <folding>
+            <element signature="n#div#2;n#div#1;n#div#1;n#div#1;n#div#1;n#!!top" expanded="false" />
+            <element signature="n#div#3;n#div#1;n#div#1;n#div#1;n#div#1;n#!!top" expanded="false" />
+            <element signature="n#div#0;n#div#3;n#div#1;n#div#1;n#div#1;n#div#1;n#!!top" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/stylesheets/sass/_shape.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-10.666667" vertical-offset="2219" max-vertical-offset="5190">
+          <caret line="165" column="0" selection-start-line="165" selection-start-column="0" selection-end-line="165" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/repo/effect/standard/54fd3e497080488f000041a7/1.0.0/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.34351146" vertical-offset="0" max-vertical-offset="655">
+          <caret line="15" column="5" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/repo/effect/standard/54c99bfe8ead0e98000041a7/1.0.0/stylesheets/sass/widget.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.09508716" vertical-offset="0" max-vertical-offset="631">
+          <caret line="4" column="30" selection-start-line="0" selection-start-column="0" selection-end-line="4" selection-end-column="74" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/repo/effect/standard/54fd3e52708048f9020041a7/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.36641222" vertical-offset="0" max-vertical-offset="655">
+          <caret line="16" column="2" selection-start-line="16" selection-start-column="2" selection-end-line="16" selection-end-column="2" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/stylesheets/sass/compass/css3/_text-shadow.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3462783" vertical-offset="131" max-vertical-offset="1320">
+          <caret line="23" column="7" selection-start-line="23" selection-start-column="7" selection-end-line="23" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/repo/effect/standard/54c99bfe8ead0e98000041a7/1.0.0/stylesheets/sass/demo.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2614897" vertical-offset="0" max-vertical-offset="1065">
+          <caret line="11" column="16" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/repo/effect/standard/54c99bfe8ead0e98000041a7/1.0.0/stylesheets/sass/_creative-button.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.36407766" vertical-offset="0" max-vertical-offset="618">
+          <caret line="15" column="12" selection-start-line="15" selection-start-column="12" selection-end-line="15" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/repo/effect/standard/54fd3e497080488f000041a7/1.0.0/stylesheets/sass/_standard-box-shadow.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.23771791" vertical-offset="0" max-vertical-offset="631">
+          <caret line="10" column="9" selection-start-line="10" selection-start-column="9" selection-end-line="10" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/repo/effect/standard/54fd3e497080488f000041a7/1.0.0/stylesheets/sass/widget.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.09508716" vertical-offset="0" max-vertical-offset="631">
+          <caret line="4" column="27" selection-start-line="4" selection-start-column="27" selection-end-line="4" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/repo/effect/standard/54fd3e497080488f000041a7/1.0.0/stylesheets/sass/demo.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.16640253" vertical-offset="0" max-vertical-offset="631">
+          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/repo/effect/standard/54fd3e52708048f9020041a7/1.0.0/stylesheets/sass/widget.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.09508716" vertical-offset="0" max-vertical-offset="631">
+          <caret line="4" column="32" selection-start-line="4" selection-start-column="32" selection-end-line="4" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/repo/effect/standard/54fd3e52708048f9020041a7/1.0.0/stylesheets/sass/demo.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.14263074" vertical-offset="0" max-vertical-offset="631">
+          <caret line="6" column="76" selection-start-line="6" selection-start-column="76" selection-end-line="6" selection-end-column="76" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/repo/effect/standard/54fd3e52708048f9020041a7/1.0.0/stylesheets/sass/_standard-text-shadow.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.09508716" vertical-offset="0" max-vertical-offset="631">
+          <caret line="4" column="51" selection-start-line="0" selection-start-column="0" selection-end-line="18" selection-end-column="1" />
+          <folding />
         </state>
       </provider>
     </entry>

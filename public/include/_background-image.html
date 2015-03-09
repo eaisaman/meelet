@@ -16,7 +16,7 @@
         <div class="backgroundImagePane">
             <div class="paneTitle fs-x-small">Image Source</div>
             <div class="paneContent fs-x-smaller"
-                 flow-init="{'target':'api/public/projectImageChunk', 'simultaneousUploads':1, 'query':{'projectId':project._id}}"
+                 flow-init="{'target':'api/public/projectImageChunk', 'simultaneousUploads':1, 'query':{'projectId':project.projectRecord._id}}"
                  flow-file-success="onUploadSuccess($file, $message)" flow-files-submitted="$flow.upload()">
                 <div class="backgroundImageButton form-control fs-x-smaller-before icon-background-image-before icon-background-image-upload-before"
                      flow-btn>
@@ -86,8 +86,8 @@
                  ui-simple-dropdown
                  ui-simple-dropdown-opts="{dataField:'value', labelField:'name', zIndex:100, gutter: 5, showTitle: true, displayUnsetOption: false}"
                  selection-list="repeatList"
-                 select-item="pickBackgroundRepeatValue"
-                 on-option-select="">
+                 select-item="pickedBackgroundRepeat"
+                 on-option-select="setBackgroundRepeatValue(pickedBackgroundRepeat)">
             </div>
         </div>
     </div>

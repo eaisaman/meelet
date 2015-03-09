@@ -8,7 +8,9 @@ define(
                 'use strict';
 
                 var boundProperties = {color: "="},
-                    defaults = {},
+                    defaults = {
+                        color: "#000000"
+                    },
                     options = angular.extend(defaults, opts),
                     injectObj = _.object(inject, Array.prototype.slice.call(arguments));
 
@@ -55,7 +57,7 @@ define(
                                 );
 
                                 scope.pickColorValue = function (styles) {
-                                    return scope.pickStyle(styles, scope.pseudo)["color"] || "#000000";
+                                    return scope.pickStyle(styles, scope.pseudo)["color"] || options.color;
                                 }
 
                                 scope.setColor = function (value) {
@@ -84,9 +86,9 @@ define(
                                 scope.toggleColorControl = function () {
                                     scope.toggleEnableControl().then(function (enable) {
                                         if (enable) {
-                                            scope.setColor(scope.pickColorValue(scope.color));
+                                            scope.setColor(options.color);
                                         } else {
-                                            scope.color = {};
+                                            scope.color = angular.copy(scope.unsetStyle(scope.color, scope.pseudo));
                                         }
                                     });
                                 }

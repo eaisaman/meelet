@@ -50,6 +50,7 @@
     "designer": "string",
     "desc": "string",
     "type": "string",
+    "uiControl": ["object"],
     "version": "string",
     "versionList": ["object"]
   },

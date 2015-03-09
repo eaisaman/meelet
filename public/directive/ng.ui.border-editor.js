@@ -9,7 +9,11 @@ define(
 
                 var boundProperties = {border: "="},
                     defaults = {
-                        borderJson: ""
+                        borderJson: "",
+                        borderColor: "#000000",
+                        borderWidth: "0px",
+                        borderStyle: "solid",
+                        borderRadius: "0px"
                     },
                     options = angular.extend(defaults, opts),
                     injectObj = _.object(inject, Array.prototype.slice.call(arguments));
@@ -63,21 +67,21 @@ define(
                                 }
 
                                 scope.pickBorderColorValue = function (styles) {
-                                    return scope.pickStyle(styles, scope.pseudo)["border-color"] || "#000000";
+                                    return scope.pickStyle(styles, scope.pseudo)["border-color"] || options.borderColor;
                                 }
 
                                 scope.pickBorderWidthValue = function (styles) {
-                                    var value = scope.pickStyle(styles, scope.pseudo)["border-width"] || "0px";
+                                    var value = scope.pickStyle(styles, scope.pseudo)["border-width"] || options.borderWidth;
                                     if (!value.match(/px$/)) value += "px";
                                     return value;
                                 }
 
                                 scope.pickBorderStyleValue = function (styles) {
-                                    return scope.pickStyle(styles, scope.pseudo)["border-style"] || "solid";
+                                    return scope.pickStyle(styles, scope.pseudo)["border-style"] || options.borderStyle;
                                 }
 
                                 scope.pickBorderRadiusValue = function (styles) {
-                                    var value = scope.pickStyle(styles, scope.pseudo)["border-radius"] || "0px";
+                                    var value = scope.pickStyle(styles, scope.pseudo)["border-radius"] || options.borderRadius;
                                     if (!value.match(/px$/)) value += "px";
                                     return value;
                                 }
@@ -132,12 +136,12 @@ define(
                                 scope.toggleBorderControl = function () {
                                     scope.borderList && scope.borderList.length && scope.toggleEnableControl().then(function (enable) {
                                         if (enable) {
-                                            scope.setBorderColor(scope.pickBorderColorValue(scope.border));
-                                            scope.setBorderWidth(scope.pickBorderWidthValue(scope.border));
-                                            scope.setBorderStyle(scope.pickBorderStyleValue(scope.border));
-                                            scope.setBorderRadius(scope.pickBorderRadiusValue(scope.border));
+                                            scope.setBorderColor(options.borderColor);
+                                            scope.setBorderWidth(options.borderWidth);
+                                            scope.setBorderStyle(options.borderStyle);
+                                            scope.setBorderRadius(options.borderRadius);
                                         } else {
-                                            scope.border = {};
+                                            scope.border = angular.copy(scope.unsetStyle(scope.border, scope.pseudo));
                                         }
                                     });
                                 }

@@ -118,14 +118,10 @@ define([
             });
 
             //Text Shadow Editor
-            directiveConfigs[13](appModule, extension, {
-                textShadowJson: "directive/text-shadow.json"
-            });
+            directiveConfigs[13](appModule, extension);
 
             //Box Shadow Editor
-            directiveConfigs[14](appModule, extension, {
-                boxShadowJson: "directive/box-shadow.json"
-            });
+            directiveConfigs[14](appModule, extension);
 
             //Shape
             directiveConfigs[15](appModule, extension);

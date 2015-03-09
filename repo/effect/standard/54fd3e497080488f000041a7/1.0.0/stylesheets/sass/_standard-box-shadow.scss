@@ -1,0 +1,19 @@
+@import "compass/css3/box-shadow";
+@import "compass/css3/transform";
+@import "compass/css3/filter";
+
+@mixin standard-box-shadow($artifactName, $version) {
+    [#{$artifactName}-#{str_replace($version, '.', '-')}] {
+        &[effect=sonar] {
+        }
+
+        &[effect=shake] {
+        }
+
+        &[effect=shrink] {
+        }
+
+        &[effect=sunken] {
+        }
+    }
+}
