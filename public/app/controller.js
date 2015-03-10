@@ -711,7 +711,8 @@ define(
                     if ($scope.dependencyRecord) {
                         var artifact = _.findWhere($scope.dependencyRecord.artifactList, {artifactId: repoArtifact._id});
                         if (artifact) {
-                            if ($rootScope.loadedProject.unselectArtifact($scope.repoLib._id, repoArtifact._id)) {
+                            var result = $rootScope.loadedProject.unselectArtifact($scope.repoLib._id, repoArtifact._id);
+                            if (result.artifactUnselect) {
                                 delete repoArtifact._selected;
                                 delete repoArtifact._version;
                             }

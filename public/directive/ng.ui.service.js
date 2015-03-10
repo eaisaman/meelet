@@ -214,17 +214,34 @@ define(
                     var self = this;
 
                     if (self.projectRecord._id) {
-                        this.xrefRecord.every(function (xref) {
-                            return xref.artifactList.every(function (a) {
+                        var xrefIndex;
+
+                        this.xrefRecord.every(function (xref, i) {
+                            var index, found;
+
+                            found = !xref.artifactList.every(function (a, j) {
                                 if (a.artifactId == artifactId) {
                                     if (a.refCount) {
                                         a.refCount--;
+                                        index = j;
                                     }
                                     return false;
                                 }
                                 return true;
                             });
+
+                            if (index != null) {
+                                xref.artifactList.splice(index, 1);
+                                if (!xref.artifactList.length)
+                                    xrefIndex = i;
+                            }
+
+                            return !found;
                         });
+
+                        if (xrefIndex != null) {
+                            self.xrefRecord.splice(xrefIndex, 1);
+                        }
                     }
                 },
                 selectArtifact: function (libraryId, artifactId, name, version) {
@@ -253,12 +270,23 @@ define(
                     return false;
                 },
                 unselectArtifact: function (libraryId, artifactId) {
-                    var self = this;
+                    var self = this,
+                        result = {libraryUnselect: false, artifactUnselect: false};
 
                     if (self.projectRecord._id) {
-                        var xref = _.findWhere(this.xrefRecord, {libraryId: libraryId});
-                        if (xref) {
-                            var index;
+                        var xrefIndex;
+
+                        if (!self.xrefRecord.every(function (record, i) {
+                                if (record.libraryId === libraryId) {
+                                    xrefIndex = i;
+
+                                    return false;
+                                }
+
+                                return true;
+                            })) {
+                            var xref = self.xrefRecord[xrefIndex],
+                                index;
 
                             xref.artifactList.every(function (a, i) {
                                 if (a.artifactId == artifactId) {
@@ -272,13 +300,17 @@ define(
 
                             if (index != null) {
                                 xref.artifactList.splice(index, 1);
+                                result.artifactUnselect = true;
 
-                                return true;
+                                if (!xref.artifactList.length) {
+                                    result.libraryUnselect = true;
+                                    self.xrefRecord.splice(xrefIndex, 1);
+                                }
                             }
                         }
                     }
 
-                    return false;
+                    return result;
                 },
                 tryLock: function (userId) {
                     var self = this;

@@ -1,7 +1,4 @@
 <style>
-    {{generateBoxShadowStyle(filterEffectLibraryList)}}
-</style>
-<style>
     {{composeBoxShadowCss(pickedBoxShadow, 'boxShadowPickerPane')}}
 </style>
 <div class="ui-control-title fs-x-small">
@@ -33,17 +30,25 @@
         <div class="tabContents">
             <div tab-sel="tab-content-box-shadow-value-1" class="presetBoxShadow">
                 <div class="effectLibrary"
+                     ng-if="effectLibrary.uiControl === 'uiBoxShadowEditor'"
                      ng-repeat="effectLibrary in filterEffectLibraryList">
-                    <div class="libraryTitle icon-box-shadow-before icon-box-shadow-box-before">{{effectLibrary.name}}
+                    <div class="libraryTitle icon-box-shadow-before icon-box-shadow-library-before">
+                        {{effectLibrary.name}}
                     </div>
-                    <div class="accordianGroup"
+                    <div class="accordianGroup fs-x-small"
                          ng-repeat="artifact in filterArtifactList(effectLibrary, project.xrefRecord)"
                          ng-click="toggleSelect($event.currentTarget, $event)">
+
+                        <style>
+                            {{generateBoxShadowStyle(artifact.json)}}
+                        </style>
+
                         <div class="accordianTitle col-as-12 icon-box-shadow-before icon-box-shadow-angle-double-up-before">
                             {{artifact.name}}
                         </div>
                         <div class="accordianBody col-as-12 no-padding">
-                            <div class="shadowPane fs-x-small col-as-10 no-padding"
+                            <div ng-attr-id="boxShadow-{{pane.value}}"
+                                 class="shadowPane fs-x-small col-as-10 no-padding"
                                  ng-repeat="pane in artifact.json"
                                  ng-click="pickBoxShadow(pane, $event)">
                                 <span class="fs-x-tiny vt-align-center">{{pane.name}}</span>
@@ -305,15 +310,17 @@
             <div tab-sel="tab-content-box-shadow-value-4" class="boxShadowArtifactPanes vt-scroll-pane">
                 <div class="accordianGroup"
                      ng-repeat="effectLibrary in markLibrarySelection(effectLibraryList, project.xrefRecord)"
+                     ng-if="effectLibrary.uiControl === 'uiBoxShadowEditor'"
                      ng-click="toggleSelect($event.currentTarget, $event)">
-                    <div class="accordianTitle col-as-12 icon-box-shadow-before icon-box-shadow-angle-double-up-before">
-                        <span class="col-as-9 no-padding">{{effectLibrary.name}}</span>
+                    <div class="accordianTitle col-as-12 fs-x-small icon-box-shadow-before icon-box-shadow-angle-double-up-before">
+                        <span class="col-as-10 no-padding"
+                              ng-attr-title="{{effectLibrary.desc}}">{{effectLibrary.desc}}</span>
 
-                        <div class="toggleSelectionButton col-as-3 no-padding-right icon-box-shadow-before"
+                        <div class="toggleSelectionButton col-as-2 no-padding-right icon-box-shadow-before"
                              ng-class="{'icon-box-shadow-square-before':!effectLibrary._selected, 'icon-box-shadow-square-check-before':effectLibrary._selected, 'partialSelect':isPartialSelection(effectLibrary, project.xrefRecord)}"
                              ng-click="toggleLibrarySelection(effectLibrary, $event)"></div>
                     </div>
-                    <div class="accordianBody fs-x-small col-as-12 no-padding">
+                    <div class="accordianBody fs-x-smaller col-as-12 no-padding">
                         <div class="effectPane col-as-12 no-padding"
                              ng-repeat="artifact in markArtifactSelection(effectLibrary, project.xrefRecord)"
                              ng-click="$event.stopPropagation()">

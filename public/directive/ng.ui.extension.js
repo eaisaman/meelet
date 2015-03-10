@@ -525,40 +525,36 @@ define(
         }
 
         Extension.prototype.generateBoxShadowStyleService = function (uiUtilService) {
-            return function (groups) {
+            return function (group) {
                 var ret = [];
 
-                if (groups && toString.call(groups) === '[object Array]') {
-                    groups.forEach(function (group) {
-                        group.list && toString.call(group.list) === '[object Array]' && group.list.forEach(function (styles) {
-                            var styleBlockArr = [],
-                                id = "boxShadow-" + styles.id;
+                group && toString.call(group) === '[object Array]' && group.forEach(function (styles) {
+                    var styleBlockArr = [],
+                        id = "boxShadow-" + styles.value;
 
-                            ["style", "beforeStyle", "afterStyle"].forEach(function (pseudoStylePrefix) {
-                                var pseudo = pseudoStylePrefix.replace(/style/i, "");
-                                if (pseudo)
-                                    pseudo = ":" + pseudo;
+                    ["style", "beforeStyle", "afterStyle"].forEach(function (pseudoStylePrefix) {
+                        var pseudo = pseudoStylePrefix.replace(/style/i, "");
+                        if (pseudo)
+                            pseudo = ":" + pseudo;
 
-                                var s = styles[pseudoStylePrefix];
+                        var s = styles[pseudoStylePrefix];
 
-                                if (s) {
-                                    var styleArr = [];
-                                    _.each(s, function (styleValue, styleName) {
-                                        var styleObj = uiUtilService.composeCssStyle(styleName, styleValue);
+                        if (s) {
+                            var styleArr = [];
+                            _.each(s, function (styleValue, styleName) {
+                                var styleObj = uiUtilService.composeCssStyle(styleName, styleValue);
 
-                                        _.each(styleObj, function (value, key) {
-                                            styleArr.push("{0}:{1}".format(key, value || '\"\"'));
-                                        });
-                                    });
-
-                                    styleArr.length && styleBlockArr.push("#{0}{1} { {2}; }".format(id, pseudo || "", styleArr.join(";")));
-                                }
+                                _.each(styleObj, function (value, key) {
+                                    styleArr.push("{0}:{1}".format(key, value || '\"\"'));
+                                });
                             });
 
-                            styleBlockArr.length && ret.push(styleBlockArr.join(" "));
-                        });
+                            styleArr.length && styleBlockArr.push("#{0}{1} { {2}; }".format(id, pseudo || "", styleArr.join(";")));
+                        }
                     });
-                }
+
+                    styleBlockArr.length && ret.push(styleBlockArr.join(" "));
+                });
 
                 return ret.join(" ");
             }

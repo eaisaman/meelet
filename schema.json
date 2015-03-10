@@ -37,9 +37,11 @@
     "updateTime": "date",
     "createTime": "date",
     "name": "string",
+    "desc": "string",
     "creator": "string",
     "thumbnailImg": "string",
-    "type": "string"
+    "type": "string",
+    "uiControl": "string"
   },
   "RepoArtifact": {
     "updateTime": "date",
@@ -50,7 +52,6 @@
     "designer": "string",
     "desc": "string",
     "type": "string",
-    "uiControl": ["object"],
     "version": "string",
     "versionList": ["object"]
   },

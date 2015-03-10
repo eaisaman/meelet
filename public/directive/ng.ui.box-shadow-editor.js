@@ -133,9 +133,10 @@ define(
                                 }
 
                                 scope.isPartialSelection = function (effectLibrary, xrefList) {
-                                    var xref = _.findWhere(xrefList, {libraryId: effectLibrary._id});
+                                    var xref = _.findWhere(xrefList, {libraryId: effectLibrary._id}),
+                                        artifactList = effectLibrary.artifactList;
 
-                                    return xref && effectLibrary.artifactList && effectLibrary.artifactList.length > xref.artifactList.length;
+                                    return xref && artifactList.length > xref.artifactList.length;
                                 }
 
                                 scope.styleNames = ['left', 'top', 'right', 'bottom', 'width', 'height'];
@@ -381,9 +382,25 @@ define(
                                         if (xref) {
                                             var artifact = _.findWhere(xref.artifactList, {artifactId: repoArtifact._id});
                                             if (artifact) {
-                                                if (scope.project.unselectArtifact(effectLibrary._id, repoArtifact._id)) {
+                                                var result = $rootScope.loadedProject.unselectArtifact(effectLibrary._id, repoArtifact._id);
+                                                if (result.artifactUnselect) {
                                                     delete repoArtifact._selected;
                                                     delete repoArtifact._version;
+                                                }
+                                                if (result.libraryUnselect) {
+                                                    delete effectLibrary._selected;
+
+                                                    var index;
+                                                    if (!scope.filterEffectLibraryList.every(function (lib, i) {
+                                                            if (lib._id === effectLibrary._id) {
+                                                                index = i;
+                                                                return false;
+                                                            }
+
+                                                            return true;
+                                                        })) {
+                                                        scope.filterEffectLibraryList.splice(index, 1);
+                                                    }
                                                 }
                                             } else {
                                                 if (scope.project.selectArtifact(effectLibrary._id, repoArtifact._id, repoArtifact.name, repoArtifact._version)) {
@@ -391,26 +408,29 @@ define(
                                                 }
                                             }
                                         } else {
-                                            scope.project.addLibrary(
-                                                effectLibrary._id,
-                                                effectLibrary.name,
-                                                effectLibrary.type,
-                                                [
-                                                    {
-                                                        artifactId: repoArtifact._id,
-                                                        name: repoArtifact.name,
-                                                        version: repoArtifact._version
-                                                    }
-                                                ]
-                                            );
+                                            if (effectLibrary.uiControl === "uiBoxShadowEditor") {
+                                                scope.project.addLibrary(
+                                                    effectLibrary._id,
+                                                    effectLibrary.name,
+                                                    effectLibrary.type,
+                                                    [
+                                                        {
+                                                            artifactId: repoArtifact._id,
+                                                            name: repoArtifact.name,
+                                                            version: repoArtifact._version
+                                                        }
+                                                    ]
+                                                );
 
-                                            repoArtifact._selected = true;
+                                                repoArtifact._selected = true;
 
-                                            if (scope.filterEffectLibraryList.every(function (lib) {
-                                                    return lib._id !== effectLibrary._id;
-                                                })) {
-                                                scope.filterEffectLibraryList.push(effectLibrary);
+                                                if (scope.filterEffectLibraryList.every(function (lib) {
+                                                        return lib._id !== effectLibrary._id;
+                                                    })) {
+                                                    scope.filterEffectLibraryList.push(effectLibrary);
+                                                }
                                             }
+
                                         }
 
                                     }
@@ -436,7 +456,7 @@ define(
                                                 scope.filterEffectLibraryList.splice(index, 1);
                                             }
                                         }
-                                    } else {
+                                    } else if (effectLibrary.uiControl === "uiBoxShadowEditor") {
                                         var artifactList = [];
                                         effectLibrary.artifactList.forEach(function (artifact) {
                                             var version = artifact.versionList.length && artifact.versionList[artifact.versionList.length - 1].name || "";
@@ -469,7 +489,7 @@ define(
                                     },
                                     function (err) {
                                         return appService.loadEffectArtifactList().then(function () {
-                                            var arr = scope.filterLibraryList(scope.effectLibraryList, scope.project.xrefRecord);
+                                            var arr = scope.filterLibraryList(_.where(scope.effectLibraryList, {uiControl: "uiBoxShadowEditor"}), scope.project.xrefRecord);
                                             arr.splice(0, 0, 0, 0);
                                             scope.filterEffectLibraryList.splice(0, scope.filterEffectLibraryList.length);
                                             Array.prototype.splice.apply(scope.filterEffectLibraryList, arr);

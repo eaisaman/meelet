@@ -199,13 +199,7 @@ define(
                                 scope.toggleSelectLibraryList = function (event) {
                                     event && event.stopPropagation && event.stopPropagation();
 
-                                    scope.toggleSelect(".widgetLibraryList").then(function () {
-                                        if (element.find(".widgetLibraryList").hasClass("select")) {
-                                            element.find(".widgetLibraryList").siblings(".accordianGroup").css("opacity", 0);
-                                        } else {
-                                            element.find(".widgetLibraryList").siblings(".accordianGroup").css("opacity", 1);
-                                        }
-                                    });
+                                    scope.toggleSelect(".widgetLibraryList");
                                 }
 
                                 scope.toggleWidgetSelection = function (repoArtifact, widgetLibrary, event) {
@@ -219,9 +213,25 @@ define(
                                         if (xref) {
                                             var artifact = _.findWhere(xref.artifactList, {artifactId: repoArtifact._id});
                                             if (artifact) {
-                                                if (scope.project.unselectArtifact(widgetLibrary._id, repoArtifact._id)) {
+                                                var result = $rootScope.loadedProject.unselectArtifact(widgetLibrary._id, repoArtifact._id);
+                                                if (result.artifactUnselect) {
                                                     delete repoArtifact._selected;
                                                     delete repoArtifact._version;
+                                                }
+                                                if (result.libraryUnselect) {
+                                                    delete widgetLibrary._selected;
+
+                                                    var index;
+                                                    if (!scope.filterWidgetLibraryList.every(function (lib, i) {
+                                                            if (lib._id === widgetLibrary._id) {
+                                                                index = i;
+                                                                return false;
+                                                            }
+
+                                                            return true;
+                                                        })) {
+                                                        scope.filterWidgetLibraryList.splice(index, 1);
+                                                    }
                                                 }
                                             } else {
                                                 if (scope.project.selectArtifact(widgetLibrary._id, repoArtifact._id, repoArtifact.name, repoArtifact._version)) {

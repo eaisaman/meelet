@@ -1,4 +1,4 @@
-#sketchControls.align-left.show, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group[tab-sel^='tab-content'].select, #borderColorPalette .colorValuePanes > .hsbValuePane.select, #colorPickerPalette .colorValuePanes > .hsbValuePane.select, #colorStopEditorPalette .colorValuePanes > .hsbValuePane.select, #shadowStopColorPalette .colorValuePanes > .hsbValuePane.select, #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette .colorValuePanes > .hsbValuePane.select, #shape-control .shapeContent > .shapePalette > .iconLibraryList, #widget-control .widgetContent > .widgetPalette > .widgetLibraryList, #sketchControls.align-right.show, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group[tab-sel^='tab-content'].select, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details #actionWidgetTreeTab, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > .effectLibraryList, #borderColorPalette .colorValuePanes > .hsbValuePane:not(.select), #colorPickerPalette .colorValuePanes > .hsbValuePane:not(.select), #colorStopEditorPalette .colorValuePanes > .hsbValuePane:not(.select), #shadowStopColorPalette .colorValuePanes > .hsbValuePane:not(.select), #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette .colorValuePanes > .hsbValuePane:not(.select), #shape-control .shapeContent > .shapePalette > .iconLibraryList.select, #widget-control .widgetContent > .widgetPalette > .widgetLibraryList.select, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details #actionWidgetTreeTab.select, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > .effectLibraryList.select, #color-control > .pickerContent.expanded > .pickerBar > .pickerPane, #border-color-control > .pickerContent.expanded > .pickerBar > .pickerPane, #fill-control .editorContent.expanded .editorColorStopList .colorStop.animate, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group .ui-control .ui-control-wrapper .ui-control-panel.hiding, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group .ui-control .ui-control-wrapper .ui-control-panel.hiding, #borderColorPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #colorPickerPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #colorStopEditorPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #shadowStopColorPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemWritableList .configurationPanel.show, #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #text-shadow-control > .textShadowContent > .textShadowPalette.show, #text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > div[tab-sel^='tab-content'].select, #box-shadow-control > .boxShadowContent > .boxShadowPalette.show, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > div[tab-sel^='tab-content'].select, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group .ui-control .ui-control-wrapper .ui-control-panel.show, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group .ui-control .ui-control-wrapper .ui-control-panel.show, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group .ui-control:not(.ui-control-inline) .ui-control-wrapper.collapsing, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group .ui-control:not(.ui-control-inline) .ui-control-wrapper.expanded, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group .ui-control:not(.ui-control-inline) .ui-control-wrapper.expanded, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group .ui-control:not(.ui-control-inline) .ui-control-wrapper.collapsing, #text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .presetTextShadow .effectLibrary .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .presetBoxShadow .effectLibrary .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowValuePanes > .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowStylePanes > .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowArtifactPanes > .accordianGroup.select > .accordianTitle:before, #shape-control .shapeContent > .shapePalette .accordianGroup.select > .accordianTitle:before, #widget-control .widgetContent > .widgetPalette .accordianGroup.select > .accordianTitle:before, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > .effectLibraryList .accordianGroup.select > .accordianTitle:before, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianTitle:before, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionBar > div.toggleTransitionButton:before, .pickerPaneShape, .pickerPaneWidget, #sketchControls.align-left.hiding, #sketchControls.align-right.hiding, #border-control > .borderContent > .borderPalette > .borderPane.borderColorPane .borderColorPalette.show, #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette.show, #fill-control .editorContent.expanded.align-left .editorColorStopList .editorPalette.show, #text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .textShadowValuePanes .shadowStopColorPalette.show, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowValuePanes .shadowStopColorPalette.show {
+#sketchControls.align-left.show, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group[tab-sel^='tab-content'].select, #borderColorPalette .colorValuePanes > .hsbValuePane.select, #colorPickerPalette .colorValuePanes > .hsbValuePane.select, #colorStopEditorPalette .colorValuePanes > .hsbValuePane.select, #shadowStopColorPalette .colorValuePanes > .hsbValuePane.select, #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette .colorValuePanes > .hsbValuePane.select, #shape-control .shapeContent > .shapePalette > .iconLibraryList, #widget-control .widgetContent > .widgetPalette > .widgetLibraryList, #sketchControls.align-right.show, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group[tab-sel^='tab-content'].select, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details #actionWidgetTreeTab, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > .effectLibraryList, #borderColorPalette .colorValuePanes > .hsbValuePane:not(.select), #colorPickerPalette .colorValuePanes > .hsbValuePane:not(.select), #colorStopEditorPalette .colorValuePanes > .hsbValuePane:not(.select), #shadowStopColorPalette .colorValuePanes > .hsbValuePane:not(.select), #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette .colorValuePanes > .hsbValuePane:not(.select), #shape-control .shapeContent > .shapePalette > .iconLibraryList.select, #widget-control .widgetContent > .widgetPalette > .widgetLibraryList.select, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details #actionWidgetTreeTab.select, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > .effectLibraryList.select, #color-control > .pickerContent.expanded > .pickerBar > .pickerPane, #border-color-control > .pickerContent.expanded > .pickerBar > .pickerPane, #fill-control .editorContent.expanded .editorColorStopList .colorStop.animate, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group .ui-control .ui-control-wrapper .ui-control-panel.hiding, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group .ui-control .ui-control-wrapper .ui-control-panel.hiding, #borderColorPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #colorPickerPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #colorStopEditorPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #shadowStopColorPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemWritableList .configurationPanel.show, #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #text-shadow-control > .textShadowContent > .textShadowPalette.show, #text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > div[tab-sel^='tab-content'].select, #box-shadow-control > .boxShadowContent > .boxShadowPalette.show, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > div[tab-sel^='tab-content'].select, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group .ui-control .ui-control-wrapper .ui-control-panel.show, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group .ui-control .ui-control-wrapper .ui-control-panel.show, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group .ui-control:not(.ui-control-inline) .ui-control-wrapper.collapsing, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group .ui-control:not(.ui-control-inline) .ui-control-wrapper.expanded, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group .ui-control:not(.ui-control-inline) .ui-control-wrapper.expanded, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group .ui-control:not(.ui-control-inline) .ui-control-wrapper.collapsing, #text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .presetTextShadow .effectLibrary .accordianGroup.select > .accordianTitle:before, #text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .textShadowArtifactPanes > .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .presetBoxShadow .effectLibrary .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowValuePanes > .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowStylePanes > .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowArtifactPanes > .accordianGroup.select > .accordianTitle:before, #shape-control .shapeContent > .shapePalette .accordianGroup.select > .accordianTitle:before, #widget-control .widgetContent > .widgetPalette .accordianGroup.select > .accordianTitle:before, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > .effectLibraryList .accordianGroup.select > .accordianTitle:before, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianTitle:before, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionBar > div.toggleTransitionButton:before, .pickerPaneShape, .pickerPaneWidget, #sketchControls.align-left.hiding, #sketchControls.align-right.hiding, #border-control > .borderContent > .borderPalette > .borderPane.borderColorPane .borderColorPalette.show, #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette.show, #fill-control .editorContent.expanded.align-left .editorColorStopList .editorPalette.show, #text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .textShadowValuePanes .shadowStopColorPalette.show, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowValuePanes .shadowStopColorPalette.show {
   -moz-animation-duration: 1s;
   -webkit-animation-duration: 1s;
   animation-duration: 1s;
@@ -4137,7 +4137,7 @@
     transform: scale(1, 1) rotate(0deg) translateY(0%);
   }
 }
-#sketchControls.align-left.show, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group[tab-sel^='tab-content'].select, #borderColorPalette .colorValuePanes > .hsbValuePane.select, #colorPickerPalette .colorValuePanes > .hsbValuePane.select, #colorStopEditorPalette .colorValuePanes > .hsbValuePane.select, #shadowStopColorPalette .colorValuePanes > .hsbValuePane.select, #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette .colorValuePanes > .hsbValuePane.select, #shape-control .shapeContent > .shapePalette > .iconLibraryList, #widget-control .widgetContent > .widgetPalette > .widgetLibraryList, #sketchControls.align-right.show, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group[tab-sel^='tab-content'].select, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details #actionWidgetTreeTab, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > .effectLibraryList, #borderColorPalette .colorValuePanes > .hsbValuePane:not(.select), #colorPickerPalette .colorValuePanes > .hsbValuePane:not(.select), #colorStopEditorPalette .colorValuePanes > .hsbValuePane:not(.select), #shadowStopColorPalette .colorValuePanes > .hsbValuePane:not(.select), #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette .colorValuePanes > .hsbValuePane:not(.select), #shape-control .shapeContent > .shapePalette > .iconLibraryList.select, #widget-control .widgetContent > .widgetPalette > .widgetLibraryList.select, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details #actionWidgetTreeTab.select, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > .effectLibraryList.select, #color-control > .pickerContent.expanded > .pickerBar > .pickerPane, #border-color-control > .pickerContent.expanded > .pickerBar > .pickerPane, #fill-control .editorContent.expanded .editorColorStopList .colorStop.animate, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group .ui-control .ui-control-wrapper .ui-control-panel.hiding, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group .ui-control .ui-control-wrapper .ui-control-panel.hiding, #borderColorPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #colorPickerPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #colorStopEditorPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #shadowStopColorPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemWritableList .configurationPanel.show, #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #text-shadow-control > .textShadowContent > .textShadowPalette.show, #text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > div[tab-sel^='tab-content'].select, #box-shadow-control > .boxShadowContent > .boxShadowPalette.show, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > div[tab-sel^='tab-content'].select, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group .ui-control .ui-control-wrapper .ui-control-panel.show, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group .ui-control .ui-control-wrapper .ui-control-panel.show, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group .ui-control:not(.ui-control-inline) .ui-control-wrapper.collapsing, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group .ui-control:not(.ui-control-inline) .ui-control-wrapper.expanded, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group .ui-control:not(.ui-control-inline) .ui-control-wrapper.expanded, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group .ui-control:not(.ui-control-inline) .ui-control-wrapper.collapsing, #text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .presetTextShadow .effectLibrary .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .presetBoxShadow .effectLibrary .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowValuePanes > .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowStylePanes > .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowArtifactPanes > .accordianGroup.select > .accordianTitle:before, #shape-control .shapeContent > .shapePalette .accordianGroup.select > .accordianTitle:before, #widget-control .widgetContent > .widgetPalette .accordianGroup.select > .accordianTitle:before, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > .effectLibraryList .accordianGroup.select > .accordianTitle:before, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianTitle:before, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionBar > div.toggleTransitionButton:before, .pickerPaneShape, .pickerPaneWidget, #sketchControls.align-left.hiding, #sketchControls.align-right.hiding, #border-control > .borderContent > .borderPalette > .borderPane.borderColorPane .borderColorPalette.show, #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette.show, #fill-control .editorContent.expanded.align-left .editorColorStopList .editorPalette.show, #text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .textShadowValuePanes .shadowStopColorPalette.show, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowValuePanes .shadowStopColorPalette.show {
+#sketchControls.align-left.show, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group[tab-sel^='tab-content'].select, #borderColorPalette .colorValuePanes > .hsbValuePane.select, #colorPickerPalette .colorValuePanes > .hsbValuePane.select, #colorStopEditorPalette .colorValuePanes > .hsbValuePane.select, #shadowStopColorPalette .colorValuePanes > .hsbValuePane.select, #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette .colorValuePanes > .hsbValuePane.select, #shape-control .shapeContent > .shapePalette > .iconLibraryList, #widget-control .widgetContent > .widgetPalette > .widgetLibraryList, #sketchControls.align-right.show, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group[tab-sel^='tab-content'].select, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details #actionWidgetTreeTab, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > .effectLibraryList, #borderColorPalette .colorValuePanes > .hsbValuePane:not(.select), #colorPickerPalette .colorValuePanes > .hsbValuePane:not(.select), #colorStopEditorPalette .colorValuePanes > .hsbValuePane:not(.select), #shadowStopColorPalette .colorValuePanes > .hsbValuePane:not(.select), #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette .colorValuePanes > .hsbValuePane:not(.select), #shape-control .shapeContent > .shapePalette > .iconLibraryList.select, #widget-control .widgetContent > .widgetPalette > .widgetLibraryList.select, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details #actionWidgetTreeTab.select, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > .effectLibraryList.select, #color-control > .pickerContent.expanded > .pickerBar > .pickerPane, #border-color-control > .pickerContent.expanded > .pickerBar > .pickerPane, #fill-control .editorContent.expanded .editorColorStopList .colorStop.animate, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group .ui-control .ui-control-wrapper .ui-control-panel.hiding, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group .ui-control .ui-control-wrapper .ui-control-panel.hiding, #borderColorPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #colorPickerPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #colorStopEditorPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #shadowStopColorPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemWritableList .configurationPanel.show, #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #text-shadow-control > .textShadowContent > .textShadowPalette.show, #text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > div[tab-sel^='tab-content'].select, #box-shadow-control > .boxShadowContent > .boxShadowPalette.show, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > div[tab-sel^='tab-content'].select, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group .ui-control .ui-control-wrapper .ui-control-panel.show, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group .ui-control .ui-control-wrapper .ui-control-panel.show, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group .ui-control:not(.ui-control-inline) .ui-control-wrapper.collapsing, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group .ui-control:not(.ui-control-inline) .ui-control-wrapper.expanded, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group .ui-control:not(.ui-control-inline) .ui-control-wrapper.expanded, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group .ui-control:not(.ui-control-inline) .ui-control-wrapper.collapsing, #text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .presetTextShadow .effectLibrary .accordianGroup.select > .accordianTitle:before, #text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .textShadowArtifactPanes > .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .presetBoxShadow .effectLibrary .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowValuePanes > .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowStylePanes > .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowArtifactPanes > .accordianGroup.select > .accordianTitle:before, #shape-control .shapeContent > .shapePalette .accordianGroup.select > .accordianTitle:before, #widget-control .widgetContent > .widgetPalette .accordianGroup.select > .accordianTitle:before, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > .effectLibraryList .accordianGroup.select > .accordianTitle:before, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianTitle:before, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionBar > div.toggleTransitionButton:before, .pickerPaneShape, .pickerPaneWidget, #sketchControls.align-left.hiding, #sketchControls.align-right.hiding, #border-control > .borderContent > .borderPalette > .borderPane.borderColorPane .borderColorPalette.show, #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette.show, #fill-control .editorContent.expanded.align-left .editorColorStopList .editorPalette.show, #text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .textShadowValuePanes .shadowStopColorPalette.show, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowValuePanes .shadowStopColorPalette.show {
   -moz-animation-duration: 1s;
   -webkit-animation-duration: 1s;
   animation-duration: 1s;
@@ -4150,7 +4150,7 @@
   backface-visibility: none;
 }
 
-#sketchControls.align-left.show, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group[tab-sel^='tab-content'].select, #borderColorPalette .colorValuePanes > .hsbValuePane.select, #colorPickerPalette .colorValuePanes > .hsbValuePane.select, #colorStopEditorPalette .colorValuePanes > .hsbValuePane.select, #shadowStopColorPalette .colorValuePanes > .hsbValuePane.select, #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette .colorValuePanes > .hsbValuePane.select, #shape-control .shapeContent > .shapePalette > .iconLibraryList, #widget-control .widgetContent > .widgetPalette > .widgetLibraryList, #sketchControls.align-right.show, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group[tab-sel^='tab-content'].select, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details #actionWidgetTreeTab, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > .effectLibraryList, #borderColorPalette .colorValuePanes > .hsbValuePane:not(.select), #colorPickerPalette .colorValuePanes > .hsbValuePane:not(.select), #colorStopEditorPalette .colorValuePanes > .hsbValuePane:not(.select), #shadowStopColorPalette .colorValuePanes > .hsbValuePane:not(.select), #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette .colorValuePanes > .hsbValuePane:not(.select), #shape-control .shapeContent > .shapePalette > .iconLibraryList.select, #widget-control .widgetContent > .widgetPalette > .widgetLibraryList.select, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details #actionWidgetTreeTab.select, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > .effectLibraryList.select, #color-control > .pickerContent.expanded > .pickerBar > .pickerPane, #border-color-control > .pickerContent.expanded > .pickerBar > .pickerPane, #fill-control .editorContent.expanded .editorColorStopList .colorStop.animate, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group .ui-control .ui-control-wrapper .ui-control-panel.hiding, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group .ui-control .ui-control-wrapper .ui-control-panel.hiding, #borderColorPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #colorPickerPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #colorStopEditorPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #shadowStopColorPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemWritableList .configurationPanel.show, #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #text-shadow-control > .textShadowContent > .textShadowPalette.show, #text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > div[tab-sel^='tab-content'].select, #box-shadow-control > .boxShadowContent > .boxShadowPalette.show, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > div[tab-sel^='tab-content'].select, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group .ui-control .ui-control-wrapper .ui-control-panel.show, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group .ui-control .ui-control-wrapper .ui-control-panel.show, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group .ui-control:not(.ui-control-inline) .ui-control-wrapper.collapsing, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group .ui-control:not(.ui-control-inline) .ui-control-wrapper.expanded, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group .ui-control:not(.ui-control-inline) .ui-control-wrapper.expanded, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group .ui-control:not(.ui-control-inline) .ui-control-wrapper.collapsing, #text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .presetTextShadow .effectLibrary .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .presetBoxShadow .effectLibrary .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowValuePanes > .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowStylePanes > .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowArtifactPanes > .accordianGroup.select > .accordianTitle:before, #shape-control .shapeContent > .shapePalette .accordianGroup.select > .accordianTitle:before, #widget-control .widgetContent > .widgetPalette .accordianGroup.select > .accordianTitle:before, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > .effectLibraryList .accordianGroup.select > .accordianTitle:before, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianTitle:before, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionBar > div.toggleTransitionButton:before, .pickerPaneShape, .pickerPaneWidget, #sketchControls.align-left.hiding, #sketchControls.align-right.hiding, #border-control > .borderContent > .borderPalette > .borderPane.borderColorPane .borderColorPalette.show, #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette.show, #fill-control .editorContent.expanded.align-left .editorColorStopList .editorPalette.show, #text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .textShadowValuePanes .shadowStopColorPalette.show, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowValuePanes .shadowStopColorPalette.show {
+#sketchControls.align-left.show, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group[tab-sel^='tab-content'].select, #borderColorPalette .colorValuePanes > .hsbValuePane.select, #colorPickerPalette .colorValuePanes > .hsbValuePane.select, #colorStopEditorPalette .colorValuePanes > .hsbValuePane.select, #shadowStopColorPalette .colorValuePanes > .hsbValuePane.select, #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette .colorValuePanes > .hsbValuePane.select, #shape-control .shapeContent > .shapePalette > .iconLibraryList, #widget-control .widgetContent > .widgetPalette > .widgetLibraryList, #sketchControls.align-right.show, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group[tab-sel^='tab-content'].select, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details #actionWidgetTreeTab, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > .effectLibraryList, #borderColorPalette .colorValuePanes > .hsbValuePane:not(.select), #colorPickerPalette .colorValuePanes > .hsbValuePane:not(.select), #colorStopEditorPalette .colorValuePanes > .hsbValuePane:not(.select), #shadowStopColorPalette .colorValuePanes > .hsbValuePane:not(.select), #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette .colorValuePanes > .hsbValuePane:not(.select), #shape-control .shapeContent > .shapePalette > .iconLibraryList.select, #widget-control .widgetContent > .widgetPalette > .widgetLibraryList.select, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details #actionWidgetTreeTab.select, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > .effectLibraryList.select, #color-control > .pickerContent.expanded > .pickerBar > .pickerPane, #border-color-control > .pickerContent.expanded > .pickerBar > .pickerPane, #fill-control .editorContent.expanded .editorColorStopList .colorStop.animate, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group .ui-control .ui-control-wrapper .ui-control-panel.hiding, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group .ui-control .ui-control-wrapper .ui-control-panel.hiding, #borderColorPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #colorPickerPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #colorStopEditorPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #shadowStopColorPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemWritableList .configurationPanel.show, #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #text-shadow-control > .textShadowContent > .textShadowPalette.show, #text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > div[tab-sel^='tab-content'].select, #box-shadow-control > .boxShadowContent > .boxShadowPalette.show, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > div[tab-sel^='tab-content'].select, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group .ui-control .ui-control-wrapper .ui-control-panel.show, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group .ui-control .ui-control-wrapper .ui-control-panel.show, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group .ui-control:not(.ui-control-inline) .ui-control-wrapper.collapsing, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group .ui-control:not(.ui-control-inline) .ui-control-wrapper.expanded, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group .ui-control:not(.ui-control-inline) .ui-control-wrapper.expanded, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group .ui-control:not(.ui-control-inline) .ui-control-wrapper.collapsing, #text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .presetTextShadow .effectLibrary .accordianGroup.select > .accordianTitle:before, #text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .textShadowArtifactPanes > .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .presetBoxShadow .effectLibrary .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowValuePanes > .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowStylePanes > .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowArtifactPanes > .accordianGroup.select > .accordianTitle:before, #shape-control .shapeContent > .shapePalette .accordianGroup.select > .accordianTitle:before, #widget-control .widgetContent > .widgetPalette .accordianGroup.select > .accordianTitle:before, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > .effectLibraryList .accordianGroup.select > .accordianTitle:before, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianTitle:before, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionBar > div.toggleTransitionButton:before, .pickerPaneShape, .pickerPaneWidget, #sketchControls.align-left.hiding, #sketchControls.align-right.hiding, #border-control > .borderContent > .borderPalette > .borderPane.borderColorPane .borderColorPalette.show, #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette.show, #fill-control .editorContent.expanded.align-left .editorColorStopList .editorPalette.show, #text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .textShadowValuePanes .shadowStopColorPalette.show, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowValuePanes .shadowStopColorPalette.show {
   -moz-animation-duration: 1s;
   -webkit-animation-duration: 1s;
   animation-duration: 1s;
@@ -7443,7 +7443,7 @@
  * Used by directive ng.ui.shape, ng.ui.state-transition, ng.ui-box-shadow-editor, ng.ui-text-shadow-editor
  * Found in _shape.html, _state_transition.html, _border-editor.html, _text-shadow.html
  */
-#text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .presetTextShadow .effectLibrary .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .presetBoxShadow .effectLibrary .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowValuePanes > .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowStylePanes > .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowArtifactPanes > .accordianGroup.select > .accordianTitle:before, #shape-control .shapeContent > .shapePalette .accordianGroup.select > .accordianTitle:before, #widget-control .widgetContent > .widgetPalette .accordianGroup.select > .accordianTitle:before, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > .effectLibraryList .accordianGroup.select > .accordianTitle:before {
+#text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .presetTextShadow .effectLibrary .accordianGroup.select > .accordianTitle:before, #text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .textShadowArtifactPanes > .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .presetBoxShadow .effectLibrary .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowValuePanes > .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowStylePanes > .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowArtifactPanes > .accordianGroup.select > .accordianTitle:before, #shape-control .shapeContent > .shapePalette .accordianGroup.select > .accordianTitle:before, #widget-control .widgetContent > .widgetPalette .accordianGroup.select > .accordianTitle:before, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > .effectLibraryList .accordianGroup.select > .accordianTitle:before {
   -moz-animation-name: rotateUpSideDown;
   -webkit-animation-name: rotateUpSideDown;
   animation-name: rotateUpSideDown;
@@ -14525,7 +14525,7 @@
   text-shadow: 0px 3px 4px rgba(0, 0, 0, 0.4);
 }
 #text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .presetTextShadow .effectLibrary .libraryTitle:before {
-  position: absolute;
+  position: relative;
   left: 0;
   top: 0;
   line-height: 2;
@@ -14727,6 +14727,131 @@
 #text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .textShadowValuePanes .shadowStop .circular-menu .circle div:before {
   font-size: 32px;
 }
+#text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .textShadowArtifactPanes > .accordianGroup {
+  position: relative;
+  float: right;
+  width: 100%;
+}
+#text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .textShadowArtifactPanes > .accordianGroup > .accordianTitle {
+  z-index: 2;
+  position: relative;
+  float: right;
+  text-align: right;
+  width: 100%;
+  line-height: 2;
+  background: #fff;
+}
+#text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .textShadowArtifactPanes > .accordianGroup > .accordianTitle:before {
+  position: absolute;
+  left: 0;
+  top: 0;
+  line-height: 2;
+  text-align: center;
+  width: 2em;
+  height: 2em;
+  -moz-transform: rotateZ(0deg);
+  -ms-transform: rotateZ(0deg);
+  -webkit-transform: rotateZ(0deg);
+  transform: rotateZ(0deg);
+  -moz-transition: -moz-transform 0.3s;
+  -o-transition: -o-transform 0.3s;
+  -webkit-transition: -webkit-transform 0.3s;
+  transition: transform 0.3s;
+}
+#text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .textShadowArtifactPanes > .accordianGroup > .accordianTitle:after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  content: '';
+  width: 100%;
+  height: 2px;
+  background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjEuMCIgeTE9IjAuNSIgeDI9IjAuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ViZWJlYiIvPjxzdG9wIG9mZnNldD0iNTAlIiBzdG9wLWNvbG9yPSIjZWJlYmViIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjZmZmZmZmIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g');
+  background: -webkit-gradient(linear, 100% 50%, 0% 50%, color-stop(0%, #ebebeb), color-stop(50%, #ebebeb), color-stop(100%, #ffffff));
+  background: -moz-linear-gradient(right, #ebebeb 0%, #ebebeb 50%, #ffffff 100%);
+  background: -webkit-linear-gradient(right, #ebebeb 0%, #ebebeb 50%, #ffffff 100%);
+  background: linear-gradient(to left, #ebebeb 0%, #ebebeb 50%, #ffffff 100%);
+}
+#text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .textShadowArtifactPanes > .accordianGroup > .accordianTitle span {
+  line-height: 2;
+  height: 2em;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  text-overflow: ellipsis;
+  text-align: left;
+  text-indent: 2em;
+  overflow: hidden;
+}
+#text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .textShadowArtifactPanes > .accordianGroup > .accordianTitle .toggleSelectionButton {
+  height: 2em;
+}
+#text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .textShadowArtifactPanes > .accordianGroup > .accordianTitle .toggleSelectionButton:before {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 2em;
+  line-height: 2;
+  text-align: center;
+}
+#text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .textShadowArtifactPanes > .accordianGroup > .accordianTitle .toggleSelectionButton.partialSelect:before {
+  color: #e6e6e6;
+}
+#text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .textShadowArtifactPanes > .accordianGroup > .accordianBody {
+  position: relative;
+  float: right;
+  width: 100%;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  -moz-transition: -moz-transform 0.3s;
+  -o-transition: -o-transform 0.3s;
+  -webkit-transition: -webkit-transform 0.3s;
+  transition: transform 0.3s;
+}
+#text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .textShadowArtifactPanes > .accordianGroup > .accordianBody .effectPane {
+  position: relative;
+  float: left;
+  opacity: 0;
+  pointer-events: none;
+  height: 0px;
+  overflow: hidden;
+}
+#text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .textShadowArtifactPanes > .accordianGroup.select > .accordianTitle:before {
+  -moz-animation-duration: 0.3s;
+  -webkit-animation-duration: 0.3s;
+  animation-duration: 0.3s;
+}
+#text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .textShadowArtifactPanes > .accordianGroup.select > .accordianBody .effectPane {
+  opacity: 1;
+  pointer-events: auto;
+  height: 2em;
+  line-height: 2;
+  margin-top: 1em;
+  margin-right: 1em;
+  overflow: visible;
+}
+#text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .textShadowArtifactPanes > .accordianGroup.select > .accordianBody .effectPane span {
+  position: relative;
+  float: left;
+  width: calc(100% - 3em);
+  line-height: 2;
+  height: 100%;
+}
+#text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .textShadowArtifactPanes > .accordianGroup.select > .accordianBody .effectPane .toggleSelectionButton {
+  position: relative;
+  float: left;
+  width: 2em;
+  height: 2em;
+}
+#text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .textShadowArtifactPanes > .accordianGroup.select > .accordianBody .effectPane .toggleSelectionButton:before {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 2em;
+  line-height: 2;
+  text-align: center;
+}
 
 #box-shadow-control > .boxShadowContent {
   position: absolute;
@@ -14882,7 +15007,7 @@
   text-shadow: 0px 3px 4px rgba(0, 0, 0, 0.4);
 }
 #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .presetBoxShadow .effectLibrary .libraryTitle:before {
-  position: absolute;
+  position: relative;
   left: 0;
   top: 0;
   line-height: 2;
@@ -15289,6 +15414,32 @@
   background: -webkit-linear-gradient(right, #ebebeb 0%, #ebebeb 50%, #ffffff 100%);
   background: linear-gradient(to left, #ebebeb 0%, #ebebeb 50%, #ffffff 100%);
 }
+#box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowArtifactPanes > .accordianGroup > .accordianTitle span {
+  line-height: 2;
+  height: 2em;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  text-overflow: ellipsis;
+  text-align: left;
+  text-indent: 2em;
+  overflow: hidden;
+}
+#box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowArtifactPanes > .accordianGroup > .accordianTitle .toggleSelectionButton {
+  height: 2em;
+}
+#box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowArtifactPanes > .accordianGroup > .accordianTitle .toggleSelectionButton:before {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 2em;
+  line-height: 2;
+  text-align: center;
+}
+#box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowArtifactPanes > .accordianGroup > .accordianTitle .toggleSelectionButton.partialSelect:before {
+  color: #e6e6e6;
+}
 #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowArtifactPanes > .accordianGroup > .accordianBody {
   position: relative;
   float: right;
@@ -15301,19 +15452,12 @@
   transition: transform 0.3s;
 }
 #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowArtifactPanes > .accordianGroup > .accordianBody .effectPane {
-  display: none;
   position: relative;
   float: left;
-  overflow: visible;
-  background: #fff;
-  border-radius: 10px;
-}
-#box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowArtifactPanes > .accordianGroup > .accordianBody .effectPane > div {
-  float: left;
-  margin-top: 0.5em;
-}
-#box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowArtifactPanes > .accordianGroup > .accordianBody .effectPane > div label {
-  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  height: 0px;
+  overflow: hidden;
 }
 #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowArtifactPanes > .accordianGroup.select > .accordianTitle:before {
   -moz-animation-duration: 0.3s;
@@ -15321,13 +15465,35 @@
   animation-duration: 0.3s;
 }
 #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowArtifactPanes > .accordianGroup.select > .accordianBody .effectPane {
-  display: block;
+  opacity: 1;
+  pointer-events: auto;
+  height: 2em;
+  line-height: 2;
+  margin-top: 1em;
+  margin-right: 1em;
+  overflow: visible;
+}
+#box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowArtifactPanes > .accordianGroup.select > .accordianBody .effectPane span {
+  position: relative;
+  float: left;
+  width: calc(100% - 3em);
+  line-height: 2;
+  height: 100%;
+}
+#box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowArtifactPanes > .accordianGroup.select > .accordianBody .effectPane .toggleSelectionButton {
+  position: relative;
+  float: left;
+  width: 2em;
+  height: 2em;
+}
+#box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowArtifactPanes > .accordianGroup.select > .accordianBody .effectPane .toggleSelectionButton:before {
+  position: absolute;
+  left: 0;
+  top: 0;
   width: 100%;
-  height: 3em;
-  margin-bottom: 0.5em;
-  -moz-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
-  -webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
-  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
+  height: 2em;
+  line-height: 2;
+  text-align: center;
 }
 
 #shape-control .shapeContent {
@@ -15374,16 +15540,40 @@
   background: inherit;
 }
 #shape-control .shapeContent > .shapePalette .accordianGroup {
+  position: relative;
+  float: left;
   width: 100%;
   overflow: hidden;
 }
 #shape-control .shapeContent > .shapePalette .accordianGroup > .accordianTitle {
   z-index: 1;
+  position: relative;
+  float: left;
   width: 100%;
   line-height: 2;
   background: #fff;
 }
+#shape-control .shapeContent > .shapePalette .accordianGroup > .accordianTitle:after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  content: '';
+  width: 100%;
+  height: 2px;
+  background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjEuMCIgeTE9IjAuNSIgeDI9IjAuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ViZWJlYiIvPjxzdG9wIG9mZnNldD0iNTAlIiBzdG9wLWNvbG9yPSIjZWJlYmViIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjZmZmZmZmIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g');
+  background: -webkit-gradient(linear, 100% 50%, 0% 50%, color-stop(0%, #ebebeb), color-stop(50%, #ebebeb), color-stop(100%, #ffffff));
+  background: -moz-linear-gradient(right, #ebebeb 0%, #ebebeb 50%, #ffffff 100%);
+  background: -webkit-linear-gradient(right, #ebebeb 0%, #ebebeb 50%, #ffffff 100%);
+  background: linear-gradient(to left, #ebebeb 0%, #ebebeb 50%, #ffffff 100%);
+}
 #shape-control .shapeContent > .shapePalette .accordianGroup > .accordianTitle:before {
+  position: absolute;
+  left: 0;
+  top: 0;
+  line-height: 2;
+  text-align: center;
+  width: 1em;
+  height: 2em;
   -moz-transform: rotateZ(0deg);
   -ms-transform: rotateZ(0deg);
   -webkit-transform: rotateZ(0deg);
@@ -15393,7 +15583,20 @@
   -webkit-transition: -webkit-transform 0.3s;
   transition: transform 0.3s;
 }
+#shape-control .shapeContent > .shapePalette .accordianGroup > .accordianTitle span {
+  line-height: 2;
+  height: 2em;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  text-overflow: ellipsis;
+  text-align: left;
+  text-indent: 2em;
+  overflow: hidden;
+}
 #shape-control .shapeContent > .shapePalette .accordianGroup > .accordianBody {
+  position: relative;
+  float: left;
   width: 100%;
   margin-top: 0.5em;
   margin-bottom: 0.5em;
@@ -15467,10 +15670,16 @@
 #shape-control .shapeContent > .shapePalette .shapeLibrary .libraryTitle {
   position: relative;
   float: left;
-  width: 100%;
+  width: calc(100% - 2em);
+  padding-left: 2em;
   line-height: 2;
   font-weight: 900;
   text-shadow: 0px 3px 4px rgba(0, 0, 0, 0.4);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 #shape-control .shapeContent > .shapePalette .shapeLibrary .libraryTitle:before {
   position: absolute;
@@ -15501,6 +15710,9 @@
   -webkit-animation-duration: 0.3s;
   animation-duration: 0.3s;
 }
+#shape-control .shapeContent > .shapePalette > .iconLibraryList.select ~ .shapeLibrary {
+  opacity: 0;
+}
 #shape-control .shapeContent > .shapePalette > .iconLibraryList .toggleSelectionButton {
   height: 2em;
 }
@@ -15515,88 +15727,6 @@
 }
 #shape-control .shapeContent > .shapePalette > .iconLibraryList .toggleSelectionButton.partialSelect:before {
   color: #e6e6e6;
-}
-#shape-control .shapeContent.align-left > .shapePalette .accordianGroup {
-  position: relative;
-  float: right;
-}
-#shape-control .shapeContent.align-left > .shapePalette .accordianGroup > .accordianTitle {
-  position: relative;
-  float: right;
-  text-align: right;
-}
-#shape-control .shapeContent.align-left > .shapePalette .accordianGroup > .accordianTitle:after {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  content: '';
-  width: 100%;
-  height: 2px;
-  background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjEuMCIgeTE9IjAuNSIgeDI9IjAuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ViZWJlYiIvPjxzdG9wIG9mZnNldD0iNTAlIiBzdG9wLWNvbG9yPSIjZWJlYmViIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjZmZmZmZmIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g');
-  background: -webkit-gradient(linear, 100% 50%, 0% 50%, color-stop(0%, #ebebeb), color-stop(50%, #ebebeb), color-stop(100%, #ffffff));
-  background: -moz-linear-gradient(right, #ebebeb 0%, #ebebeb 50%, #ffffff 100%);
-  background: -webkit-linear-gradient(right, #ebebeb 0%, #ebebeb 50%, #ffffff 100%);
-  background: linear-gradient(to left, #ebebeb 0%, #ebebeb 50%, #ffffff 100%);
-}
-#shape-control .shapeContent.align-left > .shapePalette .accordianGroup > .accordianTitle:before {
-  position: absolute;
-  left: 0;
-  top: 0;
-  line-height: 2;
-  text-align: center;
-  width: 1em;
-  height: 2em;
-}
-#shape-control .shapeContent.align-left > .shapePalette .accordianGroup > .accordianBody {
-  position: relative;
-  float: right;
-}
-#shape-control .shapeContent.align-left > .shapePalette .accordianGroup > .accordianBody .artifactPane span {
-  text-align: right;
-}
-#shape-control .shapeContent.align-left > .shapePalette .shapeLibrary .libraryTitle {
-  text-align: right;
-}
-#shape-control .shapeContent.align-right > .shapePalette .accordianGroup {
-  position: relative;
-  float: left;
-}
-#shape-control .shapeContent.align-right > .shapePalette .accordianGroup > .accordianTitle {
-  position: relative;
-  float: left;
-  text-align: left;
-}
-#shape-control .shapeContent.align-right > .shapePalette .accordianGroup > .accordianTitle:after {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  content: '';
-  width: 100%;
-  height: 2px;
-  background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuMCIgeTE9IjAuNSIgeDI9IjEuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ViZWJlYiIvPjxzdG9wIG9mZnNldD0iNTAlIiBzdG9wLWNvbG9yPSIjZWJlYmViIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjZmZmZmZmIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g');
-  background: -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, #ebebeb), color-stop(50%, #ebebeb), color-stop(100%, #ffffff));
-  background: -moz-linear-gradient(left, #ebebeb 0%, #ebebeb 50%, #ffffff 100%);
-  background: -webkit-linear-gradient(left, #ebebeb 0%, #ebebeb 50%, #ffffff 100%);
-  background: linear-gradient(to right, #ebebeb 0%, #ebebeb 50%, #ffffff 100%);
-}
-#shape-control .shapeContent.align-right > .shapePalette .accordianGroup > .accordianTitle:before {
-  position: absolute;
-  right: 0;
-  top: 0;
-  line-height: 2;
-  text-align: center;
-  width: 2em;
-  height: 2em;
-}
-#shape-control .shapeContent.align-right > .shapePalette .accordianGroup > .accordianBody {
-  position: relative;
-  float: left;
-}
-#shape-control .shapeContent.align-right > .shapePalette .accordianGroup > .accordianBody .artifactPane span {
-  text-align: left;
-}
-#shape-control .shapeContent.align-right > .shapePalette .shapeLibrary .libraryTitle {
-  text-align: left;
 }
 
 #widget-control .widgetContent {
@@ -15636,6 +15766,8 @@
   background: inherit;
 }
 #widget-control .widgetContent > .widgetPalette .accordianGroup {
+  position: relative;
+  float: left;
   width: 100%;
   overflow: hidden;
 }
@@ -15649,7 +15781,27 @@
   text-shadow: 0px 3px 4px rgba(0, 0, 0, 0.4);
   background: #fff;
 }
+#widget-control .widgetContent > .widgetPalette .accordianGroup > .accordianTitle:after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  content: '';
+  width: 100%;
+  height: 2px;
+  background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjEuMCIgeTE9IjAuNSIgeDI9IjAuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ViZWJlYiIvPjxzdG9wIG9mZnNldD0iNTAlIiBzdG9wLWNvbG9yPSIjZWJlYmViIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjZmZmZmZmIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g');
+  background: -webkit-gradient(linear, 100% 50%, 0% 50%, color-stop(0%, #ebebeb), color-stop(50%, #ebebeb), color-stop(100%, #ffffff));
+  background: -moz-linear-gradient(right, #ebebeb 0%, #ebebeb 50%, #ffffff 100%);
+  background: -webkit-linear-gradient(right, #ebebeb 0%, #ebebeb 50%, #ffffff 100%);
+  background: linear-gradient(to left, #ebebeb 0%, #ebebeb 50%, #ffffff 100%);
+}
 #widget-control .widgetContent > .widgetPalette .accordianGroup > .accordianTitle:before {
+  position: absolute;
+  left: 0;
+  top: 0;
+  line-height: 2;
+  text-align: center;
+  width: 1em;
+  height: 2em;
   -moz-transform: rotateZ(0deg);
   -ms-transform: rotateZ(0deg);
   -webkit-transform: rotateZ(0deg);
@@ -15659,7 +15811,20 @@
   -webkit-transition: -webkit-transform 0.3s;
   transition: transform 0.3s;
 }
+#widget-control .widgetContent > .widgetPalette .accordianGroup > .accordianTitle span {
+  line-height: 2;
+  height: 2em;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  text-overflow: ellipsis;
+  text-align: left;
+  text-indent: 2em;
+  overflow: hidden;
+}
 #widget-control .widgetContent > .widgetPalette .accordianGroup > .accordianBody {
+  position: relative;
+  float: left;
   width: 100%;
   margin-top: 0.5em;
   margin-bottom: 0.5em;
@@ -15750,6 +15915,9 @@
   -webkit-animation-duration: 0.3s;
   animation-duration: 0.3s;
 }
+#widget-control .widgetContent > .widgetPalette > .widgetLibraryList.select ~ .accordianGroup {
+  opacity: 0;
+}
 #widget-control .widgetContent > .widgetPalette > .widgetLibraryList .toggleSelectionButton {
   height: 2em;
 }
@@ -15764,82 +15932,6 @@
 }
 #widget-control .widgetContent > .widgetPalette > .widgetLibraryList .toggleSelectionButton.partialSelect:before {
   color: #e6e6e6;
-}
-#widget-control .widgetContent.align-left > .widgetPalette .accordianGroup {
-  position: relative;
-  float: right;
-}
-#widget-control .widgetContent.align-left > .widgetPalette .accordianGroup > .accordianTitle {
-  position: relative;
-  float: right;
-  text-align: right;
-}
-#widget-control .widgetContent.align-left > .widgetPalette .accordianGroup > .accordianTitle:after {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  content: '';
-  width: 100%;
-  height: 2px;
-  background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjEuMCIgeTE9IjAuNSIgeDI9IjAuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ViZWJlYiIvPjxzdG9wIG9mZnNldD0iNTAlIiBzdG9wLWNvbG9yPSIjZWJlYmViIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjZmZmZmZmIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g');
-  background: -webkit-gradient(linear, 100% 50%, 0% 50%, color-stop(0%, #ebebeb), color-stop(50%, #ebebeb), color-stop(100%, #ffffff));
-  background: -moz-linear-gradient(right, #ebebeb 0%, #ebebeb 50%, #ffffff 100%);
-  background: -webkit-linear-gradient(right, #ebebeb 0%, #ebebeb 50%, #ffffff 100%);
-  background: linear-gradient(to left, #ebebeb 0%, #ebebeb 50%, #ffffff 100%);
-}
-#widget-control .widgetContent.align-left > .widgetPalette .accordianGroup > .accordianTitle:before {
-  position: absolute;
-  left: 0;
-  top: 0;
-  line-height: 2;
-  text-align: center;
-  width: 1em;
-  height: 2em;
-}
-#widget-control .widgetContent.align-left > .widgetPalette .accordianGroup > .accordianBody {
-  position: relative;
-  float: right;
-}
-#widget-control .widgetContent.align-left > .widgetPalette .accordianGroup > .accordianBody .widgetPane span {
-  text-align: right;
-}
-#widget-control .widgetContent.align-right > .widgetPalette .accordianGroup {
-  position: relative;
-  float: left;
-}
-#widget-control .widgetContent.align-right > .widgetPalette .accordianGroup > .accordianTitle {
-  position: relative;
-  float: left;
-  text-align: left;
-}
-#widget-control .widgetContent.align-right > .widgetPalette .accordianGroup > .accordianTitle:after {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  content: '';
-  width: 100%;
-  height: 2px;
-  background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuMCIgeTE9IjAuNSIgeDI9IjEuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ViZWJlYiIvPjxzdG9wIG9mZnNldD0iNTAlIiBzdG9wLWNvbG9yPSIjZWJlYmViIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjZmZmZmZmIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g');
-  background: -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, #ebebeb), color-stop(50%, #ebebeb), color-stop(100%, #ffffff));
-  background: -moz-linear-gradient(left, #ebebeb 0%, #ebebeb 50%, #ffffff 100%);
-  background: -webkit-linear-gradient(left, #ebebeb 0%, #ebebeb 50%, #ffffff 100%);
-  background: linear-gradient(to right, #ebebeb 0%, #ebebeb 50%, #ffffff 100%);
-}
-#widget-control .widgetContent.align-right > .widgetPalette .accordianGroup > .accordianTitle:before {
-  position: absolute;
-  right: 0;
-  top: 0;
-  line-height: 2;
-  text-align: center;
-  width: 2em;
-  height: 2em;
-}
-#widget-control .widgetContent.align-right > .widgetPalette .accordianGroup > .accordianBody {
-  position: relative;
-  float: left;
-}
-#widget-control .widgetContent.align-right > .widgetPalette .accordianGroup > .accordianBody .widgetPane span {
-  text-align: left;
 }
 
 #page-control {
@@ -16922,6 +17014,15 @@
   height: 100%;
   overflow: auto;
 }
+#state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details[tab-sel^='tab-content'] {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: none;
+}
+#state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details[tab-sel^='tab-content'].select {
+  display: block;
+}
 #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > #triggerContent {
   position: relative;
   float: left;
@@ -17293,7 +17394,7 @@
   line-height: 2;
 }
 #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > .effectLibraryList .hideLibraryListButton + .accordianGroup {
-  top: 2.5em;
+  margin-top: 2.5em;
 }
 #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > .effectLibraryList .accordianGroup {
   position: relative;
@@ -17311,7 +17412,27 @@
   text-shadow: 0px 3px 4px rgba(0, 0, 0, 0.4);
   background: #fff;
 }
+#state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > .effectLibraryList .accordianGroup > .accordianTitle:after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  content: '';
+  width: 100%;
+  height: 2px;
+  background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjEuMCIgeTE9IjAuNSIgeDI9IjAuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ViZWJlYiIvPjxzdG9wIG9mZnNldD0iNTAlIiBzdG9wLWNvbG9yPSIjZWJlYmViIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjZmZmZmZmIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g');
+  background: -webkit-gradient(linear, 100% 50%, 0% 50%, color-stop(0%, #ebebeb), color-stop(50%, #ebebeb), color-stop(100%, #ffffff));
+  background: -moz-linear-gradient(right, #ebebeb 0%, #ebebeb 50%, #ffffff 100%);
+  background: -webkit-linear-gradient(right, #ebebeb 0%, #ebebeb 50%, #ffffff 100%);
+  background: linear-gradient(to left, #ebebeb 0%, #ebebeb 50%, #ffffff 100%);
+}
 #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > .effectLibraryList .accordianGroup > .accordianTitle:before {
+  position: absolute;
+  left: 0;
+  top: 0;
+  line-height: 2;
+  text-align: center;
+  width: 1em;
+  height: 2em;
   -moz-transform: rotateZ(0deg);
   -ms-transform: rotateZ(0deg);
   -webkit-transform: rotateZ(0deg);
@@ -17321,7 +17442,20 @@
   -webkit-transition: -webkit-transform 0.3s;
   transition: transform 0.3s;
 }
+#state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > .effectLibraryList .accordianGroup > .accordianTitle span {
+  line-height: 2;
+  height: 2em;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  text-overflow: ellipsis;
+  text-align: left;
+  text-indent: 2em;
+  overflow: hidden;
+}
 #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > .effectLibraryList .accordianGroup > .accordianBody {
+  position: relative;
+  float: left;
   width: 100%;
   margin-top: 0.5em;
   margin-bottom: 0.5em;
@@ -17356,14 +17490,11 @@
   width: calc(100% - 3em);
   line-height: 2;
   height: 100%;
-}
-#state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > .effectLibraryList .accordianGroup.select > .accordianBody .effectPane span {
-  margin: 0;
-  text-shadow: 1px 0px 0px ghostwhite, -1px 0px 0px ghostwhite, 0px 1px 0px ghostwhite, 0px -1px 0px ghostwhite, 1px 1px 0px ghostwhite, -1px -1px 0px ghostwhite, -1px 1px 0px ghostwhite, 1px -1px 0px ghostwhite, 0px 6px 1px silver, 2px 6px 1px gray, -2px 6px 1px gray, 0px 6px 7px black;
-}
-#state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > .effectLibraryList .accordianGroup.select > .accordianBody .effectPane span:active {
-  margin-top: 2px;
-  text-shadow: 1px 0px 0px ghostwhite, -1px 0px 0px ghostwhite, 0px 1px 0px ghostwhite, 0px -1px 0px ghostwhite, 1px 1px 0px ghostwhite, -1px -1px 0px ghostwhite, -1px 1px 0px ghostwhite, 1px -1px 0px ghostwhite, 0px 6px 1px silver;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > .effectLibraryList .accordianGroup.select > .accordianBody .effectPane .toggleSelectionButton {
   position: relative;
@@ -17642,100 +17773,6 @@
 }
 #state-transition-control .stateContent > .stateDetails .deleteButton:active:before {
   color: #888;
-}
-#state-transition-control .stateContent.align-left > .stateDetails .tab-content-transition-details[tab-sel^='tab-content'] {
-  position: absolute;
-  left: 0;
-  top: 0;
-  display: none;
-}
-#state-transition-control .stateContent.align-left > .stateDetails .tab-content-transition-details[tab-sel^='tab-content'].select {
-  display: block;
-}
-#state-transition-control .stateContent.align-left > .stateDetails .tab-content-transition-details .effectLibraryList .accordianGroup {
-  position: relative;
-  float: right;
-}
-#state-transition-control .stateContent.align-left > .stateDetails .tab-content-transition-details .effectLibraryList .accordianGroup > .accordianTitle {
-  position: relative;
-  float: right;
-  text-align: right;
-}
-#state-transition-control .stateContent.align-left > .stateDetails .tab-content-transition-details .effectLibraryList .accordianGroup > .accordianTitle:after {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  content: '';
-  width: 100%;
-  height: 2px;
-  background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjEuMCIgeTE9IjAuNSIgeDI9IjAuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ViZWJlYiIvPjxzdG9wIG9mZnNldD0iNTAlIiBzdG9wLWNvbG9yPSIjZWJlYmViIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjZmZmZmZmIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g');
-  background: -webkit-gradient(linear, 100% 50%, 0% 50%, color-stop(0%, #ebebeb), color-stop(50%, #ebebeb), color-stop(100%, #ffffff));
-  background: -moz-linear-gradient(right, #ebebeb 0%, #ebebeb 50%, #ffffff 100%);
-  background: -webkit-linear-gradient(right, #ebebeb 0%, #ebebeb 50%, #ffffff 100%);
-  background: linear-gradient(to left, #ebebeb 0%, #ebebeb 50%, #ffffff 100%);
-}
-#state-transition-control .stateContent.align-left > .stateDetails .tab-content-transition-details .effectLibraryList .accordianGroup > .accordianTitle:before {
-  position: absolute;
-  left: 0;
-  top: 0;
-  line-height: 2;
-  text-align: center;
-  width: 1em;
-  height: 2em;
-}
-#state-transition-control .stateContent.align-left > .stateDetails .tab-content-transition-details .effectLibraryList .accordianGroup > .accordianBody {
-  position: relative;
-  float: right;
-}
-#state-transition-control .stateContent.align-left > .stateDetails .tab-content-transition-details .effectLibraryList .accordianGroup > .accordianBody .effectPane span {
-  text-align: right;
-}
-#state-transition-control .stateContent.align-right > .stateDetails .tab-content-transition-details[tab-sel^='tab-content'] {
-  position: absolute;
-  left: 0;
-  top: 0;
-  display: none;
-}
-#state-transition-control .stateContent.align-right > .stateDetails .tab-content-transition-details[tab-sel^='tab-content'].select {
-  display: block;
-}
-#state-transition-control .stateContent.align-right > .stateDetails .tab-content-transition-details .effectLibraryList .accordianGroup {
-  position: relative;
-  float: left;
-}
-#state-transition-control .stateContent.align-right > .stateDetails .tab-content-transition-details .effectLibraryList .accordianGroup > .accordianTitle {
-  position: relative;
-  float: left;
-  text-align: left;
-}
-#state-transition-control .stateContent.align-right > .stateDetails .tab-content-transition-details .effectLibraryList .accordianGroup > .accordianTitle:after {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  content: '';
-  width: 100%;
-  height: 2px;
-  background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuMCIgeTE9IjAuNSIgeDI9IjEuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ViZWJlYiIvPjxzdG9wIG9mZnNldD0iNTAlIiBzdG9wLWNvbG9yPSIjZWJlYmViIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjZmZmZmZmIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g');
-  background: -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, #ebebeb), color-stop(50%, #ebebeb), color-stop(100%, #ffffff));
-  background: -moz-linear-gradient(left, #ebebeb 0%, #ebebeb 50%, #ffffff 100%);
-  background: -webkit-linear-gradient(left, #ebebeb 0%, #ebebeb 50%, #ffffff 100%);
-  background: linear-gradient(to right, #ebebeb 0%, #ebebeb 50%, #ffffff 100%);
-}
-#state-transition-control .stateContent.align-right > .stateDetails .tab-content-transition-details .effectLibraryList .accordianGroup > .accordianTitle:before {
-  position: absolute;
-  right: 0;
-  top: 0;
-  line-height: 2;
-  text-align: center;
-  width: 2em;
-  height: 2em;
-}
-#state-transition-control .stateContent.align-right > .stateDetails .tab-content-transition-details .effectLibraryList .accordianGroup > .accordianBody {
-  position: relative;
-  float: left;
-}
-#state-transition-control .stateContent.align-right > .stateDetails .tab-content-transition-details .effectLibraryList .accordianGroup > .accordianBody .effectPane span {
-  text-align: left;
 }
 
 #frameSketchWidgetDemoArea * {

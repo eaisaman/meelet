@@ -7,34 +7,18 @@
         </div>
     </div>
     <div class="widgetPalette ui-control-panel">
-        <div class="accordianGroup"
-             ng-repeat="widgetLibrary in filterWidgetLibraryList"
-             ng-click="toggleSelect($event.currentTarget, $event)">
-            <div class="accordianTitle col-as-12 icon-widget-before icon-widget-cog-before">
-                {{widgetLibrary.name}}
-            </div>
-            <div class="accordianBody fs-x-small col-as-12 no-padding">
-                <div class="widgetPane col-as-12 no-padding"
-                     ng-repeat="artifact in filterArtifactList(widgetLibrary, project.xrefRecord)"
-                     ng-click="pickWidget(artifact, widgetLibrary, $event)">
-                    <div class="demoButton fs-x-large-before icon-widget-before icon-widget-show-demo-before"
-                         ng-click="showArtifactDemo(artifact, widgetLibrary, $event)"></div>
-                    <span>{{artifact.name}}</span>
-                </div>
-            </div>
-        </div>
-        <div class="widgetLibraryList fs-x-medium">
+        <div class="widgetLibraryList">
             <div class="accordianGroup"
                  ng-repeat="widgetLibrary in markLibrarySelection(widgetLibraryList, project.xrefRecord)"
                  ng-click="toggleSelect($event.currentTarget, $event)">
-                <div class="accordianTitle col-as-12 icon-widget-before icon-widget-angle-double-up-before">
-                    <span class="col-as-9 no-padding">{{widgetLibrary.name}}</span>
+                <div class="accordianTitle col-as-12 fs-x-small icon-widget-before icon-widget-angle-double-up-before">
+                    <span class="col-as-10 no-padding" ng-attr-title="{{widgetLibrary.desc}}">{{widgetLibrary.desc}}</span>
 
-                    <div class="toggleSelectionButton col-as-3 no-padding-right icon-widget-before"
+                    <div class="toggleSelectionButton col-as-2 no-padding-right icon-widget-before"
                          ng-class="{'icon-widget-square-before':!widgetLibrary._selected, 'icon-widget-square-check-before':widgetLibrary._selected, 'partialSelect':isPartialSelection(widgetLibrary, project.xrefRecord)}"
                          ng-click="toggleLibrarySelection(widgetLibrary, $event)"></div>
                 </div>
-                <div class="accordianBody fs-x-small col-as-12 no-padding">
+                <div class="accordianBody fs-x-smaller col-as-12 no-padding">
                     <div class="widgetPane col-as-12 no-padding"
                          ng-repeat="artifact in markArtifactSelection(widgetLibrary, project.xrefRecord)"
                          ng-click="$event.stopPropagation()">
@@ -44,6 +28,22 @@
                              ng-class="{'icon-widget-square-before':!artifact._selected, 'icon-widget-square-check-before':artifact._selected}"
                              ng-click="toggleWidgetSelection(artifact, widgetLibrary, $event)"></div>
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="accordianGroup fs-x-small"
+             ng-repeat="widgetLibrary in filterWidgetLibraryList"
+             ng-click="toggleSelect($event.currentTarget, $event)">
+            <div class="accordianTitle col-as-12 icon-widget-before icon-widget-cog-before" ng-attr-title="{{widgetLibrary.desc}}">
+                <span class="col-as-12 no-padding" ng-attr-title="{{widgetLibrary.desc}}">{{widgetLibrary.desc}}</span>
+            </div>
+            <div class="accordianBody col-as-12 no-padding">
+                <div class="widgetPane col-as-12 no-padding"
+                     ng-repeat="artifact in filterArtifactList(widgetLibrary, project.xrefRecord)"
+                     ng-click="pickWidget(artifact, widgetLibrary, $event)">
+                    <div class="demoButton fs-x-large-before icon-widget-before icon-widget-show-demo-before"
+                         ng-click="showArtifactDemo(artifact, widgetLibrary, $event)"></div>
+                    <span>{{artifact.name}}</span>
                 </div>
             </div>
         </div>

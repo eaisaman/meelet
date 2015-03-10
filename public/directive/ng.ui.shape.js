@@ -165,13 +165,7 @@ define(
                                 scope.toggleSelectLibraryList = function (event) {
                                     event && event.stopPropagation && event.stopPropagation();
 
-                                    scope.toggleSelect(".iconLibraryList").then(function () {
-                                        if (element.find(".iconLibraryList").hasClass("select")) {
-                                            element.find(".iconLibraryList").siblings(".accordianGroup").css("opacity", 0);
-                                        } else {
-                                            element.find(".iconLibraryList").siblings(".accordianGroup").css("opacity", 1);
-                                        }
-                                    });
+                                    scope.toggleSelect(".iconLibraryList");
                                 }
 
                                 scope.toggleIconSelection = function (repoArtifact, iconLibrary, event) {
@@ -185,9 +179,25 @@ define(
                                         if (xref) {
                                             var artifact = _.findWhere(xref.artifactList, {artifactId: repoArtifact._id});
                                             if (artifact) {
-                                                if (scope.project.unselectArtifact(iconLibrary._id, repoArtifact._id)) {
+                                                var result = $rootScope.loadedProject.unselectArtifact(iconLibrary._id, repoArtifact._id);
+                                                if (result.artifactUnselect) {
                                                     delete repoArtifact._selected;
                                                     delete repoArtifact._version;
+                                                }
+                                                if (result.libraryUnselect) {
+                                                    delete iconLibrary._selected;
+
+                                                    var index;
+                                                    if (!scope.filterIconLibraryList.every(function (lib, i) {
+                                                            if (lib._id === iconLibrary._id) {
+                                                                index = i;
+                                                                return false;
+                                                            }
+
+                                                            return true;
+                                                        })) {
+                                                        scope.filterIconLibraryList.splice(index, 1);
+                                                    }
                                                 }
                                             } else {
                                                 if (scope.project.selectArtifact(iconLibrary._id, repoArtifact._id, repoArtifact.name, repoArtifact._version)) {

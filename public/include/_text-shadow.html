@@ -18,16 +18,19 @@
                      class="toolButton icon-text-shadow-before icon-text-shadow-after icon-text-shadow-alphabet-before icon-text-shadow-alphabet-after"></div>
                 <div tab-sel="tab-head-text-shadow-value-2" tab-content="text-shadow-value"
                      class="toolButton icon-text-shadow-before icon-text-shadow-after icon-text-shadow-format-list-bulleted-before  icon-text-shadow-format-list-bulleted-after"></div>
+                <div tab-sel="tab-head-text-shadow-value-3" tab-content="text-shadow-value"
+                     class="toolButton icon-text-shadow-before icon-text-shadow-after icon-text-shadow-library-before  icon-text-shadow-library-after"></div>
             </div>
         </div>
         <div class="tabContents">
             <div tab-sel="tab-content-text-shadow-value-1" class="presetTextShadow">
                 <div class="effectLibrary"
+                     ng-if="effectLibrary.uiControl === 'uiTextShadowEditor'"
                      ng-repeat="effectLibrary in filterEffectLibraryList">
-                    <div class="libraryTitle icon-text-shadow-before icon-text-shadow-alphabet-before">
+                    <div class="libraryTitle icon-text-shadow-before icon-text-shadow-library-before">
                         {{effectLibrary.name}}
                     </div>
-                    <div class="accordianGroup"
+                    <div class="accordianGroup fs-x-small"
                          ng-repeat="artifact in filterArtifactList(effectLibrary, project.xrefRecord)"
                          ng-click="toggleSelect($event.currentTarget, $event)">
                         <div class="accordianTitle col-as-12 icon-text-shadow-before icon-text-shadow-angle-double-up-before">
@@ -94,6 +97,32 @@
                                  ng-click="copyShadowStop($index, $event)"></div>
                             <div class="icon-text-shadow icon-text-shadow-paste-before"
                                  ng-click="pasteShadowStop($index, $event)"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div tab-sel="tab-content-text-shadow-value-3" class="textShadowArtifactPanes vt-scroll-pane">
+                <div class="accordianGroup"
+                     ng-if="effectLibrary.uiControl === 'uiTextShadowEditor'"
+                     ng-repeat="effectLibrary in markLibrarySelection(effectLibraryList, project.xrefRecord)"
+                     ng-click="toggleSelect($event.currentTarget, $event)">
+                    <div class="accordianTitle col-as-12 fs-x-small icon-text-shadow-before icon-text-shadow-angle-double-up-before">
+                        <span class="col-as-10 no-padding"
+                              ng-attr-title="{{effectLibrary.desc}}">{{effectLibrary.desc}}</span>
+
+                        <div class="toggleSelectionButton col-as-2 no-padding-right icon-text-shadow-before"
+                             ng-class="{'icon-text-shadow-square-before':!effectLibrary._selected, 'icon-text-shadow-square-check-before':effectLibrary._selected, 'partialSelect':isPartialSelection(effectLibrary, project.xrefRecord)}"
+                             ng-click="toggleLibrarySelection(effectLibrary, $event)"></div>
+                    </div>
+                    <div class="accordianBody fs-x-smaller col-as-12 no-padding">
+                        <div class="effectPane col-as-12 no-padding"
+                             ng-repeat="artifact in markArtifactSelection(effectLibrary, project.xrefRecord)"
+                             ng-click="$event.stopPropagation()">
+                            <span>{{artifact.name}}</span>
+
+                            <div class="toggleSelectionButton icon-text-shadow-before"
+                                 ng-class="{'icon-text-shadow-square-before':!artifact._selected, 'icon-text-shadow-square-check-before':artifact._selected}"
+                                 ng-click="toggleArtifactSelection(artifact, effectLibrary, $event)"></div>
                         </div>
                     </div>
                 </div>

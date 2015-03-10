@@ -321,9 +321,25 @@ define(
                                         if (xref) {
                                             var artifact = _.findWhere(xref.artifactList, {artifactId: repoArtifact._id});
                                             if (artifact) {
-                                                if (scope.project.unselectArtifact(effectLibrary._id, repoArtifact._id)) {
+                                                var result = $rootScope.loadedProject.unselectArtifact(effectLibrary._id, repoArtifact._id);
+                                                if (result.artifactUnselect) {
                                                     delete repoArtifact._selected;
                                                     delete repoArtifact._version;
+                                                }
+                                                if (result.libraryUnselect) {
+                                                    delete effectLibrary._selected;
+
+                                                    var index;
+                                                    if (!scope.filterEffectLibraryList.every(function (lib, i) {
+                                                            if (lib._id === effectLibrary._id) {
+                                                                index = i;
+                                                                return false;
+                                                            }
+
+                                                            return true;
+                                                        })) {
+                                                        scope.filterEffectLibraryList.splice(index, 1);
+                                                    }
                                                 }
                                             } else {
                                                 if (scope.project.selectArtifact(effectLibrary._id, repoArtifact._id, repoArtifact.name, repoArtifact._version)) {
