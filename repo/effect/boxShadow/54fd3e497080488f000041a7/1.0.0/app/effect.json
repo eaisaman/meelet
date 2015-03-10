@@ -1,0 +1,574 @@
+[
+  {
+    "name": "Elevated",
+    "value": "elevated",
+    "style": {
+      "box-shadow": [
+        {
+          "color": "#A4A4A4",
+          "h-shadow": "0px",
+          "v-shadow": "1px",
+          "blur": "4px",
+          "spread": "1px"
+        },
+        {
+          "color": "#E0E0E0",
+          "h-shadow": "0px",
+          "v-shadow": "0px",
+          "blur": "40px",
+          "inset": "inset"
+        },
+        {
+          "color": "#DDDDDD",
+          "h-shadow": "0px",
+          "v-shadow": "1px",
+          "blur": "1px"
+        },
+        {
+          "color": "#D6D6D6",
+          "h-shadow": "0px",
+          "v-shadow": "2px",
+          "blur": "1px"
+        },
+        {
+          "color": "#CCCCCC",
+          "h-shadow": "0px",
+          "v-shadow": "3px",
+          "blur": "1px"
+        },
+        {
+          "color": "#C5C5C5",
+          "h-shadow": "0px",
+          "v-shadow": "4px",
+          "blur": "1px"
+        },
+        {
+          "color": "#C1C1C1",
+          "h-shadow": "0px",
+          "v-shadow": "5px",
+          "blur": "1px"
+        },
+        {
+          "color": "#BBBBBB",
+          "h-shadow": "0px",
+          "v-shadow": "6px",
+          "blur": "1px"
+        },
+        {
+          "color": "#777777",
+          "h-shadow": "0px",
+          "v-shadow": "7px",
+          "blur": "1px"
+        },
+        {
+          "color": "#535353",
+          "h-shadow": "0px",
+          "v-shadow": "8px",
+          "blur": "3px",
+          "spread": "1px"
+        },
+        {
+          "color": "#A4A4A4",
+          "h-shadow": "0px",
+          "v-shadow": "9px",
+          "blur": "5px",
+          "spread": "1px"
+        },
+        {
+          "color": "#C1C1C1",
+          "h-shadow": "0px",
+          "v-shadow": "10px",
+          "blur": "7px",
+          "spread": "1px"
+        },
+        {
+          "color": "#C1C1C1",
+          "h-shadow": "0px",
+          "v-shadow": "11px",
+          "blur": "17px",
+          "spread": "0px"
+        },
+        {
+          "color": "#E0E0E0",
+          "h-shadow": "0px",
+          "v-shadow": "12px",
+          "blur": "21px",
+          "spread": "0px"
+        },
+        {
+          "color": "#E0E0E0",
+          "h-shadow": "0px",
+          "v-shadow": "13px",
+          "blur": "25px",
+          "spread": "0px"
+        }
+      ]
+    }
+  },
+  {
+    "name": "Sunken",
+    "value": "sunken",
+    "style": {
+      "box-shadow": [
+        {
+          "color": "#A4A4A4",
+          "h-shadow": "0px",
+          "v-shadow": "1px",
+          "blur": "4px",
+          "spread": "1px"
+        },
+        {
+          "color": "#E0E0E0",
+          "h-shadow": "0px",
+          "v-shadow": "0px",
+          "blur": "40px",
+          "inset": "inset"
+        },
+        {
+          "color": "#DDDDDD",
+          "h-shadow": "0px",
+          "v-shadow": "1px",
+          "blur": "1px",
+          "inset": "inset"
+        },
+        {
+          "color": "#D6D6D6",
+          "h-shadow": "0px",
+          "v-shadow": "2px",
+          "blur": "1px",
+          "inset": "inset"
+        },
+        {
+          "color": "#CCCCCC",
+          "h-shadow": "0px",
+          "v-shadow": "3px",
+          "blur": "1px",
+          "inset": "inset"
+        },
+        {
+          "color": "#C5C5C5",
+          "h-shadow": "0px",
+          "v-shadow": "4px",
+          "blur": "1px",
+          "inset": "inset"
+        },
+        {
+          "color": "#C1C1C1",
+          "h-shadow": "0px",
+          "v-shadow": "5px",
+          "blur": "1px",
+          "inset": "inset"
+        },
+        {
+          "color": "#BBBBBB",
+          "h-shadow": "0px",
+          "v-shadow": "6px",
+          "blur": "1px",
+          "inset": "inset"
+        },
+        {
+          "color": "#777777",
+          "h-shadow": "0px",
+          "v-shadow": "7px",
+          "blur": "1px",
+          "inset": "inset"
+        },
+        {
+          "color": "#535353",
+          "h-shadow": "0px",
+          "v-shadow": "8px",
+          "blur": "3px",
+          "spread": "1px",
+          "inset": "inset"
+        },
+        {
+          "color": "#A4A4A4",
+          "h-shadow": "0px",
+          "v-shadow": "9px",
+          "blur": "5px",
+          "spread": "1px",
+          "inset": "inset"
+        },
+        {
+          "color": "#C1C1C1",
+          "h-shadow": "0px",
+          "v-shadow": "10px",
+          "blur": "7px",
+          "spread": "0px",
+          "inset": "inset"
+        },
+        {
+          "color": "#C1C1C1",
+          "h-shadow": "0px",
+          "v-shadow": "11px",
+          "blur": "17px",
+          "spread": "0px",
+          "inset": "inset"
+        },
+        {
+          "color": "#E0E0E0",
+          "h-shadow": "0px",
+          "v-shadow": "12px",
+          "blur": "21px",
+          "spread": "0px",
+          "inset": "inset"
+        },
+        {
+          "color": "#E0E0E0",
+          "h-shadow": "0px",
+          "v-shadow": "13px",
+          "blur": "25px",
+          "spread": "0px",
+          "inset": "inset"
+        },
+        {
+          "color": "#CCCCCC",
+          "h-shadow": "0px",
+          "v-shadow": "15px",
+          "blur": "28px",
+          "spread": "0px"
+        },
+        {
+          "color": "#CCCCCC",
+          "h-shadow": "0px",
+          "v-shadow": "7px",
+          "blur": "5px",
+          "spread": "5px"
+        },
+        {
+          "color": "#EEEEEE",
+          "h-shadow": "0px",
+          "v-shadow": "9px",
+          "blur": "15px",
+          "spread": "0px"
+        }
+      ]
+    }
+  },
+  {
+    "name": "Pressed",
+    "value": "pressed",
+    "style": {
+      "box-shadow": [
+        {
+          "color": "#555555",
+          "h-shadow": "2px",
+          "v-shadow": "2px",
+          "blur": "3px"
+        }
+      ]
+    }
+  },
+  {
+    "name": "Outer Shadow",
+    "value": "outerShadow",
+    "style": {
+      "box-shadow": [
+        {
+          "color": "#878787",
+          "h-shadow": "3px",
+          "v-shadow": "3px",
+          "blur": "5px",
+          "spread": "6px"
+        }
+      ]
+    }
+  },
+  {
+    "name": "Inner Shadow",
+    "value": "innerShadow",
+    "style": {
+      "box-shadow": [
+        {
+          "color": "#000000",
+          "h-shadow": "0px",
+          "v-shadow": "0px",
+          "blur": "10px",
+          "inset": "inset"
+        }
+      ]
+    }
+  },
+  {
+    "name": "One Edge Shadow",
+    "value": "oneEdgeShadow",
+    "style": {
+      "box-shadow": [
+        {
+          "color": "#000000",
+          "h-shadow": "0px",
+          "v-shadow": "8px",
+          "blur": "6px",
+          "spread": "-6px"
+        }
+      ]
+    }
+  },
+  {
+    "name": "Drop Shadow",
+    "value": "dropShadow",
+    "style": {
+      "box-shadow": [
+        {
+          "color": "#A4A4A4",
+          "h-shadow": "0px",
+          "v-shadow": "1px",
+          "blur": "4px"
+        },
+        {
+          "color": "#E0E0E0",
+          "h-shadow": "0px",
+          "v-shadow": "0px",
+          "blur": "40px",
+          "inset": "inset"
+        }
+      ]
+    }
+  },
+  {
+    "name": "Lifted",
+    "value": "lifted",
+    "style": {
+      "background": "#FFFFFF"
+    },
+    "beforeStyle": {
+      "position": "absolute",
+      "content": "",
+      "z-index": "-2",
+      "left": "10px",
+      "bottom": "15px",
+      "width": "50%",
+      "height": "20%",
+      "max-width": "300px",
+      "max-height": "100px",
+      "transform": [
+        {
+          "name": "rotate",
+          "value": "-3deg"
+        }
+      ],
+      "box-shadow": [
+        {
+          "color": "#3C3C3C",
+          "h-shadow": "0px",
+          "v-shadow": "15px",
+          "blur": "10px"
+        }
+      ]
+    },
+    "afterStyle": {
+      "position": "absolute",
+      "content": "",
+      "z-index": "-2",
+      "right": "10px",
+      "bottom": "15px",
+      "width": "50%",
+      "height": "20%",
+      "max-width": "300px",
+      "max-height": "100px",
+      "transform": [
+        {
+          "name": "rotate",
+          "value": "3deg"
+        }
+      ],
+      "box-shadow": [
+        {
+          "color": "#3C3C3C",
+          "h-shadow": "0px",
+          "v-shadow": "15px",
+          "blur": "10px"
+        }
+      ]
+    }
+  },
+  {
+    "name": "Curled",
+    "value": "curled",
+    "style": {
+      "background": "#FFFFFF"
+    },
+    "beforeStyle": {
+      "position": "absolute",
+      "content": "",
+      "z-index": "-2",
+      "left": "12px",
+      "bottom": "10px",
+      "width": "50%",
+      "height": "55%",
+      "max-width": "200px",
+      "max-height": "100px",
+      "transform": [
+        {
+          "name": "skew",
+          "value": "-8deg"
+        },
+        {
+          "name": "rotate",
+          "value": "-3deg"
+        }
+      ],
+      "box-shadow": [
+        {
+          "color": "#6D6D6D",
+          "h-shadow": "0px",
+          "v-shadow": "8px",
+          "blur": "12px"
+        }
+      ]
+    },
+    "afterStyle": {
+      "position": "absolute",
+      "content": "",
+      "z-index": "-2",
+      "right": "12px",
+      "bottom": "10px",
+      "width": "50%",
+      "height": "55%",
+      "max-width": "200px",
+      "max-height": "100px",
+      "transform": [
+        {
+          "name": "skew",
+          "value": "8deg"
+        },
+        {
+          "name": "rotate",
+          "value": "3deg"
+        }
+      ],
+      "box-shadow": [
+        {
+          "color": "#6D6D6D",
+          "h-shadow": "0px",
+          "v-shadow": "8px",
+          "blur": "12px"
+        }
+      ]
+    }
+  },
+  {
+    "name": "Raised",
+    "value": "raised",
+    "style": {
+      "box-shadow": [
+        {
+          "color": "#6D6D6D",
+          "h-shadow": "0px",
+          "v-shadow": "15px",
+          "blur": "10px",
+          "spread": "-10px"
+        },
+        {
+          "color": "#A4A4A4",
+          "h-shadow": "0px",
+          "v-shadow": "1px",
+          "blur": "4px"
+        },
+        {
+          "color": "#E0E0E0",
+          "h-shadow": "0px",
+          "v-shadow": "0px",
+          "blur": "40px",
+          "inset": "inset"
+        }
+      ]
+    }
+  },
+  {
+    "name": "Single Vertical Curve",
+    "value": "singleVerticalCurve",
+    "style": {
+      "background": "#FFFFFF"
+    },
+    "beforeStyle": {
+      "position": "absolute",
+      "content": "",
+      "z-index": "-2",
+      "top": "10px",
+      "bottom": "10px",
+      "left": "0px",
+      "right": "50%",
+      "box-shadow": [
+        {
+          "color": "#535353",
+          "h-shadow": "0px",
+          "v-shadow": "0px",
+          "blur": "15px"
+        }
+      ]
+    }
+  },
+  {
+    "name": "Double Vertical Curve",
+    "value": "doubleVerticalCurve",
+    "style": {
+      "background": "#FFFFFF"
+    },
+    "beforeStyle": {
+      "position": "absolute",
+      "content": "",
+      "z-index": "-2",
+      "top": "10px",
+      "bottom": "10px",
+      "left": "0px",
+      "right": "0px",
+      "box-shadow": [
+        {
+          "color": "#535353",
+          "h-shadow": "0px",
+          "v-shadow": "0px",
+          "blur": "15px"
+        }
+      ]
+    }
+  },
+  {
+    "name": "Single Horizontal Curve",
+    "value": "singleHorizontalCurve",
+    "style": {
+      "background": "#FFFFFF"
+    },
+    "beforeStyle": {
+      "position": "absolute",
+      "content": "",
+      "z-index": "-2",
+      "top": "50%",
+      "bottom": "0px",
+      "left": "10px",
+      "right": "10px",
+      "box-shadow": [
+        {
+          "color": "#535353",
+          "h-shadow": "0px",
+          "v-shadow": "0px",
+          "blur": "15px"
+        }
+      ]
+    }
+  },
+  {
+    "name": "Double Horizontal Curve",
+    "value": "doubleHorizontalCurve",
+    "style": {
+      "background": "#FFFFFF"
+    },
+    "beforeStyle": {
+      "position": "absolute",
+      "content": "",
+      "z-index": "-2",
+      "top": "0px",
+      "bottom": "0px",
+      "left": "10px",
+      "right": "10px",
+      "box-shadow": [
+        {
+          "color": "#535353",
+          "h-shadow": "0px",
+          "v-shadow": "0px",
+          "blur": "15px"
+        }
+      ]
+    }
+  }
+]

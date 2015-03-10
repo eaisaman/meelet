@@ -1,0 +1,167 @@
+@import "compass/css3/box-shadow";
+@import "compass/css3/transform";
+@import "compass/css3/filter";
+
+@mixin standard-box-shadow($artifactName, $version) {
+    [#{$artifactName}-#{str_replace($version, '.', '-')}] {
+        &[effect=sunken] {
+            @include box-shadow(0 1px 4px 1px #A4A4A4, 0 0 40px #E0E0E0 inset, 0 1px 1px #dddddd inset, 0 2px 1px #d6d6d6 inset, 0 3px 1px #cccccc inset, 0 4px 1px #c5c5c5 inset, 0 5px 1px #c1c1c1 inset, 0 6px 1px #bbbbbb inset, 0 7px 1px #777777 inset, 0 8px 3px 1px #535353 inset, 0 9px 5px 1px #A4A4A4 inset, 0 10px 7px 0 #C1C1C1 inset, 0 11px 17px 0 #C1C1C1 inset, 0 12px 21px 0 #E0E0E0 inset, 0 13px 25px 0 #E0E0E0 inset, 0 15px 28px 0 #CCCCCC, 0 7px 5px 5px #CCCCCC, 0 9px 15px 0 #EEEEEE);
+        }
+
+        &[effect=pressed] {
+            @include box-shadow(0px 2px 3px #555555);
+        }
+
+        &[effect=outerShadow] {
+            @include box-shadow(3px 3px 5px 6px #878787);
+        }
+
+        &[effect=innerShadow] {
+            @include box-shadow(inset 0 0 10px #000000);
+        }
+
+        &[effect=oneEdgeShadow] {
+            @include box-shadow(0 8px 6px -6px #000000);
+        }
+
+        &[effect=dropShadow] {
+            @include box-shadow(0 1px 4px #A4A4A4, 0 0 40px #E0E0E0 inset);
+        }
+
+        &[effect=lifted] {
+            background: #ffffff;
+
+            &:before {
+                z-index: -2;
+                content: "";
+                position: absolute;
+                bottom: 15px;
+                left: 10px;
+                width: 50%;
+                height: 20%;
+                max-width: 300px;
+                max-height: 100px;
+
+                @include box-shadow(0 15px 10px #3C3C3C);
+                @include transform(rotate(-3deg));
+            }
+
+            &:after {
+                z-index: -2;
+                content: "";
+                position: absolute;
+                bottom: 15px;
+                right: 10px;
+                width: 50%;
+                height: 20%;
+                max-width: 300px;
+                max-height: 100px;
+
+                @include box-shadow(0 15px 10px #3C3C3C);
+                @include transform(rotate(3deg));
+            }
+        }
+
+        &[effect=curled] {
+            background: #ffffff;
+
+            &:before {
+                z-index: -2;
+                content: "";
+                position: absolute;
+                bottom: 12px;
+                left: 12px;
+                width: 50%;
+                height: 55%;
+                max-width: 200px;
+                max-height: 100px;
+
+                @include box-shadow(0 8px 12px #6D6D6D);
+                @include transform(skew(-8deg) rotate(-3deg));
+            }
+
+            &:after {
+                z-index: -2;
+                content: "";
+                position: absolute;
+                bottom: 12px;
+                right: 12px;
+                width: 50%;
+                height: 55%;
+                max-width: 200px;
+                max-height: 100px;
+
+                @include box-shadow(0 8px 12px #6D6D6D);
+                @include transform(skew(8deg) rotate(3deg));
+            }
+        }
+
+        &[effect=raised] {
+            @include box-shadow(0 15px 10px -10px #6D6D6D, 0 1px 4px #A4A4A4, 0 0 40px #E0E0E0 inset);
+        }
+
+        &[effect=singleVerticalCurve] {
+            background: #ffffff;
+
+            &:before {
+                z-index: -2;
+                content: "";
+                position: absolute;
+                top: 10px;
+                bottom: 10px;
+                left: 0;
+                right: 50%;
+
+                @include box-shadow(0 0 15px #535353);
+            }
+        }
+
+        &[effect=doubleVerticalCurve] {
+            background: #ffffff;
+
+            &:before {
+                z-index: -2;
+                content: "";
+                position: absolute;
+                top: 10px;
+                bottom: 10px;
+                left: 0;
+                right: 0;
+
+                @include box-shadow(0 0 15px #535353);
+            }
+        }
+
+        &[effect=singleHorizontalCurve] {
+            background: #ffffff;
+
+            &:before {
+                z-index: -2;
+                content: "";
+                position: absolute;
+                top: 50%;
+                bottom: 0;
+                left: 10px;
+                right: 10px;
+
+                @include box-shadow(0 0 15px #535353);
+            }
+        }
+
+        &[effect=doubleHorizontalCurve] {
+            background: #ffffff;
+
+            &:before {
+                z-index: -2;
+                content: "";
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 10px;
+                right: 10px;
+
+                @include box-shadow(0 0 15px #535353);
+            }
+        }
+    }
+}
