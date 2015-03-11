@@ -54,7 +54,7 @@ define(
 
         }
 
-        function FrameSketchController($scope, $rootScope, $timeout, $q, angularEventTypes, angularConstants, appService, uiService, uiUtilService) {
+        function FrameSketchController($scope, $rootScope, $timeout, $q, $log, angularEventTypes, angularConstants, appService, uiService, uiUtilService) {
             $scope.zoomWidget = function (event) {
                 event && event.stopPropagation && event.stopPropagation();
 
@@ -93,7 +93,9 @@ define(
 
             $scope.enableAddWidget = function (event) {
                 function addWidgetHandler(event) {
-                    var $container = $("." + angularConstants.widgetClasses.containerClass);
+                    var $container = $("." + angularConstants.widgetClasses.containerClass),
+                        touchX = $shapeElement && $shapeElement.data("touchX") || 0,
+                        touchY = $shapeElement && $shapeElement.data("touchY") || 0;
 
                     if (event.type === "panstart") {
 
@@ -101,15 +103,20 @@ define(
 
                         $shapeElement.addClass("pickerPaneShape squarePane")
                             .css("z-index", angularConstants.draggingShapeZIndex);
-                        $shapeElement.css("left", event.srcEvent.clientX - $container.offset().left);
-                        $shapeElement.css("top", event.srcEvent.clientY - $container.offset().top);
-                        $shapeElement.appendTo($("." + angularConstants.widgetClasses.containerClass));
-                    } else if (event.type === "panmove") {
+                        $shapeElement.appendTo($container);
+
+                        touchX = event.srcEvent.offsetX;
+                        touchY = event.srcEvent.offsetY;
+                        $shapeElement.data("touchX", touchX);
+                        $shapeElement.data("touchY", touchY);
+                    } else if ($shapeElement && event.type === "panmove") {
+                        var left = event.srcEvent.clientX - $shapeElement.parent().offset().left + touchX,
+                            top = event.srcEvent.clientY - $shapeElement.parent().offset().top + touchY;
+
+                        $shapeElement.css("left", left + "px");
+                        $shapeElement.css("top", top + "px");
+
                         var $to = $(event.srcEvent.toElement);
-
-                        $shapeElement.css("left", event.srcEvent.clientX - $container.offset().left);
-                        $shapeElement.css("top", event.srcEvent.clientY - $container.offset().top);
-
                         if ($to.hasClass(angularConstants.widgetClasses.widgetClass)) {
                             if (!$to.hasClass(angularConstants.widgetClasses.hoverClass)) {
                                 $("." + angularConstants.widgetClasses.holderClass).find("." + angularConstants.widgetClasses.hoverClass).removeClass(angularConstants.widgetClasses.hoverClass);
@@ -118,8 +125,9 @@ define(
                         } else if ($to.hasClass(angularConstants.widgetClasses.holderClass)) {
                             $("." + angularConstants.widgetClasses.holderClass).find("." + angularConstants.widgetClasses.hoverClass).removeClass(angularConstants.widgetClasses.hoverClass);
                         }
-                    } else if (event.type === "panend") {
+                    } else if ($shapeElement && event.type === "panend") {
                         $shapeElement.remove();
+                        $shapeElement = null;
                         $("." + angularConstants.widgetClasses.holderClass).find("." + angularConstants.widgetClasses.hoverClass).removeClass(angularConstants.widgetClasses.hoverClass);
 
                         var $to = $(event.srcEvent.toElement);
@@ -149,6 +157,8 @@ define(
                             }
                         }
                     }
+
+                    return uiUtilService.getResolveDefer();
                 }
 
                 event && event.stopPropagation && event.stopPropagation();
@@ -159,7 +169,8 @@ define(
 
                 if (!mc) {
                     mc = new Hammer.Manager(event.target);
-                    mc.add(new Hammer.Pan({threshold: 0, pointers: 0}));
+                    mc.add(new Hammer.Press());
+                    mc.add(new Hammer.Pan());
                     mc.on("panstart panmove panend", addWidgetHandler);
                     $el.data("hammer", mc);
                 }
@@ -812,7 +823,7 @@ define(
         return function (appModule) {
             appModule.
                 controller('RootController', ["$scope", "$rootScope", "$q", "appService", "urlService", RootController]).
-                controller('FrameSketchController', ["$scope", "$rootScope", "$timeout", "$q", "angularEventTypes", "angularConstants", "appService", "uiService", "uiUtilService", FrameSketchController]).
+                controller('FrameSketchController', ["$scope", "$rootScope", "$timeout", "$q", "$log", "angularEventTypes", "angularConstants", "appService", "uiService", "uiUtilService", FrameSketchController]).
                 controller('ProjectController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "uiService", "urlService", ProjectController]).
                 controller('RepoController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "urlService", RepoController]).
                 controller('RepoLibController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "urlService", RepoLibController]);

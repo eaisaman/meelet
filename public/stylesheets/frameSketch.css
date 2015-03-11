@@ -10690,7 +10690,6 @@
 
 .pickerPaneShape {
   position: absolute;
-  pointer-events: none;
   -moz-animation-duration: 2s;
   -webkit-animation-duration: 2s;
   animation-duration: 2s;

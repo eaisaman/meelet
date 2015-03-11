@@ -23,10 +23,10 @@
                 <div name="extraButtons">
                     <div ng-hide="true" ng-click="zoomWidget($event)" class="topbarButton icon-toolbar-before"
                          ng-class="{'icon-frame-sketch-expand-before':!zoomId, 'icon-frame-sketch-collapse-before':zoomId}"></div>
-                    <div ng-click="removeWidget($event)"
-                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-remove-before"></div>
                     <div ng-mouseenter="enableAddWidget($event)"
                          class="topbarButton icon-frame-sketch-before icon-frame-sketch-insert-before"></div>
+                    <div ng-click="removeWidget($event)"
+                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-remove-before"></div>
                     <div ng-click="locateWidget($event)"
                          class="topbarButton icon-frame-sketch-before icon-frame-sketch-locate-before"></div>
                     <div ng-click="duplicateWidget($event)"

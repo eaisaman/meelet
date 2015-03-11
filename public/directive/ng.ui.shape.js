@@ -83,23 +83,33 @@ define(
 
                                 function addWidgetHandler(event) {
                                     if (scope.pickerPaneShape) {
-                                        var $container = $("." + options.containerClass);
+                                        var $container = $("." + options.containerClass),
+                                            touchX = $shapeElement && $shapeElement.data("touchX") || 0,
+                                            touchY = $shapeElement && $shapeElement.data("touchY") || 0;
 
                                         if (event.type === "panstart") {
+                                            var $el = $(event.srcEvent.target);
 
                                             $shapeElement = $("<div />");
 
                                             $shapeElement.addClass("pickerPaneShape fs-x-medium-before squarePane")
                                                 .addClass(scope.getIconClassList(scope.pickerPaneShape.iconLibrary.name, scope.pickerPaneShape.artifact.name, scope.pickerPaneShape.icon, 'before').join(" "))
-                                                .css("z-index", options.elementZIndex);
-                                            $shapeElement.css("left", event.srcEvent.clientX - $container.offset().left);
-                                            $shapeElement.css("top", event.srcEvent.clientY - $container.offset().top);
+                                                .css({opacity: 0, "z-index": options.elementZIndex});
                                             $shapeElement.appendTo($("." + options.containerClass));
-                                        } else if (event.type === "panmove") {
-                                            var $to = $(event.srcEvent.toElement);
 
-                                            $shapeElement.css("left", event.srcEvent.clientX - $container.offset().left);
-                                            $shapeElement.css("top", event.srcEvent.clientY - $container.offset().top);
+                                            touchX = event.srcEvent.offsetX - $shapeElement.width();
+                                            touchY = event.srcEvent.offsetY;
+                                            $shapeElement.data("touchX", touchX);
+                                            $shapeElement.data("touchY", touchY);
+                                        } else if ($shapeElement && event.type === "panmove") {
+                                            var left = event.srcEvent.clientX - $shapeElement.parent().offset().left + touchX,
+                                                top = event.srcEvent.clientY - $shapeElement.parent().offset().top + touchY;
+
+                                            $shapeElement.css("left", left + "px");
+                                            $shapeElement.css("top", top + "px");
+                                            $shapeElement.css({opacity: 1, left: left + "px", top: top + "px"});
+
+                                            var $to = $(event.srcEvent.toElement);
 
                                             if ($to.hasClass(options.widgetClass)) {
                                                 if (!$to.hasClass(options.hoverClass)) {
@@ -109,8 +119,9 @@ define(
                                             } else if ($to.hasClass(options.holderClass)) {
                                                 $("." + options.holderClass).find("." + options.hoverClass).removeClass(options.hoverClass);
                                             }
-                                        } else if (event.type === "panend") {
+                                        } else if ($shapeElement && event.type === "panend") {
                                             $shapeElement.remove();
+                                            $shapeElement = null;
                                             $("." + options.holderClass).find("." + options.hoverClass).removeClass(options.hoverClass);
 
                                             var $to = $(event.srcEvent.toElement);
@@ -275,7 +286,8 @@ define(
                                 }
 
                                 var mc = new Hammer.Manager(element.find(".pickerPane").get(0));
-                                mc.add(new Hammer.Pan({threshold: 0, pointers: 0}));
+                                mc.add(new Hammer.Press());
+                                mc.add(new Hammer.Pan());
                                 mc.on("panstart panmove panend", addWidgetHandler);
 
                                 scope.$on('$destroy', function () {

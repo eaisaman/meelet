@@ -2,7 +2,7 @@
 var ANGULAR_LIB_PATH = "javascripts/angular/1.3.0-beta.8/",
     ANGULAR_MODULES_LIB_PATH = "javascripts/angular-modules/",
     ANGULAR_PLUGINS_LIB_PATH = "javascripts/angular-plugins/",
-    HAMMER_LIB_PATH = "javascripts/hammer/2.0.2/",
+    HAMMER_LIB_PATH = "javascripts/hammer/2.0.4/",
     JQUERY_LIB_PATH = "javascripts/jquery/2.1.1/",
     JQUERY_PLUGINS_LIB_PATH = "javascripts/jquery-plugins/",
     JQUERY_UI_LIB_PATH = "javascripts/jquery-ui/1.11.0/",
@@ -60,7 +60,7 @@ require(["jquery-lib", "jquery-plugins-lib", "hammer-lib", "jquery-ui-lib", "jqu
             activeClass: "pickedWidget",
             widgetContainerClass: "widgetContainer"
         },
-        draggingShapeZIndex: 99,
+        draggingShapeZIndex: 101,
         actionDelay: 100,
         checkInterval: 10,
         renderTimeout: 3000,

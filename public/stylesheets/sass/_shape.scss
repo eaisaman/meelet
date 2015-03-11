@@ -6,7 +6,6 @@ $underlineLinearGradient: (rgb(235, 235, 235) 0%, rgb(235, 235, 235) 50%, #fff 1
 
 .pickerPaneShape {
     position: absolute;
-    pointer-events: none;
 
     @extend %sonarEffect;
     @include animation-duration(2s);
