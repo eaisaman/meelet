@@ -385,6 +385,7 @@ define(
                     $scope.onModalClose = null;
                 });
             }
+
             $scope.isConfigurable = function (widgetObj) {
                 return uiService.isConfigurable(widgetObj);
             }

@@ -2,9 +2,9 @@ define(
     ["angular", "jquery"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$timeout", "$q", "$parse", "angularEventTypes", "angularConstants", "uiUtilService", "uiService"];
+            var inject = ["$timeout", "$q", "$parse", "$rootScope", "angularEventTypes", "angularConstants", "uiUtilService", "uiService"];
 
-            appModule.directive("uiPage", _.union(inject, [function ($timeout, $q, $parse, angularEventTypes, angularConstants, uiUtilService, uiService) {
+            appModule.directive("uiPage", _.union(inject, [function ($timeout, $q, $parse, $rootScope, angularEventTypes, angularConstants, uiUtilService, uiService) {
                 'use strict';
 
                 var defaults = {
@@ -16,7 +16,7 @@ define(
 
                 return {
                     restrict: "A",
-                    scope: {sketchObject: "=", sketchWorks: "=", dockAlign: "=", treeNodeIdPrefix: "="},
+                    scope: {sketchObject: "=", dockAlign: "=", treeNodeIdPrefix: "="},
                     replace: false,
                     templateUrl: "include/_page.html",
                     compile: function (element, attrs) {
@@ -25,6 +25,8 @@ define(
                                 extension && extension.attach && extension.attach(scope, _.extend(injectObj, {element: element, scope: scope}));
 
                                 options = _.extend(_.clone(options), $parse(attrs['uiPageOpts'])(scope, {}));
+
+                                scope.project = $rootScope.loadedProject;
                             },
                             post: function (scope, element, attrs) {
                                 scope.togglePage = function (event) {
@@ -52,7 +54,7 @@ define(
                                                     pageObj.addClass(options.pageClass);
                                                     scope.sketchObject.pickedPage && scope.sketchObject.pickedPage.removeOmniClass(angularConstants.widgetClasses.activeClass);
                                                     scope.sketchObject.pickedPage = pageObj;
-                                                    scope.sketchWorks.pages.push(pageObj);
+                                                    scope.project.sketchWorks.pages.push(pageObj);
                                                 });
                                             }
                                         }
@@ -63,13 +65,13 @@ define(
                                     event && event.stopPropagation && event.stopPropagation();
 
                                     var i = $(".pageList select").val();
-                                    if (scope.sketchWorks.pages.length > 1) {
-                                        var pageObj = scope.sketchWorks.pages[i],
-                                            j = (i + 1) == scope.sketchWorks.pages.length ? 0 : i;
+                                    if (scope.project.sketchWorks.pages.length > 1) {
+                                        var pageObj = scope.project.sketchWorks.pages[i],
+                                            j = (i + 1) == scope.project.sketchWorks.pages.length ? 0 : i;
 
-                                        scope.sketchWorks.pages.splice(i, 1);
+                                        scope.project.sketchWorks.pages.splice(i, 1);
                                         if (pageObj == scope.sketchObject.pickedPage) {
-                                            scope.sketchObject.pickedPage = scope.sketchWorks.pages[j];
+                                            scope.sketchObject.pickedPage = scope.project.sketchWorks.pages[j];
                                         }
                                     }
                                 }
@@ -82,14 +84,14 @@ define(
                                         function (name) {
                                             if (name) {
                                                 var i = $(".pageList select").val(),
-                                                    pageObj = scope.sketchWorks.pages[i];
+                                                    pageObj = scope.project.sketchWorks.pages[i];
 
                                                 uiService.copyPage(pageObj, $("." + options.pageHolderClass)).then(function (cloneObj) {
                                                     cloneObj.addOmniClass(angularConstants.widgetClasses.activeClass);
                                                     cloneObj.addClass(options.pageClass);
                                                     scope.sketchObject.pickedPage && scope.sketchObject.pickedPage.removeOmniClass(angularConstants.widgetClasses.activeClass);
                                                     scope.sketchObject.pickedPage = cloneObj;
-                                                    scope.sketchWorks.pages.splice(i + 1, 0, cloneObj);
+                                                    scope.project.sketchWorks.pages.splice(i + 1, 0, cloneObj);
                                                 });
                                             }
                                         }
@@ -134,7 +136,7 @@ define(
                                 $timeout(function () {
                                     $(".pageList select").change(function () {
                                         var i = $(this).val(),
-                                            pageObj = scope.sketchWorks.pages[i];
+                                            pageObj = scope.project.sketchWorks.pages[i];
 
                                         if (pageObj.id != scope.sketchObject.pickedPage.id) {
                                             scope.sketchObject.pickedPage = pageObj;

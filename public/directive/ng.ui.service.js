@@ -534,6 +534,12 @@ define(
                         state: this.state.id
                     });
                 },
+                clone: function () {
+                    var cloneObj = new Transition(this.name, this.state);
+                    cloneObj.actionObj = this.actionObj.clone();
+
+                    return cloneObj;
+                },
                 fromObject: function (obj) {
                     var ret = new Transition(obj.name, null, obj.id);
 
@@ -631,6 +637,17 @@ define(
                         self.widgetObj = obj;
                     });
                 },
+                clone: function (cloneObj, MEMBERS) {
+                    var self = this;
+
+                    _.extend(MEMBERS = MEMBERS || {}, BaseTransitionAction.prototype.MEMBERS);
+                    MEMBERS = _.omit(MEMBERS, ["id", "actionType", "widgetObj"]);
+                    _.keys(MEMBERS).forEach(function (member) {
+                        cloneObj[member] = angular.copy(self[member]);
+                    });
+
+                    return cloneObj;
+                },
                 doAction: function () {
                 },
                 restoreWidget: function (widgetObj) {
@@ -677,6 +694,22 @@ define(
                     });
 
                     return ret;
+                },
+                clone: function (cloneObj, MEMBERS) {
+                    var self = this;
+
+                    cloneObj = cloneObj || new SequenceTransitionAction(this.widgetObj);
+
+                    _.extend(MEMBERS = MEMBERS || {}, SequenceTransitionAction.prototype.MEMBERS);
+                    MEMBERS = _.omit(MEMBERS, ["childActions"]);
+
+                    SequenceTransitionAction.prototype.__proto__.clone.apply(self, [cloneObj, MEMBERS]);
+
+                    this.childActions.forEach(function (child) {
+                        cloneObj.childActions.push(child.clone());
+                    });
+
+                    return cloneObj;
                 },
                 doAction: function () {
                     var self = this,
@@ -735,6 +768,15 @@ define(
                     EffectTransitionAction.prototype.__proto__.fromObject.apply(ret, [obj]);
 
                     return ret;
+                },
+                clone: function (cloneObj, MEMBERS) {
+                    cloneObj = cloneObj || new EffectTransitionAction(this.widgetObj, this.artifactSpec, this.effect);
+
+                    _.extend(MEMBERS = MEMBERS || {}, EffectTransitionAction.prototype.MEMBERS);
+
+                    EffectTransitionAction.prototype.__proto__.clone.apply(this, [cloneObj, MEMBERS]);
+
+                    return cloneObj;
                 },
                 doAction: function () {
                     var self = this,
@@ -820,6 +862,15 @@ define(
 
                     return ret;
                 },
+                clone: function (cloneObj, MEMBERS) {
+                    cloneObj = cloneObj || new StateTransitionAction(this.widgetObj, this.newState);
+
+                    _.extend(MEMBERS = MEMBERS || {}, StateTransitionAction.prototype.MEMBERS);
+
+                    StateTransitionAction.prototype.__proto__.clone.apply(this, [cloneObj, MEMBERS]);
+
+                    return cloneObj;
+                },
                 doAction: function () {
                     var self = this,
                         defer = $inject.$q.defer();
@@ -879,6 +930,15 @@ define(
 
                     return ret;
                 },
+                clone: function (cloneObj, MEMBERS) {
+                    cloneObj = cloneObj || new ConfigurationTransitionAction(this.widgetObj, this.configuration);
+
+                    _.extend(MEMBERS = MEMBERS || {}, ConfigurationTransitionAction.prototype.MEMBERS);
+
+                    ConfigurationTransitionAction.prototype.__proto__.clone.apply(this, [cloneObj, MEMBERS]);
+
+                    return cloneObj;
+                },
                 doAction: function () {
                     var self = this,
                         defer = $inject.$q.defer();
@@ -907,8 +967,7 @@ define(
                     triggerType: "",
                     eventName: "",
                     options: null,
-                    widgetObj: null,
-                    callback: null
+                    widgetObj: null
                 },
                 initialize: function (id, triggerType, eventName, options) {
                     var MEMBERS = arguments.callee.prototype.MEMBERS;
@@ -926,6 +985,17 @@ define(
                     return _.pick(this, ["id", "triggerType", "eventName", "options"], "CLASS_NAME");
                 },
                 fromObject: function (obj) {
+                },
+                clone: function (cloneObj, MEMBERS) {
+                    var self = this;
+
+                    _.extend(MEMBERS = MEMBERS || {}, BaseTrigger.prototype.MEMBERS);
+                    MEMBERS = _.omit(MEMBERS, ["id", "triggerType", "eventName", "widgetObj"]);
+                    _.keys(MEMBERS).forEach(function (member) {
+                        cloneObj[member] = angular.copy(self[member]);
+                    });
+
+                    return cloneObj;
                 },
                 on: function (widgetObj) {
                     this.widgetObj = widgetObj;
@@ -958,6 +1028,16 @@ define(
                     GestureTrigger.prototype.__proto__.fromObject.apply(ret, [obj]);
 
                     return ret;
+                },
+                clone: function (cloneObj, MEMBERS) {
+                    var self = this;
+
+                    cloneObj = cloneObj || new GestureTrigger(null, self.eventName, self.options);
+                    _.extend(MEMBERS = MEMBERS || {}, GestureTrigger.prototype.MEMBERS);
+
+                    GestureTrigger.prototype.__proto__.clone.apply(self, [cloneObj, MEMBERS]);
+
+                    return cloneObj;
                 },
                 on: function (widgetObj) {
                     var self = this;
@@ -1714,19 +1794,20 @@ define(
                     isKindOf: function (className) {
                         return BaseSketchWidgetClass.prototype.CLASS_NAME == className;
                     },
-                    clone: function () {
-                        var self = this,
-                            cloneObj = new self.initialize(),
-                            cloneMembers = _.difference(_.keys(self.MEMBERS), ["id", "childWidgets", "anchor", "styleManager", "states", "$element"]);
+                    clone: function (cloneObj, MEMBERS) {
+                        var self = this;
 
-                        cloneMembers.forEach(function (member) {
+                        _.extend(MEMBERS = MEMBERS || {}, BaseSketchWidgetClass.prototype.MEMBERS);
+                        MEMBERS = _.omit(MEMBERS, ["id", "childWidgets", "anchor", "styleManager", "states", "state", "stateContext", "$element"]);
+                        _.keys(MEMBERS).forEach(function (member) {
                             cloneObj[member] = angular.copy(self[member]);
                         });
 
                         self.states.forEach(function (s) {
-                            cloneObj.states.push(s.clone && s.clone() || angular.copy(s));
+                            cloneObj.states.push(s.clone());
                         });
-                        cloneObj.setState(self.state);
+                        cloneObj.stateContext = self.stateContext;
+                        cloneObj.setState(self.state.clone());
 
                         cloneObj.styleManager = self.styleManager.clone();
                         cloneObj.styleManager.widgetObj = cloneObj;
@@ -2636,7 +2717,11 @@ define(
                     "height": "100px",
                     "background": "#ffffff"
                 },
-                MEMBERS: {},
+                MEMBERS: {
+                    isElement: true,
+                    isTemporary: false,
+                    html: ""
+                },
                 initialize: function (id, widgetsArr, isTemporary) {
                     this.initialize.prototype.__proto__.initialize.apply(this, [id]);
                     var self = this,
@@ -2648,6 +2733,7 @@ define(
 
                     this.isElement = true;
                     this.isTemporary = false;
+                    this.html = "";
 
                     if (isTemporary != null) {
                         this.isTemporary = isTemporary;
@@ -2680,11 +2766,19 @@ define(
 
                     return ElementSketchWidgetClass.prototype.CLASS_NAME == className || ElementSketchWidgetClass.prototype.__proto__.isKindOf.apply(self, [className]);
                 },
+                clone: function (cloneObj, MEMBERS) {
+                    cloneObj = cloneObj || new ElementSketchWidgetClass();
+                    _.extend(MEMBERS = MEMBERS || {}, ElementSketchWidgetClass.prototype.MEMBERS);
+
+                    ElementSketchWidgetClass.prototype.__proto__.clone.apply(this, [cloneObj, MEMBERS]);
+
+                    return cloneObj;
+                },
                 appendTo: function (container) {
                     var self = this;
 
                     ElementSketchWidgetClass.prototype.__proto__.appendTo.apply(self, [container]);
-                    self.setHtml(self.html);
+                    self.html && self.setHtml(self.html);
 
                     return self;
                 },
@@ -2999,6 +3093,14 @@ define(
 
                     return IncludeSketchWidgetClass.prototype.CLASS_NAME == className || IncludeSketchWidgetClass.prototype.__proto__.isKindOf.apply(self, [className]);
                 },
+                clone: function (cloneObj, MEMBERS) {
+                    cloneObj = cloneObj || new IncludeSketchWidgetClass(null, this.template);
+                    _.extend(MEMBERS = MEMBERS || {}, IncludeSketchWidgetClass.prototype.MEMBERS);
+
+                    IncludeSketchWidgetClass.prototype.__proto__.clone.apply(this, [cloneObj, MEMBERS]);
+
+                    return cloneObj;
+                },
                 appendTo: function (container) {
                     var self = this;
 
@@ -3133,6 +3235,14 @@ define(
                     var self = this;
 
                     return RepoSketchWidgetClass.prototype.CLASS_NAME == className || RepoSketchWidgetClass.prototype.__proto__.isKindOf.apply(self, [className]);
+                },
+                clone: function (cloneObj, MEMBERS) {
+                    cloneObj = cloneObj || new RepoSketchWidgetClass(null, this.widgetSpec);
+                    _.extend(MEMBERS = MEMBERS || {}, RepoSketchWidgetClass.prototype.MEMBERS);
+
+                    RepoSketchWidgetClass.prototype.__proto__.clone.apply(this, [cloneObj, MEMBERS]);
+
+                    return cloneObj;
                 },
                 appendTo: function (container) {
                     var self = this,
@@ -3367,6 +3477,14 @@ define(
                     PageSketchWidgetClass.prototype.__proto__.endMatchReference.apply(null);
 
                     return ret;
+                },
+                clone: function (cloneObj, MEMBERS) {
+                    cloneObj = cloneObj || new PageSketchWidgetClass();
+                    _.extend(MEMBERS = MEMBERS || {}, PageSketchWidgetClass.prototype.MEMBERS);
+
+                    PageSketchWidgetClass.prototype.__proto__.clone.apply(this, [cloneObj, MEMBERS]);
+
+                    return cloneObj;
                 },
                 isKindOf: function (className) {
                     var self = this;

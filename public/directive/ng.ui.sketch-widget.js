@@ -443,8 +443,7 @@ define(
                                             registerHandlers(scope, element);
                                         }
                                     });
-                                },
-                                post: function (scope, element, attrs) {
+
                                     attrs.$observe(DIRECTIVE, function (value) {
                                         uiService.createWidgetObj(element);
                                         registerHandlers(scope, element);
@@ -453,6 +452,8 @@ define(
                                     scope.$on('$destroy', function () {
                                         unregisterHandlers(element);
                                     });
+                                },
+                                post: function (scope, element, attrs) {
                                 }
                             };
                         }
