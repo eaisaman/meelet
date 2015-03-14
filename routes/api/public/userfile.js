@@ -661,6 +661,7 @@ UserFileController.prototype.postProjectArtifactXref = function (projectId, libr
 
     projectId = new self.db.Types.ObjectId(projectId);
     libraryId = new self.db.Types.ObjectId(libraryId);
+    artifactList = (artifactList && JSON.parse(artifactList)) || [];
     artifactList = _.filter(artifactList, function (a) {
         return a && a.version && bson.ObjectId.isValid(a.artifactId) && (a.artifactId = new self.db.Types.ObjectId(a.artifactId));
     });
@@ -699,7 +700,7 @@ UserFileController.prototype.postProjectArtifactXref = function (projectId, libr
                         } else if (!selectionDetail.library.length) {
                             next(new Error(_.string.sprintf("Cannot find repo library with id %s", libraryId)));
                         } else {
-                            next(null, selectionDetail.xref);
+                            next(null, selectionDetail.xref, selectionDetail.library);
                         }
                     } else {
                         next(err);
@@ -707,7 +708,7 @@ UserFileController.prototype.postProjectArtifactXref = function (projectId, libr
                 }
             );
         },
-        function (xref, next) {
+        function (xref, library, next) {
             if (xref.length) {
                 self.schema.ProjectArtifactXref.update({
                     libraryId: libraryId,
@@ -719,6 +720,8 @@ UserFileController.prototype.postProjectArtifactXref = function (projectId, libr
                 self.schema.ProjectArtifactXref.create({
                     projectId: projectId,
                     libraryId: libraryId,
+                    libraryName: library[0].name,
+                    type: library[0].type,
                     artifactList: artifactList,
                     createTime: now,
                     updateTime: now

@@ -60,7 +60,8 @@
     "createTime": "date",
     "projectId": "ObjectId",
     "libraryId": "ObjectId",
-    "artifactList": ["object"],
-    "version": "string"
+    "libraryName": "string",
+    "type": "string",
+    "artifactList": ["object"]
   }
 }
