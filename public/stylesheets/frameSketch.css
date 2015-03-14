@@ -10783,6 +10783,7 @@
   top: 0;
   width: 100%;
   heigh: 100%;
+  pointer-events: none;
   background: transparent;
 }
 
@@ -18151,6 +18152,8 @@
 #sketchContainer #sketchHolder .deviceBackground .deviceScreenBackground .deviceScreen .deviceHolder .pageHolder {
   z-index: 0;
   position: absolute;
+  top: 0px !important;
+  top: 0px !important;
   width: 100%;
   height: 100%;
   overflow: hidden;

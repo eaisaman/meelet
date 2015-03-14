@@ -313,17 +313,17 @@ define(
                                     }
 
                                     leftResizeMgr = new Hammer.Manager(element.find("#leftResizeControl")[0]);
-                                    leftResizeMgr.add(new Hammer.Pan({threshold: 5, pointers: 0}));
+                                    leftResizeMgr.add(new Hammer.Pan({threshold: 5}));
                                     leftResizeMgr.on("panstart panmove panend", leftResizeHandler);
 
                                     moveMgr = new Hammer.Manager(element.find("#horizontalMoveControl")[0]);
-                                    moveMgr.add(new Hammer.Pan({threshold: 5, pointers: 0}));
+                                    moveMgr.add(new Hammer.Pan({threshold: 5}));
                                     moveMgr.add(new Hammer.Tap());
                                     moveMgr.on("panstart panmove panend", moveHandler);
                                     moveMgr.on("tap", toggleMoveModeHandler);
 
                                     rightResizeMgr = new Hammer.Manager(element.find("#rightResizeControl")[0]);
-                                    rightResizeMgr.add(new Hammer.Pan({threshold: 5, pointers: 0}));
+                                    rightResizeMgr.add(new Hammer.Pan({threshold: 5}));
                                     rightResizeMgr.on("panstart panmove panend", rightResizeHandler);
                                 }
 

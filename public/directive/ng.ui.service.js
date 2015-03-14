@@ -99,7 +99,7 @@ define(
                                                     _id: a.artifactId,
                                                     name: a.name,
                                                     type: xref.type
-                                                }, xref.libraryName, a.version)
+                                                }, xref.libraryId, xref.libraryName, a.version)
                                             );
                                         });
                                     });
@@ -182,8 +182,40 @@ define(
 
                     return false;
                 },
-                loadArtifact: function (artifactId, version) {
-                    return _.findWhere(this.artifactSpecs, {artifactId: artifactId, version: version});
+                loadArtifact: function (libraryId, artifactId, version) {
+                    var self = this,
+                        loadedSpec = _.findWhere(self.artifactSpecs, {artifactId: artifactId, version: version});
+
+                    if (loadedSpec) {
+                        return $inject.uiUtilService.getResolveDefer(loadedSpec);
+                    } else {
+                        var xref = _.findWhere(self.xrefRecord, {libraryId: libraryId}),
+                            artifact;
+
+                        if (xref && !xref.artifactList.every(function (a) {
+                                if (a.artifactId === artifactId && a.version === version) {
+                                    artifact = a;
+                                    return false;
+                                }
+
+                                return true;
+                            })) {
+                            return $inject.appService.loadRepoArtifact({
+                                _id: artifactId,
+                                name: artifact.name,
+                                type: xref.type
+                            }, xref.libraryId, xref.libraryName, version).then(
+                                function (loadedSpec) {
+                                    return $inject.uiUtilService.getResolveDefer(loadedSpec);
+                                },
+                                function (err) {
+                                    return $inject.uiUtilService.getRejectDefer(err);
+                                }
+                            );
+                        } else {
+                            return $inject.uiUtilService.getRejectDefer();
+                        }
+                    }
                 },
                 refArtifact: function (libraryId, artifactId, name, version) {
                     var self = this;
@@ -497,9 +529,8 @@ define(
                         return t.toState.name == stateOption.name;
                     });
                 },
-                clone: function () {
-                    var cloneObj = new State(this.node, this.name, this.context);
-                    cloneObj.widgetObj = this.widgetObj;
+                clone: function (widgetObj) {
+                    var cloneObj = new State(widgetObj, this.name, this.context);
 
                     return cloneObj;
                 }
@@ -1256,7 +1287,7 @@ define(
                                 classList: []
                             },
                         args = Array.prototype.slice.call(arguments, 2),
-                        ret = self,
+                        ret = self.widgetObj,
                         stylePseudoPrefix = ((pseudo || "") + "Style").replace(/^:(.+)/, "$1");
                     stylePseudoPrefix = stylePseudoPrefix.charAt(0).toLowerCase() + stylePseudoPrefix.substr(1);
 
@@ -1544,9 +1575,9 @@ define(
                         }
                     }
                 },
-                clone: function () {
+                clone: function (widgetObj) {
                     var self = this,
-                        cloneObj = new self.initialize(),
+                        cloneObj = new StyleManager(widgetObj),
                         cloneMembers = _.difference(_.keys(self.MEMBERS), ["widgetObj", "stateMaps"]);
 
                     cloneMembers.forEach(function (member) {
@@ -1803,14 +1834,13 @@ define(
                             cloneObj[member] = angular.copy(self[member]);
                         });
 
-                        self.states.forEach(function (s) {
-                            cloneObj.states.push(s.clone());
-                        });
-                        cloneObj.stateContext = self.stateContext;
-                        cloneObj.setState(self.state.clone());
+                        cloneObj.styleManager = self.styleManager.clone(cloneObj);
 
-                        cloneObj.styleManager = self.styleManager.clone();
-                        cloneObj.styleManager.widgetObj = cloneObj;
+                        cloneObj.states.splice(0, cloneObj.states.length);
+                        self.states.forEach(function (s) {
+                            cloneObj.states.push(s.clone(cloneObj));
+                        });
+                        cloneObj.setStateContext(self.stateContext);
 
                         self.childWidgets.forEach(function (obj) {
                             cloneObj.childWidgets.push(obj.clone());
@@ -1871,7 +1901,11 @@ define(
                             }
 
                             self.$element.detach();
+
+                            return true;
                         }
+
+                        return false;
                     },
                     removeChild: function (child) {
                         var self = this,
@@ -1959,11 +1993,6 @@ define(
                                 widgetObj;
 
                             if (!self.$element) {
-                                //FIXME "Phantom Element". Due to Angular rendering, there are two possible cases of such kind of element:
-                                //first, the element may be removed from document, but the widget object still holds reference to the orphanage element;
-                                //second, the widget object holds reference to the orphanage element, while an element appears in document which needs to
-                                //be attached to by the widget object.
-
                                 self.$element = $("<div />").data("widgetObject", self).attr("id", self.id);
                                 self.childWidgets.forEach(function (child) {
                                     if (child.$element) {
@@ -2005,8 +2034,11 @@ define(
                                         childHeight = Math.floor(childHeight * $inject.angularConstants.precision) / $inject.angularConstants.precision;
                                 }
 
-                                if ((self.parent() || {}).id !== widgetObj.id) {
-                                    self.detach();
+
+                                var parent = self.parent(),
+                                    isDetached = false;
+                                if (parent == null || parent.id !== widgetObj.id) {
+                                    isDetached = self.detach();
                                 }
 
                                 if (widgetObj.childWidgets.every(function (obj) {
@@ -2022,7 +2054,7 @@ define(
 
                                 if (widgetObj.isTemporary) {
                                     //Only widget whose element has already existed in html can be appended to temporary widget
-                                    if (self.$element && self.$element.parent().length) {
+                                    if ((self.$element && self.$element.parent().length) || isDetached) {
                                         var left,
                                             top,
                                             offsetLeft,
@@ -2091,10 +2123,8 @@ define(
                                             });
                                         }
 
-                                        if (!$container || !$container.parent().length) {
-                                            widgetObj.offsetLeft = left;
-                                            widgetObj.offsetTop = top;
-                                        }
+                                        widgetObj.offsetLeft = left;
+                                        widgetObj.offsetTop = top;
 
                                         widgetObj.css("width", width + "px");
                                         widgetObj.css("height", height + "px");
@@ -2146,6 +2176,56 @@ define(
                         }
 
                         return self;
+                    },
+                    moveAfter: function () {
+                        var self = this,
+                            parentWidgetObj = self.parent();
+
+                        if (parentWidgetObj) {
+                            var wIndex;
+                            if (!parentWidgetObj.childWidgets.every(function (obj, index) {
+                                    if (obj.id == self.id) {
+                                        wIndex = index;
+                                        return false;
+                                    }
+
+                                    return true;
+                                })) {
+                                if (wIndex) {
+                                    parentWidgetObj.childWidgets.splice(wIndex, 1);
+                                    parentWidgetObj.childWidgets.splice(wIndex - 1, 0, self);
+                                    if (self.$element) {
+                                        self.$element.detach();
+                                        self.$element.insertBefore(parentWidgetObj.childWidgets[wIndex].$element);
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    moveBefore: function () {
+                        var self = this,
+                            parentWidgetObj = self.parent();
+
+                        if (parentWidgetObj) {
+                            var wIndex;
+                            if (!parentWidgetObj.childWidgets.every(function (obj, index) {
+                                    if (obj.id == self.id) {
+                                        wIndex = index;
+                                        return false;
+                                    }
+
+                                    return true;
+                                })) {
+                                if (wIndex < parentWidgetObj.childWidgets.length - 1) {
+                                    parentWidgetObj.childWidgets.splice(wIndex, 1);
+                                    parentWidgetObj.childWidgets.splice(wIndex + 1, 0, self);
+                                    if (self.$element) {
+                                        self.$element.detach();
+                                        self.$element.insertAfter(parentWidgetObj.childWidgets[wIndex].$element);
+                                    }
+                                }
+                            }
+                        }
                     },
                     addClass: function (classes) {
                         this.styleManager.addClass.apply(this.styleManager, [classes, this.state, this.stateContext]);
@@ -2745,7 +2825,10 @@ define(
                         });
                     }
 
-                    this.css(ElementSketchWidgetClass.prototype.DEFAULT_STYLE);
+                    var self = this;
+                    _.each(ElementSketchWidgetClass.prototype.DEFAULT_STYLE, function (styleValue, styleName) {
+                        !self.css(styleName) && self.css(styleName, styleValue);
+                    });
                 },
                 toJSON: function () {
                     var jsonObj = ElementSketchWidgetClass.prototype.__proto__.toJSON.apply(this);
@@ -3203,7 +3286,10 @@ define(
                     this.resizable = false;
                     this.widgetSpec = widgetSpec;
 
-                    this.css(RepoSketchWidgetClass.prototype.DEFAULT_STYLE);
+                    var self = this;
+                    _.each(RepoSketchWidgetClass.prototype.DEFAULT_STYLE, function (styleValue, styleName) {
+                        !self.css(styleName) && self.css(styleName, styleValue);
+                    });
                 },
                 dispose: function () {
                     var self = this;
@@ -3245,59 +3331,65 @@ define(
                     return cloneObj;
                 },
                 appendTo: function (container) {
-                    var self = this,
-                        loadedSpec = $inject.$rootScope.loadedProject.loadArtifact(self.widgetSpec.artifactId, self.widgetSpec.version);
+                    var self = this;
 
-                    self.template = loadedSpec.template;
-                    if (_.isEmpty(self.widgetSpec.configuration)) {
-                        _.extend(self.widgetSpec, loadedSpec);
-                    }
-
-                    var stateConfiguration = loadedSpec.configuration.state;
-                    if (stateConfiguration) {
-                        var stateOptions = stateConfiguration.options;
-                        stateOptions.forEach(function (option) {
-                            RepoSketchWidgetClass.prototype.__proto__.addStateOption.apply(self, [{name: option.name}]);
-
-                            if (self.states.every(function (s) {
-                                    return s.context.id != self.stateContext.id || s.name != option.name;
-                                })) {
-                                self.states.push(new State(self, option.name, self.stateContext));
+                    return $inject.$rootScope.loadedProject.loadArtifact(self.widgetSpec.libraryId, self.widgetSpec.artifactId, self.widgetSpec.version).then(
+                        function (loadedSpec) {
+                            self.template = loadedSpec.template;
+                            if (_.isEmpty(self.widgetSpec.configuration)) {
+                                _.extend(self.widgetSpec, loadedSpec);
                             }
-                        });
-                    }
 
-                    return $inject.appService.addConfigurableArtifact(
-                        self.widgetSpec.projectId,
-                        self.id,
-                        self.widgetSpec.libraryName,
-                        self.widgetSpec.artifactId,
-                        self.widgetSpec.type,
-                        self.widgetSpec.version
-                    ).then(
-                        function () {
-                            return RepoSketchWidgetClass.prototype.__proto__.appendTo.apply(self, [container]);
-                        },
-                        function (err) {
-                            return $inject.uiUtilService.getRejectDefer(err);
-                        }
-                    ).then(
-                        function () {
-                            self.$element && self.$element.addClass("widgetIncludeAnchor");
+                            var stateConfiguration = loadedSpec.configuration.state;
+                            if (stateConfiguration) {
+                                var stateOptions = stateConfiguration.options;
+                                stateOptions.forEach(function (option) {
+                                    RepoSketchWidgetClass.prototype.__proto__.addStateOption.apply(self, [{name: option.name}]);
 
-                            //Apply default value to widget's configuration.
-                            _.without(_.keys(self.widgetSpec.configuration), ["state", "handDownConfiguration"]).forEach(
-                                function (key) {
-                                    var config = self.widgetSpec.configuration[key],
-                                        value = config.pickedValue || config.defaultValue;
-
-                                    if (value != null) {
-                                        self.setScopedValue(key, value);
+                                    if (self.states.every(function (s) {
+                                            return s.context.id != self.stateContext.id || s.name != option.name;
+                                        })) {
+                                        self.states.push(new State(self, option.name, self.stateContext));
                                     }
+                                });
+                            }
+
+                            return $inject.appService.addConfigurableArtifact(
+                                self.widgetSpec.projectId,
+                                self.id,
+                                self.widgetSpec.libraryName,
+                                self.widgetSpec.artifactId,
+                                self.widgetSpec.type,
+                                self.widgetSpec.version
+                            ).then(
+                                function () {
+                                    return RepoSketchWidgetClass.prototype.__proto__.appendTo.apply(self, [container]);
+                                },
+                                function (err) {
+                                    return $inject.uiUtilService.getRejectDefer(err);
+                                }
+                            ).then(
+                                function () {
+                                    self.$element && self.$element.addClass("widgetIncludeAnchor");
+
+                                    //Apply default value to widget's configuration.
+                                    _.without(_.keys(self.widgetSpec.configuration), ["state", "handDownConfiguration"]).forEach(
+                                        function (key) {
+                                            var config = self.widgetSpec.configuration[key],
+                                                value = config.pickedValue || config.defaultValue;
+
+                                            if (value != null) {
+                                                self.setScopedValue(key, value);
+                                            }
+                                        }
+                                    );
+
+                                    return $inject.uiUtilService.getResolveDefer();
+                                },
+                                function (err) {
+                                    return $inject.uiUtilService.getRejectDefer(err);
                                 }
                             );
-
-                            return $inject.uiUtilService.getResolveDefer();
                         },
                         function (err) {
                             return $inject.uiUtilService.getRejectDefer(err);
@@ -3491,6 +3583,79 @@ define(
 
                     return PageSketchWidgetClass.prototype.CLASS_NAME == className || PageSketchWidgetClass.prototype.__proto__.isKindOf.apply(self, [className]);
                 },
+                css: function () {
+                    var args = Array.prototype.slice.call(arguments);
+
+                    //Page's left and top should be fixed to "0px"
+                    switch (args.length) {
+                        case 1:
+                            if (args[0] === "left" || args[0] === "top") {
+                                return "0px";
+                            } else if (typeof args[0] === "object") {
+                                if (_.isEmpty((_.omit(args[0], ["left", "top"])))) {
+                                    return this;
+                                }
+                            }
+                            break;
+                        case 2:
+                            if (args[0] === "left" || args[0] === "top") {
+                                return this;
+                            }
+                            break;
+                    }
+
+                    return PageSketchWidgetClass.prototype.__proto__.css.apply(this, args);
+                },
+                pseudoCss: function (pseudo) {
+                    var args = Array.prototype.slice.call(arguments);
+
+                    //Page's left and top should be fixed to "0px"
+                    if (pseudo != null && !pseudo) {
+                        switch (args.length) {
+                            case 2:
+                                if (args[1] === "left" || args[1] === "top") {
+                                    return "0px";
+                                } else if (typeof args[1] === "object") {
+                                    if (_.isEmpty((_.omit(args[1], ["left", "top"])))) {
+                                        return this;
+                                    }
+                                }
+                                break;
+                            case 3:
+                                if (args[1] === "left" || args[1] === "top") {
+                                    return this;
+                                }
+                                break;
+                        }
+                    }
+
+                    return PageSketchWidgetClass.prototype.__proto__.pseudoCss.apply(this, args);
+                },
+                trackablePseudoCss: function (source, pseudo) {
+                    var args = Array.prototype.slice.call(arguments);
+
+                    //Page's left and top should be fixed to "0px"
+                    if (pseudo != null && !pseudo) {
+                        switch (args.length) {
+                            case 3:
+                                if (args[2] === "left" || args[2] === "top") {
+                                    return "0px";
+                                } else if (typeof args[2] === "object") {
+                                    if (_.isEmpty((_.omit(args[2], ["left", "top"])))) {
+                                        return this;
+                                    }
+                                }
+                                break;
+                            case 4:
+                                if (args[2] === "left" || args[2] === "top") {
+                                    return this;
+                                }
+                                break;
+                        }
+                    }
+
+                    return PageSketchWidgetClass.prototype.__proto__.trackablePseudoCss.apply(this, args);
+                },
                 parent: function () {
                     return null;
                 },
@@ -3625,10 +3790,10 @@ define(
             widgetObj.attr["ng-class"] = "{'isPlaying': sketchWidgetSetting.isPlaying}";
             widgetObj.addOmniClass(self.angularConstants.widgetClasses.widgetClass);
 
+            self.$rootScope.loadedProject.refArtifact(widgetSpec.libraryId, widgetSpec.artifactId, widgetSpec.name, widgetSpec.version);
+
             return widgetObj.appendTo(containerElement).then(
                 function () {
-                    self.$rootScope.loadedProject.refArtifact(widgetSpec.libraryId, widgetSpec.artifactId, widgetSpec.name, widgetSpec.version);
-
                     return self.uiUtilService.getResolveDefer(widgetObj);
                 },
                 function (err) {
@@ -3673,7 +3838,7 @@ define(
                     }
                 });
 
-                if (widgetArr.length && containerElement) {
+                if (widgetArr.length > 1 && containerElement) {
                     var compositeObj = new ElementSketchWidgetClass(null, widgetArr, isTemporary);
 
                     compositeObj.attr["ui-draggable"] = "";

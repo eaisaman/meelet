@@ -132,6 +132,7 @@ define(
                                                                     artifactId: scope.pickedArtifact._id,
                                                                     name: scope.pickedArtifact.name,
                                                                     type: scope.pickedArtifact.type,
+                                                                    libraryId: scope.pickedLibrary._id,
                                                                     libraryName: scope.pickedLibrary.name,
                                                                     version: version,
                                                                     projectId: scope.project.projectRecord._id
@@ -309,7 +310,7 @@ define(
                                 }
 
                                 var mc = new Hammer.Manager(element.find(".pickerPane").get(0));
-                                mc.add(new Hammer.Pan({threshold: 0, pointers: 0}));
+                                mc.add(new Hammer.Pan({threshold: 0}));
                                 mc.on("panstart panmove panend", addWidgetHandler);
 
                                 scope.$on('$destroy', function () {

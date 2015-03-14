@@ -139,6 +139,14 @@
     content: "\e616";
 }
 
+.icon-frame-sketch-move-up:before {
+    content: "\e617";
+}
+
+.icon-frame-sketch-move-down:before {
+    content: "\e618";
+}
+
 .icon-frame-sketch-insert-before:before {
     content: "\e600";
 }
@@ -231,6 +239,14 @@
     content: "\e616";
 }
 
+.icon-frame-sketch-move-up-before:before {
+    content: "\e617";
+}
+
+.icon-frame-sketch-move-down-before:before {
+    content: "\e618";
+}
+
 .icon-frame-sketch-insert-after:after {
     content: "\e600";
 }
@@ -321,5 +337,13 @@
 
 .icon-frame-sketch-exit-after:after {
     content: "\e616";
+}
+
+.icon-frame-sketch-move-up-after:after {
+    content: "\e617";
+}
+
+.icon-frame-sketch-move-down-after:after {
+    content: "\e618";
 }
 

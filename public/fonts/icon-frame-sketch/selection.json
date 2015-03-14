@@ -24,6 +24,7 @@
 				"ligatures": ""
 			},
 			"setIdx": 0,
+			"setId": 4,
 			"iconIdx": 0
 		},
 		{
@@ -47,6 +48,7 @@
 				"name": "confirm"
 			},
 			"setIdx": 0,
+			"setId": 4,
 			"iconIdx": 1
 		},
 		{
@@ -70,6 +72,7 @@
 				"name": "cancel"
 			},
 			"setIdx": 0,
+			"setId": 4,
 			"iconIdx": 2
 		},
 		{
@@ -94,6 +97,7 @@
 				"name": "fill"
 			},
 			"setIdx": 0,
+			"setId": 4,
 			"iconIdx": 3
 		},
 		{
@@ -154,6 +158,7 @@
 				"name": "ruler"
 			},
 			"setIdx": 0,
+			"setId": 4,
 			"iconIdx": 4
 		},
 		{
@@ -178,6 +183,7 @@
 				"name": "play"
 			},
 			"setIdx": 0,
+			"setId": 4,
 			"iconIdx": 5
 		},
 		{
@@ -202,6 +208,7 @@
 				"name": "pause"
 			},
 			"setIdx": 0,
+			"setId": 4,
 			"iconIdx": 6
 		},
 		{
@@ -226,6 +233,7 @@
 				"name": "stop"
 			},
 			"setIdx": 0,
+			"setId": 4,
 			"iconIdx": 7
 		},
 		{
@@ -251,6 +259,7 @@
 				"ligatures": ""
 			},
 			"setIdx": 0,
+			"setId": 4,
 			"iconIdx": 8
 		},
 		{
@@ -276,6 +285,7 @@
 				"ligatures": ""
 			},
 			"setIdx": 0,
+			"setId": 4,
 			"iconIdx": 9
 		},
 		{
@@ -301,6 +311,7 @@
 				"ligatures": ""
 			},
 			"setIdx": 0,
+			"setId": 4,
 			"iconIdx": 10
 		},
 		{
@@ -326,6 +337,7 @@
 				"ligatures": ""
 			},
 			"setIdx": 0,
+			"setId": 4,
 			"iconIdx": 11
 		},
 		{
@@ -351,6 +363,7 @@
 				"ligatures": ""
 			},
 			"setIdx": 0,
+			"setId": 4,
 			"iconIdx": 12
 		},
 		{
@@ -376,6 +389,7 @@
 				"ligatures": ""
 			},
 			"setIdx": 0,
+			"setId": 4,
 			"iconIdx": 13
 		},
 		{
@@ -401,6 +415,7 @@
 				"ligatures": ""
 			},
 			"setIdx": 0,
+			"setId": 4,
 			"iconIdx": 14
 		},
 		{
@@ -426,6 +441,7 @@
 				"ligatures": ""
 			},
 			"setIdx": 0,
+			"setId": 4,
 			"iconIdx": 15
 		},
 		{
@@ -451,6 +467,7 @@
 				"ligatures": ""
 			},
 			"setIdx": 0,
+			"setId": 4,
 			"iconIdx": 16
 		},
 		{
@@ -475,6 +492,7 @@
 				"name": "load"
 			},
 			"setIdx": 0,
+			"setId": 4,
 			"iconIdx": 17
 		},
 		{
@@ -499,6 +517,7 @@
 				"name": "save"
 			},
 			"setIdx": 0,
+			"setId": 4,
 			"iconIdx": 18
 		},
 		{
@@ -523,6 +542,7 @@
 				"name": "remove"
 			},
 			"setIdx": 0,
+			"setId": 4,
 			"iconIdx": 19
 		},
 		{
@@ -547,7 +567,8 @@
 				"name": "lock"
 			},
 			"setIdx": 0,
-			"iconIdx": 21
+			"setId": 4,
+			"iconIdx": 20
 		},
 		{
 			"icon": {
@@ -571,7 +592,8 @@
 				"name": "unlock"
 			},
 			"setIdx": 0,
-			"iconIdx": 22
+			"setId": 4,
+			"iconIdx": 21
 		},
 		{
 			"icon": {
@@ -598,7 +620,82 @@
 				"name": "exit"
 			},
 			"setIdx": 0,
-			"iconIdx": 20
+			"setId": 4,
+			"iconIdx": 22
+		},
+		{
+			"icon": {
+				"paths": [
+					"M704 512v384h64v-384h160l-192-192-192 192z",
+					"M64 192h96v64h-96v-64z",
+					"M192 192h96v64h-96v-64z",
+					"M320 192h64v96h-64v-96z",
+					"M64 416h64v96h-64v-96z",
+					"M160 448h96v64h-96v-64z",
+					"M288 448h96v64h-96v-64z",
+					"M64 288h64v96h-64v-96z",
+					"M320 320h64v96h-64v-96z",
+					"M320 704v192h-192v-192h192zM384 640h-320v320h320v-320z"
+				],
+				"attrs": [],
+				"isMulticolor": false,
+				"tags": [
+					"move-up",
+					"sort",
+					"arrange"
+				],
+				"defaultCode": 60997,
+				"grid": 16
+			},
+			"attrs": [],
+			"properties": {
+				"id": 1175,
+				"order": 2,
+				"prevSize": 32,
+				"code": 58903,
+				"ligatures": "move-up, sort",
+				"name": "move-up"
+			},
+			"setIdx": 0,
+			"setId": 4,
+			"iconIdx": 23
+		},
+		{
+			"icon": {
+				"paths": [
+					"M768 704v-384h-64v384h-160l192 192 192-192z",
+					"M320 256v192h-192v-192h192zM384 192h-320v320h320v-320z",
+					"M64 640h96v64h-96v-64z",
+					"M192 640h96v64h-96v-64z",
+					"M320 640h64v96h-64v-96z",
+					"M64 864h64v96h-64v-96z",
+					"M160 896h96v64h-96v-64z",
+					"M288 896h96v64h-96v-64z",
+					"M64 736h64v96h-64v-96z",
+					"M320 768h64v96h-64v-96z"
+				],
+				"attrs": [],
+				"isMulticolor": false,
+				"tags": [
+					"move-down",
+					"sort",
+					"arrange"
+				],
+				"defaultCode": 60998,
+				"grid": 16
+			},
+			"attrs": [],
+			"properties": {
+				"id": 1176,
+				"order": 1,
+				"prevSize": 32,
+				"code": 58904,
+				"ligatures": "move-down, sort2",
+				"name": "move-down"
+			},
+			"setIdx": 0,
+			"setId": 4,
+			"iconIdx": 24
 		}
 	],
 	"height": 1024,

@@ -248,11 +248,11 @@ define(
                                     }
 
                                     horizontalMoveMgr = new Hammer.Manager(element.find(".horizontalMoveControl")[0]);
-                                    horizontalMoveMgr.add(new Hammer.Pan({threshold: 5, pointers: 0}));
+                                    horizontalMoveMgr.add(new Hammer.Pan({threshold: 5}));
                                     horizontalMoveMgr.on("panstart panmove panend", horizontalMoveHandler);
 
                                     verticalMoveMgr = new Hammer.Manager(element.find(".verticalMoveControl")[0]);
-                                    verticalMoveMgr.add(new Hammer.Pan({threshold: 5, pointers: 0}));
+                                    verticalMoveMgr.add(new Hammer.Pan({threshold: 5}));
                                     verticalMoveMgr.on("panstart panmove panend", verticalMoveHandler);
                                 }
 

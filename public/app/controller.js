@@ -277,6 +277,22 @@ define(
                 }
             }
 
+            $scope.moveUpWidget = function (event) {
+                event && event.stopPropagation && event.stopPropagation();
+
+                var widgetObj = $scope.sketchObject.pickedWidget;
+
+                widgetObj && widgetObj.moveAfter();
+            }
+
+            $scope.moveDownWidget = function (event) {
+                event && event.stopPropagation && event.stopPropagation();
+
+                var widgetObj = $scope.sketchObject.pickedWidget;
+
+                widgetObj && widgetObj.moveBefore();
+            }
+
             $scope.toggleRuler = function (event) {
                 event && event.stopPropagation && event.stopPropagation();
 
@@ -347,7 +363,7 @@ define(
                 event && event.stopPropagation && event.stopPropagation();
 
                 $scope.modalUsage = "Demo";
-                appService.loadRepoArtifact($scope.sketchWidgetSetting.pickedArtifact, $scope.sketchWidgetSetting.pickedLibrary.name, "", "#frameSketchWidgetDemoArea").then(function () {
+                appService.loadRepoArtifact($scope.sketchWidgetSetting.pickedArtifact, $scope.sketchWidgetSetting.pickedLibrary._id, $scope.sketchWidgetSetting.pickedLibrary.name, "", "#frameSketchWidgetDemoArea").then(function () {
                     var scope = angular.element($("#frameSketchContainer .md-modal")).scope();
                     scope.toggleModalWindow();
                 });
@@ -759,7 +775,7 @@ define(
             $scope.showDemo = function (repoArtifact, event) {
                 event && event.stopPropagation && event.stopPropagation();
 
-                appService.loadRepoArtifact(repoArtifact, $scope.repoLib.name, "", "#demoArea").then(function () {
+                appService.loadRepoArtifact(repoArtifact, $scope.repoLib._id, $scope.repoLib.name, "", "#demoArea").then(function () {
                     var scope = angular.element($(".repoLibContainer .md-modal")).scope();
                     scope.toggleModalWindow();
                 });

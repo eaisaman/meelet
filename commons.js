@@ -20,6 +20,21 @@ var memory_cache = require('cache-manager').caching({store: 'memory', max: 100, 
 var Commons = function () {
 }, c = new Commons();
 
+Commons.prototype.mkdirsSync = function (dirpath) {
+    try {
+        dirpath.split(path.sep).reduce(function (parts, part) {
+            parts += part + '/';
+            var subpath = path.resolve(parts);
+            if (!fs.existsSync(subpath)) {
+                fs.mkdirSync(subpath, 0777);
+            }
+            return parts;
+        }, '');
+    } catch (err) {
+        return err;
+    }
+}
+
 Commons.prototype.spawn = function (cmd, args, opts, done) {
 
     var child = spawn(cmd, args || [], opts);
@@ -383,26 +398,15 @@ Commons.prototype.addConfigurableArtifact = function (projectId, widgetId, libra
                                         });
                                     },
                                     function (callback) {
-                                        fs.mkdir(configPath, 0777, function (fsError) {
-                                            if (!fsError || fsError.code === "EEXIST") {
-                                                callback(null);
-                                            } else {
-                                                callback(fsError);
-                                            }
+                                        var err = self.mkdirsSync(configPath);
+
+                                        process.nextTick(function () {
+                                            callback(err);
                                         });
                                     },
                                 ],
-                                function (errs) {
-                                    if (errs && errs.length) {
-                                        var msg = new Buffer(_.string.sprintf("Total Errors %d%s", errs.length, path.sep));
-                                        errs.forEach(function (e) {
-                                            msg.write(e.message, msg.length);
-                                            msg.write(path.sep);
-                                        });
-                                        next(msg.toString());
-                                    } else {
-                                        next(null);
-                                    }
+                                function (err) {
+                                    next(err);
                                 }
                             );
                         },

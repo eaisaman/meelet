@@ -29,6 +29,10 @@ define(
 
                     var resizeHandler, toggleHandler, toggleResizeOnPressHandler, toggleTextModeHandler;
 
+                    function isTextToggleable(widgetObj) {
+                        return !widgetObj.isTemporary && !widgetObj.hasClass(angularConstants.widgetClasses.holderClass);
+                    }
+
                     function registerHandlers(scope, element) {
                         var widgetObj = element.data("widgetObject");
 
@@ -37,8 +41,6 @@ define(
 
                             if (!mc) {
                                 mc = new Hammer.Manager(element[0]);
-                                mc.add(new Hammer.Press());
-                                mc.add(new Hammer.Tap());
                                 element.data("hammer", mc);
 
                                 toggleHandler = function (event) {
@@ -66,12 +68,12 @@ define(
                                                                     }
                                                                 } else {
                                                                     prevWidget.removeOmniClass(angularConstants.widgetClasses.activeClass);
-                                                                    prevWidget.resizable && !prevWidget.isTemporary && toggleResize(prevWidget.$element, false);
+                                                                    //prevWidget.resizable && !prevWidget.isTemporary && toggleResize(prevWidget.$element, false);
                                                                     scope.sketchObject.pickedWidget = null;
                                                                 }
                                                             } else {
                                                                 prevWidget.removeOmniClass(angularConstants.widgetClasses.activeClass);
-                                                                prevWidget.resizable && !prevWidget.isTemporary && toggleResize(prevWidget.$element, false);
+                                                                //prevWidget.resizable && !prevWidget.isTemporary && toggleResize(prevWidget.$element, false);
 
                                                                 if (!prevWidget.directContains(widget)) {
                                                                     if (prevWidget.id != widget.id) {
@@ -141,18 +143,18 @@ define(
                                             if (!scope.sketchObject.pickedWidget || scope.sketchObject.pickedWidget.id != widget.id) {
                                                 scope.sketchObject.pickedWidget = widget;
                                                 scope.sketchObject.pickedWidget.addOmniClass(angularConstants.widgetClasses.activeClass);
-                                                widget.resizable && !widget.isTemporary && toggleResize(widget.$element);
+                                                //widget.resizable && !widget.isTemporary && toggleResize(widget.$element);
                                             }
 
                                             if (prevWidget) {
                                                 if (scope.sketchObject.pickedWidget == prevWidget) {
-                                                    var resizeToggled = prevWidget.resizable && !prevWidget.isTemporary && toggleResize(prevWidget.$element);
-                                                    if (!resizeToggled) {
+                                                    //var resizeToggled = prevWidget.resizable && !prevWidget.isTemporary && toggleResize(prevWidget.$element);
+                                                    //if (!resizeToggled) {
                                                         scope.sketchObject.pickedWidget = null;
                                                         prevWidget.removeOmniClass(angularConstants.widgetClasses.activeClass);
-                                                    }
+                                                    //}
                                                 } else {
-                                                    prevWidget.resizable && !prevWidget.isTemporary && toggleResize(prevWidget.$element, false);
+                                                    //prevWidget.resizable && !prevWidget.isTemporary && toggleResize(prevWidget.$element, false);
                                                     prevWidget.removeOmniClass(angularConstants.widgetClasses.activeClass);
                                                 }
                                             }
@@ -280,7 +282,7 @@ define(
                                             $resize.css("color", borderColor);
 
                                             var rmc = new Hammer.Manager($resize.get(0));
-                                            rmc.add(new Hammer.Pan({threshold: 0, pointers: 0}));
+                                            rmc.add(new Hammer.Pan({threshold: 0}));
                                             rmc.add(new Hammer.Tap());
                                             rmc.on("panstart panmove panend", resizeHandler);
                                             rmc.on("tap", function (event) {
@@ -390,8 +392,13 @@ define(
                                     return state;
                                 }
 
+                                mc.add(new Hammer.Tap());
                                 mc.on("tap", toggleHandler);
-                                mc.on("press", toggleTextModeHandler);
+
+                                if (isTextToggleable(widgetObj)) {
+                                    mc.add(new Hammer.Press());
+                                    mc.on("press", toggleTextModeHandler);
+                                }
 
                                 //Disable resize mode on sketch widget since we can use ruler function instead.
                                 //mc.on("press", toggleResizeOnPressHandler);
@@ -407,7 +414,9 @@ define(
 
                             if (mc) {
                                 mc.off("tap", toggleHandler);
-                                mc.off("press", toggleTextModeHandler);
+
+                                if (isTextToggleable(widgetObj))
+                                    mc.off("press", toggleTextModeHandler);
 
                                 //Disable resize mode on sketch widget since we can use ruler function instead.
                                 //mc.off("press", toggleResizeOnPressHandler);

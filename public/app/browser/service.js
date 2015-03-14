@@ -46,7 +46,7 @@ define(
             return errorDefer.promise;
         }
 
-        appService.prototype.loadRepoArtifact = function (repoArtifact, repoLibName, version, demoSelector) {
+        appService.prototype.loadRepoArtifact = function (repoArtifact, repoLibId, repoLibName, version, demoSelector) {
             version = version || repoArtifact.versionList[repoArtifact.versionList.length - 1].name;
 
             var self = this,
@@ -54,9 +54,11 @@ define(
                 loadedSpec = {
                     name: repoArtifact.name,
                     artifactId: repoArtifact._id,
+                    libraryId: repoLibId,
                     libraryName: repoLibName,
                     version: version,
-                    type: repoArtifact.type
+                    type: repoArtifact.type,
+                    projectId: self.$rootScope.loadedProject && self.$rootScope.loadedProject.projectRecord._id || ""
                 },
                 repoUrl = "repo/{0}/{1}/{2}/{3}".format(
                     repoArtifact.type,
@@ -320,7 +322,7 @@ define(
                                 var artifactList = result[i].data.result == "OK" && result[i].data.resultValue || [],
                                     recentArtifactList = [];
                                 artifactList.forEach(function (artifact) {
-                                    artifactArr.push({artifact: artifact, libraryName: libraryList[i].name});
+                                    artifactArr.push({artifact: artifact, libraryId: libraryList[i]._id, libraryName: libraryList[i].name});
 
                                     if (libraryList[i].artifactList.every(function (loadedArtifact) {
                                             if (artifact._id === loadedArtifact._id) {
@@ -343,7 +345,7 @@ define(
                                 libraryList[i].artifactList = result[i].data.result == "OK" && result[i].data.resultValue || [];
 
                                 libraryList[i].artifactList.forEach(function (artifact) {
-                                    artifactArr.push({artifact: artifact, libraryName: libraryList[i].name});
+                                    artifactArr.push({artifact: artifact, libraryId: libraryList[i]._id, libraryName: libraryList[i].name});
                                 });
                             }
 
@@ -376,7 +378,7 @@ define(
                     //Load each artifact's stylesheets
                     var promiseArr = [];
                     artifactArr && artifactArr.forEach(function (artifactObj) {
-                        promiseArr.push(self.loadRepoArtifact(artifactObj.artifact, artifactObj.libraryName));
+                        promiseArr.push(self.loadRepoArtifact(artifactObj.artifact, artifactObj.libraryId, artifactObj.libraryName));
                     });
 
 
@@ -395,9 +397,8 @@ define(
                     //Load each artifact's stylesheets
                     var promiseArr = [];
                     artifactArr && artifactArr.forEach(function (artifactObj) {
-                        promiseArr.push(self.loadRepoArtifact(artifactObj.artifact, artifactObj.libraryName));
+                        promiseArr.push(self.loadRepoArtifact(artifactObj.artifact, artifactObj.libraryId, artifactObj.libraryName));
                     });
-
 
                     return promiseArr.length && self.$q.all(promiseArr) || self.getResolveDefer();
                 },
@@ -446,16 +447,16 @@ define(
                     });
                 } else {
                     self.$timeout(function () {
-                        defer.reject();
+                        defer.reject(result.data.reason);
                     });
                 }
 
                 return defer.promise;
-            }, function () {
+            }, function (err) {
                 var errDefer = self.$q.defer();
 
                 self.$timeout(function () {
-                    errDefer.reject();
+                    errDefer.reject(err);
                 });
 
                 return errDefer.promise;
