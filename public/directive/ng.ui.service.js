@@ -3330,6 +3330,35 @@ define(
 
                     return cloneObj;
                 },
+                css: function () {
+                    var args = Array.prototype.slice.call(arguments);
+
+                    //widgetContainer's size should be the same as that of its parent
+                    if (this.childWidgets.length) {
+                        var child = this.childWidgets[0];
+
+                        if (child.hasClass($inject.angularConstants.widgetClasses.widgetContainerClass)) {
+                            switch (args.length) {
+                                case 1:
+                                    if (typeof args[0] === "object") {
+                                        var sizeStyle = _.pick(args[0], ["width", "height"]);
+
+                                        if (!_.isEmpty(sizeStyle)) {
+                                            child.css(sizeStyle);
+                                        }
+                                    }
+                                    break;
+                                case 2:
+                                    if (args[0] === "width" || args[0] === "height") {
+                                        child.css(args[0], args[1]);
+                                    }
+                                    break;
+                            }
+                        }
+                    }
+
+                    return RepoSketchWidgetClass.prototype.__proto__.css.apply(this, args);
+                },
                 appendTo: function (container) {
                     var self = this;
 

@@ -41,7 +41,7 @@ define(
                                 }));
 
                                 scope.widgetHorizontalLocation = function (widget) {
-                                    if (widget && widget.isElement && !widget.isTemporary) {
+                                    if (widget && !widget.isTemporary) {
                                         var $parent = widget.$element.parent(),
                                             parentLeft = $parent.offset().left - element.offset().left;
 

@@ -12,7 +12,7 @@
               ng-repeat="i in [0,markerCount-1]|makeRange"></span>
         <div class="fs-x-small verticalLocator"
              ng-style='widgetVerticalLocation(pickedWidget)'
-             ng-show="pickedWidget.isElement && !pickedWidget.isTemporary">
+             ng-show="!pickedWidget.isTemporary">
             <div id="topResizeControl" class="icon-vertical-ruler-before icon-vertical-ruler-arrow-up-before"></div>
             <div id="verticalMoveControl" class="icon-vertical-ruler-before"
                  ng-class="{'icon-vertical-ruler-move-align-center-before':alignCenter, 'icon-vertical-ruler-move-before':!alignCenter}"></div>

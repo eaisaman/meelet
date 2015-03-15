@@ -41,7 +41,7 @@ define(
                                 }));
 
                                 scope.widgetVerticalLocation = function (widget) {
-                                    if (widget && widget.isElement && !widget.isTemporary) {
+                                    if (widget && !widget.isTemporary) {
                                         var $parent = widget.$element.parent(),
                                             parentTop = $parent.offset().top - element.offset().top;
 

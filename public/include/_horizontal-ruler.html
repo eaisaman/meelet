@@ -12,7 +12,7 @@
               ng-repeat="i in [0,markerCount-1]|makeRange"></span>
         <div class="fs-x-small horizontalLocator"
              ng-style='widgetHorizontalLocation(pickedWidget)'
-             ng-show="pickedWidget.isElement && !pickedWidget.isTemporary">
+             ng-show="!pickedWidget.isTemporary">
             <div id="leftResizeControl"
                  class="icon-horizontal-ruler-before icon-horizontal-ruler-arrow-left-before"></div>
             <div id="horizontalMoveControl"
