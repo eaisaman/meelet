@@ -32,6 +32,7 @@ define(
                                 options.holderClass = angularConstants.widgetClasses.holderClass;
                                 options.widgetClass = angularConstants.widgetClasses.widgetClass;
                                 options.hoverClass = angularConstants.widgetClasses.hoverClass;
+                                options.anchorAttr = angularConstants.anchorAttr;
                                 options.elementZIndex = angularConstants.draggingShapeZIndex;
 
                                 scope.filterLibraryList = function (libraryList, xrefList) {
@@ -126,7 +127,7 @@ define(
 
                                             var $to = $(event.srcEvent.toElement);
 
-                                            if ($to.hasClass(options.widgetClass) || $to.hasClass(options.holderClass)) {
+                                            if ($to.hasClass(options.widgetClass) || $to.hasClass(options.holderClass) || $to.attr(options.anchorAttr)) {
                                                 var x = event.srcEvent.clientX - $to.offset().left,
                                                     y = event.srcEvent.clientY - $to.offset().top;
 

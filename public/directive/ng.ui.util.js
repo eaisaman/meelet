@@ -515,10 +515,10 @@ define(
             }
         }
 
-        Util.prototype.latestOnce = function (fn, callback, interval) {
-            var self = this,
-                onceId = fn.onceId;
+        Util.prototype.latestOnce = function (fn, callback, interval, onceId) {
+            var self = this;
 
+            onceId = onceId || fn.onceId;
             if (!onceId)
                 return angular.noop;
 

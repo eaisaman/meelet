@@ -2,9 +2,9 @@ define(
     ["angular", "jquery"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$parse", "$http", "$timeout", "$q", "angularEventTypes", "uiUtilService"];
+            var inject = ["$parse", "$http", "$timeout", "$q", "angularConstants", "angularEventTypes", "uiUtilService"];
 
-            appModule.directive("uiColorEditorPalette", _.union(inject, [function ($parse, $http, $timeout, $q, angularEventTypes, uiUtilService) {
+            appModule.directive("uiColorEditorPalette", _.union(inject, [function ($parse, $http, $timeout, $q, angularConstants, angularEventTypes, uiUtilService) {
                 'use strict';
 
                 var defaults = {
@@ -235,7 +235,7 @@ define(
                                     changeSelectedColor.onceId = "color-editor-palette.changeSelectedColor";
 
                                     if (to && scope.selectedColor !== to)
-                                        uiUtilService.latestOnce(changeSelectedColor, null, 50)(to);
+                                        uiUtilService.latestOnce(changeSelectedColor, null, angularConstants.actionDelay)(to);
                                 }
 
                                 scope.watchSelectedColor = function (state) {

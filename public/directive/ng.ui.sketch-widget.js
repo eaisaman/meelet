@@ -150,8 +150,8 @@ define(
                                                 if (scope.sketchObject.pickedWidget == prevWidget) {
                                                     //var resizeToggled = prevWidget.resizable && !prevWidget.isTemporary && toggleResize(prevWidget.$element);
                                                     //if (!resizeToggled) {
-                                                        scope.sketchObject.pickedWidget = null;
-                                                        prevWidget.removeOmniClass(angularConstants.widgetClasses.activeClass);
+                                                    scope.sketchObject.pickedWidget = null;
+                                                    prevWidget.removeOmniClass(angularConstants.widgetClasses.activeClass);
                                                     //}
                                                 } else {
                                                     //prevWidget.resizable && !prevWidget.isTemporary && toggleResize(prevWidget.$element, false);
@@ -170,7 +170,7 @@ define(
                                     var target = angular.isElement(event) && event || event.target,
                                         $target = $(target);
 
-                                    if ($target.attr("widget-anchor") != null) {
+                                    if ($target.attr(angularConstants.anchorAttr) != null) {
                                         var $container = $target.closest("." + angularConstants.widgetClasses.widgetContainerClass);
                                         $target = $container.parent();
                                     }
@@ -333,7 +333,7 @@ define(
                                     var target = angular.isElement(event) && event || event.target,
                                         $target = $(target);
 
-                                    if ($target.attr("widget-anchor") != null) {
+                                    if ($target.attr(angularConstants.anchorAttr) != null) {
                                         var $container = $target.closest("." + angularConstants.widgetClasses.widgetContainerClass);
                                         $target = $container.parent();
                                     }
@@ -453,9 +453,19 @@ define(
                                         }
                                     });
 
-                                    attrs.$observe(DIRECTIVE, function (value) {
-                                        uiService.createWidgetObj(element);
-                                        registerHandlers(scope, element);
+                                    attrs.$observe(DIRECTIVE, function () {
+                                        function attachHandler(el) {
+                                            var widgetObj = uiService.createWidgetObj(el);
+                                            widgetObj.attach();
+                                            registerHandlers(scope, el);
+
+                                            return uiUtilService.getResolveDefer();
+                                        }
+
+                                        //Directive ng-include will recreate element which have no widget id attribute.
+                                        var id = element.attr("id") || element.parent().attr("id");
+
+                                        id && uiUtilService.latestOnce(attachHandler, null, angularConstants.actionDelay, "sketch-widget.attachHandler.{0}".format(id))(element);
                                     });
 
                                     scope.$on('$destroy', function () {

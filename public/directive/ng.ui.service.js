@@ -1506,7 +1506,7 @@ define(
                     if (stateValue !== stateMap[state.name]) stateMap[state.name] = stateValue;
 
                     if (!_.isEmpty(stateValue.beforeStyle) || !_.isEmpty(stateValue.afterStyle)) {
-                        $inject.uiUtilService.latestOnce(appendToPseudoEnabledWidgets, null, 100)();
+                        $inject.uiUtilService.latestOnce(appendToPseudoEnabledWidgets, null, $inject.angularConstants.actionDelay)();
                     }
                 },
                 removePseudoStyle: function () {
@@ -1854,7 +1854,7 @@ define(
 
                         if (self.$element) {
                             if (self.anchor) {
-                                var $anchor = self.$element.parent("[widget-anchor='" + self.anchor + "']");
+                                var $anchor = self.$element.parent("[{0}='{1}']".format($inject.angularConstants.anchorAttr, self.anchor));
                                 if ($anchor.length) {
                                     $parent = $anchor.closest("[ui-sketch-widget]");
                                 }
@@ -1872,7 +1872,7 @@ define(
                         if (self.$element) {
                             if (self.anchor) {
                                 parentElement =
-                                    parentWidgetElement && parentWidgetElement.find("[widget-anchor='" + self.anchor + "']") || self.$element.parent("[widget-anchor='" + self.anchor + "']");
+                                    parentWidgetElement && parentWidgetElement.find("[{0}='{1}']".format($inject.angularConstants.anchorAttr, self.anchor)) || self.$element.parent("[{0}='{1}']".format($inject.angularConstants.anchorAttr, self.anchor));
                             } else {
                                 parentElement = parentWidgetElement || self.$element.parent("[ui-sketch-widget]");
                             }
@@ -1959,17 +1959,21 @@ define(
                         var self = this,
                             $element;
 
-                        if (element.jquery) {
-                            $element = element;
-                        } else if (typeof element === "string" || angular.isElement(element)) {
-                            $element = $(element);
+                        if (element) {
+                            if (element.jquery) {
+                                $element = element;
+                            } else if (typeof element === "string" || angular.isElement(element)) {
+                                $element = $(element);
+                            }
+                        } else {
+                            $element = self.$element;
                         }
 
                         if ($element && $element.length) {
                             var $container = $element.parent();
 
                             if ($container.length) {
-                                var anchor = $container.attr("widget-anchor");
+                                var anchor = $container.attr($inject.angularConstants.anchorAttr);
 
                                 if (anchor) {
                                     $container = $container.closest("[ui-sketch-widget]");
@@ -1978,33 +1982,32 @@ define(
                                 var widgetObj = $container.data("widgetObject");
 
                                 if (widgetObj) {
-                                    self.remove();
+                                    self.$element && self.$element.parent().length && self.$element.detach();
 
                                     self.anchor = anchor;
                                     self.$element = $element;
-                                    $element.attr("id", self.id);
+                                    $element.data("widgetObject", self).attr("id", self.id);
+                                    $element.appendTo($container);
+
+                                    self.childWidgets.forEach(function (child) {
+                                        var $childElement = child.$element;
+
+                                        $childElement.parent().length && $childElement.detach();
+                                        $childElement.appendTo($container);
+                                        child.$element = null;
+
+                                        child.attach($childElement);
+                                    })
                                 }
                             }
                         }
+
+                        return $inject.uiUtilService.getResolveDefer();
                     },
                     appendTo: function (container) {
                         if (container) {
                             var self = this,
                                 widgetObj;
-
-                            if (!self.$element) {
-                                self.$element = $("<div />").data("widgetObject", self).attr("id", self.id);
-                                self.childWidgets.forEach(function (child) {
-                                    if (child.$element) {
-                                        child.$element.detach();
-                                    } else {
-                                        child.$element = $("<div />").data("widgetObject", child).attr("id", child.id);
-                                    }
-                                    child.$element.attr(child.attr);
-                                    self.$element.append(child.$element);
-                                })
-                            }
-                            self.$element.attr(self.attr);
 
                             var $container;
                             if (container.isKindOf && container.isKindOf("BaseSketchWidget")) {
@@ -2017,6 +2020,24 @@ define(
                                 $container = $(container);
                                 widgetObj = $container.data("widgetObject");
                             }
+
+                            if (!self.$element) {
+                                self.$element = $("<div />").data("widgetObject", self).attr("id", self.id);
+                                self.childWidgets.forEach(function (child) {
+                                    if (child.$element) {
+                                        child.$element.detach();
+                                    } else {
+                                        child.$element = $("<div />").data("widgetObject", child).attr("id", child.id);
+                                    }
+                                    child.$element.attr(child.attr);
+                                    self.$element.append(child.$element);
+                                })
+                            } else {
+                                if (!self.$element.parent()) {
+                                    $container.append(self.$element);
+                                }
+                            }
+                            self.$element.attr(self.attr);
 
                             if (widgetObj && widgetObj.isKindOf && widgetObj.isKindOf("BaseSketchWidget")) {
                                 var childLeft, childTop, childWidth, childHeight;
@@ -2175,7 +2196,7 @@ define(
                             }
                         }
 
-                        return self;
+                        return $inject.uiUtilService.getResolveDefer();
                     },
                     moveAfter: function () {
                         var self = this,
@@ -2860,10 +2881,15 @@ define(
                 appendTo: function (container) {
                     var self = this;
 
-                    ElementSketchWidgetClass.prototype.__proto__.appendTo.apply(self, [container]);
-                    self.html && self.setHtml(self.html);
-
-                    return self;
+                    return ElementSketchWidgetClass.prototype.__proto__.appendTo.apply(self, [container]).then(
+                        function () {
+                            self.html && self.setHtml(self.html);
+                            return $inject.uiUtilService.getResolveDefer();
+                        },
+                        function (err) {
+                            return $inject.uiUtilService.getRejectDefer(err);
+                        }
+                    );
                 },
                 levelUp: function (widgetObj, doCompile, waiveDisassemble) {
                     var self = this;
@@ -3187,81 +3213,80 @@ define(
                 appendTo: function (container) {
                     var self = this;
 
-                    IncludeSketchWidgetClass.prototype.__proto__.appendTo.apply(self, [container]);
+                    return IncludeSketchWidgetClass.prototype.__proto__.appendTo.apply(self, [container]).then(
+                        function () {
+                            if (self.$element && self.template) {
+                                return $inject.uiUtilService.whilst(function () {
+                                        return !angular.element(self.$element).scope();
+                                    }, function (callback) {
+                                        callback();
+                                    }, function (err) {
+                                        var defer = $inject.$q.defer();
 
-                    if (self.$element && self.template) {
-                        return $inject.uiUtilService.whilst(function () {
-                                return !angular.element(self.$element).scope();
-                            }, function (callback) {
-                                callback();
-                            }, function (err) {
-                                var defer = $inject.$q.defer();
+                                        if (!err) {
+                                            self.$element.attr("ng-include", "'" + self.template + "'");
 
-                                if (!err) {
-                                    self.$element.attr("ng-include", "'" + self.template + "'");
+                                            var $parent = self.$element.parent(),
+                                                scope = angular.element(self.$element).scope();
 
-                                    var $parent = self.$element.parent(),
-                                        scope = angular.element(self.$element).scope();
+                                            scope.$on("$includeContentLoaded", function () {
+                                                function completionScanner() {
+                                                    return $inject.uiUtilService.whilst(function () {
+                                                            return !$parent.find("#" + self.id).length;
+                                                        }, function (callback) {
+                                                            callback();
+                                                        }, null,
+                                                        $inject.angularConstants.checkInterval,
+                                                        "IncludeSketchWidgetClass.appendTo.completionScanner",
+                                                        $inject.angularConstants.renderTimeout
+                                                    );
+                                                }
 
-                                    scope.$on("$includeContentLoaded", function () {
-                                        function completionScanner() {
-                                            return $inject.uiUtilService.whilst(function () {
-                                                    return !$parent.find("#" + self.id).length;
-                                                }, function (callback) {
-                                                    callback();
-                                                }, null,
-                                                $inject.angularConstants.checkInterval,
-                                                "IncludeSketchWidgetClass.appendTo.completionScanner",
-                                                $inject.angularConstants.renderTimeout
-                                            );
+                                                completionScanner.onceId = "IncludeSketchWidgetClass.appendTo.completionScanner";
+
+                                                $inject.uiUtilService.once(completionScanner, function (err) {
+                                                    if (err) {
+                                                        defer.reject(err);
+                                                    } else {
+                                                        defer.resolve(self);
+                                                    }
+                                                }, 20)();
+                                            });
+
+                                            $inject.$compile(self.$element)(scope);
+                                        } else {
+                                            $inject.$timeout(function () {
+                                                defer.reject(err);
+                                            });
                                         }
 
-                                        completionScanner.onceId = "IncludeSketchWidgetClass.appendTo.completionScanner";
+                                        return defer.promise;
+                                    },
+                                    $inject.angularConstants.checkInterval,
+                                    "IncludeSketchWidgetClass.appendTo",
+                                    $inject.angularConstants.renderTimeout
+                                ).then(function (err) {
+                                        var defer = $inject.$q.defer();
 
-                                        $inject.uiUtilService.once(completionScanner, function (err) {
+                                        $inject.$timeout(function () {
                                             if (err) {
                                                 defer.reject(err);
                                             } else {
                                                 defer.resolve(self);
                                             }
-                                        }, 20)();
-                                    });
+                                        });
 
-                                    $inject.$compile(self.$element)(scope);
-                                } else {
-                                    $inject.$timeout(function () {
-                                        defer.reject(err);
-                                    });
-                                }
-
-                                return defer.promise;
-                            },
-                            $inject.angularConstants.checkInterval,
-                            "IncludeSketchWidgetClass.appendTo",
-                            $inject.angularConstants.renderTimeout
-                        ).then(function (err) {
-                                var defer = $inject.$q.defer();
-
-                                $inject.$timeout(function () {
-                                    if (err) {
-                                        defer.reject(err);
-                                    } else {
-                                        defer.resolve(self);
+                                        return defer.promise;
                                     }
-                                });
-
-                                return defer.promise;
+                                );
+                            } else {
+                                return $inject.uiUtilService.getResolveDefer(self);
                             }
-                        );
-                    } else {
-                        var defer = $inject.$q.defer();
+                        }, function (err) {
+                            return $inject.uiUtilService.getRejectDefer(err);
 
-                        $inject.$timeout(function () {
-                            defer.resolve(self);
-                        });
-
-                        return defer.promise;
-                    }
+                        }
+                    );
                 }
             }),
             RepoSketchWidgetClass = Class(IncludeSketchWidgetClass, {
@@ -3709,11 +3734,11 @@ define(
             widgetObj = $el && $el.data("widgetObject");
 
             if ($el && $el.attr("ui-sketch-widget") != null && !widgetObj) {
-                var $parentElement = $el.parent("[widget-anchor]"),
+                var $parentElement = $el.parent($inject.angularConstants.anchorAttr),
                     anchor;
 
                 if ($parentElement.length) {
-                    anchor = $parentElement.attr("widget-anchor");
+                    anchor = $parentElement.attr($inject.angularConstants.anchorAttr);
                     $parentElement = $parentElement.closest("[ui-sketch-widget]");
                 } else {
                     $parentElement = $el.parent("[ui-sketch-widget]");
@@ -3721,6 +3746,8 @@ define(
 
                 if ($parentElement.length) {
                     var parentWidgetObj = $parentElement.data("widgetObject");
+
+                    //Directive ng-include will recreate element which have no widget object attached to.
                     parentWidgetObj = parentWidgetObj || self.createWidgetObj($parentElement);
 
                     var id = $el.attr("id");
@@ -3738,7 +3765,6 @@ define(
                     } else if ($el.hasClass(self.angularConstants.widgetClasses.widgetContainerClass) && parentWidgetObj.isKindOf("RepoSketchWidget")) {
                         if (parentWidgetObj.childWidgets.length) {
                             widgetObj = parentWidgetObj.childWidgets[0];
-                            widgetObj.addOmniClass(self.angularConstants.widgetClasses.widgetContainerClass);
                         }
                     }
 
@@ -3752,17 +3778,19 @@ define(
                         widgetObj.attr["sketch-object"] = "sketchObject";
                         widgetObj.attr["ng-class"] = "{'isPlaying': sketchWidgetSetting.isPlaying}";
                         widgetObj.addOmniClass(self.angularConstants.widgetClasses.widgetClass);
-                        if ($el.hasClass(self.angularConstants.widgetClasses.widgetContainerClass)) {
-                            widgetObj.addOmniClass(self.angularConstants.widgetClasses.widgetContainerClass);
-                        }
+
+                        widgetObj.$element = $el;
+                        widgetObj.anchor = anchor;
+                        $el.attr("id", widgetObj.id);
+                        $el.data("widgetObject", widgetObj);
+
+                        ElementSketchWidgetClass.prototype.appendTo.apply(widgetObj, [parentWidgetObj]);
+                    } else {
+                        widgetObj.$element = $el;
+                        widgetObj.anchor = anchor;
+                        $el.attr("id", widgetObj.id);
+                        $el.data("widgetObject", widgetObj);
                     }
-
-                    widgetObj.$element = $el;
-                    widgetObj.anchor = anchor;
-                    $el.attr("id", widgetObj.id);
-                    $el.data("widgetObject", widgetObj);
-
-                    BaseSketchWidgetClass.prototype.appendTo.apply(widgetObj, [parentWidgetObj]);
                 }
             }
 
@@ -3785,16 +3813,16 @@ define(
 
                 if ($container.hasClass(self.angularConstants.widgetClasses.holderClass) || $container.hasClass(self.angularConstants.widgetClasses.widgetClass)) {
                     $parent = $container;
-                } else if ($container.attr("widget-anchor") != null) {
+                } else if ($container.attr($inject.angularConstants.anchorAttr) != null) {
                     $parent = $container.closest("[ui-sketch-widget]");
-                    anchor = $container.attr("widget-anchor");
+                    anchor = $container.attr($inject.angularConstants.anchorAttr);
                 }
 
                 if ($parent) {
                     widgetObj = widgetObj || new ElementSketchWidgetClass();
                     widgetObj.anchor = anchor;
                     widgetObj.attr["ui-draggable"] = "";
-                    widgetObj.attr["ui-draggable-opts"] = "{threshold: 5, pointers: 0}";
+                    widgetObj.attr["ui-draggable-opts"] = "{threshold: 5}";
                     widgetObj.attr["ui-sketch-widget"] = "";
                     widgetObj.attr["is-playing"] = "sketchWidgetSetting.isPlaying";
                     widgetObj.attr["sketch-object"] = "sketchObject";
@@ -3871,7 +3899,7 @@ define(
                     var compositeObj = new ElementSketchWidgetClass(null, widgetArr, isTemporary);
 
                     compositeObj.attr["ui-draggable"] = "";
-                    compositeObj.attr["ui-draggable-opts"] = "{threshold: 5, pointers: 0}";
+                    compositeObj.attr["ui-draggable-opts"] = "{threshold: 5}";
                     compositeObj.attr["ui-sketch-widget"] = "";
                     compositeObj.attr["is-playing"] = "sketchWidgetSetting.isPlaying";
                     compositeObj.attr["sketch-object"] = "sketchObject";
@@ -3994,7 +4022,7 @@ define(
                 $element = $(element);
             }
 
-            var anchor = $element.attr("widget-anchor");
+            var anchor = $element.attr($inject.angularConstants.anchorAttr);
             if (anchor) {
                 $element.children("[ui-sketch-widget]").each(function (i, childElement) {
                     var $child = $(childElement),
