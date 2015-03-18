@@ -463,9 +463,11 @@ define(
                                         }
 
                                         //Directive ng-include will recreate element which have no widget id attribute.
-                                        var id = element.attr("id") || element.parent().attr("id");
+                                        if (element.parent().length) {
+                                            var id = element.attr("id") || element.parent().attr("id");
 
-                                        id && uiUtilService.latestOnce(attachHandler, null, angularConstants.actionDelay, "sketch-widget.attachHandler.{0}".format(id))(element);
+                                            id && uiUtilService.latestOnce(attachHandler, null, angularConstants.actionDelay, "sketch-widget.attachHandler.{0}".format(id))(element);
+                                        }
                                     });
 
                                     scope.$on('$destroy', function () {
