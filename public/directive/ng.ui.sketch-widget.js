@@ -443,21 +443,35 @@ define(
 
                                     //Since widget setting gesture may collide with actual playing gesture, we disable it for play.
                                     scope.$watch("isPlaying", function (value) {
-                                        var widgetObj = uiService.createWidgetObj(element);
-                                        widgetObj && widgetObj.setIsPlaying && widgetObj.setIsPlaying(value);
+                                        function watchHandler(el, watchFlag) {
+                                            var widgetObj = uiService.createWidgetObj(el);
+                                            if (widgetObj) {
+                                                widgetObj.setIsPlaying && widgetObj.setIsPlaying(watchFlag);
+                                                if (watchFlag) {
+                                                    unregisterHandlers(el);
+                                                } else {
+                                                    registerHandlers(scope, el);
+                                                }
+                                            }
 
-                                        if (value) {
-                                            unregisterHandlers(element);
-                                        } else {
-                                            registerHandlers(scope, element);
+                                            return uiUtilService.getResolveDefer();
+                                        }
+
+                                        //Directive ng-include will recreate element which have no widget id attribute.
+                                        if (element.parent().length) {
+                                            var id = element.attr("id") || element.parent().attr("id");
+
+                                            id && uiUtilService.latestOnce(watchHandler, null, angularConstants.actionDelay, "sketch-widget.watchHandler.{0}".format(id))(element, value);
                                         }
                                     });
 
                                     attrs.$observe(DIRECTIVE, function () {
                                         function attachHandler(el) {
                                             var widgetObj = uiService.createWidgetObj(el);
-                                            widgetObj.attach();
-                                            registerHandlers(scope, el);
+                                            if (widgetObj) {
+                                                widgetObj.attach();
+                                                registerHandlers(scope, el);
+                                            }
 
                                             return uiUtilService.getResolveDefer();
                                         }

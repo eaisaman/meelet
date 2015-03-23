@@ -19,6 +19,12 @@ $default-tab-value-map: (
 @mixin tab($tabClass, $version, $tabBackgroundColor, $titleBackgroundColor, $activeTitleBackgroundColor) {
 
     .#{$tabClass}[version='#{$version}'] {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+
         &[tab-transition=moveToLeft] {
             > .tabGroups > .tabGroup {
                 &.show {
@@ -463,7 +469,7 @@ $default-tab-value-map: (
             }
         }
 
-        &[tab-transition=fadeRight] {
+        &[tab-transition=foldRight] {
             > .tabGroups > .tabGroup {
                 &.show {
                     @extend %_widget_tab_moveFromLeftFade;
@@ -474,7 +480,7 @@ $default-tab-value-map: (
             }
         }
 
-        &[tab-transition=fadeTop] {
+        &[tab-transition=foldTop] {
             > .tabGroups > .tabGroup {
                 &.show {
                     @extend %_widget_tab_moveFromBottomFade;
@@ -485,7 +491,7 @@ $default-tab-value-map: (
             }
         }
 
-        &[tab-transition=fadeBottom] {
+        &[tab-transition=foldBottom] {
             > .tabGroups > .tabGroup {
                 &.show {
                     @extend %_widget_tab_moveFromTopFade;

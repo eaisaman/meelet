@@ -132,7 +132,7 @@ define(
 
                         var $to = $(event.srcEvent.toElement);
 
-                        if ($to.hasClass(angularConstants.widgetClasses.widgetClass) || $to.hasClass(angularConstants.widgetClasses.holderClass)) {
+                        if ($to.hasClass(angularConstants.widgetClasses.widgetClass) || $to.hasClass(angularConstants.widgetClasses.holderClass) || $to.attr(angularConstants.anchorAttr)) {
                             var x = event.srcEvent.clientX - $to.offset().left,
                                 y = event.srcEvent.clientY - $to.offset().top;
 
@@ -794,7 +794,7 @@ define(
 
                 $scope.repoLib = repoLib;
                 $scope.project = $rootScope.loadedProject;
-                $scope.dependencyRecord = _.findWhere($rootScope.loadedProject.xrefRecord, {libraryId: repoLib._id})
+                $scope.dependencyRecord = $rootScope.loadedProject && _.findWhere($rootScope.loadedProject.xrefRecord, {libraryId: repoLib._id}) || {};
 
                 if (repoLib) {
                     var artifactFilter = {

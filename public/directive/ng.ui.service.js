@@ -1969,17 +1969,17 @@ define(
                             $element = self.$element;
                         }
 
-                        if ($element && $element.length) {
-                            var $container = $element.parent();
+                        if ($element && $element.parent().length) {
+                            var $parent = $element.parent(),
+                                anchor = $parent.attr($inject.angularConstants.anchorAttr);
 
-                            if ($container.length) {
-                                var anchor = $container.attr($inject.angularConstants.anchorAttr);
+                            if (anchor) {
+                                $parent = $parent.closest("[ui-sketch-widget]");
+                            }
 
-                                if (anchor) {
-                                    $container = $container.closest("[ui-sketch-widget]");
-                                }
+                            if ($parent.length) {
 
-                                var widgetObj = $container.data("widgetObject");
+                                var widgetObj = $parent.data("widgetObject");
 
                                 if (widgetObj) {
                                     self.$element && self.$element.parent().length && self.$element.detach();
@@ -1987,13 +1987,24 @@ define(
                                     self.anchor = anchor;
                                     self.$element = $element;
                                     $element.data("widgetObject", self).attr("id", self.id);
-                                    $element.appendTo($container);
+                                    if (self.anchor) {
+                                        $parent.find("[{0}='{1}']".format($inject.angularConstants.anchorAttr, self.anchor)).append(self.$element);
+                                    } else {
+                                        $parent.append(self.$element);
+                                    }
 
                                     self.childWidgets.forEach(function (child) {
                                         var $childElement = child.$element;
 
-                                        $childElement.parent().length && $childElement.detach();
-                                        $childElement.appendTo($container);
+                                        if ($childElement) {
+                                            $childElement.detach();
+                                            if (child.anchor) {
+                                                self.$element.find("[{0}='{1}']".format($inject.angularConstants.anchorAttr, child.anchor)).append($childElement);
+                                            } else {
+                                                self.$element.append($childElement);
+                                            }
+                                        }
+
                                         child.$element = null;
 
                                         child.attach($childElement);
@@ -2058,7 +2069,7 @@ define(
 
                                 var parent = self.parent(),
                                     isDetached = false;
-                                if (parent == null || parent.id !== widgetObj.id) {
+                                if (parent && parent.id !== widgetObj.id) {
                                     isDetached = self.detach();
                                 }
 
@@ -3250,7 +3261,7 @@ define(
                                                     } else {
                                                         defer.resolve(self);
                                                     }
-                                                }, 20)();
+                                                }, $inject.angularConstants.unresponsiveInterval)();
                                             });
 
                                             $inject.$compile(self.$element)(scope);
@@ -3750,46 +3761,48 @@ define(
                     //Directive ng-include will recreate element which have no widget object attached to.
                     parentWidgetObj = parentWidgetObj || self.createWidgetObj($parentElement);
 
-                    var id = $el.attr("id");
+                    if (parentWidgetObj) {
+                        var id = $el.attr("id");
 
-                    //Fetch widget object if found
-                    if (id) {
-                        parentWidgetObj.childWidgets.every(function (child) {
-                            if (child.id === id) {
-                                widgetObj = child;
-                                return false;
+                        //Fetch widget object if found
+                        if (id) {
+                            parentWidgetObj.childWidgets.every(function (child) {
+                                if (child.id === id) {
+                                    widgetObj = child;
+                                    return false;
+                                }
+
+                                return true;
+                            });
+                        } else if ($el.hasClass(self.angularConstants.widgetClasses.widgetContainerClass) && parentWidgetObj.isKindOf("RepoSketchWidget")) {
+                            if (parentWidgetObj.childWidgets.length) {
+                                widgetObj = parentWidgetObj.childWidgets[0];
                             }
-
-                            return true;
-                        });
-                    } else if ($el.hasClass(self.angularConstants.widgetClasses.widgetContainerClass) && parentWidgetObj.isKindOf("RepoSketchWidget")) {
-                        if (parentWidgetObj.childWidgets.length) {
-                            widgetObj = parentWidgetObj.childWidgets[0];
                         }
-                    }
 
-                    if (!widgetObj) {
-                        widgetObj = new ElementSketchWidgetClass();
+                        if (!widgetObj) {
+                            widgetObj = new ElementSketchWidgetClass();
 
-                        widgetObj.attr["ui-draggable"] = $el.attr("ui-draggable");
-                        widgetObj.attr["ui-draggable-opts"] = $el.attr("ui-draggable-opts");
-                        widgetObj.attr["ui-sketch-widget"] = "";
-                        widgetObj.attr["is-playing"] = "sketchWidgetSetting.isPlaying";
-                        widgetObj.attr["sketch-object"] = "sketchObject";
-                        widgetObj.attr["ng-class"] = "{'isPlaying': sketchWidgetSetting.isPlaying}";
-                        widgetObj.addOmniClass(self.angularConstants.widgetClasses.widgetClass);
+                            widgetObj.attr["ui-draggable"] = $el.attr("ui-draggable");
+                            widgetObj.attr["ui-draggable-opts"] = $el.attr("ui-draggable-opts");
+                            widgetObj.attr["ui-sketch-widget"] = "";
+                            widgetObj.attr["is-playing"] = "sketchWidgetSetting.isPlaying";
+                            widgetObj.attr["sketch-object"] = "sketchObject";
+                            widgetObj.attr["ng-class"] = "{'isPlaying': sketchWidgetSetting.isPlaying}";
+                            widgetObj.addOmniClass(self.angularConstants.widgetClasses.widgetClass);
 
-                        widgetObj.$element = $el;
-                        widgetObj.anchor = anchor;
-                        $el.attr("id", widgetObj.id);
-                        $el.data("widgetObject", widgetObj);
+                            widgetObj.$element = $el;
+                            widgetObj.anchor = anchor;
+                            $el.attr("id", widgetObj.id);
+                            $el.data("widgetObject", widgetObj);
 
-                        ElementSketchWidgetClass.prototype.appendTo.apply(widgetObj, [parentWidgetObj]);
-                    } else {
-                        widgetObj.$element = $el;
-                        widgetObj.anchor = anchor;
-                        $el.attr("id", widgetObj.id);
-                        $el.data("widgetObject", widgetObj);
+                            ElementSketchWidgetClass.prototype.appendTo.apply(widgetObj, [parentWidgetObj]);
+                        } else {
+                            widgetObj.$element = $el;
+                            widgetObj.anchor = anchor;
+                            $el.attr("id", widgetObj.id);
+                            $el.data("widgetObject", widgetObj);
+                        }
                     }
                 }
             }

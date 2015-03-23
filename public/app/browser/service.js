@@ -85,6 +85,9 @@ define(
                         if (artifact.template)
                             loadedSpec.template = "{0}/{1}".format(repoUrl, artifact.template);
 
+                        if (artifact.anchors)
+                            loadedSpec.anchors = artifact.anchors;
+
                         if (artifact.directiveName)
                             repoArtifact.directiveName = artifact.directiveName;
 
@@ -322,7 +325,11 @@ define(
                                 var artifactList = result[i].data.result == "OK" && result[i].data.resultValue || [],
                                     recentArtifactList = [];
                                 artifactList.forEach(function (artifact) {
-                                    artifactArr.push({artifact: artifact, libraryId: libraryList[i]._id, libraryName: libraryList[i].name});
+                                    artifactArr.push({
+                                        artifact: artifact,
+                                        libraryId: libraryList[i]._id,
+                                        libraryName: libraryList[i].name
+                                    });
 
                                     if (libraryList[i].artifactList.every(function (loadedArtifact) {
                                             if (artifact._id === loadedArtifact._id) {
@@ -345,7 +352,11 @@ define(
                                 libraryList[i].artifactList = result[i].data.result == "OK" && result[i].data.resultValue || [];
 
                                 libraryList[i].artifactList.forEach(function (artifact) {
-                                    artifactArr.push({artifact: artifact, libraryId: libraryList[i]._id, libraryName: libraryList[i].name});
+                                    artifactArr.push({
+                                        artifact: artifact,
+                                        libraryId: libraryList[i]._id,
+                                        libraryName: libraryList[i].name
+                                    });
                                 });
                             }
 

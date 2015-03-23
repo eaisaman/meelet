@@ -1,43 +1,47 @@
+<script type="text/ng-template" id="_sidebarDemoBarContent.html">
+    <div name="barContent">
+        <h2 class="icon icon-stack">Sidebar</h2>
+        <ul>
+            <li><a class="icon icon-data" href="#">Data Management</a></li>
+            <li><a class="icon icon-location" href="#">Location</a></li>
+            <li><a class="icon icon-study" href="#">Study</a></li>
+            <li><a class="icon icon-photo" href="#">Collections</a></li>
+            <li><a class="icon icon-wallet" href="#">Credits</a></li>
+        </ul>
+    </div>
+</script>
+<script type="text/ng-template" id="_sidebarDemoMainContent.html">
+    <div name="mainContent">
+        <header>
+            <h1>Sidebar Transitions <span>Transition effects for off-canvas views</span></h1>
+        </header>
+        <div class="main clearfix">
+            <div id="st-trigger-effects" class="column">
+                <button ng-click="doTransition('slideInOnTop', $event)">Slide in On Top</button>
+                <button ng-click="doTransition('reveal', $event)">Reveal</button>
+                <button ng-click="doTransition('slideAlong', $event)">Slide along</button>
+                <button ng-click="doTransition('reverseSlideOut', $event)">Reverse slide out</button>
+                <button ng-click="doTransition('scaleDownPusher', $event)">Scale down pusher</button>
+                <button ng-click="doTransition('scaleUp', $event)">Scale Up</button>
+                <button ng-click="doTransition('scaleRotatePusher', $event)">Scale &amp; rotate pusher</button>
+                <button ng-click="doTransition('openDoor', $event)">Open door</button>
+                <button ng-click="doTransition('fallDown', $event)">Fall down</button>
+
+                <button ng-click="doTransition('rotatePusher', $event)">Rotate pusher</button>
+                <button ng-click="doTransition('rotateIn3D', $event)">3D rotate in</button>
+                <button ng-click="doTransition('rotateOut3D', $event)">3D rotate out</button>
+                <button ng-click="doTransition('delayed3DRotate', $event)">Delayed 3D Rotate</button>
+            </div>
+            <div class="column">
+                <p>Sidebar menus or off-canvas navigations can be revealed in many creative ways.</p>
+                <p>Here is some inspiration for showing them in style using CSS transitions.</p>
+            </div>
+        </div>
+    </div>
+</script>
 <div class="widgetDemoContainer fs-x-small" ng-controller="SidebarDemoController">
     <div ui-widget-side-bar-1-0-0
          transition="demoTransition" overlay="overlay"
          side="side" bar-content-width="contentWidth">
-        <div name="barContent">
-            <h2 class="icon icon-stack">Sidebar</h2>
-            <ul>
-                <li><a class="icon icon-data" href="#">Data Management</a></li>
-                <li><a class="icon icon-location" href="#">Location</a></li>
-                <li><a class="icon icon-study" href="#">Study</a></li>
-                <li><a class="icon icon-photo" href="#">Collections</a></li>
-                <li><a class="icon icon-wallet" href="#">Credits</a></li>
-            </ul>
-        </div>
-        <div name="mainContent">
-            <header>
-                <h1>Sidebar Transitions <span>Transition effects for off-canvas views</span></h1>
-            </header>
-            <div class="main clearfix">
-                <div id="st-trigger-effects" class="column">
-                    <button ng-click="doTransition('slideInOnTop', $event)">Slide in On Top</button>
-                    <button ng-click="doTransition('reveal', $event)">Reveal</button>
-                    <button ng-click="doTransition('slideAlong', $event)">Slide along</button>
-                    <button ng-click="doTransition('reverseSlideOut', $event)">Reverse slide out</button>
-                    <button ng-click="doTransition('scaleDownPusher', $event)">Scale down pusher</button>
-                    <button ng-click="doTransition('scaleUp', $event)">Scale Up</button>
-                    <button ng-click="doTransition('scaleRotatePusher', $event)">Scale &amp; rotate pusher</button>
-                    <button ng-click="doTransition('openDoor', $event)">Open door</button>
-                    <button ng-click="doTransition('fallDown', $event)">Fall down</button>
-
-                    <button ng-click="doTransition('rotatePusher', $event)">Rotate pusher</button>
-                    <button ng-click="doTransition('rotateIn3D', $event)">3D rotate in</button>
-                    <button ng-click="doTransition('rotateOut3D', $event)">3D rotate out</button>
-                    <button ng-click="doTransition('delayed3DRotate', $event)">Delayed 3D Rotate</button>
-                </div>
-                <div class="column">
-                    <p>Sidebar menus or off-canvas navigations can be revealed in many creative ways.</p>
-                    <p>Here is some inspiration for showing them in style using CSS transitions.</p>
-                </div>
-            </div>
-        </div>
     </div>
 </div>

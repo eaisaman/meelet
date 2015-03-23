@@ -56,12 +56,12 @@
 
         @include creative-link($default-creative-link-value-map...);
 
-        #reveal {
-            $reveal-value-map: map-merge($default-creative-link-value-map, (backgroundColor: #cccccc));
+        &#reveal {
+            $reveal-value-map: map-merge($default-creative-link-value-map, (color: #3fa46a));
             @include creative-link($reveal-value-map...);
         }
 
-        #flipUp {
+        &#flipUp {
             $flipUp-value-map: map-merge($default-creative-link-value-map, (color: #000000));
             @include creative-link($flipUp-value-map...);
         }

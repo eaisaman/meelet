@@ -64,6 +64,7 @@ require(["jquery-lib", "jquery-plugins-lib", "hammer-lib", "jquery-ui-lib", "jqu
         draggingShapeZIndex: 101,
         actionDelay: 100,
         checkInterval: 10,
+        unresponsiveInterval: 20,
         renderTimeout: 3000,
         loadTimeout: 10000
     });

@@ -16,6 +16,12 @@ $default-modal-window-value-map: (
 @mixin modal-window($modalWindowClass, $version, $modalContentWidth, $modalContentHeight, $overlayColor, $mainColor, $modalColor) {
 
     .#{$modalWindowClass}[version='#{$version}'] {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+
         &.md-perspective {
             @include perspective(600px);
         }

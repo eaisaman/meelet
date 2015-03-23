@@ -1,13 +1,13 @@
 <div>
     <div class="_widget_sideBarContainer" version="1.0.0" ng-class="[transition, side, overlay]"
          ng-show="transition|in:['slideInOnTop', 'reveal', 'slideAlong', 'reverseSlideOut', 'scaleDownPusher', 'scaleUp', 'scaleRotatePusher', 'openDoor', 'fallDown']">
-        <div ui-multi-transclude="barContent" class="barContent" ng-click="$event.stopPropagation()"></div>
-        <div ui-multi-transclude="mainContent" class="mainContent" ng-click="hideSideBar($event)"></div>
+        <div desc="Side Bar Content" class="barContent" widget-anchor="986F8450-9E40-4DEF-9C2F-05B1547B7A38" ng-click="$event.stopPropagation()"></div>
+        <div desc="Main Area Content" class="mainContent" widget-anchor="80694DA6-8AA6-47D4-A9B0-368900098A97" ng-click="hideSideBar($event)"></div>
     </div>
     <div class="_widget_sideBarContainer" version="1.0.0" ng-class="[transition, side, overlay]"
          ng-show="transition|in:['rotatePusher', 'rotateIn3D', 'rotateOut3D', 'delayed3DRotate']">
-        <div ui-multi-transclude="mainContent" class="mainContent" ng-click="hideSideBar($event)">
-            <div ui-multi-transclude="barContent" class="barContent" ng-click="$event.stopPropagation()"></div>
+        <div desc="Main Area Content" class="mainContent" widget-anchor="80694DA6-8AA6-47D4-A9B0-368900098A97" ng-click="hideSideBar($event)">
+            <div desc="Side Bar Content" class="barContent" widget-anchor="986F8450-9E40-4DEF-9C2F-05B1547B7A38" ng-click="$event.stopPropagation()"></div>
         </div>
     </div>
 </div>
