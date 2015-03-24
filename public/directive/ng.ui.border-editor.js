@@ -10,7 +10,7 @@ define(
                 var boundProperties = {border: "="},
                     defaults = {
                         borderJson: "",
-                        borderColor: "#000000",
+                        borderColor: {color: "#000000", alpha: 1},
                         borderWidth: "0px",
                         borderStyle: "solid",
                         borderRadius: "0px"
@@ -67,7 +67,7 @@ define(
                                 }
 
                                 scope.pickBorderColorValue = function (styles) {
-                                    return scope.pickStyle(styles, scope.pseudo)["border-color"] || options.borderColor;
+                                    return scope.pickStyle(styles, scope.pseudo)["border-color"] || angular.copy(options.borderColor);
                                 }
 
                                 scope.pickBorderWidthValue = function (styles) {
@@ -136,7 +136,7 @@ define(
                                 scope.toggleBorderControl = function () {
                                     scope.borderList && scope.borderList.length && scope.toggleEnableControl().then(function (enable) {
                                         if (enable) {
-                                            scope.setBorderColor(options.borderColor);
+                                            scope.setBorderColor(angular.copy(options.borderColor));
                                             scope.setBorderWidth(options.borderWidth);
                                             scope.setBorderStyle(options.borderStyle);
                                             scope.setBorderRadius(options.borderRadius);
@@ -200,14 +200,18 @@ define(
 
                                 scope.setBorderColor = function (value) {
                                     if (value) {
+                                        if (value.alpha < 1 && !value.alphaColor) {
+                                            value.alphaColor = uiUtilService.rgba(value);
+                                        }
+
                                         var pseudoStylePrefix = (scope.pseudo || "") + "Style";
                                         pseudoStylePrefix = pseudoStylePrefix.charAt(0).toLowerCase() + pseudoStylePrefix.substr(1);
 
                                         scope.border[pseudoStylePrefix] = scope.border[pseudoStylePrefix] || {};
                                         var pseudoBorderStyle = scope.border[pseudoStylePrefix];
 
-                                        if (pseudoBorderStyle['border-color'] != value) {
-                                            pseudoBorderStyle['border-color'] = value;
+                                        if (pseudoBorderStyle['border-color'] == null || pseudoBorderStyle['border-color'].color != value.color || pseudoBorderStyle['border-color'].alpha != value.alpha) {
+                                            pseudoBorderStyle['border-color'] = _.pick(value, ["color", "alpha", "alphaColor"]);
 
                                             //Trigger watcher on sketchWidgetSetting.borderColor to apply style to widget
                                             scope.border = angular.copy(scope.border);
@@ -215,9 +219,9 @@ define(
                                             scope.borderIsSet = false;
                                             scope.pickedBorderColor = value;
                                             scope.borderColorPaneBackgroundColor = "";
-                                            scope.borderColorPaneColor = uiUtilService.contrastColor(value);
+                                            scope.borderColorPaneColor = uiUtilService.contrastColor(value.color);
                                             $timeout(function () {
-                                                scope.borderColorPaneBackgroundColor = value;
+                                                scope.borderColorPaneBackgroundColor = value.alphaColor || value.color;
                                                 scope.borderIsSet = true;
                                             });
                                         }

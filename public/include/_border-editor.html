@@ -52,7 +52,7 @@
                         <div class="borderColorPickerPane"
                              ng-style="{'color':'{{borderColorPaneColor}}', 'background-color':'{{borderColorPaneBackgroundColor}}'}"
                              ng-if="borderColorPaneBackgroundColor">
-                            {{pickedBorderColor}}
+                            {{pickedBorderColor.alphaColor || pickedBorderColor.color}}
                         </div>
                     </div>
                     <div id="borderColorPalette" class="borderColorPalette fs-x-large" ui-color-editor-palette

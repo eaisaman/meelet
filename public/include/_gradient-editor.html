@@ -15,7 +15,7 @@
             </div>
             <div class="colorSummary">
                 <div class="smallSquarePane" ng-repeat="colorStop in pickedGradientColor.colorStopList"
-                     ng-style="{'background-color':'{{colorStop.color}}'}"
+                     ng-style="{'background-color':'{{colorStop.color.alphaColor || colorStop.color.color}}'}"
                      ng-if="colorStop.color">
                 </div>
             </div>
@@ -33,12 +33,14 @@
         <div class="colorStop" ng-repeat="colorStop in pickedGradientColor.colorStopList"
              ng-style="{'background-color':'{{colorStop.backgroundColor}}'}"
              ng-attr-color-order="{{$index}}">
-            <div class="colorStopLabel fs-x-small" ng-style="{'color':'{{colorStop.color}}'}">
+            <div class="colorStopLabel fs-x-small"
+                 ng-style="{'color':'{{colorStop.color.alphaColor || colorStop.color.color}}'}">
                 <input class="spinValue" required type="number" ng-model="colorStop.percent"
                        ng-keyup="onPercentChange($event)"
                        ng-attr-min="{{colorStop.minPercent}}" ng-attr-max="{{colorStop.maxPercent}}"/>
             </div>
-            <div class="colorPane fs-x-large" ng-style="{'background-color':'{{colorStop.color}}'}"
+            <div class="colorPane fs-x-large"
+                 ng-style="{'background-color':'{{colorStop.color.alphaColor || colorStop.color.color}}'}"
                  ng-click="toggleColorStopMenu($index, $event)" ng-if="colorStop.color">
             </div>
             <div class="circular-menu">

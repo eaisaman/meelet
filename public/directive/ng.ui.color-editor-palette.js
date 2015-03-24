@@ -50,8 +50,9 @@ define(
                                     scope.colors = scope.options.colors || [];
                                 }
 
+                                scope.util = uiUtilService;
                                 scope.Math = Math;
-                                scope.selectedColorObj = scope.selectedColorObj || {};
+                                scope.selectedColorObj = scope.selectedColorObj || {alpha: 1};
                             },
                             post: function (scope, element, attrs) {
                                 function setSelectedColor(color) {
@@ -222,7 +223,7 @@ define(
                                         var defer = $q.defer();
 
                                         $timeout(function () {
-                                            scope.selectedColor = value;
+                                            scope.selectedColor = _.pick(value, ["color", "alpha"]);
                                             scope.onColorSelect && $timeout(function () {
                                                 scope.onColorSelect();
                                             });
@@ -234,8 +235,7 @@ define(
 
                                     changeSelectedColor.onceId = "color-editor-palette.changeSelectedColor";
 
-                                    if (to && scope.selectedColor !== to)
-                                        uiUtilService.latestOnce(changeSelectedColor, null, angularConstants.actionDelay)(to);
+                                    uiUtilService.latestOnce(changeSelectedColor, null, angularConstants.actionDelay)(to);
                                 }
 
                                 scope.watchSelectedColor = function (state) {
@@ -245,14 +245,13 @@ define(
                                                 if (to != undefined) {
                                                     if (to) {
                                                         scope.colors && scope.colors.every(function (c) {
-                                                            return c != to;
-                                                        }) && scope.colors.splice(0, 0, to);
+                                                            return c != to.color;
+                                                        }) && scope.colors.splice(0, 0, to.color);
 
-                                                        scope.selectedColorObj.color !== to && scope.pickColor({color: to});
+                                                        (scope.selectedColorObj.color !== to.color || scope.selectedColorObj.alpha !== to.alpha) && scope.pickColor(to);
                                                     } else {
                                                         if (scope.colors && scope.colors.length) {
-                                                            to = scope.colors[0];
-                                                            scope.pickColor({color: to});
+                                                            scope.pickColor({color: scope.colors[0], alpha: 1});
                                                         }
                                                     }
 
@@ -264,35 +263,6 @@ define(
                                     } else {
                                         scope.deregisterWatch && scope.deregisterWatch();
                                         scope.deregisterWatch = null;
-                                    }
-                                }
-
-                                scope.onPercentChange = function (event) {
-                                    event && event.stopPropagation && event.stopPropagation();
-
-                                    var $el = $(event.target),
-                                        value = parseInt($el.val()),
-                                        max = $el.attr("max"),
-                                        min = $el.attr("min"),
-                                        $stop = $el.closest(".colorStop"),
-                                        $prev = $stop.prev(".colorStop"),
-                                        $next = $stop.next(".colorStop");
-
-                                    if (angular.isNumber(value) && min <= value && value <= max) {
-                                        if ($prev.length) {
-                                            $prev.find(".spinValue").attr("max", value - 1);
-                                        }
-                                        if ($next.length) {
-                                            $next.find(".spinValue").attr("min", value + 1);
-                                        }
-                                    } else {
-                                        var scopeEl = angular.element(event.target).scope();
-
-                                        if ($prev.length) {
-                                            scopeEl.colorStop.percent = parseInt($prev.attr("max")) + 1;
-                                        } else {
-                                            scopeEl.colorStop.percent = 0;
-                                        }
                                     }
                                 }
 
@@ -355,8 +325,15 @@ define(
                                         colorObj.lightValue = hsl[2];
                                     }
 
+                                    if (colorObj.alpha == null)
+                                        colorObj.alpha = scope.selectedColorObj.alpha;
+                                    if (colorObj.alpha == 1)
+                                        delete colorObj.alphaColor;
+                                    else
+                                        colorObj.alphaColor = uiUtilService.rgba(colorObj.color, colorObj.alpha);
+
                                     scope.selectedColorObj = colorObj;
-                                    scope.updateSelectedColor(colorObj.color);
+                                    scope.updateSelectedColor(colorObj);
 
                                     element.find(".colorSticker").css("background-color", colorObj.color).attr("picked-color", colorObj.color);
 
@@ -381,6 +358,51 @@ define(
                                     }
 
                                     return true;
+                                }
+
+                                function alphaHandler() {
+                                    scope.pickColor(scope.selectedColorObj);
+
+                                    return uiUtilService.getResolveDefer();
+                                }
+
+                                scope.onAlphaChange = function (event) {
+                                    event && event.stopPropagation && event.stopPropagation();
+
+                                    var $el = $(event.target),
+                                        value = parseFloat($el.val()),
+                                        max = parseFloat($el.attr("max")),
+                                        min = parseFloat($el.attr("min"));
+
+                                    if (value > max) {
+                                        scope.selectedColorObj.alpha = 1;
+                                    } else if (value < min) {
+                                        scope.selectedColorObj.alpha = 0;
+                                    }
+
+                                    uiUtilService.latestOnce(alphaHandler, null, angularConstants.actionDelay, "color-editor-palette.alphaHandler")();
+                                }
+
+                                scope.incrementAlpha = function (event) {
+                                    event && event.stopPropagation && event.stopPropagation();
+
+                                    scope.selectedColorObj.alpha += 0.1;
+                                    scope.selectedColorObj.alpha = Math.round(scope.selectedColorObj.alpha * 10) / 10;
+                                    if (scope.selectedColorObj.alpha > 1)
+                                        scope.selectedColorObj.alpha = 1;
+
+                                    uiUtilService.latestOnce(alphaHandler, null, angularConstants.actionDelay, "color-editor-palette.alphaHandler")();
+                                }
+
+                                scope.decrementAlpha = function (event) {
+                                    event && event.stopPropagation && event.stopPropagation();
+
+                                    scope.selectedColorObj.alpha -= 0.1;
+                                    scope.selectedColorObj.alpha = Math.round(scope.selectedColorObj.alpha * 10) / 10;
+                                    if (scope.selectedColorObj.alpha < 0)
+                                        scope.selectedColorObj.alpha = 0;
+
+                                    uiUtilService.latestOnce(alphaHandler, null, angularConstants.actionDelay, "color-editor-palette.alphaHandler")();
                                 }
 
                                 scope.observeColorValueScrollMeter = function (event) {

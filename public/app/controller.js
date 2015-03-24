@@ -132,29 +132,27 @@ define(
 
                         var $to = $(event.srcEvent.toElement);
 
-                        if ($to.hasClass(angularConstants.widgetClasses.widgetClass) || $to.hasClass(angularConstants.widgetClasses.holderClass) || $to.attr(angularConstants.anchorAttr)) {
+                        if (!$scope.sketchWidgetSetting.isPlaying && ($to.hasClass(angularConstants.widgetClasses.widgetClass) || $to.hasClass(angularConstants.widgetClasses.holderClass) || $to.attr(angularConstants.anchorAttr))) {
                             var x = event.srcEvent.clientX - $to.offset().left,
                                 y = event.srcEvent.clientY - $to.offset().top;
 
                             x = Math.floor(x * angularConstants.precision) / angularConstants.precision;
                             y = Math.floor(y * angularConstants.precision) / angularConstants.precision;
 
-                            if (!$scope.sketchWidgetSetting.isPlaying) {
-                                uiUtilService.broadcast($scope,
-                                    angularEventTypes.beforeWidgetCreationEvent,
-                                    function (name) {
-                                        if (name) {
-                                            var widgetObj = uiService.createWidget($to);
-                                            widgetObj.name = name;
+                            uiUtilService.broadcast($scope,
+                                angularEventTypes.beforeWidgetCreationEvent,
+                                function (name) {
+                                    if (name) {
+                                        var widgetObj = uiService.createWidget($to);
+                                        widgetObj.name = name;
 
-                                            if (widgetObj) {
-                                                widgetObj.css("left", x + "px");
-                                                widgetObj.css("top", y + "px");
-                                            }
+                                        if (widgetObj) {
+                                            widgetObj.css("left", x + "px");
+                                            widgetObj.css("top", y + "px");
                                         }
                                     }
-                                );
-                            }
+                                }
+                            );
                         }
                     }
 
@@ -364,7 +362,7 @@ define(
 
                 $scope.modalUsage = "Demo";
                 appService.loadRepoArtifact($scope.sketchWidgetSetting.pickedArtifact, $scope.sketchWidgetSetting.pickedLibrary._id, $scope.sketchWidgetSetting.pickedLibrary.name, "", "#frameSketchWidgetDemoArea").then(function () {
-                    var scope = angular.element($("#frameSketchContainer .md-modal")).scope();
+                    var scope = angular.element($("#frameSketchContainer > .modalWindowContainer > .md-modal")).scope();
                     scope.toggleModalWindow();
                 });
             }
@@ -379,14 +377,14 @@ define(
                         callback($("#newWidgetName").val());
                     };
                 }
-                var scope = angular.element($("#frameSketchContainer .md-modal")).scope();
+                var scope = angular.element($("#frameSketchContainer > .modalWindowContainer > .md-modal")).scope();
                 scope.toggleModalWindow();
             }
 
             $scope.hideModal = function (event) {
                 event && event.stopPropagation && event.stopPropagation();
 
-                var scope = angular.element($("#frameSketchContainer .md-modal")).scope();
+                var scope = angular.element($("#frameSketchContainer > .modalWindowContainer > .md-modal")).scope();
                 scope.toggleModalWindow().then(function () {
                     $scope.onModalClose = null;
                 });
@@ -395,7 +393,7 @@ define(
             $scope.confirmWidgetName = function (event) {
                 event && event.stopPropagation && event.stopPropagation();
 
-                var scope = angular.element($("#frameSketchContainer .md-modal")).scope();
+                var scope = angular.element($("#frameSketchContainer > .modalWindowContainer > .md-modal")).scope();
                 scope.toggleModalWindow().then(function () {
                     $scope.onModalClose && $scope.onModalClose();
                     $scope.onModalClose = null;
@@ -500,8 +498,9 @@ define(
 
             $scope.uiService = uiService;
             $scope.Math = Math;
-            $scope.sketchWidgetSetting = {};
-            $scope.sketchPageSetting = {};
+            $scope.sketchWidgetSetting = {
+                isPlaying: false
+            };
             $scope.sketchObject = {};
             $scope.sketchDevice = {
                 type: "desktop",

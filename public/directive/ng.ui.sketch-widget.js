@@ -428,7 +428,7 @@ define(
 
                     return {
                         restrict: "A",
-                        scope: {sketchObject: "=", isPlaying: "="},
+                        scope: {sketchObject: "=", isPlaying: "=", widgetName: "@"},
                         replace: false,
                         compile: function (element, attrs) {
                             return {
@@ -446,6 +446,9 @@ define(
                                         function watchHandler(el, watchFlag) {
                                             var widgetObj = uiService.createWidgetObj(el);
                                             if (widgetObj) {
+                                                if (scope.widgetName) {
+                                                    widgetObj.name = scope.widgetName;
+                                                }
                                                 widgetObj.setIsPlaying && widgetObj.setIsPlaying(watchFlag);
                                                 if (watchFlag) {
                                                     unregisterHandlers(el);
@@ -469,6 +472,9 @@ define(
                                         function attachHandler(el) {
                                             var widgetObj = uiService.createWidgetObj(el);
                                             if (widgetObj) {
+                                                if (scope.widgetName) {
+                                                    widgetObj.name = scope.widgetName;
+                                                }
                                                 widgetObj.attach();
                                                 registerHandlers(scope, el);
                                             }

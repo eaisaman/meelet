@@ -420,7 +420,7 @@ define(
                     var self = this;
 
                     if (self.projectRecord._id) {
-                        self.saveSketch().then(function () {
+                        return self.saveSketch().then(function () {
                             var promiseArr = [];
                             self.xrefRecord.forEach(
                                 function (xref) {
@@ -433,6 +433,8 @@ define(
                             return $inject.uiUtilService.getRejectDefer(err);
                         });
                     }
+
+                    return $inject.uiUtilService.getRejectDefer(err);
                 },
                 loadSketch: function () {
                     var self = this;
@@ -2609,48 +2611,6 @@ define(
 
                         return defer.promise;
                     },
-                    setBorderColor: function (value) {
-                        value && this.css("border-color", value) || this.css("border-color", "");
-                    },
-                    getBorderColor: function () {
-                        return this.css("border-color");
-                    },
-                    setBorderWidth: function (value) {
-                        value && this.css("border-width", $inject.uiUtilService.formalizePixelLength(value)) || this.css("border-width", "");
-                    },
-                    getBorderWidth: function () {
-                        return this.css("border-width");
-                    },
-                    setBorderStyle: function (value) {
-                        value && this.css("border-style", value) || this.css("border-style", "");
-                    },
-                    getBorderStyle: function () {
-                        return this.css("border-style");
-                    },
-                    setBorderRadius: function (value) {
-                        value && this.css("border-radius", $inject.uiUtilService.formalizePixelLength(value)) || this.css("border-radius", "");
-                    },
-                    getBorderRadius: function () {
-                        return this.css("border-radius");
-                    },
-                    setColor: function (value) {
-                        value && this.css("color", value) || this.css("color", "");
-                    },
-                    getColor: function () {
-                        return this.css("color");
-                    },
-                    setTextShadow: function (value) {
-                        value && this.css("text-shadow", value) || this.css("text-shadow", "");
-                    },
-                    getTextShadow: function () {
-                        return this.css("text-shadow");
-                    },
-                    setBoxShadow: function (value) {
-                        value && this.css("box-shadow", value) || this.css("box-shadow", "");
-                    },
-                    getBoxShadow: function () {
-                        return this.css("box-shadow");
-                    },
                     getTrackablePseudoStyle: function () {
                         var args = Array.prototype.slice.call(arguments);
                         return this.trackablePseudoCss.apply(this, args);
@@ -2827,7 +2787,7 @@ define(
                 DEFAULT_STYLE: {
                     "width": "100px",
                     "height": "100px",
-                    "background": "#ffffff"
+                    "background": {color: "#ffffff", alpha: 1}
                 },
                 MEMBERS: {
                     isElement: true,
@@ -3305,7 +3265,7 @@ define(
                 DEFAULT_STYLE: {
                     "width": "100px",
                     "height": "100px",
-                    "background": "#ffffff"
+                    "background": {color: "#ffffff", alpha: 1}
                 },
                 MEMBERS: {
                     widgetSpec: null,
@@ -3331,7 +3291,7 @@ define(
                     var self = this;
 
                     //Unreference artifact
-                    $("head link[type='text/css'][widget={0}]".format(self._id)).remove();
+                    $("head link[type='text/css'][widget={0}]".format(self.id)).remove();
                     $inject.$rootScope.loadedProject.unrefArtifact(self.widgetSpec.artifactId);
 
                     return RepoSketchWidgetClass.prototype.__proto__.dispose.apply(self).then(function () {
@@ -3435,7 +3395,7 @@ define(
                                 }
                             ).then(
                                 function () {
-                                    self.$element && self.$element.addClass("widgetIncludeAnchor");
+                                    self.$element && self.$element.addClass($inject.angularConstants.widgetClasses.widgetIncludeAnchorClass);
 
                                     //Apply default value to widget's configuration.
                                     _.without(_.keys(self.widgetSpec.configuration), ["state", "handDownConfiguration"]).forEach(
@@ -3477,7 +3437,7 @@ define(
                     var self = this;
 
                     if (self.$element && self.$element.parent().length) {
-                        var scope = angular.element(self.$element.find(".ui-widget:nth-of-type(1) :first-child")).scope();
+                        var scope = angular.element(self.$element.find("[widget-container]:nth-of-type(1) :first-child")).scope();
 
                         return scope[key];
                     }
@@ -3489,12 +3449,12 @@ define(
 
                     if (self.$element && self.$element.parent().length) {
                         $inject.uiUtilService.whilst(function () {
-                                return !angular.element(self.$element.find(".ui-widget:nth-of-type(1) :first-child")).scope();
+                                return !angular.element(self.$element.find("[widget-container]:nth-of-type(1) :first-child")).scope();
                             }, function (callback) {
                                 callback();
                             }, function (err) {
                                 if (!err) {
-                                    var scope = angular.element(self.$element.find(".ui-widget:nth-of-type(1) :first-child")).scope();
+                                    var scope = angular.element(self.$element.find("[widget-container]:nth-of-type(1) :first-child")).scope();
 
                                     if (typeof key === "object") {
                                         _.each(key, function (item) {
@@ -3518,24 +3478,28 @@ define(
                             $inject.angularConstants.renderTimeout
                         )
                     }
+
+                    return true;
                 },
                 getConfiguration: function (key) {
                     var self = this,
                         config = self.widgetSpec.configuration[key] || self.widgetSpec.configuration.handDownConfiguration[key];
 
-                    return config.pickedValue || config.defaultValue;
+                    return config.pickedValue != null ? config.pickedValue : config.defaultValue;
                 },
                 setConfiguration: function (key, value) {
                     var self = this,
                         config = self.widgetSpec.configuration[key] || self.widgetSpec.configuration.handDownConfiguration[key];
 
-                    if (value != null) {
-                        config.pickedValue = value;
-                    } else {
-                        delete config.pickedValue;
-                    }
+                    if (value != config.defaultValue) {
+                        if (value != null) {
+                            config.pickedValue = value;
+                        } else {
+                            delete config.pickedValue;
+                        }
 
-                    config.handDown && self.setHandDownConfiguration(key, value) || self.setScopedValue(key, value || config.defaultValue);
+                        config.handDown && self.setHandDownConfiguration(key, value) || self.setScopedValue(key, value || config.defaultValue);
+                    }
                 },
                 setHandDownConfiguration: function (key, value) {
                     var self = this,
@@ -3546,6 +3510,7 @@ define(
                     self.handDownConfigurationList.every(function (item, i) {
                         if (item.key === key) {
                             index = i;
+                            item.value = value;
                             return false;
                         }
 
@@ -3559,16 +3524,39 @@ define(
                     } else {
                         value == null && self.handDownConfigurationList.splice(index, 1);
                     }
+
+                    return true;
                 },
                 applyHandDownConfiguration: function () {
                     var self = this;
 
                     if (self.handDownConfigurationList && self.handDownConfigurationList.length) {
-                        return $inject.appService.updateConfigurableArtifact(self.widgetSpec.projectId, self.id, self.widgetSpec.artifactId, self.handDownConfigurationList);
+                        var configurationArr = [];
+
+                        _.each(self.widgetSpec.configuration.handDownConfiguration, function (config, key) {
+                            if (config.pickedValue != null) {
+                                configurationArr.push({key: key, value: config.pickedValue});
+                            }
+                        });
+
+                        return $inject.$q.all(
+                            [
+                                $inject.$rootScope.loadedProject.save(),
+                                $inject.appService.updateConfigurableArtifact(self.widgetSpec.projectId, self.id, self.widgetSpec.artifactId, configurationArr).then(
+                                    function () {
+                                        self.handDownConfigurationList.splice(0, self.handDownConfigurationList.length);
+
+                                        return $inject.uiUtilService.getResolveDefer();
+                                    },
+                                    function (err) {
+                                        $inject.uiUtilService.getRejectDefer(err);
+                                    }
+                                )
+                            ]
+                        );
                     } else {
                         return $inject.uiUtilService.getResolveDefer();
                     }
-
                 },
                 addState: function () {
                 },
@@ -3581,10 +3569,7 @@ define(
                 setState: function (value) {
                     RepoSketchWidgetClass.prototype.__proto__.setState.apply(this, [value]);
 
-                    if (this.$element && this.$element.parent().length) {
-                        var scope = angular.element(this.$element.find(".ui-widget:nth-of-type(1) :first-child")).scope();
-                        scope.state = value;
-                    }
+                    this.setScopedValue("state", value);
                 },
                 setStateContext: function (value) {
                     var self = this;
@@ -3774,6 +3759,10 @@ define(
 
                                 return true;
                             });
+
+                            if (widgetObj && widgetObj.isKindOf("RepoSketchWidget")) {
+                                $el.addClass(self.angularConstants.widgetClasses.widgetIncludeAnchorClass);
+                            }
                         } else if ($el.hasClass(self.angularConstants.widgetClasses.widgetContainerClass) && parentWidgetObj.isKindOf("RepoSketchWidget")) {
                             if (parentWidgetObj.childWidgets.length) {
                                 widgetObj = parentWidgetObj.childWidgets[0];

@@ -47,7 +47,7 @@ define(
                                 );
 
                                 scope.pickTextShadowValue = function (styles) {
-                                    return scope.pickStyle(styles, scope.pseudo)["text-shadow"] || _.clone(options.textShadow);
+                                    return scope.pickStyle(styles, scope.pseudo)["text-shadow"] || angular.copy(options.textShadow);
                                 }
 
                                 function createTextShadowStopValueInputAssign(name) {
@@ -141,7 +141,7 @@ define(
                                 scope.toggleTextShadowControl = function () {
                                     scope.toggleEnableControl().then(function (enable) {
                                         if (enable) {
-                                            scope.setTextShadow(_.clone(options.textShadow));
+                                            scope.setTextShadow(angular.copy(options.textShadow));
                                         } else {
                                             scope.textShadow = angular.copy(scope.unsetStyle(scope.textShadow, scope.pseudo));
                                         }
@@ -285,17 +285,21 @@ define(
                                     }
                                 }
 
-                                scope.setStopColor = function (index, hex, event) {
+                                scope.setStopColor = function (index, value, event) {
                                     event && event.stopPropagation && event.stopPropagation();
 
                                     if (index < scope.pickedTextShadow.length) {
+                                        if (value.alpha < 1 && !value.alphaColor) {
+                                            value.alphaColor = uiUtilService.rgba(value);
+                                        }
+
                                         var shadowStop = scope.pickedTextShadow[index];
 
-                                        if (hex !== shadowStop.color) {
-                                            shadowStop.color = "";
+                                        if (shadowStop.color != value) {
+                                            shadowStop.color = null;
 
                                             $timeout(function () {
-                                                shadowStop.color = hex;
+                                                shadowStop.color = _.pick(value, ["color", "alpha", "alphaColor"]);
 
                                                 //Trigger watcher on sketchWidgetSetting.textShadow to apply style to widget
                                                 scope.setTextShadow(scope.pickedTextShadow);
@@ -316,6 +320,17 @@ define(
                                 }
 
                                 scope.setTextShadow = function (value) {
+                                    value.forEach(function (shadowStop) {
+                                        if (typeof shadowStop.color === "string") {
+                                            shadowStop.color = {color: shadowStop.color, alpha: 1};
+                                        } else if (typeof shadowStop.color === "object") {
+                                            shadowStop.color = _.pick(shadowStop.color, ["color", "alpha", "alphaColor"]);
+                                            if (shadowStop.color.alpha < 1 && !shadowStop.color.alphaColor) {
+                                                shadowStop.color.alphaColor = uiUtilService.rgba(shadowStop.color);
+                                            }
+                                        }
+                                    });
+
                                     scope.pickedTextShadow = value;
 
                                     var pseudoStylePrefix = (scope.pseudo || "") + "Style";

@@ -75,9 +75,11 @@ define(
                                     }
 
                                     scope.toggleModalWindow = function (event) {
-                                        return scope.toggleDisplay('.md-modal', event).then(function () {
-                                            return checkState();
-                                        });
+                                        if (scope.isPlaying == null || scope.isPlaying) {
+                                            scope.toggleDisplay('.md-modal', event).then(function () {
+                                                return checkState();
+                                            });
+                                        }
                                     }
 
                                     scope.transition = "fadeInScaleUp";

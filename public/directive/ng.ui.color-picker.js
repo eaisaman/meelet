@@ -9,7 +9,7 @@ define(
 
                 var boundProperties = {color: "="},
                     defaults = {
-                        color: "#000000"
+                        color: {color: "#000000", alpha: 1}
                     },
                     options = angular.extend(defaults, opts),
                     injectObj = _.object(inject, Array.prototype.slice.call(arguments));
@@ -36,12 +36,15 @@ define(
                                         {
                                             color: function (value) {
                                                 if (value && scope.hasStyle(value)) {
-                                                    scope.pickedColor = uiUtilService.formalizeHex(scope.pickColorValue(value));
+                                                    scope.pickedColor = scope.pickColorValue(value);
                                                     scope.colorIsSet = false;
+                                                    if (scope.pickedColor.alpha < 1 && !scope.pickedColor.alphaColor) {
+                                                        scope.pickedColor.alphaColor = uiUtilService.rgba(scope.pickedColor);
+                                                    }
+                                                    scope.pickerPaneBackgroundColor = scope.pickedColor.alphaColor || scope.pickedColor.color;
+                                                    scope.pickerPaneColor = uiUtilService.contrastColor(scope.pickedColor.color);
+                                                    scope.pickerBarBackgroundColor = scope.pickerPaneColor === "#ffffff" ? uiUtilService.lighterColor(scope.pickedColor.color, 0.5) : uiUtilService.lighterColor(scope.pickedColor.color, -0.5);
                                                     $timeout(function () {
-                                                        scope.pickerPaneBackgroundColor = scope.pickedColor;
-                                                        scope.pickerPaneColor = uiUtilService.contrastColor(scope.pickedColor);
-                                                        scope.pickerBarBackgroundColor = scope.pickerPaneColor === "#ffffff" ? uiUtilService.lighterColor(scope.pickedColor, 0.5) : uiUtilService.lighterColor(scope.pickedColor, -0.5);
                                                         scope.colorIsSet = true;
                                                     });
                                                     $timeout(function () {
@@ -57,26 +60,30 @@ define(
                                 );
 
                                 scope.pickColorValue = function (styles) {
-                                    return scope.pickStyle(styles, scope.pseudo)["color"] || options.color;
+                                    return scope.pickStyle(styles, scope.pseudo)["color"] || angular.copy(options.color);
                                 }
 
                                 scope.setColor = function (value) {
+                                    if (value.alpha < 1 && !value.alphaColor) {
+                                        value.alphaColor = uiUtilService.rgba(value);
+                                    }
+
                                     var pseudoStylePrefix = (scope.pseudo || "") + "Style";
                                     pseudoStylePrefix = pseudoStylePrefix.charAt(0).toLowerCase() + pseudoStylePrefix.substr(1);
 
                                     scope.color[pseudoStylePrefix] = scope.color[pseudoStylePrefix] || {};
                                     var pseudoColorStyle = scope.color[pseudoStylePrefix];
-                                    if (pseudoColorStyle['color'] != value) {
-                                        pseudoColorStyle['color'] = value;
+                                    if (pseudoColorStyle['color'] == null || pseudoColorStyle['color'].color != value.color || pseudoColorStyle['color'].alpha != value.alpha) {
+                                        pseudoColorStyle['color'] = _.pick(value, ["color", "alpha", "alphaColor"]);
 
                                         //Trigger watcher on sketchWidgetSetting.color to apply style to widget
                                         scope.color = angular.copy(scope.color);
 
                                         scope.colorIsSet = false;
                                         scope.pickedColor = value;
-                                        scope.pickerPaneBackgroundColor = value;
-                                        scope.pickerPaneColor = uiUtilService.contrastColor(value);
-                                        scope.pickerBarBackgroundColor = scope.pickerPaneColor === "#ffffff" ? uiUtilService.lighterColor(value, 0.5) : uiUtilService.lighterColor(value, -0.5);
+                                        scope.pickerPaneBackgroundColor = scope.pickedColor.alphaColor || scope.pickedColor.color;
+                                        scope.pickerPaneColor = uiUtilService.contrastColor(value.color);
+                                        scope.pickerBarBackgroundColor = scope.pickerPaneColor === "#ffffff" ? uiUtilService.lighterColor(value.color, 0.5) : uiUtilService.lighterColor(value.color, -0.5);
                                         $timeout(function () {
                                             scope.colorIsSet = true;
                                         });
@@ -86,7 +93,7 @@ define(
                                 scope.toggleColorControl = function () {
                                     scope.toggleEnableControl().then(function (enable) {
                                         if (enable) {
-                                            scope.setColor(options.color);
+                                            scope.setColor(angular.copy(options.color));
                                         } else {
                                             scope.color = angular.copy(scope.unsetStyle(scope.color, scope.pseudo));
                                         }

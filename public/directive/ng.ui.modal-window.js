@@ -37,10 +37,10 @@ define(
                                     event && event.stopPropagation && event.stopPropagation();
 
                                     if (scope.isPlaying == null || scope.isPlaying) {
-                                        return scope.toggleDisplay('.md-modal', event).then(function () {
+                                        return scope.toggleDisplay('> .md-modal', event).then(function () {
                                             var defer = $q.defer();
                                             $timeout(function () {
-                                                if (!element.find(".md-modal").hasClass("show")) {
+                                                if (!element.find("> .md-modal").hasClass("show")) {
                                                     scope.onWindowClose && scope.onWindowClose();
                                                 }
 

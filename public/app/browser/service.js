@@ -528,12 +528,10 @@ define(
                     configuration: JSON.stringify(configuration)
                 }
             }).then(function (result) {
-                var defer = self.$q.defer();
-
                 if (result.data.result === "OK") {
                     $("head link[type='text/css'][widget='{0}']".format(widgetId)).remove();
 
-                    self.$timeout(function () {
+                    return self.$timeout(function () {
                         var link = document.createElement("link");
                         link.type = "text/css";
                         link.rel = "stylesheet";
@@ -542,25 +540,12 @@ define(
                         link.setAttribute("widget", widgetId);
 
                         document.getElementsByTagName("head")[0].appendChild(link);
-
-                        configurationArray && configurationArray.splice(0, configurationArray.length);
-                        defer.resolve();
                     });
                 } else {
-                    self.$timeout(function () {
-                        defer.reject();
-                    });
+                    return self.uiUtilService.getRejectDefer(result.data.reason);
                 }
-
-                return defer.promise;
-            }, function () {
-                var errDefer = self.$q.defer();
-
-                self.$timeout(function () {
-                    errDefer.reject();
-                });
-
-                return errDefer.promise;
+            }, function (err) {
+                return self.uiUtilService.getRejectDefer(err);
             });
         };
 

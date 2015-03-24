@@ -37,6 +37,7 @@ define(
                                 options.holderClass = angularConstants.widgetClasses.holderClass;
                                 options.widgetClass = angularConstants.widgetClasses.widgetClass;
                                 options.hoverClass = angularConstants.widgetClasses.hoverClass;
+                                options.anchorAttr = angularConstants.anchorAttr;
 
                                 scope.filterLibraryList = function (libraryList, xrefList) {
                                     return uiUtilService.filterSelection(libraryList, xrefList, [{
@@ -119,7 +120,7 @@ define(
                                             x = Math.floor(x * angularConstants.precision) / angularConstants.precision;
                                             y = Math.floor(y * angularConstants.precision) / angularConstants.precision;
 
-                                            if (!scope.isPlaying && ($to.hasClass(options.holderClass) || $to.hasClass(options.widgetClass))) {
+                                            if (!scope.isPlaying && ($to.hasClass(options.widgetClass) || $to.hasClass(options.holderClass) || $to.attr(options.anchorAttr))) {
                                                 uiUtilService.broadcast(scope,
                                                     angularEventTypes.beforeWidgetCreationEvent,
                                                     function (name) {

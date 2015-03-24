@@ -10,7 +10,7 @@
          ng-if="colorIsSet">
         <div class="pickerPane fs-x-smaller"
              ng-style="{'background-color':'{{pickerPaneBackgroundColor}}'}">
-            <span ng-style="{'color':'{{pickerPaneColor}}'}">{{pickedColor}}</span>
+            <span ng-style="{'color':'{{pickerPaneColor}}'}">{{pickedColor.alphaColor || pickedColor.color}}</span>
         </div>
     </div>
     <div class="ui-control-panel">

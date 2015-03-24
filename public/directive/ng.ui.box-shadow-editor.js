@@ -149,7 +149,7 @@ define(
                                 scope.toggleBoxShadowControl = function () {
                                     scope.toggleEnableControl().then(function (enable) {
                                         if (enable) {
-                                            scope.setBoxShadow(_.clone(options.boxShadow));
+                                            scope.setBoxShadow(angular.copy(options.boxShadow));
                                         } else {
                                             scope.boxShadow = angular.copy(scope.unsetStyles(scope.boxShadow));
                                         }
@@ -329,7 +329,7 @@ define(
                                     }
                                 }
 
-                                scope.setStopColor = function (pseudo, index, hex, event) {
+                                scope.setStopColor = function (pseudo, index, value, event) {
                                     event && event.stopPropagation && event.stopPropagation();
 
                                     var pseudoStylePrefix = (pseudo || "") + "Style";
@@ -338,13 +338,17 @@ define(
                                     scope.pickedBoxShadow[pseudoStylePrefix] = scope.pickedBoxShadow[pseudoStylePrefix] || {};
                                     var pseudoShadowStyle = scope.pickedBoxShadow[pseudoStylePrefix];
                                     if (index < pseudoShadowStyle['box-shadow'].length) {
+                                        if (value.alpha < 1 && !value.alphaColor) {
+                                            value.alphaColor = uiUtilService.rgba(value);
+                                        }
+
                                         var shadowStop = pseudoShadowStyle['box-shadow'][index];
 
-                                        if (hex !== shadowStop.color) {
-                                            shadowStop.color = "";
+                                        if (value !== shadowStop.color) {
+                                            shadowStop.color = null;
 
                                             $timeout(function () {
-                                                shadowStop.color = hex;
+                                                shadowStop.color = _.pick(value, ["color", "alpha", "alphaColor"]);
 
                                                 //Trigger watcher on sketchWidgetSetting.boxShadow to apply style to widget
                                                 scope.setBoxShadow(scope.pickedBoxShadow);
@@ -365,8 +369,24 @@ define(
                                 }
 
                                 scope.setBoxShadow = function (value) {
+                                    ["style", "beforeStyle", "afterStyle"].forEach(function (pseudoStylePrefix) {
+                                        if (value[pseudoStylePrefix]["box-shadow"]) {
+                                            value[pseudoStylePrefix]["box-shadow"].forEach(function (shadowStop) {
+                                                if (typeof shadowStop.color === "string") {
+                                                    shadowStop.color = {color: shadowStop.color, alpha: 1};
+                                                } else if (typeof shadowStop.color === "object") {
+                                                    shadowStop.color = _.pick(shadowStop.color, ["color", "alpha", "alphaColor"]);
+                                                    if (shadowStop.color.alpha < 1 && !shadowStop.color.alphaColor) {
+                                                        shadowStop.color.alphaColor = uiUtilService.rgba(shadowStop.color);
+                                                    }
+                                                }
+                                            });
+                                        }
+                                    });
+
                                     value.source = "uiBoxShadowEditor";
                                     scope.pickedBoxShadow = value;
+
                                     //Trigger watcher on sketchWidgetSetting.boxShadow to apply style to widget
                                     scope.boxShadow = angular.copy(value);
                                 }

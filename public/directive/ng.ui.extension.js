@@ -476,13 +476,13 @@ define(
             }
         }
 
-        Extension.prototype.composeTextShadowCssService = function () {
+        Extension.prototype.composeTextShadowCssService = function (uiUtilService) {
             return function (value) {
                 var arr = [];
 
                 if (value && toString.call(value) === '[object Array]') {
                     value.forEach(function (item) {
-                        var str = "{0} {1} {2} {3}".format(item.color || "", item["h-shadow"] || "", item["v-shadow"] || "", item["blur"] || "").trim();
+                        var str = "{0} {1} {2} {3}".format(uiUtilService.rgba(item.color) || "", item["h-shadow"] || "", item["v-shadow"] || "", item["blur"] || "").trim();
                         str && arr.push(str);
                     });
                 }

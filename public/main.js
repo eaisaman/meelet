@@ -58,7 +58,8 @@ require(["jquery-lib", "jquery-plugins-lib", "hammer-lib", "jquery-ui-lib", "jqu
             widgetClass: "sketchWidget",
             hoverClass: "widgetHover",
             activeClass: "pickedWidget",
-            widgetContainerClass: "widgetContainer"
+            widgetContainerClass: "widgetContainer",
+            widgetIncludeAnchorClass: "widgetIncludeAnchor"
         },
         anchorAttr: "widget-anchor",
         draggingShapeZIndex: 101,

@@ -1,9 +1,11 @@
 <div>
-    <div class="_widget_modalWindowContainer" version="1.0.0" ng-class="[setPerspective?'md-perspective':'']">
+    <div class="_widget_modalWindowContainer" widget-container version="1.0.0"
+         ng-class="[setPerspective?'md-perspective':'']">
         <div desc="Modal Area Content" class="md-modal" ng-class="[transition]"
              widget-anchor="8E1D416B-6F65-445E-9398-E9F0F6D30FF8">
         </div>
         <div desc="Main Area Content" class="mainContent" widget-anchor="A3D9E528-879D-4012-80C6-26743933D343"></div>
-        <div class="modalOverlay" ng-click="toggleModalWindow($event)"></div>
+        <div class="modalOverlay" ng-click="toggleModalWindow($event)"
+             ng-style="{'pointer-events':isPlaying?'auto':'none'}"></div>
     </div>
 </div>

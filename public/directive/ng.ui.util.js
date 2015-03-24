@@ -57,6 +57,24 @@ define(
             return width;
         }
 
+        Util.prototype.rgba = function (hex, alpha) {
+            var rgb;
+
+            if (typeof hex === "string") {
+                rgb = this.hexTorgb(hex);
+                alpha = 1;
+            } else {
+                rgb = this.hexTorgb(hex.color);
+                alpha = hex.alpha;
+                hex = hex.color;
+            }
+
+            if (alpha == 1)
+                return hex;
+            else
+                return "rgba({0}, {1}, {2}, {3})".format(rgb[0], rgb[1], rgb[2], alpha);
+        }
+
         Util.prototype.rgbToHsl = function (r, g, b) {
             r /= 255, g /= 255, b /= 255;
             var max = Math.max(r, g, b), min = Math.min(r, g, b);
@@ -568,156 +586,6 @@ define(
             };
         }
 
-        Util.prototype.createEditableStyleObject = function (styleObj) {
-            var self = this,
-                styleObjArr,
-                editableArr = [];
-
-            if (toString.call(styleObj) === '[object Object]')
-                styleObjArr = [styleObj];
-            else if (toString.call(styleObj) === '[object Array]')
-                styleObjArr = styleObj;
-
-            styleObjArr && styleObjArr.forEach(function (value) {
-                var editable = _.clone(value);
-
-                editable.pseudo = editable.pseudo || "";
-
-                //transform
-                if (editable.transform) {
-                    self.tailorCssPrefix(editable, "transform");
-                    var editableTransformArr = [],
-                        transformStrArr = editable.transform.split(" ");
-                    transformStrArr && transformStrArr.forEach(function (str) {
-                        var m = str.match(/(.+)\((.*)\)/);
-                        if (m && m.length == 3) {
-                            editableTransformArr.push({name: m[1], value: m[2] || ""});
-                        }
-                    });
-                    editable.transform = editableTransformArr;
-                }
-
-                //transform-origin
-                if (editable["transform-origin"]) {
-                    self.tailorCssPrefix(editable, "transform-origin");
-                }
-
-                //box-shadow
-                if (editable["box-shadow"]) {
-                    var boxShadowStr = editable["box-shadow"],
-                        shadowStopStrArr = boxShadowStr.split(","),
-                        shadowStopList = [],
-                        stopAttrs = ["h-shadow", "v-shadow", "blur", "spread", "inset"];
-
-                    shadowStopStrArr.forEach(function (shadowStopStr) {
-                        var shadowStop = {},
-                            stopValues = shadowStopStr.split(" "),
-                            i = 0;
-
-                        stopValues.forEach(function (v) {
-                            if (v) {
-                                if (v !== "inset")
-                                    shadowStop[stopAttrs[i++]] = v;
-                                else
-                                    shadowStop['inset'] = v;
-                            }
-                        });
-
-                        !_.isEmpty(shadowStop) && shadowStopList.push(shadowStop);
-                    });
-
-                    editable["box-shadow"] = shadowStopList;
-                }
-
-                //text-shadow
-                if (editable["text-shadow"]) {
-                    var textShadowStr = editable["text-shadow"],
-                        shadowStopStrArr = textShadowStr.split(","),
-                        shadowStopList = [],
-                        stopAttrs = ["h-shadow", "v-shadow", "blur"];
-
-                    shadowStopStrArr.forEach(function (shadowStopStr) {
-                        var shadowStop = {},
-                            stopValues = shadowStopStr.split(" "),
-                            i = 0;
-
-                        stopValues.forEach(function (v) {
-                            if (v) {
-                                shadowStop[stopAttrs[i++]] = v;
-                            }
-                        });
-
-                        !_.isEmpty(shadowStop) && shadowStopList.push(shadowStop);
-                    });
-
-                    editable["text-shadow"] = shadowStopList;
-                }
-
-                //gradientColor
-                if (editable.background) {
-                    var colorObj;
-
-                    if (toString.call(editable.background) === '[object Array]') {
-                        editable.background.every(function (styleValue) {
-                            var m = styleValue.match(/linear-gradient\((.+)\)/);
-                            if (m && m.length == 2) {
-                                var n = m[1].match(/(\d)deg,(.+)$/);
-                                if (n && n.length == 3) {
-                                    var angle = parseInt(n[1]),
-                                        stops = n[2].split(","),
-                                        colorStopList = [];
-
-                                    stops.forEach(function (stopValue) {
-                                        var s = stopValue.match(/(#\w+) (\d+)%/);
-                                        if (s && s.length == 3) {
-                                            var color = s[1];
-                                            colorStopList.push({
-                                                percent: parseInt(s[2]),
-                                                color: color
-                                            });
-                                        }
-                                    });
-
-                                    if (colorStopList.length) {
-                                        for (var i = 1; i < colorStopList.length - 1; i++) {
-                                            colorStopList[i].minPercent = colorStopList[i - 1].percent + 1;
-                                            colorStopList[i].maxPercent = colorStopList[i + 1].percent - 1;
-                                        }
-                                        colorStopList[0].minPercent = 0;
-                                        colorStopList[colorStopList.length - 1].maxPercent = 100;
-                                        if (colorStopList.length > 1) {
-                                            colorStopList[0].maxPercent = colorStopList[1].percent - 1;
-                                            colorStopList[colorStopList.length - 1].minPercent = colorStopList[colorStopList.length - 2].percent + 1;
-                                        }
-
-                                        colorObj = {angle: angle, colorStopList: colorStopList};
-                                    }
-                                }
-                            }
-                        });
-                    } else if (typeof editable.background === "string") {
-                        colorObj = {
-                            angle: 0,
-                            colorStopList: [
-                                {
-                                    percent: 0,
-                                    color: editable.background,
-                                    minPercent: 0,
-                                    maxPercent: 100
-                                }
-                            ]
-                        };
-                    }
-
-                    editable.background = colorObj;
-                }
-
-                editableArr.push(editable);
-            });
-
-            return editableArr;
-        }
-
         Util.prototype.tailorCssPrefix = function (styleObj, style) {
             if (style && styleObj) {
                 var prefixes = ["-webkit-", "-moz-", "-ms-", "-o-"];
@@ -765,7 +633,7 @@ define(
                 if (styleValue != null) {
                     if (toString.call(styleValue) === '[object Array]') {
                         styleValue.forEach(function (item) {
-                            var str = "{0} {1} {2} {3} {4} {5}".format(item.color || "", item["h-shadow"] || "", item["v-shadow"] || "", item["blur"] || "", item["spread"] || "", item["inset"] || "").trim();
+                            var str = "{0} {1} {2} {3} {4} {5}".format(self.rgba(item.color) || "", item["h-shadow"] || "", item["v-shadow"] || "", item["blur"] || "", item["spread"] || "", item["inset"] || "").trim();
                             str && arr.push(str);
                         });
                     }
@@ -777,7 +645,7 @@ define(
                 if (styleValue != null) {
                     if (toString.call(styleValue) === '[object Array]') {
                         styleValue.forEach(function (item) {
-                            var str = "{0} {1} {2} {3}".format(item.color || "", item["h-shadow"] || "", item["v-shadow"] || "", item["blur"] || "").trim();
+                            var str = "{0} {1} {2} {3}".format(self.rgba(item.color) || "", item["h-shadow"] || "", item["v-shadow"] || "", item["blur"] || "").trim();
                             str && arr.push(str);
                         });
                     }
@@ -833,8 +701,8 @@ define(
 
                         var webkitStops = [], stops = [];
                         styleValue.colorStopList.forEach(function (colorStop) {
-                            webkitStops.push("color-stop({1}%, {0})".format(colorStop.color, colorStop.percent));
-                            stops.push("{0} {1}%".format(colorStop.color, colorStop.percent));
+                            webkitStops.push("color-stop({1}%, {0})".format(self.rgba(colorStop.color), colorStop.percent));
+                            stops.push("{0} {1}%".format(self.rgba(colorStop.color), colorStop.percent));
                         });
 
                         var styles = [];
@@ -847,7 +715,7 @@ define(
 
                         styleObj = {"background": styles};
                     } else {
-                        styleObj = {"background": styleValue.colorStopList[0].color || ""};
+                        styleObj = {"background": self.rgba(styleValue.colorStopList[0].color) || ""};
                     }
                 } else {
                     styleObj = {"background": ""};
@@ -863,6 +731,10 @@ define(
                     styleObj = {"background-position": "{0} {1}".format(styleValue.x, styleValue.y)};
                 } else {
                     styleObj = {"background-position": ""};
+                }
+            } else if (styleName === "color" || styleName === "border-color") {
+                if (styleValue && !_.isEmpty(styleValue)) {
+                    styleObj[styleName] = self.rgba(styleValue);
                 }
             } else {
                 styleObj[styleName] = styleValue || "";

@@ -83,7 +83,7 @@
                     </div>
                     <div class="shadowStopColor col-as-2 no-padding-right fs-x-tiny"
                          ng-click="toggleShadowStopMenu($index, $event)" ng-if="shadowStop.color">
-                        <span ng-style="{'background-color':'{{shadowStop.color}}'}"></span>
+                        <span ng-style="{'background-color':'{{shadowStop.color.alphaColor || shadowStop.color.color}}'}"></span>
                     </div>
                     <div class="circular-menu">
                         <div class="circle">

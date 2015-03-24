@@ -6,6 +6,7 @@ $color: rgba(0, 0, 0, 0.4);
 $borderColor: rgba(0, 0, 0, 0.4);
 $fontColor: rgba(0, 0, 0, 0.4);
 $activeColor: #669933;
+$errorColor: #e74c3c;
 
 @mixin emboss-title($pseudo: "", $onActive:true) {
     &#{$pseudo} {

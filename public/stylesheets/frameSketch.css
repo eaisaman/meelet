@@ -8198,14 +8198,13 @@
 #borderColorPalette > .topBar > .pickedColorList {
   position: relative;
   width: 100%;
-  height: 3em;
+  height: 5em;
   margin: 5px;
 }
 #borderColorPalette > .topBar > .pickedColorList > .pickedColorPanes {
-  position: relative;
-  float: left;
-  left: 1em;
-  top: 0.5em;
+  position: absolute;
+  left: 3em;
+  top: 0;
   height: 100%;
   width: calc(100% - 3em);
   overflow: hidden;
@@ -8232,8 +8231,7 @@
   content: "";
 }
 #borderColorPalette > .topBar > .pickedColorList > .colorSticker {
-  position: relative;
-  float: left;
+  position: absolute;
   left: 0.5em;
   top: 0.5em;
   width: 2em;
@@ -8248,6 +8246,73 @@
   top: -2px;
   line-height: 2;
   text-align: center;
+}
+#borderColorPalette > .topBar > .pickedColorList > .alphaStep {
+  position: absolute;
+  left: 0.25em;
+  top: 3em;
+  width: 2.5em;
+  height: 1.5em;
+}
+#borderColorPalette > .topBar > .pickedColorList > .alphaStep:before {
+  position: absolute;
+  content: "";
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuMCIgeTE9IjAuNSIgeDI9IjEuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ViZWJlYiIvPjxzdG9wIG9mZnNldD0iNTAlIiBzdG9wLWNvbG9yPSIjZWJlYmViIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjZmZmZmZmIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g');
+  background: -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, #ebebeb), color-stop(50%, #ebebeb), color-stop(100%, #ffffff));
+  background: -moz-linear-gradient(left, #ebebeb 0%, #ebebeb 50%, #ffffff 100%);
+  background: -webkit-linear-gradient(left, #ebebeb 0%, #ebebeb 50%, #ffffff 100%);
+  background: linear-gradient(to right, #ebebeb 0%, #ebebeb 50%, #ffffff 100%);
+}
+#borderColorPalette > .topBar > .pickedColorList > .alphaStep .alphaValue {
+  position: absolute;
+  top: calc(50% - 0.75em);
+  left: 1em;
+  width: calc(100% - 2em);
+  height: 1.5em;
+  border-width: 0;
+  outline: none;
+  text-align: center;
+  background: transparent;
+}
+#borderColorPalette > .topBar > .pickedColorList > .alphaStep .alphaValue::-webkit-inner-spin-button, #borderColorPalette > .topBar > .pickedColorList > .alphaStep .alphaValue::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+#borderColorPalette > .topBar > .pickedColorList > .alphaStep .alphaValue.ng-invalid {
+  color: #e74c3c;
+}
+#borderColorPalette > .topBar > .pickedColorList > .alphaStep .alphaSpin {
+  position: absolute;
+  top: calc(50% - 0.5em);
+  width: 1em;
+  height: 1em;
+  border-radius: 4px;
+  box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.135);
+  display: inline-block;
+  background-color: #ddd;
+}
+#borderColorPalette > .topBar > .pickedColorList > .alphaStep .alphaSpin:before {
+  position: absolute;
+  width: 100%;
+  line-height: 1;
+  font-weight: 600;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.4);
+}
+#borderColorPalette > .topBar > .pickedColorList > .alphaStep .alphaSpin:active {
+  background-color: #555;
+  color: #669933;
+  box-shadow: none;
+}
+#borderColorPalette > .topBar > .pickedColorList > .alphaStep .alphaSpin:first-of-type {
+  left: 0;
+}
+#borderColorPalette > .topBar > .pickedColorList > .alphaStep .alphaSpin:last-of-type {
+  right: 0;
 }
 #borderColorPalette > .tabContents {
   position: relative;
@@ -9046,14 +9111,13 @@
 #colorPickerPalette > .topBar > .pickedColorList {
   position: relative;
   width: 100%;
-  height: 3em;
+  height: 5em;
   margin: 5px;
 }
 #colorPickerPalette > .topBar > .pickedColorList > .pickedColorPanes {
-  position: relative;
-  float: left;
-  left: 1em;
-  top: 0.5em;
+  position: absolute;
+  left: 3em;
+  top: 0;
   height: 100%;
   width: calc(100% - 3em);
   overflow: hidden;
@@ -9080,8 +9144,7 @@
   content: "";
 }
 #colorPickerPalette > .topBar > .pickedColorList > .colorSticker {
-  position: relative;
-  float: left;
+  position: absolute;
   left: 0.5em;
   top: 0.5em;
   width: 2em;
@@ -9096,6 +9159,73 @@
   top: -2px;
   line-height: 2;
   text-align: center;
+}
+#colorPickerPalette > .topBar > .pickedColorList > .alphaStep {
+  position: absolute;
+  left: 0.25em;
+  top: 3em;
+  width: 2.5em;
+  height: 1.5em;
+}
+#colorPickerPalette > .topBar > .pickedColorList > .alphaStep:before {
+  position: absolute;
+  content: "";
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuMCIgeTE9IjAuNSIgeDI9IjEuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwLjQiLz48c3RvcCBvZmZzZXQ9Ijc1JSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwLjQiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmZmZmZmYiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyYWQpIiAvPjwvc3ZnPiA=');
+  background: -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, rgba(0, 0, 0, 0.4)), color-stop(75%, rgba(0, 0, 0, 0.4)), color-stop(100%, #ffffff));
+  background: -moz-linear-gradient(left, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.4) 75%, #ffffff 100%);
+  background: -webkit-linear-gradient(left, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.4) 75%, #ffffff 100%);
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.4) 75%, #ffffff 100%);
+}
+#colorPickerPalette > .topBar > .pickedColorList > .alphaStep .alphaValue {
+  position: absolute;
+  top: calc(50% - 0.75em);
+  left: 1em;
+  width: calc(100% - 2em);
+  height: 1.5em;
+  border-width: 0;
+  outline: none;
+  text-align: center;
+  background: transparent;
+}
+#colorPickerPalette > .topBar > .pickedColorList > .alphaStep .alphaValue::-webkit-inner-spin-button, #colorPickerPalette > .topBar > .pickedColorList > .alphaStep .alphaValue::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+#colorPickerPalette > .topBar > .pickedColorList > .alphaStep .alphaValue.ng-invalid {
+  color: #e74c3c;
+}
+#colorPickerPalette > .topBar > .pickedColorList > .alphaStep .alphaSpin {
+  position: absolute;
+  top: calc(50% - 0.5em);
+  width: 1em;
+  height: 1em;
+  border-radius: 4px;
+  box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.135);
+  display: inline-block;
+  background-color: #ddd;
+}
+#colorPickerPalette > .topBar > .pickedColorList > .alphaStep .alphaSpin:before {
+  position: absolute;
+  width: 100%;
+  line-height: 1;
+  font-weight: 600;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.4);
+}
+#colorPickerPalette > .topBar > .pickedColorList > .alphaStep .alphaSpin:active {
+  background-color: #555;
+  color: #669933;
+  box-shadow: none;
+}
+#colorPickerPalette > .topBar > .pickedColorList > .alphaStep .alphaSpin:first-of-type {
+  left: 0;
+}
+#colorPickerPalette > .topBar > .pickedColorList > .alphaStep .alphaSpin:last-of-type {
+  right: 0;
 }
 #colorPickerPalette > .tabContents {
   position: relative;
@@ -9437,14 +9567,13 @@
 #colorStopEditorPalette > .topBar > .pickedColorList {
   position: relative;
   width: 100%;
-  height: 3em;
+  height: 5em;
   margin: 5px;
 }
 #colorStopEditorPalette > .topBar > .pickedColorList > .pickedColorPanes {
-  position: relative;
-  float: left;
-  left: 1em;
-  top: 0.5em;
+  position: absolute;
+  left: 3em;
+  top: 0;
   height: 100%;
   width: calc(100% - 3em);
   overflow: hidden;
@@ -9471,8 +9600,7 @@
   content: "";
 }
 #colorStopEditorPalette > .topBar > .pickedColorList > .colorSticker {
-  position: relative;
-  float: left;
+  position: absolute;
   left: 0.5em;
   top: 0.5em;
   width: 2em;
@@ -9487,6 +9615,73 @@
   top: -2px;
   line-height: 2;
   text-align: center;
+}
+#colorStopEditorPalette > .topBar > .pickedColorList > .alphaStep {
+  position: absolute;
+  left: 0.25em;
+  top: 3em;
+  width: 2.5em;
+  height: 1.5em;
+}
+#colorStopEditorPalette > .topBar > .pickedColorList > .alphaStep:before {
+  position: absolute;
+  content: "";
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuMCIgeTE9IjAuNSIgeDI9IjEuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwLjQiLz48c3RvcCBvZmZzZXQ9Ijc1JSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwLjQiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmZmZmZmYiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyYWQpIiAvPjwvc3ZnPiA=');
+  background: -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, rgba(0, 0, 0, 0.4)), color-stop(75%, rgba(0, 0, 0, 0.4)), color-stop(100%, #ffffff));
+  background: -moz-linear-gradient(left, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.4) 75%, #ffffff 100%);
+  background: -webkit-linear-gradient(left, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.4) 75%, #ffffff 100%);
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.4) 75%, #ffffff 100%);
+}
+#colorStopEditorPalette > .topBar > .pickedColorList > .alphaStep .alphaValue {
+  position: absolute;
+  top: calc(50% - 0.75em);
+  left: 1em;
+  width: calc(100% - 2em);
+  height: 1.5em;
+  border-width: 0;
+  outline: none;
+  text-align: center;
+  background: transparent;
+}
+#colorStopEditorPalette > .topBar > .pickedColorList > .alphaStep .alphaValue::-webkit-inner-spin-button, #colorStopEditorPalette > .topBar > .pickedColorList > .alphaStep .alphaValue::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+#colorStopEditorPalette > .topBar > .pickedColorList > .alphaStep .alphaValue.ng-invalid {
+  color: #e74c3c;
+}
+#colorStopEditorPalette > .topBar > .pickedColorList > .alphaStep .alphaSpin {
+  position: absolute;
+  top: calc(50% - 0.5em);
+  width: 1em;
+  height: 1em;
+  border-radius: 4px;
+  box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.135);
+  display: inline-block;
+  background-color: #ddd;
+}
+#colorStopEditorPalette > .topBar > .pickedColorList > .alphaStep .alphaSpin:before {
+  position: absolute;
+  width: 100%;
+  line-height: 1;
+  font-weight: 600;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.4);
+}
+#colorStopEditorPalette > .topBar > .pickedColorList > .alphaStep .alphaSpin:active {
+  background-color: #555;
+  color: #669933;
+  box-shadow: none;
+}
+#colorStopEditorPalette > .topBar > .pickedColorList > .alphaStep .alphaSpin:first-of-type {
+  left: 0;
+}
+#colorStopEditorPalette > .topBar > .pickedColorList > .alphaStep .alphaSpin:last-of-type {
+  right: 0;
 }
 #colorStopEditorPalette > .tabContents {
   position: relative;
@@ -10412,14 +10607,13 @@
 #shadowStopColorPalette > .topBar > .pickedColorList {
   position: relative;
   width: 100%;
-  height: 3em;
+  height: 5em;
   margin: 5px;
 }
 #shadowStopColorPalette > .topBar > .pickedColorList > .pickedColorPanes {
-  position: relative;
-  float: left;
-  left: 1em;
-  top: 0.5em;
+  position: absolute;
+  left: 3em;
+  top: 0;
   height: 100%;
   width: calc(100% - 3em);
   overflow: hidden;
@@ -10446,8 +10640,7 @@
   content: "";
 }
 #shadowStopColorPalette > .topBar > .pickedColorList > .colorSticker {
-  position: relative;
-  float: left;
+  position: absolute;
   left: 0.5em;
   top: 0.5em;
   width: 2em;
@@ -10462,6 +10655,73 @@
   top: -2px;
   line-height: 2;
   text-align: center;
+}
+#shadowStopColorPalette > .topBar > .pickedColorList > .alphaStep {
+  position: absolute;
+  left: 0.25em;
+  top: 3em;
+  width: 2.5em;
+  height: 1.5em;
+}
+#shadowStopColorPalette > .topBar > .pickedColorList > .alphaStep:before {
+  position: absolute;
+  content: "";
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuMCIgeTE9IjAuNSIgeDI9IjEuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwLjQiLz48c3RvcCBvZmZzZXQ9Ijc1JSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwLjQiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmZmZmZmYiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyYWQpIiAvPjwvc3ZnPiA=');
+  background: -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, rgba(0, 0, 0, 0.4)), color-stop(75%, rgba(0, 0, 0, 0.4)), color-stop(100%, #ffffff));
+  background: -moz-linear-gradient(left, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.4) 75%, #ffffff 100%);
+  background: -webkit-linear-gradient(left, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.4) 75%, #ffffff 100%);
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.4) 75%, #ffffff 100%);
+}
+#shadowStopColorPalette > .topBar > .pickedColorList > .alphaStep .alphaValue {
+  position: absolute;
+  top: calc(50% - 0.75em);
+  left: 1em;
+  width: calc(100% - 2em);
+  height: 1.5em;
+  border-width: 0;
+  outline: none;
+  text-align: center;
+  background: transparent;
+}
+#shadowStopColorPalette > .topBar > .pickedColorList > .alphaStep .alphaValue::-webkit-inner-spin-button, #shadowStopColorPalette > .topBar > .pickedColorList > .alphaStep .alphaValue::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+#shadowStopColorPalette > .topBar > .pickedColorList > .alphaStep .alphaValue.ng-invalid {
+  color: #e74c3c;
+}
+#shadowStopColorPalette > .topBar > .pickedColorList > .alphaStep .alphaSpin {
+  position: absolute;
+  top: calc(50% - 0.5em);
+  width: 1em;
+  height: 1em;
+  border-radius: 4px;
+  box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.135);
+  display: inline-block;
+  background-color: #ddd;
+}
+#shadowStopColorPalette > .topBar > .pickedColorList > .alphaStep .alphaSpin:before {
+  position: absolute;
+  width: 100%;
+  line-height: 1;
+  font-weight: 600;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.4);
+}
+#shadowStopColorPalette > .topBar > .pickedColorList > .alphaStep .alphaSpin:active {
+  background-color: #555;
+  color: #669933;
+  box-shadow: none;
+}
+#shadowStopColorPalette > .topBar > .pickedColorList > .alphaStep .alphaSpin:first-of-type {
+  left: 0;
+}
+#shadowStopColorPalette > .topBar > .pickedColorList > .alphaStep .alphaSpin:last-of-type {
+  right: 0;
 }
 #shadowStopColorPalette > .tabContents {
   position: relative;
@@ -13244,14 +13504,13 @@
 #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette > .topBar > .pickedColorList {
   position: relative;
   width: 100%;
-  height: 3em;
+  height: 5em;
   margin: 5px;
 }
 #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette > .topBar > .pickedColorList > .pickedColorPanes {
-  position: relative;
-  float: left;
-  left: 1em;
-  top: 0.5em;
+  position: absolute;
+  left: 3em;
+  top: 0;
   height: 100%;
   width: calc(100% - 3em);
   overflow: hidden;
@@ -13278,8 +13537,7 @@
   content: "";
 }
 #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette > .topBar > .pickedColorList > .colorSticker {
-  position: relative;
-  float: left;
+  position: absolute;
   left: 0.5em;
   top: 0.5em;
   width: 2em;
@@ -13294,6 +13552,73 @@
   top: -2px;
   line-height: 2;
   text-align: center;
+}
+#widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette > .topBar > .pickedColorList > .alphaStep {
+  position: absolute;
+  left: 0.25em;
+  top: 3em;
+  width: 2.5em;
+  height: 1.5em;
+}
+#widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette > .topBar > .pickedColorList > .alphaStep:before {
+  position: absolute;
+  content: "";
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuMCIgeTE9IjAuNSIgeDI9IjEuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ViZWJlYiIvPjxzdG9wIG9mZnNldD0iNTAlIiBzdG9wLWNvbG9yPSIjZWJlYmViIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjZmZmZmZmIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g');
+  background: -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, #ebebeb), color-stop(50%, #ebebeb), color-stop(100%, #ffffff));
+  background: -moz-linear-gradient(left, #ebebeb 0%, #ebebeb 50%, #ffffff 100%);
+  background: -webkit-linear-gradient(left, #ebebeb 0%, #ebebeb 50%, #ffffff 100%);
+  background: linear-gradient(to right, #ebebeb 0%, #ebebeb 50%, #ffffff 100%);
+}
+#widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette > .topBar > .pickedColorList > .alphaStep .alphaValue {
+  position: absolute;
+  top: calc(50% - 0.75em);
+  left: 1em;
+  width: calc(100% - 2em);
+  height: 1.5em;
+  border-width: 0;
+  outline: none;
+  text-align: center;
+  background: transparent;
+}
+#widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette > .topBar > .pickedColorList > .alphaStep .alphaValue::-webkit-inner-spin-button, #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette > .topBar > .pickedColorList > .alphaStep .alphaValue::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+#widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette > .topBar > .pickedColorList > .alphaStep .alphaValue.ng-invalid {
+  color: #e74c3c;
+}
+#widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette > .topBar > .pickedColorList > .alphaStep .alphaSpin {
+  position: absolute;
+  top: calc(50% - 0.5em);
+  width: 1em;
+  height: 1em;
+  border-radius: 4px;
+  box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.135);
+  display: inline-block;
+  background-color: #ddd;
+}
+#widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette > .topBar > .pickedColorList > .alphaStep .alphaSpin:before {
+  position: absolute;
+  width: 100%;
+  line-height: 1;
+  font-weight: 600;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.4);
+}
+#widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette > .topBar > .pickedColorList > .alphaStep .alphaSpin:active {
+  background-color: #555;
+  color: #669933;
+  box-shadow: none;
+}
+#widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette > .topBar > .pickedColorList > .alphaStep .alphaSpin:first-of-type {
+  left: 0;
+}
+#widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette > .topBar > .pickedColorList > .alphaStep .alphaSpin:last-of-type {
+  right: 0;
 }
 #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette > .tabContents {
   position: relative;
@@ -18153,7 +18478,7 @@
   z-index: 0;
   position: absolute;
   top: 0px !important;
-  top: 0px !important;
+  left: 0px !important;
   width: 100%;
   height: 100%;
   overflow: hidden;

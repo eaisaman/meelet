@@ -2,14 +2,15 @@
 @import "compass/css3/transition";
 
 $activeBackgroundColor: rgba(0, 0, 0, 0.3);
+$underlineLinearGradient: ($color 0%, $color 75%, #fff 100%);
 
 @mixin color-editor-palette($colorEditorPaletteId, $colorEditorPaletteClass) {
     $colorEditorPalette: null;
 
     @if $colorEditorPaletteId != null {
-        $colorEditorPalette : "#" + $colorEditorPaletteId;
+        $colorEditorPalette: "#" + $colorEditorPaletteId;
     } @else {
-        $colorEditorPalette : "." + $colorEditorPaletteClass;
+        $colorEditorPalette: "." + $colorEditorPaletteClass;
     }
 
     #{$colorEditorPalette} {
@@ -133,14 +134,13 @@ $activeBackgroundColor: rgba(0, 0, 0, 0.3);
             > .pickedColorList {
                 position: relative;
                 width: 100%;
-                height: 3em;
+                height: 5em;
                 margin: 5px;
 
                 > .pickedColorPanes {
-                    position: relative;
-                    float: left;
-                    left: 1em;
-                    top: 0.5em;
+                    position: absolute;
+                    left: 3em;
+                    top: 0;
                     height: 100%;
                     width: calc(100% - 3em);
                     overflow: hidden;
@@ -170,8 +170,7 @@ $activeBackgroundColor: rgba(0, 0, 0, 0.3);
                 }
 
                 > .colorSticker {
-                    position: relative;
-                    float: left;
+                    position: absolute;
                     left: 0.5em;
                     top: 0.5em;
                     width: 2em;
@@ -186,6 +185,81 @@ $activeBackgroundColor: rgba(0, 0, 0, 0.3);
                         top: -2px;
                         line-height: 2;
                         text-align: center;
+                    }
+                }
+
+                > .alphaStep {
+                    position: absolute;
+                    left: 0.25em;
+                    top: 3em;
+                    width: 2.5em;
+                    height: 1.5em;
+
+                    &:before {
+                        position: absolute;
+                        content: "";
+                        bottom: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 2px;
+
+                        @include background(linear-gradient(left, $underlineLinearGradient));
+                    }
+
+                    .alphaValue {
+                        position: absolute;
+                        top: calc(50% - 0.75em);
+                        left: 1em;
+                        width: calc(100% - 2em);
+                        height: 1.5em;
+                        border-width: 0;
+                        outline: none;
+                        text-align: center;
+                        background: transparent;
+
+                        &::-webkit-inner-spin-button,
+                        &::-webkit-outer-spin-button {
+                            -webkit-appearance: none;
+                            margin: 0;
+                        }
+
+                        &.ng-invalid {
+                            color: $errorColor;
+                        }
+                    }
+
+                    .alphaSpin {
+                        position: absolute;
+                        top: calc(50% - 0.5em);
+                        width: 1em;
+                        height: 1em;
+                        border-radius: 4px;
+                        box-shadow: inset 0 -2px 0 rgba(0, 0, 0, .135);
+                        display: inline-block;
+                        background-color: #ddd;
+
+                        &:before {
+                            position: absolute;
+                            width: 100%;
+                            line-height: 1;
+                            font-weight: 600;
+                            text-align: center;
+                            color: $color;
+                        }
+
+                        &:active {
+                            background-color: #555;
+                            color: $activeColor;
+                            box-shadow: none;
+                        }
+
+                        &:first-of-type {
+                            left: 0;
+                        }
+
+                        &:last-of-type {
+                            right: 0;
+                        }
                     }
                 }
             }

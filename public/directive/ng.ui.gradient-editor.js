@@ -14,7 +14,7 @@ define(
                             angle: 0, colorStopList: [
                                 {
                                     percent: 0,
-                                    color: "#000000",
+                                    color: {color: "#000000", alpha: 1},
                                     minPercent: 0,
                                     maxPercent: 100,
                                     backgroundColor: uiUtilService.lighterColor("#000000", 0.5)
@@ -62,7 +62,7 @@ define(
                                 scope.pickGradientColorValue = function (styles) {
                                     var styleValue = scope.pickStyle(styles, scope.pseudo)["linearGradientColor"];
 
-                                    return !_.isEmpty(styleValue) && styleValue || options.linearGradientColor;
+                                    return !_.isEmpty(styleValue) && styleValue || angular.copy(options.linearGradientColor);
                                 }
 
                                 scope.Math = Math;
@@ -113,7 +113,7 @@ define(
                                 scope.toggleGradientControl = function () {
                                     scope.toggleEnableControl().then(function (enable) {
                                         if (enable) {
-                                            scope.setGradientColor(options.linearGradientColor);
+                                            scope.setGradientColor(angular.copy(options.linearGradientColor));
                                         } else {
                                             scope.linearGradientColor = angular.copy(scope.unsetStyle(scope.linearGradientColor, scope.pseudo));
                                         }
@@ -306,7 +306,7 @@ define(
                                     scope.toggleColorStopMenu(index, event);
 
                                     if (index < scope.pickedGradientColor.colorStopList.length) {
-                                        scope.copiedColor = scope.pickedGradientColor.colorStopList[index].color;
+                                        scope.copiedColor = angular.copy(scope.pickedGradientColor.colorStopList[index].color);
                                     }
                                 }
 
@@ -316,26 +316,26 @@ define(
                                     scope.toggleColorStopMenu(index, event);
 
                                     if (scope.copiedColor && index < scope.pickedGradientColor.colorStopList.length) {
-                                        var colorStop = scope.pickedGradientColor.colorStopList[index];
-
-                                        if (scope.copiedColor !== colorStop.color) {
-                                            scope.setStopColor(index, scope.copiedColor);
-                                        }
+                                        scope.setStopColor(index, scope.copiedColor);
                                     }
                                 }
 
-                                scope.setStopColor = function (index, hex, event) {
+                                scope.setStopColor = function (index, value, event) {
                                     event && event.stopPropagation && event.stopPropagation();
 
                                     if (index < scope.pickedGradientColor.colorStopList.length) {
+                                        if (value.alpha < 1 && !value.alphaColor) {
+                                            value.alphaColor = uiUtilService.rgba(value);
+                                        }
+
                                         var colorStop = scope.pickedGradientColor.colorStopList[index];
 
-                                        if (hex !== colorStop.color) {
-                                            colorStop.color = "";
+                                        if (value !== colorStop.color) {
+                                            colorStop.color = null;
 
                                             $timeout(function () {
-                                                colorStop.color = hex;
-                                                colorStop.backgroundColor = uiUtilService.contrastColor(hex) === "#ffffff" ? uiUtilService.lighterColor(hex, 0.5) : uiUtilService.lighterColor(hex, -0.5);
+                                                colorStop.color = value;
+                                                colorStop.backgroundColor = uiUtilService.contrastColor(value.color) === "#ffffff" ? uiUtilService.lighterColor(value.color, 0.5) : uiUtilService.lighterColor(value.color, - 0.5);
 
                                                 //Trigger watcher on sketchWidgetSetting.linearGradientColor to apply style to widget
                                                 scope.setGradientColor(scope.pickedGradientColor);
@@ -356,6 +356,12 @@ define(
                                 }
 
                                 scope.setGradientColor = function (value) {
+                                    value.colorStopList.forEach(function (colorStop) {
+                                        if (colorStop.color.alpha < 1 && !colorStop.color.alphaColor) {
+                                            colorStop.color.alphaColor = uiUtilService.rgba(colorStop.color);
+                                        }
+                                    });
+
                                     scope.pickedGradientColor = value;
 
                                     var pseudoStylePrefix = (scope.pseudo || "") + "Style";
@@ -363,6 +369,9 @@ define(
 
                                     scope.linearGradientColor[pseudoStylePrefix] = scope.linearGradientColor[pseudoStylePrefix] || {};
                                     var pseudoGradientStyle = scope.linearGradientColor[pseudoStylePrefix];
+                                    value.colorStopList.forEach(function (colorStop) {
+                                        colorStop.color = _.pick(colorStop.color, ["color", "alpha", "alphaColor"]);
+                                    });
                                     pseudoGradientStyle['linearGradientColor'] = value;
 
                                     //Trigger watcher on sketchWidgetSetting.linearGradientColor to apply style to widget

@@ -58,7 +58,7 @@ define(
                     type: "list",
                     options: [
                         {name: "overlay", value: "overlay"},
-                        {name: "transparent", value: ""}
+                        {name: "transparent", value: "transparent"}
                     ],
                     defaultValue: "overlay"
                 },

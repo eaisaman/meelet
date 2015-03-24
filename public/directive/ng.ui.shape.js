@@ -127,7 +127,7 @@ define(
 
                                             var $to = $(event.srcEvent.toElement);
 
-                                            if ($to.hasClass(options.widgetClass) || $to.hasClass(options.holderClass) || $to.attr(options.anchorAttr)) {
+                                            if (!scope.isPlaying && ($to.hasClass(options.widgetClass) || $to.hasClass(options.holderClass) || $to.attr(options.anchorAttr))) {
                                                 var x = event.srcEvent.clientX - $to.offset().left,
                                                     y = event.srcEvent.clientY - $to.offset().top;
 
