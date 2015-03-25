@@ -203,7 +203,8 @@ define(
                                             if (value.rValue && value.gValue && value.bValue) {
                                                 value.color = uiUtilService.rgbToHex(value.rValue, value.gValue, value.bValue);
                                             }
-                                            scope.selectedColor = _.pick(value, ["color", "alpha"]);
+                                            value.alphaColor = uiUtilService.rgba(value);
+                                            scope.selectedColor = _.pick(value, ["color", "alpha", "alphaColor"]);
                                             scope.onColorSelect && $timeout(function () {
                                                 scope.onColorSelect();
                                             });

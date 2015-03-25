@@ -11,8 +11,7 @@ define(
                 url: "demo/tabDemo.html"
             },
             template: "app/widget.html",
-            anchors: [
-            ],
+            anchors: [],
             configuration: {
                 tabTitles: {
                     name: "Tabs",
@@ -294,19 +293,19 @@ define(
                         name: "Background Color",
                         type: "color",
                         handDown: true,
-                        defaultValue: "#d4d4d4"
+                        defaultValue: {color: "#d4d4d4", alpha: 1}
                     },
                     titleBackgroundColor: {
                         name: "Title Color",
                         type: "color",
                         handDown: true,
-                        defaultValue: "#838383"
+                        defaultValue: {color: "#838383", alpha: 1}
                     },
                     activeTitleBackgroundColor: {
                         name: "Active Color",
                         type: "color",
                         handDown: true,
-                        defaultValue: "#fffff"
+                        defaultValue: {color: "#fffff", alpha: 1}
                     }
                 }
             }

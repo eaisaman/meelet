@@ -171,6 +171,10 @@ define(
                     mc.add(new Hammer.Pan());
                     mc.on("panstart panmove panend", addWidgetHandler);
                     $el.data("hammer", mc);
+
+                    $scope.$on('$destroy', function () {
+                        mc.off("panstart panmove panend", addWidgetHandler);
+                    });
                 }
             }
 

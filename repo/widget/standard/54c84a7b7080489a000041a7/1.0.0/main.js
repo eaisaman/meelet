@@ -48,37 +48,37 @@ define(
                         name: "Color",
                         type: "color",
                         handDown: true,
-                        defaultValue: "#ffffff"
+                        defaultValue: {color: "#ffffff", alpha: 1}
                     },
                     inactiveColor: {
                         name: "Inactive Color",
                         type: "color",
                         handDown: true,
-                        defaultValue: "#95a5a6"
+                        defaultValue: {color: "#95a5a6", alpha: 1}
                     },
                     backgroundColor: {
                         name: "Background Color",
                         type: "color",
                         handDown: true,
-                        defaultValue: "#ffffff"
+                        defaultValue: {color: "#ffffff", alpha: 1}
                     },
                     inactiveBackgroundColor: {
                         name: "Inactive Background Color",
                         type: "color",
                         handDown: true,
-                        defaultValue: "#000000"
+                        defaultValue: {color: "#000000", alpha: 1}
                     },
                     lineColor: {
                         name: "Line Color",
                         type: "color",
                         handDown: true,
-                        defaultValue: "#ffffff"
+                        defaultValue: {color: "#ffffff", alpha: 1}
                     },
                     inactiveLineColor: {
                         name: "Inactive Line Color",
                         type: "color",
                         handDown: true,
-                        defaultValue: "#95a5a6"
+                        defaultValue: {color: "#95a5a6", alpha: 1}
                     }
                 }
             }

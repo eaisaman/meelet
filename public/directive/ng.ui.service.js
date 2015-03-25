@@ -3535,7 +3535,14 @@ define(
 
                         _.each(self.widgetSpec.configuration.handDownConfiguration, function (config, key) {
                             if (config.pickedValue != null) {
-                                configurationArr.push({key: key, value: config.pickedValue});
+                                if (config.type === "color") {
+                                    configurationArr.push({
+                                        key: key,
+                                        value: config.pickedValue.alphaColor || config.pickedValue.color
+                                    });
+                                } else {
+                                    configurationArr.push({key: key, value: config.pickedValue});
+                                }
                             }
                         });
 

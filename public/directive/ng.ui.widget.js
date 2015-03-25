@@ -84,7 +84,7 @@ define(
                                 scope.project = $rootScope.loadedProject;
                             },
                             post: function (scope, element, attrs) {
-                                var $widgetElement;
+                                var $widgetElement, mc;
 
                                 function addWidgetHandler(event) {
                                     if (scope.pickerPaneWidget) {
@@ -326,47 +326,39 @@ define(
                                     $wrapper.addClass("expanded");
                                     $panel.addClass("show");
 
-                                    $q.all(
-                                        [
-                                            uiUtilService.whilst(
-                                                function () {
-                                                    return !element.find(".pickerPane").length;
-                                                },
-                                                function (callback) {
-                                                    callback();
-                                                },
-                                                function (err) {
-                                                    var mc = new Hammer.Manager(element.find(".pickerPane").get(0));
-                                                    mc.add(new Hammer.Pan({threshold: 0}));
-                                                    mc.on("panstart panmove panend", addWidgetHandler);
+                                    var $el = element.find(".pickerPane");
 
-                                                    scope.$on('$destroy', function () {
-                                                        mc.off("panstart panmove panend", addWidgetHandler);
-                                                    });
-                                                }, angularConstants.checkInterval, "widget.initHammer"
-                                            ),
+                                    mc = $el.data("hammer");
+                                    if (!mc) {
+                                        mc = new Hammer.Manager($el.get(0));
+                                        mc.add(new Hammer.Pan());
+                                        mc.on("panstart panmove panend", addWidgetHandler);
+                                        $el.data("hammer", mc);
 
-                                            uiUtilService.whilst(
-                                                function () {
-                                                    return !scope.project;
-                                                },
-                                                function (callback) {
-                                                    callback();
-                                                },
-                                                function (err) {
-                                                    return appService.loadWidgetArtifactList().then(function () {
-                                                        var arr = scope.filterLibraryList(scope.widgetLibraryList, scope.project.xrefRecord);
-                                                        arr.splice(0, 0, 0, 0);
-                                                        scope.filterWidgetLibraryList.splice(0, scope.filterWidgetLibraryList.length);
-                                                        Array.prototype.splice.apply(scope.filterWidgetLibraryList, arr);
+                                        scope.$on('$destroy', function () {
+                                            mc.off("panstart panmove panend", addWidgetHandler);
+                                        });
+                                    }
 
-                                                        return uiUtilService.getResolveDefer();
-                                                    }, function (err) {
-                                                        return uiUtilService.getRejectDefer(err);
-                                                    });
-                                                }, angularConstants.checkInterval, "widget.initFilterWidgetLibraryList"
-                                            )
-                                        ]
+                                    uiUtilService.whilst(
+                                        function () {
+                                            return !scope.project;
+                                        },
+                                        function (callback) {
+                                            callback();
+                                        },
+                                        function (err) {
+                                            return appService.loadWidgetArtifactList().then(function () {
+                                                var arr = scope.filterLibraryList(scope.widgetLibraryList, scope.project.xrefRecord);
+                                                arr.splice(0, 0, 0, 0);
+                                                scope.filterWidgetLibraryList.splice(0, scope.filterWidgetLibraryList.length);
+                                                Array.prototype.splice.apply(scope.filterWidgetLibraryList, arr);
+
+                                                return uiUtilService.getResolveDefer();
+                                            }, function (err) {
+                                                return uiUtilService.getRejectDefer(err);
+                                            });
+                                        }, angularConstants.checkInterval, "widget.initFilterWidgetLibraryList"
                                     );
                                 });
                             }

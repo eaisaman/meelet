@@ -71,19 +71,19 @@ define(
                         name: "Overlay Color",
                         type: "color",
                         handDown: true,
-                        defaultValue: "#d4d4d4"
+                        defaultValue: {color: "#d4d4d4", alpha: 1}
                     },
                     mainColor: {
                         name: "Main Color",
                         type: "color",
                         handDown: true,
-                        defaultValue: "#ffffff"
+                        defaultValue: {color: "#ffffff", alpha: 1}
                     },
                     modalColor: {
                         name: "Modal Color",
                         type: "color",
                         handDown: true,
-                        defaultValue: "#cccccc"
+                        defaultValue: {color: "#cccccc", alpha: 1}
                     }
                 }
             }

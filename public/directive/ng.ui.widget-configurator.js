@@ -93,8 +93,8 @@ define(
 
                                 scope.initHandDownColorStyle = function (item) {
                                     $("#handDownConfiguration-" + item.index + " .configurationColorPickerPane").css({
-                                        'color': uiUtilService.contrastColor(item.pickedValue),
-                                        'background-color': item.pickedValue
+                                        'color': uiUtilService.contrastColor(item.pickedValue.alphaColor || item.pickedValue.color),
+                                        'background-color': item.pickedValue.alphaColor || item.pickedValue.color
                                     });
                                 }
 

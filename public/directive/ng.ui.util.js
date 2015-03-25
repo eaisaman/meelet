@@ -64,7 +64,7 @@ define(
                 rgb = this.hexTorgb(hex);
                 alpha = 1;
             } else {
-                if (hex.rValue && hex.gValue && hex.bValue) {
+                if (hex.rValue != null && hex.gValue != null && hex.bValue != null) {
                     rgb = [hex.rValue, hex.gValue, hex.bValue];
                 } else {
                     rgb = this.hexTorgb(hex.color);
