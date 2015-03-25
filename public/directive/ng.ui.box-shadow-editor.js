@@ -136,7 +136,7 @@ define(
                                     var xref = _.findWhere(xrefList, {libraryId: effectLibrary._id}),
                                         artifactList = effectLibrary.artifactList;
 
-                                    return xref && artifactList.length > xref.artifactList.length;
+                                    return xref && artifactList && artifactList.length > xref.artifactList.length;
                                 }
 
                                 scope.styleNames = ['left', 'top', 'right', 'bottom', 'width', 'height'];
@@ -149,7 +149,19 @@ define(
                                 scope.toggleBoxShadowControl = function () {
                                     scope.toggleEnableControl().then(function (enable) {
                                         if (enable) {
-                                            scope.setBoxShadow(angular.copy(options.boxShadow));
+                                            uiUtilService.whilst(
+                                                function () {
+                                                    return !scope.boxShadow;
+                                                },
+                                                function (callback) {
+                                                    callback();
+                                                },
+                                                function (err) {
+                                                    scope.setBoxShadow(angular.copy(options.boxShadow));
+
+                                                    return uiUtilService.getResolveDefer();
+                                                }, angularConstants.checkInterval
+                                            );
                                         } else {
                                             scope.boxShadow = angular.copy(scope.unsetStyles(scope.boxShadow));
                                         }
@@ -369,26 +381,28 @@ define(
                                 }
 
                                 scope.setBoxShadow = function (value) {
-                                    ["style", "beforeStyle", "afterStyle"].forEach(function (pseudoStylePrefix) {
-                                        if (value[pseudoStylePrefix]["box-shadow"]) {
-                                            value[pseudoStylePrefix]["box-shadow"].forEach(function (shadowStop) {
-                                                if (typeof shadowStop.color === "string") {
-                                                    shadowStop.color = {color: shadowStop.color, alpha: 1};
-                                                } else if (typeof shadowStop.color === "object") {
-                                                    shadowStop.color = _.pick(shadowStop.color, ["color", "alpha", "alphaColor"]);
-                                                    if (shadowStop.color.alpha < 1 && !shadowStop.color.alphaColor) {
-                                                        shadowStop.color.alphaColor = uiUtilService.rgba(shadowStop.color);
+                                    if (value) {
+                                        ["style", "beforeStyle", "afterStyle"].forEach(function (pseudoStylePrefix) {
+                                            if (value[pseudoStylePrefix]["box-shadow"]) {
+                                                value[pseudoStylePrefix]["box-shadow"].forEach(function (shadowStop) {
+                                                    if (typeof shadowStop.color === "string") {
+                                                        shadowStop.color = {color: shadowStop.color, alpha: 1};
+                                                    } else if (typeof shadowStop.color === "object") {
+                                                        shadowStop.color = _.pick(shadowStop.color, ["color", "alpha", "alphaColor"]);
+                                                        if (shadowStop.color.alpha < 1 && !shadowStop.color.alphaColor) {
+                                                            shadowStop.color.alphaColor = uiUtilService.rgba(shadowStop.color);
+                                                        }
                                                     }
-                                                }
-                                            });
-                                        }
-                                    });
+                                                });
+                                            }
+                                        });
 
-                                    value.source = "uiBoxShadowEditor";
-                                    scope.pickedBoxShadow = value;
+                                        value.source = "uiBoxShadowEditor";
+                                        scope.pickedBoxShadow = value;
 
-                                    //Trigger watcher on sketchWidgetSetting.boxShadow to apply style to widget
-                                    scope.boxShadow = angular.copy(value);
+                                        //Trigger watcher on sketchWidgetSetting.boxShadow to apply style to widget
+                                        scope.boxShadow = angular.copy(value);
+                                    }
                                 }
 
                                 scope.toggleArtifactSelection = function (repoArtifact, effectLibrary, event) {

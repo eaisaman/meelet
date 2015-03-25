@@ -69,9 +69,10 @@ define(
                                 }
 
                                 scope.isPartialSelection = function (iconLibrary, xrefList) {
-                                    var xref = _.findWhere(xrefList, {libraryId: iconLibrary._id});
+                                    var xref = _.findWhere(xrefList, {libraryId: iconLibrary._id}),
+                                        artifactList = iconLibrary.artifactList;
 
-                                    return xref && iconLibrary.artifactList && iconLibrary.artifactList.length > xref.artifactList.length;
+                                    return xref && artifactList && artifactList.length > xref.artifactList.length;
                                 }
 
                                 scope._ = _;
@@ -286,15 +287,6 @@ define(
                                     }
                                 }
 
-                                var mc = new Hammer.Manager(element.find(".pickerPane").get(0));
-                                mc.add(new Hammer.Press());
-                                mc.add(new Hammer.Pan());
-                                mc.on("panstart panmove panend", addWidgetHandler);
-
-                                scope.$on('$destroy', function () {
-                                    mc.off("panstart panmove panend", addWidgetHandler);
-                                });
-
                                 scope.$on(angularEventTypes.switchProjectEvent, function (event, data) {
                                     if (data) {
                                         var arr = scope.filterLibraryList(scope.iconLibraryList, scope.project.xrefRecord);
@@ -311,27 +303,51 @@ define(
                                     $wrapper.addClass("expanded");
                                     $panel.addClass("show");
 
-                                    uiUtilService.whilst(
-                                        function () {
-                                            return !scope.project;
-                                        },
-                                        function (callback) {
-                                            callback();
-                                        },
-                                        function (err) {
-                                            return appService.loadIconArtifactList().then(function () {
-                                                var arr = scope.filterLibraryList(scope.iconLibraryList, scope.project.xrefRecord);
-                                                arr.splice(0, 0, 0, 0);
-                                                scope.filterIconLibraryList.splice(0, scope.filterIconLibraryList.length);
-                                                Array.prototype.splice.apply(scope.filterIconLibraryList, arr);
+                                    $q.all(
+                                        [
+                                            uiUtilService.whilst(
+                                                function () {
+                                                    return !element.find(".pickerPane").length;
+                                                },
+                                                function (callback) {
+                                                    callback();
+                                                },
+                                                function (err) {
+                                                    var mc = new Hammer.Manager(element.find(".pickerPane").get(0));
+                                                    mc.add(new Hammer.Press());
+                                                    mc.add(new Hammer.Pan());
+                                                    mc.on("panstart panmove panend", addWidgetHandler);
 
-                                                return uiUtilService.getResolveDefer();
-                                            }, function (err) {
-                                                return uiUtilService.getRejectDefer(err);
-                                            });
-                                        }, angularConstants.checkInterval
+                                                    scope.$on('$destroy', function () {
+                                                        mc.off("panstart panmove panend", addWidgetHandler);
+                                                    });
+
+                                                    return uiUtilService.getResolveDefer();
+                                                }, angularConstants.checkInterval
+                                            ),
+                                            uiUtilService.whilst(
+                                                function () {
+                                                    return !scope.project;
+                                                },
+                                                function (callback) {
+                                                    callback();
+                                                },
+                                                function (err) {
+                                                    return appService.loadIconArtifactList().then(function () {
+                                                        var arr = scope.filterLibraryList(scope.iconLibraryList, scope.project.xrefRecord);
+                                                        arr.splice(0, 0, 0, 0);
+                                                        scope.filterIconLibraryList.splice(0, scope.filterIconLibraryList.length);
+                                                        Array.prototype.splice.apply(scope.filterIconLibraryList, arr);
+
+                                                        return uiUtilService.getResolveDefer();
+                                                    }, function (err) {
+                                                        return uiUtilService.getRejectDefer(err);
+                                                    });
+                                                }, angularConstants.checkInterval
+                                            )
+                                        ]
                                     );
-                                });
+                                }, angularConstants.actionDelay);
                             }
                         }
                     }

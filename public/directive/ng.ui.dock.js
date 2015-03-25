@@ -2,9 +2,9 @@ define(
     ["angular", "jquery"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$timeout", "$q", "uiUtilService"];
+            var inject = ["$timeout", "$q", "uiUtilService", "angularConstants"];
 
-            appModule.directive("uiDock", _.union(inject, [function ($timeout, $q, uiUtilService) {
+            appModule.directive("uiDock", _.union(inject, [function ($timeout, $q, uiUtilService, angularConstants) {
                 'use strict';
 
                 var defaults = {},
@@ -63,12 +63,15 @@ define(
                                     });
                                 }
 
-                                scope.selectContentTab(
-                                    element.find(".dockContent"),
-                                    element.find("div[tab-sel^=tab-head-control-group]").get(0),
-                                    null,
-                                    "control-group"
-                                );
+                                $timeout(function () {
+                                    scope.selectContentTab(
+                                        element.find(".dockContent"),
+                                        element.find("div[tab-sel^=tab-head-control-group]").get(0),
+                                        null,
+                                        "control-group"
+                                    );
+                                }, angularConstants.actionDelay);
+
 
                                 /* FIXME Adjust Slidee Height When Sketch Control Expands.
                                  *  div.content-1 is used as slidee for sly plugin, whose height is 200% of its parent.

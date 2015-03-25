@@ -93,9 +93,10 @@ define(
                                 }
 
                                 scope.isPartialSelection = function (effectLibrary, xrefList) {
-                                    var xref = _.findWhere(xrefList, {libraryId: effectLibrary._id});
+                                    var xref = _.findWhere(xrefList, {libraryId: effectLibrary._id}),
+                                        artifactList = effectLibrary.artifactList;
 
-                                    return xref && effectLibrary.artifactList && effectLibrary.artifactList.length > xref.artifactList.length;
+                                    return xref && artifactList && artifactList.length > xref.artifactList.length;
                                 }
 
                                 scope._ = _;

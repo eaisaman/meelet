@@ -128,7 +128,7 @@ define(
                                     var xref = _.findWhere(xrefList, {libraryId: effectLibrary._id}),
                                         artifactList = effectLibrary.artifactList;
 
-                                    return xref && artifactList.length > xref.artifactList.length;
+                                    return xref && artifactList && artifactList.length > xref.artifactList.length;
                                 }
 
                                 scope.pseudo = "";
@@ -141,7 +141,19 @@ define(
                                 scope.toggleTextShadowControl = function () {
                                     scope.toggleEnableControl().then(function (enable) {
                                         if (enable) {
-                                            scope.setTextShadow(angular.copy(options.textShadow));
+                                            uiUtilService.whilst(
+                                                function () {
+                                                    return !scope.textShadow;
+                                                },
+                                                function (callback) {
+                                                    callback();
+                                                },
+                                                function (err) {
+                                                    scope.setTextShadow(angular.copy(options.textShadow));
+
+                                                    return uiUtilService.getResolveDefer();
+                                                }, angularConstants.checkInterval
+                                            );
                                         } else {
                                             scope.textShadow = angular.copy(scope.unsetStyle(scope.textShadow, scope.pseudo));
                                         }
@@ -320,28 +332,30 @@ define(
                                 }
 
                                 scope.setTextShadow = function (value) {
-                                    value.forEach(function (shadowStop) {
-                                        if (typeof shadowStop.color === "string") {
-                                            shadowStop.color = {color: shadowStop.color, alpha: 1};
-                                        } else if (typeof shadowStop.color === "object") {
-                                            shadowStop.color = _.pick(shadowStop.color, ["color", "alpha", "alphaColor"]);
-                                            if (shadowStop.color.alpha < 1 && !shadowStop.color.alphaColor) {
-                                                shadowStop.color.alphaColor = uiUtilService.rgba(shadowStop.color);
+                                    if (value) {
+                                        value.forEach(function (shadowStop) {
+                                            if (typeof shadowStop.color === "string") {
+                                                shadowStop.color = {color: shadowStop.color, alpha: 1};
+                                            } else if (typeof shadowStop.color === "object") {
+                                                shadowStop.color = _.pick(shadowStop.color, ["color", "alpha", "alphaColor"]);
+                                                if (shadowStop.color.alpha < 1 && !shadowStop.color.alphaColor) {
+                                                    shadowStop.color.alphaColor = uiUtilService.rgba(shadowStop.color);
+                                                }
                                             }
-                                        }
-                                    });
+                                        });
 
-                                    scope.pickedTextShadow = value;
+                                        scope.pickedTextShadow = value;
 
-                                    var pseudoStylePrefix = (scope.pseudo || "") + "Style";
-                                    pseudoStylePrefix = pseudoStylePrefix.charAt(0).toLowerCase() + pseudoStylePrefix.substr(1);
+                                        var pseudoStylePrefix = (scope.pseudo || "") + "Style";
+                                        pseudoStylePrefix = pseudoStylePrefix.charAt(0).toLowerCase() + pseudoStylePrefix.substr(1);
 
-                                    scope.textShadow[pseudoStylePrefix] = scope.textShadow[pseudoStylePrefix] || {};
-                                    var pseudoShadowStyle = scope.textShadow[pseudoStylePrefix];
-                                    pseudoShadowStyle['text-shadow'] = value;
+                                        scope.textShadow[pseudoStylePrefix] = scope.textShadow[pseudoStylePrefix] || {};
+                                        var pseudoShadowStyle = scope.textShadow[pseudoStylePrefix];
+                                        pseudoShadowStyle['text-shadow'] = value;
 
-                                    //Trigger watcher on sketchWidgetSetting.textShadow to apply style to widget
-                                    scope.textShadow = angular.copy(scope.textShadow);
+                                        //Trigger watcher on sketchWidgetSetting.textShadow to apply style to widget
+                                        scope.textShadow = angular.copy(scope.textShadow);
+                                    }
                                 }
 
                                 scope.toggleArtifactSelection = function (repoArtifact, effectLibrary, event) {
