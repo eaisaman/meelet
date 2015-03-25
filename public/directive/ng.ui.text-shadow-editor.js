@@ -300,7 +300,7 @@ define(
                                 scope.setStopColor = function (index, value, event) {
                                     event && event.stopPropagation && event.stopPropagation();
 
-                                    if (index < scope.pickedTextShadow.length) {
+                                    if (value.color && index < scope.pickedTextShadow.length) {
                                         if (value.alpha < 1 && !value.alphaColor) {
                                             value.alphaColor = uiUtilService.rgba(value);
                                         }

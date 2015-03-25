@@ -199,7 +199,7 @@ define(
                                 }
 
                                 scope.setBorderColor = function (value) {
-                                    if (value) {
+                                    if (value && value.color) {
                                         if (value.alpha < 1 && !value.alphaColor) {
                                             value.alphaColor = uiUtilService.rgba(value);
                                         }

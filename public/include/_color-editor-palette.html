@@ -42,7 +42,7 @@
                  ng-click="toggleSelect('.hsbValuePane', $event)"></div>
             <div class="valuePane hueValuePane">
                 <div class="valueTitle fs-x-medium">H</div>
-                <div class="valueDisplay fs-x-small">{{Math.floor(selectedColorObj.hueValue * 359)}}</div>
+                <div class="valueDisplay fs-x-small">{{selectedColorObj.hueDegreeValue}}</div>
                 <div class="valueScroll vt-scroll-normal">
                     <div class="scrollUpButton fs-x-toolButton-normal icon-color-editor-palette-before icon-color-editor-palette-arrow-up-before"
                          ng-click="decrementColor($event)"></div>
@@ -58,8 +58,7 @@
             </div>
             <div class="valuePane saturationValuePane">
                 <div class="valueTitle fs-x-medium">S</div>
-                <div class="valueDisplay fs-x-small">{{Math.round(selectedColorObj.saturationValue * 100) /
-                    100}}
+                <div class="valueDisplay fs-x-small">{{selectedColorObj.saturationValue}}
                 </div>
                 <div class="valueScroll vt-scroll-normal">
                     <div class="scrollUpButton fs-x-toolButton-normal icon-color-editor-palette-before icon-color-editor-palette-arrow-up-before"
@@ -77,7 +76,7 @@
             </div>
             <div class="valuePane lightValuePane">
                 <div class="valueTitle fs-x-medium">L</div>
-                <div class="valueDisplay fs-x-small">{{Math.round(selectedColorObj.lightValue * 100) / 100}}
+                <div class="valueDisplay fs-x-small">{{selectedColorObj.lightValue}}
                 </div>
                 <div class="valueScroll vt-scroll-normal">
                     <div class="scrollUpButton fs-x-toolButton-normal icon-color-editor-palette-before icon-color-editor-palette-arrow-up-before"

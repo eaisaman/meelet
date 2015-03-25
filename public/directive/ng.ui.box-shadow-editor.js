@@ -344,36 +344,38 @@ define(
                                 scope.setStopColor = function (pseudo, index, value, event) {
                                     event && event.stopPropagation && event.stopPropagation();
 
-                                    var pseudoStylePrefix = (pseudo || "") + "Style";
-                                    pseudoStylePrefix = pseudoStylePrefix.charAt(0).toLowerCase() + pseudoStylePrefix.substr(1);
+                                    if (value.color) {
+                                        var pseudoStylePrefix = (pseudo || "") + "Style";
+                                        pseudoStylePrefix = pseudoStylePrefix.charAt(0).toLowerCase() + pseudoStylePrefix.substr(1);
 
-                                    scope.pickedBoxShadow[pseudoStylePrefix] = scope.pickedBoxShadow[pseudoStylePrefix] || {};
-                                    var pseudoShadowStyle = scope.pickedBoxShadow[pseudoStylePrefix];
-                                    if (index < pseudoShadowStyle['box-shadow'].length) {
-                                        if (value.alpha < 1 && !value.alphaColor) {
-                                            value.alphaColor = uiUtilService.rgba(value);
-                                        }
+                                        scope.pickedBoxShadow[pseudoStylePrefix] = scope.pickedBoxShadow[pseudoStylePrefix] || {};
+                                        var pseudoShadowStyle = scope.pickedBoxShadow[pseudoStylePrefix];
+                                        if (index < pseudoShadowStyle['box-shadow'].length) {
+                                            if (value.alpha < 1 && !value.alphaColor) {
+                                                value.alphaColor = uiUtilService.rgba(value);
+                                            }
 
-                                        var shadowStop = pseudoShadowStyle['box-shadow'][index];
+                                            var shadowStop = pseudoShadowStyle['box-shadow'][index];
 
-                                        if (value !== shadowStop.color) {
-                                            shadowStop.color = null;
+                                            if (value !== shadowStop.color) {
+                                                shadowStop.color = null;
 
-                                            $timeout(function () {
-                                                shadowStop.color = _.pick(value, ["color", "alpha", "alphaColor"]);
+                                                $timeout(function () {
+                                                    shadowStop.color = _.pick(value, ["color", "alpha", "alphaColor"]);
 
-                                                //Trigger watcher on sketchWidgetSetting.boxShadow to apply style to widget
-                                                scope.setBoxShadow(scope.pickedBoxShadow);
-                                            }).then($timeout(function () {
-                                                var $shadowStop = element.find(".shadowStopGroup[pseudo='" + pseudo + "'] .shadowStop[shadow-order=" + index + "]");
+                                                    //Trigger watcher on sketchWidgetSetting.boxShadow to apply style to widget
+                                                    scope.setBoxShadow(scope.pickedBoxShadow);
+                                                }).then($timeout(function () {
+                                                    var $shadowStop = element.find(".shadowStopGroup[pseudo='" + pseudo + "'] .shadowStop[shadow-order=" + index + "]");
 
-                                                uiUtilService.onAnimationEnd($shadowStop).then(
-                                                    function () {
-                                                        $shadowStop.removeClass("animate");
-                                                    }
-                                                );
-                                                $shadowStop.addClass("animate");
-                                            }));
+                                                    uiUtilService.onAnimationEnd($shadowStop).then(
+                                                        function () {
+                                                            $shadowStop.removeClass("animate");
+                                                        }
+                                                    );
+                                                    $shadowStop.addClass("animate");
+                                                }));
+                                            }
                                         }
                                     }
 

@@ -2,9 +2,9 @@ define(
     ["angular", "jquery"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$http", "$timeout", "$q", "angularEventTypes", "uiUtilService"];
+            var inject = ["$http", "$timeout", "$q", "angularEventTypes", "angularConstants", "uiUtilService"];
 
-            appModule.directive("uiColorPicker", _.union(inject, [function ($http, $timeout, $q, angularEventTypes, uiUtilService) {
+            appModule.directive("uiColorPicker", _.union(inject, [function ($http, $timeout, $q, angularEventTypes, angularConstants, uiUtilService) {
                 'use strict';
 
                 var boundProperties = {color: "="},
@@ -64,36 +64,50 @@ define(
                                 }
 
                                 scope.setColor = function (value) {
-                                    if (value.alpha < 1 && !value.alphaColor) {
-                                        value.alphaColor = uiUtilService.rgba(value);
-                                    }
+                                    if (value.color) {
+                                        if (value.alpha < 1 && !value.alphaColor) {
+                                            value.alphaColor = uiUtilService.rgba(value);
+                                        }
 
-                                    var pseudoStylePrefix = (scope.pseudo || "") + "Style";
-                                    pseudoStylePrefix = pseudoStylePrefix.charAt(0).toLowerCase() + pseudoStylePrefix.substr(1);
+                                        var pseudoStylePrefix = (scope.pseudo || "") + "Style";
+                                        pseudoStylePrefix = pseudoStylePrefix.charAt(0).toLowerCase() + pseudoStylePrefix.substr(1);
 
-                                    scope.color[pseudoStylePrefix] = scope.color[pseudoStylePrefix] || {};
-                                    var pseudoColorStyle = scope.color[pseudoStylePrefix];
-                                    if (pseudoColorStyle['color'] == null || pseudoColorStyle['color'].color != value.color || pseudoColorStyle['color'].alpha != value.alpha) {
-                                        pseudoColorStyle['color'] = _.pick(value, ["color", "alpha", "alphaColor"]);
+                                        scope.color[pseudoStylePrefix] = scope.color[pseudoStylePrefix] || {};
+                                        var pseudoColorStyle = scope.color[pseudoStylePrefix];
+                                        if (pseudoColorStyle['color'] == null || pseudoColorStyle['color'].color != value.color || pseudoColorStyle['color'].alpha != value.alpha) {
+                                            pseudoColorStyle['color'] = _.pick(value, ["color", "alpha", "alphaColor"]);
 
-                                        //Trigger watcher on sketchWidgetSetting.color to apply style to widget
-                                        scope.color = angular.copy(scope.color);
+                                            //Trigger watcher on sketchWidgetSetting.color to apply style to widget
+                                            scope.color = angular.copy(scope.color);
 
-                                        scope.colorIsSet = false;
-                                        scope.pickedColor = value;
-                                        scope.pickerPaneBackgroundColor = scope.pickedColor.alphaColor || scope.pickedColor.color;
-                                        scope.pickerPaneColor = uiUtilService.contrastColor(value.color);
-                                        scope.pickerBarBackgroundColor = scope.pickerPaneColor === "#ffffff" ? uiUtilService.lighterColor(value.color, 0.5) : uiUtilService.lighterColor(value.color, -0.5);
-                                        $timeout(function () {
-                                            scope.colorIsSet = true;
-                                        });
+                                            scope.colorIsSet = false;
+                                            scope.pickedColor = value;
+                                            scope.pickerPaneBackgroundColor = scope.pickedColor.alphaColor || scope.pickedColor.color;
+                                            scope.pickerPaneColor = uiUtilService.contrastColor(value.color);
+                                            scope.pickerBarBackgroundColor = scope.pickerPaneColor === "#ffffff" ? uiUtilService.lighterColor(value.color, 0.5) : uiUtilService.lighterColor(value.color, -0.5);
+                                            $timeout(function () {
+                                                scope.colorIsSet = true;
+                                            });
+                                        }
                                     }
                                 };
 
                                 scope.toggleColorControl = function () {
                                     scope.toggleEnableControl().then(function (enable) {
                                         if (enable) {
-                                            scope.setColor(angular.copy(options.color));
+                                            uiUtilService.whilst(
+                                                function () {
+                                                    return !scope.color;
+                                                },
+                                                function (callback) {
+                                                    callback();
+                                                },
+                                                function (err) {
+                                                    scope.setColor(angular.copy(options.color));
+
+                                                    return uiUtilService.getResolveDefer();
+                                                }, angularConstants.checkInterval
+                                            );
                                         } else {
                                             scope.color = angular.copy(scope.unsetStyle(scope.color, scope.pseudo));
                                         }

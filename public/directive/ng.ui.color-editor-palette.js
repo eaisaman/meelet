@@ -86,14 +86,19 @@ define(
                                         scope.selectedColorObj.bValue = Math.floor(color.bValue);
                                     }
                                     if (scope.selectedColorObj.hueValue != color.hueValue) {
+                                        color.hueValue = Math.round(color.hueValue * 100) / 100;
+                                        color.hueDegreeValue = Math.floor(color.hueValue * 359);
                                         element.find(".hueValuePane .scrollMeter").css("top", colorValuePercent(color.hueValue, "Hue"));
                                         scope.selectedColorObj.hueValue = color.hueValue;
+                                        scope.selectedColorObj.hueDegreeValue = color.hueDegreeValue;
                                     }
                                     if (scope.selectedColorObj.saturationValue != color.saturationValue) {
+                                        color.saturationValue = Math.round(color.saturationValue * 100) / 100;
                                         element.find(".saturationValuePane .scrollMeter").css("top", colorValuePercent(color.saturationValue, "Saturation"));
                                         scope.selectedColorObj.saturationValue = color.saturationValue;
                                     }
                                     if (scope.selectedColorObj.lightValue != color.lightValue) {
+                                        color.lightValue = Math.round(color.lightValue * 100) / 100;
                                         element.find(".lightValuePane .scrollMeter").css("top", colorValuePercent(color.lightValue, "Light"));
                                         scope.selectedColorObj.lightValue = color.lightValue;
                                     }
@@ -320,9 +325,10 @@ define(
                                         (!colorObj.saturationValue && colorObj.saturationValue != 0) ||
                                         (!colorObj.lightValue && colorObj.lightValue != 0)) {
                                         var hsl = uiUtilService.hexTohsl(colorObj.color);
-                                        colorObj.hueValue = hsl[0];
-                                        colorObj.saturationValue = hsl[1];
-                                        colorObj.lightValue = hsl[2];
+                                        colorObj.hueValue = Math.round(hsl[0] * 100) / 100;
+                                        colorObj.hueDegreeValue = Math.floor(colorObj.hueValue * 359);
+                                        colorObj.saturationValue = Math.round(hsl[1] * 100) / 100;
+                                        colorObj.lightValue = Math.round(hsl[2] * 100) / 100;
                                     }
 
                                     if (colorObj.alpha == null)
@@ -430,6 +436,7 @@ define(
                                         } else if (valueName === "hueValue" || valueName === "saturationValue" || valueName === "lightValue") {
                                             value = Math.floor(value * 100) / 100;
                                             color.hueValue = scope.selectedColorObj.hueValue;
+                                            color.hueDegreeValue = Math.floor(color.hueValue * 359);
                                             color.saturationValue = scope.selectedColorObj.saturationValue;
                                             color.lightValue = scope.selectedColorObj.lightValue;
                                             color[valueName] = value;
