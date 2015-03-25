@@ -8424,7 +8424,27 @@
 }
 #borderColorPalette .colorValuePanes .valuePane .valueDisplay {
   line-height: 1.5;
+  height: 1.5em;
   font-weight: 400;
+}
+#borderColorPalette .colorValuePanes .valuePane .valueDisplay input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  line-height: 1;
+  height: 1em;
+  border-width: 0;
+  outline: none;
+  text-align: center;
+  background: transparent;
+}
+#borderColorPalette .colorValuePanes .valuePane .valueDisplay input::-webkit-inner-spin-button, #borderColorPalette .colorValuePanes .valuePane .valueDisplay input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+#borderColorPalette .colorValuePanes .valuePane .valueDisplay input.ng-invalid {
+  color: #e74c3c;
 }
 #borderColorPalette .colorValuePanes .valuePane .valueScroll {
   width: calc(100% - 10px);
@@ -8464,6 +8484,7 @@
   left: -1.5em;
   width: 1.5em;
   height: 1em;
+  margin-top: -0.5em;
   background: transparent;
   -moz-transition: -moz-transform 0.3s;
   -o-transition: -o-transform 0.3s;
@@ -9337,7 +9358,27 @@
 }
 #colorPickerPalette .colorValuePanes .valuePane .valueDisplay {
   line-height: 1.5;
+  height: 1.5em;
   font-weight: 400;
+}
+#colorPickerPalette .colorValuePanes .valuePane .valueDisplay input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  line-height: 1;
+  height: 1em;
+  border-width: 0;
+  outline: none;
+  text-align: center;
+  background: transparent;
+}
+#colorPickerPalette .colorValuePanes .valuePane .valueDisplay input::-webkit-inner-spin-button, #colorPickerPalette .colorValuePanes .valuePane .valueDisplay input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+#colorPickerPalette .colorValuePanes .valuePane .valueDisplay input.ng-invalid {
+  color: #e74c3c;
 }
 #colorPickerPalette .colorValuePanes .valuePane .valueScroll {
   width: calc(100% - 10px);
@@ -9377,6 +9418,7 @@
   left: -1.5em;
   width: 1.5em;
   height: 1em;
+  margin-top: -0.5em;
   background: transparent;
   -moz-transition: -moz-transform 0.3s;
   -o-transition: -o-transform 0.3s;
@@ -9793,7 +9835,27 @@
 }
 #colorStopEditorPalette .colorValuePanes .valuePane .valueDisplay {
   line-height: 1.5;
+  height: 1.5em;
   font-weight: 400;
+}
+#colorStopEditorPalette .colorValuePanes .valuePane .valueDisplay input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  line-height: 1;
+  height: 1em;
+  border-width: 0;
+  outline: none;
+  text-align: center;
+  background: transparent;
+}
+#colorStopEditorPalette .colorValuePanes .valuePane .valueDisplay input::-webkit-inner-spin-button, #colorStopEditorPalette .colorValuePanes .valuePane .valueDisplay input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+#colorStopEditorPalette .colorValuePanes .valuePane .valueDisplay input.ng-invalid {
+  color: #e74c3c;
 }
 #colorStopEditorPalette .colorValuePanes .valuePane .valueScroll {
   width: calc(100% - 10px);
@@ -9833,6 +9895,7 @@
   left: -1.5em;
   width: 1.5em;
   height: 1em;
+  margin-top: -0.5em;
   background: transparent;
   -moz-transition: -moz-transform 0.3s;
   -o-transition: -o-transform 0.3s;
@@ -10833,7 +10896,27 @@
 }
 #shadowStopColorPalette .colorValuePanes .valuePane .valueDisplay {
   line-height: 1.5;
+  height: 1.5em;
   font-weight: 400;
+}
+#shadowStopColorPalette .colorValuePanes .valuePane .valueDisplay input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  line-height: 1;
+  height: 1em;
+  border-width: 0;
+  outline: none;
+  text-align: center;
+  background: transparent;
+}
+#shadowStopColorPalette .colorValuePanes .valuePane .valueDisplay input::-webkit-inner-spin-button, #shadowStopColorPalette .colorValuePanes .valuePane .valueDisplay input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+#shadowStopColorPalette .colorValuePanes .valuePane .valueDisplay input.ng-invalid {
+  color: #e74c3c;
 }
 #shadowStopColorPalette .colorValuePanes .valuePane .valueScroll {
   width: calc(100% - 10px);
@@ -10873,6 +10956,7 @@
   left: -1.5em;
   width: 1.5em;
   height: 1em;
+  margin-top: -0.5em;
   background: transparent;
   -moz-transition: -moz-transform 0.3s;
   -o-transition: -o-transform 0.3s;
@@ -13730,7 +13814,27 @@
 }
 #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette .colorValuePanes .valuePane .valueDisplay {
   line-height: 1.5;
+  height: 1.5em;
   font-weight: 400;
+}
+#widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette .colorValuePanes .valuePane .valueDisplay input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  line-height: 1;
+  height: 1em;
+  border-width: 0;
+  outline: none;
+  text-align: center;
+  background: transparent;
+}
+#widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette .colorValuePanes .valuePane .valueDisplay input::-webkit-inner-spin-button, #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette .colorValuePanes .valuePane .valueDisplay input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+#widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette .colorValuePanes .valuePane .valueDisplay input.ng-invalid {
+  color: #e74c3c;
 }
 #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette .colorValuePanes .valuePane .valueScroll {
   width: calc(100% - 10px);
@@ -13770,6 +13874,7 @@
   left: -1.5em;
   width: 1.5em;
   height: 1em;
+  margin-top: -0.5em;
   background: transparent;
   -moz-transition: -moz-transform 0.3s;
   -o-transition: -o-transform 0.3s;

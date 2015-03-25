@@ -109,7 +109,9 @@ define(
                                                 }, angularConstants.checkInterval
                                             );
                                         } else {
-                                            scope.color = angular.copy(scope.unsetStyle(scope.color, scope.pseudo));
+                                            if (scope.color) {
+                                                scope.color = angular.copy(scope.unsetStyle(scope.color, scope.pseudo));
+                                            }
                                         }
                                     });
                                 }

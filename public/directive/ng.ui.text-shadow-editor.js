@@ -155,7 +155,9 @@ define(
                                                 }, angularConstants.checkInterval
                                             );
                                         } else {
-                                            scope.textShadow = angular.copy(scope.unsetStyle(scope.textShadow, scope.pseudo));
+                                            if (scope.textShadow) {
+                                                scope.textShadow = angular.copy(scope.unsetStyle(scope.textShadow, scope.pseudo));
+                                            }
                                         }
                                     });
                                 }

@@ -59,11 +59,25 @@ define(
                                 scope.toggleBackgroundImageControl = function () {
                                     scope.toggleEnableControl().then(function (enable) {
                                         if (enable) {
-                                            scope.setBackgroundImageUrl(options.backgroundImageUrl);
-                                            scope.setBackgroundPosition(options.backgroundPosition.x, options.backgroundPosition.y, options.backgroundPosition.unit);
-                                            scope.setBackgroundRepeatValue(options.backgroundRepeat);
+                                            uiUtilService.whilst(
+                                                function () {
+                                                    return !scope.backgroundImage;
+                                                },
+                                                function (callback) {
+                                                    callback();
+                                                },
+                                                function (err) {
+                                                    scope.setBackgroundImageUrl(options.backgroundImageUrl);
+                                                    scope.setBackgroundPosition(options.backgroundPosition.x, options.backgroundPosition.y, options.backgroundPosition.unit);
+                                                    scope.setBackgroundRepeatValue(options.backgroundRepeat);
+
+                                                    return uiUtilService.getResolveDefer();
+                                                }, angularConstants.checkInterval
+                                            );
                                         } else {
-                                            scope.backgroundImage = angular.copy(scope.unsetStyle(scope.backgroundImage, scope.pseudo));
+                                            if (scope.backgroundImage) {
+                                                scope.backgroundImage = angular.copy(scope.unsetStyle(scope.backgroundImage, scope.pseudo));
+                                            }
                                         }
                                     });
                                 }

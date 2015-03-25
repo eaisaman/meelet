@@ -2,9 +2,9 @@ define(
     ["angular", "jquery"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$parse", "$http", "$timeout", "$q", "angularEventTypes", "uiUtilService"];
+            var inject = ["$parse", "$http", "$timeout", "$q", "angularEventTypes", "angularConstants", "uiUtilService"];
 
-            appModule.directive("uiBorderEditor", _.union(inject, [function ($parse, $http, $timeout, $q, angularEventTypes, uiUtilService) {
+            appModule.directive("uiBorderEditor", _.union(inject, [function ($parse, $http, $timeout, $q, angularEventTypes, angularConstants, uiUtilService) {
                 'use strict';
 
                 var boundProperties = {border: "="},
@@ -136,12 +136,26 @@ define(
                                 scope.toggleBorderControl = function () {
                                     scope.borderList && scope.borderList.length && scope.toggleEnableControl().then(function (enable) {
                                         if (enable) {
-                                            scope.setBorderColor(angular.copy(options.borderColor));
-                                            scope.setBorderWidth(options.borderWidth);
-                                            scope.setBorderStyle(options.borderStyle);
-                                            scope.setBorderRadius(options.borderRadius);
+                                            uiUtilService.whilst(
+                                                function () {
+                                                    return !scope.border;
+                                                },
+                                                function (callback) {
+                                                    callback();
+                                                },
+                                                function (err) {
+                                                    scope.setBorderColor(angular.copy(options.borderColor));
+                                                    scope.setBorderWidth(options.borderWidth);
+                                                    scope.setBorderStyle(options.borderStyle);
+                                                    scope.setBorderRadius(options.borderRadius);
+
+                                                    return uiUtilService.getResolveDefer();
+                                                }, angularConstants.checkInterval
+                                            );
                                         } else {
-                                            scope.border = angular.copy(scope.unsetStyle(scope.border, scope.pseudo));
+                                            if (scope.border) {
+                                                scope.border = angular.copy(scope.unsetStyle(scope.border, scope.pseudo));
+                                            }
                                         }
                                     });
                                 }

@@ -348,7 +348,31 @@ $underlineLinearGradient: ($color 0%, $color 75%, #fff 100%);
                 }
                 .valueDisplay {
                     line-height: 1.5;
+                    height: 1.5em;
                     font-weight: 400;
+
+                    input {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        line-height: 1;
+                        height: 1em;
+                        border-width: 0;
+                        outline: none;
+                        text-align: center;
+                        background: transparent;
+
+                        &::-webkit-inner-spin-button,
+                        &::-webkit-outer-spin-button {
+                            -webkit-appearance: none;
+                            margin: 0;
+                        }
+
+                        &.ng-invalid {
+                            color: $errorColor;
+                        }
+                    }
                 }
                 .valueScroll {
                     width: calc(100% - 10px);
@@ -391,6 +415,7 @@ $underlineLinearGradient: ($color 0%, $color 75%, #fff 100%);
                             left: -1.5em;
                             width: 1.5em;
                             height: 1em;
+                            margin-top: -0.5em;
                             background: transparent;
                             @include transition(transform 0.3s);
 

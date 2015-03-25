@@ -2,9 +2,9 @@ define(
     ["angular", "jquery", "hammer", "ng.ui.hammer-gestures", "ng.ui.extension"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$timeout", "$q", "angularEventTypes", "uiUtilService"];
+            var inject = ["$timeout", "$q", "angularEventTypes", "angularConstants", "uiUtilService"];
 
-            appModule.directive("uiGradientEditor", _.union(inject, [function ($timeout, $q, angularEventTypes, uiUtilService) {
+            appModule.directive("uiGradientEditor", _.union(inject, [function ($timeout, $q, angularEventTypes, angularConstants, uiUtilService) {
                 'use strict';
 
                 var boundProperties = {linearGradientColor: "="},
@@ -113,9 +113,23 @@ define(
                                 scope.toggleGradientControl = function () {
                                     scope.toggleEnableControl().then(function (enable) {
                                         if (enable) {
-                                            scope.setGradientColor(angular.copy(options.linearGradientColor));
+                                            uiUtilService.whilst(
+                                                function () {
+                                                    return !scope.linearGradientColor;
+                                                },
+                                                function (callback) {
+                                                    callback();
+                                                },
+                                                function (err) {
+                                                    scope.setGradientColor(angular.copy(options.linearGradientColor));
+
+                                                    return uiUtilService.getResolveDefer();
+                                                }, angularConstants.checkInterval
+                                            );
                                         } else {
-                                            scope.linearGradientColor = angular.copy(scope.unsetStyle(scope.linearGradientColor, scope.pseudo));
+                                            if (scope.linearGradientColor) {
+                                                scope.linearGradientColor = angular.copy(scope.unsetStyle(scope.linearGradientColor, scope.pseudo));
+                                            }
                                         }
                                     });
                                 }

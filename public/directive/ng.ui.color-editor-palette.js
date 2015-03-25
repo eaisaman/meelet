@@ -55,7 +55,7 @@ define(
                                 scope.selectedColorObj = scope.selectedColorObj || {alpha: 1};
                             },
                             post: function (scope, element, attrs) {
-                                function setSelectedColor(color) {
+                                function adjustScrollMeterPosition(color) {
                                     function colorValuePercent(value, colorValueType) {
                                         var range = 0;
                                         if (colorValueType == "R" || colorValueType == "G" || colorValueType == "B") {
@@ -68,42 +68,13 @@ define(
                                         return range && value && (Math.floor(value / range * 100) + "%") || "0%";
                                     }
 
-                                    if (scope.selectedColorObj.rValue != color.rValue || scope.selectedColorObj.gValue != color.gValue || scope.selectedColorObj.bValue != color.bValue) {
-                                        color.color = uiUtilService.rgbToHex(color.rValue, color.gValue, color.bValue);
-                                    } else if (scope.selectedColorObj.hueValue != color.hueValue || scope.selectedColorObj.saturationValue != color.saturationValue || scope.selectedColorObj.lightValue != color.lightValue) {
-                                        color.color = uiUtilService.hslToHex(color.hueValue, color.saturationValue, color.lightValue);
-                                    }
-                                    if (scope.selectedColorObj.rValue != color.rValue) {
-                                        element.find(".rValuePane .scrollMeter").css("top", colorValuePercent(color.rValue, "R"));
-                                        scope.selectedColorObj.rValue = Math.floor(color.rValue);
-                                    }
-                                    if (scope.selectedColorObj.gValue != color.gValue) {
-                                        element.find(".gValuePane .scrollMeter").css("top", colorValuePercent(color.gValue, "G"));
-                                        scope.selectedColorObj.gValue = Math.floor(color.gValue);
-                                    }
-                                    if (scope.selectedColorObj.bValue != color.bValue) {
-                                        element.find(".bValuePane .scrollMeter").css("top", colorValuePercent(color.bValue, "B"));
-                                        scope.selectedColorObj.bValue = Math.floor(color.bValue);
-                                    }
-                                    if (scope.selectedColorObj.hueValue != color.hueValue) {
-                                        color.hueValue = Math.round(color.hueValue * 100) / 100;
-                                        color.hueDegreeValue = Math.floor(color.hueValue * 359);
-                                        element.find(".hueValuePane .scrollMeter").css("top", colorValuePercent(color.hueValue, "Hue"));
-                                        scope.selectedColorObj.hueValue = color.hueValue;
-                                        scope.selectedColorObj.hueDegreeValue = color.hueDegreeValue;
-                                    }
-                                    if (scope.selectedColorObj.saturationValue != color.saturationValue) {
-                                        color.saturationValue = Math.round(color.saturationValue * 100) / 100;
-                                        element.find(".saturationValuePane .scrollMeter").css("top", colorValuePercent(color.saturationValue, "Saturation"));
-                                        scope.selectedColorObj.saturationValue = color.saturationValue;
-                                    }
-                                    if (scope.selectedColorObj.lightValue != color.lightValue) {
-                                        color.lightValue = Math.round(color.lightValue * 100) / 100;
-                                        element.find(".lightValuePane .scrollMeter").css("top", colorValuePercent(color.lightValue, "Light"));
-                                        scope.selectedColorObj.lightValue = color.lightValue;
-                                    }
+                                    element.find(".rValuePane .scrollMeter").css("top", colorValuePercent(color.rValue, "R"));
+                                    element.find(".gValuePane .scrollMeter").css("top", colorValuePercent(color.gValue, "G"));
+                                    element.find(".bValuePane .scrollMeter").css("top", colorValuePercent(color.bValue, "B"));
 
-                                    scope.pickColor(color);
+                                    element.find(".hueValuePane .scrollMeter").css("top", colorValuePercent(color.hueValue, "Hue"));
+                                    element.find(".saturationValuePane .scrollMeter").css("top", colorValuePercent(color.saturationValue, "Saturation"));
+                                    element.find(".lightValuePane .scrollMeter").css("top", colorValuePercent(color.lightValue, "Light"));
                                 }
 
                                 function rgbLinearGradient(r, g, b, colorValueType) {
@@ -228,6 +199,10 @@ define(
                                         var defer = $q.defer();
 
                                         $timeout(function () {
+                                            //FIXME value.color conflicts with its rValue/gValue/bValue, we recalculate color hex value as workaround here.
+                                            if (value.rValue && value.gValue && value.bValue) {
+                                                value.color = uiUtilService.rgbToHex(value.rValue, value.gValue, value.bValue);
+                                            }
                                             scope.selectedColor = _.pick(value, ["color", "alpha"]);
                                             scope.onColorSelect && $timeout(function () {
                                                 scope.onColorSelect();
@@ -276,7 +251,7 @@ define(
 
                                     var $u = $(event.target).siblings(".scrollBar").find(".scrollMeter"),
                                         range = parseInt($u.attr("color-range")),
-                                        step = range / 20,
+                                        step = parseInt($u.attr("color-value-step")) || (range / 20),
                                         valueName = $u.attr("color-value-name");
 
                                     if (range && valueName) {
@@ -286,7 +261,16 @@ define(
                                             value = range;
                                         color[valueName] = value;
                                         color.color = null;
-                                        setSelectedColor(color);
+
+                                        if (valueName === "rValue" || valueName === "gValue" || valueName === "bValue") {
+                                            delete color.hueValue, delete color.saturationValue, delete color.lightValue;
+                                        }
+
+                                        if (valueName === "hueValue" || valueName === "saturationValue" || valueName === "lightValue") {
+                                            delete color.rValue, delete color.gValue, delete color.bValue;
+                                        }
+
+                                        scope.pickColor(color);
                                     }
                                 }
 
@@ -295,7 +279,7 @@ define(
 
                                     var $u = $(event.target).siblings(".scrollBar").find(".scrollMeter"),
                                         range = parseInt($u.attr("color-range")),
-                                        step = range / 20,
+                                        step = parseInt($u.attr("color-value-step")) || (range / 20),
                                         valueName = $u.attr("color-value-name");
 
                                     if (range && valueName) {
@@ -305,30 +289,56 @@ define(
                                             value = 0;
                                         color[valueName] = value;
                                         color.color = null;
-                                        setSelectedColor(color);
+
+                                        if (valueName === "rValue" || valueName === "gValue" || valueName === "bValue") {
+                                            delete color.hueValue, delete color.saturationValue, delete color.lightValue;
+                                        }
+
+                                        if (valueName === "hueValue" || valueName === "saturationValue" || valueName === "lightValue") {
+                                            delete color.rValue, delete color.gValue, delete color.bValue;
+                                        }
+
+                                        scope.pickColor(color);
                                     }
                                 }
 
                                 scope.pickColor = function (colorObj, event) {
                                     event && event.stopPropagation && event.stopPropagation();
 
-                                    if ((!colorObj.rValue && colorObj.rValue != 0) ||
-                                        (!colorObj.gValue && colorObj.gValue != 0) ||
-                                        (!colorObj.bValue && colorObj.bValue != 0)) {
-                                        var rgb = uiUtilService.hexTorgb(colorObj.color);
-                                        colorObj.rValue = rgb[0];
-                                        colorObj.gValue = rgb[1];
-                                        colorObj.bValue = rgb[2];
+                                    if (colorObj.color == null) {
+                                        if (colorObj.hueValue != null) {
+                                            colorObj.hueValue = Math.round(colorObj.hueValue * 100) / 100;
+                                            colorObj.hueDegreeValue = Math.floor(colorObj.hueValue * 359);
+                                        }
+                                        if (colorObj.saturationValue != null) {
+                                            colorObj.saturationValue = Math.round(colorObj.saturationValue * 100) / 100;
+                                        }
+                                        if (colorObj.lightValue != null) {
+                                            colorObj.lightValue = Math.round(colorObj.lightValue * 100) / 100;
+                                        }
+
+                                        if (colorObj.rValue != null && colorObj.gValue != null && colorObj.bValue != null) {
+                                            colorObj.color = uiUtilService.rgbToHex(colorObj.rValue, colorObj.gValue, colorObj.bValue);
+                                        } else if (colorObj.hueValue != null && colorObj.saturationValue != null && colorObj.lightValue != null) {
+                                            colorObj.color = uiUtilService.hslToHex(colorObj.hueValue, colorObj.saturationValue, colorObj.lightValue);
+                                        }
                                     }
 
-                                    if ((!colorObj.hueValue && colorObj.hueValue != 0) ||
-                                        (!colorObj.saturationValue && colorObj.saturationValue != 0) ||
-                                        (!colorObj.lightValue && colorObj.lightValue != 0)) {
-                                        var hsl = uiUtilService.hexTohsl(colorObj.color);
-                                        colorObj.hueValue = Math.round(hsl[0] * 100) / 100;
-                                        colorObj.hueDegreeValue = Math.floor(colorObj.hueValue * 359);
-                                        colorObj.saturationValue = Math.round(hsl[1] * 100) / 100;
-                                        colorObj.lightValue = Math.round(hsl[2] * 100) / 100;
+                                    if (colorObj.color) {
+                                        if (colorObj.rValue == null || colorObj.gValue == null || colorObj.bValue == null) {
+                                            var rgb = uiUtilService.hexTorgb(colorObj.color);
+                                            colorObj.rValue = rgb[0];
+                                            colorObj.gValue = rgb[1];
+                                            colorObj.bValue = rgb[2];
+                                        }
+
+                                        if ((colorObj.hueValue == null || colorObj.saturationValue == null) || colorObj.lightValue == null) {
+                                            var hsl = uiUtilService.hexTohsl(colorObj.color);
+                                            colorObj.hueValue = Math.round(hsl[0] * 100) / 100;
+                                            colorObj.hueDegreeValue = Math.floor(colorObj.hueValue * 359);
+                                            colorObj.saturationValue = Math.round(hsl[1] * 100) / 100;
+                                            colorObj.lightValue = Math.round(hsl[2] * 100) / 100;
+                                        }
                                     }
 
                                     if (colorObj.alpha == null)
@@ -336,8 +346,9 @@ define(
                                     if (colorObj.alpha == 1)
                                         delete colorObj.alphaColor;
                                     else
-                                        colorObj.alphaColor = uiUtilService.rgba(colorObj.color, colorObj.alpha);
+                                        colorObj.alphaColor = uiUtilService.rgba(colorObj, colorObj.alpha);
 
+                                    adjustScrollMeterPosition(colorObj);
                                     scope.selectedColorObj = colorObj;
                                     scope.updateSelectedColor(colorObj);
 
@@ -366,27 +377,37 @@ define(
                                     return true;
                                 }
 
-                                function alphaHandler() {
+                                function colorObjHandler() {
                                     scope.pickColor(scope.selectedColorObj);
 
                                     return uiUtilService.getResolveDefer();
                                 }
 
-                                scope.onAlphaChange = function (event) {
+                                scope.onColorInputChange = function (event) {
                                     event && event.stopPropagation && event.stopPropagation();
 
                                     var $el = $(event.target),
                                         value = parseFloat($el.val()),
+                                        valueName = $el.attr("color-value-name"),
                                         max = parseFloat($el.attr("max")),
                                         min = parseFloat($el.attr("min"));
 
                                     if (value > max) {
-                                        scope.selectedColorObj.alpha = 1;
+                                        scope.selectedColorObj[valueName] = max;
                                     } else if (value < min) {
-                                        scope.selectedColorObj.alpha = 0;
+                                        scope.selectedColorObj[valueName] = min;
                                     }
 
-                                    uiUtilService.latestOnce(alphaHandler, null, angularConstants.actionDelay, "color-editor-palette.alphaHandler")();
+                                    if (valueName === "rValue" || valueName === "gValue" || valueName === "bValue") {
+                                        delete scope.selectedColorObj.hueValue, delete scope.selectedColorObj.hueDegreeValue, delete scope.selectedColorObj.saturationValue, delete scope.selectedColorObj.lightValue;
+                                    }
+
+                                    if (valueName === "hueValue" || valueName === "saturationValue" || valueName === "lightValue") {
+                                        delete scope.selectedColorObj.rValue, delete scope.selectedColorObj.gValue, delete scope.selectedColorObj.bValue;
+                                    }
+                                    scope.selectedColorObj.color = null;
+
+                                    uiUtilService.latestOnce(colorObjHandler, null, angularConstants.actionDelay, "color-editor-palette.colorObjHandler")();
                                 }
 
                                 scope.incrementAlpha = function (event) {
@@ -397,7 +418,7 @@ define(
                                     if (scope.selectedColorObj.alpha > 1)
                                         scope.selectedColorObj.alpha = 1;
 
-                                    uiUtilService.latestOnce(alphaHandler, null, angularConstants.actionDelay, "color-editor-palette.alphaHandler")();
+                                    uiUtilService.latestOnce(colorObjHandler, null, angularConstants.actionDelay, "color-editor-palette.colorObjHandler")();
                                 }
 
                                 scope.decrementAlpha = function (event) {
@@ -408,7 +429,7 @@ define(
                                     if (scope.selectedColorObj.alpha < 0)
                                         scope.selectedColorObj.alpha = 0;
 
-                                    uiUtilService.latestOnce(alphaHandler, null, angularConstants.actionDelay, "color-editor-palette.alphaHandler")();
+                                    uiUtilService.latestOnce(colorObjHandler, null, angularConstants.actionDelay, "color-editor-palette.colorObjHandler")();
                                 }
 
                                 scope.observeColorValueScrollMeter = function (event) {

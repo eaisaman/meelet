@@ -163,7 +163,9 @@ define(
                                                 }, angularConstants.checkInterval
                                             );
                                         } else {
-                                            scope.boxShadow = angular.copy(scope.unsetStyles(scope.boxShadow));
+                                            if (scope.boxShadow) {
+                                                scope.boxShadow = angular.copy(scope.unsetStyles(scope.boxShadow));
+                                            }
                                         }
                                     });
                                 }

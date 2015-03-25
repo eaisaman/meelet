@@ -64,8 +64,14 @@ define(
                 rgb = this.hexTorgb(hex);
                 alpha = 1;
             } else {
-                rgb = this.hexTorgb(hex.color);
-                alpha = hex.alpha;
+                if (hex.rValue && hex.gValue && hex.bValue) {
+                    rgb = [hex.rValue, hex.gValue, hex.bValue];
+                } else {
+                    rgb = this.hexTorgb(hex.color);
+                }
+                if (alpha == null)
+                    alpha = hex.alpha;
+                alpha = Math.round(alpha * 100) / 100;
                 hex = hex.color;
             }
 
