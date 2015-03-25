@@ -321,9 +321,7 @@ define(
                                                     scope.$on('$destroy', function () {
                                                         mc.off("panstart panmove panend", addWidgetHandler);
                                                     });
-
-                                                    return uiUtilService.getResolveDefer();
-                                                }, angularConstants.checkInterval
+                                                }, angularConstants.checkInterval, "shape.initHammer"
                                             ),
                                             uiUtilService.whilst(
                                                 function () {
@@ -343,7 +341,7 @@ define(
                                                     }, function (err) {
                                                         return uiUtilService.getRejectDefer(err);
                                                     });
-                                                }, angularConstants.checkInterval
+                                                }, angularConstants.checkInterval, "shape.initFilterLibraryList"
                                             )
                                         ]
                                     );
