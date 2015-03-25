@@ -518,26 +518,23 @@ define(
                                     }
                                 }
 
-                                uiUtilService.whilst(
-                                    function () {
-                                        return !scope.project;
-                                    },
-                                    function (callback) {
-                                        callback();
-                                    },
-                                    function (err) {
-                                        return appService.loadEffectArtifactList().then(function () {
-                                            var arr = scope.filterLibraryList(_.where(scope.effectLibraryList, {uiControl: "uiBoxShadowEditor"}), scope.project.xrefRecord);
-                                            arr.splice(0, 0, 0, 0);
-                                            scope.filterEffectLibraryList.splice(0, scope.filterEffectLibraryList.length);
-                                            Array.prototype.splice.apply(scope.filterEffectLibraryList, arr);
+                                scope.$on(angularEventTypes.switchProjectEvent, function (event, data) {
+                                    if (data) {
+                                        var arr = scope.filterLibraryList(_.where(scope.effectLibraryList, {uiControl: "uiBoxShadowEditor"}), scope.project.xrefRecord);
+                                        arr.splice(0, 0, 0, 0);
+                                        scope.filterEffectLibraryList.splice(0, scope.filterEffectLibraryList.length);
+                                        Array.prototype.splice.apply(scope.filterEffectLibraryList, arr);
+                                    }
+                                });
 
-                                            return uiUtilService.getResolveDefer();
-                                        }, function (err) {
-                                            return uiUtilService.getRejectDefer(err);
-                                        });
-                                    }, angularConstants.checkInterval
-                                );
+                                $timeout(function () {
+                                    appService.loadEffectArtifactList().then(function () {
+                                        var arr = scope.filterLibraryList(_.where(scope.effectLibraryList, {uiControl: "uiBoxShadowEditor"}), scope.project.xrefRecord);
+                                        arr.splice(0, 0, 0, 0);
+                                        scope.filterEffectLibraryList.splice(0, scope.filterEffectLibraryList.length);
+                                        Array.prototype.splice.apply(scope.filterEffectLibraryList, arr);
+                                    });
+                                }, angularConstants.actionDelay);
                             }
                         }
                     }

@@ -317,26 +317,12 @@ define(
                                         });
                                     }
 
-                                    uiUtilService.whilst(
-                                        function () {
-                                            return !scope.project;
-                                        },
-                                        function (callback) {
-                                            callback();
-                                        },
-                                        function (err) {
-                                            return appService.loadIconArtifactList().then(function () {
-                                                var arr = scope.filterLibraryList(scope.iconLibraryList, scope.project.xrefRecord);
-                                                arr.splice(0, 0, 0, 0);
-                                                scope.filterIconLibraryList.splice(0, scope.filterIconLibraryList.length);
-                                                Array.prototype.splice.apply(scope.filterIconLibraryList, arr);
-
-                                                return uiUtilService.getResolveDefer();
-                                            }, function (err) {
-                                                return uiUtilService.getRejectDefer(err);
-                                            });
-                                        }, angularConstants.checkInterval, "shape.initFilterLibraryList"
-                                    );
+                                    appService.loadIconArtifactList().then(function () {
+                                        var arr = scope.filterLibraryList(scope.iconLibraryList, scope.project.xrefRecord);
+                                        arr.splice(0, 0, 0, 0);
+                                        scope.filterIconLibraryList.splice(0, scope.filterIconLibraryList.length);
+                                        Array.prototype.splice.apply(scope.filterIconLibraryList, arr);
+                                    });
                                 }, angularConstants.actionDelay);
                             }
                         }

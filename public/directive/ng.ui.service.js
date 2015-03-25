@@ -4068,19 +4068,23 @@ define(
                 self.$rootScope.loadedProject.unload();
                 self.$rootScope.loadedProject.populate(dbObject);
             } else {
-                self.$rootScope.loadedProject = newInstance = new Project(dbObject);
+                newInstance = new Project(dbObject);
             }
 
             return this.uiUtilService.chain(
                 [
                     function () {
-                        return self.$rootScope.loadedProject.loadDependencies();
+                        return (self.$rootScope.loadedProject || newInstance).loadDependencies();
                     },
                     function () {
-                        return self.$rootScope.loadedProject.loadSketch();
+                        return (self.$rootScope.loadedProject || newInstance).loadSketch();
                     },
                     function () {
-                        !newInstance && self.$rootScope.$broadcast(self.angularEventTypes.switchProjectEvent, self.$rootScope.loadedProject);
+                        if (newInstance) {
+                            self.$rootScope.loadedProject = newInstance;
+                        }
+
+                        self.$rootScope.$broadcast(self.angularEventTypes.switchProjectEvent, self.$rootScope.loadedProject);
 
                         return self.$rootScope.loadedProject.tryLock(self.$rootScope.loginUser._id);
                     }

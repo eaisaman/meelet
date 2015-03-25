@@ -340,27 +340,13 @@ define(
                                         });
                                     }
 
-                                    uiUtilService.whilst(
-                                        function () {
-                                            return !scope.project;
-                                        },
-                                        function (callback) {
-                                            callback();
-                                        },
-                                        function (err) {
-                                            return appService.loadWidgetArtifactList().then(function () {
-                                                var arr = scope.filterLibraryList(scope.widgetLibraryList, scope.project.xrefRecord);
-                                                arr.splice(0, 0, 0, 0);
-                                                scope.filterWidgetLibraryList.splice(0, scope.filterWidgetLibraryList.length);
-                                                Array.prototype.splice.apply(scope.filterWidgetLibraryList, arr);
-
-                                                return uiUtilService.getResolveDefer();
-                                            }, function (err) {
-                                                return uiUtilService.getRejectDefer(err);
-                                            });
-                                        }, angularConstants.checkInterval, "widget.initFilterWidgetLibraryList"
-                                    );
-                                });
+                                    appService.loadWidgetArtifactList().then(function () {
+                                        var arr = scope.filterLibraryList(scope.widgetLibraryList, scope.project.xrefRecord);
+                                        arr.splice(0, 0, 0, 0);
+                                        scope.filterWidgetLibraryList.splice(0, scope.filterWidgetLibraryList.length);
+                                        Array.prototype.splice.apply(scope.filterWidgetLibraryList, arr);
+                                    });
+                                }, angularConstants.actionDelay);
                             }
                         }
                     }

@@ -450,27 +450,13 @@ define(
                                     $wrapper.addClass("expanded");
                                     $panel.addClass("show");
 
-                                    uiUtilService.whilst(
-                                        function () {
-                                            return !scope.project;
-                                        },
-                                        function (callback) {
-                                            callback();
-                                        },
-                                        function (err) {
-                                            return appService.loadEffectArtifactList().then(function () {
-                                                var arr = scope.filterLibraryList(scope.effectLibraryList, scope.project.xrefRecord);
-                                                arr.splice(0, 0, 0, 0);
-                                                scope.filterEffectLibraryList.splice(0, scope.filterEffectLibraryList.length);
-                                                Array.prototype.splice.apply(scope.filterEffectLibraryList, arr);
-
-                                                return uiUtilService.getResolveDefer();
-                                            }, function (err) {
-                                                return uiUtilService.getRejectDefer(err);
-                                            });
-                                        }, angularConstants.checkInterval
-                                    );
-                                });
+                                    appService.loadEffectArtifactList().then(function () {
+                                        var arr = scope.filterLibraryList(scope.effectLibraryList, scope.project.xrefRecord);
+                                        arr.splice(0, 0, 0, 0);
+                                        scope.filterEffectLibraryList.splice(0, scope.filterEffectLibraryList.length);
+                                        Array.prototype.splice.apply(scope.filterEffectLibraryList, arr);
+                                    });
+                                }, angularConstants.actionDelay);
                             }
                         }
                     }
