@@ -316,6 +316,8 @@ define(
             $scope.loadProject = function (event) {
                 event && event.stopPropagation && event.stopPropagation();
 
+                $rootScope.loadedProject.unload();
+
                 return uiUtilService.chain(
                     [
                         function () {
