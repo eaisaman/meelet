@@ -108,6 +108,9 @@ define(
                                             scopeEl.colorStop.percent = 0;
                                         }
                                     }
+
+                                    //Trigger watcher on sketchWidgetSetting.linearGradientColor to apply style to widget
+                                    scope.setGradientColor(scope.pickedGradientColor);
                                 }
 
                                 scope.toggleGradientControl = function () {

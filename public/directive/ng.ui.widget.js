@@ -79,9 +79,6 @@ define(
                                 }
 
                                 scope._ = _;
-                                scope.widgetLibraryList = $rootScope.widgetLibraryList;
-                                scope.filterWidgetLibraryList = [];
-                                scope.project = $rootScope.loadedProject;
                             },
                             post: function (scope, element, attrs) {
                                 var $widgetElement, mc;
@@ -319,6 +316,9 @@ define(
                                     }
                                 });
 
+                                scope.widgetLibraryList = $rootScope.widgetLibraryList;
+                                scope.filterWidgetLibraryList = [];
+
                                 $timeout(function () {
                                     var $wrapper = element.find(".ui-control-wrapper"),
                                         $panel = element.find(".ui-control-panel");
@@ -340,13 +340,25 @@ define(
                                         });
                                     }
 
-                                    appService.loadWidgetArtifactList().then(function () {
-                                        var arr = scope.filterLibraryList(scope.widgetLibraryList, scope.project.xrefRecord);
-                                        arr.splice(0, 0, 0, 0);
-                                        scope.filterWidgetLibraryList.splice(0, scope.filterWidgetLibraryList.length);
-                                        Array.prototype.splice.apply(scope.filterWidgetLibraryList, arr);
-                                    });
-                                }, angularConstants.actionDelay);
+                                    uiUtilService.whilst(
+                                        function () {
+                                            return !$rootScope.loadedProject;
+                                        },
+                                        function (callback) {
+                                            callback();
+                                        },
+                                        function (err) {
+                                            scope.project = $rootScope.loadedProject;
+
+                                            appService.loadWidgetArtifactList().then(function () {
+                                                var arr = scope.filterLibraryList(scope.widgetLibraryList, scope.project.xrefRecord);
+                                                arr.splice(0, 0, 0, 0);
+                                                scope.filterWidgetLibraryList.splice(0, scope.filterWidgetLibraryList.length);
+                                                Array.prototype.splice.apply(scope.filterWidgetLibraryList, arr);
+                                            });
+                                        }, angularConstants.checkInterval
+                                    );
+                                });
                             }
                         }
                     }

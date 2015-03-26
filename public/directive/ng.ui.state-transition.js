@@ -100,11 +100,6 @@ define(
                                 }
 
                                 scope._ = _;
-                                scope.triggers = {};
-                                scope.effectList = [];
-                                scope.effectLibraryList = $rootScope.effectLibraryList;
-                                scope.filterEffectLibraryList = [];
-                                scope.project = $rootScope.loadedProject;
                             },
                             post: function (scope, element, attrs) {
                                 scope.toggleTransitionDetails = function (selector, event) {
@@ -443,6 +438,11 @@ define(
                                     }
                                 });
 
+                                scope.triggers = {};
+                                scope.effectList = [];
+                                scope.effectLibraryList = $rootScope.effectLibraryList;
+                                scope.filterEffectLibraryList = [];
+
                                 $timeout(function () {
                                     var $wrapper = element.find(".ui-control-wrapper"),
                                         $panel = element.find(".ui-control-panel");
@@ -450,13 +450,25 @@ define(
                                     $wrapper.addClass("expanded");
                                     $panel.addClass("show");
 
-                                    appService.loadEffectArtifactList().then(function () {
-                                        var arr = scope.filterLibraryList(scope.effectLibraryList, scope.project.xrefRecord);
-                                        arr.splice(0, 0, 0, 0);
-                                        scope.filterEffectLibraryList.splice(0, scope.filterEffectLibraryList.length);
-                                        Array.prototype.splice.apply(scope.filterEffectLibraryList, arr);
-                                    });
-                                }, angularConstants.actionDelay);
+                                    uiUtilService.whilst(
+                                        function () {
+                                            return !$rootScope.loadedProject;
+                                        },
+                                        function (callback) {
+                                            callback();
+                                        },
+                                        function (err) {
+                                            scope.project = $rootScope.loadedProject;
+
+                                            appService.loadEffectArtifactList().then(function () {
+                                                var arr = scope.filterLibraryList(scope.effectLibraryList, scope.project.xrefRecord);
+                                                arr.splice(0, 0, 0, 0);
+                                                scope.filterEffectLibraryList.splice(0, scope.filterEffectLibraryList.length);
+                                                Array.prototype.splice.apply(scope.filterEffectLibraryList, arr);
+                                            });
+                                        }, angularConstants.checkInterval
+                                    );
+                                });
                             }
                         }
                     }

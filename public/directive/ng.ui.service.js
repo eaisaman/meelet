@@ -3695,11 +3695,13 @@ define(
                     if (pseudo != null && !pseudo) {
                         switch (args.length) {
                             case 3:
-                                if (args[2] === "left" || args[2] === "top") {
-                                    return "0px";
-                                } else if (typeof args[2] === "object") {
-                                    if (_.isEmpty((_.omit(args[2], ["left", "top"])))) {
-                                        return this;
+                                if (args[2]) {
+                                    if (args[2] === "left" || args[2] === "top") {
+                                        return "0px";
+                                    } else if (typeof args[2] === "object") {
+                                        if (_.isEmpty((_.omit(args[2], ["left", "top"])))) {
+                                            return this;
+                                        }
                                     }
                                 }
                                 break;

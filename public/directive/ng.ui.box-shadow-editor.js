@@ -140,10 +140,6 @@ define(
                                 }
 
                                 scope.styleNames = ['left', 'top', 'right', 'bottom', 'width', 'height'];
-                                scope.effectList = [];
-                                scope.effectLibraryList = $rootScope.effectLibraryList;
-                                scope.filterEffectLibraryList = [];
-                                scope.project = $rootScope.loadedProject;
                             },
                             post: function (scope, element, attrs) {
                                 scope.toggleBoxShadowControl = function () {
@@ -527,14 +523,30 @@ define(
                                     }
                                 });
 
+                                scope.effectList = [];
+                                scope.effectLibraryList = $rootScope.effectLibraryList;
+                                scope.filterEffectLibraryList = [];
+
                                 $timeout(function () {
-                                    appService.loadEffectArtifactList().then(function () {
-                                        var arr = scope.filterLibraryList(_.where(scope.effectLibraryList, {uiControl: "uiBoxShadowEditor"}), scope.project.xrefRecord);
-                                        arr.splice(0, 0, 0, 0);
-                                        scope.filterEffectLibraryList.splice(0, scope.filterEffectLibraryList.length);
-                                        Array.prototype.splice.apply(scope.filterEffectLibraryList, arr);
-                                    });
-                                }, angularConstants.actionDelay);
+                                    uiUtilService.whilst(
+                                        function () {
+                                            return !$rootScope.loadedProject;
+                                        },
+                                        function (callback) {
+                                            callback();
+                                        },
+                                        function (err) {
+                                            scope.project = $rootScope.loadedProject;
+
+                                            appService.loadEffectArtifactList().then(function () {
+                                                var arr = scope.filterLibraryList(_.where(scope.effectLibraryList, {uiControl: "uiBoxShadowEditor"}), scope.project.xrefRecord);
+                                                arr.splice(0, 0, 0, 0);
+                                                scope.filterEffectLibraryList.splice(0, scope.filterEffectLibraryList.length);
+                                                Array.prototype.splice.apply(scope.filterEffectLibraryList, arr);
+                                            });
+                                        }, angularConstants.checkInterval
+                                    );
+                                });
                             }
                         }
                     }
