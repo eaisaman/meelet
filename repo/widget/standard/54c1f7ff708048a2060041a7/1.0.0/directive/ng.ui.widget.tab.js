@@ -96,17 +96,26 @@ define(
                                         event && event.stopPropagation();
 
                                         var $el = $(event.target),
-                                            tabIndex = $el.attr("tab-index"),
-                                            $tab = element.find(".tabGroup[tab-index = " + tabIndex + "]");
+                                            tabIndex = parseInt($el.attr("tab-index"));
 
-                                        scope.pickedTabTitle = scope.tabTitles[tabIndex].name;
+                                        if (tabIndex >= 0) {
+                                            var $tab = element.find(".tabGroup[tab-index = " + tabIndex + "]");
 
-                                        return $q.all([scope.toggleExclusiveSelect($el, event, true), scope.toggleExclusiveDisplay($tab, event, true)]);
+                                            scope.pickedTabTitle = scope.tabTitles[tabIndex].name;
+
+                                            return $q.all([scope.toggleExclusiveSelect($el, event, true), scope.toggleExclusiveDisplay($tab, event, true)]);
+                                        }
+
+                                        return uiUtilService.getResolveDefer();
                                     }
 
                                     scope.onModifyTabTitles = function (to) {
                                         if (to != null) {
-                                            scope.pickedTabTitle = to.length && to[0].name || "";
+                                            if (!scope.pickedTabTitle || to.every(function (titleObj) {
+                                                    return titleObj.name !== scope.pickedTabTitle;
+                                                })) {
+                                                scope.pickedTabTitle = to.length && to[0].name || "";
+                                            }
 
                                             to.forEach(function (titleObj, i) {
                                                 var $tabGroup = element.find(".tabGroup[" + i + "]"),
@@ -159,6 +168,18 @@ define(
                                     scope.tabTitles = scope.tabTitles || [];
                                 },
                                 post: function (scope, element, attrs, ctrl) {
+                                    uiUtilService.whilst(function () {
+                                            return !element.closest(".widgetContainer").attr("id");
+                                        }, function (callback) {
+                                            callback();
+                                        }, function (err) {
+                                            if (!err) {
+                                                //id of widget of RepoSketchWidgetClass type
+                                                scope.artifactId = element.closest(".widgetContainer").parent().attr("id");
+                                            }
+                                        },
+                                        angularConstants.checkInterval
+                                    )
                                 }
                             }
                         }

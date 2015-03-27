@@ -16,7 +16,8 @@ define(
                 tabTitles: {
                     name: "Tabs",
                     type: "boundWriteList",
-                    listName: "tabTitles"
+                    listName: "tabTitles",
+                    defaultValue: []
                 },
                 pickedTabTitle: {
                     name: "Active Tab",

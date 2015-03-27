@@ -3397,17 +3397,18 @@ define(
                                 function () {
                                     self.$element && self.$element.addClass($inject.angularConstants.widgetClasses.widgetIncludeAnchorClass);
 
-                                    //Apply default value to widget's configuration.
+                                    var configuration = {};
                                     _.without(_.keys(self.widgetSpec.configuration), ["state", "handDownConfiguration"]).forEach(
                                         function (key) {
                                             var config = self.widgetSpec.configuration[key],
                                                 value = config.pickedValue || config.defaultValue;
 
                                             if (value != null) {
-                                                self.setScopedValue(key, value);
+                                                configuration[key] = config;
                                             }
                                         }
                                     );
+                                    _.isEmpty(configuration) || self.setScopedValue(configuration);
 
                                     return $inject.uiUtilService.getResolveDefer();
                                 },
@@ -3449,28 +3450,33 @@ define(
 
                     if (self.$element && self.$element.parent().length) {
                         $inject.uiUtilService.whilst(function () {
-                                return !angular.element(self.$element.find("[widget-container]:nth-of-type(1) :first-child")).scope();
+                                var scope = angular.element(self.$element.find("[widget-container]:nth-of-type(1) :first-child")).scope();
+                                return !scope || scope.artifactId !== self.id;
                             }, function (callback) {
                                 callback();
                             }, function (err) {
                                 if (!err) {
-                                    var scope = angular.element(self.$element.find("[widget-container]:nth-of-type(1) :first-child")).scope();
+                                    $inject.$timeout(
+                                        function () {
+                                            var scope = angular.element(self.$element.find("[widget-container]:nth-of-type(1) :first-child")).scope();
 
-                                    if (typeof key === "object") {
-                                        _.each(key, function (item) {
-                                            if (item.type === "size") {
-                                                var m = (item.pickedValue || "").match(/([-\d\.]+)(px|%)+$/)
-                                                if (m && m.length == 3) {
-                                                    scope[item.key] = item.pickedValue;
-                                                }
-                                            } else {
-                                                scope[item.key] = item.pickedValue;
+                                            if (typeof key === "object") {
+                                                _.each(key, function (item, itemKey) {
+                                                    if (item.type === "size") {
+                                                        var m = ((item.pickedValue || item.defaultValue) || "").match(/([-\d\.]+)(px|%)+$/)
+                                                        if (m && m.length == 3) {
+                                                            scope[itemKey] = item.pickedValue || item.defaultValue;
+                                                        }
+                                                    } else {
+                                                        scope[itemKey] = item.pickedValue || item.defaultValue;
+                                                    }
+                                                });
                                             }
-                                        });
-                                    }
-                                    else if (typeof key === "string") {
-                                        scope[key] = value;
-                                    }
+                                            else if (typeof key === "string") {
+                                                scope[key] = value;
+                                            }
+                                        }
+                                    );
                                 }
                             },
                             $inject.angularConstants.checkInterval,
@@ -3931,6 +3937,10 @@ define(
         Service.prototype.createPage = function (holderElement, pageObj) {
             var self = this;
 
+            if (typeof holderElement === "string" || angular.isElement(holderElement)) {
+                holderElement = $(holderElement);
+            }
+
             if (!pageObj) {
                 pageObj = new PageSketchWidgetClass();
                 pageObj.attr["ui-sketch-widget"] = "";
@@ -4063,29 +4073,24 @@ define(
         }
 
         Service.prototype.loadProject = function (dbObject) {
-            var self = this,
-                newInstance;
+            var self = this;
 
             if (self.$rootScope.loadedProject) {
                 self.$rootScope.loadedProject.unload();
                 self.$rootScope.loadedProject.populate(dbObject);
             } else {
-                newInstance = new Project(dbObject);
+                self.$rootScope.loadedProject = new Project(dbObject);
             }
 
             return this.uiUtilService.chain(
                 [
                     function () {
-                        return (self.$rootScope.loadedProject || newInstance).loadDependencies();
+                        return self.$rootScope.loadedProject.loadDependencies();
                     },
                     function () {
-                        return (self.$rootScope.loadedProject || newInstance).loadSketch();
+                        return self.$rootScope.loadedProject.loadSketch();
                     },
                     function () {
-                        if (newInstance) {
-                            self.$rootScope.loadedProject = newInstance;
-                        }
-
                         self.$rootScope.$broadcast(self.angularEventTypes.switchProjectEvent, self.$rootScope.loadedProject);
 
                         return self.$rootScope.loadedProject.tryLock(self.$rootScope.loginUser._id);

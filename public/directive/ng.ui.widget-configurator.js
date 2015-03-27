@@ -31,10 +31,10 @@ define(
                                 function createConfigurationObject(value, key, index) {
                                     var obj = _.extend({}, value, {key: key, index: index});
                                     if (obj.type === "boundReadList") {
-                                        obj.options = scope.configurableWidget.getScopedValue(obj.listName);
+                                        obj.options = scope.configurableWidget.getConfiguration(obj.listName);
                                         obj.pickedValue = scope.configurableWidget.getConfiguration(key);
                                     } else if (obj.type === "boundWriteList") {
-                                        obj.options = scope.configurableWidget.getScopedValue(obj.listName);
+                                        obj.options = scope.configurableWidget.getConfiguration(obj.listName);
                                     } else {
                                         obj.pickedValue = scope.configurableWidget.getConfiguration(key);
                                     }

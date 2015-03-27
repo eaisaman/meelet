@@ -82,6 +82,19 @@ define(
                                 },
                                 post: function (scope, element, attrs, ctrl) {
                                     ctrl.transclude(element);
+
+                                    uiUtilService.whilst(function () {
+                                            return !element.closest(".widgetContainer").attr("id");
+                                        }, function (callback) {
+                                            callback();
+                                        }, function (err) {
+                                            if (!err) {
+                                                //id of widget of RepoSketchWidgetClass type
+                                                scope.artifactId = element.closest(".widgetContainer").parent().attr("id");
+                                            }
+                                        },
+                                        angularConstants.checkInterval
+                                    )
                                 }
                             }
                         }
