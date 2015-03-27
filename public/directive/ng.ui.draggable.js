@@ -28,7 +28,7 @@ define(
 
             appModule.directive(
                 DIRECTIVE,
-                ['$parse', '$log', '$timeout', '$q', 'angularConstants', 'uiUtilService', function ($parse, $log, $timeout, $q, angularConstants, uiUtilService) {
+                ['$parse', '$log', '$timeout', '$q', '$exceptionHandler', 'angularConstants', 'uiUtilService', function ($parse, $log, $timeout, $q, $exceptionHandler, angularConstants, uiUtilService) {
                     return function (scope, element, attr) {
                         var mc, dragHandler;
 

@@ -2,9 +2,9 @@ define(
     ["angular", "jquery"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$parse", "$http", "$timeout", "$q", "angularEventTypes", "angularConstants", "uiUtilService"];
+            var inject = ["$parse", "$http", "$timeout", "$q", "$exceptionHandler", "angularEventTypes", "angularConstants", "uiUtilService"];
 
-            appModule.directive("uiBorderEditor", _.union(inject, [function ($parse, $http, $timeout, $q, angularEventTypes, angularConstants, uiUtilService) {
+            appModule.directive("uiBorderEditor", _.union(inject, [function ($parse, $http, $timeout, $q, $exceptionHandler, angularEventTypes, angularConstants, uiUtilService) {
                 'use strict';
 
                 var boundProperties = {border: "="},

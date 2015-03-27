@@ -20,11 +20,11 @@ define(
                     draggableOnceId: "draggable.dragHandler.handler"
                 },
                 options = angular.extend(defaults, opts),
-                inject = ['$parse', '$timeout', "$q", "$compile", "$log", "angularConstants", "angularEventTypes", "uiUtilService", "uiService"];
+                inject = ['$parse', '$timeout', "$q", "$exceptionHandler", "$compile", "$log", "angularConstants", "angularEventTypes", "uiUtilService", "uiService"];
 
             appModule.directive(
                 DIRECTIVE,
-                _.union(inject, [function ($parse, $timeout, $q, $compile, $log, angularConstants, angularEventTypes, uiUtilService, uiService) {
+                _.union(inject, [function ($parse, $timeout, $q, $exceptionHandler, $compile, $log, angularConstants, angularEventTypes, uiUtilService, uiService) {
                     var injectObj = _.object(inject, Array.prototype.slice.call(arguments));
 
                     var resizeHandler, toggleHandler, toggleResizeOnPressHandler, toggleTextModeHandler;

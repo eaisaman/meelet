@@ -2,9 +2,9 @@ define(
     ["angular", "jquery"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$http", "$timeout", "$q", "$parse", "angularConstants", "angularEventTypes", "uiUtilService"];
+            var inject = ["$http", "$timeout", "$q", "$exceptionHandler", "$parse", "angularConstants", "angularEventTypes", "uiUtilService"];
 
-            appModule.directive("uiMultilevelMenu", _.union(inject, [function ($http, $timeout, $q, $parse, angularConstants, angularEventTypes, uiUtilService) {
+            appModule.directive("uiMultilevelMenu", _.union(inject, [function ($http, $timeout, $q, $exceptionHandler, $parse, angularConstants, angularEventTypes, uiUtilService) {
                 'use strict';
 
                 var injectObj = _.object(inject, Array.prototype.slice.call(arguments)),

@@ -2,9 +2,9 @@ define(
     ["angular", "jquery", "hammer", "ng.ui.hammer-gestures", "ng.ui.extension"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$timeout", "$q", "angularEventTypes", "angularConstants", "uiUtilService"];
+            var inject = ["$timeout", "$q", "$exceptionHandler", "angularEventTypes", "angularConstants", "uiUtilService"];
 
-            appModule.directive("uiGradientEditor", _.union(inject, [function ($timeout, $q, angularEventTypes, angularConstants, uiUtilService) {
+            appModule.directive("uiGradientEditor", _.union(inject, [function ($timeout, $q, $exceptionHandler, angularEventTypes, angularConstants, uiUtilService) {
                 'use strict';
 
                 var boundProperties = {linearGradientColor: "="},

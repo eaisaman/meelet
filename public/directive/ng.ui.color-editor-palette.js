@@ -2,9 +2,9 @@ define(
     ["angular", "jquery"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$parse", "$http", "$timeout", "$q", "angularConstants", "angularEventTypes", "uiUtilService"];
+            var inject = ["$parse", "$http", "$timeout", "$q", "$exceptionHandler", "angularConstants", "angularEventTypes", "uiUtilService"];
 
-            appModule.directive("uiColorEditorPalette", _.union(inject, [function ($parse, $http, $timeout, $q, angularConstants, angularEventTypes, uiUtilService) {
+            appModule.directive("uiColorEditorPalette", _.union(inject, [function ($parse, $http, $timeout, $q, $exceptionHandler, angularConstants, angularEventTypes, uiUtilService) {
                 'use strict';
 
                 var defaults = {

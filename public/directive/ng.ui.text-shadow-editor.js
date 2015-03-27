@@ -2,9 +2,9 @@ define(
     ["angular", "jquery"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$parse", "$rootScope", "$http", "$timeout", "$q", "angularConstants", "angularEventTypes", "uiUtilService", "appService"];
+            var inject = ["$parse", "$rootScope", "$http", "$timeout", "$q", "$exceptionHandler", "angularConstants", "angularEventTypes", "uiUtilService", "appService"];
 
-            appModule.directive("uiTextShadowEditor", _.union(inject, [function ($parse, $rootScope, $http, $timeout, $q, angularConstants, angularEventTypes, uiUtilService, appService) {
+            appModule.directive("uiTextShadowEditor", _.union(inject, [function ($parse, $rootScope, $http, $timeout, $q, $exceptionHandler, angularConstants, angularEventTypes, uiUtilService, appService) {
                 'use strict';
 
                 var boundProperties = {textShadow: "="},

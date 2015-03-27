@@ -1,13 +1,14 @@
 define(
     ["angular", "jquery"],
     function () {
-        var Util = function ($timeout, $q, angularConstants) {
+        var Util = function ($timeout, $q, $exceptionHandler, angularConstants) {
             this.$timeout = $timeout;
             this.$q = $q;
+            this.$exceptionHandler = $exceptionHandler;
             this.angularConstants = angularConstants;
         };
 
-        Util.$inject = ["$timeout", "$q", "angularConstants"];
+        Util.$inject = ["$timeout", "$q", "$exceptionHandler", "angularConstants"];
 
         Util.prototype.calculateTop = function ($element) {
             var self = this,
@@ -426,7 +427,12 @@ define(
                                 if (err) {
                                     t && self.$timeout.cancel(t);
 
-                                    callback && callback(err);
+                                    try {
+                                        callback && callback(err);
+                                    } catch(e) {
+                                        self.$exceptionHandler(e);
+                                    }
+
                                     self.whilstMap[whilstId].defer.resolve(err);
                                     delete self.whilstMap[whilstId];
                                 } else
@@ -518,7 +524,11 @@ define(
                     function () {
                         self.$timeout(
                             function () {
-                                callback && callback();
+                                try {
+                                    callback && callback();
+                                } catch(e) {
+                                    self.$exceptionHandler(e);
+                                }
 
                                 delete self.onceMap[onceId];
                             },
@@ -555,7 +565,11 @@ define(
                             timestamp = self.latestOnceMap[id].timestamp;
 
                         function block() {
-                            callback && callback.apply(null, Array.prototype.slice.call(arguments));
+                            try {
+                                callback && callback.apply(null, Array.prototype.slice.call(arguments));
+                            } catch(e) {
+                                self.$exceptionHandler(e);
+                            }
 
                             if (timestamp == self.latestOnceMap[id].timestamp) {
                                 self.latestOnceMap[id].isExecuted = false;

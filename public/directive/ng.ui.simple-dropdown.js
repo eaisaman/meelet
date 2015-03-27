@@ -2,9 +2,9 @@ define(
     ["angular", "jquery"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$timeout", "$q", "$parse", "angularConstants", "uiUtilService"];
+            var inject = ["$timeout", "$q", "$exceptionHandler", "$parse", "angularConstants", "uiUtilService"];
 
-            appModule.directive("uiSimpleDropdown", _.union(inject, [function ($timeout, $q, $parse, angularConstants, uiUtilService) {
+            appModule.directive("uiSimpleDropdown", _.union(inject, [function ($timeout, $q, $exceptionHandler, $parse, angularConstants, uiUtilService) {
                 'use strict';
 
                 var boundProperties = {

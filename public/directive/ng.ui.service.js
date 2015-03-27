@@ -1,10 +1,11 @@
 define(
     ["angular", "jquery", "underscore", "ng.ui.util"],
     function () {
-        var Service = function ($parse, $timeout, $q, $compile, $rootScope, angularEventTypes, angularConstants, appService, uiUtilService) {
+        var Service = function ($parse, $timeout, $q, $exceptionHandler, $compile, $rootScope, angularEventTypes, angularConstants, appService, uiUtilService) {
             this.$parse = $parse;
             this.$timeout = $timeout;
             this.$q = $q;
+            this.$exceptionHandler = $exceptionHandler;
             this.$compile = $compile;
             this.$rootScope = $rootScope;
             this.angularEventTypes = angularEventTypes;
@@ -15,7 +16,7 @@ define(
             _.extend($inject, _.pick(this, Service.$inject));
         };
 
-        Service.$inject = ["$parse", "$timeout", "$q", "$compile", "$rootScope", "angularEventTypes", "angularConstants", "appService", "uiUtilService"];
+        Service.$inject = ["$parse", "$timeout", "$q", "$exceptionHandler", "$compile", "$rootScope", "angularEventTypes", "angularConstants", "appService", "uiUtilService"];
         var $inject = {};
 
         //Define sketch widget class

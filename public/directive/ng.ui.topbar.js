@@ -2,9 +2,9 @@ define(
     ["angular", "jquery"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$rootScope", "$timeout", "$q", "urlService", "uiService", "uiUtilService"];
+            var inject = ["$rootScope", "$timeout", "$q", "$exceptionHandler", "urlService", "uiService", "uiUtilService"];
 
-            appModule.directive("uiTopbar", _.union(inject, [function ($rootScope, $timeout, $q, urlService, uiService, uiUtilService) {
+            appModule.directive("uiTopbar", _.union(inject, [function ($rootScope, $timeout, $q, $exceptionHandler, urlService, uiService, uiUtilService) {
                 'use strict';
 
                 var defaults = {},
