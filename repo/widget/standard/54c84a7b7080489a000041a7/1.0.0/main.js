@@ -43,6 +43,11 @@ define(
                     ],
                     defaultValue: "brackets"
                 },
+                linkTitle: {
+                    name: "Title",
+                    type: "text",
+                    defaultValue: ""
+                },
                 handDownConfiguration: {
                     color: {
                         name: "Color",

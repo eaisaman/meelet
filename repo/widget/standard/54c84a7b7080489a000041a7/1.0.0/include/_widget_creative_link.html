@@ -1,10 +1,11 @@
-<div class="_widget_creativeLinkContainer" widget-container version="1.0.0" ng-attr-link-effect="{{effect}}"
-     ng-class="{'toggled':activeState === state}" ng-click="toggleState($event)"
-     ng-style="{'color': '{{color}}'}">
-    <div class="linkContent" ng-transclude></div>
-    <div class="linkContent"></div>
+<div>
+    <div class="_widget_creativeLinkContainer" widget-container version="1.0.0" ng-attr-link-effect="{{effect}}"
+         ng-class="{'toggled':activeState === state}" ng-click="toggleState($event)">
+        <div class="linkContent"><span>{{linkTitle}}</span></div>
+        <div class="linkContent"><span>{{linkTitle}}</span></div>
     <span class="lineBox" ng-if="effect == 'switchLine'">
-        <span class="leftLine" ng-style="{'background': '{{lineColor}}'}"></span>
-        <span class="rightLine" ng-style="{'background': '{{lineColor}}'}"></span>
+        <span class="leftLine"></span>
+        <span class="rightLine"></span>
     </span>
+    </div>
 </div>

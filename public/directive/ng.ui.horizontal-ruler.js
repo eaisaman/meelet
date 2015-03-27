@@ -17,7 +17,6 @@ define(
                     restrict: "A",
                     scope: {
                         dockAlign: "=",
-                        sketchObject: "=",
                         isPlaying: "=",
                         scale: "=",
                         markerCount: "=",
@@ -158,7 +157,7 @@ define(
                                                 if (m && m.length == 2)
                                                     ftLeft = Math.floor(parseFloat(m[1]) * angularConstants.precision) / angularConstants.precision;
                                                 else
-                                                    ftLeft = Math.floor($u.offset().left - $u.parent().offset().left($u.offset().left - $u.parent().offset().left) * angularConstants.precision) / angularConstants.precision;
+                                                    ftLeft = Math.floor(($u.offset().left - $u.parent().offset().left) * angularConstants.precision) / angularConstants.precision;
                                                 left = ftLeft + moveX;
 
                                                 if (left >= 0 && left + width <= maxWidth) {

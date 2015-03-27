@@ -28,17 +28,17 @@
 <div class="pageContent ui-control-wrapper" ng-class="dockAlign">
     <div class="pageBar ui-control-bar">
         <div class="currentPage col-as-5 no-padding">
-            <div class="pageState fs-x-smaller" ng-if="sketchObject.pickedPage.states.length">
+            <div class="pageState fs-x-smaller" ng-if="$root.sketchObject.pickedPage.states.length">
                 <div class="stateButton icon-page-before icon-page-flag-before"
-                     ng-class="{'activeState':sketchObject.pickedPage.state.name != sketchObject.pickedPage.initialStateOption.name}"
-                     ng-click="toggleSelectState(sketchObject.pickedPage, $event)"
-                     ng-if="sketchObject.pickedPage.states.length > 1"
+                     ng-class="{'activeState':$root.sketchObject.pickedPage.state.name != $root.sketchObject.pickedPage.initialStateOption.name}"
+                     ng-click="toggleSelectState($root.sketchObject.pickedPage, $event)"
+                     ng-if="$root.sketchObject.pickedPage.states.length > 1"
                         >
                 </div>
 
                 <div class="editState"
-                     ng-if="sketchObject.pickedPage.state.name != sketchObject.pickedPage.initialStateOption.name">
-                    {{sketchObject.pickedPage.state.name}}
+                     ng-if="$root.sketchObject.pickedPage.state.name != $root.sketchObject.pickedPage.initialStateOption.name">
+                    {{$root.sketchObject.pickedPage.state.name}}
                 </div>
             </div>
 
@@ -46,8 +46,8 @@
         </div>
 
         <div class="pageList col-as-7" ng-click="$event.stopPropagation()">
-            <select class="form-control fs-x-medium vt-align-center" title="{{sketchObject.pickedPage.name}}">
-                <option value="{{$index}}" selected="{{p.id == sketchObject.pickedPage.id}}"
+            <select class="form-control fs-x-medium vt-align-center" title="{{$root.sketchObject.pickedPage.name}}">
+                <option value="{{$index}}" selected="{{p.id == $root.sketchObject.pickedPage.id}}"
                         ng-repeat="p in project.sketchWorks.pages">
                     {{$index+1}}
                 </option>
@@ -68,8 +68,8 @@
     <div class="pageDetails ui-control-panel">
         <ui-tree id="pageDetailsTree" class="fs-x-small" drag-enabled="false" spacing="20" coverage="50"
                  collapseAll="true">
-            <ol ui-tree-nodes ng-model="sketchObject.pickedPage.childWidgets">
-                <li ng-repeat="item in sketchObject.pickedPage.childWidgets" ui-tree-node
+            <ol ui-tree-nodes ng-model="$root.sketchObject.pickedPage.childWidgets">
+                <li ng-repeat="item in $root.sketchObject.pickedPage.childWidgets" ui-tree-node
                     ng-attr-id="{{treeNodeIdPrefix + item.id}}" ng-include="'_pageWidgets.html'"
                     ng-class="{ 'selected': selected }"></li>
             </ol>

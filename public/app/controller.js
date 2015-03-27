@@ -16,6 +16,8 @@ define(
             $rootScope.loginUser = {};
             $rootScope.userDetail = {projectList: []};
             $rootScope.loadedProject = null;
+            $rootScope.sketchObject = {};
+            $rootScope.visiblePseudoEnabledWidgets = [];
             $scope.urlService = urlService;
 
             $scope.markSelection = function (target, source, props) {
@@ -200,20 +202,14 @@ define(
                 if (widgetObj && widgetObj.isElement) {
                     var $parent = widgetObj.$element.parent();
                     if ($parent.length) {
-                        var cloneObj = uiService.copyWidget(widgetObj, $parent),
-                            left = ($parent.width() - cloneObj.$element.width()) / 2,
-                            top = ($parent.height() - cloneObj.$element.height()) / 2;
+                        uiService.copyWidget(widgetObj, $parent).then(function (cloneObj) {
+                            var left = ($parent.width() - cloneObj.$element.width()) / 2,
+                                top = ($parent.height() - cloneObj.$element.height()) / 2;
 
-                        left = Math.floor(left * 100) / 100, top = Math.floor(top * 100) / 100;
+                            left = Math.floor(left * 100) / 100, top = Math.floor(top * 100) / 100;
 
-                        cloneObj.css("left", left + "px");
-                        cloneObj.css("top", top + "px");
-
-                        $timeout(function () {
-                            var manager = cloneObj.$element.data("hammer"),
-                                element = cloneObj.$element.get(0);
-
-                            manager.emit("tap", {target: element, srcEvent: {target: element}});
+                            cloneObj.css("left", left + "px");
+                            cloneObj.css("top", top + "px");
                         });
                     }
                 }
@@ -507,7 +503,6 @@ define(
             $scope.sketchWidgetSetting = {
                 isPlaying: false
             };
-            $scope.sketchObject = {};
             $scope.sketchDevice = {
                 type: "desktop",
                 width: 1024,
@@ -518,8 +513,6 @@ define(
             $scope.dockAlign = "align-left";
             $scope.iconLibraryList = $rootScope.iconLibraryList;
             $scope.effectLibraryList = $rootScope.effectLibraryList;
-
-            $rootScope.visiblePseudoEnabledWidgets = [];
         }
 
         function ProjectController($scope, $rootScope, $timeout, $q, angularConstants, appService, uiService, urlService) {

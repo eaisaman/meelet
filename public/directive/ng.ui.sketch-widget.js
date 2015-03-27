@@ -20,11 +20,11 @@ define(
                     draggableOnceId: "draggable.dragHandler.handler"
                 },
                 options = angular.extend(defaults, opts),
-                inject = ['$parse', '$timeout', "$q", "$exceptionHandler", "$compile", "$log", "angularConstants", "angularEventTypes", "uiUtilService", "uiService"];
+                inject = ['$rootScope', '$parse', '$timeout', "$q", "$exceptionHandler", "$compile", "$log", "angularConstants", "angularEventTypes", "uiUtilService", "uiService"];
 
             appModule.directive(
                 DIRECTIVE,
-                _.union(inject, [function ($parse, $timeout, $q, $exceptionHandler, $compile, $log, angularConstants, angularEventTypes, uiUtilService, uiService) {
+                _.union(inject, [function ($rootScope, $parse, $timeout, $q, $exceptionHandler, $compile, $log, angularConstants, angularEventTypes, uiUtilService, uiService) {
                     var injectObj = _.object(inject, Array.prototype.slice.call(arguments));
 
                     var resizeHandler, toggleHandler, toggleResizeOnPressHandler, toggleTextModeHandler;
@@ -48,7 +48,7 @@ define(
                                         var defer = $q.defer();
 
                                         $timeout(function () {
-                                            var prevWidget = scope.sketchObject.pickedWidget;
+                                            var prevWidget = $rootScope.sketchObject.pickedWidget;
 
                                             if (shiftPressed) {
                                                 if (widget.isElement) {
@@ -61,7 +61,7 @@ define(
 
                                                                         if (prevWidget.childWidgets.length == 1) {
                                                                             prevWidget.disassemble();
-                                                                            scope.sketchObject.pickedWidget = null;
+                                                                            $rootScope.sketchObject.pickedWidget = null;
                                                                         }
                                                                     } else {
                                                                         widget.appendTo(prevWidget);
@@ -69,7 +69,7 @@ define(
                                                                 } else {
                                                                     prevWidget.removeOmniClass(angularConstants.widgetClasses.activeClass);
                                                                     //prevWidget.resizable && !prevWidget.isTemporary && toggleResize(prevWidget.$element, false);
-                                                                    scope.sketchObject.pickedWidget = null;
+                                                                    $rootScope.sketchObject.pickedWidget = null;
                                                                 }
                                                             } else {
                                                                 prevWidget.removeOmniClass(angularConstants.widgetClasses.activeClass);
@@ -79,34 +79,34 @@ define(
                                                                     if (prevWidget.id != widget.id) {
                                                                         if (widget.isTemporary) {
                                                                             prevWidget.appendTo(widget);
-                                                                            scope.sketchObject.pickedWidget = widget;
+                                                                            $rootScope.sketchObject.pickedWidget = widget;
                                                                         } else {
                                                                             var composite = uiService.createComposite([prevWidget, widget], true);
                                                                             composite.addClass(options.widgetClass);
-                                                                            scope.sketchObject.pickedWidget = composite;
+                                                                            $rootScope.sketchObject.pickedWidget = composite;
                                                                         }
-                                                                        scope.sketchObject.pickedWidget.addOmniClass(angularConstants.widgetClasses.activeClass);
+                                                                        $rootScope.sketchObject.pickedWidget.addOmniClass(angularConstants.widgetClasses.activeClass);
                                                                     } else {
-                                                                        scope.sketchObject.pickedWidget = null;
+                                                                        $rootScope.sketchObject.pickedWidget = null;
                                                                     }
                                                                 }
                                                             }
                                                         }
                                                     } else {
-                                                        scope.sketchObject.pickedWidget = widget;
-                                                        scope.sketchObject.pickedWidget.addOmniClass(angularConstants.widgetClasses.activeClass);
+                                                        $rootScope.sketchObject.pickedWidget = widget;
+                                                        $rootScope.sketchObject.pickedWidget.addOmniClass(angularConstants.widgetClasses.activeClass);
                                                     }
                                                 }
                                             } else {
-                                                if (!scope.sketchObject.pickedWidget || scope.sketchObject.pickedWidget.id != widget.id) {
-                                                    scope.sketchObject.pickedWidget = widget;
-                                                    scope.sketchObject.pickedWidget.addOmniClass(angularConstants.widgetClasses.activeClass);
+                                                if (!$rootScope.sketchObject.pickedWidget || $rootScope.sketchObject.pickedWidget.id != widget.id) {
+                                                    $rootScope.sketchObject.pickedWidget = widget;
+                                                    $rootScope.sketchObject.pickedWidget.addOmniClass(angularConstants.widgetClasses.activeClass);
                                                 }
 
                                                 if (prevWidget) {
                                                     prevWidget.removeOmniClass(angularConstants.widgetClasses.activeClass);
-                                                    if (scope.sketchObject.pickedWidget == prevWidget)
-                                                        scope.sketchObject.pickedWidget = null;
+                                                    if ($rootScope.sketchObject.pickedWidget == prevWidget)
+                                                        $rootScope.sketchObject.pickedWidget = null;
                                                     !prevWidget.isTemporary && prevWidget.isElement && prevWidget.$element && toggleTextMode(prevWidget.$element, false);
                                                 }
                                             }
@@ -138,19 +138,19 @@ define(
                                         var defer = $q.defer();
 
                                         $timeout(function () {
-                                            var prevWidget = scope.sketchObject.pickedWidget;
+                                            var prevWidget = $rootScope.sketchObject.pickedWidget;
 
-                                            if (!scope.sketchObject.pickedWidget || scope.sketchObject.pickedWidget.id != widget.id) {
-                                                scope.sketchObject.pickedWidget = widget;
-                                                scope.sketchObject.pickedWidget.addOmniClass(angularConstants.widgetClasses.activeClass);
+                                            if (!$rootScope.sketchObject.pickedWidget || $rootScope.sketchObject.pickedWidget.id != widget.id) {
+                                                $rootScope.sketchObject.pickedWidget = widget;
+                                                $rootScope.sketchObject.pickedWidget.addOmniClass(angularConstants.widgetClasses.activeClass);
                                                 //widget.resizable && !widget.isTemporary && toggleResize(widget.$element);
                                             }
 
                                             if (prevWidget) {
-                                                if (scope.sketchObject.pickedWidget == prevWidget) {
+                                                if ($rootScope.sketchObject.pickedWidget == prevWidget) {
                                                     //var resizeToggled = prevWidget.resizable && !prevWidget.isTemporary && toggleResize(prevWidget.$element);
                                                     //if (!resizeToggled) {
-                                                    scope.sketchObject.pickedWidget = null;
+                                                    $rootScope.sketchObject.pickedWidget = null;
                                                     prevWidget.removeOmniClass(angularConstants.widgetClasses.activeClass);
                                                     //}
                                                 } else {
@@ -307,17 +307,17 @@ define(
                                         var defer = $q.defer();
 
                                         $timeout(function () {
-                                            var prevWidget = scope.sketchObject.pickedWidget;
+                                            var prevWidget = $rootScope.sketchObject.pickedWidget;
 
                                             prevWidget && !prevWidget.isTemporary && prevWidget.isElement && toggleTextMode(prevWidget.$element, false);
 
                                             if (!prevWidget || prevWidget.id != widget.id) {
                                                 prevWidget && prevWidget.removeOmniClass(angularConstants.widgetClasses.activeClass);
-                                                scope.sketchObject.pickedWidget = widget;
+                                                $rootScope.sketchObject.pickedWidget = widget;
                                                 !widget.isTemporary && widget.isElement && toggleTextMode(widget.$element);
                                             } else {
                                                 if (!toggleTextMode(widget.$element)) {
-                                                    scope.sketchObject.pickedWidget = null;
+                                                    $rootScope.sketchObject.pickedWidget = null;
                                                 }
                                                 widget.removeOmniClass(angularConstants.widgetClasses.activeClass);
                                             }
@@ -428,7 +428,7 @@ define(
 
                     return {
                         restrict: "A",
-                        scope: {sketchObject: "=", isPlaying: "=", widgetName: "@"},
+                        scope: {isPlaying: "=", widgetName: "@"},
                         replace: false,
                         compile: function (element, attrs) {
                             return {

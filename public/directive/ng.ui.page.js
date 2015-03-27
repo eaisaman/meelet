@@ -16,7 +16,7 @@ define(
 
                 return {
                     restrict: "A",
-                    scope: {sketchObject: "=", dockAlign: "=", treeNodeIdPrefix: "="},
+                    scope: {dockAlign: "=", treeNodeIdPrefix: "="},
                     replace: false,
                     templateUrl: "include/_page.html",
                     compile: function (element, attrs) {

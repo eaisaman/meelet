@@ -2210,7 +2210,7 @@ define(
                             }
                         }
 
-                        return $inject.uiUtilService.getResolveDefer();
+                        return $inject.uiUtilService.getResolveDefer(self);
                     },
                     moveAfter: function () {
                         var self = this,
@@ -2856,7 +2856,7 @@ define(
                     return ElementSketchWidgetClass.prototype.__proto__.appendTo.apply(self, [container]).then(
                         function () {
                             self.html && self.setHtml(self.html);
-                            return $inject.uiUtilService.getResolveDefer();
+                            return $inject.uiUtilService.getResolveDefer(self);
                         },
                         function (err) {
                             return $inject.uiUtilService.getRejectDefer(err);
@@ -3238,17 +3238,11 @@ define(
                                     "IncludeSketchWidgetClass.appendTo",
                                     $inject.angularConstants.renderTimeout
                                 ).then(function (err) {
-                                        var defer = $inject.$q.defer();
-
-                                        $inject.$timeout(function () {
-                                            if (err) {
-                                                defer.reject(err);
-                                            } else {
-                                                defer.resolve(self);
-                                            }
-                                        });
-
-                                        return defer.promise;
+                                        if (err) {
+                                            return $inject.uiUtilService.getRejectDefer(err);
+                                        } else {
+                                            return $inject.uiUtilService.getResolveDefer(self);
+                                        }
                                     }
                                 );
                             } else {
@@ -3411,7 +3405,7 @@ define(
                                     );
                                     _.isEmpty(configuration) || self.setScopedValue(configuration);
 
-                                    return $inject.uiUtilService.getResolveDefer();
+                                    return $inject.uiUtilService.getResolveDefer(self);
                                 },
                                 function (err) {
                                     return $inject.uiUtilService.getRejectDefer(err);
@@ -3746,7 +3740,7 @@ define(
             widgetObj = $el && $el.data("widgetObject");
 
             if ($el && $el.attr("ui-sketch-widget") != null && !widgetObj) {
-                var $parentElement = $el.parent($inject.angularConstants.anchorAttr),
+                var $parentElement = $el.parent("[{0}]".format($inject.angularConstants.anchorAttr)),
                     anchor;
 
                 if ($parentElement.length) {
@@ -3792,7 +3786,6 @@ define(
                             widgetObj.attr["ui-draggable-opts"] = $el.attr("ui-draggable-opts");
                             widgetObj.attr["ui-sketch-widget"] = "";
                             widgetObj.attr["is-playing"] = "sketchWidgetSetting.isPlaying";
-                            widgetObj.attr["sketch-object"] = "sketchObject";
                             widgetObj.attr["ng-class"] = "{'isPlaying': sketchWidgetSetting.isPlaying}";
                             widgetObj.addOmniClass(self.angularConstants.widgetClasses.widgetClass);
 
@@ -3843,13 +3836,12 @@ define(
                     widgetObj.attr["ui-draggable-opts"] = "{threshold: 5}";
                     widgetObj.attr["ui-sketch-widget"] = "";
                     widgetObj.attr["is-playing"] = "sketchWidgetSetting.isPlaying";
-                    widgetObj.attr["sketch-object"] = "sketchObject";
                     widgetObj.attr["ng-class"] = "{'isPlaying': sketchWidgetSetting.isPlaying}";
                     widgetObj.addOmniClass(self.angularConstants.widgetClasses.widgetClass);
                     widgetObj.appendTo($parent);
 
-                    var scope = angular.element(containerElement).scope();
-                    $inject.$compile(containerElement)(scope);
+                    var scope = angular.element($container).scope();
+                    $inject.$compile($container)(scope);
 
                     return widgetObj;
                 }
@@ -3861,7 +3853,6 @@ define(
                 widgetObj = new RepoSketchWidgetClass(null, widgetSpec);
             widgetObj.attr["ui-sketch-widget"] = "";
             widgetObj.attr["is-playing"] = "sketchWidgetSetting.isPlaying";
-            widgetObj.attr["sketch-object"] = "sketchObject";
             widgetObj.attr["ng-class"] = "{'isPlaying': sketchWidgetSetting.isPlaying}";
             widgetObj.addOmniClass(self.angularConstants.widgetClasses.widgetClass);
 
@@ -3877,17 +3868,58 @@ define(
             );
         }
 
-        Service.prototype.copyWidget = function (widgetObj, holderElement) {
+        Service.prototype.copyWidget = function (widgetObj, containerElement) {
             var self = this,
-                cloneObj = widgetObj.clone();
+                cloneObj = widgetObj.clone(),
+                $container;
 
-            cloneObj.removeOmniClass(self.angularConstants.widgetClasses.activeClass);
-            cloneObj.appendTo(holderElement);
+            if (containerElement.jquery) {
+                $container = containerElement;
+            } else if (typeof containerElement === "string" || angular.isElement(containerElement)) {
+                $container = $(containerElement);
+            }
 
-            var scope = angular.element(cloneObj.$element.parent()).scope();
-            $inject.$compile(cloneObj.$element.parent())(scope);
+            if ($container) {
+                var $parent,
+                    anchor;
 
-            return cloneObj;
+                if ($container.hasClass(self.angularConstants.widgetClasses.holderClass) || $container.hasClass(self.angularConstants.widgetClasses.widgetClass)) {
+                    $parent = $container;
+                } else if ($container.attr(self.angularConstants.anchorAttr) != null) {
+                    $parent = $container.closest("[ui-sketch-widget]");
+                    anchor = $container.attr(self.angularConstants.anchorAttr);
+                }
+            }
+
+            if ($parent) {
+                cloneObj.anchor = anchor;
+                cloneObj.removeOmniClass(self.angularConstants.widgetClasses.activeClass);
+
+                return cloneObj.appendTo($parent).then(function () {
+                    var scope = angular.element(cloneObj.$element.parent()).scope();
+                    self.$compile(cloneObj.$element.parent())(scope);
+
+                    return self.uiUtilService.whilst(function () {
+                        return !cloneObj.$element.data("hammer");
+                    }, function (callback) {
+                        callback();
+                    }, function () {
+                        var manager = cloneObj.$element.data("hammer"),
+                            element = cloneObj.$element.get(0);
+
+                        manager.emit("tap", {target: element, srcEvent: {target: element}});
+                    }, self.angularConstants.checkInterval).then(
+                        function () {
+                            return self.uiUtilService.getResolveDefer(cloneObj);
+                        }, function () {
+                            return self.uiUtilService.getRejectDefer();
+                        }
+                    );
+                });
+
+
+                return self.uiUtilService.getRejectDefer();
+            }
         }
 
         Service.prototype.createComposite = function (widgetObjs, isTemporary) {
@@ -3920,7 +3952,6 @@ define(
                     compositeObj.attr["ui-draggable-opts"] = "{threshold: 5}";
                     compositeObj.attr["ui-sketch-widget"] = "";
                     compositeObj.attr["is-playing"] = "sketchWidgetSetting.isPlaying";
-                    compositeObj.attr["sketch-object"] = "sketchObject";
                     compositeObj.attr["ng-class"] = "{'isPlaying': sketchWidgetSetting.isPlaying}";
                     compositeObj.addOmniClass(self.angularConstants.widgetClasses.widgetClass);
                     compositeObj.appendTo(containerElement);
@@ -3946,7 +3977,6 @@ define(
                 pageObj = new PageSketchWidgetClass();
                 pageObj.attr["ui-sketch-widget"] = "";
                 pageObj.attr["is-playing"] = "sketchWidgetSetting.isPlaying";
-                pageObj.attr["sketch-object"] = "sketchObject";
                 pageObj.attr["ng-class"] = "{'isPlaying': sketchWidgetSetting.isPlaying}";
                 pageObj.addOmniClass(self.angularConstants.widgetClasses.holderClass);
             }
