@@ -86,7 +86,7 @@ define(
                                     event && event.stopPropagation && event.stopPropagation();
 
                                     scope.widgetSpec.isApplyingHandDown = true;
-                                    scope.pickedWidget.applyHandDownConfiguration().then(function () {
+                                    scope.configurableWidget.applyHandDownConfiguration().then(function () {
                                         scope.widgetSpec.isApplyingHandDown = false;
                                     });
                                 }
@@ -107,7 +107,7 @@ define(
                                             widgetObj.setConfiguration(item.key, Number(item.pickedValue));
                                         }
                                     } else if (item.type === "size") {
-                                        var m = (item.pickedValue || "").match(/([-\d\.]+)(px|%)+$/)
+                                        var m = (item.pickedValue || "").match(/([-\d\.]+)(px|em|%)+$/)
                                         if (m && m.length == 3) {
                                             widgetObj.setConfiguration(item.key, item.pickedValue);
                                         }

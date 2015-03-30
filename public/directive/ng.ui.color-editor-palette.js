@@ -216,7 +216,7 @@ define(
 
                                     changeSelectedColor.onceId = "color-editor-palette.changeSelectedColor";
 
-                                    uiUtilService.latestOnce(changeSelectedColor, null, angularConstants.actionDelay)(to);
+                                    to && uiUtilService.latestOnce(changeSelectedColor, null, angularConstants.actionDelay)(to);
                                 }
 
                                 scope.watchSelectedColor = function (state) {

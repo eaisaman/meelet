@@ -289,6 +289,18 @@ define(
                     defaultValue: "moveToLeft"
                 },
                 handDownConfiguration: {
+                    tabHeaderWidth: {
+                        name: "Header Width",
+                        type: "size",
+                        handDown: true,
+                        defaultValue: "8em"
+                    },
+                    tabHeaderHeight: {
+                        name: "Header Height",
+                        type: "size",
+                        handDown: true,
+                        defaultValue: "2em"
+                    },
                     tabBackgroundColor: {
                         name: "Background Color",
                         type: "color",

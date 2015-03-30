@@ -131,10 +131,6 @@ define(
                                                 } else {
                                                     var $newGroup = $("<div />").
                                                         addClass("tabGroup fs-x-large-before").
-                                                        attr("tab-index", i).
-                                                        attr("tab-name", titleObj.name).
-                                                        attr("desc", "Tab Group " + titleObj.name).
-                                                        attr("widget-anchor", "{0}[{1}]".format(widgetAnchorId, titleObj.name)).
                                                         attr("ng-class", "{'show': pickedTabTitle === '{0}'}".format(titleObj.name));
 
                                                     if ($tabGroup.length) {
@@ -144,22 +140,20 @@ define(
                                                     }
                                                 }
                                             });
-                                            if (to.length) {
-                                                element.find(".tabGroup").each(function (i, groupElement) {
-                                                    if (i < to.length) {
-                                                        $(groupElement).attr("tab-index", i).attr("widget-anchor", "{0}[{1}]".format(widgetAnchorId, to[i].name));
-                                                        uiService.anchorElement(groupElement);
-                                                    } else {
-                                                        uiService.disposeElement(groupElement);
-                                                    }
-                                                });
+                                            var len = to.length || 0;
+                                            element.find(".tabGroup").each(function (i, groupElement) {
+                                                if (i < len) {
+                                                    $(groupElement).attr("tab-name", to[i].name)
+                                                        .attr("desc", "Tab Group " + to[i].name)
+                                                        .attr("tab-index", i)
+                                                        .attr("widget-anchor", "{0}[{1}]".format(widgetAnchorId, to[i].name));
+                                                    uiService.anchorElement(groupElement);
+                                                } else {
+                                                    uiService.disposeElement(groupElement);
+                                                }
+                                            });
 
-                                                $compile(element.find(".tabGroups"))(scope);
-
-                                                element.find(".tabGroups").children(".tabGroup").each(function (i, groupElement) {
-                                                    ctrl.transclude(to[i].name, $(groupElement));
-                                                });
-                                            }
+                                            $compile(element.find(".tabGroups"))(scope);
                                         }
                                     }
 

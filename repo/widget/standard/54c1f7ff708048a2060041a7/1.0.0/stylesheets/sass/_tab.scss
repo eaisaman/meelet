@@ -4,8 +4,6 @@
 @import "compass/css3/box-shadow";
 @import "animation/tab";
 
-$tabHeaderWidth: 8em;
-$tabHeaderHeight: 2em;
 $numOfMaxTabs: 10;
 
 $default-tab-value-map: (
@@ -13,10 +11,12 @@ $default-tab-value-map: (
         version: "1.0.0",
         tabBackgroundColor: #d4d4d4,
         titleBackgroundColor: #838383,
-        activeTitleBackgroundColor: #fffff
+        activeTitleBackgroundColor: #fffff,
+        tabHeaderWidth: 8em,
+        tabHeaderHeight: 2em
 );
 
-@mixin tab($tabClass, $version, $tabBackgroundColor, $titleBackgroundColor, $activeTitleBackgroundColor) {
+@mixin tab($tabClass, $version, $tabHeaderWidth, $tabHeaderHeight, $tabBackgroundColor, $titleBackgroundColor, $activeTitleBackgroundColor) {
 
     .#{$tabClass}[version='#{$version}'] {
         position: absolute;

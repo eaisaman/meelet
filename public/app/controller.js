@@ -275,6 +275,39 @@ define(
                 }
             }
 
+            $scope.pickParentWidget = function (event) {
+                event && event.stopPropagation && event.stopPropagation();
+
+                var widgetObj = $scope.sketchObject.pickedWidget;
+
+                if (widgetObj) {
+                    var parentWidget = widgetObj.parent();
+
+                    if (parentWidget) {
+                        if (parentWidget.hasClass(angularConstants.widgetClasses.widgetContainerClass)) {
+                            parentWidget = widgetObj.parent();
+                            $rootScope.sketchObject.pickedWidget = parentWidget;
+                            $rootScope.sketchObject.pickedWidget.addOmniClass(angularConstants.widgetClasses.activeClass);
+
+                            widgetObj.removeOmniClass(angularConstants.widgetClasses.activeClass);
+                            if (!widgetObj.isTemporary && widgetObj.isElement && widgetObj.$element) {
+                                var $text = $("#widgetText"),
+                                    editingWidget = $text.data("widgetObject");
+
+                                $text.toggle(false);
+                                if (editingWidget) {
+                                    $text.css("width", "auto");
+                                    if ($text.width()) {
+                                        editingWidget.setHtml($text.html());
+                                    }
+                                }
+                                $text.removeData("widgetObject");
+                            }
+                        }
+                    }
+                }
+            }
+
             $scope.moveUpWidget = function (event) {
                 event && event.stopPropagation && event.stopPropagation();
 

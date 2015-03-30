@@ -2024,15 +2024,17 @@ define(
                                 widgetObj;
 
                             var $container;
-                            if (container.isKindOf && container.isKindOf("BaseSketchWidget")) {
-                                $container = (container.$element = container.$element || $("<div />").data("widgetObject", container).attr("id", container.id));
-                                widgetObj = container;
-                            } else if (container.jquery) {
+                            if (container.jquery) {
                                 $container = container;
                                 widgetObj = $container.data("widgetObject");
                             } else if (typeof container === "string" || angular.isElement(container)) {
                                 $container = $(container);
                                 widgetObj = $container.data("widgetObject");
+                            }
+
+                            if (container.isKindOf && container.isKindOf("BaseSketchWidget")) {
+                                $container = (container.$element = container.$element || $("<div />").data("widgetObject", container).attr("id", container.id));
+                                widgetObj = container;
                             }
 
                             if (!self.$element) {
@@ -2788,7 +2790,7 @@ define(
                 DEFAULT_STYLE: {
                     "width": "100px",
                     "height": "100px",
-                    "background": {color: "#ffffff", alpha: 1}
+                    "linearGradientColor": {colorStopList: [{color: {color: "#ffffff", alpha: 1}, angle: 0}]}
                 },
                 MEMBERS: {
                     isElement: true,
@@ -2820,7 +2822,7 @@ define(
 
                     var self = this;
                     _.each(ElementSketchWidgetClass.prototype.DEFAULT_STYLE, function (styleValue, styleName) {
-                        !self.css(styleName) && self.css(styleName, styleValue);
+                        !self.css(styleName) && self.css(styleName, angular.copy(styleValue));
                     });
                 },
                 toJSON: function () {
@@ -3220,7 +3222,49 @@ define(
                                                     if (err) {
                                                         defer.reject(err);
                                                     } else {
-                                                        defer.resolve(self);
+                                                        var promiseArr = [],
+                                                            childWidgets = self.childWidgets;
+
+                                                        if (childWidgets.length) {
+                                                            var containerWidget = self.childWidgets[0];
+
+                                                            containerWidget.addOmniClass($inject.angularConstants.widgetClasses.widgetContainerClass);
+                                                            childWidgets = containerWidget.childWidgets;
+
+                                                            childWidgets.forEach(function (child) {
+                                                                if (child.anchor) {
+                                                                    promiseArr.push(
+                                                                        $inject.uiUtilService.whilst(
+                                                                            function () {
+                                                                                return !self.$element.find("[{0}='{1}']".format($inject.angularConstants.anchorAttr, child.anchor)).length;
+                                                                            }, function (callback) {
+                                                                                callback();
+                                                                            }, function (err) {
+                                                                                if (!err) {
+                                                                                    child.appendTo(containerWidget);
+                                                                                }
+                                                                            },
+                                                                            $inject.angularConstants.checkInterval,
+                                                                            "IncludeSketchWidgetClass.appendTo.anchorScanner." + child.id,
+                                                                            $inject.angularConstants.renderTimeout
+                                                                        )
+                                                                    );
+                                                                }
+                                                            });
+                                                        }
+
+                                                        if (promiseArr.length) {
+                                                            $inject.$q.all(promiseArr).then(
+                                                                function () {
+                                                                    defer.resolve(self);
+                                                                },
+                                                                function (err) {
+                                                                    defer.reject(err);
+                                                                }
+                                                            )
+                                                        } else {
+                                                            defer.resolve(self);
+                                                        }
                                                     }
                                                 }, $inject.angularConstants.unresponsiveInterval)();
                                             });
@@ -3260,7 +3304,7 @@ define(
                 DEFAULT_STYLE: {
                     "width": "100px",
                     "height": "100px",
-                    "background": {color: "#ffffff", alpha: 1}
+                    "linearGradientColor": {colorStopList: [{color: {color: "#ffffff", alpha: 1}, angle: 0}]}
                 },
                 MEMBERS: {
                     widgetSpec: null,
@@ -3279,7 +3323,7 @@ define(
 
                     var self = this;
                     _.each(RepoSketchWidgetClass.prototype.DEFAULT_STYLE, function (styleValue, styleName) {
-                        !self.css(styleName) && self.css(styleName, styleValue);
+                        !self.css(styleName) && self.css(styleName, angular.copy(styleValue));
                     });
                 },
                 dispose: function () {
@@ -3468,7 +3512,7 @@ define(
                                             if (typeof key === "object") {
                                                 _.each(key, function (item, itemKey) {
                                                     if (item.type === "size") {
-                                                        var m = ((item.pickedValue || item.defaultValue) || "").match(/([-\d\.]+)(px|%)+$/)
+                                                        var m = ((item.pickedValue || item.defaultValue) || "").match(/([-\d\.]+)(px|em|%)+$/)
                                                         if (m && m.length == 3) {
                                                             scope[itemKey] = item.pickedValue || item.defaultValue;
                                                         }
