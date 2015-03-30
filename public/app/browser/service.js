@@ -85,9 +85,6 @@ define(
                         if (artifact.template)
                             loadedSpec.template = "{0}/{1}".format(repoUrl, artifact.template);
 
-                        if (artifact.anchors)
-                            loadedSpec.anchors = artifact.anchors;
-
                         if (artifact.directiveName)
                             repoArtifact.directiveName = artifact.directiveName;
 

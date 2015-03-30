@@ -6,7 +6,7 @@
         <span>{{widgetSpec.name}}</span>
     </div>
     <div class="configurationPalette ui-control-panel">
-        <div class="configurationPane widgetConfiguration" ng-repeat="configurationItem in widgetSpec.configuration">
+        <div class="configurationPane widgetConfiguration" ng-if="configurableWidget && widgetSpec.configuration.length" ng-repeat="configurationItem in widgetSpec.configuration">
             <div class="input-group col-as-12 fs-x-smaller">
                 <label class="col-as-5 no-padding-right control-label">{{configurationItem.name}}</label>
 
@@ -77,7 +77,7 @@
                 </div>
             </div>
         </div>
-        <div class="handDownConfigurationGroup widgetConfiguration" ng-if="widgetSpec.handDownConfiguration.length">
+        <div class="handDownConfigurationGroup widgetConfiguration" ng-if="configurableWidget && widgetSpec.handDownConfiguration.length">
             <div class="handDownConfigurationBar fs-x-smaller">
                 <span class="handDownButton fs-x-large-before col-as-3 no-padding icon-widget-configurator-before icon-widget-configurator-loading-bubbles-before"
                       ng-class="{'dirty':pickedWidget.handDownConfigurationList && pickedWidget.handDownConfigurationList.length, 'handingDown':widgetSpec.isApplyingHandDown}"

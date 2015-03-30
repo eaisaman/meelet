@@ -24,9 +24,9 @@ $default-creative-link-value-map: (
             span {
                 position: absolute;
                 left: 0;
-                top: 0;
+                top: calc(50% - 0.5em);
                 width: 100%;
-                height: 100%;
+                height: 1em;
                 text-align: center;
             }
         }
@@ -36,8 +36,8 @@ $default-creative-link-value-map: (
 
             &:before, &:after {
                 position: absolute;
-                top: 0;
-                height: 100%;
+                top: calc(50% - 0.5em);
+                height: 1em;
                 width: 1em;
                 display: inline-block;
                 opacity: 0;
@@ -280,6 +280,9 @@ $default-creative-link-value-map: (
                 }
 
                 .linkContent:nth-of-type(2) {
+                    opacity: 0;
+                    pointer-events:none;
+
                     @include transform(translateX(100%));
                 }
             }

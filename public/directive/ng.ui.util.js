@@ -1,14 +1,15 @@
 define(
     ["angular", "jquery"],
     function () {
-        var Util = function ($timeout, $q, $exceptionHandler, angularConstants) {
+        var Util = function ($parse, $timeout, $q, $exceptionHandler, angularConstants) {
+            this.$parse = $parse;
             this.$timeout = $timeout;
             this.$q = $q;
             this.$exceptionHandler = $exceptionHandler;
             this.angularConstants = angularConstants;
         };
 
-        Util.$inject = ["$timeout", "$q", "$exceptionHandler", "angularConstants"];
+        Util.$inject = ["$parse", "$timeout", "$q", "$exceptionHandler", "angularConstants"];
 
         Util.prototype.calculateTop = function ($element) {
             var self = this,
@@ -429,7 +430,7 @@ define(
 
                                     try {
                                         callback && callback(err);
-                                    } catch(e) {
+                                    } catch (e) {
                                         self.$exceptionHandler(e);
                                     }
 
@@ -526,7 +527,7 @@ define(
                             function () {
                                 try {
                                     callback && callback();
-                                } catch(e) {
+                                } catch (e) {
                                     self.$exceptionHandler(e);
                                 }
 
@@ -567,7 +568,7 @@ define(
                         function block() {
                             try {
                                 callback && callback.apply(null, Array.prototype.slice.call(arguments));
-                            } catch(e) {
+                            } catch (e) {
                                 self.$exceptionHandler(e);
                             }
 

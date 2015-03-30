@@ -11,9 +11,6 @@ define(
                 url: "demo/creativeLinkDemo.html"
             },
             template: "app/widget.html",
-            anchors: [
-                "A0B94FA7-BBAB-4951-A77B-F9642E00FE1D"
-            ],
             configuration: {
                 state: {
                     name: "State",
@@ -45,6 +42,11 @@ define(
                 },
                 linkTitle: {
                     name: "Title",
+                    type: "text",
+                    defaultValue: ""
+                },
+                stateGroup: {
+                    name: "State Group",
                     type: "text",
                     defaultValue: ""
                 },

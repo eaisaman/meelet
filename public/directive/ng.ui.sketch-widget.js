@@ -129,7 +129,7 @@ define(
 
                                     var widget = $target.data("widgetObject");
                                     if (widget) {
-                                        uiUtilService.once(handler, null, 20)(widget, event.srcEvent && event.srcEvent.shiftKey);
+                                        uiUtilService.once(handler, null, angularConstants.unresponsiveInterval)(widget, event.srcEvent && event.srcEvent.shiftKey);
                                     }
                                 }
 
@@ -177,7 +177,7 @@ define(
 
                                     var widget = $target.data("widgetObject");
                                     if (widget && widget.isKindOf("ElementSketchWidget")) {
-                                        uiUtilService.once(handler, null, 20)(widget);
+                                        uiUtilService.once(handler, null, angularConstants.unresponsiveInterval)(widget);
                                     }
                                 }
 
@@ -241,7 +241,7 @@ define(
                                     }
 
                                     handler.onceId = options.draggableOnceId;
-                                    uiUtilService.once(handler, null, 20)(event);
+                                    uiUtilService.once(handler, null, angularConstants.unresponsiveInterval)(event);
                                 }
 
                                 function toggleResize($el, state) {
@@ -340,7 +340,7 @@ define(
 
                                     var widget = $target.data("widgetObject");
                                     if (widget && widget.isKindOf("ElementSketchWidget")) {
-                                        uiUtilService.once(handler, null, 20)(widget);
+                                        uiUtilService.once(handler, null, angularConstants.unresponsiveInterval)(widget);
                                     }
                                 }
 

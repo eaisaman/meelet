@@ -11,10 +11,6 @@ define(
                 url: "demo/modalWindowDemo.html"
             },
             template: "app/widget.html",
-            anchors: [
-                "A3D9E528-879D-4012-80C6-26743933D343",
-                "8E1D416B-6F65-445E-9398-E9F0F6D30FF8"
-            ],
             configuration: {
                 state: {
                     name: "State",

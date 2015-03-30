@@ -184,7 +184,7 @@ define(
 
                                 handler.onceId = options.onceId;
 
-                                uiUtilService.once(handler, null, 20)(event);
+                                uiUtilService.once(handler, null, angularConstants.unresponsiveInterval)(event);
                             };
 
                             mc.on("panstart panmove panend", dragHandler);

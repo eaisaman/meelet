@@ -80,7 +80,7 @@ define(
                                                 var args = Array.prototype.slice.call(arguments),
                                                     result = assign.apply(fn, args);
 
-                                                uiUtilService.once(shadowHandler, null, 20)(value);
+                                                uiUtilService.once(shadowHandler, null, angularConstants.unresponsiveInterval)(value);
 
                                                 return result;
                                             }

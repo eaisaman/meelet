@@ -42,6 +42,7 @@ define(
                             state: "=?",
                             isPlaying: "=?",
                             linkTitle: "=?",
+                            stateGroup: "=?",
                             /**
                              * Valid effect values include 'brackets', 'slideUpLine', 'slideDownLine', 'slideUpSecondLine',
                              * 'translateLine', 'slightTranslateLine', 'reveal', 'switchLine',
@@ -64,14 +65,40 @@ define(
                                         event && event.stopPropagation && event.stopPropagation();
 
                                         if (scope.isPlaying == null || scope.isPlaying) {
-                                            scope.state = scope.state === scope.activeState && "*" || scope.activeState;
+                                            if (scope.stateGroup && scope.artifactId) {
+                                                uiUtilService.broadcast(scope, angularConstants.stateGroupEventPattern.format(scope.stateGroup), {
+                                                    artifactId: scope.artifactId
+                                                });
+                                            } else {
+                                                scope.state = scope.state === scope.activeState && "*" || scope.activeState;
+                                            }
                                         }
                                     }
 
-                                    scope.sketchWidgetSetting = scope.$parent.sketchWidgetSetting || {isPlaying: true};
+                                    scope.setStateGroup = function (value) {
+                                        scope.stateGroup = value;
+
+                                        if (scope.artifactId) {
+                                            scope.stateGroupListener && scope.stateGroupListener();
+
+                                            if (value) {
+                                                scope.stateGroupListener = scope.$on(angularConstants.stateGroupEventPattern.format(scope.stateGroup), function (event, obj) {
+                                                    if (obj.artifactId) {
+                                                        if (obj.artifactId === scope.artifactId) {
+                                                            scope.state = scope.activeState;
+                                                        } else {
+                                                            scope.state = "*";
+                                                        }
+                                                    }
+                                                });
+                                            } else {
+                                                scope.stateGroupListener = null;
+                                            }
+                                        }
+                                    }
+
                                     scope.state = scope.state || "*";
                                     scope.activeState = "select";
-                                    scope.effect = scope.effect || "brackets";
                                 },
                                 post: function (scope, element, attrs, ctrl) {
                                     ctrl.transclude(scope, element);

@@ -11,10 +11,6 @@ define(
                 url: "demo/sidebarDemo.html"
             },
             template: "app/widget.html",
-            anchors: [
-                "986F8450-9E40-4DEF-9C2F-05B1547B7A38",
-                "80694DA6-8AA6-47D4-A9B0-368900098A97"
-            ],
             configuration: {
                 state: {
                     name: "State",

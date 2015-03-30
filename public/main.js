@@ -62,6 +62,7 @@ require(["jquery-lib", "jquery-plugins-lib", "hammer-lib", "jquery-ui-lib", "jqu
             widgetIncludeAnchorClass: "widgetIncludeAnchor"
         },
         anchorAttr: "widget-anchor",
+        stateGroupEventPattern: "State Change Event of State Group {0}",
         draggingShapeZIndex: 101,
         actionDelay: 100,
         checkInterval: 20,

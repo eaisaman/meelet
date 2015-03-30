@@ -11,7 +11,6 @@ define(
                 url: "demo/tabDemo.html"
             },
             template: "app/widget.html",
-            anchors: [],
             configuration: {
                 tabTitles: {
                     name: "Tabs",

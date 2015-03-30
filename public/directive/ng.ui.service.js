@@ -3357,7 +3357,7 @@ define(
                         function (loadedSpec) {
                             self.template = loadedSpec.template;
                             if (_.isEmpty(self.widgetSpec.configuration)) {
-                                _.extend(self.widgetSpec, loadedSpec);
+                                _.extend(self.widgetSpec, angular.copy(loadedSpec));
                             }
 
                             var stateConfiguration = loadedSpec.configuration.state;
@@ -3443,6 +3443,16 @@ define(
                 setScopedValue: function (key, value) {
                     var self = this;
 
+                    function scopeSetterHandler(scope, key, value) {
+                        var setterName = ("set" + key.charAt(0).toUpperCase() + key.substr(1)),
+                            setter = scope[setterName];
+                        if (setter) {
+                            setter.apply(scope, [value]);
+                        } else {
+                            scope[key] = value;
+                        }
+                    }
+
                     if (self.$element && self.$element.parent().length) {
                         $inject.uiUtilService.whilst(function () {
                                 var scope = angular.element(self.$element.find("[widget-container]:nth-of-type(1) :first-child")).scope();
@@ -3463,12 +3473,12 @@ define(
                                                             scope[itemKey] = item.pickedValue || item.defaultValue;
                                                         }
                                                     } else {
-                                                        scope[itemKey] = item.pickedValue || item.defaultValue;
+                                                        scopeSetterHandler(scope, itemKey, item.pickedValue || item.defaultValue);
                                                     }
                                                 });
                                             }
                                             else if (typeof key === "string") {
-                                                scope[key] = value;
+                                                scopeSetterHandler(scope, key, value);
                                             }
                                         }
                                     );
