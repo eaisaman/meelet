@@ -309,7 +309,7 @@
             </div>
             <div tab-sel="tab-content-box-shadow-value-4" class="boxShadowArtifactPanes vt-scroll-pane">
                 <div class="accordianGroup"
-                     ng-repeat="effectLibrary in markLibrarySelection(effectLibraryList, project.xrefRecord)"
+                     ng-repeat="effectLibrary in markLibrarySelection(effectLibraryList, $root.loadedProject.xrefRecord)"
                      ng-if="effectLibrary.uiControl === 'uiBoxShadowEditor'"
                      ng-click="toggleSelect($event.currentTarget, $event)">
                     <div class="accordianTitle col-as-12 fs-x-small icon-box-shadow-before icon-box-shadow-angle-double-up-before">
@@ -317,12 +317,12 @@
                               ng-attr-title="{{effectLibrary.desc}}">{{effectLibrary.desc}}</span>
 
                         <div class="toggleSelectionButton col-as-2 no-padding-right icon-box-shadow-before"
-                             ng-class="{'icon-box-shadow-square-before':!effectLibrary._selected, 'icon-box-shadow-square-check-before':effectLibrary._selected, 'partialSelect':isPartialSelection(effectLibrary, project.xrefRecord)}"
+                             ng-class="{'icon-box-shadow-square-before':!effectLibrary._selected, 'icon-box-shadow-square-check-before':effectLibrary._selected, 'partialSelect':isPartialSelection(effectLibrary, $root.loadedProject.xrefRecord)}"
                              ng-click="toggleLibrarySelection(effectLibrary, $event)"></div>
                     </div>
                     <div class="accordianBody fs-x-smaller col-as-12 no-padding">
                         <div class="effectPane col-as-12 no-padding"
-                             ng-repeat="artifact in markArtifactSelection(effectLibrary, project.xrefRecord)"
+                             ng-repeat="artifact in markArtifactSelection(effectLibrary, $root.loadedProject.xrefRecord)"
                              ng-click="$event.stopPropagation()">
                             <span>{{artifact.name}}</span>
 

@@ -10,18 +10,18 @@
     <div class="shapePalette ui-control-panel">
         <div class="iconLibraryList">
             <div class="accordianGroup"
-                 ng-repeat="iconLibrary in markLibrarySelection(iconLibraryList, project.xrefRecord)"
+                 ng-repeat="iconLibrary in markLibrarySelection(iconLibraryList, $root.loadedProject.xrefRecord)"
                  ng-click="toggleSelect($event.currentTarget, $event)">
                 <div class="accordianTitle col-as-12 fs-x-small icon-shape-before icon-shape-angle-double-up-before">
                     <span class="col-as-10 no-padding" ng-attr-title="{{iconLibrary.desc}}">{{iconLibrary.desc}}</span>
 
                     <div class="toggleSelectionButton col-as-2 no-padding-right icon-shape-before"
-                         ng-class="{'icon-shape-square-before':!iconLibrary._selected, 'icon-shape-square-check-before':iconLibrary._selected, 'partialSelect':isPartialSelection(iconLibrary, project.xrefRecord)}"
+                         ng-class="{'icon-shape-square-before':!iconLibrary._selected, 'icon-shape-square-check-before':iconLibrary._selected, 'partialSelect':isPartialSelection(iconLibrary, $root.loadedProject.xrefRecord)}"
                          ng-click="toggleLibrarySelection(iconLibrary, $event)"></div>
                 </div>
                 <div class="accordianBody fs-x-smaller col-as-12 no-padding">
                     <div class="artifactPane col-as-12 no-padding"
-                         ng-repeat="artifact in markArtifactSelection(iconLibrary, project.xrefRecord)"
+                         ng-repeat="artifact in markArtifactSelection(iconLibrary, $root.loadedProject.xrefRecord)"
                          ng-click="$event.stopPropagation()">
                         <span>{{artifact.name}}</span>
 
@@ -36,7 +36,7 @@
              ng-repeat="iconLibrary in filterIconLibraryList">
             <div class="libraryTitle fs-x-medium icon-shape-before icon-shape-glyphs-before" ng-attr-title="{{iconLibrary.desc}}">{{iconLibrary.desc}}</div>
             <div class="accordianGroup"
-                 ng-repeat="artifact in filterArtifactList(iconLibrary, project.xrefRecord)"
+                 ng-repeat="artifact in filterArtifactList(iconLibrary, $root.loadedProject.xrefRecord)"
                  ng-click="toggleSelect($event.currentTarget, $event)">
                 <div class="accordianTitle col-as-12 fs-x-small icon-shape-before icon-shape-angle-double-up-before">
                     <span class="col-as-12 no-padding" ng-attr-title="{{artifact.name}}">{{artifact.name}}</span>

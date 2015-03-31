@@ -816,7 +816,7 @@ define(
                     var self = this,
                         defer = $inject.$q.defer();
 
-                    if (self.widgetObj.$element && self.widgetObj.$element.parent().length) {
+                    if (self.widgetObj.$element && self.widgetObj.$element[0].nodeType == 1 && self.widgetObj.$element.parent().length) {
                         var fullName = self.artifactSpec.directiveName + "-" + self.artifactSpec.version.replace(/\./g, "-");
                         self.widgetObj.$element.attr(fullName, "");
                         self.widgetObj.$element.attr("effect", self.effect.name);
@@ -855,7 +855,7 @@ define(
                 restoreWidget: function () {
                     var self = this;
 
-                    if (self.widgetObj.$element && self.widgetObj.$element.parent().length) {
+                    if (self.widgetObj.$element && self.widgetObj.$element[0].nodeType == 1 && self.widgetObj.$element.parent().length) {
                         var fullName = self.artifactSpec.directiveName + "-" + self.artifactSpec.version.replace(/\./g, "-");
                         self.widgetObj.$element.removeAttr(fullName);
                         self.widgetObj.$element.removeAttr("effect");
@@ -912,7 +912,7 @@ define(
                     $inject.$timeout(function () {
                         self.widgetObj.setState(self.newState);
 
-                        if (self.widgetObj.$element && self.widgetObj.$element.parent().length) {
+                        if (self.widgetObj.$element && self.widgetObj.$element[0].nodeType == 1 && self.widgetObj.$element.parent().length) {
                             var animationName = self.widgetObj.$element.css("animation-name");
                             if (animationName && animationName !== "none") {
                                 $inject.uiUtilService.onAnimationEnd(self.widgetObj.$element).then(function () {
@@ -980,7 +980,7 @@ define(
                     $inject.$timeout(function () {
                         self.widgetObj.setConfiguration && self.widgetObj.setConfiguration(self.configuration);
 
-                        if (self.widgetObj.$element && self.widgetObj.$element.parent().length) {
+                        if (self.widgetObj.$element && self.widgetObj.$element[0].nodeType == 1 && self.widgetObj.$element.parent().length) {
                             var animationName = self.widgetObj.$element.css("animation-name");
                             if (animationName && animationName !== "none") {
                                 $inject.uiUtilService.onAnimationEnd(self.widgetObj.$element).then(function () {
@@ -1076,7 +1076,7 @@ define(
                 on: function (widgetObj) {
                     var self = this;
 
-                    if (widgetObj && widgetObj.$element && widgetObj.$element.parent().length && self.eventName) {
+                    if (widgetObj && widgetObj.$element && widgetObj.$element[0].nodeType == 1 && widgetObj.$element.parent().length && self.eventName) {
                         self.initialize.prototype.__proto__.on.apply(self, [widgetObj]);
 
                         self.hammer = new Hammer(widgetObj.$element.get(0), _.clone(self.options));
@@ -1972,7 +1972,7 @@ define(
                             $element = self.$element;
                         }
 
-                        if ($element && $element.parent().length) {
+                        if ($element && $element[0].nodeType == 1 && $element.parent().length) {
                             var $parent = $element.parent(),
                                 anchor = $parent.attr($inject.angularConstants.anchorAttr);
 
@@ -2056,6 +2056,11 @@ define(
                             if (container.isKindOf && container.isKindOf("BaseSketchWidget")) {
                                 $container = (container.$element = container.$element || $("<div />").data("widgetObject", container).attr("id", container.id));
                                 widgetObj = container;
+                            }
+
+                            //ng-include may change dom element to comment which is invalid for later processing
+                            if (self.$element && self.$element[0].nodeType != 1) {
+                                self.$element = null;
                             }
 
                             if (!self.$element) {
@@ -2591,9 +2596,9 @@ define(
                     },
                     fillParent: function () {
                         var self = this,
-                            $parent = self.$element && self.$element.parent();
+                            $parent = self.$element && self.$element[0].nodeType == 1 && self.$element.parent();
 
-                        if ($parent.length) {
+                        if ($parent && $parent.length) {
                             var height = $inject.uiUtilService.calculateHeight($parent),
                                 width = $inject.uiUtilService.calculateWidth($parent);
 
@@ -2627,7 +2632,7 @@ define(
                             defer = $inject.$q.defer();
 
                         self.css(animation);
-                        self.$element && self.$element.parent().length && $inject.uiUtilService.onAnimationEnd(self.$element).then(function () {
+                        self.$element && self.$element[0].nodeType == 1 && self.$element.parent().length && $inject.uiUtilService.onAnimationEnd(self.$element).then(function () {
                             defer.resolve();
                         }) || $inject.$timeout(function () {
                             defer.resolve();
@@ -2889,7 +2894,7 @@ define(
                 levelUp: function (widgetObj, doCompile, waiveDisassemble) {
                     var self = this;
 
-                    if (self.$element && self.$element.parent().length) {
+                    if (self.$element && self.$element[0].nodeType == 1 && self.$element.parent().length) {
                         var $parent = self.$element.parent(),
                             left = self.$element.offset().left,
                             top = self.$element.offset().top,
@@ -2959,7 +2964,7 @@ define(
                 disassemble: function () {
                     var self = this;
 
-                    if (self.$element && self.$element.parent().length && self.childWidgets.length) {
+                    if (self.$element && self.$element[0].nodeType == 1 && self.$element.parent().length && self.childWidgets.length) {
                         for (; self.childWidgets.length;) {
                             var childWidget = self.childWidgets[0];
                             self.levelUp(childWidget, false, true);
@@ -2981,7 +2986,7 @@ define(
                 alignLeft: function () {
                     var self = this;
 
-                    if (self.$element && self.$element.parent().length) {
+                    if (self.$element && self.$element[0].nodeType == 1 && self.$element.parent().length) {
                         var maxChildWidth = 0,
                             m = (self.css("left") || "").match(/([-\d\.]+)px$/),
                             firstChildLeft,
@@ -3011,7 +3016,7 @@ define(
                 alignCenter: function () {
                     var self = this;
 
-                    if (self.$element && self.$element.parent().length) {
+                    if (self.$element && self.$element[0].nodeType == 1 && self.$element.parent().length) {
                         var width,
                             maxChildWidth = 0,
                             m = (self.css("left") || "").match(/([-\d\.]+)px$/),
@@ -3057,7 +3062,7 @@ define(
                 alignRight: function () {
                     var self = this;
 
-                    if (self.$element && self.$element.parent().length) {
+                    if (self.$element && self.$element[0].nodeType == 1 && self.$element.parent().length) {
                         var width,
                             maxChildWidth = 0,
                             m = (self.css("left") || "").match(/([-\d\.]+)px$/),
@@ -3113,7 +3118,7 @@ define(
                 zoomIn: function ($page) {
                     var self = this;
 
-                    if ($page && self.$element && self.$element.parent().length) {
+                    if ($page && self.$element && self.$element[0].nodeType == 1 && self.$element.parent().length) {
                         var scaleX = $page.width() / self.$element.width(),
                             scaleY = $page.height() / self.$element.height(),
                             scale = Math.max(scaleX, scaleY);
@@ -3210,7 +3215,7 @@ define(
 
                     return IncludeSketchWidgetClass.prototype.__proto__.appendTo.apply(self, [container]).then(
                         function () {
-                            if (self.$element && self.$element.parent().length && self.template) {
+                            if (self.$element && self.$element[0].nodeType == 1 && self.$element.parent().length && self.template) {
                                 return $inject.uiUtilService.whilst(function () {
                                         return !angular.element(self.$element).scope();
                                     }, function (callback) {
@@ -3484,9 +3489,9 @@ define(
                 },
                 fillParent: function () {
                     var self = this,
-                        $parent = self.$element && self.$element.parent();
+                        $parent = self.$element && self.$element[0].nodeType == 1 && self.$element.parent();
 
-                    if ($parent.length) {
+                    if ($parent && $parent.length) {
                         RepoSketchWidgetClass.prototype.__proto__.fillParent.apply(self);
 
                         self.childWidgets.forEach(function (child) {
@@ -3497,7 +3502,7 @@ define(
                 getScopedValue: function (key) {
                     var self = this;
 
-                    if (self.$element && self.$element.parent().length) {
+                    if (self.$element && self.$element[0].nodeType == 1 && self.$element.parent().length) {
                         var scope = angular.element(self.$element.find("[widget-container]:nth-of-type(1)").first().children()[0]).scope();
 
                         return scope[key];
@@ -3518,7 +3523,7 @@ define(
                         }
                     }
 
-                    if (self.$element && self.$element.parent().length) {
+                    if (self.$element && self.$element[0].nodeType == 1 && self.$element.parent().length) {
                         $inject.uiUtilService.whilst(function () {
                                 var scope = angular.element(self.$element.find("[widget-container]:nth-of-type(1)").first().children()[0]).scope();
                                 return !scope || scope.artifactId !== self.id;
@@ -3799,7 +3804,7 @@ define(
                 parentElement: function () {
                     var self = this;
 
-                    return self.$element && self.$element.parent() || null;
+                    return self.$element && self.$element[0].nodeType == 1 && self.$element.parent() || null;
                 }
             });
 

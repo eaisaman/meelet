@@ -133,7 +133,7 @@ define(
                                                                     libraryId: scope.pickedLibrary._id,
                                                                     libraryName: scope.pickedLibrary.name,
                                                                     version: version,
-                                                                    projectId: scope.project.projectRecord._id
+                                                                    projectId: $rootScope.loadedProject.projectRecord._id
                                                                 }
                                                             ).then(
                                                                 function (widgetObj) {
@@ -209,7 +209,7 @@ define(
                                     repoArtifact._version = (repoArtifact.versionList.length && repoArtifact.versionList[repoArtifact.versionList.length - 1].name || "");
 
                                     if (repoArtifact._version) {
-                                        var xref = _.findWhere(scope.project.xrefRecord, {libraryId: widgetLibrary._id});
+                                        var xref = _.findWhere($rootScope.loadedProject.xrefRecord, {libraryId: widgetLibrary._id});
 
                                         if (xref) {
                                             var artifact = _.findWhere(xref.artifactList, {artifactId: repoArtifact._id});
@@ -235,12 +235,12 @@ define(
                                                     }
                                                 }
                                             } else {
-                                                if (scope.project.selectArtifact(widgetLibrary._id, repoArtifact._id, repoArtifact.name, repoArtifact._version)) {
+                                                if ($rootScope.loadedProject.selectArtifact(widgetLibrary._id, repoArtifact._id, repoArtifact.name, repoArtifact._version)) {
                                                     repoArtifact._selected = true;
                                                 }
                                             }
                                         } else {
-                                            scope.project.addLibrary(
+                                            $rootScope.loadedProject.addLibrary(
                                                 widgetLibrary._id,
                                                 widgetLibrary.name,
                                                 widgetLibrary.type,
@@ -268,9 +268,9 @@ define(
                                 scope.toggleLibrarySelection = function (widgetLibrary, event) {
                                     event && event.stopPropagation && event.stopPropagation();
 
-                                    var library = _.findWhere(scope.project.xrefRecord, {libraryId: widgetLibrary._id});
+                                    var library = _.findWhere($rootScope.loadedProject.xrefRecord, {libraryId: widgetLibrary._id});
                                     if (library) {
-                                        if (scope.project.removeLibrary(widgetLibrary._id)) {
+                                        if ($rootScope.loadedProject.removeLibrary(widgetLibrary._id)) {
                                             delete widgetLibrary._selected;
 
                                             var index;
@@ -350,10 +350,8 @@ define(
                                             callback();
                                         },
                                         function (err) {
-                                            scope.project = $rootScope.loadedProject;
-
                                             appService.loadWidgetArtifactList().then(function () {
-                                                var arr = scope.filterLibraryList(scope.widgetLibraryList, scope.project.xrefRecord);
+                                                var arr = scope.filterLibraryList(scope.widgetLibraryList, $rootScope.loadedProject.xrefRecord);
                                                 arr.splice(0, 0, 0, 0);
                                                 scope.filterWidgetLibraryList.splice(0, scope.filterWidgetLibraryList.length);
                                                 Array.prototype.splice.apply(scope.filterWidgetLibraryList, arr);

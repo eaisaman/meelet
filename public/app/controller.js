@@ -360,26 +360,31 @@ define(
             }
 
             $scope.renderProject = function () {
-                return uiUtilService.whilst(function () {
-                    return !$("." + angularConstants.widgetClasses.deviceHolderClass).length;
-                }, function (callback) {
-                    callback();
-                }, function () {
-                    if ($rootScope.loadedProject.sketchWorks.pages.length) {
-                        uiService.createPage("." + angularConstants.widgetClasses.deviceHolderClass, $rootScope.loadedProject.sketchWorks.pages[0]).then(function (pageObj) {
-                            $scope.sketchObject.pickedPage = pageObj;
+                return uiUtilService.whilst(
+                    function () {
+                        return !$("." + angularConstants.widgetClasses.deviceHolderClass).length || !$rootScope.loadedProject;
+                    }, function (callback) {
+                        callback();
+                    }, function () {
+                        if ($rootScope.loadedProject.sketchWorks.pages.length) {
+                            uiService.createPage("." + angularConstants.widgetClasses.deviceHolderClass, $rootScope.loadedProject.sketchWorks.pages[0]).then(function (pageObj) {
+                                $scope.sketchObject.pickedPage = pageObj;
 
-                            CKEDITOR.inline('widgetText');
-                        });
-                    } else {
-                        uiService.createPage("." + angularConstants.widgetClasses.deviceHolderClass).then(function (pageObj) {
-                            $scope.sketchObject.pickedPage = pageObj;
-                            $rootScope.loadedProject.sketchWorks.pages.push(pageObj);
+                                CKEDITOR.inline('widgetText');
+                            });
+                        } else {
+                            uiService.createPage("." + angularConstants.widgetClasses.deviceHolderClass).then(function (pageObj) {
+                                $scope.sketchObject.pickedPage = pageObj;
+                                $rootScope.loadedProject.sketchWorks.pages.push(pageObj);
 
-                            CKEDITOR.inline('widgetText');
-                        });
-                    }
-                }, angularConstants.checkInterval, "FrameSketchController.renderProject." + $rootScope.loadedProject.projectRecord._id);
+                                CKEDITOR.inline('widgetText');
+                            });
+                        }
+                    },
+                    angularConstants.checkInterval,
+                    "FrameSketchController.renderProject",
+                    angularConstants.renderTimeout
+                );
             }
 
             $scope.toggleLockProject = function (event) {
@@ -523,7 +528,6 @@ define(
             });
 
             function initMaster() {
-                $scope.project = $rootScope.loadedProject;
                 $scope.renderProject();
             }
 
@@ -603,11 +607,11 @@ define(
                 $scope.toggleEditMode = !$scope.toggleEditMode;
             }
 
-            $scope.toggleCheck = function (project, event) {
+            $scope.toggleCheck = function (projectItem, event) {
                 event && event.stopPropagation && event.stopPropagation();
 
-                project.checked = !project.checked;
-                !project.checked && delete project.checked;
+                projectItem.checked = !projectItem.checked;
+                !projectItem.checked && delete projectItem.checked;
             }
 
             $scope.addProject = function (project, event) {
@@ -646,15 +650,15 @@ define(
                 return true;
             }
 
-            $scope.removeProject = function (project, event) {
+            $scope.removeProject = function (projectItem, event) {
                 event && event.stopPropagation && event.stopPropagation();
 
                 $(".topbarToggleButton.select").removeClass("select");
 
-                appService.deleteProject($rootScope.loginUser._id, project).then(function (result) {
+                appService.deleteProject($rootScope.loginUser._id, projectItem).then(function (result) {
                     var index;
                     if (!$rootScope.userDetail.projectList.every(function (p, i) {
-                            if (p._id === project._id) {
+                            if (p._id === projectItem._id) {
                                 index = i;
                                 return false;
                             }
@@ -665,10 +669,10 @@ define(
                 });
             }
 
-            $scope.selectProject = function (project, event) {
+            $scope.selectProject = function (projectItem, event) {
                 event && event.stopPropagation && event.stopPropagation();
 
-                uiService.loadProject(project).then(function (projectObj) {
+                uiService.loadProject(projectItem).then(function (projectObj) {
                     urlService.frameSketch(false, {project: projectObj});
                 });
             }
@@ -688,61 +692,6 @@ define(
 
             initMaster();
 
-            $scope.classie = classie;
-            $scope._ = _;
-        }
-
-        function RepoController($scope, $rootScope, $timeout, $q, angularConstants, appService, urlService) {
-            $scope.setRepoType = function (repoTypeValue) {
-                appService.getRepoLibrary(repoTypeValue && {type: repoTypeValue} || {}).then(function (result) {
-                    $rootScope.repoLibraryList = result.data.result == "OK" && result.data.resultValue || [];
-                });
-            }
-
-            $scope.toggleRepoLibSelection = function (repoLib, event) {
-                event && event.stopPropagation && event.stopPropagation();
-
-                var library = _.findWhere($scope.project.xrefRecord, {libraryId: repoLib._id});
-                if (library) {
-                    if ($scope.project.removeLibrary(repoLib._id)) {
-                        delete repoLib._selected;
-                    }
-                } else {
-                    var artifactFilter = {
-                        library: repoLib._id,
-                        forbidden: false
-                    };
-
-                    appService.getRepoArtifact(artifactFilter).then(function (result) {
-                        if (result.data.result == "OK") {
-                            var artifactList = [];
-                            result.data.resultValue.forEach(function (artifact) {
-                                var version = artifact.versionList.length && artifact.versionList[artifact.versionList.length - 1].name || "";
-
-                                version && artifactList.push({
-                                    artifactId: artifact._id,
-                                    name: artifact.name,
-                                    version: version
-                                });
-                            });
-
-                            if (artifactList.length && $scope.project.addLibrary(repoLib._id, repoLib.name, repoLib.type, artifactList)) {
-                                repoLib._selected = true;
-                            }
-                        }
-                    });
-                }
-
-                return true;
-            }
-
-            function initMaster() {
-                $scope.project = $rootScope.loadedProject;
-            };
-
-            initMaster();
-
-            $scope.repoTypes = angularConstants.repoTypes;
             $scope.classie = classie;
             $scope._ = _;
         }
@@ -875,5 +824,59 @@ define(
                 controller('ProjectController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "uiService", "urlService", ProjectController]).
                 controller('RepoController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "urlService", RepoController]).
                 controller('RepoLibController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "urlService", RepoLibController]);
+        }
+
+        function RepoController($scope, $rootScope, $timeout, $q, angularConstants, appService, urlService) {
+            $scope.setRepoType = function (repoTypeValue) {
+                appService.getRepoLibrary(repoTypeValue && {type: repoTypeValue} || {}).then(function (result) {
+                    $rootScope.repoLibraryList = result.data.result == "OK" && result.data.resultValue || [];
+                });
+            }
+
+            $scope.toggleRepoLibSelection = function (repoLib, event) {
+                event && event.stopPropagation && event.stopPropagation();
+
+                var library = _.findWhere($rootScope.loadedProject.xrefRecord, {libraryId: repoLib._id});
+                if (library) {
+                    if ($rootScope.loadedProject.removeLibrary(repoLib._id)) {
+                        delete repoLib._selected;
+                    }
+                } else {
+                    var artifactFilter = {
+                        library: repoLib._id,
+                        forbidden: false
+                    };
+
+                    appService.getRepoArtifact(artifactFilter).then(function (result) {
+                        if (result.data.result == "OK") {
+                            var artifactList = [];
+                            result.data.resultValue.forEach(function (artifact) {
+                                var version = artifact.versionList.length && artifact.versionList[artifact.versionList.length - 1].name || "";
+
+                                version && artifactList.push({
+                                    artifactId: artifact._id,
+                                    name: artifact.name,
+                                    version: version
+                                });
+                            });
+
+                            if (artifactList.length && $rootScope.loadedProject.addLibrary(repoLib._id, repoLib.name, repoLib.type, artifactList)) {
+                                repoLib._selected = true;
+                            }
+                        }
+                    });
+                }
+
+                return true;
+            }
+
+            function initMaster() {
+            }
+
+            initMaster();
+
+            $scope.repoTypes = angularConstants.repoTypes;
+            $scope.classie = classie;
+            $scope._ = _;
         }
     });

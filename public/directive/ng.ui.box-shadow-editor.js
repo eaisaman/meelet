@@ -414,7 +414,7 @@ define(
                                     repoArtifact._version = (repoArtifact.versionList.length && repoArtifact.versionList[repoArtifact.versionList.length - 1].name || "");
 
                                     if (repoArtifact._version) {
-                                        var xref = _.findWhere(scope.project.xrefRecord, {libraryId: effectLibrary._id});
+                                        var xref = _.findWhere($rootScope.loadedProject.xrefRecord, {libraryId: effectLibrary._id});
 
                                         if (xref) {
                                             var artifact = _.findWhere(xref.artifactList, {artifactId: repoArtifact._id});
@@ -440,13 +440,13 @@ define(
                                                     }
                                                 }
                                             } else {
-                                                if (scope.project.selectArtifact(effectLibrary._id, repoArtifact._id, repoArtifact.name, repoArtifact._version)) {
+                                                if ($rootScope.loadedProject.selectArtifact(effectLibrary._id, repoArtifact._id, repoArtifact.name, repoArtifact._version)) {
                                                     repoArtifact._selected = true;
                                                 }
                                             }
                                         } else {
                                             if (effectLibrary.uiControl === "uiBoxShadowEditor") {
-                                                scope.project.addLibrary(
+                                                $rootScope.loadedProject.addLibrary(
                                                     effectLibrary._id,
                                                     effectLibrary.name,
                                                     effectLibrary.type,
@@ -476,9 +476,9 @@ define(
                                 scope.toggleLibrarySelection = function (effectLibrary, event) {
                                     event && event.stopPropagation && event.stopPropagation();
 
-                                    var library = _.findWhere(scope.project.xrefRecord, {libraryId: effectLibrary._id});
+                                    var library = _.findWhere($rootScope.loadedProject.xrefRecord, {libraryId: effectLibrary._id});
                                     if (library) {
-                                        if (scope.project.removeLibrary(effectLibrary._id)) {
+                                        if ($rootScope.loadedProject.removeLibrary(effectLibrary._id)) {
                                             delete effectLibrary._selected;
 
                                             var index;
@@ -505,7 +505,7 @@ define(
                                             });
                                         });
 
-                                        if (artifactList.length && scope.project.addLibrary(effectLibrary._id, effectLibrary.name, effectLibrary.type, artifactList)) {
+                                        if (artifactList.length && $rootScope.loadedProject.addLibrary(effectLibrary._id, effectLibrary.name, effectLibrary.type, artifactList)) {
                                             effectLibrary._selected = true;
 
                                             if (scope.filterEffectLibraryList.every(function (lib) {
@@ -519,7 +519,7 @@ define(
 
                                 scope.$on(angularEventTypes.switchProjectEvent, function (event, data) {
                                     if (data) {
-                                        var arr = scope.filterLibraryList(_.where(scope.effectLibraryList, {uiControl: "uiBoxShadowEditor"}), scope.project.xrefRecord);
+                                        var arr = scope.filterLibraryList(_.where(scope.effectLibraryList, {uiControl: "uiBoxShadowEditor"}), $rootScope.loadedProject.xrefRecord);
                                         arr.splice(0, 0, 0, 0);
                                         scope.filterEffectLibraryList.splice(0, scope.filterEffectLibraryList.length);
                                         Array.prototype.splice.apply(scope.filterEffectLibraryList, arr);
@@ -539,10 +539,8 @@ define(
                                             callback();
                                         },
                                         function (err) {
-                                            scope.project = $rootScope.loadedProject;
-
                                             appService.loadEffectArtifactList().then(function () {
-                                                var arr = scope.filterLibraryList(_.where(scope.effectLibraryList, {uiControl: "uiBoxShadowEditor"}), scope.project.xrefRecord);
+                                                var arr = scope.filterLibraryList(_.where(scope.effectLibraryList, {uiControl: "uiBoxShadowEditor"}), $rootScope.loadedProject.xrefRecord);
                                                 arr.splice(0, 0, 0, 0);
                                                 scope.filterEffectLibraryList.splice(0, scope.filterEffectLibraryList.length);
                                                 Array.prototype.splice.apply(scope.filterEffectLibraryList, arr);

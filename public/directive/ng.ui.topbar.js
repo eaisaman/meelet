@@ -74,16 +74,9 @@ define(
 
                                                 if (urlService.currentLocation() === "frameSketch") {
                                                     $timeout(function () {
-                                                        uiUtilService.chain(
-                                                            [
-                                                                function () {
-                                                                    return uiService.loadProject(projectItem);
-                                                                },
-                                                                function () {
-                                                                    return scope.renderProject();
-                                                                }
-                                                            ]
-                                                        );
+                                                        uiService.loadProject(projectItem).then(function () {
+                                                            scope.renderProject && scope.renderProject();
+                                                        });
                                                     })
                                                 } else {
                                                     $timeout(function () {

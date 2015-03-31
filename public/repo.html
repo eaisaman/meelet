@@ -17,7 +17,7 @@
     </div>
     <div class="repoContent col-as-12">
         <div class="fs-x-small repoLib"
-             ng-repeat="repoLib in markSelection(repoLibraryList, project.xrefRecord, [{target:'_id',source:'libraryId'}])"
+             ng-repeat="repoLib in markSelection(repoLibraryList, $root.loadedProject && $root.loadedProject.xrefRecord, [{target:'_id',source:'libraryId'}])"
              ng-click="urlService.repoLib(false, {repoLib:repoLib})">
             <div class="repoImg fs-x-huge">
                 <img onerror="classie.addClass(this.parentNode, 'imgLoadError')"
@@ -45,7 +45,7 @@
                 <div class="col-as-6 no-padding-left"><span>{{repoLib.creator}}</span>
                 </div>
             </div>
-            <div class="repoLibButton col-as-12" ng-if="project" ng-click="toggleRepoLibSelection(repoLib, $event)">
+            <div class="repoLibButton col-as-12" ng-if="$root.loadedProject" ng-click="toggleRepoLibSelection(repoLib, $event)">
                 {{repoLib._selected?'Remove':'Add'}}
             </div>
         </div>

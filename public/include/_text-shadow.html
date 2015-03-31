@@ -31,7 +31,7 @@
                         {{effectLibrary.name}}
                     </div>
                     <div class="accordianGroup fs-x-small"
-                         ng-repeat="artifact in filterArtifactList(effectLibrary, project.xrefRecord)"
+                         ng-repeat="artifact in filterArtifactList(effectLibrary, $root.loadedProject.xrefRecord)"
                          ng-click="toggleSelect($event.currentTarget, $event)">
                         <div class="accordianTitle col-as-12 icon-text-shadow-before icon-text-shadow-angle-double-up-before">
                             {{artifact.name}}
@@ -104,19 +104,19 @@
             <div tab-sel="tab-content-text-shadow-value-3" class="textShadowArtifactPanes vt-scroll-pane">
                 <div class="accordianGroup"
                      ng-if="effectLibrary.uiControl === 'uiTextShadowEditor'"
-                     ng-repeat="effectLibrary in markLibrarySelection(effectLibraryList, project.xrefRecord)"
+                     ng-repeat="effectLibrary in markLibrarySelection(effectLibraryList, $root.loadedProject.xrefRecord)"
                      ng-click="toggleSelect($event.currentTarget, $event)">
                     <div class="accordianTitle col-as-12 fs-x-small icon-text-shadow-before icon-text-shadow-angle-double-up-before">
                         <span class="col-as-10 no-padding"
                               ng-attr-title="{{effectLibrary.desc}}">{{effectLibrary.desc}}</span>
 
                         <div class="toggleSelectionButton col-as-2 no-padding-right icon-text-shadow-before"
-                             ng-class="{'icon-text-shadow-square-before':!effectLibrary._selected, 'icon-text-shadow-square-check-before':effectLibrary._selected, 'partialSelect':isPartialSelection(effectLibrary, project.xrefRecord)}"
+                             ng-class="{'icon-text-shadow-square-before':!effectLibrary._selected, 'icon-text-shadow-square-check-before':effectLibrary._selected, 'partialSelect':isPartialSelection(effectLibrary, $root.loadedProject.xrefRecord)}"
                              ng-click="toggleLibrarySelection(effectLibrary, $event)"></div>
                     </div>
                     <div class="accordianBody fs-x-smaller col-as-12 no-padding">
                         <div class="effectPane col-as-12 no-padding"
-                             ng-repeat="artifact in markArtifactSelection(effectLibrary, project.xrefRecord)"
+                             ng-repeat="artifact in markArtifactSelection(effectLibrary, $root.loadedProject.xrefRecord)"
                              ng-click="$event.stopPropagation()">
                             <span>{{artifact.name}}</span>
 

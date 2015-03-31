@@ -184,7 +184,7 @@ define(
                                     repoArtifact._version = (repoArtifact.versionList.length && repoArtifact.versionList[repoArtifact.versionList.length - 1].name || "");
 
                                     if (repoArtifact._version) {
-                                        var xref = _.findWhere(scope.project.xrefRecord, {libraryId: iconLibrary._id});
+                                        var xref = _.findWhere($rootScope.loadedProject.xrefRecord, {libraryId: iconLibrary._id});
 
                                         if (xref) {
                                             var artifact = _.findWhere(xref.artifactList, {artifactId: repoArtifact._id});
@@ -210,12 +210,12 @@ define(
                                                     }
                                                 }
                                             } else {
-                                                if (scope.project.selectArtifact(iconLibrary._id, repoArtifact._id, repoArtifact.name, repoArtifact._version)) {
+                                                if ($rootScope.loadedProject.selectArtifact(iconLibrary._id, repoArtifact._id, repoArtifact.name, repoArtifact._version)) {
                                                     repoArtifact._selected = true;
                                                 }
                                             }
                                         } else {
-                                            scope.project.addLibrary(
+                                            $rootScope.loadedProject.addLibrary(
                                                 iconLibrary._id,
                                                 iconLibrary.name,
                                                 iconLibrary.type,
@@ -243,9 +243,9 @@ define(
                                 scope.toggleLibrarySelection = function (iconLibrary, event) {
                                     event && event.stopPropagation && event.stopPropagation();
 
-                                    var library = _.findWhere(scope.project.xrefRecord, {libraryId: iconLibrary._id});
+                                    var library = _.findWhere($rootScope.loadedProject.xrefRecord, {libraryId: iconLibrary._id});
                                     if (library) {
-                                        if (scope.project.removeLibrary(iconLibrary._id)) {
+                                        if ($rootScope.loadedProject.removeLibrary(iconLibrary._id)) {
                                             delete iconLibrary._selected;
 
                                             var index;
@@ -272,7 +272,7 @@ define(
                                             });
                                         });
 
-                                        if (artifactList.length && scope.project.addLibrary(iconLibrary._id, iconLibrary.name, iconLibrary.type, artifactList)) {
+                                        if (artifactList.length && $rootScope.loadedProject.addLibrary(iconLibrary._id, iconLibrary.name, iconLibrary.type, artifactList)) {
                                             iconLibrary._selected = true;
 
                                             if (scope.filterIconLibraryList.every(function (lib) {
@@ -286,7 +286,7 @@ define(
 
                                 scope.$on(angularEventTypes.switchProjectEvent, function (event, data) {
                                     if (data) {
-                                        var arr = scope.filterLibraryList(scope.iconLibraryList, scope.project.xrefRecord);
+                                        var arr = scope.filterLibraryList(scope.iconLibraryList, $rootScope.loadedProject.xrefRecord);
                                         arr.splice(0, 0, 0, 0);
                                         scope.filterIconLibraryList.splice(0, scope.filterIconLibraryList.length);
                                         Array.prototype.splice.apply(scope.filterIconLibraryList, arr);
@@ -325,10 +325,8 @@ define(
                                             callback();
                                         },
                                         function (err) {
-                                            scope.project = $rootScope.loadedProject;
-
                                             appService.loadIconArtifactList().then(function () {
-                                                var arr = scope.filterLibraryList(scope.iconLibraryList, scope.project.xrefRecord);
+                                                var arr = scope.filterLibraryList(scope.iconLibraryList, $rootScope.loadedProject.xrefRecord);
                                                 arr.splice(0, 0, 0, 0);
                                                 scope.filterIconLibraryList.splice(0, scope.filterIconLibraryList.length);
                                                 Array.prototype.splice.apply(scope.filterIconLibraryList, arr);
