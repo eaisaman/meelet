@@ -148,7 +148,10 @@ define(
                                                     scope.setTextShadow(angular.copy(options.textShadow));
 
                                                     return uiUtilService.getResolveDefer();
-                                                }, angularConstants.checkInterval
+                                                },
+                                                angularConstants.checkInterval,
+                                                "ui-text-shadow-editor.toggleTextShadowControl",
+                                                angularConstants.renderTimeout
                                             );
                                         } else {
                                             if (scope.textShadow) {
@@ -495,7 +498,10 @@ define(
                                                 scope.filterEffectLibraryList.splice(0, scope.filterEffectLibraryList.length);
                                                 Array.prototype.splice.apply(scope.filterEffectLibraryList, arr);
                                             });
-                                        }, angularConstants.checkInterval
+                                        },
+                                        angularConstants.checkInterval,
+                                        "ui-text-shadow-editor.compile.post",
+                                        angularConstants.renderTimeout
                                     );
                                 });
                             }

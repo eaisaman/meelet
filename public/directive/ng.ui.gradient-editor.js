@@ -127,7 +127,10 @@ define(
                                                     scope.setGradientColor(angular.copy(options.linearGradientColor));
 
                                                     return uiUtilService.getResolveDefer();
-                                                }, angularConstants.checkInterval
+                                                },
+                                                angularConstants.checkInterval,
+                                                "ui-gradient-editor.toggleGradientControl",
+                                                angularConstants.renderTimeout
                                             );
                                         } else {
                                             if (scope.linearGradientColor) {

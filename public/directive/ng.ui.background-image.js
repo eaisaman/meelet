@@ -72,7 +72,10 @@ define(
                                                     scope.setBackgroundRepeatValue(options.backgroundRepeat);
 
                                                     return uiUtilService.getResolveDefer();
-                                                }, angularConstants.checkInterval
+                                                },
+                                                angularConstants.checkInterval,
+                                                "ui-background-image.toggleBackgroundImageControl",
+                                                angularConstants.renderTimeout
                                             );
                                         } else {
                                             if (scope.backgroundImage) {

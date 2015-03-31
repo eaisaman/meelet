@@ -2,7 +2,7 @@ define(
     ["angular", "jquery"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$timeout", "$q",  "$exceptionHandler", "$parse", "$rootScope", "angularEventTypes", "angularConstants", "uiUtilService", "uiService"];
+            var inject = ["$timeout", "$q", "$exceptionHandler", "$parse", "$rootScope", "angularEventTypes", "angularConstants", "uiUtilService", "uiService"];
 
             appModule.directive("uiPage", _.union(inject, [function ($timeout, $q, $exceptionHandler, $parse, $rootScope, angularEventTypes, angularConstants, uiUtilService, uiService) {
                 'use strict';
@@ -22,7 +22,10 @@ define(
                     compile: function (element, attrs) {
                         return {
                             pre: function (scope, element, attrs) {
-                                extension && extension.attach && extension.attach(scope, _.extend(injectObj, {element: element, scope: scope}));
+                                extension && extension.attach && extension.attach(scope, _.extend(injectObj, {
+                                    element: element,
+                                    scope: scope
+                                }));
 
                                 options = _.extend(_.clone(options), $parse(attrs['uiPageOpts'])(scope, {}));
 
@@ -48,7 +51,7 @@ define(
                                         angularEventTypes.beforeWidgetCreationEvent,
                                         function (name) {
                                             if (name) {
-                                                uiService.createPage($("." + options.pageHolderClass)).then(function(pageObj) {
+                                                uiService.createPage($("." + options.pageHolderClass)).then(function (pageObj) {
                                                     pageObj.name = name;
                                                     pageObj.addOmniClass(angularConstants.widgetClasses.activeClass);
                                                     pageObj.addClass(options.pageClass);
@@ -101,33 +104,56 @@ define(
                                 scope.toggleSelectState = function (item, event) {
                                     event && event.stopPropagation && event.stopPropagation();
 
-                                    var $dropdown = element.find("#widgetStateDropdown");
+                                    if (item != null && item != scope.stateTreeNodeItem) {
+                                        scope.stateTreeNodeItem = null;
 
-                                    if (event) {
-                                        var $el = $(event.target),
-                                            offset = $el.offset();
+                                        $timeout(function () {
+                                            scope.stateTreeNodeItem = item;
 
-                                        var m = ($el.css("height") || "").match(/([-\d\.]+)px$/);
-                                        if (m && m.length == 2)
-                                            offset.top += parseFloat(m[1]) * 1.5;
-                                        offset.left = Math.floor(offset.left * angularConstants.precision) / angularConstants.precision;
-                                        offset.top = Math.floor(offset.top * angularConstants.precision) / angularConstants.precision;
+                                            if (item.stateOptions.length) {
+                                                return uiUtilService.whilst(
+                                                    function () {
+                                                        return !angular.element(element.find("#widgetStateDropdown > div")).scope();
+                                                    },
+                                                    function (callback) {
+                                                        callback();
+                                                    },
+                                                    function (err) {
+                                                        if (!err) {
+                                                            var $dropdown = element.find("#widgetStateDropdown");
 
-                                        $dropdown.offset(offset);
-                                    }
+                                                            if (event) {
+                                                                var $el = $(event.target),
+                                                                    offset = $el.offset();
 
-                                    if (item) {
-                                        scope.stateTreeNodeItem = item;
-                                    }
+                                                                var m = ($el.css("height") || "").match(/([-\d\.]+)px$/);
+                                                                if (m && m.length == 2)
+                                                                    offset.top += parseFloat(m[1]) * 1.5;
+                                                                offset.left = Math.floor(offset.left * angularConstants.precision) / angularConstants.precision;
+                                                                offset.top = Math.floor(offset.top * angularConstants.precision) / angularConstants.precision;
 
-                                    if (scope.stateTreeNodeItem.stateOptions.length) {
-                                        scope.toggleSelect($dropdown).then(
-                                            function ($dropdown) {
-                                                if ($dropdown.hasClass("select")) {
-                                                    angular.element($dropdown.find("> div")).scope().open();
-                                                }
+                                                                $dropdown.offset(offset);
+                                                            }
+
+                                                            scope.toggleSelect($dropdown).then(
+                                                                function ($dropdown) {
+                                                                    if ($dropdown.hasClass("select")) {
+                                                                        angular.element(element.find("#widgetStateDropdown > div")).scope().open();
+                                                                    }
+                                                                }
+                                                            );
+                                                        }
+                                                    },
+                                                    angularConstants.checkInterval,
+                                                    "ui-page.toggleSelectState",
+                                                    angularConstants.renderTimeout
+                                                );
                                             }
-                                        );
+                                        });
+                                    } else {
+                                        scope.toggleSelect(element.find("#widgetStateDropdown"), null, false).then(function () {
+                                            scope.stateTreeNodeItem = null;
+                                        });
                                     }
 
                                     return true;

@@ -379,7 +379,7 @@ define(
                             CKEDITOR.inline('widgetText');
                         });
                     }
-                }, angularConstants.checkInterval, "FrameSketchController.renderProject");
+                }, angularConstants.checkInterval, "FrameSketchController.renderProject." + $rootScope.loadedProject.projectRecord._id);
             }
 
             $scope.toggleLockProject = function (event) {

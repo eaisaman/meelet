@@ -156,7 +156,10 @@ define(
                                                     scope.setBoxShadow(angular.copy(options.boxShadow));
 
                                                     return uiUtilService.getResolveDefer();
-                                                }, angularConstants.checkInterval
+                                                },
+                                                angularConstants.checkInterval,
+                                                "ui-box-shadow-editor.toggleBoxShadowControl",
+                                                angularConstants.renderTimeout
                                             );
                                         } else {
                                             if (scope.boxShadow) {
@@ -544,7 +547,10 @@ define(
                                                 scope.filterEffectLibraryList.splice(0, scope.filterEffectLibraryList.length);
                                                 Array.prototype.splice.apply(scope.filterEffectLibraryList, arr);
                                             });
-                                        }, angularConstants.checkInterval
+                                        },
+                                        angularConstants.checkInterval,
+                                        "ui-box-shadow-editor.compile.post",
+                                        angularConstants.renderTimeout
                                     );
                                 });
                             }

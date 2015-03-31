@@ -333,7 +333,10 @@ define(
                                                 scope.filterIconLibraryList.splice(0, scope.filterIconLibraryList.length);
                                                 Array.prototype.splice.apply(scope.filterIconLibraryList, arr);
                                             });
-                                        }, angularConstants.checkInterval
+                                        },
+                                        angularConstants.checkInterval,
+                                        "ui-shape.compile.post",
+                                        angularConstants.renderTimeout
                                     );
                                 });
                             }

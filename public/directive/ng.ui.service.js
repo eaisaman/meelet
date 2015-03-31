@@ -1981,7 +1981,6 @@ define(
                             }
 
                             if ($parent.length) {
-
                                 var widgetObj = $parent.data("widgetObject");
 
                                 if (widgetObj) {
@@ -2017,6 +2016,28 @@ define(
                         }
 
                         return $inject.uiUtilService.getResolveDefer();
+                    },
+                    relink: function (containerWidget) {
+                        var self = this;
+
+                        return self.appendTo(containerWidget).then(
+                            function () {
+                                var promiseArr = [];
+
+                                self.childWidgets.forEach(function (child) {
+                                    promiseArr.push(child.relink(self));
+                                });
+
+                                if (promiseArr.length) {
+                                    return $inject.$q.all(promiseArr);
+                                } else {
+                                    return $inject.uiUtilService.getResolveDefer(self);
+                                }
+                            },
+                            function (err) {
+                                return $inject.uiUtilService.getRejectDefer(err);
+                            }
+                        );
                     },
                     appendTo: function (container) {
                         if (container) {
@@ -3189,7 +3210,7 @@ define(
 
                     return IncludeSketchWidgetClass.prototype.__proto__.appendTo.apply(self, [container]).then(
                         function () {
-                            if (self.$element && self.template) {
+                            if (self.$element && self.$element.parent().length && self.template) {
                                 return $inject.uiUtilService.whilst(function () {
                                         return !angular.element(self.$element).scope();
                                     }, function (callback) {
@@ -3211,7 +3232,7 @@ define(
                                                             callback();
                                                         }, null,
                                                         $inject.angularConstants.checkInterval,
-                                                        "IncludeSketchWidgetClass.appendTo.completionScanner",
+                                                        "IncludeSketchWidgetClass.appendTo.completionScanner." + self.id,
                                                         $inject.angularConstants.renderTimeout
                                                     );
                                                 }
@@ -3241,7 +3262,7 @@ define(
                                                                                 callback();
                                                                             }, function (err) {
                                                                                 if (!err) {
-                                                                                    child.appendTo(containerWidget);
+                                                                                    child.relink(containerWidget);
                                                                                 }
                                                                             },
                                                                             $inject.angularConstants.checkInterval,
@@ -3279,7 +3300,7 @@ define(
                                         return defer.promise;
                                     },
                                     $inject.angularConstants.checkInterval,
-                                    "IncludeSketchWidgetClass.appendTo",
+                                    "IncludeSketchWidgetClass.appendTo." + self.id,
                                     $inject.angularConstants.renderTimeout
                                 ).then(function (err) {
                                         if (err) {
@@ -3477,7 +3498,7 @@ define(
                     var self = this;
 
                     if (self.$element && self.$element.parent().length) {
-                        var scope = angular.element(self.$element.find("[widget-container]:nth-of-type(1) :first-child")).scope();
+                        var scope = angular.element(self.$element.find("[widget-container]:nth-of-type(1)").first().children()[0]).scope();
 
                         return scope[key];
                     }
@@ -3499,7 +3520,7 @@ define(
 
                     if (self.$element && self.$element.parent().length) {
                         $inject.uiUtilService.whilst(function () {
-                                var scope = angular.element(self.$element.find("[widget-container]:nth-of-type(1) :first-child")).scope();
+                                var scope = angular.element(self.$element.find("[widget-container]:nth-of-type(1)").first().children()[0]).scope();
                                 return !scope || scope.artifactId !== self.id;
                             }, function (callback) {
                                 callback();
@@ -3507,7 +3528,7 @@ define(
                                 if (!err) {
                                     $inject.$timeout(
                                         function () {
-                                            var scope = angular.element(self.$element.find("[widget-container]:nth-of-type(1) :first-child")).scope();
+                                            var scope = angular.element(self.$element.find("[widget-container]:nth-of-type(1)").first().children()[0]).scope();
 
                                             if (typeof key === "object") {
                                                 _.each(key, function (item, itemKey) {
@@ -3529,7 +3550,7 @@ define(
                                 }
                             },
                             $inject.angularConstants.checkInterval,
-                            "RepoSketchWidgetClass.setScopedValue",
+                            "RepoSketchWidgetClass.setScopedValue." + self.id,
                             $inject.angularConstants.renderTimeout
                         )
                     }
@@ -3631,7 +3652,9 @@ define(
                 setState: function (value) {
                     RepoSketchWidgetClass.prototype.__proto__.setState.apply(this, [value]);
 
-                    this.setScopedValue("state", value);
+                    var stateName = typeof value === "string" && value || value.name;
+
+                    this.setScopedValue("state", stateName);
                 },
                 setStateContext: function (value) {
                     var self = this;
@@ -3878,9 +3901,9 @@ define(
 
                 if ($container.hasClass(self.angularConstants.widgetClasses.holderClass) || $container.hasClass(self.angularConstants.widgetClasses.widgetClass)) {
                     $parent = $container;
-                } else if ($container.attr($inject.angularConstants.anchorAttr) != null) {
+                } else if ($container.attr(self.angularConstants.anchorAttr) != null) {
                     $parent = $container.closest("[ui-sketch-widget]");
-                    anchor = $container.attr($inject.angularConstants.anchorAttr);
+                    anchor = $container.attr(self.angularConstants.anchorAttr);
                 }
 
                 if ($parent) {
@@ -3912,14 +3935,39 @@ define(
 
             self.$rootScope.loadedProject.refArtifact(widgetSpec.libraryId, widgetSpec.artifactId, widgetSpec.name, widgetSpec.version);
 
-            return widgetObj.appendTo(containerElement).then(
-                function () {
-                    return self.uiUtilService.getResolveDefer(widgetObj);
-                },
-                function (err) {
-                    return self.uiUtilService.getRejectDefer(err);
+            if (containerElement.jquery) {
+                $container = containerElement;
+            } else if (typeof containerElement === "string" || angular.isElement(containerElement)) {
+                $container = $(containerElement);
+            }
+
+            if ($container) {
+                var $parent,
+                    anchor;
+
+                if ($container.hasClass(self.angularConstants.widgetClasses.holderClass) || $container.hasClass(self.angularConstants.widgetClasses.widgetClass)) {
+                    $parent = $container;
+                } else if ($container.attr(self.angularConstants.anchorAttr) != null) {
+                    $parent = $container.closest("[ui-sketch-widget]");
+                    anchor = $container.attr(self.angularConstants.anchorAttr);
                 }
-            );
+
+                if ($parent) {
+                    widgetObj.anchor = anchor;
+
+                    return widgetObj.appendTo($parent).then(
+                        function () {
+                            return self.uiUtilService.getResolveDefer(widgetObj);
+                        },
+                        function (err) {
+                            return self.uiUtilService.getRejectDefer(err);
+                        }
+                    );
+
+                }
+            }
+
+            return self.uiUtilService.getRejectDefer();
         }
 
         Service.prototype.copyWidget = function (widgetObj, containerElement) {
@@ -3953,16 +4001,20 @@ define(
                     var scope = angular.element(cloneObj.$element.parent()).scope();
                     self.$compile(cloneObj.$element.parent())(scope);
 
-                    return self.uiUtilService.whilst(function () {
-                        return !cloneObj.$element.data("hammer");
-                    }, function (callback) {
-                        callback();
-                    }, function () {
-                        var manager = cloneObj.$element.data("hammer"),
-                            element = cloneObj.$element.get(0);
+                    return self.uiUtilService.whilst(
+                        function () {
+                            return !cloneObj.$element.data("hammer");
+                        }, function (callback) {
+                            callback();
+                        }, function () {
+                            var manager = cloneObj.$element.data("hammer"),
+                                element = cloneObj.$element.get(0);
 
-                        manager.emit("tap", {target: element, srcEvent: {target: element}});
-                    }, self.angularConstants.checkInterval).then(
+                            manager.emit("tap", {target: element, srcEvent: {target: element}});
+                        },
+                        self.angularConstants.checkInterval,
+                        "Service.copyWidget." + cloneObj.id,
+                        self.angularConstants.renderTimeout).then(
                         function () {
                             return self.uiUtilService.getResolveDefer(cloneObj);
                         }, function () {
@@ -4034,24 +4086,33 @@ define(
                 pageObj.attr["ng-class"] = "{'isPlaying': sketchWidgetSetting.isPlaying}";
                 pageObj.addOmniClass(self.angularConstants.widgetClasses.holderClass);
             }
-            pageObj.appendTo(holderElement);
 
-            return self.uiUtilService.whilst(function () {
-                return !angular.element(holderElement).scope();
-            }, function (callback) {
-                callback();
-            }, function () {
-                var scope = angular.element(holderElement).scope();
-                self.$compile(holderElement)(scope);
-            }).then(function () {
-                var defer = self.$q.defer();
+            return pageObj.appendTo(holderElement).then(
+                function () {
+                    return self.uiUtilService.whilst(
+                        function () {
+                            return !angular.element(holderElement).scope();
+                        }, function (callback) {
+                            callback();
+                        }, function () {
+                            var scope = angular.element(holderElement).scope();
+                            self.$compile(holderElement)(scope);
+                        }, self.angularConstants.checkInterval,
+                        "Service.createPage." + pageObj.id,
+                        self.angularConstants.renderTimeout).then(function () {
+                            var defer = self.$q.defer();
 
-                self.$timeout(function () {
-                    defer.resolve(pageObj);
-                });
+                            self.$timeout(function () {
+                                defer.resolve(pageObj);
+                            });
 
-                return defer.promise;
-            }, self.angularConstants.checkInterval);
+                            return defer.promise;
+                        }, self.angularConstants.checkInterval);
+                },
+                function (err) {
+                    return self.uiUtilService.getRejectDefer(err);
+                }
+            );
         }
 
         Service.prototype.copyPage = function (pageObj, holderElement) {
@@ -4059,24 +4120,36 @@ define(
                 cloneObj = pageObj.clone();
 
             cloneObj.removeOmniClass(self.angularConstants.widgetClasses.activeClass);
-            cloneObj.appendTo(holderElement);
 
-            return self.uiUtilService.whilst(function () {
-                return !angular.element(cloneObj.$element.parent()).scope();
-            }, function (callback) {
-                callback();
-            }, function () {
-                var scope = angular.element(cloneObj.$element.parent()).scope();
-                $inject.$compile(cloneObj.$element.parent())(scope);
-            }).then(function () {
-                var defer = self.$q.defer();
 
-                self.$timeout(function () {
-                    defer.resolve(cloneObj);
-                });
+            return cloneObj.appendTo(holderElement).then(
+                function () {
+                    return self.uiUtilService.whilst(
+                        function () {
+                            return !angular.element(cloneObj.$element.parent()).scope();
+                        }, function (callback) {
+                            callback();
+                        }, function () {
+                            var scope = angular.element(cloneObj.$element.parent()).scope();
+                            $inject.$compile(cloneObj.$element.parent())(scope);
+                        }).then(function () {
+                            var defer = self.$q.defer();
 
-                return defer.promise;
-            }, self.angularConstants.checkInterval);
+                            self.$timeout(function () {
+                                defer.resolve(cloneObj);
+                            });
+
+                            return defer.promise;
+                        },
+                        self.angularConstants.checkInterval,
+                        "Service.copyPage." + cloneObj.id,
+                        self.angularConstants.renderTimeout);
+
+                },
+                function (err) {
+                    return self.uiUtilService.getRejectDefer(err);
+                }
+            );
         }
 
         Service.prototype.fromObject = function (obj) {

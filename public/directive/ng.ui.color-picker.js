@@ -106,7 +106,10 @@ define(
                                                     scope.setColor(angular.copy(options.color));
 
                                                     return uiUtilService.getResolveDefer();
-                                                }, angularConstants.checkInterval
+                                                },
+                                                angularConstants.checkInterval,
+                                                "ui-color-picker-toggleColorControl",
+                                                angularConstants.renderTimeout
                                             );
                                         } else {
                                             if (scope.color) {

@@ -137,9 +137,11 @@ define(
                                                                 }
                                                             ).then(
                                                                 function (widgetObj) {
-                                                                    widgetObj.name = name;
-                                                                    widgetObj.css("left", x + "px");
-                                                                    widgetObj.css("top", y + "px");
+                                                                    if (widgetObj) {
+                                                                        widgetObj.name = name;
+                                                                        widgetObj.css("left", x + "px");
+                                                                        widgetObj.css("top", y + "px");
+                                                                    }
                                                                 }
                                                             );
                                                         }
@@ -356,7 +358,10 @@ define(
                                                 scope.filterWidgetLibraryList.splice(0, scope.filterWidgetLibraryList.length);
                                                 Array.prototype.splice.apply(scope.filterWidgetLibraryList, arr);
                                             });
-                                        }, angularConstants.checkInterval
+                                        },
+                                        angularConstants.checkInterval,
+                                        "ui-widget.compile.post",
+                                        angularConstants.renderTimeout
                                     );
                                 });
                             }

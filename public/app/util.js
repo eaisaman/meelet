@@ -21,29 +21,6 @@ define(
             return this.mobilecheck() ? 'touchstart' : 'click';
         }
 
-        utilService.prototype.whilst = function (test, iterator, callback, timeout) {
-            var self = this,
-                defer = self.$q.defer();
-
-            self.$timeout(function () {
-                if (test()) {
-                    iterator(function (err) {
-                        if (err) {
-                            callback && callback(err);
-                            defer.reject(err);
-                        }
-                        self.async.whilst(test, iterator, callback, timeout);
-                    });
-                }
-                else {
-                    callback && callback();
-                    defer.resolve("DONE");
-                }
-            }, timeout);
-
-            return defer.promise;
-        }
-
         return function (appModule) {
             appModule.
                 config(["$provide", function ($provide) {

@@ -30,7 +30,10 @@ define(
                                         }
 
                                         return defer.promise;
-                                    }, angularConstants.checkInterval
+                                    },
+                                    angularConstants.checkInterval,
+                                    null,
+                                    angularConstants.renderTimeout
                                 );
                                 return;
                             }

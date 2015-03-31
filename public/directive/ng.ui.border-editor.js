@@ -150,7 +150,10 @@ define(
                                                     scope.setBorderRadius(options.borderRadius);
 
                                                     return uiUtilService.getResolveDefer();
-                                                }, angularConstants.checkInterval
+                                                },
+                                                angularConstants.checkInterval,
+                                                "ui-border-editor.toggleBorderControl",
+                                                angularConstants.renderTimeout
                                             );
                                         } else {
                                             if (scope.border) {

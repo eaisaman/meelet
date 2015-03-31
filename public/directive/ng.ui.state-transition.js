@@ -466,7 +466,10 @@ define(
                                                 scope.filterEffectLibraryList.splice(0, scope.filterEffectLibraryList.length);
                                                 Array.prototype.splice.apply(scope.filterEffectLibraryList, arr);
                                             });
-                                        }, angularConstants.checkInterval
+                                        },
+                                        angularConstants.checkInterval,
+                                        "ui-state-transition.compile.post",
+                                        angularConstants.renderTimeout
                                     );
                                 });
                             }

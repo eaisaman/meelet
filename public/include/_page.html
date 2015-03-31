@@ -75,7 +75,7 @@
             </ol>
         </ui-tree>
     </div>
-    <div id="widgetStateDropdown" class="fs-x-smaller stackAndRotateSelect" ui-simple-dropdown
+    <div id="widgetStateDropdown" class="fs-x-smaller stackAndRotateSelect" ng-if="stateTreeNodeItem" ui-simple-dropdown
          ui-simple-dropdown-opts="{dataField:'name', labelField:'name', zIndex:1000, gutter: 5, showTitle: false, displayUnsetOption: false}"
          selection-list="stateTreeNodeItem.getStates()" select-item="pickedState"
          on-option-select="toggleSelectState() && stateTreeNodeItem.setState(pickedState)">
