@@ -104,7 +104,8 @@ define(
                                         }, function (err) {
                                             if (!err) {
                                                 //id of widget of RepoSketchWidgetClass type
-                                                scope.artifactId = element.closest(".widgetContainer").parent().attr("id");
+                                                scope.widgetId = element.closest(".widgetContainer").parent().attr("id");
+                                                uiUtilService.broadcast(scope, angularConstants.widgetEventPattern.format(angularEventTypes.widgetContentIncludedEvent, scope.widgetId), {widgetId:scope.widgetId});
                                             }
                                         },
                                         angularConstants.checkInterval

@@ -464,7 +464,7 @@ define(
                                         if (element.parent().length) {
                                             var id = element.attr("id") || element.parent().attr("id");
 
-                                            id && uiUtilService.latestOnce(watchHandler, null, angularConstants.actionDelay, "sketch-widget.watchHandler.{0}".format(id))(element, value);
+                                            id && uiUtilService.latestOnce(watchHandler, null, angularConstants.unresponsiveInterval, "sketch-widget.watchHandler.{0}".format(id))(element, value);
                                         }
                                     });
 
@@ -482,11 +482,10 @@ define(
                                             return uiUtilService.getResolveDefer();
                                         }
 
-                                        //Directive ng-include will recreate element which have no widget id attribute.
                                         if (element.parent().length) {
-                                            var id = element.attr("id") || element.parent().attr("id");
+                                            var id = element.attr("id");
 
-                                            id && uiUtilService.latestOnce(attachHandler, null, angularConstants.actionDelay, "sketch-widget.attachHandler.{0}".format(id))(element);
+                                            id && uiUtilService.latestOnce(attachHandler, null, angularConstants.unresponsiveInterval, "sketch-widget.attachHandler.{0}".format(id))(element);
                                         }
                                     });
 

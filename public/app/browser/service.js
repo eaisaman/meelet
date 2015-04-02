@@ -328,7 +328,7 @@ define(
                                         libraryName: libraryList[i].name
                                     });
 
-                                    if (libraryList[i].artifactList.every(function (loadedArtifact) {
+                                    if ((libraryList[i].artifactList = libraryList[i].artifactList || []).every(function (loadedArtifact) {
                                             if (artifact._id === loadedArtifact._id) {
                                                 _.extend(loadedArtifact, artifact);
                                                 return false;

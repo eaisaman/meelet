@@ -65,8 +65,8 @@ define(
                                         event && event.stopPropagation && event.stopPropagation();
 
                                         if (scope.isPlaying == null || scope.isPlaying) {
-                                            if (scope.stateGroup && scope.artifactId) {
-                                                uiUtilService.broadcast(scope, angularConstants.stateGroupEventPattern.format(scope.stateGroup), {
+                                            if (scope.configuration.stateGroup || scope.stateGroup && scope.artifactId) {
+                                                uiUtilService.broadcast(scope, angularConstants.stateGroupEventPattern.format(scope.configuration.stateGroup || scope.stateGroup), {
                                                     artifactId: scope.artifactId
                                                 });
                                             } else {
@@ -76,7 +76,7 @@ define(
                                     }
 
                                     scope.setStateGroup = function (value) {
-                                        scope.stateGroup = value;
+                                        scope.configuration.stateGroup = scope.stateGroup = value;
 
                                         if (scope.artifactId) {
                                             scope.stateGroupListener && scope.stateGroupListener();
@@ -99,6 +99,7 @@ define(
 
                                     scope.state = scope.state || "*";
                                     scope.activeState = "select";
+                                    scope.configuration = {};
                                 },
                                 post: function (scope, element, attrs, ctrl) {
                                     ctrl.transclude(scope, element);
@@ -110,7 +111,8 @@ define(
                                         }, function (err) {
                                             if (!err) {
                                                 //id of widget of RepoSketchWidgetClass type
-                                                scope.artifactId = element.closest(".widgetContainer").parent().attr("id");
+                                                scope.widgetId = element.closest(".widgetContainer").parent().attr("id");
+                                                uiUtilService.broadcast(scope, angularConstants.widgetEventPattern.format(angularEventTypes.widgetContentIncludedEvent, scope.widgetId), {widgetId:scope.widgetId});
                                             }
                                         },
                                         angularConstants.checkInterval

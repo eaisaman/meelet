@@ -40,7 +40,8 @@ require(["jquery-lib", "jquery-plugins-lib", "hammer-lib", "jquery-ui-lib", "jqu
     window.appModule.value("angularEventTypes", {
         boundPropertiesEvent: "boundPropertiesEvent",
         beforeWidgetCreationEvent: "beforeWidgetCreationEvent",
-        switchProjectEvent: "switchProjectEvent"
+        switchProjectEvent: "switchProjectEvent",
+        widgetContentIncludedEvent: "widgetContentIncluded"
     });
     window.appModule.value("angularConstants", {
         precision: 1000,
@@ -63,11 +64,14 @@ require(["jquery-lib", "jquery-plugins-lib", "hammer-lib", "jquery-ui-lib", "jqu
         },
         anchorAttr: "widget-anchor",
         stateGroupEventPattern: "State Change Event of State Group {0}",
+        widgetEventPattern: "Event {0} of widget {1}",
         draggingShapeZIndex: 101,
         actionDelay: 100,
         checkInterval: 20,
+        loadCheckInterval: 40,
         unresponsiveInterval: 20,
         renderTimeout: 3000,
+        loadRenderTimeout: 6000,
         loadTimeout: 10000
     });
     //For upload file angular module 'ng-flow'

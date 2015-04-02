@@ -216,7 +216,7 @@ define(
 
                                     changeSelectedColor.onceId = "color-editor-palette.changeSelectedColor";
 
-                                    to && uiUtilService.latestOnce(changeSelectedColor, null, angularConstants.actionDelay)(to);
+                                    to && uiUtilService.latestOnce(changeSelectedColor, null, angularConstants.unresponsiveInterval)(to);
                                 }
 
                                 scope.watchSelectedColor = function (state) {
@@ -408,7 +408,7 @@ define(
                                     }
                                     scope.selectedColorObj.color = null;
 
-                                    uiUtilService.latestOnce(colorObjHandler, null, angularConstants.actionDelay, "color-editor-palette.colorObjHandler")();
+                                    uiUtilService.latestOnce(colorObjHandler, null, angularConstants.unresponsiveInterval, "color-editor-palette.colorObjHandler")();
                                 }
 
                                 scope.incrementAlpha = function (event) {
@@ -419,7 +419,7 @@ define(
                                     if (scope.selectedColorObj.alpha > 1)
                                         scope.selectedColorObj.alpha = 1;
 
-                                    uiUtilService.latestOnce(colorObjHandler, null, angularConstants.actionDelay, "color-editor-palette.colorObjHandler")();
+                                    uiUtilService.latestOnce(colorObjHandler, null, angularConstants.unresponsiveInterval, "color-editor-palette.colorObjHandler")();
                                 }
 
                                 scope.decrementAlpha = function (event) {
@@ -430,7 +430,7 @@ define(
                                     if (scope.selectedColorObj.alpha < 0)
                                         scope.selectedColorObj.alpha = 0;
 
-                                    uiUtilService.latestOnce(colorObjHandler, null, angularConstants.actionDelay, "color-editor-palette.colorObjHandler")();
+                                    uiUtilService.latestOnce(colorObjHandler, null, angularConstants.unresponsiveInterval, "color-editor-palette.colorObjHandler")();
                                 }
 
                                 scope.observeColorValueScrollMeter = function (event) {
