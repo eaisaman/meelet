@@ -17,6 +17,9 @@ define(
             $rootScope.userDetail = {projectList: []};
             $rootScope.loadedProject = null;
             $rootScope.sketchObject = {};
+            $rootScope.sketchWidgetSetting = {
+                isPlaying: false
+            };
             $rootScope.visiblePseudoEnabledWidgets = [];
             $scope.urlService = urlService;
 
@@ -134,7 +137,7 @@ define(
 
                         var $to = $(event.srcEvent.toElement);
 
-                        if (!$scope.sketchWidgetSetting.isPlaying && ($to.hasClass(angularConstants.widgetClasses.widgetClass) || $to.hasClass(angularConstants.widgetClasses.holderClass) || $to.attr(angularConstants.anchorAttr))) {
+                        if (!$rootScope.sketchWidgetSetting.isPlaying && ($to.hasClass(angularConstants.widgetClasses.widgetClass) || $to.hasClass(angularConstants.widgetClasses.holderClass) || $to.attr(angularConstants.anchorAttr))) {
                             var x = event.srcEvent.clientX - $to.offset().left,
                                 y = event.srcEvent.clientY - $to.offset().top;
 
@@ -327,13 +330,13 @@ define(
             $scope.toggleRuler = function (event) {
                 event && event.stopPropagation && event.stopPropagation();
 
-                $scope.sketchWidgetSetting.showRuler = !$scope.sketchWidgetSetting.showRuler;
+                $rootScope.sketchWidgetSetting.showRuler = !$rootScope.sketchWidgetSetting.showRuler;
             }
 
             $scope.togglePlayWidget = function (event) {
                 event && event.stopPropagation && event.stopPropagation();
 
-                $scope.sketchWidgetSetting.isPlaying = !$scope.sketchWidgetSetting.isPlaying;
+                $rootScope.sketchWidgetSetting.isPlaying = !$rootScope.sketchWidgetSetting.isPlaying;
             }
 
             $scope.saveProject = function (event) {
@@ -401,7 +404,7 @@ define(
                 event && event.stopPropagation && event.stopPropagation();
 
                 $scope.modalUsage = "Demo";
-                appService.loadRepoArtifact($scope.sketchWidgetSetting.pickedArtifact, $scope.sketchWidgetSetting.pickedLibrary._id, $scope.sketchWidgetSetting.pickedLibrary.name, "", "#frameSketchWidgetDemoArea").then(function () {
+                appService.loadRepoArtifact($rootScope.sketchWidgetSetting.pickedArtifact, $rootScope.sketchWidgetSetting.pickedLibrary._id, $rootScope.sketchWidgetSetting.pickedLibrary.name, "", "#frameSketchWidgetDemoArea").then(function () {
                     var scope = angular.element($("#frameSketchContainer > .modalWindowContainer > .md-modal")).scope();
                     scope.toggleModalWindow();
                 });
@@ -472,7 +475,7 @@ define(
                             value = getter.apply($scope.sketchObject.pickedWidget, [source]);
                         else
                             value = getter.apply($scope.sketchObject.pickedWidget);
-                        $scope.sketchWidgetSetting[name] = value;
+                        $rootScope.sketchWidgetSetting[name] = value;
                         setting.initFn && setting.initFn(value);
                     }
 
@@ -537,9 +540,6 @@ define(
 
             $scope.uiService = uiService;
             $scope.Math = Math;
-            $scope.sketchWidgetSetting = {
-                isPlaying: false
-            };
             $scope.sketchDevice = {
                 type: "desktop",
                 width: 1024,

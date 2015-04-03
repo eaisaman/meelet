@@ -65,9 +65,9 @@ define(
                                         event && event.stopPropagation && event.stopPropagation();
 
                                         if (scope.isPlaying == null || scope.isPlaying) {
-                                            if (scope.configuration.stateGroup || scope.stateGroup && scope.artifactId) {
+                                            if (scope.configuration.stateGroup || scope.stateGroup && scope.widgetId) {
                                                 uiUtilService.broadcast(scope, angularConstants.stateGroupEventPattern.format(scope.configuration.stateGroup || scope.stateGroup), {
-                                                    artifactId: scope.artifactId
+                                                    widgetId: scope.widgetId
                                                 });
                                             } else {
                                                 scope.state = scope.state === scope.activeState && "*" || scope.activeState;
@@ -78,13 +78,13 @@ define(
                                     scope.setStateGroup = function (value) {
                                         scope.configuration.stateGroup = scope.stateGroup = value;
 
-                                        if (scope.artifactId) {
+                                        if (scope.widgetId) {
                                             scope.stateGroupListener && scope.stateGroupListener();
 
                                             if (value) {
-                                                scope.stateGroupListener = scope.$on(angularConstants.stateGroupEventPattern.format(scope.stateGroup), function (event, obj) {
-                                                    if (obj.artifactId) {
-                                                        if (obj.artifactId === scope.artifactId) {
+                                                scope.stateGroupListener = scope.$on(angularConstants.stateGroupEventPattern.format(scope.configuration.stateGroup || scope.stateGroup), function (event, obj) {
+                                                    if (obj.widgetId) {
+                                                        if (obj.widgetId === scope.widgetId) {
                                                             scope.state = scope.activeState;
                                                         } else {
                                                             scope.state = "*";

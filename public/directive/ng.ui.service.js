@@ -3230,7 +3230,7 @@ define(
                                                 containerWidget = childWidgets.length && childWidgets[0],
                                                 anchors = [];
 
-                                            containerWidget.childWidgets.forEach(function (child) {
+                                            containerWidget.childWidgets && containerWidget.childWidgets.forEach(function (child) {
                                                 child.anchor && anchors.every(function (anchor) {
                                                     return anchor !== child.anchor;
                                                 }) && anchors.push(child.anchor);
@@ -3929,8 +3929,8 @@ define(
                             widgetObj.attr["ui-draggable"] = $el.attr("ui-draggable");
                             widgetObj.attr["ui-draggable-opts"] = $el.attr("ui-draggable-opts");
                             widgetObj.attr["ui-sketch-widget"] = "";
-                            widgetObj.attr["is-playing"] = "sketchWidgetSetting.isPlaying";
-                            widgetObj.attr["ng-class"] = "{'isPlaying': sketchWidgetSetting.isPlaying}";
+                            widgetObj.attr["is-playing"] = "$root.sketchWidgetSetting.isPlaying";
+                            widgetObj.attr["ng-class"] = "{'isPlaying': $root.sketchWidgetSetting.isPlaying}";
                             widgetObj.addOmniClass(self.angularConstants.widgetClasses.widgetClass);
 
                             widgetObj.$element = $el;
@@ -3979,8 +3979,8 @@ define(
                     widgetObj.attr["ui-draggable"] = "";
                     widgetObj.attr["ui-draggable-opts"] = "{threshold: 5}";
                     widgetObj.attr["ui-sketch-widget"] = "";
-                    widgetObj.attr["is-playing"] = "sketchWidgetSetting.isPlaying";
-                    widgetObj.attr["ng-class"] = "{'isPlaying': sketchWidgetSetting.isPlaying}";
+                    widgetObj.attr["is-playing"] = "$root.sketchWidgetSetting.isPlaying";
+                    widgetObj.attr["ng-class"] = "{'isPlaying': $root.sketchWidgetSetting.isPlaying}";
                     widgetObj.addOmniClass(self.angularConstants.widgetClasses.widgetClass);
                     widgetObj.appendTo($parent);
 
@@ -3996,8 +3996,8 @@ define(
             var self = this,
                 widgetObj = new RepoSketchWidgetClass(null, widgetSpec);
             widgetObj.attr["ui-sketch-widget"] = "";
-            widgetObj.attr["is-playing"] = "sketchWidgetSetting.isPlaying";
-            widgetObj.attr["ng-class"] = "{'isPlaying': sketchWidgetSetting.isPlaying}";
+            widgetObj.attr["is-playing"] = "$root.sketchWidgetSetting.isPlaying";
+            widgetObj.attr["ng-class"] = "{'isPlaying': $root.sketchWidgetSetting.isPlaying}";
             widgetObj.addOmniClass(self.angularConstants.widgetClasses.widgetClass);
 
             self.$rootScope.loadedProject.refArtifact(widgetSpec.libraryId, widgetSpec.artifactId, widgetSpec.name, widgetSpec.version);
@@ -4124,8 +4124,8 @@ define(
                     compositeObj.attr["ui-draggable"] = "";
                     compositeObj.attr["ui-draggable-opts"] = "{threshold: 5}";
                     compositeObj.attr["ui-sketch-widget"] = "";
-                    compositeObj.attr["is-playing"] = "sketchWidgetSetting.isPlaying";
-                    compositeObj.attr["ng-class"] = "{'isPlaying': sketchWidgetSetting.isPlaying}";
+                    compositeObj.attr["is-playing"] = "$root.sketchWidgetSetting.isPlaying";
+                    compositeObj.attr["ng-class"] = "{'isPlaying': $root.sketchWidgetSetting.isPlaying}";
                     compositeObj.addOmniClass(self.angularConstants.widgetClasses.widgetClass);
                     compositeObj.appendTo(containerElement);
 
@@ -4150,8 +4150,8 @@ define(
             if (!pageObj) {
                 pageObj = new PageSketchWidgetClass();
                 pageObj.attr["ui-sketch-widget"] = "";
-                pageObj.attr["is-playing"] = "sketchWidgetSetting.isPlaying";
-                pageObj.attr["ng-class"] = "{'isPlaying': sketchWidgetSetting.isPlaying}";
+                pageObj.attr["is-playing"] = "$root.sketchWidgetSetting.isPlaying";
+                pageObj.attr["ng-class"] = "{'isPlaying': $root.sketchWidgetSetting.isPlaying}";
                 pageObj.addOmniClass(self.angularConstants.widgetClasses.holderClass);
             }
 

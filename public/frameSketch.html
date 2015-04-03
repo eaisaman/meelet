@@ -52,7 +52,7 @@
                     <div ng-click="toggleRuler($event)"
                          class="topbarButton icon-frame-sketch-before icon-frame-sketch-ruler-before"></div>
                     <div ng-click="togglePlayWidget($event)" class="topbarButton icon-frame-sketch-before"
-                         ng-class="{'icon-frame-sketch-play-before':!sketchWidgetSetting.isPlaying, 'icon-frame-sketch-pause-before':sketchWidgetSetting.isPlaying}"></div>
+                         ng-class="{'icon-frame-sketch-play-before':!$root.sketchWidgetSetting.isPlaying, 'icon-frame-sketch-pause-before':$root.sketchWidgetSetting.isPlaying}"></div>
                     <div ng-click="saveProject($event)" ng-if="$root.loadedProject.projectRecord.lock"
                          class="topbarButton icon-frame-sketch-before icon-frame-sketch-save-before"></div>
                     <div ng-click="loadProject($event)"
@@ -73,14 +73,14 @@
                              ng-style="{'width': '{{sketchDevice.width + 90}}', 'height': '{{sketchDevice.height + 90}}'}">
                             <div id="deviceHolder" class="deviceHolder"
                                  ng-style="{'left': 45, 'top': 45, 'width': '{{sketchDevice.width}}', 'height': '{{sketchDevice.height}}'}"></div>
-                            <div id="verticalRuler" class="ruler fs-x-smaller" ng-if="sketchWidgetSetting.showRuler"
+                            <div id="verticalRuler" class="ruler fs-x-smaller" ng-if="$root.sketchWidgetSetting.showRuler"
                                  ng-style="{'left':0, 'top': 45, 'width': 45, 'height': '{{sketchDevice.height}}'}"
                                  ui-vertical-ruler device-width="sketchDevice.width" device-height="sketchDevice.height"
                                  min-height="Math.floor(sketchDevice.height/sketchDevice.rulerMarkerCount * 1000) / 1000"
                                  marker-height="Math.floor(sketchDevice.height/sketchDevice.rulerMarkerCount * 1000) / 1000"
                                  marker-count="sketchDevice.rulerMarkerCount" picked-widget="sketchObject.pickedWidget">
                             </div>
-                            <div id="horizontalRuler" class="ruler fs-x-smaller" ng-if="sketchWidgetSetting.showRuler"
+                            <div id="horizontalRuler" class="ruler fs-x-smaller" ng-if="$root.sketchWidgetSetting.showRuler"
                                  ng-style="{'left':45, 'top': 0, 'width': '{{sketchDevice.width}}', 'height': 45}"
                                  ui-horizontal-ruler device-width="sketchDevice.width"
                                  device-height="sketchDevice.height"
@@ -140,7 +140,7 @@
                                             <div id="background-image-control"
                                                  class="ui-control ui-control-inline ui-control-bordered"
                                                  ui-background-image
-                                                 background-image="sketchWidgetSetting.backgroundImage"
+                                                 background-image="$root.sketchWidgetSetting.backgroundImage"
                                                  dock-align="dockAlign">
                                                 Background Image
                                             </div>
@@ -148,7 +148,7 @@
                                             <div id="color-control"
                                                  class="ui-control ui-control-inline ui-control-bordered"
                                                  ui-color-picker
-                                                 color="sketchWidgetSetting.color"
+                                                 color="$root.sketchWidgetSetting.color"
                                                  dock-align="dockAlign">
                                                 Color
                                             </div>
@@ -156,7 +156,7 @@
                                             <div id="border-control"
                                                  class="ui-control ui-control-inline ui-control-bordered"
                                                  ui-border-editor
-                                                 border="sketchWidgetSetting.border"
+                                                 border="$root.sketchWidgetSetting.border"
                                                  dock-align="dockAlign">
                                                 Border
                                             </div>
@@ -164,7 +164,7 @@
                                             <div id="fill-control"
                                                  class="ui-control ui-control-inline ui-control-bordered"
                                                  ui-gradient-editor
-                                                 linear-gradient-color="sketchWidgetSetting.linearGradientColor"
+                                                 linear-gradient-color="$root.sketchWidgetSetting.linearGradientColor"
                                                  dock-align="dockAlign">
                                                 Linear Gradient
                                             </div>
@@ -172,7 +172,7 @@
                                             <div id="text-shadow-control"
                                                  class="ui-control ui-control-inline ui-control-bordered"
                                                  ui-text-shadow-editor
-                                                 text-shadow="sketchWidgetSetting.textShadow"
+                                                 text-shadow="$root.sketchWidgetSetting.textShadow"
                                                  dock-align="dockAlign">
                                                 Text Shadow
                                             </div>
@@ -180,7 +180,7 @@
                                             <div id="box-shadow-control"
                                                  class="ui-control ui-control-inline ui-control-bordered"
                                                  ui-box-shadow-editor
-                                                 box-shadow="sketchWidgetSetting.boxShadow"
+                                                 box-shadow="$root.sketchWidgetSetting.boxShadow"
                                                  dock-align="dockAlign">
                                                 Box Shadow
                                             </div>
@@ -198,16 +198,16 @@
                     </div>
                     <div id="shape-control-group" tab-sel="tab-content-control-group-2" class="ui-control-group">
                         <div id="shape-control" class="ui-control ui-control-inline enable" ui-shape
-                             is-playing="sketchWidgetSetting.isPlaying"
+                             is-playing="$root.sketchWidgetSetting.isPlaying"
                              dock-align="dockAlign">
                         </div>
                     </div>
                     <div id="widget-control-group" tab-sel="tab-content-control-group-3" class="ui-control-group">
                         <div id="widget-control" class="ui-control ui-control-inline enable" ui-widget
                              ui-widget-opts="{elementZIndex: 99}"
-                             is-playing="sketchWidgetSetting.isPlaying"
-                             picked-artifact="sketchWidgetSetting.pickedArtifact"
-                             picked-library="sketchWidgetSetting.pickedLibrary"
+                             is-playing="$root.sketchWidgetSetting.isPlaying"
+                             picked-artifact="$root.sketchWidgetSetting.pickedArtifact"
+                             picked-library="$root.sketchWidgetSetting.pickedLibrary"
                              dock-align="dockAlign" show-demo="showDemo()">
                         </div>
                     </div>
