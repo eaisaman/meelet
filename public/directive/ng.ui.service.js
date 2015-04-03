@@ -3211,7 +3211,9 @@ define(
                     return IncludeSketchWidgetClass.prototype.__proto__.appendTo.apply(self, [container]).then(
                         function () {
                             if (self.$element && self.$element[0].nodeType == 1 && self.$element.parent().length && self.template) {
-                                return $inject.uiUtilService.whilst(
+                                var defer = $inject.$q.defer();
+
+                                $inject.uiUtilService.whilst(
                                     function () {
                                         return !angular.element(self.$element).scope();
                                     },
@@ -3219,8 +3221,6 @@ define(
                                         callback();
                                     },
                                     function (err) {
-                                        var defer = $inject.$q.defer();
-
                                         if (!err) {
                                             self.$element.attr("ng-include", "'" + self.template + "'");
 
@@ -3264,26 +3264,17 @@ define(
                                                 $inject.angularConstants.loadRenderTimeout
                                             );
                                         } else {
-                                            $inject.$timeout(function () {
-                                                defer.reject(err);
-                                            });
+                                            defer.reject(err);
                                         }
-
-                                        return defer.promise;
                                     },
                                     $inject.angularConstants.checkInterval,
                                     "IncludeSketchWidgetClass.appendTo." + self.id,
                                     $inject.angularConstants.renderTimeout
-                                ).then(function (err) {
-                                        if (err) {
-                                            return $inject.uiUtilService.getRejectDefer(err);
-                                        } else {
-                                            return $inject.uiUtilService.getResolveDefer(self);
-                                        }
-                                    }
                                 );
+
+                                return defer.promise;
                             } else {
-                                return $inject.uiUtilService.getResolveDefer(self);
+                                return $inject.uiUtilService.getRejectDefer("Invalid Element {0}".format(self.id));
                             }
                         }, function (err) {
                             return $inject.uiUtilService.getRejectDefer(err);
@@ -3336,7 +3327,7 @@ define(
                 onContentIncluded: function () {
                     var self = this;
 
-                    return function(event, obj) {
+                    return function (event, obj) {
                         if (obj && obj.widgetId == self.id && self.$element && self.$element[0].nodeType == 1 && self.$element.parent().length) {
                             var $parent = self.$element.parent(),
                                 childWidgets = self.childWidgets,
@@ -3527,20 +3518,22 @@ define(
                                 }
                             ).then(
                                 function () {
-                                    self.$element && self.$element.addClass($inject.angularConstants.widgetClasses.widgetIncludeAnchorClass);
+                                    if (self.$element && self.$element.length && self.$element[0].nodeType == 1 && self.$element.parent().length) {
+                                        self.$element.addClass($inject.angularConstants.widgetClasses.widgetIncludeAnchorClass);
 
-                                    var configuration = {};
-                                    _.without(_.keys(self.widgetSpec.configuration), ["state", "handDownConfiguration"]).forEach(
-                                        function (key) {
-                                            var config = self.widgetSpec.configuration[key],
-                                                value = config.pickedValue || config.defaultValue;
+                                        var configuration = {};
+                                        _.without(_.keys(self.widgetSpec.configuration), ["state", "handDownConfiguration"]).forEach(
+                                            function (key) {
+                                                var config = self.widgetSpec.configuration[key],
+                                                    value = config.pickedValue || config.defaultValue;
 
-                                            if (value != null) {
-                                                configuration[key] = config;
+                                                if (value != null) {
+                                                    configuration[key] = config;
+                                                }
                                             }
-                                        }
-                                    );
-                                    _.isEmpty(configuration) || self.setScopedValue(configuration);
+                                        );
+                                        _.isEmpty(configuration) || self.setScopedValue(configuration);
+                                    }
 
                                     return $inject.uiUtilService.getResolveDefer(self);
                                 },
@@ -4162,7 +4155,7 @@ define(
                 pageObj.addOmniClass(self.angularConstants.widgetClasses.holderClass);
             }
 
-            return self.uiUtilService.whilst(
+            self.uiUtilService.whilst(
                 function () {
                     return !angular.element(holderElement).scope();
                 }, function (callback) {
