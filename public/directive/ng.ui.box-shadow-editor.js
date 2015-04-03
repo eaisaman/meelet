@@ -530,27 +530,34 @@ define(
                                 scope.effectLibraryList = $rootScope.effectLibraryList;
                                 scope.filterEffectLibraryList = [];
 
-                                $timeout(function () {
-                                    uiUtilService.whilst(
-                                        function () {
-                                            return !$rootScope.loadedProject;
-                                        },
-                                        function (callback) {
-                                            callback();
-                                        },
-                                        function (err) {
-                                            appService.loadEffectArtifactList().then(function () {
-                                                var arr = scope.filterLibraryList(_.where(scope.effectLibraryList, {uiControl: "uiBoxShadowEditor"}), $rootScope.loadedProject.xrefRecord);
-                                                arr.splice(0, 0, 0, 0);
-                                                scope.filterEffectLibraryList.splice(0, scope.filterEffectLibraryList.length);
-                                                Array.prototype.splice.apply(scope.filterEffectLibraryList, arr);
-                                            });
-                                        },
-                                        angularConstants.checkInterval,
-                                        "ui-box-shadow-editor.compile.post",
-                                        angularConstants.renderTimeout
-                                    );
-                                });
+                                uiUtilService.latestOnce(
+                                    function () {
+                                        return $timeout(function () {
+                                            uiUtilService.whilst(
+                                                function () {
+                                                    return !$rootScope.loadedProject;
+                                                },
+                                                function (callback) {
+                                                    callback();
+                                                },
+                                                function (err) {
+                                                    appService.loadEffectArtifactList().then(function () {
+                                                        var arr = scope.filterLibraryList(_.where(scope.effectLibraryList, {uiControl: "uiBoxShadowEditor"}), $rootScope.loadedProject.xrefRecord);
+                                                        arr.splice(0, 0, 0, 0);
+                                                        scope.filterEffectLibraryList.splice(0, scope.filterEffectLibraryList.length);
+                                                        Array.prototype.splice.apply(scope.filterEffectLibraryList, arr);
+                                                    });
+                                                },
+                                                angularConstants.checkInterval,
+                                                "ui-box-shadow-editor.compile.post",
+                                                angularConstants.renderTimeout
+                                            );
+                                        });
+                                    },
+                                    null,
+                                    angularConstants.unresponsiveInterval,
+                                    "ui-box-shadow-editor.compile.post.init"
+                                )();
                             }
                         }
                     }

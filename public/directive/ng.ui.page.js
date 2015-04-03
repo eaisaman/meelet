@@ -159,19 +159,27 @@ define(
                                     return true;
                                 }
 
-                                $timeout(function () {
-                                    $(".pageList select").change(function () {
-                                        var i = $(this).val(),
-                                            pageObj = scope.project.sketchWorks.pages[i];
 
-                                        if (pageObj.id != scope.sketchObject.pickedPage.id) {
-                                            scope.sketchObject.pickedPage = pageObj;
-                                            scope.$apply();
-                                        }
-                                    });
+                                uiUtilService.latestOnce(
+                                    function () {
+                                        return $timeout(function () {
+                                            $(".pageList select").change(function () {
+                                                var i = $(this).val(),
+                                                    pageObj = scope.project.sketchWorks.pages[i];
 
-                                    scope.$broadcast("collapseAll");
-                                });
+                                                if (pageObj.id != scope.sketchObject.pickedPage.id) {
+                                                    scope.sketchObject.pickedPage = pageObj;
+                                                    scope.$apply();
+                                                }
+                                            });
+
+                                            scope.$broadcast("collapseAll");
+                                        });
+                                    },
+                                    null,
+                                    angularConstants.unresponsiveInterval,
+                                    "ui-page.compile.post.init"
+                                )();
                             }
                         }
                     }

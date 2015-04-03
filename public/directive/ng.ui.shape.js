@@ -296,47 +296,52 @@ define(
                                 scope.iconLibraryList = $rootScope.iconLibraryList;
                                 scope.filterIconLibraryList = [];
 
-                                $timeout(function () {
-                                    var $wrapper = element.find(".ui-control-wrapper"),
-                                        $panel = element.find(".ui-control-panel");
+                                uiUtilService.latestOnce(
+                                    function () {
+                                        var $wrapper = element.find(".ui-control-wrapper"),
+                                            $panel = element.find(".ui-control-panel");
 
-                                    $wrapper.addClass("expanded");
-                                    $panel.addClass("show");
+                                        $wrapper.addClass("expanded");
+                                        $panel.addClass("show");
 
-                                    var $el = element.find(".pickerPane");
+                                        var $el = element.find(".pickerPane");
 
-                                    mc = $el.data("hammer");
-                                    if (!mc) {
-                                        mc = new Hammer.Manager(element.find(".pickerPane").get(0));
-                                        mc.add(new Hammer.Pan());
-                                        mc.on("panstart panmove panend", addWidgetHandler);
-                                        $el.data("hammer", mc);
+                                        mc = $el.data("hammer");
+                                        if (!mc) {
+                                            mc = new Hammer.Manager(element.find(".pickerPane").get(0));
+                                            mc.add(new Hammer.Pan());
+                                            mc.on("panstart panmove panend", addWidgetHandler);
+                                            $el.data("hammer", mc);
 
-                                        scope.$on('$destroy', function () {
-                                            mc.off("panstart panmove panend", addWidgetHandler);
-                                        });
-                                    }
-
-                                    uiUtilService.whilst(
-                                        function () {
-                                            return !$rootScope.loadedProject;
-                                        },
-                                        function (callback) {
-                                            callback();
-                                        },
-                                        function (err) {
-                                            appService.loadIconArtifactList().then(function () {
-                                                var arr = scope.filterLibraryList(scope.iconLibraryList, $rootScope.loadedProject.xrefRecord);
-                                                arr.splice(0, 0, 0, 0);
-                                                scope.filterIconLibraryList.splice(0, scope.filterIconLibraryList.length);
-                                                Array.prototype.splice.apply(scope.filterIconLibraryList, arr);
+                                            scope.$on('$destroy', function () {
+                                                mc.off("panstart panmove panend", addWidgetHandler);
                                             });
-                                        },
-                                        angularConstants.checkInterval,
-                                        "ui-shape.compile.post",
-                                        angularConstants.renderTimeout
-                                    );
-                                });
+                                        }
+
+                                        return uiUtilService.whilst(
+                                            function () {
+                                                return !$rootScope.loadedProject;
+                                            },
+                                            function (callback) {
+                                                callback();
+                                            },
+                                            function (err) {
+                                                appService.loadIconArtifactList().then(function () {
+                                                    var arr = scope.filterLibraryList(scope.iconLibraryList, $rootScope.loadedProject.xrefRecord);
+                                                    arr.splice(0, 0, 0, 0);
+                                                    scope.filterIconLibraryList.splice(0, scope.filterIconLibraryList.length);
+                                                    Array.prototype.splice.apply(scope.filterIconLibraryList, arr);
+                                                });
+                                            },
+                                            angularConstants.checkInterval,
+                                            "ui-shape.compile.post.filterIconLibraryList",
+                                            angularConstants.renderTimeout
+                                        );
+                                    },
+                                    null,
+                                    angularConstants.unresponsiveInterval,
+                                    "ui-shape.compile.post.init"
+                                )();
                             }
                         }
                     }

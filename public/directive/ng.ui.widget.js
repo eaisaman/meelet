@@ -297,7 +297,7 @@ define(
                                             });
                                         });
 
-                                        if (artifactList.length && scope.project.addLibrary(widgetLibrary._id, widgetLibrary.name, widgetLibrary.type, artifactList)) {
+                                        if (artifactList.length && $rootScope.loadedProject.addLibrary(widgetLibrary._id, widgetLibrary.name, widgetLibrary.type, artifactList)) {
                                             widgetLibrary._selected = true;
 
                                             if (scope.filterWidgetLibraryList.every(function (lib) {
@@ -311,7 +311,7 @@ define(
 
                                 scope.$on(angularEventTypes.switchProjectEvent, function (event, data) {
                                     if (data) {
-                                        var arr = scope.filterLibraryList(scope.widgetLibraryList, scope.project.xrefRecord);
+                                        var arr = scope.filterLibraryList(scope.widgetLibraryList, $rootScope.loadedProject.xrefRecord);
                                         arr.splice(0, 0, 0, 0);
                                         scope.filterWidgetLibraryList.splice(0, scope.filterWidgetLibraryList.length);
                                         Array.prototype.splice.apply(scope.filterWidgetLibraryList, arr);
@@ -321,47 +321,56 @@ define(
                                 scope.widgetLibraryList = $rootScope.widgetLibraryList;
                                 scope.filterWidgetLibraryList = [];
 
-                                $timeout(function () {
-                                    var $wrapper = element.find(".ui-control-wrapper"),
-                                        $panel = element.find(".ui-control-panel");
+                                uiUtilService.latestOnce(
+                                    function () {
+                                        return $timeout(
+                                            function () {
+                                                var $wrapper = element.find(".ui-control-wrapper"),
+                                                    $panel = element.find(".ui-control-panel");
 
-                                    $wrapper.addClass("expanded");
-                                    $panel.addClass("show");
+                                                $wrapper.addClass("expanded");
+                                                $panel.addClass("show");
 
-                                    var $el = element.find(".pickerPane");
+                                                var $el = element.find(".pickerPane");
 
-                                    mc = $el.data("hammer");
-                                    if (!mc) {
-                                        mc = new Hammer.Manager($el.get(0));
-                                        mc.add(new Hammer.Pan());
-                                        mc.on("panstart panmove panend", addWidgetHandler);
-                                        $el.data("hammer", mc);
+                                                mc = $el.data("hammer");
+                                                if (!mc) {
+                                                    mc = new Hammer.Manager($el.get(0));
+                                                    mc.add(new Hammer.Pan());
+                                                    mc.on("panstart panmove panend", addWidgetHandler);
+                                                    $el.data("hammer", mc);
 
-                                        scope.$on('$destroy', function () {
-                                            mc.off("panstart panmove panend", addWidgetHandler);
-                                        });
-                                    }
+                                                    scope.$on('$destroy', function () {
+                                                        mc.off("panstart panmove panend", addWidgetHandler);
+                                                    });
+                                                }
 
-                                    uiUtilService.whilst(
-                                        function () {
-                                            return !$rootScope.loadedProject;
-                                        },
-                                        function (callback) {
-                                            callback();
-                                        },
-                                        function (err) {
-                                            appService.loadWidgetArtifactList().then(function () {
-                                                var arr = scope.filterLibraryList(scope.widgetLibraryList, $rootScope.loadedProject.xrefRecord);
-                                                arr.splice(0, 0, 0, 0);
-                                                scope.filterWidgetLibraryList.splice(0, scope.filterWidgetLibraryList.length);
-                                                Array.prototype.splice.apply(scope.filterWidgetLibraryList, arr);
-                                            });
-                                        },
-                                        angularConstants.checkInterval,
-                                        "ui-widget.compile.post",
-                                        angularConstants.renderTimeout
-                                    );
-                                });
+                                                uiUtilService.whilst(
+                                                    function () {
+                                                        return !$rootScope.loadedProject;
+                                                    },
+                                                    function (callback) {
+                                                        callback();
+                                                    },
+                                                    function (err) {
+                                                        appService.loadWidgetArtifactList().then(function () {
+                                                            var arr = scope.filterLibraryList(scope.widgetLibraryList, $rootScope.loadedProject.xrefRecord);
+                                                            arr.splice(0, 0, 0, 0);
+                                                            scope.filterWidgetLibraryList.splice(0, scope.filterWidgetLibraryList.length);
+                                                            Array.prototype.splice.apply(scope.filterWidgetLibraryList, arr);
+                                                        });
+                                                    },
+                                                    angularConstants.checkInterval,
+                                                    "ui-widget.compile.post.filterWidgetLibraryList",
+                                                    angularConstants.renderTimeout
+                                                );
+                                            }
+                                        );
+                                    },
+                                    null,
+                                    angularConstants.unresponsiveInterval,
+                                    "ui-widget.compile.post.init"
+                                )();
                             }
                         }
                     }

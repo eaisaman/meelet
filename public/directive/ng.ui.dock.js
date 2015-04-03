@@ -63,15 +63,21 @@ define(
                                     });
                                 }
 
-                                $timeout(function () {
-                                    scope.selectContentTab(
-                                        element.find(".dockContent"),
-                                        element.find("div[tab-sel^=tab-head-control-group]").get(0),
-                                        null,
-                                        "control-group"
-                                    );
-                                }, angularConstants.actionDelay);
-
+                                uiUtilService.latestOnce(
+                                    function () {
+                                        return $timeout(function () {
+                                            scope.selectContentTab(
+                                                element.find(".dockContent"),
+                                                element.find("div[tab-sel^=tab-head-control-group]").get(0),
+                                                null,
+                                                "control-group"
+                                            );
+                                        }, angularConstants.actionDelay);
+                                    },
+                                    null,
+                                    angularConstants.unresponsiveInterval,
+                                    "ui-dock.compile.post.init"
+                                )();
 
                                 /* FIXME Adjust Slidee Height When Sketch Control Expands.
                                  *  div.content-1 is used as slidee for sly plugin, whose height is 200% of its parent.

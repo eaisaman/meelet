@@ -481,27 +481,32 @@ define(
                                 scope.effectLibraryList = $rootScope.effectLibraryList;
                                 scope.filterEffectLibraryList = [];
 
-                                $timeout(function () {
-                                    uiUtilService.whilst(
-                                        function () {
-                                            return !$rootScope.loadedProject;
-                                        },
-                                        function (callback) {
-                                            callback();
-                                        },
-                                        function (err) {
-                                            appService.loadEffectArtifactList().then(function () {
-                                                var arr = scope.filterLibraryList(_.where(scope.effectLibraryList, {uiControl: "uiTextShadowEditor"}), $rootScope.loadedProject.xrefRecord);
-                                                arr.splice(0, 0, 0, 0);
-                                                scope.filterEffectLibraryList.splice(0, scope.filterEffectLibraryList.length);
-                                                Array.prototype.splice.apply(scope.filterEffectLibraryList, arr);
-                                            });
-                                        },
-                                        angularConstants.checkInterval,
-                                        "ui-text-shadow-editor.compile.post",
-                                        angularConstants.renderTimeout
-                                    );
-                                });
+                                uiUtilService.latestOnce(
+                                    function () {
+                                        return uiUtilService.whilst(
+                                            function () {
+                                                return !$rootScope.loadedProject;
+                                            },
+                                            function (callback) {
+                                                callback();
+                                            },
+                                            function (err) {
+                                                appService.loadEffectArtifactList().then(function () {
+                                                    var arr = scope.filterLibraryList(_.where(scope.effectLibraryList, {uiControl: "uiTextShadowEditor"}), $rootScope.loadedProject.xrefRecord);
+                                                    arr.splice(0, 0, 0, 0);
+                                                    scope.filterEffectLibraryList.splice(0, scope.filterEffectLibraryList.length);
+                                                    Array.prototype.splice.apply(scope.filterEffectLibraryList, arr);
+                                                });
+                                            },
+                                            angularConstants.checkInterval,
+                                            "ui-text-shadow-editor.compile.post.filterEffectLibraryList",
+                                            angularConstants.renderTimeout
+                                        );
+                                    },
+                                    null,
+                                    angularConstants.unresponsiveInterval,
+                                    "ui-text-shadow-editor.compile.post.init"
+                                )();
                             }
                         }
                     }

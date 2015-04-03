@@ -339,9 +339,16 @@ define(
                                     }
                                 }
 
-                                $timeout(function () {
-                                    registerHandlers();
-                                });
+                                uiUtilService.latestOnce(
+                                    function () {
+                                        return $timeout(function () {
+                                            registerHandlers();
+                                        });
+                                    },
+                                    null,
+                                    angularConstants.unresponsiveInterval,
+                                    "ui-vertical-ruler.compile.post.init"
+                                )();
 
                                 scope.$on('$destroy', function () {
                                     unregisterHandlers();
