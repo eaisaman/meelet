@@ -64,7 +64,7 @@ define(
                                     scope.toggleState = function (event) {
                                         event && event.stopPropagation && event.stopPropagation();
 
-                                        if (scope.isPlaying == null || scope.isPlaying) {
+                                        if ((scope.isPlaying == null || scope.isPlaying) && !event.originalEvent.defaultPrevented) {
                                             if (scope.configuration.stateGroup || scope.stateGroup && scope.widgetId) {
                                                 uiUtilService.broadcast(scope, angularConstants.stateGroupEventPattern.format(scope.configuration.stateGroup || scope.stateGroup), {
                                                     widgetId: scope.widgetId

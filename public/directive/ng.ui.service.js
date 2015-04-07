@@ -1079,10 +1079,47 @@ define(
                     if (widgetObj && widgetObj.$element && widgetObj.$element[0].nodeType == 1 && widgetObj.$element.parent().length && self.eventName) {
                         self.initialize.prototype.__proto__.on.apply(self, [widgetObj]);
 
-                        self.hammer = new Hammer(widgetObj.$element.get(0), _.clone(self.options));
-                        self.hammer.on(self.eventName, function (event) {
+                        var mc = widgetObj.$element.data("gesture-hammer");
+                        if (!mc) {
+                            mc = new Hammer.Manager(widgetObj.$element[0]);
+                            widgetObj.$element.data("gesture-hammer", mc);
+                        }
+
+                        switch (self.eventName) {
+                            case "panleft":
+                            case "panright":
+                            case "panup":
+                            case "pandown":
+                                mc.add(new Hammer.Pan(_.clone(self.options)));
+                            case "touch":
+                                mc.add(new Hammer.Tap(_.clone(self.options)));
+                                break;
+                            case "press":
+                                mc.add(new Hammer.Press(_.clone(self.options)));
+                                break;
+                            case "pinchin":
+                            case "pinchout":
+                                mc.add(new Hammer.Pinch(_.clone(self.options)));
+                                break;
+                            case "tap":
+                            case "doubletap":
+                                mc.add(new Hammer.Tap(_.clone(self.options)));
+                                break;
+                            case "swipe":
+                                mc.add(new Hammer.Swipe(_.clone(self.options)));
+                                break;
+                        }
+                        mc.on(self.eventName, function (event) {
+                            if (event && event.srcEvent) {
+                                event.srcEvent.stopPropagation && event.srcEvent.stopPropagation();
+                                event.srcEvent.preventDefault && event.srcEvent.preventDefault(true);
+                            }
+
                             self.callback && self.callback();
                         });
+
+                        self.hammer = mc;
+                        self.recognizer = self.hammer.get(self.eventName);
                     }
                 },
                 off: function () {
@@ -1090,6 +1127,9 @@ define(
 
                     if (this.hammer) {
                         this.hammer.off(this.eventName);
+                        this.hammer.remove(this.recognizer);
+                        $(this.hammer.element).removeData("gesture-hammer");
+                        this.hammer.destroy();
                         this.hammer = null;
                     }
                 }

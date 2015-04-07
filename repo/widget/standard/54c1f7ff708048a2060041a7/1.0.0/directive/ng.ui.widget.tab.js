@@ -95,21 +95,23 @@ define(
                                     scope.selectWidgetTab = function (event) {
                                         event && event.stopPropagation();
 
-                                        var $el = $(event.target),
-                                            tabIndex = parseInt($el.attr("tab-index"));
+                                        if ((scope.isPlaying == null || scope.isPlaying) && !event.originalEvent.defaultPrevented) {
+                                            var $el = $(event.target),
+                                                tabIndex = parseInt($el.attr("tab-index"));
 
-                                        if (tabIndex >= 0) {
-                                            var $tab = element.find(".tabGroup[tab-index = " + tabIndex + "]");
+                                            if (tabIndex >= 0) {
+                                                var $tab = element.find(".tabGroup[tab-index = " + tabIndex + "]");
 
-                                            scope.pickedTabTitle = scope.tabTitles[tabIndex].name;
+                                                scope.pickedTabTitle = scope.tabTitles[tabIndex].name;
 
-                                            return $q.all([scope.toggleExclusiveSelect($el, event, true), scope.toggleExclusiveDisplay($tab, event, true)]);
+                                                return $q.all([scope.toggleExclusiveSelect($el, event, true), scope.toggleExclusiveDisplay($tab, event, true)]);
+                                            }
                                         }
 
                                         return uiUtilService.getResolveDefer();
                                     }
 
-                                    scope.setTabTitles = scope.onModifyTabTitles = function (to) {
+                                    scope.onModifyTabTitles = function (to) {
                                         if (to != null) {
                                             if (!scope.pickedTabTitle || to.every(function (titleObj) {
                                                     return titleObj.name !== scope.pickedTabTitle;
@@ -158,6 +160,8 @@ define(
                                                     ctrl.transclude(to[i].name, $(groupElement));
                                                 });
                                             }
+
+                                            $compile(element.find(".tabGroups"))(scope);
                                         }
                                     }
 

@@ -75,7 +75,7 @@ define(
                                     }
 
                                     scope.toggleSideBar = function (event) {
-                                        if (scope.isPlaying == null || scope.isPlaying) {
+                                        if ((scope.isPlaying == null || scope.isPlaying) && !event.originalEvent.defaultPrevented) {
                                             scope.toggleSelect("._widget_sideBarContainer", event).then(function () {
                                                 return checkState();
                                             });
@@ -83,7 +83,7 @@ define(
                                     }
 
                                     scope.hideSideBar = function (event) {
-                                        if (scope.isPlaying == null || scope.isPlaying) {
+                                        if ((scope.isPlaying == null || scope.isPlaying) && !event.originalEvent.defaultPrevented) {
                                             scope.toggleSelect("._widget_sideBarContainer", event, false).then(function () {
                                                 return checkState();
                                             });

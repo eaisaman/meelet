@@ -269,8 +269,9 @@ $zIndexWidgetText: 100;
 
                             .widgetIncludeAnchor .widgetContainer {
                                 position: absolute;
-                                width: 100%;
-                                height: 100%;
+                                width: 100% !important;
+                                height: 100% !important;
+                                background: transparent !important;
 
                                 > div {
                                     position: absolute;

@@ -36,7 +36,37 @@
         "id": "2641E570-0CF4-4A8A-9A46-C374CE5BC319",
         "name": "Double Tap",
         "eventName": "doubletap",
-        "options": {}
+        "options": {
+          "taps": 2
+        }
+      },
+      {
+        "id": "8B4AE606-E5D9-4290-B6D4-6C05FBD546F1",
+        "name": "Pan Left",
+        "eventName": "panleft",
+        "options": {
+        }
+      },
+      {
+        "id": "4ABCA09D-4181-4A37-8399-E43DB5F2CFE1",
+        "name": "Pan Right",
+        "eventName": "panright",
+        "options": {
+        }
+      },
+      {
+        "id": "65240B82-C1C4-407C-9553-26D21C944044",
+        "name": "Pan Up",
+        "eventName": "panup",
+        "options": {
+        }
+      },
+      {
+        "id": "B870662E-EB5F-4F09-B04D-2AFBF9337291",
+        "name": "Pan Down",
+        "eventName": "pandown",
+        "options": {
+        }
       },
       {
         "id": "E923CF20-923F-4F7A-8B2E-C06EFD76D25C",
