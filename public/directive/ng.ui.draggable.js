@@ -32,17 +32,14 @@ define(
                     return function (scope, element, attr) {
                         var mc, dragHandler;
 
-                        attr.$observe(DIRECTIVE, function (value) {
-                            var fn = $parse(value),
-                                opts = $parse(attr[DIRECTIVE + 'Opts'])(scope, {});
+                        function registerHandlers(opts) {
+                            mc = element.data("hammer");
 
-                            opts.direction = directionOpt[opts.direction || 'all'] || DIRECTION_ALL;
-                            options = _.extend(_.clone(options), opts)
-                            scope.$watch(options.scaleSetting, function (value) {
-                                scope.scale = value;
-                            });
-                            mc = new Hammer.Manager(element[0]);
+                            if (!mc) {
+                                mc = new Hammer.Manager(element[0]);
+                            }
                             mc.add(new Hammer.Pan(_.extend({}, opts)));
+
                             dragHandler = function (event) {
                                 function handler(event) {
                                     var defer = $q.defer();
@@ -188,9 +185,31 @@ define(
                             };
 
                             mc.on("panstart panmove panend", dragHandler);
+                        }
+
+                        function unregisterHandlers() {
+                            mc = element.data("hammer");
+
+                            if (mc) {
+                                mc.off("panstart panmove panend", dragHandler);
+                            }
+                        }
+
+                        attr.$observe(DIRECTIVE, function (value) {
+                            var fn = $parse(value),
+                                opts = $parse(attr[DIRECTIVE + 'Opts'])(scope, {});
+
+                            opts.direction = directionOpt[opts.direction || 'all'] || DIRECTION_ALL;
+                            options = _.extend(_.clone(options), opts)
+                            scope.$watch(options.scaleSetting, function (value) {
+                                scope.scale = value;
+                            });
+
+                            registerHandlers(opts);
                         });
+
                         scope.$on('$destroy', function () {
-                            mc.off("panstart panmove panend", dragHandler);
+                            unregisterHandlers();
                         });
                     };
                 }]);

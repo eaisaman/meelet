@@ -32,7 +32,7 @@ define(
                                         return defer.promise;
                                     },
                                     angularConstants.checkInterval,
-                                    null,
+                                    "ui-multi-transclude.{0}-{1}".format(name, new Date().getTime()),
                                     angularConstants.renderTimeout
                                 );
                                 return;

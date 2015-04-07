@@ -296,7 +296,7 @@ define(
                                                 return defer.promise;
                                             },
                                             angularConstants.checkInterval,
-                                            null,
+                                            "ui-simple-dropdown.watchSelectionList-{0}".format(element.attr("id") || new Date().getTime()),
                                             angularConstants.renderTimeout
                                         );
                                     }

@@ -28,7 +28,7 @@ define(
                                     scope: scope
                                 }));
 
-                                function createConfigurationObject(value, key, index) {
+                                function createConfigurationObject(widget, value, key, index) {
                                     var obj = _.extend({}, value, {key: key, index: index});
                                     if (obj.type === "boundReadList") {
                                         obj.options = scope.configurableWidget.getConfiguration(obj.listName);
@@ -38,27 +38,32 @@ define(
                                     } else {
                                         obj.pickedValue = scope.configurableWidget.getConfiguration(key);
                                     }
+                                    obj.widget = widget;
 
                                     return obj;
                                 }
 
                                 scope.$watch("pickedWidget", function (value) {
                                     if (value) {
-                                        scope.configurableWidget = uiService.configurableWidget(value);
-                                        scope.widgetSpec = _.pick(scope.configurableWidget.widgetSpec, "configuration", "name");
-                                        var configuration = [],
-                                            handDownConfiguration = [];
+                                        scope.configurableWidget = null;
 
-                                        _.each(_.omit(scope.widgetSpec.configuration, "state", "handDownConfiguration"), function (value, key) {
-                                            configuration.push(createConfigurationObject(value, key, configuration.length));
+                                        $timeout(function () {
+                                            scope.configurableWidget = uiService.configurableWidget(value);
+                                            scope.widgetSpec = _.pick(scope.configurableWidget.widgetSpec, "configuration", "name");
+                                            var configuration = [],
+                                                handDownConfiguration = [];
+
+                                            _.each(_.omit(scope.widgetSpec.configuration, "state", "handDownConfiguration"), function (value, key) {
+                                                configuration.push(createConfigurationObject(scope.configurableWidget, value, key, configuration.length));
+                                            });
+
+                                            _.each(scope.widgetSpec.configuration.handDownConfiguration && scope.widgetSpec.configuration.handDownConfiguration, function (value, key) {
+                                                handDownConfiguration.push(createConfigurationObject(scope.configurableWidget, value, key, handDownConfiguration.length));
+                                            });
+
+                                            scope.widgetSpec.configuration = configuration;
+                                            scope.widgetSpec.handDownConfiguration = handDownConfiguration;
                                         });
-
-                                        _.each(scope.widgetSpec.configuration.handDownConfiguration && scope.widgetSpec.configuration.handDownConfiguration, function (value, key) {
-                                            handDownConfiguration.push(createConfigurationObject(value, key, handDownConfiguration.length));
-                                        });
-
-                                        scope.widgetSpec.configuration = configuration;
-                                        scope.widgetSpec.handDownConfiguration = handDownConfiguration;
                                     }
                                 });
 
@@ -99,7 +104,7 @@ define(
                                 }
 
                                 scope.setItem = function (item) {
-                                    var widgetObj = scope.configurableWidget;
+                                    var widgetObj = item.widget;
 
                                     if (item.type === "number") {
                                         var m = (item.pickedValue || "").match(/([-\d\.]+)$/)
@@ -176,13 +181,11 @@ define(
                                                 return defer.promise;
                                             }
 
-                                            itemInputHandler.onceId = "uiWidgetConfigurator.createConfigurationItemAssign.itemInputHandler";
-
                                             if (value) {
                                                 var args = Array.prototype.slice.call(arguments),
                                                     result = assign.apply(fn, args);
 
-                                                uiUtilService.once(itemInputHandler, null, angularConstants.unresponsiveInterval)(value);
+                                                uiUtilService.latestOnce(itemInputHandler, null, angularConstants.unresponsiveInterval, "uiWidgetConfigurator.createConfigurationItemAssign.itemInputHandler.{0}.{1}".format(scope.configurableWidget.id, $scope.configurationItem.name))(value);
 
                                                 return result;
                                             }

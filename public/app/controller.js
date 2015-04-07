@@ -288,24 +288,25 @@ define(
 
                     if (parentWidget) {
                         if (parentWidget.hasClass(angularConstants.widgetClasses.widgetContainerClass)) {
-                            parentWidget = widgetObj.parent();
-                            $rootScope.sketchObject.pickedWidget = parentWidget;
-                            $rootScope.sketchObject.pickedWidget.addOmniClass(angularConstants.widgetClasses.activeClass);
+                            parentWidget = parentWidget.parent();
+                        }
 
-                            widgetObj.removeOmniClass(angularConstants.widgetClasses.activeClass);
-                            if (!widgetObj.isTemporary && widgetObj.isElement && widgetObj.$element) {
-                                var $text = $("#widgetText"),
-                                    editingWidget = $text.data("widgetObject");
+                        $rootScope.sketchObject.pickedWidget = parentWidget;
+                        $rootScope.sketchObject.pickedWidget.addOmniClass(angularConstants.widgetClasses.activeClass);
 
-                                $text.toggle(false);
-                                if (editingWidget) {
-                                    $text.css("width", "auto");
-                                    if ($text.width()) {
-                                        editingWidget.setHtml($text.html());
-                                    }
+                        widgetObj.removeOmniClass(angularConstants.widgetClasses.activeClass);
+                        if (!widgetObj.isTemporary && widgetObj.isElement && widgetObj.$element) {
+                            var $text = $("#widgetText"),
+                                editingWidget = $text.data("widgetObject");
+
+                            $text.toggle(false);
+                            if (editingWidget) {
+                                $text.css("width", "auto");
+                                if ($text.width()) {
+                                    editingWidget.setHtml($text.html());
                                 }
-                                $text.removeData("widgetObject");
                             }
+                            $text.removeData("widgetObject");
                         }
                     }
                 }
@@ -514,7 +515,7 @@ define(
                 for (var key in data) {
                     var prop = data[key].prop;
                     if (typeof prop === "string") {
-                        var m = prop.match(/^sketchWidgetSetting\.(\w+)/);
+                        var m = prop.match(/sketchWidgetSetting\.(\w+)$/);
                         if (m && m.length == 2) {
                             var name = m[1],
                                 setting = {name: name, initFn: data[key].initFn, source: data[key].source};

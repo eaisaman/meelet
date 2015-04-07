@@ -97,19 +97,26 @@ define(
                                     scope.deregisterWatchState = createStateWatch();
                                 },
                                 post: function (scope, element, attrs) {
-                                    uiUtilService.whilst(function () {
-                                            return !element.closest(".widgetContainer").attr("id");
-                                        }, function (callback) {
-                                            callback();
-                                        }, function (err) {
-                                            if (!err) {
-                                                //id of widget of RepoSketchWidgetClass type
-                                                scope.widgetId = element.closest(".widgetContainer").parent().attr("id");
-                                                uiUtilService.broadcast(scope, angularConstants.widgetEventPattern.format(angularEventTypes.widgetContentIncludedEvent, scope.widgetId), {widgetId:scope.widgetId});
-                                            }
-                                        },
-                                        angularConstants.checkInterval
-                                    )
+                                    if (element.hasClass(angularConstants.repoWidgetClass)) {
+                                        uiUtilService.whilst(function () {
+                                                return !element.closest(".widgetContainer").attr("id");
+                                            }, function (callback) {
+                                                callback();
+                                            }, function (err) {
+                                                if (!err) {
+                                                    //id of widget of RepoSketchWidgetClass type
+                                                    scope.widgetId = element.closest(".widgetContainer").parent().attr("id");
+                                                    uiUtilService.broadcast(scope, angularConstants.widgetEventPattern.format(angularEventTypes.widgetContentIncludedEvent, scope.widgetId), {
+                                                        widgetId: scope.widgetId,
+                                                        widgetScope: scope,
+                                                        $element: element.closest(".widgetContainer").parent()
+                                                    });
+                                                }
+                                            },
+                                            angularConstants.checkInterval,
+                                            "ui-widget-sidebar.compile.post" + new Date().getTime()
+                                        )
+                                    }
                                 }
                             }
                         }

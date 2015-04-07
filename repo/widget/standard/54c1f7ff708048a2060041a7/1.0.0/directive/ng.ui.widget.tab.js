@@ -109,7 +109,7 @@ define(
                                         return uiUtilService.getResolveDefer();
                                     }
 
-                                    scope.onModifyTabTitles = function (to) {
+                                    scope.setTabTitles = scope.onModifyTabTitles = function (to) {
                                         if (to != null) {
                                             if (!scope.pickedTabTitle || to.every(function (titleObj) {
                                                     return titleObj.name !== scope.pickedTabTitle;
@@ -153,7 +153,11 @@ define(
                                                 }
                                             });
 
-                                            $compile(element.find(".tabGroups"))(scope);
+                                            if (!element.hasClass(angularConstants.repoWidgetClass)) {
+                                                element.find(".tabGroups").children(".tabGroup").each(function (i, groupElement) {
+                                                    ctrl.transclude(to[i].name, $(groupElement));
+                                                });
+                                            }
                                         }
                                     }
 
@@ -162,19 +166,22 @@ define(
                                     scope.tabTitles = scope.tabTitles || [];
                                 },
                                 post: function (scope, element, attrs, ctrl) {
-                                    uiUtilService.whilst(function () {
-                                            return !element.closest(".widgetContainer").attr("id");
-                                        }, function (callback) {
-                                            callback();
-                                        }, function (err) {
-                                            if (!err) {
-                                                //id of widget of RepoSketchWidgetClass type
-                                                scope.widgetId = element.closest(".widgetContainer").parent().attr("id");
-                                                uiUtilService.broadcast(scope, angularConstants.widgetEventPattern.format(angularEventTypes.widgetContentIncludedEvent, scope.widgetId), {widgetId:scope.widgetId});
-                                            }
-                                        },
-                                        angularConstants.checkInterval
-                                    )
+                                    if (element.hasClass(angularConstants.repoWidgetClass)) {
+                                        uiUtilService.whilst(function () {
+                                                return !element.closest(".widgetContainer").attr("id");
+                                            }, function (callback) {
+                                                callback();
+                                            }, function (err) {
+                                                if (!err) {
+                                                    //id of widget of RepoSketchWidgetClass type
+                                                    scope.widgetId = element.closest(".widgetContainer").parent().attr("id");
+                                                    uiUtilService.broadcast(scope, angularConstants.widgetEventPattern.format(angularEventTypes.widgetContentIncludedEvent, scope.widgetId), {widgetId: scope.widgetId});
+                                                }
+                                            },
+                                            angularConstants.checkInterval,
+                                            "ui-widget-tab.compile.post" + new Date().getTime()
+                                        )
+                                    }
                                 }
                             }
                         }

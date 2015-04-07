@@ -3225,16 +3225,7 @@ define(
                                             self.$element.attr("ng-include", "'" + self.template + "'");
 
                                             var $parent = self.$element.parent(),
-                                                scope = angular.element(self.$element).scope(),
-                                                childWidgets = self.childWidgets,
-                                                containerWidget = childWidgets.length && childWidgets[0],
-                                                anchors = [];
-
-                                            containerWidget.childWidgets && containerWidget.childWidgets.forEach(function (child) {
-                                                child.anchor && anchors.every(function (anchor) {
-                                                    return anchor !== child.anchor;
-                                                }) && anchors.push(child.anchor);
-                                            });
+                                                scope = angular.element(self.$element).scope();
 
                                             $inject.$compile(self.$element)(scope);
 
@@ -3244,23 +3235,21 @@ define(
                                                         widgetScope = angular.element($el.find("[widget-container]:nth-of-type(1)").first().children()[0]).scope();
 
                                                     return !$el.length || !widgetScope
-                                                        || widgetScope.widgetId !== self.id
-                                                        || (anchors.length && !anchors.every(function (anchor) {
-                                                            return $el.find("[{0}='{1}']".format($inject.angularConstants.anchorAttr, anchor)).length;
-                                                        }));
+                                                        || widgetScope.widgetId !== self.id;
                                                 }, function (callback) {
                                                     callback();
                                                 }, function (err) {
-                                                    if (err) {
-                                                        defer.reject(err);
-                                                    } else {
+                                                    if (!err) {
+                                                        //Set scoped value on widget scope
                                                         self.attach($parent.find("#" + self.id));
-
+                                                        self.$element.removeAttr("ng-include");
                                                         defer.resolve(self);
+                                                    } else {
+                                                        defer.reject(err);
                                                     }
                                                 },
                                                 $inject.angularConstants.loadCheckInterval,
-                                                "IncludeSketchWidgetClass.appendTo.completionScanner." + self.id,
+                                                "IncludeSketchWidgetClass.appendTo.completionScanner.widgetScope." + self.id,
                                                 $inject.angularConstants.loadRenderTimeout
                                             );
                                         } else {
@@ -3278,7 +3267,6 @@ define(
                             }
                         }, function (err) {
                             return $inject.uiUtilService.getRejectDefer(err);
-
                         }
                     );
                 },
@@ -3291,96 +3279,116 @@ define(
                     IncludeSketchWidgetClass.prototype.__proto__.attach.apply(self, [element]);
 
                     if (self.$element && self.$element[0].nodeType == 1 && self.$element.parent().length) {
-                        $inject.uiUtilService.whilst(
-                            function () {
-                                return !angular.element(self.$element).scope();
-                            },
-                            function (callback) {
-                                callback();
-                            },
-                            function (err) {
-                                if (!err) {
-                                    //In case previous widget scope already destroyed which may incur error when unregistering listener
-                                    try {
-                                        self.contentIncludeWatcher && self.contentIncludeWatcher();
-                                        self.contentIncludeWatcher = null;
-                                    } catch (e) {
-                                    }
+                        self.$element.addClass($inject.angularConstants.widgetClasses.widgetIncludeAnchorClass);
 
-                                    var currentScope = angular.element(self.$element).scope();
-                                    self.contentIncludeWatcher = currentScope.$on(
-                                        $inject.angularConstants.widgetEventPattern.format($inject.angularEventTypes.widgetContentIncludedEvent, self.id),
-                                        self.onContentIncluded());
+                        if (!self.contentIncludeWatcher) {
+                            self.contentIncludeWatcher = $inject.$rootScope.$on(
+                                $inject.angularConstants.widgetEventPattern.format($inject.angularEventTypes.widgetContentIncludedEvent, self.id),
+                                self.onContentIncluded());
 
-                                    currentScope.$on("destroy", function () {
-                                        self.contentIncludeWatcher && self.contentIncludeWatcher();
-                                        self.contentIncludeWatcher = null;
-                                    });
-                                }
-                            },
-                            "IncludeSketchWidgetClass.attach.contentIncludeWatcher." + self.id,
-                            $inject.uiUtilService.angularConstants.checkInterval,
-                            $inject.uiUtilService.angularConstants.renderTimeout
-                        );
+                            //FIXME contentIncludeWatcher needs to be called when the holding page is switched off.
+                        }
                     }
                 },
                 onContentIncluded: function () {
                     var self = this;
 
-                    return function (event, obj) {
-                        if (obj && obj.widgetId == self.id && self.$element && self.$element[0].nodeType == 1 && self.$element.parent().length) {
-                            var $parent = self.$element.parent(),
-                                childWidgets = self.childWidgets,
-                                containerWidget = childWidgets.length && childWidgets[0],
-                                anchors = [];
+                    return $inject.uiUtilService.latestOnce(
+                        function (event, obj) {
+                            var defer = $inject.$q.defer();
 
-                            containerWidget.childWidgets.forEach(function (child) {
-                                child.anchor && anchors.every(function (anchor) {
-                                    return anchor !== child.anchor;
-                                }) && anchors.push(child.anchor);
-                            });
+                            if (obj && obj.widgetId == self.id && self.$element && self.$element[0].nodeType == 1 && self.$element.parent().length) {
+                                var childWidgets = self.childWidgets,
+                                    containerWidget = childWidgets.length && childWidgets[0],
+                                    widgetScope = angular.element(self.$element.find("[widget-container]:nth-of-type(1)").first().children()[0]).scope(),
+                                    anchors = [];
 
-                            $inject.uiUtilService.whilst(
-                                function () {
-                                    var $el = $parent.find("#" + self.id),
-                                        widgetScope = angular.element($el.find("[widget-container]:nth-of-type(1)").first().children()[0]).scope();
+                                IncludeSketchWidgetClass.prototype.__proto__.attach.apply(self, [obj.$element]);
+                                self.$element.addClass($inject.angularConstants.widgetClasses.widgetIncludeAnchorClass);
 
-                                    return !$el.length || !widgetScope
-                                        || widgetScope.widgetId !== self.id
-                                        || (anchors.length && !anchors.every(function (anchor) {
-                                            return $el.find("[{0}='{1}']".format($inject.angularConstants.anchorAttr, anchor)).length;
-                                        }));
-                                }, function (callback) {
-                                    callback();
-                                }, function (err) {
-                                    if (err) {
-                                        return $inject.uiUtilService.getRejectDefer(err);
-                                    } else {
-                                        var promiseArr = [];
+                                containerWidget.childWidgets.forEach(function (child) {
+                                    child.anchor && anchors.every(function (anchor) {
+                                        return anchor !== child.anchor;
+                                    }) && anchors.push(child.anchor);
+                                });
 
-                                        if (containerWidget) {
-                                            containerWidget.attach(self.$element.children()[0]);
+                                //Set scoped value on widget scope
+                                var configuration = {};
+                                _.without(_.keys(self.widgetSpec.configuration), ["state", "handDownConfiguration"]).forEach(
+                                    function (key) {
+                                        var config = self.widgetSpec.configuration[key],
+                                            value = config.pickedValue || config.defaultValue;
 
-                                            containerWidget.addOmniClass($inject.angularConstants.widgetClasses.widgetContainerClass);
-
-                                            containerWidget.childWidgets.forEach(function (child) {
-                                                promiseArr.push(child.relink(containerWidget));
-                                            });
-                                        }
-
-                                        if (promiseArr.length) {
-                                            return $inject.$q.all(promiseArr);
-                                        } else {
-                                            return $inject.uiUtilService.getResolveDefer();
+                                        if (value != null) {
+                                            configuration[key] = config;
                                         }
                                     }
-                                },
-                                $inject.angularConstants.loadCheckInterval,
-                                "IncludeSketchWidgetClass.onContentIncluded." + self.id,
-                                $inject.angularConstants.loadRenderTimeout
-                            );
-                        }
-                    }
+                                );
+
+                                if (!_.isEmpty(configuration)) {
+                                    self.setScopedValue(configuration);
+                                }
+
+                                if (anchors.length) {
+                                    $inject.uiUtilService.whilst(
+                                        function () {
+                                            return !anchors.every(function (anchor) {
+                                                return self.$element.find("[{0}='{1}']".format($inject.angularConstants.anchorAttr, anchor)).length;
+                                            });
+                                        }, function (callback) {
+                                            callback();
+                                        }, function (err) {
+                                            if (err) {
+                                                defer.reject(err);
+                                            } else {
+                                                var promiseArr = [];
+
+                                                if (containerWidget) {
+                                                    containerWidget.attach(self.$element.children()[0]);
+
+                                                    containerWidget.addOmniClass($inject.angularConstants.widgetClasses.widgetContainerClass);
+
+                                                    containerWidget.childWidgets.forEach(function (child) {
+                                                        promiseArr.push(child.relink(containerWidget));
+                                                    });
+                                                }
+
+                                                if (promiseArr.length) {
+                                                    $inject.$q.all(promiseArr).then(
+                                                        function () {
+                                                            anchors.forEach(function (anchor) {
+                                                                //Some anchors may appear in runtime after scoped value is set, which makes its child widgets uncompiled.
+                                                                var $anchor = self.$element.find("[{0}='{1}']".format($inject.angularConstants.anchorAttr, anchor));
+                                                                $anchor.length && $inject.$compile($anchor)(widgetScope);
+                                                            });
+                                                            defer.resolve(self);
+                                                        },
+                                                        function (err) {
+                                                            defer.reject(err);
+                                                        }
+                                                    );
+                                                } else {
+                                                    defer.resolve(self);
+                                                }
+                                            }
+                                        },
+                                        $inject.angularConstants.loadCheckInterval,
+                                        "IncludeSketchWidgetClass.onContentIncluded.anchors." + self.id,
+                                        $inject.angularConstants.renderTimeout
+                                    );
+                                } else {
+                                    defer.resolve(self);
+                                }
+                            } else {
+                                defer.reject("Invalid Element {0}".format(self.id));
+                            }
+
+                            return defer.promise;
+                        },
+                        null,
+                        $inject.angularConstants.unresponsiveInterval,
+                        "IncludeSketchWidgetClass.onContentIncluded." + self.id
+                    );
                 }
             }),
             RepoSketchWidgetClass = Class(IncludeSketchWidgetClass, {
@@ -3516,30 +3524,6 @@ define(
                                 function (err) {
                                     return $inject.uiUtilService.getRejectDefer(err);
                                 }
-                            ).then(
-                                function () {
-                                    if (self.$element && self.$element.length && self.$element[0].nodeType == 1 && self.$element.parent().length) {
-                                        self.$element.addClass($inject.angularConstants.widgetClasses.widgetIncludeAnchorClass);
-
-                                        var configuration = {};
-                                        _.without(_.keys(self.widgetSpec.configuration), ["state", "handDownConfiguration"]).forEach(
-                                            function (key) {
-                                                var config = self.widgetSpec.configuration[key],
-                                                    value = config.pickedValue || config.defaultValue;
-
-                                                if (value != null) {
-                                                    configuration[key] = config;
-                                                }
-                                            }
-                                        );
-                                        _.isEmpty(configuration) || self.setScopedValue(configuration);
-                                    }
-
-                                    return $inject.uiUtilService.getResolveDefer(self);
-                                },
-                                function (err) {
-                                    return $inject.uiUtilService.getRejectDefer(err);
-                                }
                             );
                         },
                         function (err) {
@@ -3574,7 +3558,8 @@ define(
                     return null;
                 },
                 setScopedValue: function (key, value) {
-                    var self = this;
+                    var self = this,
+                        defer = $inject.$q.defer();
 
                     function scopeSetterHandler(scope, key, value) {
                         var setterName = ("set" + key.charAt(0).toUpperCase() + key.substr(1)),
@@ -3614,15 +3599,21 @@ define(
                                     else if (typeof key === "string") {
                                         scopeSetterHandler(scope, key, value);
                                     }
+
+                                    defer.resolve(self);
+                                } else {
+                                    defer.reject(err);
                                 }
                             },
                             $inject.angularConstants.checkInterval,
                             "RepoSketchWidgetClass.setScopedValue." + self.id,
                             $inject.angularConstants.renderTimeout
                         )
+                    } else {
+                        return defer.reject("Invalid Element {0}".format(self.id));
                     }
 
-                    return true;
+                    return defer.promise;
                 },
                 getConfiguration: function (key) {
                     var self = this,
@@ -3926,10 +3917,9 @@ define(
                         if (!widgetObj) {
                             widgetObj = new ElementSketchWidgetClass();
 
-                            widgetObj.attr["ui-draggable"] = $el.attr("ui-draggable");
-                            widgetObj.attr["ui-draggable-opts"] = $el.attr("ui-draggable-opts");
                             widgetObj.attr["ui-sketch-widget"] = "";
                             widgetObj.attr["is-playing"] = "$root.sketchWidgetSetting.isPlaying";
+                            widgetObj.attr["scale"] = "$root.sketchWidgetSetting.scale";
                             widgetObj.attr["ng-class"] = "{'isPlaying': $root.sketchWidgetSetting.isPlaying}";
                             widgetObj.addOmniClass(self.angularConstants.widgetClasses.widgetClass);
 
@@ -3976,10 +3966,9 @@ define(
                 if ($parent) {
                     widgetObj = widgetObj || new ElementSketchWidgetClass();
                     widgetObj.anchor = anchor;
-                    widgetObj.attr["ui-draggable"] = "";
-                    widgetObj.attr["ui-draggable-opts"] = "{threshold: 5}";
                     widgetObj.attr["ui-sketch-widget"] = "";
                     widgetObj.attr["is-playing"] = "$root.sketchWidgetSetting.isPlaying";
+                    widgetObj.attr["scale"] = "$root.sketchWidgetSetting.scale";
                     widgetObj.attr["ng-class"] = "{'isPlaying': $root.sketchWidgetSetting.isPlaying}";
                     widgetObj.addOmniClass(self.angularConstants.widgetClasses.widgetClass);
                     widgetObj.appendTo($parent);
@@ -3997,6 +3986,7 @@ define(
                 widgetObj = new RepoSketchWidgetClass(null, widgetSpec);
             widgetObj.attr["ui-sketch-widget"] = "";
             widgetObj.attr["is-playing"] = "$root.sketchWidgetSetting.isPlaying";
+            widgetObj.attr["scale"] = "$root.sketchWidgetSetting.scale";
             widgetObj.attr["ng-class"] = "{'isPlaying': $root.sketchWidgetSetting.isPlaying}";
             widgetObj.addOmniClass(self.angularConstants.widgetClasses.widgetClass);
 
@@ -4121,10 +4111,9 @@ define(
                 if (widgetArr.length > 1 && containerElement) {
                     var compositeObj = new ElementSketchWidgetClass(null, widgetArr, isTemporary);
 
-                    compositeObj.attr["ui-draggable"] = "";
-                    compositeObj.attr["ui-draggable-opts"] = "{threshold: 5}";
                     compositeObj.attr["ui-sketch-widget"] = "";
                     compositeObj.attr["is-playing"] = "$root.sketchWidgetSetting.isPlaying";
+                    compositeObj.attr["scale"] = "$root.sketchWidgetSetting.scale";
                     compositeObj.attr["ng-class"] = "{'isPlaying': $root.sketchWidgetSetting.isPlaying}";
                     compositeObj.addOmniClass(self.angularConstants.widgetClasses.widgetClass);
                     compositeObj.appendTo(containerElement);
@@ -4151,6 +4140,7 @@ define(
                 pageObj = new PageSketchWidgetClass();
                 pageObj.attr["ui-sketch-widget"] = "";
                 pageObj.attr["is-playing"] = "$root.sketchWidgetSetting.isPlaying";
+                pageObj.attr["scale"] = "$root.sketchWidgetSetting.scale";
                 pageObj.attr["ng-class"] = "{'isPlaying': $root.sketchWidgetSetting.isPlaying}";
                 pageObj.addOmniClass(self.angularConstants.widgetClasses.holderClass);
             }
@@ -4332,4 +4322,5 @@ define(
                 }]);
         };
     }
-);
+)
+;

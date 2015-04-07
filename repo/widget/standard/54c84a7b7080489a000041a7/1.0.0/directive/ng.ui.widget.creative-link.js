@@ -102,21 +102,24 @@ define(
                                     scope.configuration = {};
                                 },
                                 post: function (scope, element, attrs, ctrl) {
-                                    ctrl.transclude(scope, element);
-
-                                    uiUtilService.whilst(function () {
-                                            return !element.closest(".widgetContainer").attr("id");
-                                        }, function (callback) {
-                                            callback();
-                                        }, function (err) {
-                                            if (!err) {
-                                                //id of widget of RepoSketchWidgetClass type
-                                                scope.widgetId = element.closest(".widgetContainer").parent().attr("id");
-                                                uiUtilService.broadcast(scope, angularConstants.widgetEventPattern.format(angularEventTypes.widgetContentIncludedEvent, scope.widgetId), {widgetId:scope.widgetId});
-                                            }
-                                        },
-                                        angularConstants.checkInterval
-                                    )
+                                    if (element.hasClass(angularConstants.repoWidgetClass)) {
+                                        uiUtilService.whilst(function () {
+                                                return !element.closest(".widgetContainer").attr("id");
+                                            }, function (callback) {
+                                                callback();
+                                            }, function (err) {
+                                                if (!err) {
+                                                    //id of widget of RepoSketchWidgetClass type
+                                                    scope.widgetId = element.closest(".widgetContainer").parent().attr("id");
+                                                    uiUtilService.broadcast(scope, angularConstants.widgetEventPattern.format(angularEventTypes.widgetContentIncludedEvent, scope.widgetId), {widgetId: scope.widgetId});
+                                                }
+                                            },
+                                            angularConstants.checkInterval,
+                                            "ui-widget-creative-link.compile.post" + new Date().getTime()
+                                        )
+                                    } else {
+                                        ctrl.transclude(scope, element);
+                                    }
                                 }
                             }
                         }

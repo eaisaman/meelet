@@ -124,9 +124,8 @@ define(
                                                     callback();
                                                 },
                                                 function (err) {
-                                                    scope.setGradientColor(angular.copy(options.linearGradientColor));
-
-                                                    return uiUtilService.getResolveDefer();
+                                                    if (!err)
+                                                        scope.setGradientColor(angular.copy(options.linearGradientColor));
                                                 },
                                                 angularConstants.checkInterval,
                                                 "ui-gradient-editor.toggleGradientControl",

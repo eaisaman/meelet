@@ -1,7 +1,8 @@
 define(
     ["angular", "jquery"],
     function () {
-        var Util = function ($parse, $timeout, $q, $exceptionHandler, angularConstants) {
+        var Util = function ($log, $parse, $timeout, $q, $exceptionHandler, angularConstants) {
+            this.$log = $log;
             this.$parse = $parse;
             this.$timeout = $timeout;
             this.$q = $q;
@@ -9,7 +10,7 @@ define(
             this.angularConstants = angularConstants;
         };
 
-        Util.$inject = ["$parse", "$timeout", "$q", "$exceptionHandler", "angularConstants"];
+        Util.$inject = ["$log", "$parse", "$timeout", "$q", "$exceptionHandler", "angularConstants"];
 
         Util.prototype.calculateTop = function ($element) {
             var self = this,
@@ -370,12 +371,13 @@ define(
             var self = this;
 
             self.whilst(function () {
-                return !scope.$root;
-            }, function (callback) {
-                callback();
-            }, function () {
-                scope.$root.$broadcast(eventName, boundObj);
-            }, self.angularConstants.checkInterval)
+                    return !scope.$root;
+                }, function (callback) {
+                    callback();
+                }, function () {
+                    scope.$root.$broadcast(eventName, boundObj);
+                }, self.angularConstants.checkInterval,
+                "uiUtilService.broadcast.{0}-{1}".format(eventName, new Date().getTime()))
         }
 
         Util.prototype.timeout = function (callback, timeout) {
@@ -415,8 +417,16 @@ define(
             self.whilstMap[whilstId].defer = self.whilstMap[whilstId].defer || self.$q.defer();
             var t = timeout > 0 && self.$timeout(function () {
                     if (self.whilstMap[whilstId]) {
+                        try {
+                            callback && callback("TIMEOUT");
+                        } catch (e) {
+                            self.$exceptionHandler(e);
+                        }
+
                         self.whilstMap[whilstId].defer.resolve("TIMEOUT");
                         delete self.whilstMap[whilstId];
+
+                        self.$log.debug("TIMEOUT occurred on whilstId " + whilstId);
                     }
                 }, timeout) || null;
 
@@ -465,6 +475,8 @@ define(
                     if (self.chainMap[chainId]) {
                         self.chainMap[chainId].defer.resolve("TIMEOUT");
                         delete self.chainMap[chainId];
+
+                        self.$log.debug("TIMEOUT occurred on chainId " + chainId);
                     }
                 }, timeout) || null;
 
@@ -565,9 +577,9 @@ define(
                             args = self.latestOnceMap[id].args,
                             timestamp = self.latestOnceMap[id].timestamp;
 
-                        function block() {
+                        function block(err) {
                             try {
-                                callback && callback.apply(null, Array.prototype.slice.call(arguments));
+                                callback && callback.apply(null, [err]);
                             } catch (e) {
                                 self.$exceptionHandler(e);
                             }
@@ -584,7 +596,11 @@ define(
                             }
                         }
 
-                        fn.apply(null, args).then(block, block);
+                        try {
+                            fn.apply(null, args).then(block, block);
+                        } catch (e) {
+                            self.$exceptionHandler(e);
+                        }
                     }, interval
                 );
             }
