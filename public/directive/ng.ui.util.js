@@ -12,6 +12,28 @@ define(
 
         Util.$inject = ["$log", "$parse", "$timeout", "$q", "$exceptionHandler", "angularConstants"];
 
+        Util.prototype.arrayOmit = function (objects) {
+            var keys = Array.prototype.concat.apply(Array.prototype, Array.prototype.slice.call(arguments, 1)),
+                arr = [];
+
+            objects && objects.forEach(function (obj) {
+                arr.push(_.omit(obj, keys));
+            });
+
+            return arr;
+        }
+
+        Util.prototype.arrayPick = function (objects) {
+            var keys = Array.prototype.concat.apply(Array.prototype, Array.prototype.slice.call(arguments, 1)),
+                arr = [];
+
+            objects && objects.forEach(function (obj) {
+                arr.push(_.pick(obj, keys));
+            });
+
+            return arr;
+        }
+
         Util.prototype.calculateTop = function ($element) {
             var self = this,
                 m = ($element.css("top") || "").match(/([-\d\.]+)px$/),
@@ -426,7 +448,7 @@ define(
                         self.whilstMap[whilstId].defer.resolve("TIMEOUT");
                         delete self.whilstMap[whilstId];
 
-                        self.$log.debug("TIMEOUT occurred on whilstId " + whilstId);
+                        self.angularConstants.VERBOSE && self.$log.debug("TIMEOUT occurred on whilstId " + whilstId);
                     }
                 }, timeout) || null;
 
@@ -476,7 +498,7 @@ define(
                         self.chainMap[chainId].defer.resolve("TIMEOUT");
                         delete self.chainMap[chainId];
 
-                        self.$log.debug("TIMEOUT occurred on chainId " + chainId);
+                        self.angularConstants.VERBOSE && self.$log.debug("TIMEOUT occurred on chainId " + chainId);
                     }
                 }, timeout) || null;
 
@@ -532,6 +554,8 @@ define(
 
             return function () {
                 var args = Array.prototype.slice.call(arguments);
+
+                self.angularConstants.VERBOSE && self.$log.debug("onceId:" + onceId);
 
                 fn.apply(null, args).then(
                     function () {

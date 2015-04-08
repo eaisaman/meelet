@@ -4,6 +4,7 @@
 @import "global";
 @import "multilevel-menu";
 @import "simple-dropdown";
+@import "multilevel-menu";
 @import "angular-ui-tree";
 
 $underlineLinearGradient: (rgb(235, 235, 235) 0%, rgb(235, 235, 235) 50%, #fff 100%);
@@ -15,6 +16,7 @@ $maxNumOfConfigurationItems: 10;
 @include simple-dropdown(null, widgetObjStateDropdown, $activeColor);
 @include simple-dropdown(null, configurationItemList, $activeColor);
 @include simple-dropdown(null, triggerEventDropdown, $activeColor);
+@include multilevel-menu(null, configurationItemMultilevelList, $activeColor);
 @include angular-ui-tree(actionWidgetTree);
 
 @mixin state-transition($stateEditorId) {
@@ -463,7 +465,7 @@ $maxNumOfConfigurationItems: 10;
                                                 }
 
                                                 #actionWidgetTreeTab {
-                                                    z-index: 101;
+                                                    z-index: 120;
                                                     position: absolute;
                                                     width: 100%;
                                                     height: 100%;
@@ -512,7 +514,7 @@ $maxNumOfConfigurationItems: 10;
                                                     #actionWidgetTree {
                                                         position: absolute;
                                                         top: 2em;
-                                                        width: calc(100% - 2em);
+                                                        min-width: 40em;
                                                         height: calc(100% - 4em);
                                                         margin: 1em;
                                                     }

@@ -95,7 +95,7 @@ define(
                                     scope.selectWidgetTab = function (event) {
                                         event && event.stopPropagation();
 
-                                        if ((scope.isPlaying == null || scope.isPlaying) && !event.originalEvent.defaultPrevented) {
+                                        if (scope.isPlaying == null || scope.isPlaying) {
                                             var $el = $(event.target),
                                                 tabIndex = parseInt($el.attr("tab-index"));
 

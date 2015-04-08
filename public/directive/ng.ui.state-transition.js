@@ -2,9 +2,9 @@ define(
     ["angular", "jquery"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$rootScope", "$http", "$timeout", "$q", "$exceptionHandler", "angularEventTypes", "angularConstants", "uiUtilService", "uiService", "appService"];
+            var inject = ["$rootScope", "$http", "$parse", "$timeout", "$q", "$exceptionHandler", "angularEventTypes", "angularConstants", "uiUtilService", "uiService", "appService"];
 
-            appModule.directive("uiStateTransition", _.union(inject, [function ($rootScope, $http, $timeout, $q, $exceptionHandler, angularEventTypes, angularConstants, uiUtilService, uiService, appService) {
+            appModule.directive("uiStateTransition", _.union(inject, [function ($rootScope, $http, $parse, $timeout, $q, $exceptionHandler, angularEventTypes, angularConstants, uiUtilService, uiService, appService) {
                 'use strict';
 
                 var defaults = {
@@ -29,7 +29,7 @@ define(
                                 scope.$watch("pickedWidget", function (value) {
                                     if (value) {
                                         var widgetObj = uiService.configurableWidget(value);
-                                        scope.activeWidget = widgetObj || scope.pickedWidget;
+                                        scope.activeWidget = widgetObj || value;
                                     }
                                 });
 
@@ -99,6 +99,40 @@ define(
                                     return xref && artifactList && artifactList.length > xref.artifactList.length;
                                 }
 
+                                function createConfigurationItemAssign(name) {
+                                    var fn = $parse(name),
+                                        assign = fn.assign;
+
+                                    if (!fn.assign.customized) {
+                                        fn.assign = function ($scope, value) {
+                                            function itemHandler() {
+                                                var defer = $q.defer();
+
+                                                $timeout(function () {
+                                                    $scope.item.setConfigurationItem($scope.configurationItem);
+                                                    defer.resolve();
+                                                });
+
+                                                return defer.promise;
+                                            }
+
+                                            if (value) {
+                                                var args = Array.prototype.slice.call(arguments),
+                                                    result = assign.apply(fn, args);
+
+                                                uiUtilService.latestOnce(itemHandler, null, angularConstants.unresponsiveInterval, "uiStateTransition.createConfigurationItemAssign.itemHandler.{0}.{1}".format($scope.configurationItem.widget.id, $scope.configurationItem.name))();
+
+                                                return result;
+                                            }
+                                        }
+
+                                        fn.assign.customized = true;
+                                    }
+                                    return fn;
+                                }
+
+                                createConfigurationItemAssign("configurationItem.configuredValue");
+
                                 scope._ = _;
                             },
                             post: function (scope, element, attrs) {
@@ -167,7 +201,7 @@ define(
                                                 var $node = element.find("#actionWidgetTreeTab li.selected");
                                                 if ($node.length) {
                                                     var nodeScope = angular.element($node).scope();
-                                                    action.widgetObj = nodeScope.item;
+                                                    action.setWidget(nodeScope.item);
                                                 }
                                             }
                                             scope.pickedAction = null;
@@ -416,15 +450,6 @@ define(
                                     $http.get(options.triggerJson).then(function (result) {
                                         result.data.forEach(function (triggerGroup) {
                                             scope.triggers[triggerGroup.group] = triggerGroup.list;
-                                        });
-                                    });
-                                }
-
-                                if (options.animationJson) {
-                                    $http.get(options.animationJson).then(function (result) {
-                                        scope.animations = [];
-                                        result.data.forEach(function (animationGroup) {
-                                            scope.animations.push(animationGroup);
                                         });
                                     });
                                 }

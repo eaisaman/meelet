@@ -23,7 +23,7 @@
                      ui-multilevel-menu-opts="{dataField:'value', labelField:'name', zIndex:101}"
                      picked-menu-item="configurationItem.pickedValue"
                      on-menu-select="setItem(configurationItem)">
-                    {{configurationItem.pickedValue || 'Choose a transition'}}
+                    {{configurationItem.pickedValue || 'Choose...'}}
                 </div>
                 <div ng-if="configurationItem.type === 'boundReadList'"
                      class="configurationItemList col-as-7 no-padding stackAndRotateSelect"

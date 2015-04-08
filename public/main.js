@@ -52,6 +52,7 @@ require(["jquery-lib", "jquery-plugins-lib", "hammer-lib", "jquery-ui-lib", "jqu
             {name: "effect", value: "effect"},
             {name: "icon", value: "icon"}
         ],
+        VERBOSE: true,
         widgetClasses: {
             containerClass: "sketchHolder",
             deviceHolderClass: "deviceHolder",
@@ -71,6 +72,7 @@ require(["jquery-lib", "jquery-plugins-lib", "hammer-lib", "jquery-ui-lib", "jqu
         checkInterval: 20,
         loadCheckInterval: 40,
         unresponsiveInterval: 40,
+        eventThrottleInterval: 300,
         renderTimeout: 3000,
         loadRenderTimeout: 6000,
         loadTimeout: 10000

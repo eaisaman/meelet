@@ -75,18 +75,40 @@ define(
                                     }
 
                                     scope.toggleSideBar = function (event) {
-                                        if ((scope.isPlaying == null || scope.isPlaying) && !event.originalEvent.defaultPrevented) {
-                                            scope.toggleSelect("._widget_sideBarContainer", event).then(function () {
+                                        function toggleHandler() {
+                                            return scope.toggleSelect("._widget_sideBarContainer", event).then(function () {
                                                 return checkState();
                                             });
+                                        }
+
+                                        if (scope.isPlaying == null || scope.isPlaying) {
+                                            var $el = $(event.target),
+                                                widgetObj = $el.data("widgetObject") || $(event.target).closest(".widgetContainer").parent().data("widgetObject");
+
+                                            if (widgetObj) {
+                                                return $timeout(widgetObj.handleEvent(toggleHandler));
+                                            } else {
+                                                return toggleHandler();
+                                            }
                                         }
                                     }
 
                                     scope.hideSideBar = function (event) {
-                                        if ((scope.isPlaying == null || scope.isPlaying) && !event.originalEvent.defaultPrevented) {
-                                            scope.toggleSelect("._widget_sideBarContainer", event, false).then(function () {
+                                        function hideHandler() {
+                                            return scope.toggleSelect("._widget_sideBarContainer", event, false).then(function () {
                                                 return checkState();
                                             });
+                                        }
+
+                                        if (scope.isPlaying == null || scope.isPlaying) {
+                                            var $el = $(event.target),
+                                                widgetObj = $el.data("widgetObject") || $(event.target).closest(".widgetContainer").parent().data("widgetObject");
+
+                                            if (widgetObj) {
+                                                return $timeout(widgetObj.handleEvent(hideHandler));
+                                            } else {
+                                                return hideHandler();
+                                            }
                                         }
                                     }
 

@@ -231,7 +231,6 @@ define(
                                 scope.onSelect = function (event) {
                                     event && event.stopPropagation && event.stopPropagation();
 
-
                                     if (scope.enableSelection == null || scope.enableSelection) {
                                         var $optEl = $(event.target),
                                             value = $optEl.attr("data-value"),

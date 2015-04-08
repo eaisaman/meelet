@@ -116,24 +116,46 @@
                              class="configurationItemList col-as-7 no-padding stackAndRotateSelect"
                              ui-simple-dropdown
                              ui-simple-dropdown-opts="{dataField:'value', labelField:'name', zIndex:100, gutter: 5, showTitle: true, displayUnsetOption: false}"
-                             selection-list="configurationItem.options" select-item="configurationItem.pickedOption">
+                             selection-list="configurationItem.options" select-item="configurationItem.configuredValue"
+                             on-option-select="item.setConfigurationItem(configurationItem)">
+                        </div>
+                        <div ng-if="configurationItem.type === 'multilevel-list'"
+                             class="configurationItemMultilevelList col-as-7 no-padding" ui-multilevel-menu
+                             menu-list="configurationItem.options"
+                             ui-multilevel-menu-opts="{dataField:'value', labelField:'name', zIndex:101}"
+                             picked-menu-item="configurationItem.configuredValue"
+                             on-menu-select="item.setConfigurationItem(configurationItem)">
+                            {{configurationItem.configuredValue || 'Choose...'}}
+                        </div>
+                        <div ng-if="configurationItem.type === 'boundReadList'"
+                             class="configurationItemList col-as-7 no-padding stackAndRotateSelect"
+                             ui-simple-dropdown
+                             ui-simple-dropdown-opts="{dataField:'name', labelField:'name', zIndex:102, gutter: 5, showTitle: true, displayUnsetOption: false}"
+                             selection-list="configurationItem.options" select-item="configurationItem.configuredValue"
+                             on-option-select="item.setConfigurationItem(configurationItem)">
                         </div>
                         <div ng-if="configurationItem.type === 'number'"
                              class="col-as-7 no-padding">
                             <input type="number"
                                    class="form-control no-padding fs-x-smaller"
-                                   ng-model="configurationItem.numberValue"/>
+                                   ng-model="configurationItem.configuredValue"/>
                         </div>
                         <div ng-if="configurationItem.type === 'size'"
                              class="col-as-7 no-padding">
                             <input type="text"
                                    class="form-control no-padding fs-x-smaller"
-                                   ng-model="configurationItem.sizeValue"/>
+                                   ng-model="configurationItem.configuredValue"/>
+                        </div>
+                        <div ng-if="configurationItem.type === 'text'"
+                             class="col-as-7 no-padding">
+                            <input type="text"
+                                   class="form-control no-padding fs-x-smaller"
+                                   ng-model="configurationItem.configuredValue"/>
                         </div>
                         <div ng-if="configurationItem.type === 'boolean'"
                              class="col-as-7 no-padding">
                             <input class="configurationCheckBox" type="checkbox"
-                                   ng-checked="configurationItem.booleanValue"/>
+                                   ng-checked="configurationItem.configuredValue"/>
                         </div>
                     </div>
                 </div>

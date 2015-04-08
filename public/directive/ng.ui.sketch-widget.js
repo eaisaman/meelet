@@ -3,7 +3,6 @@ define(
     function () {
         return function (appModule, extension, opts) {
             var DIRECTIVE = "uiSketchWidget";
-            var VERBOSE = true;
 
             var DIRECTION_NONE = 1;
             var DIRECTION_LEFT = 2;
@@ -230,7 +229,7 @@ define(
                                     var defer = $q.defer();
 
                                     $timeout(function () {
-                                        if (VERBOSE) {
+                                        if (angularConstants.VERBOSE) {
                                             $log.debug(event.type);
                                         }
 
@@ -290,7 +289,7 @@ define(
 
                                                         widgetObj.css("top", top + "px");
 
-                                                        if (VERBOSE) {
+                                                        if (angularConstants.VERBOSE) {
                                                             $log.debug("top:" + top);
                                                             $log.debug("touchY:" + touchY);
                                                         }
@@ -332,7 +331,7 @@ define(
 
                                                         widgetObj.css("left", left + "px");
 
-                                                        if (VERBOSE) {
+                                                        if (angularConstants.VERBOSE) {
                                                             $log.debug("left:" + left);
                                                             $log.debug("touchX:" + touchX);
                                                         }

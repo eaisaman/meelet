@@ -497,7 +497,10 @@ define(
                     this.id = id || "State_" + new Date().getTime();
                 },
                 toJSON: function () {
-                    return _.extend(_.pick(this, ["id", "node", "name", "transitions"], "CLASS_NAME"), {context: this.context && this.context.node !== "?" && this.context.id || ""});
+                    return _.extend(_.pick(this, ["id", "node", "name"], "CLASS_NAME"), {
+                        transitions: $inject.uiUtilService.arrayOmit(this.transitions, "$$hashKey"),
+                        context: this.context && this.context.node !== "?" && this.context.id || ""
+                    });
                 },
                 fromObject: function (obj) {
                     var ret = new State(obj.node, obj.name, obj.context, obj.id);
@@ -560,7 +563,7 @@ define(
                     this.actionObj = new SequenceTransitionAction();
 
                     if (state != null && typeof state === "object") {
-                        this.actionObj.widgetObj = state.widgetObj;
+                        this.actionObj.setWidget(state.widgetObj);
                     }
                 },
                 toJSON: function () {
@@ -618,7 +621,7 @@ define(
 
                         doActionHandler.onceId = "Transition.setTrigger.triggerCallback.doActionHandler";
 
-                        $inject.uiUtilService.once(doActionHandler, null, 100)();
+                        return $inject.uiUtilService.once(doActionHandler, null, $inject.angularConstants.unresponsiveInterval)();
                     }
 
                     if (triggerType === "Gesture") {
@@ -667,8 +670,8 @@ define(
                 fromObject: function (obj) {
                     var self = this;
 
-                    BaseSketchWidgetClass.prototype.matchReference(obj.widgetObj, function (obj) {
-                        self.widgetObj = obj;
+                    BaseSketchWidgetClass.prototype.matchReference(obj.widgetObj, function (result) {
+                        self.setWidget(result);
                     });
                 },
                 clone: function (cloneObj, MEMBERS) {
@@ -685,6 +688,9 @@ define(
                 doAction: function () {
                 },
                 restoreWidget: function (widgetObj) {
+                },
+                setWidget: function (widgetObj) {
+                    this.widgetObj = widgetObj;
                 }
             }),
             SequenceTransitionAction = Class(BaseTransitionAction, {
@@ -702,12 +708,12 @@ define(
                 },
                 toJSON: function () {
                     var jsonObj = SequenceTransitionAction.prototype.__proto__.toJSON.apply(this);
-                    _.extend(jsonObj, _.pick(this, ["childActions", "CLASS_NAME"]));
+                    _.extend(jsonObj, _.pick(this, ["CLASS_NAME"]), {childActions: $inject.uiUtilService.arrayOmit(this.childActions, "$$hashKey")});
 
                     return jsonObj;
                 },
                 fromObject: function (obj) {
-                    var ret = new SequenceTransitionAction(obj.widgetObj, obj.id);
+                    var ret = new SequenceTransitionAction(null, obj.id);
 
                     SequenceTransitionAction.prototype.__proto__.fromObject.apply(ret, [obj]);
 
@@ -797,7 +803,7 @@ define(
                     return jsonObj;
                 },
                 fromObject: function (obj) {
-                    var ret = new EffectTransitionAction(obj.widgetObj, obj.artifactSpec, obj.effect, obj.id);
+                    var ret = new EffectTransitionAction(null, obj.artifactSpec, obj.effect, obj.id);
 
                     EffectTransitionAction.prototype.__proto__.fromObject.apply(ret, [obj]);
 
@@ -890,7 +896,7 @@ define(
                     return jsonObj;
                 },
                 fromObject: function (obj) {
-                    var ret = new StateTransitionAction(obj.widgetObj, obj.newState, obj.id);
+                    var ret = new StateTransitionAction(null, obj.newState, obj.id);
 
                     StateTransitionAction.prototype.__proto__.fromObject.apply(ret, [obj]);
 
@@ -929,7 +935,7 @@ define(
             ConfigurationTransitionAction = Class(BaseTransitionAction, {
                 CLASS_NAME: "ConfigurationTransitionAction",
                 MEMBERS: {
-                    configuration: {}
+                    configuration: []
                 },
                 initialize: function (widgetObj, configuration, id) {
                     this.initialize.prototype.__proto__.initialize.apply(this, [widgetObj, "Configuration", id]);
@@ -938,27 +944,28 @@ define(
                     for (var member in MEMBERS) {
                         this[member] = angular.copy(MEMBERS[member]);
                     }
-                    if (widgetObj) {
-                        this.configuration = widgetObj.widgetSpec && widgetObj.widgetSpec.configuration || null;
+                    if (configuration) {
+                        this.configuration = configuration;
+                    } else if (widgetObj && widgetObj.widgetSpec) {
+                        this.setWidget(widgetObj);
                     }
-                    this.configuration = this.configuration || configuration;
-                    this.configuration = angular.copy(this.configuration);
                 },
                 toJSON: function () {
                     var jsonObj = ConfigurationTransitionAction.prototype.__proto__.toJSON.apply(this);
 
-                    _.extend(jsonObj, _.pick(this, ["configuration", "CLASS_NAME"]));
+                    var configuration = $inject.uiUtilService.arrayOmit(this.configuration, ["$$hashKey", "widget"]);
+                    configuration.forEach(function (configurationItem) {
+                        if (configurationItem.type === "list" || configurationItem.type === "boundReadList") {
+                            configurationItem.options = $inject.uiUtilService.arrayOmit(configurationItem.options, "$$hashKey");
+                        }
+                    });
+
+                    _.extend(jsonObj, _.pick(this, ["CLASS_NAME"]), {configuration: configuration});
 
                     return jsonObj;
                 },
                 fromObject: function (obj) {
-                    _.values(obj.configuration).forEach(function (value) {
-                        value.options && value.options.forEach(function (option) {
-                            delete option["$$hashKey"];
-                        });
-                    });
-
-                    var ret = new ConfigurationTransitionAction(obj.widgetObj, obj.configuration, obj.id);
+                    var ret = new ConfigurationTransitionAction(null, obj.configuration, obj.id);
 
                     ConfigurationTransitionAction.prototype.__proto__.fromObject.apply(ret, [obj]);
 
@@ -978,20 +985,92 @@ define(
                         defer = $inject.$q.defer();
 
                     $inject.$timeout(function () {
-                        self.widgetObj.setConfiguration && self.widgetObj.setConfiguration(self.configuration);
+                        var configuration = _.filter(self.configuration, function (item) {
+                            return item.pickedValue != null;
+                        });
 
-                        if (self.widgetObj.$element && self.widgetObj.$element[0].nodeType == 1 && self.widgetObj.$element.parent().length) {
-                            var animationName = self.widgetObj.$element.css("animation-name");
-                            if (animationName && animationName !== "none") {
-                                $inject.uiUtilService.onAnimationEnd(self.widgetObj.$element).then(function () {
-                                    defer.resolve(self);
-                                });
+                        if (configuration.length) {
+                            var obj = {};
+                            configuration.forEach(function (configurationItem) {
+                                obj[configurationItem.key] = {};
+                                obj[configurationItem.key].type = configurationItem.type;
+                                obj[configurationItem.key].defaultValue = configurationItem.defaultValue;
+                                obj[configurationItem.key].pickedValue = configurationItem.pickedValue;
+                            });
+
+                            self.widgetObj.setScopedValue && self.widgetObj.setScopedValue(obj);
+
+                            if (self.widgetObj.$element && self.widgetObj.$element[0].nodeType == 1 && self.widgetObj.$element.parent().length) {
+                                var animationName = self.widgetObj.$element.css("animation-name");
+                                if (animationName && animationName !== "none") {
+                                    $inject.uiUtilService.onAnimationEnd(self.widgetObj.$element).then(function () {
+                                        defer.resolve(self);
+                                    });
+                                }
                             }
                         }
                         defer.resolve(self);
                     });
 
                     return defer.promise;
+                },
+                setWidget: function (widgetObj) {
+                    var self = this,
+                        arr = [];
+
+                    ConfigurationTransitionAction.prototype.__proto__.setWidget.apply(self, [widgetObj]);
+
+                    if (widgetObj.widgetSpec) {
+                        _.each(_.omit(widgetObj.widgetSpec.configuration, "state", "handDownConfiguration"), function (value, key) {
+                            var obj = _.extend({
+                                configuredValue: (self.getConfigurationItem(key) || value).pickedValue,
+                                widget: widgetObj
+                            }, value, {key: key});
+
+                            if (obj.type !== "boundWriteList") {
+                                if (obj.type === "boundReadList") {
+                                    obj.options = widgetObj.getConfiguration(obj.listName);
+                                }
+                                obj.widget = widgetObj;
+                                delete obj.pickedValue;
+
+                                arr.push(obj);
+                            }
+                        });
+
+                        this.configuration = arr;
+                    } else {
+                        this.configuration && this.configuration.forEach(function (configurationItem) {
+                            configurationItem.widget = widgetObj;
+                        });
+                    }
+                },
+                getConfigurationItem: function (key) {
+                    var self = this,
+                        result = null;
+
+                    this.configuration && this.configuration.every(function (configurationItem) {
+                        if (configurationItem.widget == null || configurationItem.widget.id == self.widgetObj.id) {
+                            if (configurationItem.key === key) {
+                                result = configurationItem;
+                            }
+                            return false;
+                        }
+
+                        return true;
+                    });
+
+                    return result;
+                },
+                setConfigurationItem: function (item) {
+                    this.configuration && this.configuration.every(function (configurationItem) {
+                        if (configurationItem.key === item.key) {
+                            configurationItem.pickedValue = item.configuredValue;
+                            return false;
+                        }
+
+                        return true;
+                    });
                 }
             }),
             BaseTrigger = Class({
@@ -1016,7 +1095,7 @@ define(
                     this.options = options;
                 },
                 toJSON: function () {
-                    return _.pick(this, ["id", "triggerType", "eventName", "options"], "CLASS_NAME");
+                    return _.extend(_.pick(this, ["id", "triggerType", "eventName", "options", "CLASS_NAME"]));
                 },
                 fromObject: function (obj) {
                 },
@@ -1112,10 +1191,9 @@ define(
                         mc.on(self.eventName, function (event) {
                             if (event && event.srcEvent) {
                                 event.srcEvent.stopPropagation && event.srcEvent.stopPropagation();
-                                event.srcEvent.preventDefault && event.srcEvent.preventDefault(true);
                             }
 
-                            self.callback && self.callback();
+                            self.callback && widgetObj.handleEvent(self.callback)();
                         });
 
                         self.hammer = mc;
@@ -1752,7 +1830,7 @@ define(
                             proto.objectMap[this.id] = value;
                             value.item = this;
                             value.callbacks.forEach(function (callback) {
-                                callback.call(null, value);
+                                callback(value.item);
                             });
                             value.callbacks.splice(0, value.callbacks.length);
                         }
@@ -1803,9 +1881,12 @@ define(
                         delete proto.objectMap;
                     },
                     toJSON: function () {
-                        return _.extend(_.pick(this, ["id", "name", "childWidgets", "anchor", "attr", "styleManager", "states", "stateOptions"]), {
+                        return _.extend(_.pick(this, ["id", "name", "anchor", "attr", "styleManager"]), {
                             state: this.state.id,
-                            stateContext: this.stateContext.node !== "?" && this.stateContext.id || ""
+                            stateContext: this.stateContext.node !== "?" && this.stateContext.id || "",
+                            childWidgets: $inject.uiUtilService.arrayOmit(this.childWidgets, "$$hashKey"),
+                            states: $inject.uiUtilService.arrayOmit(this.states, "$$hashKey"),
+                            stateOptions: $inject.uiUtilService.arrayOmit(this.stateOptions, "$$hashKey")
                         });
                     },
                     fromObject: function (obj) {
@@ -1885,6 +1966,15 @@ define(
                         });
 
                         return cloneObj;
+                    },
+                    handleEvent: function (fn) {
+                        var self = this;
+
+                        return $inject.uiUtilService.once(function () {
+                            var result = fn() || {};
+
+                            return result.then && result || $inject.uiUtilService.getResolveDefer();
+                        }, null, $inject.angularConstants.eventThrottleInterval, "BaseSketchWidgetClass.handleEvent.{0}".format(self.id));
                     },
                     parent: function () {
                         var self = this,
@@ -3473,7 +3563,33 @@ define(
                 },
                 toJSON: function () {
                     var jsonObj = RepoSketchWidgetClass.prototype.__proto__.toJSON.apply(this);
-                    _.extend(jsonObj, _.pick(this, ["CLASS_NAME", "widgetSpec"]));
+
+                    var widgetSpec = _.pick(this.widgetSpec, ["libraryId", "libraryName", "artifactId", "name", "version", "type", "projectId"]),
+                        configuration = {handDownConfiguration: {}}, handDownConfiguration = configuration.handDownConfiguration;
+
+                    _.each(this.widgetSpec.configuration.handDownConfiguration, function (config, key) {
+                        if (config.pickedValue != null) {
+                            if (config.type === "boundWriteList") {
+                                handDownConfiguration[key] = {pickedValue: $inject.uiUtilService.arrayOmit(config.pickedValue, "$$hashKey")};
+                            } else {
+                                handDownConfiguration[key] = {pickedValue: config.pickedValue};
+                            }
+                        }
+                    });
+
+                    _.each(_.omit(this.widgetSpec.configuration, "state", "handDownConfiguration"), function (config, key) {
+                        if (config.pickedValue != null) {
+                            if (config.type === "boundWriteList") {
+                                configuration[key] = {pickedValue: $inject.uiUtilService.arrayOmit(config.pickedValue, "$$hashKey")};
+                            } else {
+                                configuration[key] = {pickedValue: config.pickedValue};
+                            }
+                        }
+                    });
+
+                    _.extend(jsonObj, _.pick(this, ["CLASS_NAME"]), {
+                        widgetSpec: _.extend(widgetSpec, {configuration: configuration})
+                    });
 
                     return jsonObj;
                 },
@@ -3531,10 +3647,27 @@ define(
 
                     return $inject.$rootScope.loadedProject.loadArtifact(self.widgetSpec.libraryId, self.widgetSpec.artifactId, self.widgetSpec.version).then(
                         function (loadedSpec) {
-                            self.template = loadedSpec.template;
-                            if (_.isEmpty(self.widgetSpec.configuration)) {
-                                _.extend(self.widgetSpec, angular.copy(loadedSpec));
+                            self.template = self.widgetSpec.template = loadedSpec.template;
+
+                            var configuration = angular.copy(loadedSpec.configuration);
+                            if (!_.isEmpty(self.widgetSpec.configuration)) {
+                                if (!_.isEmpty(self.widgetSpec.configuration.handDownConfiguration)) {
+                                    _.each(configuration.handDownConfiguration, function (config, key) {
+                                        var item = self.widgetSpec.configuration.handDownConfiguration[key];
+                                        if (item && item.pickedValue != null) {
+                                            config.pickedValue = item.pickedValue;
+                                        }
+                                    })
+                                }
+
+                                _.each(_.omit(configuration, "state", "handDownConfiguration"), function (config, key) {
+                                    var item = self.widgetSpec.configuration[key];
+                                    if (item && item.pickedValue != null) {
+                                        config.pickedValue = item.pickedValue;
+                                    }
+                                });
                             }
+                            self.widgetSpec.configuration = configuration;
 
                             var stateConfiguration = loadedSpec.configuration.state;
                             if (stateConfiguration) {
@@ -3658,6 +3791,10 @@ define(
                 getConfiguration: function (key) {
                     var self = this,
                         config = self.widgetSpec.configuration[key] || self.widgetSpec.configuration.handDownConfiguration[key];
+
+                    if (config.type === "boundWriteList") {
+                        config.pickedValue = config.pickedValue || [];
+                    }
 
                     return config.pickedValue != null ? config.pickedValue : config.defaultValue;
                 },
