@@ -1,4 +1,4 @@
-require.config(
+requirejs.config(
     {
         paths: {
             "app-util": APP_LIB_PATH + "util",

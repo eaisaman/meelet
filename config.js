@@ -9,6 +9,7 @@ var fs = require('fs');
 var Configuration = function () {
         this.settings = {};
         this.em = new (require('events').EventEmitter)();
+        this.cache = require('cache-manager').caching({store: 'memory', max: 100, ttl: 43200/*seconds*/});
     },
     config = new Configuration();
 

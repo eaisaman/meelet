@@ -1,4 +1,4 @@
-require.config(
+requirejs.config(
     {
         paths: {
             "ckeditor": CKEDITOR_LIB_PATH + "ckeditor"

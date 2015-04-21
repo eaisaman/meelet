@@ -1,4 +1,4 @@
-require.config(
+requirejs.config(
     {
         paths: {
             "angular": ANGULAR_LIB_PATH + "angular",

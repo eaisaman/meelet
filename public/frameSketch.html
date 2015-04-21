@@ -9,7 +9,6 @@
 <link rel="stylesheet" type="text/css" href="fonts/icon-shape/style.css"/>
 <link rel="stylesheet" type="text/css" href="fonts/icon-widget/style.css"/>
 <link rel="stylesheet" type="text/css" href="fonts/icon-page/style.css"/>
-<link rel="stylesheet" type="text/css" href="fonts/icon-frame-sketch/style.css"/>
 <link rel="stylesheet" type="text/css" href="fonts/icon-state-transition/style.css"/>
 <link rel="stylesheet" type="text/css" href="fonts/icon-widget-configurator/style.css"/>
 <link rel="stylesheet" type="text/css" href="fonts/icon-horizontal-ruler/style.css"/>
@@ -60,6 +59,8 @@
                     <div ng-click="toggleLockProject($event)"
                          class="topbarButton icon-frame-sketch-before"
                          ng-class="{'icon-frame-sketch-unlock-before':$root.loadedProject.projectRecord.lock, 'icon-frame-sketch-lock-before':!$root.loadedProject.projectRecord.lock}"></div>
+                    <div ng-click="convertToHtml($event)" ng-if="$root.loadedProject.projectRecord.lock"
+                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-html-before"></div>
                 </div>
             </div>
 
@@ -73,14 +74,16 @@
                              ng-style="{'width': '{{sketchDevice.width + 90}}', 'height': '{{sketchDevice.height + 90}}'}">
                             <div id="deviceHolder" class="deviceHolder"
                                  ng-style="{'left': 45, 'top': 45, 'width': '{{sketchDevice.width}}', 'height': '{{sketchDevice.height}}'}"></div>
-                            <div id="verticalRuler" class="ruler fs-x-smaller" ng-if="$root.sketchWidgetSetting.showRuler"
+                            <div id="verticalRuler" class="ruler fs-x-smaller"
+                                 ng-if="$root.sketchWidgetSetting.showRuler"
                                  ng-style="{'left':0, 'top': 45, 'width': 45, 'height': '{{sketchDevice.height}}'}"
                                  ui-vertical-ruler device-width="sketchDevice.width" device-height="sketchDevice.height"
                                  min-height="Math.floor(sketchDevice.height/sketchDevice.rulerMarkerCount * 1000) / 1000"
                                  marker-height="Math.floor(sketchDevice.height/sketchDevice.rulerMarkerCount * 1000) / 1000"
                                  marker-count="sketchDevice.rulerMarkerCount" picked-widget="sketchObject.pickedWidget">
                             </div>
-                            <div id="horizontalRuler" class="ruler fs-x-smaller" ng-if="$root.sketchWidgetSetting.showRuler"
+                            <div id="horizontalRuler" class="ruler fs-x-smaller"
+                                 ng-if="$root.sketchWidgetSetting.showRuler"
                                  ng-style="{'left':45, 'top': 0, 'width': '{{sketchDevice.width}}', 'height': 45}"
                                  ui-horizontal-ruler device-width="sketchDevice.width"
                                  device-height="sketchDevice.height"

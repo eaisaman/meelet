@@ -401,6 +401,12 @@ define(
                 }
             }
 
+            $scope.convertToHtml = function (event) {
+                event && event.stopPropagation && event.stopPropagation();
+
+                return $rootScope.loadedProject.convertToHtml($rootScope.loginUser._id);
+            }
+
             $scope.showDemo = function (event) {
                 event && event.stopPropagation && event.stopPropagation();
 
@@ -818,15 +824,6 @@ define(
             $scope._ = _;
         }
 
-        return function (appModule) {
-            appModule.
-                controller('RootController', ["$scope", "$rootScope", "$q", "appService", "urlService", RootController]).
-                controller('FrameSketchController', ["$scope", "$rootScope", "$timeout", "$q", "$log", "angularEventTypes", "angularConstants", "appService", "uiService", "uiUtilService", FrameSketchController]).
-                controller('ProjectController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "uiService", "urlService", ProjectController]).
-                controller('RepoController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "urlService", RepoController]).
-                controller('RepoLibController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "urlService", RepoLibController]);
-        }
-
         function RepoController($scope, $rootScope, $timeout, $q, angularConstants, appService, urlService) {
             $scope.setRepoType = function (repoTypeValue) {
                 appService.getRepoLibrary(repoTypeValue && {type: repoTypeValue} || {}).then(function (result) {
@@ -879,5 +876,14 @@ define(
             $scope.repoTypes = angularConstants.repoTypes;
             $scope.classie = classie;
             $scope._ = _;
+        }
+
+        return function (appModule) {
+            appModule.
+                controller('RootController', ["$scope", "$rootScope", "$q", "appService", "urlService", RootController]).
+                controller('FrameSketchController', ["$scope", "$rootScope", "$timeout", "$q", "$log", "angularEventTypes", "angularConstants", "appService", "uiService", "uiUtilService", FrameSketchController]).
+                controller('ProjectController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "uiService", "urlService", ProjectController]).
+                controller('RepoController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "urlService", RepoController]).
+                controller('RepoLibController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "urlService", RepoLibController]);
         }
     });

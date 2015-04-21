@@ -1,4 +1,4 @@
-require.config(
+requirejs.config(
     {
         paths: {
             "jquery.easing": JQUERY_UI_PLUGINS_LIB_PATH + "jquery.easing/1.3/jquery.easing.min"

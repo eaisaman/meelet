@@ -761,4 +761,32 @@ UserFileController.prototype.deleteProjectArtifactXref = function (xrefFilter, s
     });
 }
 
+UserFileController.prototype.postConvertToHtml = function (userId, projectId, success, fail) {
+    var self = this;
+
+    if (projectId) {
+        (!self.isDBReady && fail(new Error('DB not initialized'))) || self.schema.UserProject.find({_id: new self.db.Types.ObjectId(projectId), lock: true, lockUser: new self.db.Types.ObjectId(userId)}, function (err, data) {
+            if (err) {
+                fail(err);
+            } else {
+                if (data && data.length) {
+                    var projectPath = path.join(self.config.userFile.sketchFolder, projectId);
+
+                    commons.convertToHtml(projectPath, function (err, htmlPath) {
+                        if (err) {
+                            fail(err);
+                        } else {
+                            success({htmlPath: htmlPath});
+                        }
+                    })
+                } else {
+                    fail("Cannot find project record");
+                }
+            }
+        });
+    } else {
+        fail("Empty project id");
+    }
+}
+
 module.exports = UserFileController;

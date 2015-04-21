@@ -15,9 +15,14 @@ var session = require('express-session');
 var passport = require('passport');
 var httpStrategies = require('passport-http');
 var ejs = require("ejs");
-var memory_cache = require('cache-manager').caching({store: 'memory', max: 100, ttl: 10/*seconds*/});
+var jsdom = require('jsdom');
+var ncp = require('ncp').ncp;
+var classes = require('./meeletClasses');
 
 var Commons = function () {
+    var self = this;
+
+    self.config = require('./config');
 }, c = new Commons();
 
 Commons.prototype.mkdirsSync = function (dirpath) {
@@ -69,8 +74,26 @@ Commons.prototype.spawn = function (cmd, args, opts, done) {
     return child;
 }
 
-Commons.prototype.listFiles = function (dir, patterns, callback) {
+Commons.prototype.arrayOmit = function (objects) {
+    var keys = Array.prototype.concat.apply(Array.prototype, Array.prototype.slice.call(arguments, 1)),
+        arr = [];
 
+    objects && objects.forEach(function (obj) {
+        arr.push(_.omit(obj, keys));
+    });
+
+    return arr;
+}
+
+Commons.prototype.arrayPick = function (objects) {
+    var keys = Array.prototype.concat.apply(Array.prototype, Array.prototype.slice.call(arguments, 1)),
+        arr = [];
+
+    objects && objects.forEach(function (obj) {
+        arr.push(_.pick(obj, keys));
+    });
+
+    return arr;
 }
 
 Commons.prototype.batchLimit = function (arr, batchSize, concurrentLimit, iterator, final) {
@@ -270,12 +293,11 @@ Commons.prototype.instantiateMongoDb = function (options, resourceName, callback
  */
 Commons.prototype.session = function (options) {
     if (options.store) {
-        var self = this,
-            config = require('./config');
+        var self = this;
 
         self.sessionOptions = options;
 
-        config.on(config.ResourceReadyEvent, function (resource) {
+        self.config.on(self.config.ResourceReadyEvent, function (resource) {
             //instance is of type mongo db
             if (resource.name == options.store.resource && resource.instance) {
                 var MongoStore = require('connect-mongo')(session);
@@ -293,14 +315,14 @@ Commons.prototype.session = function (options) {
 }
 
 Commons.prototype.encryptPassword = function (plain, salt) {
-    var config = require('./config');
+    var self = this;
 
-    salt = salt || config.settings.salt;
+    salt = salt || self.config.settings.salt;
     return crypto.createHmac('sha1', salt).update(plain).digest('hex');
 }
 
 Commons.prototype.authenticate = function (options) {
-    var commonsSelf = this;
+    var self = this;
 
     function checkPassword(plain, enc, salt) {
         var enc2 = crypto.createHmac('sha1', salt).update(plain).digest('hex');
@@ -308,33 +330,32 @@ Commons.prototype.authenticate = function (options) {
     }
 
     (function () {
-        var self = this,
-            config = require('./config');
+        var initPassport = this;
 
-        config.on(config.ResourceReadyEvent, function (resource) {
+        self.config.on(self.config.ResourceReadyEvent, function (resource) {
             //instance is of type mongo db
             if (resource.name == options.resource && resource.instance && resource.schema) {
-                self.db = resource.instance;
+                initPassport.db = resource.instance;
 
-                self.db.collection(options.collectionName, function (err, collection) {
+                initPassport.db.collection(options.collectionName, function (err, collection) {
                     if (err) {
-                        if (config.logger) {
-                            config.logger.error(err);
+                        if (self.config.logger) {
+                            self.config.logger.error(err);
                         } else {
                             throw err;
                         }
                     } else {
-                        self.collection = collection;
+                        initPassport.collection = collection;
 
                         passport.use(new httpStrategies.BasicStrategy(function (username, password, done) {
-                            self.collection.findOne({loginName: username}, function (err, data) {
-                                return done(err, !err && data && checkPassword(password, data.password, data.salt || options.salt || config.settings.salt) && data);
+                            initPassport.collection.findOne({loginName: username}, function (err, data) {
+                                return done(err, !err && data && checkPassword(password, data.password, data.salt || options.salt || self.config.settings.salt) && data);
                             });
                         }));
 
                         passport.use(new httpStrategies.DigestStrategy(function (username, password, done) {
-                            self.collection.findOne({loginName: username}, function (err, data) {
-                                return done(err, !err && data != null && checkPassword(password, data.password, data.salt || options.salt || config.settings.salt) && data);
+                            initPassport.collection.findOne({loginName: username}, function (err, data) {
+                                return done(err, !err && data != null && checkPassword(password, data.password, data.salt || options.salt || self.config.settings.salt) && data);
                             });
                         }));
 
@@ -357,7 +378,7 @@ Commons.prototype.authenticate = function (options) {
         } else {
             passport.authenticate(['basic', 'digest'])(req, res, function (err) {
                 if (!err) {
-                    //res.cookie("XXX", encodeURIComponent(JSON.stringify(obj)), commonsSelf.sessionOptions.cookie || {});
+                    //res.cookie("XXX", encodeURIComponent(JSON.stringify(obj)), self.sessionOptions.cookie || {});
                 }
                 next(err);
             });
@@ -366,15 +387,14 @@ Commons.prototype.authenticate = function (options) {
 }
 
 Commons.prototype.addConfigurableArtifact = function (projectId, widgetId, libraryName, artifactId, type, version, callback) {
-    var self = this,
-        config = require('./config');
+    var self = this;
 
     if (projectId) {
-        var projectPath = path.join(config.userFile.sketchFolder, projectId),
+        var projectPath = path.join(self.config.userFile.sketchFolder, projectId),
             cssPath = path.join(projectPath, "stylesheets"),
-            sassPath = path.join(cssPath, "sass"),
+            sassPath = path.join(cssPath, "repo"),
             configPath = path.join(sassPath, artifactId),
-            artifactSassPath = path.join(config.userFile.repoFolder, type, libraryName, artifactId, version, "stylesheets", "sass"),
+            artifactSassPath = path.join(self.config.userFile.repoFolder, type, libraryName, artifactId, version, "stylesheets", "sass"),
             ejsPath = path.join(artifactSassPath, "configurable-widget.ejs"),
             widgetScssPath = path.join(configPath, _.string.sprintf("configurable-widget-%s.scss", widgetId)),
             widgetCssPath = path.join(cssPath, _.string.sprintf("configurable-widget-%s.css", widgetId));
@@ -433,9 +453,9 @@ Commons.prototype.addConfigurableArtifact = function (projectId, widgetId, libra
                             try {
                                 var templateStr = fs.readFileSync(path.join(configPath, "sass", "configurable-widget.ejs"), "utf8"),
                                     options = {debug: false, client: true},
-                                    ejsCompileCacheKey = "";
+                                    ejsCompileCacheKey = path.join(self.config.userFile.repoFolder, type, libraryName, artifactId, version);
 
-                                memory_cache.wrap(ejsCompileCacheKey, function (cacheCb) {
+                                self.config.cache.wrap(ejsCompileCacheKey, function (cacheCb) {
                                     try {
                                         var fn = ejs.compile(templateStr, options);
                                         cacheCb(null, fn);
@@ -489,12 +509,12 @@ Commons.prototype.addConfigurableArtifact = function (projectId, widgetId, libra
 }
 
 Commons.prototype.removeConfigurableArtifact = function (projectId, widgetId, artifactId, callback) {
-    var config = require('./config');
+    var self = this;
 
     if (projectId) {
-        var projectPath = path.join(config.userFile.sketchFolder, projectId),
+        var projectPath = path.join(self.config.userFile.sketchFolder, projectId),
             cssPath = path.join(projectPath, "stylesheets"),
-            sassPath = path.join(cssPath, "sass"),
+            sassPath = path.join(cssPath, "repo"),
             configPath = path.join(sassPath, artifactId),
             widgetConfigPath = path.join(configPath, _.string.sprintf("_configuration-%s.scss", widgetId)),
             widgetScssPath = path.join(configPath, _.string.sprintf("configurable-widget-%s.scss", widgetId)),
@@ -563,11 +583,10 @@ Commons.prototype.removeConfigurableArtifact = function (projectId, widgetId, ar
 }
 
 Commons.prototype.updateConfigurableArtifact = function (projectId, widgetId, artifactId, configuration, callback) {
-    var self = this,
-        config = require('./config');
+    var self = this;
 
     if (projectId) {
-        var projectPath = path.join(config.userFile.sketchFolder, projectId),
+        var projectPath = path.join(self.config.userFile.sketchFolder, projectId),
             cssPath = path.join(projectPath, "stylesheets"),
             sassPath = path.join(cssPath, "sass"),
             configPath = path.join(sassPath, artifactId),
@@ -642,6 +661,327 @@ Commons.prototype.updateConfigurableArtifact = function (projectId, widgetId, ar
             ],
             function (err) {
                 callback(err, path.basename(widgetCssPath));
+            }
+        );
+    }
+}
+
+Commons.prototype.convertToHtml = function (projectPath, callback) {
+    var self = this,
+        skeletonPath = self.config.userFile.skeletonFolder,
+        skeletonLibLoadTimeout = self.config.settings.skeletonLibLoadTimeout,
+        skeletonHtml = self.config.userFile.skeletonHtml,
+        meeletPath = path.join(projectPath, self.config.settings.meeletFile);
+
+    var nonExistentPath = (!fs.existsSync(projectPath) && projectPath)
+        || (!fs.existsSync(skeletonPath) && skeletonPath)
+        || (!fs.existsSync(skeletonHtml) && skeletonHtml)
+        || (!fs.existsSync(meeletPath) && meeletPath);
+
+    if (nonExistentPath) {
+        callback(_.string.sprintf("Path %s not found", nonExistentPath));
+    } else {
+        async.waterfall(
+            [
+                function (next) {
+                    //Building jdom for skeleton html
+                    var skeletonDomCacheKey = skeletonHtml,
+                        amdModules = [];
+
+                    self.config.cache.wrap(skeletonDomCacheKey, function (cacheCb) {
+                        jsdom.env(
+                            {
+                                file: skeletonHtml,
+                                resourceLoader: function (resource, callback) {
+                                    var pathname = resource.url.pathname;
+
+                                    if (/\/main\.js$/.test(pathname)) {
+                                        amdModules.push(pathname);
+                                    }
+
+                                    resource.defaultFetch(callback);
+                                },
+                                features: {
+                                    FetchExternalResources: ["script", "css"],
+                                    ProcessExternalResources: ["script"],
+                                    SkipExternalResources: false
+                                },
+                                loaded: function (errors, window) {
+                                    if (!errors || !errors.length) {
+                                        window.requirejs.config({
+                                            baseUrl: skeletonPath,
+                                            waitSeconds: skeletonLibLoadTimeout
+                                        });
+                                    }
+                                },
+                                created: function (errors, window) {
+                                    if (!errors || !errors.length) {
+                                        window.amdModules = amdModules;
+                                        window.modouleLogger = self.config.logger;
+                                        window.onModulesLoaded = function () {
+                                            cacheCb(null, window);
+                                        };
+                                    }
+                                },
+                                done: function (errors) {
+                                    if (errors && errors.length) {
+                                        cacheCb(errors[0]);
+                                    }
+                                }
+                            }
+                        );
+                    }, function (err, window) {
+                        next(err, window);
+                    });
+                },
+                function (window, next) {
+                    //Copy referenced javascript libraries
+                    var fnArr = [];
+                    //Copy require.js to project path if not exist
+                    fnArr.push(function (cb) {
+                        var target = path.join(projectPath, "javascripts", "require"),
+                            err = self.mkdirsSync(target);
+
+                        if (err) {
+                            cb(err);
+                        } else {
+                            ncp(path.join(skeletonPath, "javascripts", "require"), target, {
+                                clobber: false,
+                                stopOnErr: true,
+                                dereference: true
+                            }, function (err) {
+                                cb(err);
+                            });
+                        }
+                    });
+
+                    //Copy modules to project path if not exist
+                    window.amdModules && window.amdModules.forEach(function (pathname) {
+                        var relative = _.string.trim(path.relative(skeletonPath, path.dirname(pathname)));
+                        if (relative) {
+                            fnArr.push(function (cb) {
+                                var target = path.join(projectPath, relative),
+                                    err = self.mkdirsSync(target);
+
+                                if (err) {
+                                    cb(err);
+                                } else {
+                                    ncp(path.dirname(pathname), target, {
+                                        clobber: false,
+                                        stopOnErr: true,
+                                        dereference: true
+                                    }, function (err) {
+                                        cb(err);
+                                    });
+                                }
+                            });
+                        } else {
+                            fnArr.push(function (cb) {
+                                var target = path.join(projectPath, path.basename(pathname));
+
+                                ncp(pathname, target, {
+                                    clobber: false,
+                                    stopOnErr: true
+                                }, function (err) {
+                                    cb(err);
+                                });
+                            });
+                        }
+                    });
+
+                    if (fnArr.length) {
+                        async.waterfall(fnArr, function (err) {
+                            next(err);
+                        });
+                    } else {
+                        next(null);
+                    }
+                },
+                function (next) {
+                    //Parse page JSON object
+                    fs.readFile(meeletPath, "utf8", function (err, str) {
+                        if (err) next(err);
+
+                        try {
+                            var obj = JSON.parse(str),
+                                pages = [];
+
+                            obj.pages.forEach(function (pageObj) {
+                                pages.push(classes.fromObject(pageObj));
+                            });
+
+                            next(null, pages);
+                        } catch (err2) {
+                            next(err2);
+                        }
+                    });
+                },
+                function (pages, next) {
+                    //Regenerate scrap html for each page json object
+                    var fnArr = [];
+                    pages.forEach(function (page, index) {
+                        fnArr.push(function (cb) {
+                            jsdom.env(
+                                {
+                                    html: "<div class='deviceHolder'/>",
+                                    scripts: [path.join(skeletonPath, "jquery/2.1.1/jquery.min.js")],
+                                    done: function (errors, window) {
+                                        if (!errors || !errors.length) {
+                                            var arr = [];
+                                            if (page.lastModified) {
+                                                arr.push(function (wCallback) {
+                                                    var pageHtml = path.join(projectPath, _.string.sprintf("page-%d.html", index));
+                                                    fs.stat(pageHtml, function (err, stat) {
+                                                        if (err) {
+                                                            wCallback(null, pageHtml);
+                                                        } else {
+                                                            wCallback(null, stat.mtime.getTime() <= page.lastModified.getTime() && pageHtml);
+                                                        }
+                                                    });
+                                                });
+                                            } else {
+                                                arr.push(function (wCallback) {
+                                                    var pageHtml = path.join(projectPath, _.string.sprintf("page-%d.html", index));
+
+                                                    wCallback(null, pageHtml);
+                                                });
+                                            }
+
+                                            arr.push(function (pageHtml, wCallback) {
+                                                if (pageHtml) {
+                                                    page.appendTo(window.$, window.$(window.document.documentElement), window.$(".deviceHolder"));
+                                                    page.htmlGenerated = true;
+
+                                                    try {
+                                                        var out = fs.createWriteStream(pageHtml);
+
+                                                        out.on('finish', function () {
+                                                            wCallback(null);
+                                                        });
+
+                                                        out.on('error', function (err) {
+                                                            wCallback(err);
+                                                        });
+
+                                                        out.write(window.$(window.document.documentElement).find("script[type='text/ng-template']").prop('outerHTML'));
+                                                        out.write(window.$(".deviceHolder").html());
+                                                        out.end();
+                                                    } catch (err2) {
+                                                        wCallback(err2);
+                                                    }
+                                                } else {
+                                                    wCallback(null);
+                                                }
+                                            });
+
+                                            async.waterfall(arr, function (err) {
+                                                window.close();
+                                                cb(err);
+                                            })
+                                        } else {
+                                            window.close();
+                                            cb(errors[0]);
+                                        }
+                                    }
+                                }
+                            );
+                        });
+                    });
+
+                    if (fnArr.length) {
+                        async.waterfall(fnArr, function (err) {
+                            next(err, err || _.where(pages, {htmlGenerated: true}));
+                        });
+                    } else {
+                        next(null, pages);
+                    }
+                },
+                function (pages, next) {
+                    //Regenerate scss for each page json object
+
+                    var fnArr = [];
+
+                    //Copy config.rb
+                    fnArr.push(function (cb) {
+                        var rbPath = path.join(skeletonPath, "stylesheets", "sass", "config.rb"),
+                            target = path.join(projectPath, "stylesheets", "sass", "config.rb");
+
+                        ncp(rbPath, target, {
+                            clobber: true,
+                            stopOnErr: true,
+                            dereference: true
+                        }, function (err) {
+                            cb(err);
+                        });
+                    });
+                    pages.forEach(function (page, index) {
+                        fnArr.push(function (cb) {
+                            try {
+                                var basePath = path.join(projectPath, "stylesheets", "sass"),
+                                    pageScssPath = path.join(basePath, _.string.sprintf("page-%d.scss", index)),
+                                    out = fs.createWriteStream(pageScssPath);
+
+                                out.on('finish', function () {
+                                    page.scssGenerated = true;
+                                    cb(null);
+                                });
+
+                                out.on('error', function (err) {
+                                    cb(err);
+                                });
+
+                                out.write("@import \"compass/css3\";");
+                                page.writeScss(out);
+                                out.end();
+                            } catch (err2) {
+                                cb(err2);
+                            }
+                        });
+                    });
+
+                    if (fnArr.length) {
+                        async.waterfall(fnArr, function (err) {
+                            next(err, err || _.where(pages, {scssGenerated: true}));
+                        });
+                    } else {
+                        next(null, pages);
+                    }
+                },
+                function (pages, next) {
+                    //compass compile
+
+                    if (pages.length) {
+                        var basePath = path.join(projectPath, "stylesheets", "sass"),
+                            cssPath = path.join(projectPath, "stylesheets"),
+                            sassPath = path.join(projectPath, "stylesheets", "sass");
+
+                        async.waterfall([
+                            function (cb) {
+                                var err = self.mkdirsSync(sassPath);
+
+                                process.nextTick(function () {
+                                    cb(err);
+                                });
+                            },
+                            function (cb) {
+                                self.spawn("compass",
+                                    ["compile", basePath, "--css-dir", cssPath, "--sass-dir", sassPath],
+                                    {},
+                                    function (err, result, code) {
+                                        cb(err);
+                                    }
+                                );
+                            }
+                        ], function (err) {
+                            next(err);
+                        });
+                    } else {
+                        next(null);
+                    }
+                }
+            ],
+            function (err) {
+                callback(err);
             }
         );
     }

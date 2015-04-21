@@ -1,4 +1,4 @@
-require.config(
+requirejs.config(
     {
         paths: {
             "ng.ui.util": DIRECTIVE_LIB_PATH + "ng.ui.util",

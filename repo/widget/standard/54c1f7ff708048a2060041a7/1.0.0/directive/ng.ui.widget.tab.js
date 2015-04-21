@@ -2,7 +2,7 @@ define(
     ["angular", "jquery"],
     function () {
         return function ($injector, $compileProvider, $controllerProvider, extension, directiveUrl) {
-            var inject = ["$http", "$timeout", "$q", "$parse", "$compile", "angularConstants", "angularEventTypes", "uiService", "uiUtilService"],
+            var inject = ["$http", "$timeout", "$q", "$parse", "$compile", "angularConstants", "angularEventTypes", "uiUtilService"],
                 name = "uiWidgetTab",
                 version = "1.0.0",
                 directive = name + version.replace(/\./g, ""),
@@ -47,7 +47,7 @@ define(
                         }
                     }]);
 
-                $compileProvider.directive(directive, _.union(inject, [function ($http, $timeout, $q, $parse, $compile, angularConstants, angularEventTypes, uiService, uiUtilService) {
+                $compileProvider.directive(directive, _.union(inject, [function ($http, $timeout, $q, $parse, $compile, angularConstants, angularEventTypes, uiUtilService) {
                     'use strict';
 
                     var injectObj = _.object(inject, Array.prototype.slice.call(arguments));
@@ -144,14 +144,32 @@ define(
                                             });
                                             var len = to.length || 0;
                                             element.find(".tabGroup").each(function (i, groupElement) {
+                                                var $groupElement = $(groupElement);
+
                                                 if (i < len) {
-                                                    $(groupElement).attr("tab-name", to[i].name)
+                                                    var anchor = "{0}[{1}]".format(widgetAnchorId, to[i].name);
+
+                                                    $groupElement.attr("tab-name", to[i].name)
                                                         .attr("desc", "Tab Group " + to[i].name)
                                                         .attr("tab-index", i)
-                                                        .attr("widget-anchor", "{0}[{1}]".format(widgetAnchorId, to[i].name));
-                                                    uiService.anchorElement(groupElement);
+                                                        .attr("widget-anchor", anchor);
+
+                                                    $groupElement.children("[ui-sketch-widget]").each(function (i, childElement) {
+                                                        var $child = $(childElement),
+                                                            widgetObj = $child.data("widgetObject");
+
+                                                        if (widgetObj)
+                                                            widgetObj.anchor = anchor;
+                                                    });
                                                 } else {
-                                                    uiService.disposeElement(groupElement);
+                                                    $groupElement.children("[ui-sketch-widget]").each(function (i, childElement) {
+                                                        var $child = $(childElement),
+                                                            widgetObj = $child.data("widgetObject");
+
+                                                        if (widgetObj)
+                                                            widgetObj.dispose();
+                                                    });
+                                                    $groupElement.remove();
                                                 }
                                             });
 

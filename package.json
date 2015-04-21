@@ -37,7 +37,10 @@
     "connect-mongo": "~0.4.1",
     "mongodb": "~1.4.4",
     "cache-manager": "~0.17.0",
-    "ejs": "~1.0.0"
+    "ejs": "~1.0.0",
+    "jsdom": "~4.2.0",
+    "requirejs": "~2.1.17",
+    "ncp": "~2.0.0"
   },
   "devDependencies": {
     "grunt": "^0.4.5",

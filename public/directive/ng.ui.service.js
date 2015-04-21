@@ -467,8 +467,14 @@ define(
                         return $inject.uiUtilService.getResolveDefer();
                     }
                 },
-                covertToHTML: function () {
+                convertToHtml: function (userId) {
+                    var self = this;
 
+                    if (self.projectRecord._id && self.projectRecord.lock) {
+                        return $inject.appService.convertToHtml(userId, self.projectRecord._id);
+                    } else {
+                        return $inject.uiUtilService.getResolveDefer();
+                    }
                 }
             }),
             State = Class({
@@ -2116,28 +2122,6 @@ define(
                                     }
 
                                     self.anchor = anchor;
-                                    //if (self.anchor) {
-                                    //    $parent.find("[{0}='{1}']".format($inject.angularConstants.anchorAttr, self.anchor)).append(self.$element);
-                                    //} else {
-                                    //    $parent.append(self.$element);
-                                    //}
-
-                                    //self.childWidgets.forEach(function (child) {
-                                    //    var $childElement = child.$element;
-                                    //
-                                    //    if ($childElement) {
-                                    //        $childElement.detach();
-                                    //        if (child.anchor) {
-                                    //            self.$element.find("[{0}='{1}']".format($inject.angularConstants.anchorAttr, child.anchor)).append($childElement);
-                                    //        } else {
-                                    //            self.$element.append($childElement);
-                                    //        }
-                                    //    }
-                                    //
-                                    //    child.$element = null;
-                                    //
-                                    //    child.attach($childElement);
-                                    //})
                                 }
                             }
                         }
@@ -3911,7 +3895,9 @@ define(
             }),
             PageSketchWidgetClass = Class(BaseSketchWidgetClass, {
                 CLASS_NAME: "PageSketchWidget",
-                MEMBERS: {},
+                MEMBERS: {
+                    lastModified: null
+                },
                 initialize: function (id) {
                     this.initialize.prototype.__proto__.initialize.apply(this, [id]);
                     var MEMBERS = arguments.callee.prototype.MEMBERS;
@@ -3920,11 +3906,12 @@ define(
                         this[member] = angular.copy(MEMBERS[member]);
                     }
 
+                    this.lastModified = new Date();
                     this.resizable = false;
                 },
                 toJSON: function () {
                     var jsonObj = PageSketchWidgetClass.prototype.__proto__.toJSON.apply(this);
-                    _.extend(jsonObj, _.pick(this, ["CLASS_NAME"]));
+                    _.extend(jsonObj, _.pick(this, ["CLASS_NAME", "lastModified"]));
 
                     return jsonObj;
                 },
@@ -3934,6 +3921,7 @@ define(
                     PageSketchWidgetClass.prototype.__proto__.startMatchReference.apply(null);
 
                     var ret = new PageSketchWidgetClass(obj.id);
+                    ret.lastModified = obj.lastModified;
                     PageSketchWidgetClass.prototype.__proto__.fromObject.apply(ret, [obj]);
 
                     PageSketchWidgetClass.prototype.__proto__.endMatchReference.apply(null);
@@ -4355,7 +4343,6 @@ define(
                 cloneObj = pageObj.clone();
 
             cloneObj.removeOmniClass(self.angularConstants.widgetClasses.activeClass);
-
 
             return cloneObj.appendTo(holderElement).then(
                 function () {

@@ -1,27 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/public/directive/ng.ui.service.js" line="1882" />
-    <bookmark url="file://$PROJECT_DIR$/public/directive/ng.ui.service.js" line="562" />
-  </component>
   <component name="ChangeListManager">
     <list default="true" id="e0c8aa76-af86-40a2-a1e4-f776d4689a71" name="Default" comment="Bug Fix.">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/javascripts" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/app/repo/artifacts.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/stylesheets/sass/config.rb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/app/controller.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/jquery/2.1.1/jquery.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/jquery/2.1.1/jquery.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/jquery/2.1.1/jquery.min.map" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/String/main.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/classie/main.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/modernizr/main.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/main.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/app/main.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/directive/main.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/meelet.skeleton.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/meeletClasses.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/directive/ng.ui.draggable.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/directive/ng.ui.extension.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/directive/ng.ui.hammer-gestures.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/directive/ng.ui.service.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/directive/ng.ui.util.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/app/route.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/app/browser/service.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/app/embedded/service.js" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/project/54aa095281dea526028dd7fd/stylesheets/configurable-widget-Widget_1425018388663.css" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/project/54aa095281dea526028dd7fd/stylesheets/sass/548e48d1708048063a0041a8/_configuration-Widget_1425018388663.scss" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/project/54aa095281dea526028dd7fd/stylesheets/sass/548e48d1708048063a0041a8/configurable-widget-Widget_1425018388663.scss" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/include/_state_transition.html" afterPath="$PROJECT_DIR$/public/include/_state_transition.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/stylesheets/sass/_state_transition.scss" afterPath="$PROJECT_DIR$/public/stylesheets/sass/_state_transition.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/include/_widget-configurator.html" afterPath="$PROJECT_DIR$/public/include/_widget-configurator.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/stylesheets/frameSketch.css" afterPath="$PROJECT_DIR$/public/stylesheets/frameSketch.css" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/project/54aa095281dea526028dd7fd/stylesheets/sass/548e48d1708048063a0041a8/sass" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/javascripts/fabric.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/javascripts/fabric.min.js" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/public/javascripts/String.js" afterPath="$PROJECT_DIR$/public/javascripts/String/String.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/public/javascripts/String.min.js" afterPath="$PROJECT_DIR$/public/javascripts/String/String.min.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/public/javascripts/classie.js" afterPath="$PROJECT_DIR$/public/javascripts/classie/classie.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/public/javascripts/classie.min.js" afterPath="$PROJECT_DIR$/public/javascripts/classie/classie.min.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/public/javascripts/modernizr.custom.63321.js" afterPath="$PROJECT_DIR$/public/javascripts/modernizr/modernizr.custom.63321.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/public/javascripts/require.js" afterPath="$PROJECT_DIR$/public/javascripts/require/require.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/public/javascripts/require.min.js" afterPath="$PROJECT_DIR$/public/javascripts/require/require.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/fonts/icon-frame-sketch/icon-frame-sketch.eot" afterPath="$PROJECT_DIR$/public/fonts/icon-frame-sketch/icon-frame-sketch.eot" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/fonts/icon-frame-sketch/icon-frame-sketch.ttf" afterPath="$PROJECT_DIR$/public/fonts/icon-frame-sketch/icon-frame-sketch.ttf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/fonts/icon-frame-sketch/icon-frame-sketch.woff" afterPath="$PROJECT_DIR$/public/fonts/icon-frame-sketch/icon-frame-sketch.woff" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/commons.js" afterPath="$PROJECT_DIR$/commons.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config-development.json" afterPath="$PROJECT_DIR$/config-development.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config-production.json" afterPath="$PROJECT_DIR$/config-production.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config.js" afterPath="$PROJECT_DIR$/config.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/controller.js" afterPath="$PROJECT_DIR$/public/app/controller.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/fonts/icon-frame-sketch/demo.html" afterPath="$PROJECT_DIR$/public/fonts/icon-frame-sketch/demo.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/frameSketch.html" afterPath="$PROJECT_DIR$/public/frameSketch.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/fonts/icon-frame-sketch/icon-frame-sketch.svg" afterPath="$PROJECT_DIR$/public/fonts/icon-frame-sketch/icon-frame-sketch.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/index.html" afterPath="$PROJECT_DIR$/public/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/main.js" afterPath="$PROJECT_DIR$/public/main.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/main.js" afterPath="$PROJECT_DIR$/public/app/main.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/main.js" afterPath="$PROJECT_DIR$/public/directive/main.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/angular-modules/main.js" afterPath="$PROJECT_DIR$/public/javascripts/angular-modules/main.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/angular-plugins/main.js" afterPath="$PROJECT_DIR$/public/javascripts/angular-plugins/main.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/angular/1.3.0-beta.8/main.js" afterPath="$PROJECT_DIR$/public/javascripts/angular/1.3.0-beta.8/main.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/ckeditor/4.4.5/main.js" afterPath="$PROJECT_DIR$/public/javascripts/ckeditor/4.4.5/main.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/hammer/2.0.2/main.js" afterPath="$PROJECT_DIR$/public/javascripts/hammer/2.0.2/main.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/hammer/2.0.4/main.js" afterPath="$PROJECT_DIR$/public/javascripts/hammer/2.0.4/main.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/jquery-plugins/main.js" afterPath="$PROJECT_DIR$/public/javascripts/jquery-plugins/main.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/jquery-ui-plugins/main.js" afterPath="$PROJECT_DIR$/public/javascripts/jquery-ui-plugins/main.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/jquery-ui/1.11.0/main.js" afterPath="$PROJECT_DIR$/public/javascripts/jquery-ui/1.11.0/main.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/jquery/2.1.1/main.js" afterPath="$PROJECT_DIR$/public/javascripts/jquery/2.1.1/main.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/underscore/1.6.0/main.js" afterPath="$PROJECT_DIR$/public/javascripts/underscore/1.6.0/main.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/meelet.iml" afterPath="$PROJECT_DIR$/.idea/meelet.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/project/54aa095281dea526028dd7fd/meelet.json" afterPath="$PROJECT_DIR$/project/54aa095281dea526028dd7fd/meelet.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.service.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.service.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.simple-dropdown.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.simple-dropdown.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.sketch-widget.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.sketch-widget.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.state-transition.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.state-transition.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.util.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.util.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/repo/widget/standard/548e48d1708048063a0041a8/1.0.0/directive/ng.ui.widget.sidebar.js" afterPath="$PROJECT_DIR$/repo/widget/standard/548e48d1708048063a0041a8/1.0.0/directive/ng.ui.widget.sidebar.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/repo/widget/standard/54c84a7b7080489a000041a7/1.0.0/directive/ng.ui.widget.creative-link.js" afterPath="$PROJECT_DIR$/repo/widget/standard/54c84a7b7080489a000041a7/1.0.0/directive/ng.ui.widget.creative-link.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/repo/widget/standard/54c1f7ff708048a2060041a7/1.0.0/directive/ng.ui.widget.tab.js" afterPath="$PROJECT_DIR$/repo/widget/standard/54c1f7ff708048a2060041a7/1.0.0/directive/ng.ui.widget.tab.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/fonts/icon-frame-sketch/selection.json" afterPath="$PROJECT_DIR$/public/fonts/icon-frame-sketch/selection.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/browser/service.js" afterPath="$PROJECT_DIR$/public/app/browser/service.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/embedded/service.js" afterPath="$PROJECT_DIR$/public/app/embedded/service.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/fonts/icon-frame-sketch/style.css" afterPath="$PROJECT_DIR$/public/fonts/icon-frame-sketch/style.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/api/public/userfile.js" afterPath="$PROJECT_DIR$/routes/api/public/userfile.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="meelet.iws" />
@@ -43,83 +97,31 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="_state_transition.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/include/_state_transition.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="36.166668">
-              <caret line="120" column="30" selection-start-line="120" selection-start-column="30" selection-end-line="120" selection-end-column="30" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ng.ui.state-transition.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.state-transition.js">
+      <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/skeleton/app/main.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="135" column="0" selection-start-line="135" selection-start-column="0" selection-end-line="135" selection-end-column="0" />
+              <caret line="17" column="9" selection-start-line="17" selection-start-column="9" selection-end-line="17" selection-end-column="9" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="_state_transition.scss" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/stylesheets/sass/_state_transition.scss">
+      <file leaf-file-name="commons.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/commons.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-13.208333">
-              <caret line="513" column="71" selection-start-line="513" selection-start-column="71" selection-end-line="513" selection-end-column="71" />
-              <folding>
-                <element signature="e#26444#28072#0" expanded="false" />
-              </folding>
+            <state vertical-scroll-proportion="-0.39203677">
+              <caret line="686" column="53" selection-start-line="686" selection-start-column="53" selection-end-line="686" selection-end-column="53" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ng.ui.service.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.service.js">
+      <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/main.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="788" column="76" selection-start-line="788" selection-start-column="76" selection-end-line="788" selection-end-column="76" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="meelet.json" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/project/54f816a3983840af0752d224/meelet.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.45681062">
-              <caret line="1882" column="0" selection-start-line="1882" selection-start-column="0" selection-end-line="1882" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ng.ui.util.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.util.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="390" column="56" selection-start-line="390" selection-start-column="53" selection-end-line="390" selection-end-column="56" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="_widget-configurator.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/include/_widget-configurator.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-15.0">
-              <caret line="24" column="64" selection-start-line="23" selection-start-column="69" selection-end-line="24" selection-end-column="64" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ng.ui.widget-configurator.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.widget-configurator.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="32" column="67" selection-start-line="32" selection-start-column="54" selection-end-line="32" selection-end-column="67" />
+              <caret line="31" column="65" selection-start-line="31" selection-start-column="65" selection-end-line="31" selection-end-column="65" />
               <folding />
             </state>
           </provider>
@@ -127,63 +129,70 @@
       </file>
     </leaf>
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/public/directive/ng.ui.border-editor.js" />
-        <option value="$PROJECT_DIR$/public/directive/ng.ui.color-picker.js" />
-        <option value="$PROJECT_DIR$/public/app/util.js" />
-        <option value="$PROJECT_DIR$/public/include/_box-shadow.html" />
-        <option value="$PROJECT_DIR$/public/include/_shape.html" />
-        <option value="$PROJECT_DIR$/public/include/_text-shadow.html" />
-        <option value="$PROJECT_DIR$/public/directive/ng.ui.topbar.js" />
-        <option value="$PROJECT_DIR$/public/repo.html" />
-        <option value="$PROJECT_DIR$/public/project.html" />
-        <option value="$PROJECT_DIR$/repo/widget/standard/54c84a7b7080489a000041a7/1.0.0/include/_widget_creative_link.html" />
-        <option value="$PROJECT_DIR$/public/app/browser/service.js" />
-        <option value="$PROJECT_DIR$/public/javascripts/angular/1.3.0-beta.8/angular.js" />
-        <option value="$PROJECT_DIR$/public/directive/ng.ui.color-editor-palette.js" />
-        <option value="$PROJECT_DIR$/public/include/_widget.html" />
-        <option value="$PROJECT_DIR$/public/directive/ng.ui.widget.js" />
-        <option value="$PROJECT_DIR$/public/directive/ng.ui.background-image.js" />
-        <option value="$PROJECT_DIR$/public/directive/ng.ui.box-shadow-editor.js" />
-        <option value="$PROJECT_DIR$/public/directive/ng.ui.dock.js" />
-        <option value="$PROJECT_DIR$/public/directive/ng.ui.horizontal-ruler.js" />
-        <option value="$PROJECT_DIR$/public/directive/ng.ui.page.js" />
-        <option value="$PROJECT_DIR$/public/directive/ng.ui.vertical-ruler.js" />
-        <option value="$PROJECT_DIR$/public/directive/ng.ui.text-shadow-editor.js" />
-        <option value="$PROJECT_DIR$/public/directive/ng.ui.shape.js" />
-        <option value="$PROJECT_DIR$/public/frameSketch.html" />
-        <option value="$PROJECT_DIR$/repo/widget/standard/54c1f7ff708048a2060041a7/1.0.0/app/widget.html" />
-        <option value="$PROJECT_DIR$/public/directive/ng.ui.gradient-editor.js" />
-        <option value="$PROJECT_DIR$/public/directive/ng.ui.multi-transclude.js" />
-        <option value="$PROJECT_DIR$/repo/widget/standard/54c84a7b7080489a000041a7/1.0.0/app/widget.html" />
-        <option value="$PROJECT_DIR$/repo/widget/standard/548e48d1708048063a0041a8/1.0.0/app/widget.html" />
-        <option value="$PROJECT_DIR$/repo/widget/standard/548e499a708048053a0041a7/1.0.0/app/widget.html" />
-        <option value="$PROJECT_DIR$/repo/widget/standard/54c1f7ff708048a2060041a7/1.0.0/demo/tabDemo.html" />
-        <option value="$PROJECT_DIR$/public/app/controller.js" />
-        <option value="$PROJECT_DIR$/public/directive/ng.ui.draggable.js" />
-        <option value="$PROJECT_DIR$/public/directive/ng.ui.widget-configurator.js" />
-        <option value="$PROJECT_DIR$/public/stylesheets/sass/frameSketch.scss" />
-        <option value="$PROJECT_DIR$/public/directive/trigger.json" />
-        <option value="$PROJECT_DIR$/repo/widget/standard/54c84a7b7080489a000041a7/1.0.0/directive/ng.ui.widget.creative-link.js" />
         <option value="$PROJECT_DIR$/public/javascripts/hammer/2.0.4/main.js" />
-        <option value="$PROJECT_DIR$/repo/widget/standard/548e48d1708048063a0041a8/1.0.0/directive/ng.ui.widget.sidebar.js" />
-        <option value="$PROJECT_DIR$/repo/widget/standard/54c1f7ff708048a2060041a7/1.0.0/directive/ng.ui.widget.tab.js" />
-        <option value="$PROJECT_DIR$/repo/widget/standard/548e499a708048053a0041a7/1.0.0/directive/ng.ui.widget.modal-window.js" />
-        <option value="$PROJECT_DIR$/public/main.js" />
-        <option value="$PROJECT_DIR$/public/directive/ng.ui.sketch-widget.js" />
-        <option value="$PROJECT_DIR$/public/include/_widget-configurator.html" />
-        <option value="$PROJECT_DIR$/public/stylesheets/sass/_state_transition.scss" />
-        <option value="$PROJECT_DIR$/public/directive/ng.ui.simple-dropdown.js" />
-        <option value="$PROJECT_DIR$/public/include/_state_transition.html" />
-        <option value="$PROJECT_DIR$/public/directive/ng.ui.util.js" />
-        <option value="$PROJECT_DIR$/public/directive/ng.ui.state-transition.js" />
+        <option value="$PROJECT_DIR$/public/javascripts/jquery-plugins/main.js" />
+        <option value="$PROJECT_DIR$/public/javascripts/jquery-ui-plugins/main.js" />
+        <option value="$PROJECT_DIR$/public/javascripts/jquery-ui/1.11.0/main.js" />
+        <option value="$PROJECT_DIR$/public/javascripts/jquery/2.1.1/main.js" />
+        <option value="$PROJECT_DIR$/public/javascripts/underscore/1.6.0/main.js" />
+        <option value="$PROJECT_DIR$/package.json" />
+        <option value="$PROJECT_DIR$/public/skeleton/page.skeleton.html" />
         <option value="$PROJECT_DIR$/public/directive/ng.ui.service.js" />
-        <option value="$PROJECT_DIR$/project/54f816a3983840af0752d224/meelet.json" />
+        <option value="$PROJECT_DIR$/config.js" />
+        <option value="$PROJECT_DIR$/repo/widget/standard/548e48d1708048063a0041a8/1.0.0/directive/ng.ui.widget.sidebar.js" />
+        <option value="$PROJECT_DIR$/config-production.json" />
+        <option value="$PROJECT_DIR$/meeletClasses.js" />
+        <option value="$PROJECT_DIR$/project/54f816a3983840af0752d224/stylesheets/sass/page-0.scss" />
+        <option value="$PROJECT_DIR$/public/skeleton/stylesheets/sass/config.rb" />
+        <option value="$PROJECT_DIR$/public/skeleton/stylesheets/sass/configuration.skeleton.scss" />
+        <option value="$PROJECT_DIR$/public/skeleton/stylesheets/sass/_configuration.skeleton.scss" />
+        <option value="$PROJECT_DIR$/public/skeleton/stylesheets/sass/meelet.skeleton.scss" />
+        <option value="$PROJECT_DIR$/project/54f816a3983840af0752d224/page-0.html" />
+        <option value="$PROJECT_DIR$/public/skeleton/directive/main.js" />
+        <option value="$PROJECT_DIR$/public/skeleton/app/repo/artifacts.json" />
+        <option value="$PROJECT_DIR$/public/skeleton/app/repo/main.js" />
+        <option value="$PROJECT_DIR$/repo/widget/standard/54c1f7ff708048a2060041a7/1.0.0/main.js" />
+        <option value="$PROJECT_DIR$/repo/widget/standard/54c84a7b7080489a000041a7/1.0.0/main.js" />
+        <option value="$PROJECT_DIR$/repo/widget/standard/548e48d1708048063a0041a8/1.0.0/main.js" />
+        <option value="$PROJECT_DIR$/repo/widget/standard/548e499a708048053a0041a7/1.0.0/main.js" />
+        <option value="$PROJECT_DIR$/repo/icon/standard/54a0c2f1708048a9020041a7/1.0.0/main.js" />
+        <option value="$PROJECT_DIR$/repo/icon/standard/54a0c062708048ab020041a7/1.0.0/main.js" />
+        <option value="$PROJECT_DIR$/repo/icon/standard/549ccc05708048ae020041a7/1.0.0/main.js" />
+        <option value="$PROJECT_DIR$/repo/effect/textShadow/54fd3e52708048f9020041a7/1.0.0/main.js" />
+        <option value="$PROJECT_DIR$/repo/effect/standard/54ed88bd7080482a030041a7/1.0.0/main.js" />
+        <option value="$PROJECT_DIR$/repo/effect/standard/54c99bfe8ead0e98000041a7/1.0.0/main.js" />
+        <option value="$PROJECT_DIR$/repo/effect/boxShadow/54fd3e497080488f000041a7/1.0.0/main.js" />
+        <option value="$PROJECT_DIR$/repo/widget/standard/54c1f7ff708048a2060041a7/1.0.0/directive/ng.ui.widget.tab.js" />
+        <option value="$PROJECT_DIR$/config-development.json" />
+        <option value="$PROJECT_DIR$/public/app/embedded/service.js" />
+        <option value="$PROJECT_DIR$/public/app/browser/service.js" />
+        <option value="$PROJECT_DIR$/public/skeleton/app/browser/service.js" />
+        <option value="$PROJECT_DIR$/public/skeleton/app/embedded/service.js" />
+        <option value="$PROJECT_DIR$/public/skeleton/app/controller.js" />
+        <option value="$PROJECT_DIR$/public/app/route.js" />
+        <option value="$PROJECT_DIR$/public/skeleton/app/route.js" />
+        <option value="$PROJECT_DIR$/public/javascripts/String/main.js" />
+        <option value="$PROJECT_DIR$/public/javascripts/modernizr/main.js" />
+        <option value="$PROJECT_DIR$/public/javascripts/classie/main.js" />
+        <option value="$PROJECT_DIR$/public/index.html" />
+        <option value="$PROJECT_DIR$/public/skeleton/meelet.skeleton.html" />
+        <option value="$PROJECT_DIR$/public/skeleton/app/main.js" />
+        <option value="$PROJECT_DIR$/public/main.js" />
+        <option value="$PROJECT_DIR$/public/skeleton/main.js" />
+        <option value="$PROJECT_DIR$/commons.js" />
       </list>
     </option>
   </component>
@@ -209,6 +218,34 @@
     <option name="width" value="1280" />
     <option name="height" value="773" />
   </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State>
+            <id />
+          </State>
+          <State>
+            <id>DOM issuesJavaScript</id>
+          </State>
+          <State>
+            <id>JavaScript</id>
+          </State>
+          <State>
+            <id>Node.jsJavaScript</id>
+          </State>
+          <State>
+            <id>XPath</id>
+          </State>
+        </expanded-state>
+        <selected-state>
+          <State>
+            <id>CoffeeScript</id>
+          </State>
+        </selected-state>
+      </profile-state>
+    </entry>
+  </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
     <OptionsSetting value="true" id="Remove" />
@@ -233,7 +270,6 @@
     </navigator>
     <panes>
       <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -249,332 +285,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="meelet" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="meelet" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="meelet" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="repo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="widget" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="standard" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="548e499a708048053a0041a7" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="1.0.0" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="meelet" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="meelet" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="repo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="widget" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="standard" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="548e499a708048053a0041a7" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="1.0.0" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="include" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="meelet" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="meelet" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="repo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="widget" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="standard" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="548e499a708048053a0041a7" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="1.0.0" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="directive" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="meelet" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="meelet" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="repo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="widget" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="standard" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="548e48d1708048063a0041a8" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="1.0.0" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="meelet" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="meelet" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="repo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="widget" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="standard" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="548e48d1708048063a0041a8" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="1.0.0" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="directive" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="meelet" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="meelet" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="repo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="widget" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="standard" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="54c84a7b7080489a000041a7" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="1.0.0" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="meelet" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="meelet" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="repo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="widget" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="standard" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="54c84a7b7080489a000041a7" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="1.0.0" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="directive" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="meelet" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="meelet" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="repo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="widget" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="standard" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="54c1f7ff708048a2060041a7" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="1.0.0" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="meelet" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="meelet" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="repo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="widget" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="standard" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="54c1f7ff708048a2060041a7" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="1.0.0" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="directive" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="meelet" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="meelet" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="repo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="widget" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="standard" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="meelet" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="meelet" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="repo" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -623,9 +333,32 @@
               <option name="myItemId" value="project" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="54f816a3983840af0752d224" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="meelet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="meelet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="project" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -644,11 +377,18 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/public/fonts/icon-frame-sketch" />
-      <recent name="$PROJECT_DIR$/public/fonts/icon-color-editor-palette" />
-      <recent name="$PROJECT_DIR$/public/javascripts/hammer/2.0.4" />
-      <recent name="$PROJECT_DIR$/public/javascripts/hammer" />
-      <recent name="$PROJECT_DIR$/repo/effect" />
+      <recent name="$PROJECT_DIR$/public/javascripts/classie" />
+      <recent name="$PROJECT_DIR$/public/javascripts/String" />
+      <recent name="$PROJECT_DIR$/public/javascripts/modernizr" />
+      <recent name="$PROJECT_DIR$/public/skeleton/app" />
+      <recent name="$PROJECT_DIR$/public/skeleton/app/repo" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/public/javascripts/require" />
+      <recent name="$PROJECT_DIR$/public/javascripts/String" />
+      <recent name="$PROJECT_DIR$/public/javascripts/modernizr" />
+      <recent name="$PROJECT_DIR$/public/javascripts/classie" />
+      <recent name="$PROJECT_DIR$/public/skeleton" />
     </key>
   </component>
   <component name="RunManager" selected="Node.js.meelet">
@@ -860,7 +600,13 @@
       <option name="project" value="LOCAL" />
       <updated>1428398376828</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="Bug Fix.">
+      <created>1428483976811</created>
+      <option name="number" value="00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1428483976811</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -884,29 +630,29 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1280" height="773" extended-state="0" />
+    <frame x="0" y="23" width="1280" height="773" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Grunt " active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.35976505" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.35829663" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32892805" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31571218" sideWeight="0.49960285" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31424376" sideWeight="0.49960285" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2494043" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.29467833" sideWeight="0.49926794" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39207047" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25416997" sideWeight="0.49926794" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.36563876" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.329429" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.22716442" sideWeight="0.50073206" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32452276" sideWeight="0.50039715" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.329429" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.329429" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Grunt" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32796487" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32796487" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39970717" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39970717" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
     </layout>
     <layout-to-restore>
@@ -953,384 +699,423 @@
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="120" />
+      <option name="time" value="223" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.background-image.js">
+    <entry file="file://$PROJECT_DIR$/repo/effect/standard/54c99bfe8ead0e98000041a7/1.0.0/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33333334">
-          <caret line="487" column="46" selection-start-line="487" selection-start-column="46" selection-end-line="487" selection-end-column="46" />
+        <state vertical-scroll-proportion="0.114854515">
+          <caret line="5" column="31" selection-start-line="5" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.box-shadow-editor.js">
+    <entry file="file://$PROJECT_DIR$/repo/widget/standard/54c84a7b7080489a000041a7/1.0.0/directive/ng.ui.widget.creative-link.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.00913242">
-          <caret line="532" column="46" selection-start-line="532" selection-start-column="46" selection-end-line="532" selection-end-column="46" />
+        <state vertical-scroll-proportion="0.6661562">
+          <caret line="29" column="173" selection-start-line="29" selection-start-column="173" selection-end-line="29" selection-end-column="173" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.color-editor-palette.js">
+    <entry file="file://$PROJECT_DIR$/repo/widget/standard/548e48d1708048063a0041a8/1.0.0/directive/ng.ui.widget.sidebar.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33333334">
-          <caret line="421" column="50" selection-start-line="421" selection-start-column="50" selection-end-line="421" selection-end-column="50" />
+        <state vertical-scroll-proportion="0.035222054">
+          <caret line="11" column="163" selection-start-line="11" selection-start-column="163" selection-end-line="11" selection-end-column="163" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.dock.js">
+    <entry file="file://$PROJECT_DIR$/repo/widget/standard/548e499a708048053a0041a7/1.0.0/directive/ng.ui.widget.modal-window.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33333334">
-          <caret line="65" column="46" selection-start-line="65" selection-start-column="46" selection-end-line="65" selection-end-column="46" />
+        <state vertical-scroll-proportion="0.25267994">
+          <caret line="11" column="163" selection-start-line="11" selection-start-column="163" selection-end-line="11" selection-end-column="163" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.horizontal-ruler.js">
+    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.util.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33333334">
-          <caret line="344" column="46" selection-start-line="344" selection-start-column="46" selection-end-line="344" selection-end-column="46" />
+        <state vertical-scroll-proportion="0.3598775">
+          <caret line="817" column="1614" selection-start-line="817" selection-start-column="1612" selection-end-line="817" selection-end-column="1614" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.page.js">
+    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.service.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33333334">
-          <caret line="162" column="46" selection-start-line="162" selection-start-column="46" selection-end-line="162" selection-end-column="46" />
+        <state vertical-scroll-proportion="0.69984686">
+          <caret line="4452" column="0" selection-start-line="4445" selection-start-column="0" selection-end-line="4452" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/repo/widget/standard/54c84a7b7080489a000041a7/1.0.0/demo/creativeLinkDemo.html">
+    <entry file="file://$PROJECT_DIR$/repo/widget/standard/54c1f7ff708048a2060041a7/1.0.0/directive/ng.ui.widget.tab.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="2.1056662">
+          <caret line="191" column="42" selection-start-line="191" selection-start-column="40" selection-end-line="191" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config-development.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5707472">
+          <caret line="154" column="34" selection-start-line="154" selection-start-column="34" selection-end-line="154" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/skeleton/app/repo/artifacts.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="2" selection-start-line="0" selection-start-column="2" selection-end-line="0" selection-end-column="2" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/app/util.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/repo/widget/standard/54c1f7ff708048a2060041a7/1.0.0/demo/tabDemo.html">
+    <entry file="file://$PROJECT_DIR$/public/app/filter.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.49920762">
-          <caret line="21" column="45" selection-start-line="21" selection-start-column="45" selection-end-line="21" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/repo/widget/standard/54c1f7ff708048a2060041a7/1.0.0/demo/demo.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.08396947">
-          <caret line="15" column="33" selection-start-line="15" selection-start-column="33" selection-end-line="15" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/javascripts/jquery/2.1.1/jquery.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.36030534">
-          <caret line="6918" column="13" selection-start-line="6918" selection-start-column="4" selection-end-line="6918" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.widget.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6849315">
-          <caret line="20" column="38" selection-start-line="20" selection-start-column="38" selection-end-line="20" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.shape.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.22900763">
-          <caret line="307" column="0" selection-start-line="307" selection-start-column="0" selection-end-line="307" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.draggable.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="26" column="23" selection-start-line="26" selection-start-column="16" selection-end-line="26" selection-end-column="23" />
+        <state vertical-scroll-proportion="0.43644717">
+          <caret line="19" column="26" selection-start-line="19" selection-start-column="26" selection-end-line="19" selection-end-column="26" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/app/controller.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="298" column="57" selection-start-line="298" selection-start-column="57" selection-end-line="298" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/repo/widget/standard/54c84a7b7080489a000041a7/1.0.0/app/widget.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.09508716">
-          <caret line="4" column="6" selection-start-line="4" selection-start-column="6" selection-end-line="4" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/repo/widget/standard/54c84a7b7080489a000041a7/1.0.0/include/_widget_creative_link.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.23771791">
-          <caret line="10" column="6" selection-start-line="10" selection-start-column="6" selection-end-line="10" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/stylesheets/sass/frameSketch.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.52782196">
-          <caret line="276" column="55" selection-start-line="276" selection-start-column="55" selection-end-line="276" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/repo/widget/standard/54c1f7ff708048a2060041a7/1.0.0/include/_widget_tab.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.875">
-          <caret line="11" column="14" selection-start-line="11" selection-start-column="14" selection-end-line="11" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/javascripts/hammer/2.0.2/hammer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.58499235">
-          <caret line="1496" column="8" selection-start-line="1496" selection-start-column="8" selection-end-line="1496" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/javascripts/hammer/2.0.2/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.hammer-gestures.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.94180703">
-          <caret line="41" column="52" selection-start-line="41" selection-start-column="52" selection-end-line="41" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/directive/trigger.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="46" column="20" selection-start-line="46" selection-start-column="20" selection-end-line="46" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/lib/JavaScriptLanguage.jar!/com/intellij/lang/javascript/index/predefined/DOMEvents.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3323124">
-          <caret line="115" column="0" selection-start-line="115" selection-start-column="0" selection-end-line="115" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/javascripts/hammer/2.0.4/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.39050537">
-          <caret line="17" column="9" selection-start-line="17" selection-start-column="9" selection-end-line="17" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/repo/widget/standard/54c1f7ff708048a2060041a7/1.0.0/directive/ng.ui.widget.tab.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4977029">
-          <caret line="110" column="79" selection-start-line="110" selection-start-column="79" selection-end-line="110" selection-end-column="79" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/javascripts/hammer/2.0.4/hammer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="2335" column="28" selection-start-line="2335" selection-start-column="28" selection-end-line="2335" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/repo/widget/standard/54c84a7b7080489a000041a7/1.0.0/directive/ng.ui.widget.creative-link.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.033690657">
-          <caret line="91" column="41" selection-start-line="91" selection-start-column="41" selection-end-line="91" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/repo/widget/standard/548e499a708048053a0041a7/1.0.0/include/_widget_modal_window.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.23847377">
-          <caret line="10" column="6" selection-start-line="10" selection-start-column="6" selection-end-line="10" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/repo/widget/standard/548e499a708048053a0041a7/1.0.0/directive/ng.ui.widget.modal-window.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.0">
-          <caret line="78" column="0" selection-start-line="78" selection-start-column="0" selection-end-line="78" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/repo/widget/standard/548e48d1708048063a0041a8/1.0.0/directive/ng.ui.widget.sidebar.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="83" column="89" selection-start-line="83" selection-start-column="89" selection-end-line="83" selection-end-column="89" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/bson/tools/jasmine-1.1.0/jasmine.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3323124">
-          <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="54" column="22" selection-start-line="54" selection-start-column="22" selection-end-line="54" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.sketch-widget.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.13169985">
-          <caret line="288" column="0" selection-start-line="288" selection-start-column="0" selection-end-line="288" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/stylesheets/sass/_widget-configurator.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.11923689">
-          <caret line="5" column="24" selection-start-line="5" selection-start-column="9" selection-end-line="5" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/include/_page.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.49920508">
-          <caret line="67" column="27" selection-start-line="67" selection-start-column="16" selection-end-line="67" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/stylesheets/sass/_page.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-14.458333">
-          <caret line="136" column="36" selection-start-line="136" selection-start-column="20" selection-end-line="136" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/stylesheets/sass/_state_transition.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-13.208333">
-          <caret line="513" column="71" selection-start-line="513" selection-start-column="71" selection-end-line="513" selection-end-column="71" />
           <folding>
-            <element signature="e#26444#28072#0" expanded="false" />
+            <element signature="e#200#2820#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/javascripts/jquery/2.1.1/jquery.min.js">
+    <entry file="file://$PROJECT_DIR$/public/app/embedded/service.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3323124">
-          <caret line="2" column="23444" selection-start-line="2" selection-start-column="23444" selection-end-line="2" selection-end-column="23444" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/javascripts/angular-plugins/angular-ui-tree.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="782" column="28" selection-start-line="782" selection-start-column="28" selection-end-line="782" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/include/_widget-configurator.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-15.0">
-          <caret line="24" column="64" selection-start-line="23" selection-start-column="69" selection-end-line="24" selection-end-column="64" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/include/_simple-dropdown.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.23847377">
-          <caret line="10" column="26" selection-start-line="10" selection-start-column="18" selection-end-line="10" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.simple-dropdown.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.88820827">
-          <caret line="262" column="49" selection-start-line="262" selection-start-column="49" selection-end-line="262" selection-end-column="49" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/api/public/userfile.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.68147016">
-          <caret line="72" column="30" selection-start-line="72" selection-start-column="30" selection-end-line="72" selection-end-column="30" />
+        <state vertical-scroll-proportion="0.4946401">
+          <caret line="24" column="9" selection-start-line="24" selection-start-column="9" selection-end-line="24" selection-end-column="9" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/app/browser/service.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5436447">
-          <caret line="558" column="64" selection-start-line="558" selection-start-column="64" selection-end-line="558" selection-end-column="64" />
+        <state vertical-scroll-proportion="0.20673813">
+          <caret line="24" column="9" selection-start-line="24" selection-start-column="9" selection-end-line="24" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/app/route.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.712098">
+          <caret line="93" column="9" selection-start-line="73" selection-start-column="0" selection-end-line="93" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/app/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.43644717">
+          <caret line="19" column="45" selection-start-line="19" selection-start-column="45" selection-end-line="19" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/skeleton/app/route.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.60796326">
+          <caret line="22" column="13" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/skeleton/app/controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.22970903">
+          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/skeleton/app/embedded/service.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.770291">
+          <caret line="64" column="13" selection-start-line="64" selection-start-column="13" selection-end-line="64" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/skeleton/javascripts/angular/1.3.0-beta.8/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.32159266">
+          <caret line="14" column="48" selection-start-line="14" selection-start-column="48" selection-end-line="14" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/javascripts/bootstrap.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.45941806">
+          <caret line="20" column="25" selection-start-line="20" selection-start-column="25" selection-end-line="20" selection-end-column="25" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/frameSketch.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1428901567000" expanded="true" signature="-1:-1" placeholder="{&quot;background-image&quot;: 'url(images/{{sketchDevice.img}})'...}" />
+            <marker date="1428901567000" expanded="true" signature="-1:-1" placeholder="{&quot;min-width&quot;: '{{sketchDevice.width + 90}}'...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/javascripts/bootstrap/affix.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.41347626">
+          <caret line="18" column="18" selection-start-line="18" selection-start-column="18" selection-end-line="18" selection-end-column="18" />
+          <folding>
+            <element signature="n#!!doc" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/javascripts/angular/1.3.0-beta.8/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.43644717">
+          <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/javascripts/underscore/1.6.0/underscore.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.44716692">
-          <caret line="871" column="5" selection-start-line="871" selection-start-column="5" selection-end-line="871" selection-end-column="5" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/javascripts/underscore/1.6.0/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.39050537">
+          <caret line="17" column="2" selection-start-line="17" selection-start-column="2" selection-end-line="17" selection-end-column="2" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.widget-configurator.js">
+    <entry file="file://$PROJECT_DIR$/public/javascripts/hammer/2.0.4/main.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="32" column="67" selection-start-line="32" selection-start-column="54" selection-end-line="32" selection-end-column="67" />
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.util.js">
+    <entry file="file://$PROJECT_DIR$/public/javascripts/jquery-plugins/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.29862174">
+          <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/javascripts/modernizr/modernizr.custom.63321.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="390" column="56" selection-start-line="390" selection-start-column="53" selection-end-line="390" selection-end-column="56" />
-          <folding />
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/include/_state_transition.html">
+    <entry file="file://$PROJECT_DIR$/public/javascripts/modernizr/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="36.166668">
-          <caret line="120" column="30" selection-start-line="120" selection-start-column="30" selection-end-line="120" selection-end-column="30" />
+        <state vertical-scroll-proportion="0.36753446">
+          <caret line="16" column="19" selection-start-line="16" selection-start-column="19" selection-end-line="16" selection-end-column="19" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.state-transition.js">
+    <entry file="file://$PROJECT_DIR$/public/javascripts/String/String.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.55130166">
+          <caret line="29" column="47" selection-start-line="29" selection-start-column="47" selection-end-line="29" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/javascripts/classie/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.45941806">
+          <caret line="20" column="2" selection-start-line="20" selection-start-column="2" selection-end-line="20" selection-end-column="2" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/javascripts/classie/classie.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8621746">
+          <caret line="80" column="0" selection-start-line="80" selection-start-column="0" selection-end-line="80" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!doc" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/javascripts/String/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.39050537">
+          <caret line="17" column="2" selection-start-line="17" selection-start-column="2" selection-end-line="17" selection-end-column="2" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/skeleton/app/browser/service.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.12710567">
+          <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/skeleton/directive/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6891271">
+          <caret line="30" column="0" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/project/54f816a3983840af0752d224/stylesheets/configurable-widget-Widget_1428383056030.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.53984576">
+          <caret line="14" column="29" selection-start-line="14" selection-start-column="29" selection-end-line="14" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/project/54f816a3983840af0752d224/stylesheets/sass/config.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.53984576">
+          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/project/54f816a3983840af0752d224/stylesheets/sass/page-0.scss">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="135" column="0" selection-start-line="135" selection-start-column="0" selection-end-line="135" selection-end-column="0" />
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.service.js">
+    <entry file="file://$PROJECT_DIR$/node_modules/ncp/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.6480892">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/ncp/lib/ncp.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="788" column="76" selection-start-line="788" selection-start-column="76" selection-end-line="788" selection-end-column="76" />
+          <caret line="49" column="0" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/project/54f816a3983840af0752d224/meelet.json">
+    <entry file="file://$PROJECT_DIR$/public/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.45681062">
-          <caret line="1882" column="0" selection-start-line="1882" selection-start-column="0" selection-end-line="1882" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.19077902">
+          <caret line="8" column="63" selection-start-line="8" selection-start-column="63" selection-end-line="8" selection-end-column="63" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/skeleton/meelet.skeleton.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3338633">
+          <caret line="14" column="10" selection-start-line="14" selection-start-column="10" selection-end-line="14" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/jsdom/lib/jsdom.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5808656">
+          <caret line="17" column="1" selection-start-line="17" selection-start-column="1" selection-end-line="17" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/javascripts/require/require.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.81093395">
+          <caret line="38" column="31" selection-start-line="38" selection-start-column="31" selection-end-line="38" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/skeleton/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.52220523">
+          <caret line="28" column="39" selection-start-line="28" selection-start-column="39" selection-end-line="28" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/skeleton/app/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="17" column="9" selection-start-line="17" selection-start-column="9" selection-end-line="17" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/jsdom/lib/jsdom/browser/Window.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3960396">
+          <caret line="253" column="4" selection-start-line="253" selection-start-column="4" selection-end-line="253" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/project/54f816a3983840af0752d224/app/repo/artifacts.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="2" selection-start-line="0" selection-start-column="2" selection-end-line="0" selection-end-column="2" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="31" column="65" selection-start-line="31" selection-start-column="65" selection-end-line="31" selection-end-column="65" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/commons.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.39203677">
+          <caret line="686" column="53" selection-start-line="686" selection-start-column="53" selection-end-line="686" selection-end-column="53" />
           <folding />
         </state>
       </provider>

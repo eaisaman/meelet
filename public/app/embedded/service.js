@@ -22,7 +22,29 @@ define(
             });
 
             return defer.promise;
-        };
+        }
+
+        appService.prototype.getResolveDefer = function () {
+            var self = this,
+                defer = self.$q.defer();
+
+            self.$timeout(function () {
+                defer.resolve();
+            });
+
+            return defer.promise;
+        }
+
+        appService.prototype.getRejectDefer = function (err) {
+            var self = this,
+                errorDefer = self.$q.defer();
+
+            self.$timeout(function () {
+                errorDefer.reject(err);
+            });
+
+            return errorDefer.promise;
+        }
 
         appService.prototype.loadRepoArtifact = appService.prototype.NOOP;
 
@@ -70,6 +92,8 @@ define(
 
         appService.prototype.deleteProject = appService.prototype.NOOP;
 
+        appService.prototype.convertToHtml = appService.prototype.NOOP;
+
         return function (appModule) {
             appModule.
                 config(['$httpProvider',
@@ -79,8 +103,11 @@ define(
                         delete $httpProvider.defaults.headers.common['X-Requested-With'];
                     }
                 ]).
-                config(["$provide", function ($provide) {
+                config(["$provide", "$controllerProvider", "$compileProvider", "$injector", function ($provide, $controllerProvider, $compileProvider, $injector) {
                     $provide.service('appService', appService);
+                    appService.prototype.$controllerProvider = $controllerProvider;
+                    appService.prototype.$compileProvider = $compileProvider;
+                    appService.prototype.$injector = $injector;
                 }]);
         }
     }

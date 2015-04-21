@@ -22,7 +22,7 @@ define(
             });
 
             return defer.promise;
-        };
+        }
 
         appService.prototype.getResolveDefer = function () {
             var self = this,
@@ -122,7 +122,7 @@ define(
                             var requireUrl = "{0}/{1}".format(repoUrl, src);
                             (loadedSpec.js = loadedSpec.js || []).push(requireUrl);
 
-                            if (!require.defined(requireUrl)) {
+                            if (!requirejs.defined(requireUrl)) {
                                 jsArr.push(requireUrl);
                             }
                         });
@@ -130,7 +130,7 @@ define(
                             qArr.push((function () {
                                 var jsDefer = self.$q.defer();
 
-                                jsArr.splice(0, 0, "ng.ui.extension") && require(jsArr, function () {
+                                jsArr.splice(0, 0, "ng.ui.extension") && requirejs(jsArr, function () {
                                     var args = Array.prototype.slice.apply(arguments),
                                         configs = Array.prototype.slice.call(args, 1),
                                         extension = args[0];
@@ -196,7 +196,7 @@ define(
                                 (loadedSpec.demo.js = loadedSpec.demo.js || []).push("{0}/{1}".format(repoUrl, src));
                             });
                             if (jsArr.length) {
-                                jsArr.splice(0, 0, "ng.ui.extension") && require(jsArr, function () {
+                                jsArr.splice(0, 0, "ng.ui.extension") && requirejs(jsArr, function () {
                                     var configs = Array.prototype.slice.call(arguments, 1),
                                         extension = arguments[0];
 
@@ -771,6 +771,27 @@ define(
                         } else {
                             return self.getRejectDefer();
                         }
+                    } else {
+                        return self.getRejectDefer(result.data.reason);
+                    }
+                },
+                function (err) {
+                    return self.getRejectDefer(err);
+                }
+            )
+        }
+
+        appService.prototype.convertToHtml = function (userId, projectId) {
+            var self = this;
+
+            return self.$http({
+                method: 'POST',
+                url: '/api/public/convertToHtml',
+                params: {userId: userId, projectId: projectId}
+            }).then(
+                function (result) {
+                    if (result.data.result === "OK") {
+                        return self.getResolveDefer();
                     } else {
                         return self.getRejectDefer(result.data.reason);
                     }

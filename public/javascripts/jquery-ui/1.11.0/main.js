@@ -1,4 +1,4 @@
-require.config(
+requirejs.config(
     {
         paths: {
             "jquery-ui": JQUERY_UI_LIB_PATH + "jquery-ui.min"
@@ -16,11 +16,11 @@ define(
                 JQUERY_UI_LIB_PATH + "jquery-ui.min.css",
                 JQUERY_UI_LIB_PATH + "jquery-ui.structure.min.css"
         ].forEach(function (href) {
-                var link = document.createElement("link");
+                var link = window.document.createElement("link");
                 link.type = "text/css";
                 link.rel = "stylesheet";
                 link.href = href;
-                document.getElementsByTagName("head")[0].appendChild(link);
+                window.document.getElementsByTagName("head")[0].appendChild(link);
             }
         );
 

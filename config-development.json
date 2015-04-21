@@ -148,8 +148,12 @@
         },
         "userFile": {
             "sketchFolder": "project",
-            "repoFolder": "repo"
+            "repoFolder": "repo",
+            "skeletonFolder": "public/skeleton",
+            "skeletonHtml": "public/skeleton/meelet.skeleton.html"
         },
+        "skeletonLibLoadTimeout": 30,
+        "meeletFile": "meelet.json",
         "logging": {
             "appenders": [
                 {
