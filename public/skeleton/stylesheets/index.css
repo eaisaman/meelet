@@ -1,0 +1,8 @@
+* {
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+*:not(input), *:not(textarea) {
+  -webkit-user-select: none;
+}

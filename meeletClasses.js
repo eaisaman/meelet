@@ -490,7 +490,7 @@ var State = Class({
             if (styleValue != null) {
                 out.write(_.string.sprintf("@include transform-origin(%s);", styleValue));
             }
-        }  else if (styleName === "box-shadow") {
+        } else if (styleName === "box-shadow") {
             var arr = [];
             if (styleValue != null) {
                 if (toString.call(styleValue) === '[object Array]') {
@@ -502,7 +502,7 @@ var State = Class({
             }
 
             arr.length && out.write(_.string.sprintf("@include box-shadow(%s);", arr.join(",")));
-        }  else if (styleName === "text-shadow") {
+        } else if (styleName === "text-shadow") {
             var arr = [];
             if (styleValue != null) {
                 if (toString.call(styleValue) === '[object Array]') {
@@ -519,7 +519,7 @@ var State = Class({
             } else {
                 out.write("background-image: '';");
             }
-        }  else if (styleName === "linearGradientColor") {
+        } else if (styleName === "linearGradientColor") {
             if (styleValue && styleValue.colorStopList && styleValue.colorStopList.length) {
                 if (styleValue.colorStopList.length > 1) {
                     var stops = [];
@@ -814,9 +814,24 @@ var State = Class({
     appendTo: function ($, $document, $container, $template, $ngTemplate) {
         RepoSketchWidgetClass.prototype.__proto__.appendTo.apply(this, [$, $document, $container, $template, $ngTemplate]);
 
-        var self = this;
+        var self = this,
+            artifactList = $document.data("artifactList");
 
-        self.$ngTemplate = $("<script type='text/ng-template' />").attr("widgetId", self.id).appendTo($document);
+        //Array 'artifactList' used to retrieve artifact modules when generating html files.
+        if (!artifactList) {
+            artifactList = [];
+            $document.data("artifactList", artifactList);
+        }
+        artifactList.every(function (artifact) {
+            return artifact.artifactId !== self.widgetSpec.artifactId;
+        }) && artifactList.push({
+            type: self.widgetSpec.type,
+            libraryName: self.widgetSpec.libraryName,
+            artifactId: self.widgetSpec.artifactId,
+            version: self.widgetSpec.version
+        });
+
+        self.$ngTemplate = $("<script type='text/ng-template' />").attr("id", "Template_" + self.id).appendTo($document);
 
         //template
         var artifactPath = path.join(config.userFile.repoFolder, self.widgetSpec.type, self.widgetSpec.libraryName, self.widgetSpec.artifactId, self.widgetSpec.version);
@@ -890,9 +905,20 @@ var State = Class({
         PageSketchWidgetClass.prototype.__proto__.appendTo.apply(this, [$, $document, $container]);
 
         var self = this;
+
+        //Add stylesheet link
+        var $link = $("<link />").prependTo($document);
+        $link.attr("type", "text/css").attr("rel", "stylesheet").attr("href", _.string.sprintf("stylesheets/page-%s.css", self.id));
+
+        //Array 'artifactList' used to retrieve artifact modules when generating html files.
+        self.artifactList = [];
+        $document.data("artifactList", self.artifactList);
+
         self.childWidgets && self.childWidgets.forEach(function (child) {
             child.appendTo($, $document, self.$element);
         });
+
+        $document.removeData("artifactList");
     }
 });
 

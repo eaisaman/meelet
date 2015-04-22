@@ -106,13 +106,16 @@ requirejs(["jquery-lib", "jquery-plugins-lib", "hammer-lib", "jquery-ui-lib", "j
         window.modouleLogger && window.modouleLogger.debug(["angular-plugins-lib", "directive-lib", "app-lib"].join(",") + " Load Complete.");
 
         if (isBrowser) {
-            var configs = Array.prototype.slice.call(arguments);
+            var configs = Array.prototype.slice.call(arguments, 0, arguments.length - 1),
+                appConfig = arguments[arguments.length - 1];
 
             configs.forEach(function (config) {
                 config(window.appModule);
             });
 
-            angular.bootstrap(document, [APP_MODULE_NAME]);
+            appConfig(window.appModule, function () {
+                angular.bootstrap(document, [APP_MODULE_NAME]);
+            });
         }
 
         //On load function will be bound to window object if post processing needed.

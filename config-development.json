@@ -154,6 +154,7 @@
         },
         "skeletonLibLoadTimeout": 30,
         "meeletFile": "meelet.json",
+        "meeletMetaFile": "meta.json",
         "logging": {
             "appenders": [
                 {

@@ -810,16 +810,28 @@ Commons.prototype.convertToHtml = function (projectPath, callback) {
                                 pages.push(classes.fromObject(pageObj));
                             });
 
-                            next(null, pages);
+                            next(null, pages, {artifacts: [], locations: []});
                         } catch (err2) {
                             next(err2);
                         }
                     });
                 },
-                function (pages, next) {
-                    //Regenerate scrap html for each page json object
+                function (pages, meta, next) {
+                    //Generate html files
                     var fnArr = [];
-                    pages.forEach(function (page, index) {
+
+                    //Copy skeleton html file to project path if not exists;
+                    fnArr.push(function (cb) {
+                        ncp(skeletonHtml, path.join(projectPath, "index.html"), {
+                            clobber: false,
+                            stopOnErr: true
+                        }, function (err) {
+                            cb(err);
+                        });
+                    });
+
+                    //Regenerate scrap html for each page json object
+                    pages.forEach(function (page) {
                         fnArr.push(function (cb) {
                             jsdom.env(
                                 {
@@ -830,7 +842,7 @@ Commons.prototype.convertToHtml = function (projectPath, callback) {
                                             var arr = [];
                                             if (page.lastModified) {
                                                 arr.push(function (wCallback) {
-                                                    var pageHtml = path.join(projectPath, _.string.sprintf("page-%d.html", index));
+                                                    var pageHtml = path.join(projectPath, _.string.sprintf("page-%s.html", page.id));
                                                     fs.stat(pageHtml, function (err, stat) {
                                                         if (err) {
                                                             wCallback(null, pageHtml);
@@ -841,7 +853,7 @@ Commons.prototype.convertToHtml = function (projectPath, callback) {
                                                 });
                                             } else {
                                                 arr.push(function (wCallback) {
-                                                    var pageHtml = path.join(projectPath, _.string.sprintf("page-%d.html", index));
+                                                    var pageHtml = path.join(projectPath, _.string.sprintf("page-%s.html", page.id));
 
                                                     wCallback(null, pageHtml);
                                                 });
@@ -849,7 +861,10 @@ Commons.prototype.convertToHtml = function (projectPath, callback) {
 
                                             arr.push(function (pageHtml, wCallback) {
                                                 if (pageHtml) {
-                                                    page.appendTo(window.$, window.$(window.document.documentElement), window.$(".deviceHolder"));
+                                                    var $document = window.$(window.document.documentElement),
+                                                        $container = window.$(".deviceHolder");
+
+                                                    page.appendTo(window.$, $document, $container);
                                                     page.htmlGenerated = true;
 
                                                     try {
@@ -863,8 +878,9 @@ Commons.prototype.convertToHtml = function (projectPath, callback) {
                                                             wCallback(err);
                                                         });
 
-                                                        out.write(window.$(window.document.documentElement).find("script[type='text/ng-template']").prop('outerHTML'));
-                                                        out.write(window.$(".deviceHolder").html());
+                                                        out.write($document.find("link[type='text/css']").prop('outerHTML'));
+                                                        out.write($document.find("script[type='text/ng-template']").prop('outerHTML'));
+                                                        out.write($container.html());
                                                         out.end();
                                                     } catch (err2) {
                                                         wCallback(err2);
@@ -890,10 +906,88 @@ Commons.prototype.convertToHtml = function (projectPath, callback) {
 
                     if (fnArr.length) {
                         async.waterfall(fnArr, function (err) {
-                            next(err, err || _.where(pages, {htmlGenerated: true}));
+                            if (err) {
+                                next(err);
+                            } else {
+                                //Write app/route.json
+                                pages = _.where(pages, {htmlGenerated: true});
+                                meta.locations = _.pluck(pages, "id");
+                                for(var i = 0;i < meta.locations.length;i++) {
+                                    meta.locations[i] = _.string.sprintf("page-%s", meta.locations[i]);
+                                }
+                                next(null, pages, meta);
+                            }
                         });
                     } else {
-                        next(null, pages);
+                        next(null, pages, meta);
+                    }
+                },
+                function (pages, meta, next) {
+                    //Copy artifact modules
+
+                    var artifactList = [];
+                    pages && pages.forEach(function (page) {
+                        artifactList.push(page.artifactList);
+                    });
+                    artifactList = Array.prototype.concat.apply(Array.prototype, artifactList);
+                    artifactList = _.uniq(artifactList, false, function (artifact) {
+                        return artifact.artifactId;
+                    });
+                    meta.artifacts = artifactList;
+
+                    if (artifactList.length) {
+                        var fnArr = [],
+                            repoBase = path.join(projectPath, "app", "repo");
+
+                        //Copy module link to project repo path
+                        artifactList.forEach(function (artifact) {
+                            fnArr.push(function (cb) {
+                                var src = path.join(self.config.userFile.repoFolder, artifact.type, artifact.libraryName, artifact.artifactId, artifact.version),
+                                    target = path.join(repoBase, artifact.type, artifact.libraryName, artifact.artifactId, artifact.version);
+
+                                var err = self.mkdirsSync(path.dirname(target));
+
+                                if (err) {
+                                    cb(err);
+                                } else {
+                                    fs.symlink(src, target, function (fsError) {
+                                        if (!fsError || fsError.code === "EEXIST") {
+                                            cb(null);
+                                        } else {
+                                            cb(fsError);
+                                        }
+                                    });
+
+                                }
+                            });
+                        });
+
+                        async.waterfall(fnArr, function (err) {
+                            next(err, pages, meta);
+                        });
+                    } else {
+                        next(null, pages, meta);
+                    }
+                },
+                function (pages, meta, next) {
+                    //Write meta.json
+                    var metaFile = path.join(projectPath, "app", self.config.settings.meeletMetaFile);
+
+                    try {
+                        var out = fs.createWriteStream(metaFile);
+
+                        out.on('finish', function () {
+                            next(null, pages);
+                        });
+
+                        out.on('error', function (err) {
+                            next(err);
+                        });
+
+                        out.write(JSON.stringify(meta));
+                        out.end();
+                    } catch (err2) {
+                        next(err2);
                     }
                 },
                 function (pages, next) {
@@ -901,24 +995,25 @@ Commons.prototype.convertToHtml = function (projectPath, callback) {
 
                     var fnArr = [];
 
-                    //Copy config.rb
+                    //Copy folder stylesheets to project path if not exist
                     fnArr.push(function (cb) {
-                        var rbPath = path.join(skeletonPath, "stylesheets", "sass", "config.rb"),
-                            target = path.join(projectPath, "stylesheets", "sass", "config.rb");
+                        var cssPath = path.join(skeletonPath, "stylesheets"),
+                            target = path.join(projectPath, "stylesheets");
 
-                        ncp(rbPath, target, {
-                            clobber: true,
+                        ncp(cssPath, target, {
+                            clobber: false,
                             stopOnErr: true,
                             dereference: true
                         }, function (err) {
                             cb(err);
                         });
                     });
-                    pages.forEach(function (page, index) {
+
+                    pages.forEach(function (page) {
                         fnArr.push(function (cb) {
                             try {
                                 var basePath = path.join(projectPath, "stylesheets", "sass"),
-                                    pageScssPath = path.join(basePath, _.string.sprintf("page-%d.scss", index)),
+                                    pageScssPath = path.join(basePath, _.string.sprintf("page-%s.scss", page.id)),
                                     out = fs.createWriteStream(pageScssPath);
 
                                 out.on('finish', function () {
