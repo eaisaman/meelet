@@ -176,6 +176,11 @@ var State = Class({
         this.actionType = actionType;
         this.id = id || "TransitionAction_" + new Date().getTime();
     },
+    toJSON: function () {
+        return _.extend(_.pick(this, ["id", "actionType"]), {
+            widgetObj: this.widgetObj.id
+        });
+    },
     fromObject: function (obj) {
         var self = this;
 
@@ -198,6 +203,16 @@ var State = Class({
         for (var member in MEMBERS) {
             this[member] = _.clone(MEMBERS[member]);
         }
+    },
+    toJSON: function () {
+        var jsonObj = SequenceTransitionAction.prototype.__proto__.toJSON.apply(this);
+        var childActions = [];
+        this.childActions.forEach(function (childAction) {
+            childActions.push(childAction.toJSON());
+        });
+        _.extend(jsonObj, {childActions: childActions});
+
+        return jsonObj;
     },
     fromObject: function (obj) {
         var ret = new SequenceTransitionAction(null, obj.id);
@@ -238,6 +253,12 @@ var State = Class({
         this.artifactSpec = artifactSpec || this.artifactSpec;
         this.effect = effect || this.effect;
     },
+    toJSON: function () {
+        var jsonObj = EffectTransitionAction.prototype.__proto__.toJSON.apply(this);
+        _.extend(jsonObj, _.pick(this, ["artifactSpec", "effect"]));
+
+        return jsonObj;
+    },
     fromObject: function (obj) {
         var ret = new EffectTransitionAction(null, obj.artifactSpec, obj.effect, obj.id);
 
@@ -258,6 +279,12 @@ var State = Class({
             this[member] = _.clone(MEMBERS[member]);
         }
         this.newState = newState || this.newState;
+    },
+    toJSON: function () {
+        var jsonObj = StateTransitionAction.prototype.__proto__.toJSON.apply(this);
+        _.extend(jsonObj, _.pick(this, ["newState"]));
+
+        return jsonObj;
     },
     fromObject: function (obj) {
         var ret = new StateTransitionAction(null, obj.newState, obj.id);
@@ -283,6 +310,20 @@ var State = Class({
         } else if (widgetObj && widgetObj.widgetSpec) {
             this.setWidget(widgetObj);
         }
+    },
+    toJSON: function () {
+        var jsonObj = ConfigurationTransitionAction.prototype.__proto__.toJSON.apply(this);
+
+        var arr = [];
+        this.configuration.forEach(function (configurationItem) {
+            if (configurationItem.pickedValue) {
+                arr.push(_.pick(configurationItem, ["key", "pickedValue", "type"]));
+            }
+        });
+
+        _.extend(jsonObj, {configuration: arr});
+
+        return jsonObj;
     },
     fromObject: function (obj) {
         var ret = new ConfigurationTransitionAction(null, obj.configuration, obj.id);
@@ -696,6 +737,7 @@ var State = Class({
 
         self.$element = $("<div />").attr("id", self.id);
         self.$element.attr(_.omit(self.attr, ["ui-sketch-widget", "is-playing", "scale", "ng-class", "sketch-object"]));
+        self.$element.attr("state", self.state.name);
         self.styleManager.insertClass();
 
         if (self.anchor) {
@@ -717,6 +759,25 @@ var State = Class({
         } else {
             self.$element.appendTo($container);
         }
+
+        //Object 'eventMap' used to map widget's id to its event handling settings.
+        self.eventMap = {widgetId: self.id, transition: {}, offspring: {}}
+
+        var triggerMap = self.eventMap.transition;
+        self.states.forEach(function (state) {
+            state.transitions && state.transitions.forEach(function (transition) {
+                if (transition.trigger && transition.actionObj) {
+                    var transitionConfig = {};
+                    transitionConfig.state = transition.state.name;
+                    transitionConfig.actionObj = transition.actionObj.toJSON();
+
+                    triggerMap[transition.trigger.triggerType] = triggerMap[transition.trigger.triggerType] || {};
+                    triggerMap[transition.trigger.triggerType][transition.trigger.eventName] = triggerMap[transition.trigger.triggerType][transition.trigger.eventName] || _.pick(transition.trigger, ["triggerType", "eventName", "options"]);
+                    (triggerMap[transition.trigger.triggerType][transition.trigger.eventName].actions = triggerMap[transition.trigger.triggerType][transition.trigger.eventName].actions || []).push(transitionConfig);
+                }
+            });
+        });
+
     },
     writeScss: function (out, stateContext) {
         return this.styleManager.writeScss(out, stateContext || "?");
@@ -747,10 +808,19 @@ var State = Class({
     appendTo: function ($, $document, $container, $template, $ngTemplate) {
         ElementSketchWidgetClass.prototype.__proto__.appendTo.apply(this, [$, $document, $container, $template, $ngTemplate]);
 
-        var self = this;
+        var self = this,
+            offspring = self.eventMap.offspring;
 
         self.childWidgets && self.childWidgets.forEach(function (child) {
             child.appendTo($, $document, self.$element);
+
+            if (child.eventMap) {
+                if (!_.isEmpty(child.eventMap.transition))
+                    offspring[child.id] = child.eventMap;
+                else {
+                    _.extend(offspring, child.eventMap.offspring);
+                }
+            }
         });
     }
 }), IncludeSketchWidgetClass = Class(BaseSketchWidgetClass, {
@@ -815,7 +885,12 @@ var State = Class({
         RepoSketchWidgetClass.prototype.__proto__.appendTo.apply(this, [$, $document, $container, $template, $ngTemplate]);
 
         var self = this,
-            artifactList = $document.data("artifactList");
+            offspring = self.eventMap.offspring,
+            artifactList = $document.data("artifactList"),
+            initMap = $document.data("initMap"),
+            configurationMap = initMap[self.id] || {};
+
+        initMap[self.id] = configurationMap;
 
         //Array 'artifactList' used to retrieve artifact modules when generating html files.
         if (!artifactList) {
@@ -847,6 +922,14 @@ var State = Class({
         $widgetContainer.attr("id", containerWidget.id);
         containerWidget.childWidgets && containerWidget.childWidgets.forEach(function (child) {
             child.appendTo($, $document, $widgetContainer, self.$template, self.$ngTemplate);
+
+            if (child.eventMap) {
+                if (!_.isEmpty(child.eventMap.transition))
+                    offspring[child.id] = child.eventMap;
+                else {
+                    _.extend(offspring, child.eventMap.offspring);
+                }
+            }
         });
 
         //widget configuration
@@ -858,15 +941,24 @@ var State = Class({
                 if (toString.call(value) === '[object Array]') {
                     var arr = [];
                     for (var i = 0; i < value.length; i++) {
-                        var item = value[i];
+                        var item = value[i],
+                            str;
 
-                        if (typeof item === "object") item = item.name;
-                        if (typeof item === "string") item = "'" + item + "'";
-                        arr.push(item);
+                        if (typeof item === "object") str = item.name;
+                        if (typeof item === "string") str = item;
+                        str = "\"" + (str || "").replace(/"/g, "\\\"") + "\"";
+                        arr.push(str);
                     }
-                    value = "{{[" + arr.join(",") + "]}}";
+                    value = "[" + arr.join(",") + "]";
+                } else if (typeof value === "string") {
+                    value = "\"" + value.replace(/"/g, "\\\"") + "\"";
+                } else {
+                    value = toString.call(value);
                 }
-                $uiWidget.attr(c.snakeCase(key, "-"), value);
+                var snakeKey = c.snakeCase(key, "-"),
+                    initParam = _.string.sprintf("$root['%s']['%s']", self.id, snakeKey);
+                $uiWidget.attr(snakeKey, initParam);
+                configurationMap[snakeKey] = value;
             }
         });
 
@@ -906,6 +998,8 @@ var State = Class({
 
         var self = this;
 
+        self.$element.attr("ng-controller", self.id + "_Controller");
+
         //Add stylesheet link
         var $link = $("<link />").prependTo($document);
         $link.attr("type", "text/css").attr("rel", "stylesheet").attr("href", _.string.sprintf("stylesheets/page-%s.css", self.id));
@@ -914,11 +1008,31 @@ var State = Class({
         self.artifactList = [];
         $document.data("artifactList", self.artifactList);
 
+        //Object 'initMap' used to map widget's id to its configuration.
+        self.initMap = [];
+        $document.data("initMap", self.initMap);
+
+        var transition = self.eventMap.transition,
+            offspring = self.eventMap.offspring;
+
         self.childWidgets && self.childWidgets.forEach(function (child) {
             child.appendTo($, $document, self.$element);
+
+            if (child.eventMap) {
+                if (!_.isEmpty(child.eventMap.transition))
+                    offspring[child.id] = child.eventMap;
+                else {
+                    _.extend(offspring, child.eventMap.offspring);
+                }
+            }
         });
 
+        if (_.isEmpty(transition)) {
+            self.eventMap = self.eventMap.offspring;
+        }
+
         $document.removeData("artifactList");
+        $document.removeData("initMap");
     }
 });
 

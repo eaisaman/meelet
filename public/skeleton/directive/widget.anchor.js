@@ -21,7 +21,7 @@ define(
                             if (widgetId) {
                                 var html = $templateCache.get("Template_" + widgetId),
                                     $html = $(html),
-                                    $template = $html.children("[target-anchor='{0}']".format(anchor));
+                                    $template = $html.filter("[target-anchor='{0}']".format(anchor));
 
                                 $template.appendTo(element);
                                 $compile(element.contents())(scope);

@@ -4,8 +4,8 @@
         <div class="tabTitles" ng-click="selectWidgetTab($event)">
             <div class="tabTitle" ng-repeat="titleObj in tabTitles" ng-init="onModifyTabTitles(tabTitles)"
                  ng-attr-tab-index="{{$index}}"
-                 ng-class="{'select': pickedTabTitle && pickedTabTitle === titleObj.name || (!pickedTabTitle && $index == 0)}">
-                <label>{{titleObj.name}}</label>
+                 ng-class="{'select': pickedTabTitle && pickedTabTitle === getTitle(titleObj) || (!pickedTabTitle && $index == 0)}">
+                <label>{{getTitle(titleObj)}}</label>
             </div>
         </div>
         <div class="tabGroups">

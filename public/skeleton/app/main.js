@@ -2,6 +2,7 @@ requirejs.config(
     {
         paths: {
             "app-route": APP_LIB_PATH + "route",
+            "app-util": APP_LIB_PATH + "util",
             "app-filter": APP_LIB_PATH + "filter",
             "app-service": window.cordova && APP_LIB_PATH + "embedded/service" || APP_LIB_PATH + "browser/service",
             "app-controller": APP_LIB_PATH + "controller",
@@ -11,12 +12,12 @@ requirejs.config(
     }
 );
 
-window.modouleLogger && window.modouleLogger.debug("App modules " + ["app-route", "app-service", "app-controller"].join(" ") + " Loading.");
+window.modouleLogger && window.modouleLogger.debug("App modules " + ["app-route", "app-util", "app-filter", "app-service", "app-controller"].join(" ") + " Loading.");
 
 define(
-    ["json!" + APP_LIB_PATH + "meta.json", "app-route", "app-filter", "app-service", "app-controller"],
+    ["json!" + APP_LIB_PATH + "meta.json", "app-route", "app-util", "app-filter", "app-service", "app-controller"],
     function (meta) {
-        window.modouleLogger && window.modouleLogger.debug("App modules " + ["app-route", "app-service", "app-controller"].join(" ") + " Load Complete.");
+        window.modouleLogger && window.modouleLogger.debug("App modules " + ["app-route", "app-util", "app-filter", "app-service", "app-controller"].join(" ") + " Load Complete.");
 
         if (isBrowser) {
             var routeConfig = arguments[1],

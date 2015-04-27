@@ -1,0 +1,113 @@
+<%
+function _isEmpty(obj) {
+    if (obj == null) return true;
+    for (var key in obj) if (hasOwnProperty.call(obj, key)) return false;
+    return true;
+}
+
+function _keys(obj) {
+    if (Object.keys) return Object.keys(obj);
+    var keys = [];
+    for (var key in obj) if (hasOwnProperty.call(obj, key)) keys.push(key);
+    return keys;
+}
+
+function printJSON(obj) {
+    if (toString.call(obj) === '[object Object]') {
+        var objKeys = _keys(obj);
+%>
+{<%     for (var i = 0;i < objKeys.length;i++) {
+            var value = obj[objKeys[i]];
+%>'<%= objKeys[i] %>':<%printJSON(value);%><%= i<objKeys.length-1?",":"" %><%
+        }
+%>}<%
+    } else if (toString.call(obj) === '[object Array]') {
+%>[<%
+        for (var i = 0;i < obj.length;i++) {
+            printJSON(obj[i]);%><%= i<obj.length-1?",":"" %><%
+        }
+%>]<%
+    } else if (typeof obj === "string") {
+%>"<%= obj.replace(/"/g, "\\\"") %>"<%
+    } else {
+%><%= obj %><%
+    }
+}
+
+function handleTransition(widgetId, transition) {
+%>
+utilService.registerTrigger('<%= widgetId %>', <%printJSON(transition);%>)
+<%
+}
+
+function handleEventMap(eventMap) {
+    var eventKeys = _keys(eventMap);
+
+    if (eventKeys.length) {
+%>$q.all([<%
+    for(var i = 0;i < eventKeys.length;i++) {
+        var value = eventMap[eventKeys[i]];
+        handleTransition(value.widgetId, value.transition);
+        if (!_isEmpty(value.offspring)) {
+%>.then(
+<%
+            handleEventMap(value.offspring);
+%>)<%
+        }
+%><%= i<eventKeys.length-1?",":"" %><%
+    }
+%>])<%
+    }
+}%>
+
+define(
+    ["angular", "jquery", "jquery-ui", "app-route", "app-service"],
+    function () {
+        function RootController($scope, $rootScope, $q, appService, urlService) {
+            $rootScope.initFns = [];
+<%if (pages && pages.length) {
+        pages.forEach(function(page) {
+            if (page.initMap) {
+                for(var widgetId in page.initMap) {
+%>
+            $rootScope.initFns.push(function() {
+                $rootScope['<%= widgetId %>'] = {};
+<%for(var key in page.initMap[widgetId]) {%>
+                $rootScope['<%= widgetId %>']['<%= key %>'] = <%= page.initMap[widgetId][key] %>;
+<%}%>
+            });
+<%
+                }
+            }
+        });
+}%>
+            $rootScope.initFns.forEach(function(fn) {fn.apply($rootScope)});
+            urlService.firstPage();
+        }
+<%if (pages && pages.length) {
+    pages.forEach(function(page) {
+%>
+        function <%= page.id %>_Controller($scope, $rootScope, $q, appService, urlService, utilService) {
+<%handleEventMap(page.eventMap)%>
+        }
+<%
+    });
+%>
+<%}%>
+        return function (appModule) {
+            if (isBrowser) {
+                appModule.
+                    controller('RootController', ["$scope", "$rootScope", "$q", "appService", "urlService", RootController]);
+<%if (pages && pages.length) {
+    pages.forEach(function(page) {
+%>
+                appModule.
+                    controller('<%= page.id %>_Controller', ["$scope", "$rootScope", "$q", "appService", "urlService", "utilService", <%= page.id %>_Controller]);
+<%
+    });
+%>
+<%}%>
+            }
+        }
+    }
+);

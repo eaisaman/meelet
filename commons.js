@@ -912,7 +912,7 @@ Commons.prototype.convertToHtml = function (projectPath, callback) {
                                 //Write app/route.json
                                 pages = _.where(pages, {htmlGenerated: true});
                                 meta.locations = _.pluck(pages, "id");
-                                for(var i = 0;i < meta.locations.length;i++) {
+                                for (var i = 0; i < meta.locations.length; i++) {
                                     meta.locations[i] = _.string.sprintf("page-%s", meta.locations[i]);
                                 }
                                 next(null, pages, meta);
@@ -967,6 +967,46 @@ Commons.prototype.convertToHtml = function (projectPath, callback) {
                         });
                     } else {
                         next(null, pages, meta);
+                    }
+                },
+                function (pages, meta, next) {
+                    //Generate controller code
+
+                    try {
+                        var templatePath = path.join(skeletonPath, "app", "controller.ejs"),
+                            templateStr = fs.readFileSync(templatePath, "utf8"),
+                            options = {debug: false, client: true},
+                            ejsCompileCacheKey = templatePath,
+                            controllerPath = path.join(projectPath, "app", "controller.js");
+
+                        self.config.cache.wrap(ejsCompileCacheKey, function (cacheCb) {
+                            try {
+                                var fn = ejs.compile(templateStr, options);
+                                cacheCb(null, fn);
+                            } catch (compileErr) {
+                                cacheCb(compileErr);
+                            }
+                        }, function (err, fn) {
+                            if (err) {
+                                next(err);
+                            } else {
+                                try {
+                                    var jsContent = fn({pages: pages});
+                                    jsContent = jsContent.replace(/&quot;/g, "\"");
+                                    fs.writeFile(
+                                        controllerPath,
+                                        jsContent,
+                                        function (err) {
+                                            next(err, pages, meta);
+                                        }
+                                    );
+                                } catch (renderErr) {
+                                    next(renderErr);
+                                }
+                            }
+                        });
+                    } catch (err) {
+                        next(err);
                     }
                 },
                 function (pages, meta, next) {

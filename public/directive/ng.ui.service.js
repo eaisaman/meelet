@@ -760,7 +760,7 @@ define(
                 doAction: function () {
                     var self = this,
                         arr = [],
-                        chainId = "SequenceTransitionAction.doAction." + self.widgetObj.id;
+                        chainId = "SequenceTransitionAction.doAction." + self.id;
 
                     self.childActions.forEach(function (actionObj) {
                         arr.push(function () {

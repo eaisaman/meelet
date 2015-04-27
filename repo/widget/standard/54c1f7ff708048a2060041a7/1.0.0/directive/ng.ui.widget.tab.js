@@ -92,6 +92,10 @@ define(
                                         scope: scope
                                     }));
 
+                                    scope.getTitle = function (titleObj) {
+                                        return (titleObj && typeof titleObj === "string" && titleObj || titleObj.name) || "";
+                                    }
+
                                     scope.selectWidgetTab = function (event) {
                                         event && event.stopPropagation();
 
@@ -102,7 +106,7 @@ define(
                                             if (tabIndex >= 0) {
                                                 var $tab = element.find(".tabGroup[tab-index = " + tabIndex + "]");
 
-                                                scope.pickedTabTitle = scope.tabTitles[tabIndex].name;
+                                                scope.pickedTabTitle = scope.getTitle(scope.tabTitles[tabIndex]);
 
                                                 return $q.all([scope.toggleExclusiveSelect($el, event, true), scope.toggleExclusiveDisplay($tab, event, true)]);
                                             }
@@ -114,15 +118,15 @@ define(
                                     scope.onModifyTabTitles = function (to) {
                                         if (to != null) {
                                             if (!scope.pickedTabTitle || to.every(function (titleObj) {
-                                                    return titleObj.name !== scope.pickedTabTitle;
+                                                    return scope.getTitle(titleObj) !== scope.pickedTabTitle;
                                                 })) {
-                                                scope.pickedTabTitle = to.length && to[0].name || "";
+                                                scope.pickedTabTitle = to.length && scope.getTitle(to[0]) || "";
                                             }
 
                                             to.forEach(function (titleObj, i) {
                                                 var $tabGroup = element.find(".tabGroup[" + i + "]"),
                                                     $group = $tabGroup;
-                                                for (; $group.length && $group.attr("tab-name") !== titleObj.name; $group = $group.next()) {
+                                                for (; $group.length && $group.attr("tab-name") !== scope.getTitle(titleObj); $group = $group.next()) {
                                                 }
 
                                                 if ($group.length) {
@@ -133,7 +137,7 @@ define(
                                                 } else {
                                                     var $newGroup = $("<div />").
                                                         addClass("tabGroup fs-x-large-before").
-                                                        attr("ng-class", "{'show': pickedTabTitle === '{0}'}".format(titleObj.name));
+                                                        attr("ng-class", "{'show': pickedTabTitle === '{0}'}".format(scope.getTitle(titleObj)));
 
                                                     if ($tabGroup.length) {
                                                         $tabGroup.before($newGroup);
@@ -147,10 +151,10 @@ define(
                                                 var $groupElement = $(groupElement);
 
                                                 if (i < len) {
-                                                    var anchor = "{0}[{1}]".format(widgetAnchorId, to[i].name);
+                                                    var anchor = "{0}[{1}]".format(widgetAnchorId, scope.getTitle(to[i]));
 
-                                                    $groupElement.attr("tab-name", to[i].name)
-                                                        .attr("desc", "Tab Group " + to[i].name)
+                                                    $groupElement.attr("tab-name", scope.getTitle(to[i]))
+                                                        .attr("desc", "Tab Group " + scope.getTitle(to[i]))
                                                         .attr("tab-index", i)
                                                         .attr("widget-anchor", anchor);
 
@@ -175,7 +179,7 @@ define(
 
                                             if (!element.hasClass(angularConstants.repoWidgetClass)) {
                                                 element.find(".tabGroups").children(".tabGroup").each(function (i, groupElement) {
-                                                    ctrl.transclude(to[i].name, $(groupElement));
+                                                    ctrl.transclude(scope.getTitle(to[i]), $(groupElement));
                                                 });
                                             }
 
