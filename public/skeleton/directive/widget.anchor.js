@@ -19,11 +19,16 @@ define(
                                 widgetId = $parent.attr("id");
 
                             if (widgetId) {
-                                var html = $templateCache.get("Template_" + widgetId),
-                                    $html = $(html),
-                                    $template = $html.filter("[target-anchor='{0}']".format(anchor));
+                                var templateId = "Template_" + widgetId,
+                                    html = $templateCache.get(templateId),
+                                    $html = $(html);
 
-                                $template.appendTo(element);
+                                var $template = $html.filter("[target-anchor='{0}']".format(anchor));
+                                $template.children().each(function() {
+                                    if (!element.find("#" + this.id).length) {
+                                        element.append(this);
+                                    }
+                                });
                                 $compile(element.contents())(scope);
                             }
                         }

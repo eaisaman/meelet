@@ -46,9 +46,11 @@ define(
                                                 Array.prototype.splice.apply(scope.effectList, arr);
 
                                                 action.artifactSpec = {
-                                                    _id: artifact._id,
+                                                    type: artifact.type,
                                                     directiveName: artifact.directiveName,
-                                                    version: artifact._version
+                                                    libraryName: library.name,
+                                                    artifactId: artifact._id,
+                                                    version: artifact._version || (artifact.versionList.length && artifact.versionList[artifact.versionList.length - 1].name) || ""
                                                 }
                                                 return false;
                                             }

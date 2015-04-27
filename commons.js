@@ -878,8 +878,12 @@ Commons.prototype.convertToHtml = function (projectPath, callback) {
                                                             wCallback(err);
                                                         });
 
-                                                        out.write($document.find("link[type='text/css']").prop('outerHTML'));
-                                                        out.write($document.find("script[type='text/ng-template']").prop('outerHTML'));
+                                                        $document.find("link[type='text/css']").each(function() {
+                                                            out.write(window.$(this).prop('outerHTML'));
+                                                        });
+                                                        $document.find("script[type='text/ng-template']").each(function() {
+                                                            out.write(window.$(this).prop('outerHTML'));
+                                                        });
                                                         out.write($container.html());
                                                         out.end();
                                                     } catch (err2) {

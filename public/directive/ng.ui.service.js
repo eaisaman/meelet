@@ -829,7 +829,10 @@ define(
                         defer = $inject.$q.defer();
 
                     if (self.widgetObj.$element && self.widgetObj.$element[0].nodeType == 1 && self.widgetObj.$element.parent().length) {
-                        var fullName = self.artifactSpec.directiveName + "-" + self.artifactSpec.version.replace(/\./g, "-");
+                        var fullName = self.artifactSpec.directiveName;
+                        if (self.artifactSpec.version) {
+                            fullName = fullName + "-" + self.artifactSpec.version.replace(/\./g, "-")
+                        }
                         self.widgetObj.$element.attr(fullName, "");
                         self.widgetObj.$element.attr("effect", self.effect.name);
 

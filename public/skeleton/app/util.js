@@ -45,6 +45,47 @@ define(
                         return self.uiUtilService.chain(arr,
                             chainId);
                     } else if (action.actionType === "Effect") {
+                        var defer = self.$q.defer(),
+                            fullName = action.artifactSpec.directiveName;
+                        if (action.artifactSpec.version) {
+                            fullName = fullName + "-" + action.artifactSpec.version.replace(/\./g, "-")
+                        }
+                        $widgetElement.attr(fullName, "");
+                        $widgetElement.attr("effect", action.effect.name);
+
+                        if (action.effect.type === "Animation") {
+                            var cssAnimation = {};
+
+                            if (action.effect.options.duration) {
+                                _.extend(
+                                    cssAnimation, self.uiUtilService.prefixedStyle("animation-duration", "{0}s", action.effect.options.duration)
+                                );
+                            }
+                            if (action.effect.options.timing) {
+                                _.extend(
+                                    cssAnimation, self.uiUtilService.prefixedStyle("timing-function", "{0}", action.effect.options.timing)
+                                );
+                            }
+
+                            $widgetElement.css(self.cssAnimation);
+
+                            self.uiUtilService.onAnimationEnd($widgetElement).then(function () {
+                                $widgetElement.removeAttr(fullName);
+                                $widgetElement.removeAttr("effect");
+
+                                for (var key in cssAnimation) {
+                                    $widgetElement.css(key, "");
+                                }
+
+                                defer.resolve();
+                            });
+                        } else {
+                            self.$timeout(function () {
+                                defer.resolve();
+                            });
+                        }
+
+                        return defer.promise;
                     } else if (action.actionType === "State") {
                         $widgetElement.attr("state", action.newState);
 

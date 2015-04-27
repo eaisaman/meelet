@@ -47,7 +47,8 @@ define(
                             directiveUrls = [];
 
                         artifactConfigs.forEach(function (artifactConfig, index) {
-                            var repoUrl = artifactUrls[index].replace(/(.+)\/main$/g, "$1");
+                            var repoUrl = artifactUrls[index].replace(/(.+)\/main$/g, "$1"),
+                                artifactId = artifacts[index];
 
                             artifactConfig.stylesheets && artifactConfig.stylesheets.forEach(function (href) {
                                 var link = document.createElement("link");
@@ -55,7 +56,7 @@ define(
                                 link.type = "text/css";
                                 link.rel = "stylesheet";
                                 link.href = "{0}/{1}".format(repoUrl, href);
-                                link.setAttribute("artifact", artifact.artifactId)
+                                link.setAttribute("artifact", artifactId)
 
                                 document.getElementsByTagName("head")[0].appendChild(link);
                             });

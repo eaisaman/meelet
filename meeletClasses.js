@@ -84,10 +84,10 @@ var State = Class({
         this.name = name;
         this.id = id || "State_" + new Date().getTime();
     },
-    fromObject: function (obj) {
+    fromObject: function (obj, context) {
         var ret = new State(obj.node, obj.name, obj.context, obj.id);
         obj.transitions && obj.transitions.forEach(function (t) {
-            var transition = Transition.prototype.fromObject(t);
+            var transition = Transition.prototype.fromObject(t, context);
             transition.state = ret;
             ret.transitions.push(transition);
         });
@@ -125,7 +125,7 @@ var State = Class({
 
         return cloneObj;
     },
-    fromObject: function (obj) {
+    fromObject: function (obj, context) {
         var ret = new Transition(obj.name, null, obj.id);
 
         if (obj.trigger) {
@@ -140,7 +140,7 @@ var State = Class({
 
             classes.every(function (clazz) {
                 if (eval(_.string.sprintf("className === %s.prototype.CLASS_NAME", clazz))) {
-                    actionObj = eval(_.string.sprintf("%s.prototype.fromObject(obj.actionObj)", clazz));
+                    actionObj = eval(_.string.sprintf("%s.prototype.fromObject(obj.actionObj, context)", clazz));
                     return false;
                 }
 
@@ -181,7 +181,7 @@ var State = Class({
             widgetObj: this.widgetObj.id
         });
     },
-    fromObject: function (obj) {
+    fromObject: function (obj, context) {
         var self = this;
 
         BaseSketchWidgetClass.prototype.matchReference(obj.widgetObj, function (result) {
@@ -214,10 +214,10 @@ var State = Class({
 
         return jsonObj;
     },
-    fromObject: function (obj) {
+    fromObject: function (obj, context) {
         var ret = new SequenceTransitionAction(null, obj.id);
 
-        SequenceTransitionAction.prototype.__proto__.fromObject.apply(ret, [obj]);
+        SequenceTransitionAction.prototype.__proto__.fromObject.apply(ret, [obj, context]);
 
         var classes = ["EffectTransitionAction", "StateTransitionAction", "ConfigurationTransitionAction"];
         obj.childActions && obj.childActions.forEach(function (action) {
@@ -226,7 +226,7 @@ var State = Class({
 
             classes.every(function (clazz) {
                 if (eval(_.string.sprintf("className === %s.prototype.CLASS_NAME", clazz))) {
-                    actionObj = eval(_.string.sprintf("%s.prototype.fromObject(action)", clazz));
+                    actionObj = eval(_.string.sprintf("%s.prototype.fromObject(action, context)", clazz));
                     ret.childActions.push(actionObj);
                     return false;
                 }
@@ -259,10 +259,21 @@ var State = Class({
 
         return jsonObj;
     },
-    fromObject: function (obj) {
+    fromObject: function (obj, context) {
         var ret = new EffectTransitionAction(null, obj.artifactSpec, obj.effect, obj.id);
 
-        EffectTransitionAction.prototype.__proto__.fromObject.apply(ret, [obj]);
+        EffectTransitionAction.prototype.__proto__.fromObject.apply(ret, [obj, context]);
+
+        //Add effect artifact to global artifactList.
+        var artifactList = context.artifactList;
+        artifactList.every(function (artifact) {
+            return artifact.artifactId !== ret.artifactSpec.artifactId;
+        }) && artifactList.push({
+            type: ret.artifactSpec.type,
+            libraryName: ret.artifactSpec.libraryName,
+            artifactId: ret.artifactSpec.artifactId,
+            version: ret.artifactSpec.version
+        });
 
         return ret;
     }
@@ -286,10 +297,10 @@ var State = Class({
 
         return jsonObj;
     },
-    fromObject: function (obj) {
+    fromObject: function (obj, context) {
         var ret = new StateTransitionAction(null, obj.newState, obj.id);
 
-        StateTransitionAction.prototype.__proto__.fromObject.apply(ret, [obj]);
+        StateTransitionAction.prototype.__proto__.fromObject.apply(ret, [obj, context]);
 
         return ret;
     }
@@ -325,10 +336,10 @@ var State = Class({
 
         return jsonObj;
     },
-    fromObject: function (obj) {
+    fromObject: function (obj, context) {
         var ret = new ConfigurationTransitionAction(null, obj.configuration, obj.id);
 
-        ConfigurationTransitionAction.prototype.__proto__.fromObject.apply(ret, [obj]);
+        ConfigurationTransitionAction.prototype.__proto__.fromObject.apply(ret, [obj, context]);
 
         return ret;
     },
@@ -401,7 +412,7 @@ var State = Class({
         this.eventName = eventName;
         this.options = options;
     },
-    fromObject: function (obj) {
+    fromObject: function (obj, context) {
     }
 }), GestureTrigger = Class(BaseTrigger, {
     CLASS_NAME: "GestureTrigger",
@@ -416,10 +427,10 @@ var State = Class({
 
         this.callback = callback;
     },
-    fromObject: function (obj) {
+    fromObject: function (obj, context) {
         var ret = new GestureTrigger(obj.id, obj.eventName, obj.options);
 
-        GestureTrigger.prototype.__proto__.fromObject.apply(ret, [obj]);
+        GestureTrigger.prototype.__proto__.fromObject.apply(ret, [obj, context]);
 
         return ret;
     }
@@ -441,7 +452,7 @@ var State = Class({
 
         this.widgetObj = widgetObj;
     },
-    fromObject: function (obj) {
+    fromObject: function (obj, context) {
         var ret = new StyleManager();
         ret.stateMaps = obj.stateMaps;
         ret.omniClasses = obj.omniClasses;
@@ -679,13 +690,13 @@ var State = Class({
         var proto = BaseSketchWidgetClass.prototype;
         delete proto.objectMap;
     },
-    fromObject: function (obj) {
+    fromObject: function (obj, context) {
         var self = this;
 
         self.anchor = obj.anchor;
         self.name = obj.name;
         self.attr = _.omit(obj.attr, ["$$hashKey"]);
-        self.styleManager = StyleManager.prototype.fromObject(obj.styleManager);
+        self.styleManager = StyleManager.prototype.fromObject(obj.styleManager, context);
         self.styleManager.widgetObj = self;
         obj.stateOptions.forEach(function (stateOption) {
             self.stateOptions.push(_.omit(stateOption, ["$$hashKey"]));
@@ -694,7 +705,7 @@ var State = Class({
         self.states.splice(0, self.states.length);
         var stateMap = {};
         obj.states.forEach(function (s) {
-            var state = State.prototype.fromObject(s);
+            var state = State.prototype.fromObject(s, context);
             if (state) {
                 state.widgetObj = self;
                 self.states.push(state);
@@ -715,7 +726,7 @@ var State = Class({
 
             classes.every(function (clazz) {
                 if (eval(_.string.sprintf("className === %s.prototype.CLASS_NAME", clazz))) {
-                    childWidget = eval(_.string.sprintf("%s.prototype.fromObject(c)", clazz));
+                    childWidget = eval(_.string.sprintf("%s.prototype.fromObject(c, context)", clazz));
                     childWidget.stateContext = stateMap[c.stateContext];
                     return false;
                 }
@@ -742,13 +753,7 @@ var State = Class({
 
         if (self.anchor) {
             var $anchor = $template.find(_.string.sprintf("[%s='%s']", angularConstants.anchorAttr, self.anchor));
-            if ($anchor.length) {
-                var $uiWidget = $container.find("." + angularConstants.repoWidgetClass);
-                $anchor = $uiWidget.find(_.string.sprintf("[%s='%s']", angularConstants.targetAnchorAttr, self.anchor));
-                if (!$anchor.length) {
-                    ($anchor = $("<div />").attr(angularConstants.targetAnchorAttr, self.anchor)).appendTo($uiWidget);
-                }
-            } else {
+            if (!$anchor.length) {
                 $anchor = $ngTemplate.find(_.string.sprintf("[%s='%s']", angularConstants.targetAnchorAttr, self.anchor));
                 if (!$anchor.length) {
                     ($anchor = $("<div />").attr(angularConstants.targetAnchorAttr, self.anchor)).appendTo($ngTemplate);
@@ -797,10 +802,10 @@ var State = Class({
             this[member] = _.clone(MEMBERS[member]);
         }
     },
-    fromObject: function (obj) {
+    fromObject: function (obj, context) {
         var ret = new ElementSketchWidgetClass(obj.id);
 
-        ElementSketchWidgetClass.prototype.__proto__.fromObject.apply(ret, [obj]);
+        ElementSketchWidgetClass.prototype.__proto__.fromObject.apply(ret, [obj, context]);
         ret.html = obj.html;
 
         return ret;
@@ -838,12 +843,12 @@ var State = Class({
 
         this.template = template;
     },
-    fromObject: function (obj) {
+    fromObject: function (obj, context) {
         var self = this;
 
         self.template = obj.template;
 
-        IncludeSketchWidgetClass.prototype.__proto__.fromObject.apply(self, [obj]);
+        IncludeSketchWidgetClass.prototype.__proto__.fromObject.apply(self, [obj, context]);
 
         return self;
     }
@@ -864,10 +869,11 @@ var State = Class({
         this.resizable = false;
         this.widgetSpec = widgetSpec;
     },
-    fromObject: function (obj) {
+    fromObject: function (obj, context) {
         var ret = new RepoSketchWidgetClass(obj.id, obj.widgetSpec);
 
-        RepoSketchWidgetClass.prototype.__proto__.fromObject.apply(ret, [obj]);
+        RepoSketchWidgetClass.prototype.__proto__.fromObject.apply(ret, [obj, context]);
+        ret.context = context;
 
         return ret;
     },
@@ -886,17 +892,13 @@ var State = Class({
 
         var self = this,
             offspring = self.eventMap.offspring,
-            artifactList = $document.data("artifactList"),
-            initMap = $document.data("initMap"),
+            artifactList = self.context.artifactList,
+            initMap = self.context.initMap,
             configurationMap = initMap[self.id] || {};
 
         initMap[self.id] = configurationMap;
 
         //Array 'artifactList' used to retrieve artifact modules when generating html files.
-        if (!artifactList) {
-            artifactList = [];
-            $document.data("artifactList", artifactList);
-        }
         artifactList.every(function (artifact) {
             return artifact.artifactId !== self.widgetSpec.artifactId;
         }) && artifactList.push({
@@ -980,14 +982,15 @@ var State = Class({
         this.lastModified = new Date();
         this.resizable = false;
     },
-    fromObject: function (obj) {
+    fromObject: function (obj, context) {
         //Match marshalled widget id with created widget object.
         //Some objects may marshall widget id instead of the object. In order to restore object reference, match process will be handled.
         PageSketchWidgetClass.prototype.__proto__.startMatchReference.apply(null);
 
         var ret = new PageSketchWidgetClass(obj.id);
         ret.lastModified = obj.lastModified;
-        PageSketchWidgetClass.prototype.__proto__.fromObject.apply(ret, [obj]);
+        PageSketchWidgetClass.prototype.__proto__.fromObject.apply(ret, [obj, context]);
+        ret.context = context;
 
         PageSketchWidgetClass.prototype.__proto__.endMatchReference.apply(null);
 
@@ -1005,12 +1008,10 @@ var State = Class({
         $link.attr("type", "text/css").attr("rel", "stylesheet").attr("href", _.string.sprintf("stylesheets/page-%s.css", self.id));
 
         //Array 'artifactList' used to retrieve artifact modules when generating html files.
-        self.artifactList = [];
-        $document.data("artifactList", self.artifactList);
+        self.artifactList = self.context.artifactList;
 
         //Object 'initMap' used to map widget's id to its configuration.
-        self.initMap = [];
-        $document.data("initMap", self.initMap);
+        self.initMap = self.context.initMap;
 
         var transition = self.eventMap.transition,
             offspring = self.eventMap.offspring;
@@ -1030,9 +1031,6 @@ var State = Class({
         if (_.isEmpty(transition)) {
             self.eventMap = self.eventMap.offspring;
         }
-
-        $document.removeData("artifactList");
-        $document.removeData("initMap");
     }
 });
 
@@ -1042,8 +1040,9 @@ Classes.prototype.fromObject = function (obj) {
         ret;
 
     classes.every(function (clazz) {
+        var context = {artifactList: [], initMap: {}};
         if (eval(_.string.sprintf("className === %s.prototype.CLASS_NAME", clazz))) {
-            ret = eval(_.string.sprintf("%s.prototype.fromObject(obj)", clazz));
+            ret = eval(_.string.sprintf("%s.prototype.fromObject(obj, context)", clazz));
             return false;
         }
 
