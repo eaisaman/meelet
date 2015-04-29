@@ -472,7 +472,10 @@ var State = Class({
 
         out.write(_.string.sprintf("#%s {", self.widgetObj.id));
         _.each(stateMap, function (stateValue, key) {
-            out.write(_.string.sprintf("&[state='%s'] {", key));
+            if (key === "*")
+                out.write("& {");
+            else
+                out.write(_.string.sprintf("&[state='%s'] {", key));
 
             _.isEmpty(stateValue.style) || _.each(stateValue.style, function (styleValue, styleName) {
                 self.compossScssStyle(styleValue, styleName, out);

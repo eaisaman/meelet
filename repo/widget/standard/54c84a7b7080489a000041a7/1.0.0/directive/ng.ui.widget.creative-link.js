@@ -48,7 +48,7 @@ define(
                              * 'translateLine', 'slightTranslateLine', 'reveal', 'switchLine',
                              * 'scaleDown', 'fallDown', 'fadeOut', 'flipUp', 'slightTranslate'
                              */
-                            effect: "@"
+                            effect: "=?"
                         },
                         replace: true,
                         transclude: true,
@@ -65,7 +65,7 @@ define(
                                         event && event.stopPropagation && event.stopPropagation();
 
                                         if (scope.isPlaying == null || scope.isPlaying) {
-                                            if (scope.configuration.stateGroup || scope.stateGroup && scope.widgetId) {
+                                            if ((scope.configuration.stateGroup || scope.stateGroup) && scope.widgetId) {
                                                 uiUtilService.broadcast(scope, angularConstants.stateGroupEventPattern.format(scope.configuration.stateGroup || scope.stateGroup), {
                                                     widgetId: scope.widgetId
                                                 });
@@ -99,6 +99,7 @@ define(
 
                                     scope.state = scope.state || "*";
                                     scope.activeState = scope.activeState || "select";
+                                    scope.effect = scope.effect || "brackets";
                                     scope.configuration = {};
                                 },
                                 post: function (scope, element, attrs, ctrl) {
@@ -112,6 +113,8 @@ define(
                                                     //id of widget of RepoSketchWidgetClass type
                                                     scope.widgetId = element.closest(".widgetContainer").parent().attr("id");
                                                     uiUtilService.broadcast(scope, angularConstants.widgetEventPattern.format(angularEventTypes.widgetContentIncludedEvent, scope.widgetId), {widgetId: scope.widgetId});
+
+                                                    scope.stateGroup && scope.setStateGroup(scope.stateGroup);
                                                 }
                                             },
                                             angularConstants.checkInterval,

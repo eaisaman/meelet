@@ -15,6 +15,39 @@ define(
             var self = this,
                 defer = self.$q.defer();
 
+            function handleEvent(widgetId, fn) {
+                return self.uiUtilService.once(function () {
+                    var result = fn() || {};
+
+                    return result.then && result || self.uiUtilService.getResolveDefer();
+                }, null, self.angularConstants.eventThrottleInterval, "handleEvent.{0}".format(widgetId));
+            }
+
+            function createWidgetObject(action) {
+                self.uiUtilService.whilst(function () {
+                        return !document.getElementById(action.widgetObj);
+                    },
+                    function (callback) {
+                        callback();
+                    },
+                    function (err) {
+                        if (!err) {
+                            $("#" + action.widgetObj).data("widgetObject", {
+                                handleEvent: function (fn) {
+                                    return handleEvent(action.widgetObj, fn);
+                                }
+                            });
+
+                            action.childActions && action.childActions.forEach(function (childAction) {
+                                createWidgetObject(childAction);
+                            });
+                        }
+                    },
+                    self.angularConstants.checkInterval,
+                    "utilService.registerTrigger.createWidgetObject." + action.widgetObj,
+                    self.angularConstants.renderTimeout);
+            }
+
             function scopeSetterHandler(scope, key, value) {
                 var setterName = ("set" + key.charAt(0).toUpperCase() + key.substr(1)),
                     setter = scope[setterName];
@@ -29,6 +62,20 @@ define(
             }
 
             function doAction(action) {
+                var defer = self.$q.defer();
+
+                handleEvent(action.widgetObj, function () {
+                    return actionHandler(action).then(function () {
+                        defer.resolve();
+
+                        return self.uiUtilService.getResolveDefer();
+                    });
+                })();
+
+                return defer.promise;
+            }
+
+            function actionHandler(action) {
                 var $widgetElement = $("#" + action.widgetObj);
 
                 if ($widgetElement.length) {
@@ -87,11 +134,22 @@ define(
 
                         return defer.promise;
                     } else if (action.actionType === "State") {
-                        $widgetElement.attr("state", action.newState);
+                        var animateElement;
+                        if ($widgetElement.hasClass(self.angularConstants.widgetClasses.widgetIncludeAnchorClass)) {
+                            animateElement = $widgetElement.find("[widget-container]:nth-of-type(1)").first().children()[0];
+                            var scope = angular.element(animateElement).scope();
+                            scope.state = action.newState;
 
-                        var animationName = $widgetElement.css("animation-name");
+                            $widgetElement.attr("state", action.newState);
+                        } else {
+                            animateElement = $widgetElement;
+                            $widgetElement.attr("state", action.newState);
+                        }
+
+                        var $animateElement = $(animateElement),
+                            animationName = $animateElement.css("animation-name");
                         if (animationName && animationName !== "none") {
-                            return self.uiUtilService.onAnimationEnd($widgetElement);
+                            return self.uiUtilService.onAnimationEnd($animateElement);
                         } else {
                             return self.uiUtilService.getResolveDefer();
                         }
@@ -130,22 +188,35 @@ define(
 
                         return defer.promise;
                     }
-                } else {
-                    return self.uiUtilService.getRejectDefer("Cannot do action on nonexist element with id {0}".format(action.widgetObj));
                 }
             }
 
-            function createActionCallback(id, actions) {
+            function createActionCallback(actions) {
+                //Some widget may be triggered by hammer gesture and ng mouse event at the same time, which is
+                //to be prevented. A widget object with handleEvent function can stop widget event handling if
+                //hammer handling is processed first.
+                actions.forEach(function (action) {
+                    createWidgetObject(action.actionObj);
+                });
+
                 return function (event) {
-                    var $element = $("#" + id);
+                    var $element = $("#" + id),
+                        actionObj;
+
+                    if (event && event.srcEvent) {
+                        event.srcEvent.stopPropagation && event.srcEvent.stopPropagation();
+                    }
+
                     actions.every(function (action) {
                         if ($element.attr("state") === action.state) {
-                            doAction(action);
+                            actionObj = action.actionObj;
                             return false;
                         }
 
                         return false;
                     });
+
+                    actionObj && doAction(actionObj);
                 }
             }
 
@@ -164,7 +235,6 @@ define(
                                         mc = new Hammer.Manager(element),
                                         handlerMap = {};
 
-                                    $(element).data("hammer", mc);
                                     _.each(triggerConfig, function (eventConfig, eventType) {
                                         var handlerConfig;
 
@@ -194,7 +264,7 @@ define(
                                         if (handlerConfig) {
                                             handlerConfig.handlers.push({
                                                 event: eventType,
-                                                callback: createActionCallback(id, eventConfig.actions)
+                                                callback: createActionCallback(eventConfig.actions)
                                             });
                                         }
                                     })
@@ -205,14 +275,18 @@ define(
                                             mc.add(handlerConfig.recognizer);
                                             recognizers.push(handlerConfig.recognizer);
                                             handlerConfig.handlers.forEach(function (handler) {
-                                                    mc.on(handler.event, handler.callback);
-                                                    events.push(handler.event);
+                                                    if (handler.callback) {
+                                                        mc.on(handler.event, handler.callback);
+                                                        events.push(handler.event);
+                                                    }
                                                 }
                                             );
                                         }
                                     })
 
                                     if (recognizers.length && events.length) {
+                                        $(element).data("hammer", mc);
+
                                         var scope = angular.element(element).scope();
                                         scope && scope.$on('$destroy', function () {
                                             var mc = $(element).data("hammer");

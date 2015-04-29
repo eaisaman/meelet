@@ -2,9 +2,9 @@ define(
     ["angular", "jquery"],
     function () {
         return function (appModule) {
-            var inject = ["$compile", "$templateCache", "angularConstants"];
+            var inject = ["$compile", "$templateCache", "angularConstants", "uiUtilService"];
 
-            appModule.directive("widgetAnchor", _.union(inject, [function ($compile, $templateCache, angularConstants) {
+            appModule.directive("widgetAnchor", _.union(inject, [function ($compile, $templateCache, angularConstants, uiUtilService) {
                 'use strict';
 
                 return {
@@ -15,7 +15,8 @@ define(
                     link: function (scope, element, attrs) {
                         var anchor = attrs.widgetAnchor;
                         if (anchor) {
-                            var $parent = element.closest("." + angularConstants.widgetClasses.widgetContainerClass).parent(),
+                            var $element = $(element),
+                                $parent = $element.closest("." + angularConstants.widgetClasses.widgetContainerClass).parent(),
                                 widgetId = $parent.attr("id");
 
                             if (widgetId) {

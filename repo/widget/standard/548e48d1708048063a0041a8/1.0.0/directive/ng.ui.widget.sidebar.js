@@ -57,7 +57,7 @@ define(
                                                 $widget = $container.parent(),
                                                 widgetObj = $widget.data("widgetObject");
 
-                                            widgetObj && widgetObj.setState(scope.state);
+                                            widgetObj && widgetObj.setState && widgetObj.setState(scope.state);
 
                                             scope.deregisterWatchState = createStateWatch();
                                             defer.resolve();
@@ -82,11 +82,12 @@ define(
                                         }
 
                                         if (scope.isPlaying == null || scope.isPlaying) {
-                                            var $el = $(event.target),
-                                                widgetObj = $el.data("widgetObject") || $(event.target).closest(".widgetContainer").parent().data("widgetObject");
+                                            var widgetObj = element.closest(".widgetContainer").parent().data("widgetObject");
 
                                             if (widgetObj) {
-                                                return $timeout(widgetObj.handleEvent(toggleHandler));
+                                                return $timeout(function () {
+                                                    widgetObj.handleEvent(toggleHandler)();
+                                                });
                                             } else {
                                                 return toggleHandler();
                                             }
@@ -101,11 +102,12 @@ define(
                                         }
 
                                         if (scope.isPlaying == null || scope.isPlaying) {
-                                            var $el = $(event.target),
-                                                widgetObj = $el.data("widgetObject") || $(event.target).closest(".widgetContainer").parent().data("widgetObject");
+                                            var widgetObj = element.closest(".widgetContainer").parent().data("widgetObject");
 
                                             if (widgetObj) {
-                                                return $timeout(widgetObj.handleEvent(hideHandler));
+                                                return $timeout(function() {
+                                                    widgetObj.handleEvent(hideHandler)();
+                                                });
                                             } else {
                                                 return hideHandler();
                                             }
