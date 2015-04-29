@@ -82,16 +82,16 @@ define(
                                         }
                                     }
 
-                                    scope.transition = "fadeInScaleUp";
-                                    scope.setPerspective = false;
-                                    scope.modalContentWidth = "50%";
-                                    scope.modalContentHeight = "50%";
+                                    scope.transition = scope.transition || "fadeInScaleUp";
+                                    scope.setPerspective = scope.setPerspective || false;
+                                    scope.modalContentWidth = scope.modalContentWidth || "50%";
+                                    scope.modalContentHeight = scope.modalContentHeight || "50%";
                                     scope.deregisterWatchState = createStateWatch();
                                 },
                                 post: function (scope, element, attrs) {
                                     if (element.hasClass(angularConstants.repoWidgetClass)) {
                                         uiUtilService.whilst(function () {
-                                                return !element.closest(".widgetContainer").attr("id");
+                                                return !(element.closest && element.closest(".widgetContainer").attr("id"));
                                             }, function (callback) {
                                                 callback();
                                             }, function (err) {

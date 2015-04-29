@@ -98,13 +98,13 @@ define(
                                     }
 
                                     scope.state = scope.state || "*";
-                                    scope.activeState = "select";
+                                    scope.activeState = scope.activeState || "select";
                                     scope.configuration = {};
                                 },
                                 post: function (scope, element, attrs, ctrl) {
                                     if (element.hasClass(angularConstants.repoWidgetClass)) {
                                         uiUtilService.whilst(function () {
-                                                return !element.closest(".widgetContainer").attr("id");
+                                                return !(element.closest && element.closest(".widgetContainer").attr("id"));
                                             }, function (callback) {
                                                 callback();
                                             }, function (err) {

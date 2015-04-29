@@ -112,16 +112,16 @@ define(
                                         }
                                     }
 
-                                    scope.transition = "slideInOnTop";
-                                    scope.side = "leftSide";
-                                    scope.overlay = "overlay";
-                                    scope.barContentWidth = "300px";
+                                    scope.transition = scope.transition || "slideInOnTop";
+                                    scope.side = scope.side || "leftSide";
+                                    scope.overlay = scope.overlay || "overlay";
+                                    scope.barContentWidth = scope.barContentWidth || "300px";
                                     scope.deregisterWatchState = createStateWatch();
                                 },
                                 post: function (scope, element, attrs) {
                                     if (element.hasClass(angularConstants.repoWidgetClass)) {
                                         uiUtilService.whilst(function () {
-                                                return !element.closest(".widgetContainer").attr("id");
+                                                return !(element.closest && element.closest(".widgetContainer").attr("id"));
                                             }, function (callback) {
                                                 callback();
                                             }, function (err) {

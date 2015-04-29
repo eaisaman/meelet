@@ -3727,6 +3727,8 @@ define(
                         if (setter) {
                             setter.apply(scope, [value]);
                         } else {
+                            //Scoped value may be unset initially when linking directive even after its already set, which will arouse
+                            //unexpected result, to avoid such case setting needs to be stored in scoped 'configuration'.
                             if (scope.configuration) {
                                 scope.configuration[key] = value;
                             }

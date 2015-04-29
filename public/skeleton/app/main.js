@@ -48,7 +48,7 @@ define(
 
                         artifactConfigs.forEach(function (artifactConfig, index) {
                             var repoUrl = artifactUrls[index].replace(/(.+)\/main$/g, "$1"),
-                                artifactId = artifacts[index];
+                                artifactId = artifacts[index].artifactId;
 
                             artifactConfig.stylesheets && artifactConfig.stylesheets.forEach(function (href) {
                                 var link = document.createElement("link");

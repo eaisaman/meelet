@@ -12,6 +12,37 @@
 #rootBody {
     #bg {
         #main {
+            .pageHolder {
+                z-index: 0;
+                position: absolute;
+                top: 0px !important;
+                left: 0px !important;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                color: #000;
+
+                .sketchWidget {
+                    position: absolute;
+
+                    &.widgetHover {
+                        @include box-shadow(3px 3px 5px 6px rgba(0, 0, 0, 0.4));
+                    }
+
+                    &.widgetIncludeAnchor .widgetContainer {
+                        position: absolute;
+                        width: 100% !important;
+                        height: 100% !important;
+                        background: transparent !important;
+
+                        > div {
+                            position: absolute;
+                            width: 100%;
+                            height: 100%;
+                        }
+                    }
+                }
+            }
         }
     }
 }

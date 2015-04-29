@@ -816,6 +816,7 @@ var State = Class({
         var self = this,
             offspring = self.eventMap.offspring;
 
+        self.html && $(self.html).appendTo(self.$element);
         self.childWidgets && self.childWidgets.forEach(function (child) {
             child.appendTo($, $document, self.$element);
 
@@ -896,6 +897,7 @@ var State = Class({
             initMap = self.context.initMap,
             configurationMap = initMap[self.id] || {};
 
+        self.$element.addClass(angularConstants.widgetClasses.widgetIncludeAnchorClass);
         initMap[self.id] = configurationMap;
 
         //Array 'artifactList' used to retrieve artifact modules when generating html files.
@@ -921,7 +923,13 @@ var State = Class({
         //widget container
         var containerWidget = self.childWidgets[0],
             $widgetContainer = self.$template;
+
         $widgetContainer.attr("id", containerWidget.id);
+        containerWidget.$element = $widgetContainer;
+        containerWidget.$element.attr(_.omit(containerWidget.attr, ["ui-sketch-widget", "is-playing", "scale", "ng-class", "sketch-object"]));
+        containerWidget.$element.attr("state", containerWidget.state.name);
+        containerWidget.styleManager.insertClass();
+
         containerWidget.childWidgets && containerWidget.childWidgets.forEach(function (child) {
             child.appendTo($, $document, $widgetContainer, self.$template, self.$ngTemplate);
 
@@ -963,6 +971,10 @@ var State = Class({
                 configurationMap[snakeKey] = value;
             }
         });
+
+        //Add configurable stylesheet link
+        var $link = $("<link />").prependTo($document);
+        $link.attr("type", "text/css").attr("rel", "stylesheet").attr("href", _.string.sprintf("stylesheets/configurable-widget-%s.css", self.id));
 
         if (!self.$ngTemplate.children().length) {
             self.$ngTemplate.remove();
@@ -1040,7 +1052,7 @@ Classes.prototype.fromObject = function (obj) {
         ret;
 
     classes.every(function (clazz) {
-        var context = {artifactList: [], initMap: {}};
+        var context = {artifactList: [], initMap: {}, configurableStylesheets: []};
         if (eval(_.string.sprintf("className === %s.prototype.CLASS_NAME", clazz))) {
             ret = eval(_.string.sprintf("%s.prototype.fromObject(obj, context)", clazz));
             return false;

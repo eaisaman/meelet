@@ -18765,16 +18765,13 @@
   -webkit-box-shadow: 3px 3px 5px 6px rgba(0, 0, 0, 0.4);
   box-shadow: 3px 3px 5px 6px rgba(0, 0, 0, 0.4);
 }
-#sketchContainer #sketchHolder .deviceBackground .deviceScreenBackground .deviceScreen .deviceHolder .pageHolder .resize {
-  position: absolute;
-}
-#sketchContainer #sketchHolder .deviceBackground .deviceScreenBackground .deviceScreen .deviceHolder .pageHolder .widgetIncludeAnchor .widgetContainer {
+#sketchContainer #sketchHolder .deviceBackground .deviceScreenBackground .deviceScreen .deviceHolder .pageHolder .sketchWidget.widgetIncludeAnchor .widgetContainer {
   position: absolute;
   width: 100% !important;
   height: 100% !important;
   background: transparent !important;
 }
-#sketchContainer #sketchHolder .deviceBackground .deviceScreenBackground .deviceScreen .deviceHolder .pageHolder .widgetIncludeAnchor .widgetContainer > div {
+#sketchContainer #sketchHolder .deviceBackground .deviceScreenBackground .deviceScreen .deviceHolder .pageHolder .sketchWidget.widgetIncludeAnchor .widgetContainer > div {
   position: absolute;
   width: 100%;
   height: 100%;
