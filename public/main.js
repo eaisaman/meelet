@@ -11,7 +11,7 @@ var ANGULAR_LIB_PATH = "javascripts/angular/1.3.0-beta.8/",
     CLASSIE_LIB_PATH = "javascripts/classie/",
     MODERNIZR_LIB_PATH = "javascripts/modernizr/",
     STRING_LIB_PATH = "javascripts/String/",
-    CKEDITOR_LIB_PATH = "javascripts/ckeditor/4.4.5/", //Not used for project exported html
+    CKEDITOR_LIB_PATH = "javascripts/ckeditor/4.4.7/", //Not used for project exported html
     APP_LIB_PATH = "app/",
     DIRECTIVE_LIB_PATH = "directive/",
     isBrowser = !!(typeof window !== 'undefined' && typeof navigator !== 'undefined' && !/jsDom$/i.test(navigator.appName) && window.document);
