@@ -3901,7 +3901,6 @@ define(
             PageSketchWidgetClass = Class(BaseSketchWidgetClass, {
                 CLASS_NAME: "PageSketchWidget",
                 MEMBERS: {
-                    lastModified: null
                 },
                 initialize: function (id) {
                     this.initialize.prototype.__proto__.initialize.apply(this, [id]);
@@ -3911,12 +3910,11 @@ define(
                         this[member] = angular.copy(MEMBERS[member]);
                     }
 
-                    this.lastModified = new Date();
                     this.resizable = false;
                 },
                 toJSON: function () {
                     var jsonObj = PageSketchWidgetClass.prototype.__proto__.toJSON.apply(this);
-                    _.extend(jsonObj, _.pick(this, ["CLASS_NAME", "lastModified"]));
+                    _.extend(jsonObj, _.pick(this, ["CLASS_NAME"]));
 
                     return jsonObj;
                 },
@@ -3926,7 +3924,6 @@ define(
                     PageSketchWidgetClass.prototype.__proto__.startMatchReference.apply(null);
 
                     var ret = new PageSketchWidgetClass(obj.id);
-                    ret.lastModified = obj.lastModified;
                     PageSketchWidgetClass.prototype.__proto__.fromObject.apply(ret, [obj]);
 
                     PageSketchWidgetClass.prototype.__proto__.endMatchReference.apply(null);

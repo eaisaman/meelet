@@ -799,129 +799,167 @@ Commons.prototype.convertToHtml = function (projectPath, callback) {
                 },
                 function (next) {
                     //Parse page JSON object
-                    fs.readFile(meeletPath, "utf8", function (err, str) {
-                        if (err) next(err);
 
-                        try {
-                            var obj = JSON.parse(str),
-                                pages = [];
+                    async.waterfall([
+                            function (cb) {
+                                fs.readFile(meeletPath, "utf8", function (err, str) {
+                                    if (err) cb(err);
 
-                            obj.pages.forEach(function (pageObj) {
-                                pages.push(classes.fromObject(pageObj));
-                            });
+                                    try {
+                                        var obj = JSON.parse(str),
+                                            pages = [];
 
-                            next(null, pages, {artifacts: [], locations: []});
-                        } catch (err2) {
-                            next(err2);
-                        }
-                    });
-                },
-                function (pages, meta, next) {
-                    //Generate html files
-                    var fnArr = [];
+                                        obj.pages.forEach(function (pageObj) {
+                                            pages.push(classes.fromObject(pageObj));
+                                        });
 
-                    //Copy skeleton html file to project path if not exists;
-                    fnArr.push(function (cb) {
-                        ncp(skeletonHtml, path.join(projectPath, "index.html"), {
-                            clobber: false,
-                            stopOnErr: true
-                        }, function (err) {
-                            cb(err);
-                        });
-                    });
+                                        cb(null, pages, {artifacts: [], locations: []});
+                                    } catch (err2) {
+                                        cb(err2);
+                                    }
+                                });
+                            },
+                            function (pages, meta, cb) {
+                                //Compare mtime of meelet json file and page html file, if it's new regenerate html files.
 
-                    //Regenerate scrap html for each page json object
-                    pages.forEach(function (page) {
-                        fnArr.push(function (cb) {
-                            jsdom.env(
-                                {
-                                    html: "<div class='deviceHolder'/>",
-                                    scripts: [path.join(skeletonPath, "jquery/2.1.1/jquery.min.js")],
-                                    done: function (errors, window) {
-                                        if (!errors || !errors.length) {
-                                            var arr = [];
-                                            if (page.lastModified) {
-                                                arr.push(function (wCallback) {
-                                                    var pageHtml = path.join(projectPath, _.string.sprintf("page-%s.html", page.id));
-                                                    fs.stat(pageHtml, function (err, stat) {
-                                                        if (err) {
-                                                            wCallback(null, pageHtml);
-                                                        } else {
-                                                            wCallback(null, stat.mtime.getTime() <= page.lastModified.getTime() && pageHtml);
-                                                        }
-                                                    });
-                                                });
-                                            } else {
-                                                arr.push(function (wCallback) {
-                                                    var pageHtml = path.join(projectPath, _.string.sprintf("page-%s.html", page.id));
-
-                                                    wCallback(null, pageHtml);
-                                                });
-                                            }
-
-                                            arr.push(function (pageHtml, wCallback) {
-                                                if (pageHtml) {
-                                                    var $document = window.$(window.document.documentElement),
-                                                        $container = window.$(".deviceHolder");
-
-                                                    page.appendTo(window.$, $document, $container);
-                                                    page.htmlGenerated = true;
-
-                                                    try {
-                                                        var out = fs.createWriteStream(pageHtml);
-
-                                                        out.on('finish', function () {
-                                                            wCallback(null);
-                                                        });
-
-                                                        out.on('error', function (err) {
-                                                            wCallback(err);
-                                                        });
-
-                                                        $document.find("link[type='text/css']").each(function() {
-                                                            out.write(window.$(this).prop('outerHTML'));
-                                                        });
-                                                        $document.find("script[type='text/ng-template']").each(function() {
-                                                            out.write(window.$(this).prop('outerHTML'));
-                                                        });
-                                                        out.write($container.html());
-                                                        out.end();
-                                                    } catch (err2) {
-                                                        wCallback(err2);
-                                                    }
+                                if (pages && pages.length) {
+                                    var pObj = {
+                                        meeletTime: function (pCallback) {
+                                            fs.stat(meeletPath, function (err, stat) {
+                                                if (err) {
+                                                    pCallback(err);
                                                 } else {
-                                                    wCallback(null);
+                                                    pCallback(null, stat.mtime.getTime());
                                                 }
                                             });
-
-                                            async.waterfall(arr, function (err) {
-                                                window.close();
-                                                cb(err);
-                                            })
-                                        } else {
-                                            window.close();
-                                            cb(errors[0]);
                                         }
-                                    }
-                                }
-                            );
-                        });
-                    });
+                                    };
 
-                    if (fnArr.length) {
-                        async.waterfall(fnArr, function (err) {
+                                    pages.forEach(function (page) {
+                                        var pageHtml = path.join(projectPath, _.string.sprintf("page-%s.html", page.id));
+                                        pObj[page.id] = function (pCallback) {
+                                            fs.stat(pageHtml, function (err, stat) {
+                                                if (err) {
+                                                    if (err.code !== "ENOENT") //Not Found
+                                                        pCallback(err);
+                                                    else
+                                                        pCallback(null, 0);
+                                                } else {
+                                                    pCallback(null, stat.mtime.getTime());
+                                                }
+                                            });
+                                        }
+                                    });
+
+                                    async.parallel(pObj, function (err, results) {
+                                        if (err) cb(err);
+
+                                        var meeletTime = results.meeletTime,
+                                            mtimes = _.values(_.omit(results, "meeletTime"));
+
+                                        if (!mtimes.every(function (mtime) {
+                                                return mtime > meeletTime;
+                                            })) {
+                                            cb(null, pages, meta);
+                                        } else {
+                                            cb(null, null, meta);
+                                        }
+                                    })
+                                } else {
+                                    cb(null, pages, meta);
+                                }
+                            }
+                        ],
+                        function (err, pages, meta) {
                             if (err) {
                                 next(err);
                             } else {
-                                //Write app/route.json
-                                pages = _.where(pages, {htmlGenerated: true});
-                                meta.locations = _.pluck(pages, "id");
-                                for (var i = 0; i < meta.locations.length; i++) {
-                                    meta.locations[i] = _.string.sprintf("page-%s", meta.locations[i]);
-                                }
                                 next(null, pages, meta);
                             }
+                        }
+                    );
+                },
+                function (pages, meta, next) {
+                    //Generate html files
+
+                    if (pages && pages.length) {
+                        var fnArr = [];
+
+                        //Copy skeleton html file to project path if not exists;
+                        fnArr.push(function (cb) {
+                            ncp(skeletonHtml, path.join(projectPath, "index.html"), {
+                                clobber: false,
+                                stopOnErr: true
+                            }, function (err) {
+                                cb(err);
+                            });
                         });
+
+                        //Regenerate scrap html for each page json object
+                        pages.forEach(function (page) {
+                            fnArr.push(function (cb) {
+                                jsdom.env(
+                                    {
+                                        html: "<div class='deviceHolder'/>",
+                                        scripts: [path.join(skeletonPath, "jquery/2.1.1/jquery.min.js")],
+                                        done: function (errors, window) {
+                                            if (!errors || !errors.length) {
+                                                var pageHtml = path.join(projectPath, _.string.sprintf("page-%s.html", page.id)),
+                                                    $document = window.$(window.document.documentElement),
+                                                    $container = window.$(".deviceHolder");
+
+                                                page.appendTo(window.$, $document, $container);
+
+                                                try {
+                                                    var out = fs.createWriteStream(pageHtml);
+
+                                                    out.on('finish', function () {
+                                                        window.close();
+                                                        cb(null);
+                                                    });
+
+                                                    out.on('error', function (err) {
+                                                        cb(err);
+                                                    });
+
+                                                    $document.find("link[type='text/css']").each(function () {
+                                                        out.write(window.$(this).prop('outerHTML'));
+                                                    });
+                                                    $document.find("script[type='text/ng-template']").each(function () {
+                                                        out.write(window.$(this).prop('outerHTML'));
+                                                    });
+                                                    out.write($container.html());
+                                                    out.end();
+                                                } catch (err2) {
+                                                    cb(err2);
+                                                }
+                                                ;
+                                            } else {
+                                                window.close();
+                                                cb(errors[0]);
+                                            }
+                                        }
+                                    }
+                                );
+                            });
+                        });
+
+                        if (fnArr.length) {
+                            async.waterfall(fnArr, function (err) {
+                                if (err) {
+                                    next(err);
+                                } else {
+                                    //Write app/route.json
+                                    meta.locations = _.pluck(pages, "id");
+                                    for (var i = 0; i < meta.locations.length; i++) {
+                                        meta.locations[i] = _.string.sprintf("page-%s", meta.locations[i]);
+                                    }
+                                    next(null, pages, meta);
+                                }
+                            });
+                        } else {
+                            next(null, pages, meta);
+                        }
                     } else {
                         next(null, pages, meta);
                     }
@@ -929,46 +967,50 @@ Commons.prototype.convertToHtml = function (projectPath, callback) {
                 function (pages, meta, next) {
                     //Copy artifact modules
 
-                    var artifactList = [];
-                    pages && pages.forEach(function (page) {
-                        artifactList.push(page.artifactList);
-                    });
-                    artifactList = Array.prototype.concat.apply(Array.prototype, artifactList);
-                    artifactList = _.uniq(artifactList, false, function (artifact) {
-                        return artifact.artifactId;
-                    });
-                    meta.artifacts = artifactList;
+                    if (pages && pages.length) {
+                        var artifactList = [];
+                        pages.forEach(function (page) {
+                            artifactList.push(page.artifactList);
+                        });
+                        artifactList = Array.prototype.concat.apply(Array.prototype, artifactList);
+                        artifactList = _.uniq(artifactList, false, function (artifact) {
+                            return artifact.artifactId;
+                        });
+                        meta.artifacts = artifactList;
 
-                    if (artifactList.length) {
-                        var fnArr = [],
-                            repoBase = path.join(projectPath, "app", "repo");
+                        if (artifactList.length) {
+                            var fnArr = [],
+                                repoBase = path.join(projectPath, "app", "repo");
 
-                        //Copy module link to project repo path
-                        artifactList.forEach(function (artifact) {
-                            fnArr.push(function (cb) {
-                                var src = path.join(self.config.userFile.repoFolder, artifact.type, artifact.libraryName, artifact.artifactId, artifact.version),
-                                    target = path.join(repoBase, artifact.type, artifact.libraryName, artifact.artifactId, artifact.version);
+                            //Copy module link to project repo path
+                            artifactList.forEach(function (artifact) {
+                                fnArr.push(function (cb) {
+                                    var src = path.join(self.config.userFile.repoFolder, artifact.type, artifact.libraryName, artifact.artifactId, artifact.version),
+                                        target = path.join(repoBase, artifact.type, artifact.libraryName, artifact.artifactId, artifact.version);
 
-                                var err = self.mkdirsSync(path.dirname(target));
+                                    var err = self.mkdirsSync(path.dirname(target));
 
-                                if (err) {
-                                    cb(err);
-                                } else {
-                                    fs.symlink(src, target, function (fsError) {
-                                        if (!fsError || fsError.code === "EEXIST") {
-                                            cb(null);
-                                        } else {
-                                            cb(fsError);
-                                        }
-                                    });
+                                    if (err) {
+                                        cb(err);
+                                    } else {
+                                        fs.symlink(src, target, function (fsError) {
+                                            if (!fsError || fsError.code === "EEXIST") {
+                                                cb(null);
+                                            } else {
+                                                cb(fsError);
+                                            }
+                                        });
 
-                                }
+                                    }
+                                });
                             });
-                        });
 
-                        async.waterfall(fnArr, function (err) {
-                            next(err, pages, meta);
-                        });
+                            async.waterfall(fnArr, function (err) {
+                                next(err, pages, meta);
+                            });
+                        } else {
+                            next(null, pages, meta);
+                        }
                     } else {
                         next(null, pages, meta);
                     }
@@ -976,109 +1018,118 @@ Commons.prototype.convertToHtml = function (projectPath, callback) {
                 function (pages, meta, next) {
                     //Generate controller code
 
-                    try {
-                        var templatePath = path.join(skeletonPath, "app", "controller.ejs"),
-                            templateStr = fs.readFileSync(templatePath, "utf8"),
-                            options = {debug: false, client: true},
-                            ejsCompileCacheKey = templatePath,
-                            controllerPath = path.join(projectPath, "app", "controller.js");
+                    if (pages && pages.length) {
+                        try {
+                            var templatePath = path.join(skeletonPath, "app", "controller.ejs"),
+                                templateStr = fs.readFileSync(templatePath, "utf8"),
+                                options = {debug: false, client: true},
+                                ejsCompileCacheKey = templatePath,
+                                controllerPath = path.join(projectPath, "app", "controller.js");
 
-                        self.config.cache.wrap(ejsCompileCacheKey, function (cacheCb) {
-                            try {
-                                var fn = ejs.compile(templateStr, options);
-                                cacheCb(null, fn);
-                            } catch (compileErr) {
-                                cacheCb(compileErr);
-                            }
-                        }, function (err, fn) {
-                            if (err) {
-                                next(err);
-                            } else {
+                            self.config.cache.wrap(ejsCompileCacheKey, function (cacheCb) {
                                 try {
-                                    var jsContent = fn({pages: pages});
-                                    jsContent = jsContent.replace(/&quot;/g, "\"");
-                                    fs.writeFile(
-                                        controllerPath,
-                                        jsContent,
-                                        function (err) {
-                                            next(err, pages, meta);
-                                        }
-                                    );
-                                } catch (renderErr) {
-                                    next(renderErr);
+                                    var fn = ejs.compile(templateStr, options);
+                                    cacheCb(null, fn);
+                                } catch (compileErr) {
+                                    cacheCb(compileErr);
                                 }
-                            }
-                        });
-                    } catch (err) {
-                        next(err);
+                            }, function (err, fn) {
+                                if (err) {
+                                    next(err);
+                                } else {
+                                    try {
+                                        var jsContent = fn({pages: pages});
+                                        jsContent = jsContent.replace(/&quot;/g, "\"");
+                                        fs.writeFile(
+                                            controllerPath,
+                                            jsContent,
+                                            function (err) {
+                                                next(err, pages, meta);
+                                            }
+                                        );
+                                    } catch (renderErr) {
+                                        next(renderErr);
+                                    }
+                                }
+                            });
+                        } catch (err) {
+                            next(err);
+                        }
+                    } else {
+                        next(null, pages, meta);
                     }
                 },
                 function (pages, meta, next) {
                     //Write meta.json
-                    var metaFile = path.join(projectPath, "app", self.config.settings.meeletMetaFile);
 
-                    try {
-                        var out = fs.createWriteStream(metaFile);
+                    if (pages && pages.length) {
+                        var metaFile = path.join(projectPath, "app", self.config.settings.meeletMetaFile);
 
-                        out.on('finish', function () {
-                            next(null, pages);
-                        });
+                        try {
+                            var out = fs.createWriteStream(metaFile);
 
-                        out.on('error', function (err) {
-                            next(err);
-                        });
+                            out.on('finish', function () {
+                                next(null, pages);
+                            });
 
-                        out.write(JSON.stringify(meta));
-                        out.end();
-                    } catch (err2) {
-                        next(err2);
+                            out.on('error', function (err) {
+                                next(err);
+                            });
+
+                            out.write(JSON.stringify(meta));
+                            out.end();
+                        } catch (err2) {
+                            next(err2);
+                        }
+                    } else {
+                        next(null, pages, meta);
                     }
                 },
                 function (pages, next) {
                     //Regenerate scss for each page json object
 
-                    var fnArr = [];
+                    if (pages && pages.length) {
+                        var fnArr = [];
 
-                    //Copy folder stylesheets to project path if not exist
-                    fnArr.push(function (cb) {
-                        var cssPath = path.join(skeletonPath, "stylesheets"),
-                            target = path.join(projectPath, "stylesheets");
-
-                        ncp(cssPath, target, {
-                            clobber: false,
-                            stopOnErr: true,
-                            dereference: true
-                        }, function (err) {
-                            cb(err);
-                        });
-                    });
-
-                    pages.forEach(function (page) {
+                        //Copy folder stylesheets to project path if not exist
                         fnArr.push(function (cb) {
-                            try {
-                                var basePath = path.join(projectPath, "stylesheets", "sass"),
-                                    pageScssPath = path.join(basePath, _.string.sprintf("page-%s.scss", page.id)),
-                                    out = fs.createWriteStream(pageScssPath);
+                            var cssPath = path.join(skeletonPath, "stylesheets"),
+                                target = path.join(projectPath, "stylesheets");
 
-                                out.on('finish', function () {
-                                    page.scssGenerated = true;
-                                    cb(null);
-                                });
-
-                                out.on('error', function (err) {
-                                    cb(err);
-                                });
-
-                                out.write("@import \"compass/css3\";");
-                                page.writeScss(out);
-                                out.end();
-                            } catch (err2) {
-                                cb(err2);
-                            }
+                            ncp(cssPath, target, {
+                                clobber: false,
+                                stopOnErr: true,
+                                dereference: true
+                            }, function (err) {
+                                cb(err);
+                            });
                         });
-                    });
 
-                    if (fnArr.length) {
+                        pages.forEach(function (page) {
+                            fnArr.push(function (cb) {
+                                try {
+                                    var basePath = path.join(projectPath, "stylesheets", "sass"),
+                                        pageScssPath = path.join(basePath, _.string.sprintf("page-%s.scss", page.id)),
+                                        out = fs.createWriteStream(pageScssPath);
+
+                                    out.on('finish', function () {
+                                        page.scssGenerated = true;
+                                        cb(null);
+                                    });
+
+                                    out.on('error', function (err) {
+                                        cb(err);
+                                    });
+
+                                    out.write("@import \"compass/css3\";");
+                                    page.writeScss(out);
+                                    out.end();
+                                } catch (err2) {
+                                    cb(err2);
+                                }
+                            });
+                        });
+
                         async.waterfall(fnArr, function (err) {
                             next(err, err || _.where(pages, {scssGenerated: true}));
                         });
@@ -1089,7 +1140,7 @@ Commons.prototype.convertToHtml = function (projectPath, callback) {
                 function (pages, next) {
                     //compass compile
 
-                    if (pages.length) {
+                    if (pages && pages.length) {
                         var basePath = path.join(projectPath, "stylesheets", "sass"),
                             cssPath = path.join(projectPath, "stylesheets"),
                             sassPath = path.join(projectPath, "stylesheets", "sass");
