@@ -1,5 +1,5 @@
 define(
-    ["angular"],
+    ["jquery", "angular"],
     function () {
         var appService = function ($rootScope, $http, $timeout, $q, $compile, $cookies, $cookieStore) {
             this.$rootScope = $rootScope;
@@ -550,9 +550,10 @@ define(
 
         appService.prototype.saveSketch = function (projectId, sketchWorks) {
             return this.$http({
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                 method: 'POST',
                 url: '/api/public/sketch',
-                params: {projectId: projectId, sketchWorks: JSON.stringify(sketchWorks)}
+                data: $.param({projectId: projectId, sketchWorks: JSON.stringify(sketchWorks)})
             });
         }
 

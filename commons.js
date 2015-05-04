@@ -1082,7 +1082,7 @@ Commons.prototype.convertToHtml = function (projectPath, callback) {
                             next(err2);
                         }
                     } else {
-                        next(null, pages, meta);
+                        next(null, pages);
                     }
                 },
                 function (pages, next) {

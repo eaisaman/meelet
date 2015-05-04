@@ -962,14 +962,23 @@ define(
                 toJSON: function () {
                     var jsonObj = ConfigurationTransitionAction.prototype.__proto__.toJSON.apply(this);
 
-                    var configuration = $inject.uiUtilService.arrayOmit(this.configuration, ["$$hashKey", "widget"]);
+                    var configuration = $inject.uiUtilService.arrayOmit(this.configuration, ["$$hashKey", "widget"]),
+                        arr = [];
                     configuration.forEach(function (configurationItem) {
-                        if (configurationItem.type === "list" || configurationItem.type === "boundReadList") {
-                            configurationItem.options = $inject.uiUtilService.arrayOmit(configurationItem.options, "$$hashKey");
+                        if (configurationItem.pickedValue != null) {
+                            var config = {key: configurationItem.key};
+
+                            if (configurationItem.type === "boundWriteList") {
+                                config.pickedValue = $inject.uiUtilService.arrayOmit(configurationItem.pickedValue, "$$hashKey");
+                            } else {
+                                config.pickedValue = configurationItem.pickedValue;
+                            }
+
+                            arr.push(config);
                         }
                     });
 
-                    _.extend(jsonObj, _.pick(this, ["CLASS_NAME"]), {configuration: configuration});
+                    _.extend(jsonObj, _.pick(this, ["CLASS_NAME"]), {configuration: arr});
 
                     return jsonObj;
                 },
@@ -1001,10 +1010,12 @@ define(
                         if (configuration.length) {
                             var obj = {};
                             configuration.forEach(function (configurationItem) {
-                                obj[configurationItem.key] = {};
-                                obj[configurationItem.key].type = configurationItem.type;
-                                obj[configurationItem.key].defaultValue = configurationItem.defaultValue;
-                                obj[configurationItem.key].pickedValue = configurationItem.pickedValue;
+                                if (configurationItem.pickedValue != null) {
+                                    obj[configurationItem.key] = {};
+                                    obj[configurationItem.key].type = configurationItem.type;
+                                    obj[configurationItem.key].defaultValue = configurationItem.defaultValue;
+                                    obj[configurationItem.key].pickedValue = configurationItem.pickedValue;
+                                }
                             });
 
                             self.widgetObj.setScopedValue && self.widgetObj.setScopedValue(obj);
@@ -1024,45 +1035,50 @@ define(
                     return defer.promise;
                 },
                 setWidget: function (widgetObj) {
-                    var self = this,
-                        arr = [];
+                    var self = this;
+
+                    if (self.widgetObj && widgetObj.id !== self.widgetObj.id) {
+                        self.configuration.splice(0, self.configuration.length);
+                    }
 
                     ConfigurationTransitionAction.prototype.__proto__.setWidget.apply(self, [widgetObj]);
 
-                    if (widgetObj.widgetSpec) {
-                        _.each(_.omit(widgetObj.widgetSpec.configuration, "state", "handDownConfiguration"), function (value, key) {
-                            var obj = _.extend({
-                                configuredValue: (self.getConfigurationItem(key) || value).pickedValue,
-                                widget: widgetObj
-                            }, value, {key: key});
+                    self.readWidgetSpec();
+                },
+                readWidgetSpec: function () {
+                    var self = this;
+
+                    if (self.widgetObj.widgetSpec) {
+                        _.each(_.omit(self.widgetObj.widgetSpec.configuration, "state", "handDownConfiguration"), function (value, key) {
+                            var configurationItem = self.getConfigurationItem(key),
+                                pickedValue = configurationItem && configurationItem.pickedValue || null,
+                                obj = configurationItem || {key: key};
+
+                            _.extend(obj, value, {
+                                configuredValue: pickedValue || value.pickedValue || value.defaultValue
+                            });
 
                             if (obj.type !== "boundWriteList") {
                                 if (obj.type === "boundReadList") {
-                                    obj.options = widgetObj.getConfiguration(obj.listName);
+                                    obj.options = self.widgetObj.getConfiguration(obj.listName);
                                 }
-                                obj.widget = widgetObj;
-                                delete obj.pickedValue;
+                                obj.pickedValue = pickedValue;
 
-                                arr.push(obj);
+                                !configurationItem && self.configuration.push(obj);
                             }
-                        });
-
-                        this.configuration = arr;
-                    } else {
-                        this.configuration && this.configuration.forEach(function (configurationItem) {
-                            configurationItem.widget = widgetObj;
                         });
                     }
+
+                    self.configuration && self.configuration.forEach(function (configurationItem) {
+                        configurationItem.widget = self.widgetObj;
+                    });
                 },
                 getConfigurationItem: function (key) {
-                    var self = this,
-                        result = null;
+                    var result = null;
 
                     this.configuration && this.configuration.every(function (configurationItem) {
-                        if (configurationItem.widget == null || configurationItem.widget.id == self.widgetObj.id) {
-                            if (configurationItem.key === key) {
-                                result = configurationItem;
-                            }
+                        if (configurationItem.key === key) {
+                            result = configurationItem;
                             return false;
                         }
 
@@ -3900,8 +3916,7 @@ define(
             }),
             PageSketchWidgetClass = Class(BaseSketchWidgetClass, {
                 CLASS_NAME: "PageSketchWidget",
-                MEMBERS: {
-                },
+                MEMBERS: {},
                 initialize: function (id) {
                     this.initialize.prototype.__proto__.initialize.apply(this, [id]);
                     var MEMBERS = arguments.callee.prototype.MEMBERS;

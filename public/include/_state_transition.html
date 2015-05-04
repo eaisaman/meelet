@@ -96,7 +96,7 @@
         </div>
     </div>
     <div class="accordianGroup" ng-if="item.actionType == 'Configuration'"
-         ng-click="toggleConfigurationBody($event)">
+         ng-click="toggleConfigurationBody($event)" ng-init="item.readWidgetSpec()">
         <div class="accordianTitle col-as-12 icon-state-transition-before icon-state-transition-configuration-before">
             <div class="deleteButton fs-x-tiny icon-state-transition-before icon-state-transition-cross-before"
                  ng-click="deleteAction(parentAction, item, $event)"></div>
