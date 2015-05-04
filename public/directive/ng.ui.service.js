@@ -1256,7 +1256,24 @@ define(
                     this.widgetObj = widgetObj;
                 },
                 toJSON: function () {
-                    return _.extend(_.pick(this, ["stateMaps"], "CLASS_NAME"), {omniClasses: _.without(this.omniClasses, $inject.angularConstants.widgetClasses.activeClass)});
+                    var self = this,
+                        stateMaps = {};
+
+                    _.each(self.stateMaps, function (stateMap, stateContext) {
+                        var value = (stateMaps[stateContext] = {});
+
+                        _.each(stateMap, function (stateValue, state) {
+                            value[state] = _.pick(stateValue, ["style", "beforeStyle", "afterStyle"]);
+                            value[state].styleSource = [];
+                            stateValue.styleSource.forEach(function (source) {
+                                if (!_.isEmpty(source.style) || !_.isEmpty(source.beforeStyle) || !_.isEmpty(source.afterStyle)) {
+                                    value[state].styleSource.push(source);
+                                }
+                            });
+                        });
+                    });
+
+                    return _.extend(_.pick(this, "CLASS_NAME"), {omniClasses: _.without(this.omniClasses, $inject.angularConstants.widgetClasses.activeClass)}, {stateMaps: stateMaps});
                 },
                 fromObject: function (obj) {
                     var ret = new StyleManager();
