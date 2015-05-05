@@ -59,7 +59,7 @@ define(
 
         }
 
-        function FrameSketchController($scope, $rootScope, $timeout, $q, $log, angularEventTypes, angularConstants, appService, uiService, uiUtilService) {
+        function FrameSketchController($scope, $rootScope, $timeout, $q, $log, $compile, angularEventTypes, angularConstants, appService, uiService, uiUtilService) {
             $scope.zoomWidget = function (event) {
                 event && event.stopPropagation && event.stopPropagation();
 
@@ -218,9 +218,17 @@ define(
                 }
             }
 
-            $scope.alignLeft = function (event) {
-                event && event.stopPropagation && event.stopPropagation();
+            $scope.setSelectedButton = function (event) {
+                var $el = $(event.target),
+                    $sel = $(event.currentTarget).siblings(".selectedButton");
 
+                $sel.empty();
+                $sel.append($el.clone());
+
+                $compile($sel)($scope);
+            }
+
+            $scope.alignLeft = function (event) {
                 var widgetObj = $scope.sketchObject.pickedWidget;
 
                 if (widgetObj && widgetObj.isElement && widgetObj.isTemporary) {
@@ -228,19 +236,15 @@ define(
                 }
             }
 
-            $scope.alignCenter = function (event) {
-                event && event.stopPropagation && event.stopPropagation();
-
+            $scope.alignHorizontalCenter = function (event) {
                 var widgetObj = $scope.sketchObject.pickedWidget;
 
                 if (widgetObj && widgetObj.isElement && widgetObj.isTemporary) {
-                    widgetObj.alignCenter && widgetObj.alignCenter();
+                    widgetObj.alignHorizontalCenter && widgetObj.alignHorizontalCenter();
                 }
             }
 
             $scope.alignRight = function (event) {
-                event && event.stopPropagation && event.stopPropagation();
-
                 var widgetObj = $scope.sketchObject.pickedWidget;
 
                 if (widgetObj && widgetObj.isElement && widgetObj.isTemporary) {
@@ -248,9 +252,31 @@ define(
                 }
             }
 
-            $scope.fillParent = function (event) {
-                event && event.stopPropagation && event.stopPropagation();
+            $scope.alignTop = function (event) {
+                var widgetObj = $scope.sketchObject.pickedWidget;
 
+                if (widgetObj && widgetObj.isElement && widgetObj.isTemporary) {
+                    widgetObj.alignTop && widgetObj.alignTop();
+                }
+            }
+
+            $scope.alignVerticalCenter = function (event) {
+                var widgetObj = $scope.sketchObject.pickedWidget;
+
+                if (widgetObj && widgetObj.isElement && widgetObj.isTemporary) {
+                    widgetObj.alignVerticalCenter && widgetObj.alignVerticalCenter();
+                }
+            }
+
+            $scope.alignBottom = function (event) {
+                var widgetObj = $scope.sketchObject.pickedWidget;
+
+                if (widgetObj && widgetObj.isElement && widgetObj.isTemporary) {
+                    widgetObj.alignBottom && widgetObj.alignBottom();
+                }
+            }
+
+            $scope.fillParent = function (event) {
                 var widgetObj = $scope.sketchObject.pickedWidget;
 
                 if (widgetObj && !widgetObj.isTemporary) {
@@ -547,6 +573,7 @@ define(
 
             $scope.uiService = uiService;
             $scope.Math = Math;
+            $scope.classie = classie;
             $scope.sketchDevice = {
                 type: "desktop",
                 width: 1024,
@@ -881,7 +908,7 @@ define(
         return function (appModule) {
             appModule.
                 controller('RootController', ["$scope", "$rootScope", "$q", "appService", "urlService", RootController]).
-                controller('FrameSketchController', ["$scope", "$rootScope", "$timeout", "$q", "$log", "angularEventTypes", "angularConstants", "appService", "uiService", "uiUtilService", FrameSketchController]).
+                controller('FrameSketchController', ["$scope", "$rootScope", "$timeout", "$q", "$log", "$compile", "angularEventTypes", "angularConstants", "appService", "uiService", "uiUtilService", FrameSketchController]).
                 controller('ProjectController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "uiService", "urlService", ProjectController]).
                 controller('RepoController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "urlService", RepoController]).
                 controller('RepoLibController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "urlService", RepoLibController]);

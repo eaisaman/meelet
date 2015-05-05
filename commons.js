@@ -588,7 +588,7 @@ Commons.prototype.updateConfigurableArtifact = function (projectId, widgetId, ar
     if (projectId) {
         var projectPath = path.join(self.config.userFile.sketchFolder, projectId),
             cssPath = path.join(projectPath, "stylesheets"),
-            sassPath = path.join(cssPath, "sass"),
+            sassPath = path.join(cssPath, "repo"),
             configPath = path.join(sassPath, artifactId),
             widgetConfigPath = path.join(configPath, _.string.sprintf("_configuration-%s.scss", widgetId)),
             widgetScssPath = path.join(configPath, _.string.sprintf("configurable-widget-%s.scss", widgetId)),

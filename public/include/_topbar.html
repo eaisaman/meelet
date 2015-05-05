@@ -1,6 +1,6 @@
 <link rel="stylesheet" type="text/css" href="fonts/icon-topbar/style.css"/>
 
-<div id="appTopBar">
+<div id="appTopBar" ng-click="isSameButton('.topbarButtonGroup.select', $event) || toggleSelect('.topbarButtonGroup.select', $event, false)">
     <div class="topbarButton icon-topbar-before icon-topbar-back-before"
          ng-click="urlService.back()"></div>
     <div class="topbarButton icon-topbar-before icon-topbar-home-before"
@@ -9,7 +9,7 @@
     <div ui-multi-transclude="extraButtons" class="extraButtons"></div>
 
     <div class="topbarMenu icon-topbar-before icon-topbar-menu-before"
-         ng-click="toggleSelect($event.target, $event)">
+         ng-click="toggleSelect($event.target, null)">
         <div class="btn-group open">
             <ul class="dropdown-menu fs-x-small" role="menu">
                 <li class="icon-topbar-before icon-topbar-add-before" ng-click="onNewProject($event)"><a

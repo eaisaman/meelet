@@ -539,10 +539,10 @@ define(
                         document.getElementsByTagName("head")[0].appendChild(link);
                     });
                 } else {
-                    return self.uiUtilService.getRejectDefer(result.data.reason);
+                    return self.getRejectDefer(result.data.reason);
                 }
             }, function (err) {
-                return self.uiUtilService.getRejectDefer(err);
+                return self.getRejectDefer(err);
             });
         };
 

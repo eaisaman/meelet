@@ -343,46 +343,13 @@ var State = Class({
 
         return ret;
     },
-    setWidget: function (widgetObj) {
-        var self = this,
-            arr = [];
-
-        ConfigurationTransitionAction.prototype.__proto__.setWidget.apply(self, [widgetObj]);
-
-        if (widgetObj.widgetSpec) {
-            _.each(_.omit(widgetObj.widgetSpec.configuration, "state", "handDownConfiguration"), function (value, key) {
-                var obj = _.extend({
-                    configuredValue: (self.getConfigurationItem(key) || value).pickedValue,
-                    widget: widgetObj
-                }, value, {key: key});
-
-                if (obj.type !== "boundWriteList") {
-                    if (obj.type === "boundReadList") {
-                        obj.options = widgetObj.getConfiguration(obj.listName);
-                    }
-                    obj.widget = widgetObj;
-                    delete obj.pickedValue;
-
-                    arr.push(obj);
-                }
-            });
-
-            this.configuration = arr;
-        } else {
-            this.configuration && this.configuration.forEach(function (configurationItem) {
-                configurationItem.widget = widgetObj;
-            });
-        }
-    },
     getConfigurationItem: function (key) {
         var self = this,
             result = null;
 
-        this.configuration && this.configuration.every(function (configurationItem) {
-            if (configurationItem.widget == null || configurationItem.widget.id == self.widgetObj.id) {
-                if (configurationItem.key === key) {
-                    result = configurationItem;
-                }
+        self.configuration && self.configuration.every(function (configurationItem) {
+            if (configurationItem.key === key) {
+                result = configurationItem;
                 return false;
             }
 

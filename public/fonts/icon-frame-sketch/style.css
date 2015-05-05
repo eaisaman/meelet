@@ -47,327 +47,435 @@
 	-moz-osx-font-smoothing: grayscale;
 }
 
-.icon-frame-sketch-html:before {
+.icon-frame-sketch-space-horizontal:before {
     content: "\e600";
 }
 
-.icon-frame-sketch-ladder:before {
+.icon-frame-sketch-span-vertical:before {
     content: "\e601";
 }
 
-.icon-frame-sketch-exit:before {
+.icon-frame-sketch-span-horizontal:before {
     content: "\e602";
 }
 
-.icon-frame-sketch-insert:before {
+.icon-frame-sketch-space-vertical:before {
     content: "\e603";
-}
-
-.icon-frame-sketch-confirm:before {
-    content: "\e604";
-}
-
-.icon-frame-sketch-cancel:before {
-    content: "\e605";
 }
 
 .icon-frame-sketch-fill:before {
-    content: "\e606";
-}
-
-.icon-frame-sketch-ruler:before {
-    content: "\e607";
-}
-
-.icon-frame-sketch-play:before {
-    content: "\e608";
-}
-
-.icon-frame-sketch-pause:before {
-    content: "\e609";
-}
-
-.icon-frame-sketch-stop:before {
-    content: "\e60a";
-}
-
-.icon-frame-sketch-align-left:before {
-    content: "\e60b";
+    content: "\e604";
 }
 
 .icon-frame-sketch-align-center:before {
+    content: "\e605";
+}
+
+.icon-frame-sketch-align-bottom:before {
+    content: "\e606";
+}
+
+.icon-frame-sketch-align-top:before {
+    content: "\e607";
+}
+
+.icon-frame-sketch-fill-horizontal:before {
+    content: "\e608";
+}
+
+.icon-frame-sketch-fill-vertical:before {
+    content: "\e609";
+}
+
+.icon-frame-sketch-html:before {
+    content: "\e60a";
+}
+
+.icon-frame-sketch-ladder:before {
+    content: "\e60b";
+}
+
+.icon-frame-sketch-exit:before {
     content: "\e60c";
+}
+
+.icon-frame-sketch-insert:before {
+    content: "\e60d";
+}
+
+.icon-frame-sketch-confirm:before {
+    content: "\e60e";
+}
+
+.icon-frame-sketch-cancel:before {
+    content: "\e60f";
+}
+
+.icon-frame-sketch-ruler:before {
+    content: "\e610";
+}
+
+.icon-frame-sketch-play:before {
+    content: "\e611";
+}
+
+.icon-frame-sketch-pause:before {
+    content: "\e612";
+}
+
+.icon-frame-sketch-stop:before {
+    content: "\e613";
+}
+
+.icon-frame-sketch-align-left:before {
+    content: "\e614";
+}
+
+.icon-frame-sketch-align-center2:before {
+    content: "\e615";
 }
 
 .icon-frame-sketch-align-right:before {
-    content: "\e60d";
+    content: "\e616";
 }
 
 .icon-frame-sketch-expand:before {
-    content: "\e60e";
+    content: "\e617";
 }
 
 .icon-frame-sketch-collapse:before {
-    content: "\e60f";
+    content: "\e618";
 }
 
 .icon-frame-sketch-locate:before {
-    content: "\e610";
+    content: "\e619";
 }
 
 .icon-frame-sketch-duplicate:before {
-    content: "\e611";
+    content: "\e61a";
 }
 
 .icon-frame-sketch-group:before {
-    content: "\e612";
+    content: "\e61b";
 }
 
 .icon-frame-sketch-ungroup:before {
-    content: "\e613";
+    content: "\e61c";
 }
 
 .icon-frame-sketch-load:before {
-    content: "\e614";
+    content: "\e61d";
 }
 
 .icon-frame-sketch-save:before {
-    content: "\e615";
+    content: "\e61e";
 }
 
 .icon-frame-sketch-remove:before {
-    content: "\e616";
+    content: "\e61f";
 }
 
 .icon-frame-sketch-lock:before {
-    content: "\e617";
+    content: "\e620";
 }
 
 .icon-frame-sketch-unlock:before {
-    content: "\e618";
+    content: "\e621";
 }
 
 .icon-frame-sketch-move-up:before {
-    content: "\e619";
+    content: "\e622";
 }
 
 .icon-frame-sketch-move-down:before {
-    content: "\e61a";
+    content: "\e623";
 }
 
-.icon-frame-sketch-html-before:before {
+.icon-frame-sketch-space-horizontal-before:before {
     content: "\e600";
 }
 
-.icon-frame-sketch-ladder-before:before {
+.icon-frame-sketch-span-vertical-before:before {
     content: "\e601";
 }
 
-.icon-frame-sketch-exit-before:before {
+.icon-frame-sketch-span-horizontal-before:before {
     content: "\e602";
 }
 
-.icon-frame-sketch-insert-before:before {
+.icon-frame-sketch-space-vertical-before:before {
     content: "\e603";
-}
-
-.icon-frame-sketch-confirm-before:before {
-    content: "\e604";
-}
-
-.icon-frame-sketch-cancel-before:before {
-    content: "\e605";
 }
 
 .icon-frame-sketch-fill-before:before {
-    content: "\e606";
-}
-
-.icon-frame-sketch-ruler-before:before {
-    content: "\e607";
-}
-
-.icon-frame-sketch-play-before:before {
-    content: "\e608";
-}
-
-.icon-frame-sketch-pause-before:before {
-    content: "\e609";
-}
-
-.icon-frame-sketch-stop-before:before {
-    content: "\e60a";
-}
-
-.icon-frame-sketch-align-left-before:before {
-    content: "\e60b";
-}
-
-.icon-frame-sketch-align-center-before:before {
-    content: "\e60c";
-}
-
-.icon-frame-sketch-align-right-before:before {
-    content: "\e60d";
-}
-
-.icon-frame-sketch-expand-before:before {
-    content: "\e60e";
-}
-
-.icon-frame-sketch-collapse-before:before {
-    content: "\e60f";
-}
-
-.icon-frame-sketch-locate-before:before {
-    content: "\e610";
-}
-
-.icon-frame-sketch-duplicate-before:before {
-    content: "\e611";
-}
-
-.icon-frame-sketch-group-before:before {
-    content: "\e612";
-}
-
-.icon-frame-sketch-ungroup-before:before {
-    content: "\e613";
-}
-
-.icon-frame-sketch-load-before:before {
-    content: "\e614";
-}
-
-.icon-frame-sketch-save-before:before {
-    content: "\e615";
-}
-
-.icon-frame-sketch-remove-before:before {
-    content: "\e616";
-}
-
-.icon-frame-sketch-lock-before:before {
-    content: "\e617";
-}
-
-.icon-frame-sketch-unlock-before:before {
-    content: "\e618";
-}
-
-.icon-frame-sketch-move-up-before:before {
-    content: "\e619";
-}
-
-.icon-frame-sketch-move-down-before:before {
-    content: "\e61a";
-}
-
-.icon-frame-sketch-html-after:after {
-    content: "\e600";
-}
-
-.icon-frame-sketch-ladder-after:after {
-    content: "\e601";
-}
-
-.icon-frame-sketch-exit-after:after {
-    content: "\e602";
-}
-
-.icon-frame-sketch-insert-after:after {
-    content: "\e603";
-}
-
-.icon-frame-sketch-confirm-after:after {
     content: "\e604";
 }
 
-.icon-frame-sketch-cancel-after:after {
+.icon-frame-sketch-align-center-before:before {
     content: "\e605";
 }
 
-.icon-frame-sketch-fill-after:after {
+.icon-frame-sketch-align-bottom-before:before {
     content: "\e606";
 }
 
-.icon-frame-sketch-ruler-after:after {
+.icon-frame-sketch-align-top-before:before {
     content: "\e607";
 }
 
-.icon-frame-sketch-play-after:after {
+.icon-frame-sketch-fill-horizontal-before:before {
     content: "\e608";
 }
 
-.icon-frame-sketch-pause-after:after {
+.icon-frame-sketch-fill-vertical-before:before {
     content: "\e609";
 }
 
-.icon-frame-sketch-stop-after:after {
+.icon-frame-sketch-html-before:before {
     content: "\e60a";
 }
 
-.icon-frame-sketch-align-left-after:after {
+.icon-frame-sketch-ladder-before:before {
     content: "\e60b";
 }
 
-.icon-frame-sketch-align-center-after:after {
+.icon-frame-sketch-exit-before:before {
     content: "\e60c";
 }
 
-.icon-frame-sketch-align-right-after:after {
+.icon-frame-sketch-insert-before:before {
     content: "\e60d";
 }
 
-.icon-frame-sketch-expand-after:after {
+.icon-frame-sketch-confirm-before:before {
     content: "\e60e";
 }
 
-.icon-frame-sketch-collapse-after:after {
+.icon-frame-sketch-cancel-before:before {
     content: "\e60f";
 }
 
-.icon-frame-sketch-locate-after:after {
+.icon-frame-sketch-ruler-before:before {
     content: "\e610";
 }
 
-.icon-frame-sketch-duplicate-after:after {
+.icon-frame-sketch-play-before:before {
     content: "\e611";
 }
 
-.icon-frame-sketch-group-after:after {
+.icon-frame-sketch-pause-before:before {
     content: "\e612";
 }
 
-.icon-frame-sketch-ungroup-after:after {
+.icon-frame-sketch-stop-before:before {
     content: "\e613";
 }
 
-.icon-frame-sketch-load-after:after {
+.icon-frame-sketch-align-left-before:before {
     content: "\e614";
 }
 
-.icon-frame-sketch-save-after:after {
+.icon-frame-sketch-align-center2-before:before {
     content: "\e615";
 }
 
-.icon-frame-sketch-remove-after:after {
+.icon-frame-sketch-align-right-before:before {
     content: "\e616";
 }
 
-.icon-frame-sketch-lock-after:after {
+.icon-frame-sketch-expand-before:before {
     content: "\e617";
 }
 
-.icon-frame-sketch-unlock-after:after {
+.icon-frame-sketch-collapse-before:before {
     content: "\e618";
 }
 
-.icon-frame-sketch-move-up-after:after {
+.icon-frame-sketch-locate-before:before {
     content: "\e619";
 }
 
-.icon-frame-sketch-move-down-after:after {
+.icon-frame-sketch-duplicate-before:before {
     content: "\e61a";
+}
+
+.icon-frame-sketch-group-before:before {
+    content: "\e61b";
+}
+
+.icon-frame-sketch-ungroup-before:before {
+    content: "\e61c";
+}
+
+.icon-frame-sketch-load-before:before {
+    content: "\e61d";
+}
+
+.icon-frame-sketch-save-before:before {
+    content: "\e61e";
+}
+
+.icon-frame-sketch-remove-before:before {
+    content: "\e61f";
+}
+
+.icon-frame-sketch-lock-before:before {
+    content: "\e620";
+}
+
+.icon-frame-sketch-unlock-before:before {
+    content: "\e621";
+}
+
+.icon-frame-sketch-move-up-before:before {
+    content: "\e622";
+}
+
+.icon-frame-sketch-move-down-before:before {
+    content: "\e623";
+}
+
+.icon-frame-sketch-space-horizontal-after:after {
+    content: "\e600";
+}
+
+.icon-frame-sketch-span-vertical-after:after {
+    content: "\e601";
+}
+
+.icon-frame-sketch-span-horizontal-after:after {
+    content: "\e602";
+}
+
+.icon-frame-sketch-space-vertical-after:after {
+    content: "\e603";
+}
+
+.icon-frame-sketch-fill-after:after {
+    content: "\e604";
+}
+
+.icon-frame-sketch-align-center-after:after {
+    content: "\e605";
+}
+
+.icon-frame-sketch-align-bottom-after:after {
+    content: "\e606";
+}
+
+.icon-frame-sketch-align-top-after:after {
+    content: "\e607";
+}
+
+.icon-frame-sketch-fill-horizontal-after:after {
+    content: "\e608";
+}
+
+.icon-frame-sketch-fill-vertical-after:after {
+    content: "\e609";
+}
+
+.icon-frame-sketch-html-after:after {
+    content: "\e60a";
+}
+
+.icon-frame-sketch-ladder-after:after {
+    content: "\e60b";
+}
+
+.icon-frame-sketch-exit-after:after {
+    content: "\e60c";
+}
+
+.icon-frame-sketch-insert-after:after {
+    content: "\e60d";
+}
+
+.icon-frame-sketch-confirm-after:after {
+    content: "\e60e";
+}
+
+.icon-frame-sketch-cancel-after:after {
+    content: "\e60f";
+}
+
+.icon-frame-sketch-ruler-after:after {
+    content: "\e610";
+}
+
+.icon-frame-sketch-play-after:after {
+    content: "\e611";
+}
+
+.icon-frame-sketch-pause-after:after {
+    content: "\e612";
+}
+
+.icon-frame-sketch-stop-after:after {
+    content: "\e613";
+}
+
+.icon-frame-sketch-align-left-after:after {
+    content: "\e614";
+}
+
+.icon-frame-sketch-align-center2-after:after {
+    content: "\e615";
+}
+
+.icon-frame-sketch-align-right-after:after {
+    content: "\e616";
+}
+
+.icon-frame-sketch-expand-after:after {
+    content: "\e617";
+}
+
+.icon-frame-sketch-collapse-after:after {
+    content: "\e618";
+}
+
+.icon-frame-sketch-locate-after:after {
+    content: "\e619";
+}
+
+.icon-frame-sketch-duplicate-after:after {
+    content: "\e61a";
+}
+
+.icon-frame-sketch-group-after:after {
+    content: "\e61b";
+}
+
+.icon-frame-sketch-ungroup-after:after {
+    content: "\e61c";
+}
+
+.icon-frame-sketch-load-after:after {
+    content: "\e61d";
+}
+
+.icon-frame-sketch-save-after:after {
+    content: "\e61e";
+}
+
+.icon-frame-sketch-remove-after:after {
+    content: "\e61f";
+}
+
+.icon-frame-sketch-lock-after:after {
+    content: "\e620";
+}
+
+.icon-frame-sketch-unlock-after:after {
+    content: "\e621";
+}
+
+.icon-frame-sketch-move-up-after:after {
+    content: "\e622";
+}
+
+.icon-frame-sketch-move-down-after:after {
+    content: "\e623";
 }
 

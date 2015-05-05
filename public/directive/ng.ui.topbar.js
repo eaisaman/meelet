@@ -32,6 +32,17 @@ define(
                                 scope.pickedProjectId = $rootScope.loadedProject && $rootScope.loadedProject.projectRecord._id || "";
                             },
                             post: function (scope, element, attrs) {
+                                scope.isSameButton = function (selector, event) {
+                                    var $el;
+
+                                    if (typeof selector == "string")
+                                        $el = element.find(selector);
+                                    else if (selector && typeof selector === "object")
+                                        $el = selector.jquery && selector || $(selector);
+
+                                    return $el && $el.is(event.target);
+                                }
+
                                 scope.hideTopMenu = function (event) {
                                     event && event.stopPropagation && event.stopPropagation();
 

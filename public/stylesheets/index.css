@@ -7788,6 +7788,76 @@ button.close {
   color: #669933;
   box-shadow: none;
 }
+#appTopBar .topbarButtonGroup {
+  position: relative;
+  float: left;
+  top: 0.5em;
+  width: 3em;
+  height: 2em;
+  background-color: #ddd;
+  box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.135);
+  border-radius: 0.2em;
+  display: inline-block;
+  margin: 0 0.5em 0 0;
+  color: rgba(0, 0, 0, 0.4);
+}
+#appTopBar .topbarButtonGroup:active {
+  background-color: #555;
+  color: #669933;
+  box-shadow: none;
+}
+#appTopBar .topbarButtonGroup:after {
+  content: '\25BC';
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 1em;
+  height: 100%;
+  text-align: center;
+  line-height: 2;
+}
+#appTopBar .topbarButtonGroup .btn-group {
+  pointer-events: none;
+  visibility: hidden;
+  top: 100%;
+  width: 10em;
+}
+#appTopBar .topbarButtonGroup.select .btn-group {
+  pointer-events: auto;
+  visibility: visible;
+}
+#appTopBar .topbarButtonGroup > .selectedButton {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2em;
+  height: 100%;
+  background: transparent;
+  overflow: hidden;
+}
+#appTopBar .topbarButtonGroup > .selectedButton:after {
+  position: absolute;
+  right: 0;
+  width: 0px;
+  height: 100%;
+  content: '';
+  border-left: 1px solid #CACDC0;
+  border-right: 1px solid #FFF;
+}
+#appTopBar .topbarButtonGroup .topbarButton {
+  margin: 0;
+  top: 0;
+  border-radius: 0;
+}
+#appTopBar .topbarButtonGroup .topbarButton:not(:last-child):after {
+  position: absolute;
+  right: 0;
+  width: 0px;
+  height: 100%;
+  content: '';
+  border-left: 1px solid #CACDC0;
+  border-right: 1px solid #FFF;
+}
 #appTopBar .extraButtons {
   position: relative;
   float: left;
