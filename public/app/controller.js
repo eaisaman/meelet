@@ -225,6 +225,7 @@ define(
 
                 if (widgetObj && widgetObj.isElement && widgetObj.isTemporary) {
                     widgetObj.alignLeft && widgetObj.alignLeft();
+                    widgetObj.disassemble();
                 }
             }
 
@@ -233,6 +234,7 @@ define(
 
                 if (widgetObj && widgetObj.isElement && widgetObj.isTemporary) {
                     widgetObj.alignHorizontalCenter && widgetObj.alignHorizontalCenter();
+                    widgetObj.disassemble();
                 }
             }
 
@@ -241,6 +243,7 @@ define(
 
                 if (widgetObj && widgetObj.isElement && widgetObj.isTemporary) {
                     widgetObj.alignRight && widgetObj.alignRight();
+                    widgetObj.disassemble();
                 }
             }
 
@@ -249,6 +252,7 @@ define(
 
                 if (widgetObj && widgetObj.isElement && widgetObj.isTemporary) {
                     widgetObj.alignTop && widgetObj.alignTop();
+                    widgetObj.disassemble();
                 }
             }
 
@@ -257,6 +261,7 @@ define(
 
                 if (widgetObj && widgetObj.isElement && widgetObj.isTemporary) {
                     widgetObj.alignVerticalCenter && widgetObj.alignVerticalCenter();
+                    widgetObj.disassemble();
                 }
             }
 
@@ -265,6 +270,7 @@ define(
 
                 if (widgetObj && widgetObj.isElement && widgetObj.isTemporary) {
                     widgetObj.alignBottom && widgetObj.alignBottom();
+                    widgetObj.disassemble();
                 }
             }
 
@@ -295,32 +301,38 @@ define(
             $scope.spanVertical = function (event) {
                 var widgetObj = $scope.sketchObject.pickedWidget;
 
-                if (widgetObj && !widgetObj.isTemporary) {
+                if (widgetObj && widgetObj.isElement && widgetObj.isTemporary) {
+                    widgetObj.fillParent && widgetObj.fillParent();
                     widgetObj.spanVertical && widgetObj.spanVertical();
+                    widgetObj.disassemble();
                 }
             }
 
             $scope.spanHorizontal = function (event) {
                 var widgetObj = $scope.sketchObject.pickedWidget;
 
-                if (widgetObj && !widgetObj.isTemporary) {
+                if (widgetObj && widgetObj.isElement && widgetObj.isTemporary) {
+                    widgetObj.fillParent && widgetObj.fillParent();
                     widgetObj.spanHorizontal && widgetObj.spanHorizontal();
+                    widgetObj.disassemble();
                 }
             }
 
             $scope.spaceVertical = function (event) {
                 var widgetObj = $scope.sketchObject.pickedWidget;
 
-                if (widgetObj && !widgetObj.isTemporary) {
+                if (widgetObj && widgetObj.isElement && widgetObj.isTemporary) {
                     widgetObj.spaceVertical && widgetObj.spaceVertical();
+                    widgetObj.disassemble();
                 }
             }
 
             $scope.spaceHorizontal = function (event) {
                 var widgetObj = $scope.sketchObject.pickedWidget;
 
-                if (widgetObj && !widgetObj.isTemporary) {
+                if (widgetObj && widgetObj.isElement && widgetObj.isTemporary) {
                     widgetObj.spaceHorizontal && widgetObj.spaceHorizontal();
+                    widgetObj.disassemble();
                 }
             }
 

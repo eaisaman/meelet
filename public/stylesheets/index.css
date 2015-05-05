@@ -7817,12 +7817,15 @@ button.close {
   line-height: 2;
 }
 #appTopBar .topbarButtonGroup .btn-group {
+  z-index: -1;
   pointer-events: none;
   visibility: hidden;
   top: 100%;
   width: 10em;
+  border-left: 1px solid #CACDC0;
 }
 #appTopBar .topbarButtonGroup.select .btn-group {
+  z-index: 1;
   pointer-events: auto;
   visibility: visible;
 }
@@ -7849,7 +7852,7 @@ button.close {
   top: 0;
   border-radius: 0;
 }
-#appTopBar .topbarButtonGroup .topbarButton:not(:last-child):after {
+#appTopBar .topbarButtonGroup .topbarButton:after {
   position: absolute;
   right: 0;
   width: 0px;

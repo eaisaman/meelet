@@ -2753,6 +2753,28 @@ define(
                             self.css("top", "0px");
                         }
                     },
+                    fillVertical: function () {
+                        var self = this,
+                            $parent = self.$element && self.$element[0].nodeType == 1 && self.$element.parent();
+
+                        if ($parent && $parent.length) {
+                            var height = $inject.uiUtilService.calculateHeight($parent);
+
+                            self.css("height", height + "px");
+                            self.css("top", "0px");
+                        }
+                    },
+                    fillHorizontal: function () {
+                        var self = this,
+                            $parent = self.$element && self.$element[0].nodeType == 1 && self.$element.parent();
+
+                        if ($parent && $parent.length) {
+                            var width = $inject.uiUtilService.calculateWidth($parent);
+
+                            self.css("width", width + "px");
+                            self.css("left", "0px");
+                        }
+                    },
                     registerTrigger: function () {
                         var self = this;
 
@@ -3158,7 +3180,7 @@ define(
                         }
                     }
                 },
-                alignCenter: function () {
+                alignHorizontalCenter: function () {
                     var self = this;
 
                     if (self.$element && self.$element[0].nodeType == 1 && self.$element.parent().length) {
@@ -3247,6 +3269,260 @@ define(
                                     }
                                 });
                             }
+                        }
+                    }
+                },
+                alignTop: function () {
+                    var self = this;
+
+                    if (self.$element && self.$element[0].nodeType == 1 && self.$element.parent().length) {
+                        var maxChildHeight = 0,
+                            m = (self.css("top") || "").match(/([-\d\.]+)px$/),
+                            firstChildTop,
+                            top;
+                        if (m && m.length == 2) top = Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision;
+
+                        m = (self.childWidgets[0].css("top") || "").match(/([-\d\.]+)px$/);
+                        if (m && m.length == 2) firstChildTop = Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision;
+
+                        if (firstChildTop != undefined) {
+                            self.childWidgets.forEach(function (w) {
+                                var childHeight,
+                                    m = (w.css("height") || "").match(/([-\d\.]+)px$/);
+                                if (m && m.length == 2) childHeight = Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision;
+                                if (childHeight > maxChildHeight) maxChildHeight = childHeight;
+
+                                w.css("top", "0px");
+                            });
+
+                            if (maxChildHeight) {
+                                self.css("top", (top + firstChildTop) + "px");
+                                self.css("height", maxChildHeight + "px");
+                            }
+                        }
+                    }
+                },
+                alignVerticalCenter: function () {
+                    var self = this;
+
+                    if (self.$element && self.$element[0].nodeType == 1 && self.$element.parent().length) {
+                        var height,
+                            maxChildHeight = 0,
+                            m = (self.css("top") || "").match(/([-\d\.]+)px$/),
+                            firstChildTop,
+                            firstChildHeight,
+                            top;
+                        if (m && m.length == 2) top = Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision;
+
+                        m = (self.css("height") || "").match(/([-\d\.]+)px$/);
+                        if (m && m.length == 2) height = Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision;
+
+                        m = (self.childWidgets[0].css("top") || "").match(/([-\d\.]+)px$/);
+                        if (m && m.length == 2) firstChildTop = Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision;
+
+                        m = (self.childWidgets[0].css("height") || "").match(/([-\d\.]+)px$/);
+                        if (m && m.length == 2) firstChildHeight = Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision;
+
+                        if (firstChildTop != undefined && firstChildHeight) {
+                            self.childWidgets.forEach(function (w) {
+                                var childHeight,
+                                    m = (w.css("height") || "").match(/([-\d\.]+)px$/);
+                                if (m && m.length == 2) childHeight = Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision;
+                                if (childHeight > maxChildHeight) maxChildHeight = childHeight;
+                            });
+
+                            if (maxChildHeight) {
+                                self.css("top", (top + firstChildTop) + "px");
+                                self.css("height", maxChildHeight + "px");
+
+                                self.childWidgets.forEach(function (w) {
+                                    var childHeight,
+                                        m = (w.css("height") || "").match(/([-\d\.]+)px$/);
+                                    if (m && m.length == 2) childHeight = Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision;
+
+                                    if (childHeight) {
+                                        w.css("top", ((maxChildHeight - childHeight) / 2) + "px");
+                                    }
+                                });
+                            }
+                        }
+                    }
+                },
+                alignBottom: function () {
+                    var self = this;
+
+                    if (self.$element && self.$element[0].nodeType == 1 && self.$element.parent().length) {
+                        var height,
+                            maxChildHeight = 0,
+                            m = (self.css("top") || "").match(/([-\d\.]+)px$/),
+                            firstChildTop,
+                            firstChildHeight,
+                            top;
+                        if (m && m.length == 2) top = Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision;
+
+                        m = (self.css("height") || "").match(/([-\d\.]+)px$/);
+                        if (m && m.length == 2) height = Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision;
+
+                        m = (self.childWidgets[0].css("top") || "").match(/([-\d\.]+)px$/);
+                        if (m && m.length == 2) firstChildTop = Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision;
+
+                        m = (self.childWidgets[0].css("height") || "").match(/([-\d\.]+)px$/);
+                        if (m && m.length == 2) firstChildHeight = Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision;
+
+                        if (firstChildTop != undefined && firstChildHeight) {
+                            self.childWidgets.forEach(function (w) {
+                                var childHeight,
+                                    m = (w.css("height") || "").match(/([-\d\.]+)px$/);
+                                if (m && m.length == 2) childHeight = Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision;
+                                if (childHeight > maxChildHeight) maxChildHeight = childHeight;
+                            });
+
+                            if (maxChildHeight) {
+                                self.css("top", (top + firstChildTop + firstChildHeight - maxChildHeight ) + "px");
+                                self.css("height", maxChildHeight + "px");
+
+                                self.childWidgets.forEach(function (w) {
+                                    var childHeight,
+                                        m = (w.css("height") || "").match(/([-\d\.]+)px$/);
+                                    if (m && m.length == 2) childHeight = Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision;
+
+                                    if (childHeight) {
+                                        w.css("top", (maxChildHeight - childHeight) + "px");
+                                    }
+                                });
+                            }
+                        }
+                    }
+                },
+                spanVertical: function () {
+                    var self = this;
+
+                    if (self.$element && self.$element[0].nodeType == 1 && self.$element.parent().length) {
+                        var m = (self.css("height") || "").match(/([-\d\.]+)px$/),
+                            height;
+
+                        if (m && m.length == 2) height = Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision;
+
+                        if (height && self.childWidgets.length) {
+                            var childHeight = Math.floor(height / self.childWidgets.length * $inject.angularConstants.precision) / $inject.angularConstants.precision;
+
+                            self.childWidgets.forEach(function (w, i) {
+                                w.fillHorizontal && w.fillHorizontal();
+                                w.css("height", childHeight + "px");
+                                w.css("top", (i * childHeight) + "px");
+                            });
+                        }
+                    }
+                },
+                spanHorizontal: function () {
+                    var self = this;
+
+                    if (self.$element && self.$element[0].nodeType == 1 && self.$element.parent().length) {
+                        var m = (self.css("width") || "").match(/([-\d\.]+)px$/),
+                            width;
+
+                        if (m && m.length == 2) width = Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision;
+
+                        if (width && self.childWidgets.length) {
+                            var childWidth = Math.floor(width / self.childWidgets.length * $inject.angularConstants.precision) / $inject.angularConstants.precision;
+
+                            self.childWidgets.forEach(function (w, i) {
+                                w.fillVertical && w.fillVertical();
+                                w.css("width", childWidth + "px");
+                                w.css("left", (i * childWidth) + "px");
+                            });
+                        }
+                    }
+                },
+                spaceVertical: function () {
+                    var self = this;
+
+                    if (self.$element && self.$element[0].nodeType == 1 && self.$element.parent().length) {
+                        var m = (self.css("height") || "").match(/([-\d\.]+)px$/),
+                            height;
+
+                        if (m && m.length == 2) height = Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision;
+
+                        if (height && self.childWidgets.length > 1) {
+                            var totalChildHeight = 0,
+                                flowDownWidgets = [];
+
+                            self.childWidgets.forEach(function (w) {
+                                m = (w.css("height") || "").match(/([-\d\.]+)px$/);
+                                if (m && m.length == 2) totalChildHeight += Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision;
+
+                                var top,
+                                    index;
+                                m = (w.css("top") || "").match(/([-\d\.]+)px$/);
+                                if (m && m.length == 2) {
+                                    top = parseFloat(m[1]);
+                                    flowDownWidgets.every(function (fw, j) {
+                                        if (top < fw.top) {
+                                            index = j;
+                                            return false;
+                                        }
+
+                                        return true;
+                                    });
+                                    if (index == null) index = flowDownWidgets.length;
+                                    flowDownWidgets.splice(index, 0, {top: top, widget: w});
+                                }
+                            });
+
+                            var space = Math.floor((height - totalChildHeight) / (self.childWidgets.length - 1) * $inject.angularConstants.precision) / $inject.angularConstants.precision,
+                                offset = 0;
+                            flowDownWidgets.forEach(function (fw, i) {
+                                if (i > 0) offset += space;
+                                fw.widget.css("top", offset + "px");
+                                m = (fw.widget.css("height") || "").match(/([-\d\.]+)px$/);
+                                if (m && m.length == 2) offset += Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision;
+                            });
+                        }
+                    }
+                },
+                spaceHorizontal: function () {
+                    var self = this;
+
+                    if (self.$element && self.$element[0].nodeType == 1 && self.$element.parent().length) {
+                        var m = (self.css("width") || "").match(/([-\d\.]+)px$/),
+                            width;
+
+                        if (m && m.length == 2) width = Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision;
+
+                        if (width && self.childWidgets.length > 1) {
+                            var totalChildWidth = 0,
+                                flowLeftWidgets = [];
+
+                            self.childWidgets.forEach(function (w) {
+                                m = (w.css("width") || "").match(/([-\d\.]+)px$/);
+                                if (m && m.length == 2) totalChildWidth += Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision;
+
+                                var left,
+                                    index;
+                                m = (w.css("left") || "").match(/([-\d\.]+)px$/);
+                                if (m && m.length == 2) {
+                                    left = parseFloat(m[1]);
+                                    flowLeftWidgets.every(function (fw, j) {
+                                        if (left < fw.left) {
+                                            index = j;
+                                            return false;
+                                        }
+
+                                        return true;
+                                    });
+                                    if (index == null) index = flowLeftWidgets.length;
+                                    flowLeftWidgets.splice(index, 0, {left: left, widget: w});
+                                }
+                            });
+
+                            var space = Math.floor((width - totalChildWidth) / (self.childWidgets.length - 1) * $inject.angularConstants.precision) / $inject.angularConstants.precision,
+                                offset = 0;
+                            flowLeftWidgets.forEach(function (fw, i) {
+                                if (i > 0) offset += space;
+                                fw.widget.css("left", offset + "px");
+                                m = (fw.widget.css("width") || "").match(/([-\d\.]+)px$/);
+                                if (m && m.length == 2) offset += Math.floor(parseFloat(m[1]) * $inject.angularConstants.precision) / $inject.angularConstants.precision;
+                            });
                         }
                     }
                 },
@@ -3736,6 +4012,30 @@ define(
 
                         self.childWidgets.forEach(function (child) {
                             child.fillParent();
+                        });
+                    }
+                },
+                fillVertical: function () {
+                    var self = this,
+                        $parent = self.$element && self.$element[0].nodeType == 1 && self.$element.parent();
+
+                    if ($parent && $parent.length) {
+                        RepoSketchWidgetClass.prototype.__proto__.fillVertical.apply(self);
+
+                        self.childWidgets.forEach(function (child) {
+                            child.fillVertical();
+                        });
+                    }
+                },
+                fillHorizontal: function () {
+                    var self = this,
+                        $parent = self.$element && self.$element[0].nodeType == 1 && self.$element.parent();
+
+                    if ($parent && $parent.length) {
+                        RepoSketchWidgetClass.prototype.__proto__.fillHorizontal.apply(self);
+
+                        self.childWidgets.forEach(function (child) {
+                            child.fillHorizontal();
                         });
                     }
                 },
