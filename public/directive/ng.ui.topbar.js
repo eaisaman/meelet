@@ -32,15 +32,18 @@ define(
                                 scope.pickedProjectId = $rootScope.loadedProject && $rootScope.loadedProject.projectRecord._id || "";
                             },
                             post: function (scope, element, attrs) {
-                                scope.isSameButton = function (selector, event) {
-                                    var $el;
+                                scope.unselectButtonGroup = function (event) {
+                                    event && event.stopPropagation && event.stopPropagation();
 
-                                    if (typeof selector == "string")
-                                        $el = element.find(selector);
-                                    else if (selector && typeof selector === "object")
-                                        $el = selector.jquery && selector || $(selector);
+                                    var $sel = $(element).find(".topbarButtonGroup.select");
 
-                                    return $el && $el.is(event.target);
+                                    if ($sel.is(event.target)) {
+                                        if ($sel.length > 1) {
+                                            scope.toggleSelect($sel.not(event.target), event, false);
+                                        }
+                                    } else {
+                                        scope.toggleSelect(".topbarButtonGroup.select", event, false);
+                                    }
                                 }
 
                                 scope.hideTopMenu = function (event) {

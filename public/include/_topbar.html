@@ -1,6 +1,6 @@
 <link rel="stylesheet" type="text/css" href="fonts/icon-topbar/style.css"/>
 
-<div id="appTopBar" ng-click="isSameButton('.topbarButtonGroup.select', $event) || toggleSelect('.topbarButtonGroup.select', $event, false)">
+<div id="appTopBar" ng-click="unselectButtonGroup($event)">
     <div class="topbarButton icon-topbar-before icon-topbar-back-before"
          ng-click="urlService.back()"></div>
     <div class="topbarButton icon-topbar-before icon-topbar-home-before"

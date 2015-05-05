@@ -85,8 +85,6 @@ define(
             }
 
             $scope.removeWidget = function (event) {
-                event && event.stopPropagation && event.stopPropagation();
-
                 var widgetObj = $scope.sketchObject.pickedWidget;
 
                 if (widgetObj && !widgetObj.isTemporary && !widgetObj.isKindOf("PageSketchWidget")) {
@@ -164,8 +162,6 @@ define(
                     return uiUtilService.getResolveDefer();
                 }
 
-                event && event.stopPropagation && event.stopPropagation();
-
                 var $el = $(event.target),
                     mc = $el.data("hammer"),
                     $shapeElement;
@@ -184,8 +180,6 @@ define(
             }
 
             $scope.locateWidget = function (event) {
-                event && event.stopPropagation && event.stopPropagation();
-
                 var widgetObj = $scope.sketchObject.pickedWidget;
 
                 if (widgetObj && widgetObj.isElement && !widgetObj.isTemporary) {
@@ -198,8 +192,6 @@ define(
             }
 
             $scope.duplicateWidget = function (event) {
-                event && event.stopPropagation && event.stopPropagation();
-
                 var widgetObj = $scope.sketchObject.pickedWidget;
 
                 if (widgetObj && widgetObj.isElement) {
@@ -284,9 +276,55 @@ define(
                 }
             }
 
-            $scope.groupWidget = function (event) {
-                event && event.stopPropagation && event.stopPropagation();
+            $scope.fillVertical = function (event) {
+                var widgetObj = $scope.sketchObject.pickedWidget;
 
+                if (widgetObj && !widgetObj.isTemporary) {
+                    widgetObj.fillVertical && widgetObj.fillVertical();
+                }
+            }
+
+            $scope.fillHorizontal = function (event) {
+                var widgetObj = $scope.sketchObject.pickedWidget;
+
+                if (widgetObj && !widgetObj.isTemporary) {
+                    widgetObj.fillHorizontal && widgetObj.fillHorizontal();
+                }
+            }
+
+            $scope.spanVertical = function (event) {
+                var widgetObj = $scope.sketchObject.pickedWidget;
+
+                if (widgetObj && !widgetObj.isTemporary) {
+                    widgetObj.spanVertical && widgetObj.spanVertical();
+                }
+            }
+
+            $scope.spanHorizontal = function (event) {
+                var widgetObj = $scope.sketchObject.pickedWidget;
+
+                if (widgetObj && !widgetObj.isTemporary) {
+                    widgetObj.spanHorizontal && widgetObj.spanHorizontal();
+                }
+            }
+
+            $scope.spaceVertical = function (event) {
+                var widgetObj = $scope.sketchObject.pickedWidget;
+
+                if (widgetObj && !widgetObj.isTemporary) {
+                    widgetObj.spaceVertical && widgetObj.spaceVertical();
+                }
+            }
+
+            $scope.spaceHorizontal = function (event) {
+                var widgetObj = $scope.sketchObject.pickedWidget;
+
+                if (widgetObj && !widgetObj.isTemporary) {
+                    widgetObj.spaceHorizontal && widgetObj.spaceHorizontal();
+                }
+            }
+
+            $scope.groupWidget = function (event) {
                 var widgetObj = $scope.sketchObject.pickedWidget;
 
                 if (widgetObj && widgetObj.isElement && widgetObj.isTemporary) {
@@ -295,8 +333,6 @@ define(
             }
 
             $scope.ungroupWidget = function (event) {
-                event && event.stopPropagation && event.stopPropagation();
-
                 var widgetObj = $scope.sketchObject.pickedWidget;
 
                 if (widgetObj && widgetObj.isElement) {
@@ -305,8 +341,6 @@ define(
             }
 
             $scope.pickParentWidget = function (event) {
-                event && event.stopPropagation && event.stopPropagation();
-
                 var widgetObj = $scope.sketchObject.pickedWidget;
 
                 if (widgetObj) {
@@ -339,42 +373,30 @@ define(
             }
 
             $scope.moveUpWidget = function (event) {
-                event && event.stopPropagation && event.stopPropagation();
-
                 var widgetObj = $scope.sketchObject.pickedWidget;
 
                 widgetObj && widgetObj.moveAfter();
             }
 
             $scope.moveDownWidget = function (event) {
-                event && event.stopPropagation && event.stopPropagation();
-
                 var widgetObj = $scope.sketchObject.pickedWidget;
 
                 widgetObj && widgetObj.moveBefore();
             }
 
             $scope.toggleRuler = function (event) {
-                event && event.stopPropagation && event.stopPropagation();
-
                 $rootScope.sketchWidgetSetting.showRuler = !$rootScope.sketchWidgetSetting.showRuler;
             }
 
             $scope.togglePlayWidget = function (event) {
-                event && event.stopPropagation && event.stopPropagation();
-
                 $rootScope.sketchWidgetSetting.isPlaying = !$rootScope.sketchWidgetSetting.isPlaying;
             }
 
             $scope.saveProject = function (event) {
-                event && event.stopPropagation && event.stopPropagation();
-
                 return $rootScope.loadedProject.save();
             }
 
             $scope.loadProject = function (event) {
-                event && event.stopPropagation && event.stopPropagation();
-
                 $rootScope.loadedProject.unload();
 
                 return uiUtilService.chain(
@@ -418,8 +440,6 @@ define(
             }
 
             $scope.toggleLockProject = function (event) {
-                event && event.stopPropagation && event.stopPropagation();
-
                 if ($rootScope.loadedProject.projectRecord.lock) {
                     return $rootScope.loadedProject.unlock($rootScope.loginUser._id);
                 } else {
@@ -428,8 +448,6 @@ define(
             }
 
             $scope.convertToHtml = function (event) {
-                event && event.stopPropagation && event.stopPropagation();
-
                 return $rootScope.loadedProject.convertToHtml($rootScope.loginUser._id);
             }
 
