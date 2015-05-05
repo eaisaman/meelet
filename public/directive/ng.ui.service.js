@@ -3825,6 +3825,7 @@ define(
                     "linearGradientColor": {colorStopList: [{color: {color: "#ffffff", alpha: 1}, angle: 0}]}
                 },
                 MEMBERS: {
+                    isElement: true,
                     widgetSpec: null,
                     project: null
                 },
@@ -3999,6 +4000,11 @@ define(
                             return $inject.uiUtilService.getRejectDefer(err);
                         }
                     );
+                },
+                directContains: function (widgetObj) {
+                    return !this.childWidgets.every(function (w) {
+                        return w.id != widgetObj.id;
+                    });
                 },
                 relink: function (containerWidget) {
                     return this.appendTo(containerWidget);

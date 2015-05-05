@@ -132,6 +132,7 @@
             display: inline-block;
             margin: 0 0.5em 0 0;
             color: $color;
+            overflow: hidden;
 
             &:active {
                 background-color: #555;
@@ -160,6 +161,8 @@
             }
 
             &.select {
+                overflow: visible;
+
                 .btn-group {
                     z-index: 1;
                     pointer-events: auto;

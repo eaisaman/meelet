@@ -7800,6 +7800,7 @@ button.close {
   display: inline-block;
   margin: 0 0.5em 0 0;
   color: rgba(0, 0, 0, 0.4);
+  overflow: hidden;
 }
 #appTopBar .topbarButtonGroup:active {
   background-color: #555;
@@ -7823,6 +7824,9 @@ button.close {
   top: 100%;
   width: 10em;
   border-left: 1px solid #CACDC0;
+}
+#appTopBar .topbarButtonGroup.select {
+  overflow: visible;
 }
 #appTopBar .topbarButtonGroup.select .btn-group {
   z-index: 1;
