@@ -92,6 +92,37 @@
                          class="topbarButton icon-frame-sketch-before icon-frame-sketch-move-down-before"></div>
                     <div ng-click="toggleRuler($event)"
                          class="topbarButton icon-frame-sketch-before icon-frame-sketch-ruler-before"></div>
+                    <div ng-click="canPositionWidget(sketchObject.pickedWidget) && classie.toggleClass($event.target, 'select')"
+                         class="topbarDropdown icon-frame-sketch-before icon-frame-sketch-compass-before">
+                        <div class="btn-group open fs-x-small" ng-click="$event.stopPropagation()">
+                            <label class="col-as-4 no-padding control-label">Left</label>
+
+                            <div class="col-as-7 no-padding" ng-if="pickedWidgetLeft">
+                                <input type="text" class="form-control" ng-model="pickedWidgetLeft"/>
+                            </div>
+                        </div>
+                        <div class="btn-group open fs-x-small" ng-click="$event.stopPropagation()">
+                            <label class="col-as-4 no-padding control-label">Top</label>
+
+                            <div class="col-as-7 no-padding" ng-if="pickedWidgetTop">
+                                <input type="text" class="form-control" ng-model="pickedWidgetTop"/>
+                            </div>
+                        </div>
+                        <div class="btn-group open fs-x-small" ng-click="$event.stopPropagation()">
+                            <label class="col-as-4 no-padding control-label">Width</label>
+
+                            <div class="col-as-7 no-padding" ng-if="pickedWidgetWidth">
+                                <input type="text" class="form-control" ng-model="pickedWidgetWidth"/>
+                            </div>
+                        </div>
+                        <div class="btn-group open fs-x-small" ng-click="$event.stopPropagation()">
+                            <label class="col-as-4 no-padding control-label">Height</label>
+
+                            <div class="col-as-7 no-padding" ng-if="pickedWidgetHeight">
+                                <input type="text" class="form-control" ng-model="pickedWidgetHeight"/>
+                            </div>
+                        </div>
+                    </div>
                     <div ng-click="togglePlayWidget($event)" class="topbarButton icon-frame-sketch-before"
                          ng-class="{'icon-frame-sketch-play-before':!$root.sketchWidgetSetting.isPlaying, 'icon-frame-sketch-pause-before':$root.sketchWidgetSetting.isPlaying}"></div>
                     <div ng-click="saveProject($event)" ng-if="$root.loadedProject.projectRecord.lock"

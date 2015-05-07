@@ -1560,6 +1560,7 @@ define(
                                     if (keys.length) {
                                         keys.forEach(function (key) {
                                             delete sourceStyle[key];
+                                            delete stateValue[stylePseudoPrefix][key];
                                         });
 
                                         //FIXME Use latestOnce
@@ -1576,6 +1577,7 @@ define(
                                     sourceStyle[args[1]] = args[2];
                                 } else {
                                     delete sourceStyle[args[1]];
+                                    delete stateValue[stylePseudoPrefix][args[1]];
                                 }
                                 //FIXME Use latestOnce
                                 var styleProps = {};
@@ -3915,25 +3917,23 @@ define(
 
                     //widgetContainer's size should be the same as that of its parent
                     if (this.childWidgets.length) {
-                        var child = this.childWidgets[0];
+                        var containerWidget = this.childWidgets[0];
 
-                        if (child.hasClass($inject.angularConstants.widgetClasses.widgetContainerClass)) {
-                            switch (args.length) {
-                                case 1:
-                                    if (typeof args[0] === "object") {
-                                        var sizeStyle = _.pick(args[0], ["width", "height"]);
+                        switch (args.length) {
+                            case 1:
+                                if (typeof args[0] === "object") {
+                                    var sizeStyle = _.pick(args[0], ["width", "height"]);
 
-                                        if (!_.isEmpty(sizeStyle)) {
-                                            child.css(sizeStyle);
-                                        }
+                                    if (!_.isEmpty(sizeStyle)) {
+                                        containerWidget.css(sizeStyle);
                                     }
-                                    break;
-                                case 2:
-                                    if (args[0] === "width" || args[0] === "height") {
-                                        child.css(args[0], args[1]);
-                                    }
-                                    break;
-                            }
+                                }
+                                break;
+                            case 2:
+                                if (args[0] === "width" || args[0] === "height") {
+                                    containerWidget.css(args[0], args[1]);
+                                }
+                                break;
                         }
                     }
 

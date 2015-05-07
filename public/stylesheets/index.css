@@ -7699,7 +7699,7 @@ button.close {
   box-shadow: 0 1px 4px #A4A4A4, 0 0 40px #E0E0E0 inset;
   z-index: 100;
 }
-#appTopBar .topbarButton, #appTopBar .topbarMenu {
+#appTopBar .topbarButton, #appTopBar .topbarMenu, #appTopBar .topbarDropdown {
   position: relative;
   float: left;
   top: 0.5em;
@@ -7712,12 +7712,12 @@ button.close {
   margin: 0 0.5em;
   color: rgba(0, 0, 0, 0.4);
 }
-#appTopBar .topbarButton:active, #appTopBar .topbarMenu:active {
+#appTopBar .topbarButton:active, #appTopBar .topbarMenu:active, #appTopBar .topbarDropdown:active {
   background-color: #555;
   color: #669933;
   box-shadow: none;
 }
-#appTopBar .topbarButton:before, #appTopBar .topbarMenu:before {
+#appTopBar .topbarButton:before, #appTopBar .topbarMenu:before, #appTopBar .topbarDropdown:before {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -7780,6 +7780,35 @@ button.close {
   box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.135);
 }
 #appTopBar .topbarMenu.select .btn-group {
+  pointer-events: auto;
+  visibility: visible;
+}
+#appTopBar .topbarDropdown {
+  margin: 0 0.5em 0 0;
+}
+#appTopBar .topbarDropdown .btn-group {
+  z-index: -1;
+  pointer-events: none;
+  visibility: hidden;
+  top: 100%;
+  width: 10em;
+  padding-top: 0.5em;
+  background-color: #ddd;
+  border-left: 1px solid #CACDC0;
+}
+#appTopBar .topbarDropdown .btn-group:last-child {
+  padding-bottom: 0.5em;
+}
+#appTopBar .topbarDropdown.select {
+  overflow: visible;
+}
+#appTopBar .topbarDropdown.select:active {
+  color: rgba(0, 0, 0, 0.4);
+  background: #ddd;
+  box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.135);
+}
+#appTopBar .topbarDropdown.select .btn-group {
+  z-index: 1;
   pointer-events: auto;
   visibility: visible;
 }

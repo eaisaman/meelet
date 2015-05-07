@@ -118,7 +118,7 @@ define(
                                                 var args = Array.prototype.slice.call(arguments),
                                                     result = assign.apply(fn, args);
 
-                                                uiUtilService.once(borderInputHandler, null, 20)(value);
+                                                uiUtilService.once(borderInputHandler, null, unresponsiveInterval)(value);
 
                                                 return result;
                                             }

@@ -59,7 +59,7 @@ define(
 
         }
 
-        function FrameSketchController($scope, $rootScope, $timeout, $q, $log, $compile, angularEventTypes, angularConstants, appService, uiService, uiUtilService) {
+        function FrameSketchController($scope, $rootScope, $timeout, $q, $log, $compile, $parse, angularEventTypes, angularConstants, appService, uiService, uiUtilService) {
             $scope.zoomWidget = function (event) {
                 event && event.stopPropagation && event.stopPropagation();
 
@@ -400,6 +400,28 @@ define(
                 $rootScope.sketchWidgetSetting.showRuler = !$rootScope.sketchWidgetSetting.showRuler;
             }
 
+            $scope.canPositionWidget = function (widgetObj) {
+                return widgetObj && widgetObj.isElement;
+            }
+
+            $scope.initWidgetPosition = function () {
+                var widgetObj = $scope.sketchObject.pickedWidget;
+
+                if (widgetObj && widgetObj.isElement) {
+                    $scope.pickedWidgetLeft = null;
+                    $scope.pickedWidgetTop = null;
+                    $scope.pickedWidgetWidth = null;
+                    $scope.pickedWidgetHeight = null;
+
+                    $timeout(function () {
+                        $scope.pickedWidgetLeft = widgetObj.css("left");
+                        $scope.pickedWidgetTop = widgetObj.css("top");
+                        $scope.pickedWidgetWidth = widgetObj.css("width");
+                        $scope.pickedWidgetHeight = widgetObj.css("height");
+                    });
+                }
+            }
+
             $scope.togglePlayWidget = function (event) {
                 $rootScope.sketchWidgetSetting.isPlaying = !$rootScope.sketchWidgetSetting.isPlaying;
             }
@@ -551,6 +573,8 @@ define(
             $scope.$watch("sketchObject.pickedWidget", function (to) {
                 if (!to) {
                     $scope.sketchObject.pickedWidget = $scope.sketchObject.pickedPage;
+                } else {
+                    $scope.initWidgetPosition();
                 }
             });
 
@@ -594,6 +618,53 @@ define(
             });
 
             function initMaster() {
+                function createWidgetPositionInputAssign(name, cssName) {
+                    var fn = $parse(name),
+                        assign = fn.assign;
+
+                    if (!fn.assign.customized) {
+                        fn.assign = function ($scope, value) {
+                            function positionInputHandler(value) {
+                                var defer = $q.defer();
+
+                                $timeout(function () {
+                                    var widgetObj = $scope.sketchObject.pickedWidget;
+
+                                    if (widgetObj && widgetObj.isElement) {
+                                        var m = (value || "").match(/([-\d\.]+)px$/);
+                                        if (m && m.length == 2) {
+                                            widgetObj.css(cssName, value);
+                                        }
+                                    }
+
+                                    defer.resolve();
+                                });
+
+                                return defer.promise;
+                            }
+
+                            positionInputHandler.onceId = "FrameSketchController.initMaster.createWidgetPositionInputAssign.positionInputHandler";
+
+                            if (value) {
+                                var args = Array.prototype.slice.call(arguments),
+                                    result = assign.apply(fn, args);
+
+                                uiUtilService.once(positionInputHandler, null, angularConstants.unresponsiveInterval)(value);
+
+                                return result;
+                            }
+                        }
+
+                        fn.assign.customized = true;
+                    }
+                    return fn;
+                }
+
+                createWidgetPositionInputAssign("pickedWidgetLeft", "left");
+                createWidgetPositionInputAssign("pickedWidgetTop", "top");
+                createWidgetPositionInputAssign("pickedWidgetWidth", "width");
+                createWidgetPositionInputAssign("pickedWidgetHeight", "height");
+
                 $scope.renderProject();
             }
 
@@ -938,7 +1009,7 @@ define(
         return function (appModule) {
             appModule.
                 controller('RootController', ["$scope", "$rootScope", "$q", "appService", "urlService", RootController]).
-                controller('FrameSketchController', ["$scope", "$rootScope", "$timeout", "$q", "$log", "$compile", "angularEventTypes", "angularConstants", "appService", "uiService", "uiUtilService", FrameSketchController]).
+                controller('FrameSketchController', ["$scope", "$rootScope", "$timeout", "$q", "$log", "$compile", "$parse", "angularEventTypes", "angularConstants", "appService", "uiService", "uiUtilService", FrameSketchController]).
                 controller('ProjectController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "uiService", "urlService", ProjectController]).
                 controller('RepoController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "urlService", RepoController]).
                 controller('RepoLibController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "urlService", RepoLibController]);

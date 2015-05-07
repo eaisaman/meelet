@@ -47,6 +47,10 @@
 	-moz-osx-font-smoothing: grayscale;
 }
 
+.icon-frame-sketch-compass:before {
+    content: "\e624";
+}
+
 .icon-frame-sketch-space-horizontal:before {
     content: "\e600";
 }
@@ -67,7 +71,7 @@
     content: "\e604";
 }
 
-.icon-frame-sketch-align-center:before {
+.icon-frame-sketch-align-center-vertical:before {
     content: "\e605";
 }
 
@@ -131,7 +135,7 @@
     content: "\e614";
 }
 
-.icon-frame-sketch-align-center2:before {
+.icon-frame-sketch-align-center-horizontal:before {
     content: "\e615";
 }
 
@@ -191,6 +195,10 @@
     content: "\e623";
 }
 
+.icon-frame-sketch-compass-before:before {
+    content: "\e624";
+}
+
 .icon-frame-sketch-space-horizontal-before:before {
     content: "\e600";
 }
@@ -211,7 +219,7 @@
     content: "\e604";
 }
 
-.icon-frame-sketch-align-center-before:before {
+.icon-frame-sketch-align-center-vertical-before:before {
     content: "\e605";
 }
 
@@ -275,7 +283,7 @@
     content: "\e614";
 }
 
-.icon-frame-sketch-align-center2-before:before {
+.icon-frame-sketch-align-center-horizontal-before:before {
     content: "\e615";
 }
 
@@ -335,6 +343,10 @@
     content: "\e623";
 }
 
+.icon-frame-sketch-compass-after:after {
+    content: "\e624";
+}
+
 .icon-frame-sketch-space-horizontal-after:after {
     content: "\e600";
 }
@@ -355,7 +367,7 @@
     content: "\e604";
 }
 
-.icon-frame-sketch-align-center-after:after {
+.icon-frame-sketch-align-center-vertical-after:after {
     content: "\e605";
 }
 
@@ -419,7 +431,7 @@
     content: "\e614";
 }
 
-.icon-frame-sketch-align-center2-after:after {
+.icon-frame-sketch-align-center-horizontal-after:after {
     content: "\e615";
 }
 

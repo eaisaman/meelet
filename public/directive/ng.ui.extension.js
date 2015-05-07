@@ -622,7 +622,9 @@ define(
                 var pseudoStylePrefix = (pseudo || "") + "Style";
                 pseudoStylePrefix = pseudoStylePrefix.charAt(0).toLowerCase() + pseudoStylePrefix.substr(1);
 
-                styles[pseudoStylePrefix] = {};
+                _.keys(styles[pseudoStylePrefix]).forEach(function (key) {
+                    styles[pseudoStylePrefix][key] = null;
+                });
 
                 return styles;
             }

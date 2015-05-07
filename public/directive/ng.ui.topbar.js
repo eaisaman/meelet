@@ -35,14 +35,14 @@ define(
                                 scope.unselectButtonGroup = function (event) {
                                     event && event.stopPropagation && event.stopPropagation();
 
-                                    var $sel = $(element).find(".topbarButtonGroup.select");
+                                    var $sel = $(element).find(".topbarButtonGroup.select, .topbarDropdown.select");
 
                                     if ($sel.is(event.target)) {
                                         if ($sel.length > 1) {
                                             scope.toggleSelect($sel.not(event.target), event, false);
                                         }
                                     } else {
-                                        scope.toggleSelect(".topbarButtonGroup.select", event, false);
+                                        scope.toggleSelect($sel, event, false);
                                     }
                                 }
 

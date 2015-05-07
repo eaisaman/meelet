@@ -12,7 +12,7 @@
         box-shadow: 0 1px 4px #A4A4A4, 0 0 40px #E0E0E0 inset;
         z-index: 100;
 
-        .topbarButton, .topbarMenu {
+        .topbarButton, .topbarMenu, .topbarDropdown {
             position: relative;
             float: left;
             top: 0.5em;
@@ -108,6 +108,41 @@
                 }
 
                 .btn-group {
+                    pointer-events: auto;
+                    visibility: visible;
+                }
+            }
+        }
+
+        .topbarDropdown {
+            margin: 0 0.5em 0 0;
+
+            .btn-group {
+                z-index: -1;
+                pointer-events: none;
+                visibility: hidden;
+                top: 100%;
+                width: 10em;
+                padding-top: 0.5em;
+                background-color: #ddd;
+                border-left: 1px solid #CACDC0;
+
+                &:last-child {
+                    padding-bottom: 0.5em;
+                }
+            }
+
+            &.select {
+                overflow: visible;
+
+                &:active {
+                    color: $color;
+                    background: #ddd;
+                    box-shadow: inset 0 -2px 0 rgba(0, 0, 0, .135);
+                }
+
+                .btn-group {
+                    z-index: 1;
                     pointer-events: auto;
                     visibility: visible;
                 }
