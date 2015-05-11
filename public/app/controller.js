@@ -456,14 +456,14 @@ define(
                             uiService.createPage("." + angularConstants.widgetClasses.deviceHolderClass, $rootScope.loadedProject.sketchWorks.pages[0]).then(function (pageObj) {
                                 $scope.sketchObject.pickedPage = pageObj;
 
-                                CKEDITOR.inline('widgetText');
+                                //CKEDITOR.inline('widgetText');
                             });
                         } else {
                             uiService.createPage("." + angularConstants.widgetClasses.deviceHolderClass).then(function (pageObj) {
                                 $scope.sketchObject.pickedPage = pageObj;
                                 $rootScope.loadedProject.sketchWorks.pages.push(pageObj);
 
-                                CKEDITOR.inline('widgetText');
+                                //CKEDITOR.inline('widgetText');
                             });
                         }
                     },
@@ -631,10 +631,7 @@ define(
                                     var widgetObj = $scope.sketchObject.pickedWidget;
 
                                     if (widgetObj && widgetObj.isElement) {
-                                        var m = (value || "").match(/([-\d\.]+)px$/);
-                                        if (m && m.length == 2) {
-                                            widgetObj.css(cssName, value);
-                                        }
+                                        widgetObj.css(cssName, value);
                                     }
 
                                     defer.resolve();
@@ -643,13 +640,14 @@ define(
                                 return defer.promise;
                             }
 
-                            positionInputHandler.onceId = "FrameSketchController.initMaster.createWidgetPositionInputAssign.positionInputHandler";
-
                             if (value) {
+                                var m = (value || "").match(/([-\d\.]+)px$/);
+                                if (m && m.length == 2) {
+                                    uiUtilService.once(positionInputHandler, null, angularConstants.unresponsiveInterval, "FrameSketchController.initMaster.createWidgetPositionInputAssign.positionInputHandler." + name)(value);
+                                }
+
                                 var args = Array.prototype.slice.call(arguments),
                                     result = assign.apply(fn, args);
-
-                                uiUtilService.once(positionInputHandler, null, angularConstants.unresponsiveInterval)(value);
 
                                 return result;
                             }

@@ -5,8 +5,8 @@ requirejs.config(
             "sly": JQUERY_PLUGINS_LIB_PATH + "sly/1.2.7/sly"
         },
         shim: {
-            "icheck": {deps: ["jquery"]},
-            "sly": {deps: ["jquery"]}
+            "icheck": {deps: ["jquery-lib"]},
+            "sly": {deps: ["jquery-lib"]}
         },
         waitSeconds: 0
     }
