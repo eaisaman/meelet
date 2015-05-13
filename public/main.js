@@ -15,6 +15,7 @@ var ANGULAR_LIB_PATH = "javascripts/angular/1.3.0-beta.8/",
     FLOWCHART_LIB_PATH = "javascripts/flowchart/1.4.0/", //Depended by editormd
     JQUERY_FLOWCHART_LIB_PATH = "javascripts/jquery.flowchart/1.0.0/", //Depended by editormd
     SEQUENCE_DIAGRAM_LIB_PATH = "javascripts/sequence-diagram/1.0.4/", //Depended by editormd
+    KATEX_LIB_PATH = "javascripts/katex/0.3.0/",//Depended by editormd
     CODEMIRROR_LIB_PATH = "javascripts/codemirror/5.2.0/",//Depended by editormd
     MARKED_LIB_PATH = "javascripts/marked/0.3.3/",//Depended by editormd
     PRETTIFY_LIB_PATH = "javascripts/prettify/r298/",//Depended by editormd
@@ -45,6 +46,7 @@ requirejs.config({
         "flowchart-lib": FLOWCHART_LIB_PATH + "main",
         "jquery-flowchart-lib": JQUERY_FLOWCHART_LIB_PATH + "main",
         "sequence-diagram-lib": SEQUENCE_DIAGRAM_LIB_PATH + "main",
+        "katex-lib": KATEX_LIB_PATH + "main",
         "codemirror-lib": CODEMIRROR_LIB_PATH + "main",
         "marked-lib": MARKED_LIB_PATH + "main",
         "prettify-lib": PRETTIFY_LIB_PATH + "main",

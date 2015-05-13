@@ -164,8 +164,12 @@
                                  marker-width="Math.floor(sketchDevice.width/sketchDevice.rulerMarkerCount * 1000) / 1000"
                                  marker-count="sketchDevice.rulerMarkerCount" picked-widget="sketchObject.pickedWidget">
                             </div>
-                            <div id="widgetText" contenteditable="true"
-                                 ng-bind-html="sketchObject.pickedWidget.html | to_trusted"></div>
+                            <div id="widgetTextHolder"
+                                 ng-style="{'left': 45, 'top': 45, 'width': '{{sketchDevice.width}}', 'height': '{{sketchDevice.height}}'}">
+                                <div id="widgetText">
+                                    <textarea></textarea>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -11,7 +11,9 @@ define(
     [
         "raphael"
     ],
-    function () {
+    function (Raphael) {
+        window.Raphael = Raphael;
+
         return function () {
         }
     }

@@ -18779,7 +18779,12 @@
 #sketchContainer #sketchHolder .deviceBackground .deviceScreenBackground .deviceScreen .ruler {
   position: absolute;
 }
-#sketchContainer #sketchHolder .deviceBackground .deviceScreenBackground .deviceScreen #widgetText {
+#sketchContainer #sketchHolder .deviceBackground .deviceScreenBackground .deviceScreen #widgetTextHolder {
   z-index: 100;
+  position: absolute;
+  display: none;
+  background: #fff;
+}
+#sketchContainer #sketchHolder .deviceBackground .deviceScreenBackground .deviceScreen #widgetTextHolder #widgetText {
   position: absolute;
 }

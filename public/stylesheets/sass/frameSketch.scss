@@ -282,9 +282,15 @@ $zIndexWidgetText: 100;
                         position: absolute;
                     }
 
-                    #widgetText {
+                    #widgetTextHolder {
                         z-index: $zIndexWidgetText;
                         position: absolute;
+                        display: none;
+                        background: #fff;
+
+                        #widgetText {
+                            position: absolute;
+                        }
                     }
                 }
 

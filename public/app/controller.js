@@ -368,7 +368,7 @@ define(
 
                         widgetObj.removeOmniClass(angularConstants.widgetClasses.activeClass);
                         if (!widgetObj.isTemporary && widgetObj.isElement && widgetObj.$element) {
-                            var $text = $("#widgetText"),
+                            var $text = $("#widgetTextHolder"),
                                 editingWidget = $text.data("widgetObject");
 
                             $text.toggle(false);
@@ -455,15 +455,11 @@ define(
                         if ($rootScope.loadedProject.sketchWorks.pages.length) {
                             uiService.createPage("." + angularConstants.widgetClasses.deviceHolderClass, $rootScope.loadedProject.sketchWorks.pages[0]).then(function (pageObj) {
                                 $scope.sketchObject.pickedPage = pageObj;
-
-                                //CKEDITOR.inline('widgetText');
                             });
                         } else {
                             uiService.createPage("." + angularConstants.widgetClasses.deviceHolderClass).then(function (pageObj) {
                                 $scope.sketchObject.pickedPage = pageObj;
                                 $rootScope.loadedProject.sketchWorks.pages.push(pageObj);
-
-                                //CKEDITOR.inline('widgetText');
                             });
                         }
                     },

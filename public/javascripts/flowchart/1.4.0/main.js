@@ -16,7 +16,9 @@ define(
     [
         "flowchart"
     ],
-    function () {
+    function (flowchart) {
+        window.flowchart = flowchart;
+
         return function () {
         }
     }

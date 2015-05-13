@@ -23,7 +23,8 @@
         if (define.amd) // for Require.js
         {
             /* Require.js define replace */
-        } 
+            define(factory);
+        }
         else 
         {
 		    define(["jquery"], factory);  // for Sea.js
@@ -96,6 +97,7 @@
         appendMarkdown       : "",             // if in init textarea value not empty, append markdown to textarea
         width                : "100%",
         height               : "100%",
+        cmPath               : "",             // CodeMirror module file directory
         path                 : "./lib/",       // Dependents module file directory
         pluginPath           : "",             // If this empty, default use settings.path + "../plugins/"
         delay                : 300,            // Delay parse markdown to html, Uint : ms
@@ -442,8 +444,8 @@
                 
                 if (settings.searchReplace && !settings.readOnly) 
                 {
-                    editormd.loadCSS(settings.path + "codemirror/addon/dialog/dialog");
-                    editormd.loadCSS(settings.path + "codemirror/addon/search/matchesonscrollbar");
+                    editormd.loadCSS(settings.cmPath + "addon/dialog/dialog");
+                    editormd.loadCSS(settings.cmPath + "addon/search/matchesonscrollbar");
                 }
             }
             
@@ -597,7 +599,7 @@
             
             if (theme !== "default")
             {
-                editormd.loadCSS(settings.path + "codemirror/theme/" + settings.theme);
+                editormd.loadCSS(settings.cmPath + "theme/" + settings.theme);
             }
             
             this.cm.setOption("theme", theme);
@@ -618,7 +620,7 @@
             
             if (settings.theme !== "default")
             {
-                editormd.loadCSS(settings.path + "codemirror/theme/" + settings.theme);
+                editormd.loadCSS(settings.cmPath + "theme/" + settings.theme);
             }
             
             var codeMirrorConfig = {

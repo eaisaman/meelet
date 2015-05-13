@@ -11,7 +11,9 @@ define(
     [
         "marked"
     ],
-    function () {
+    function (marked) {
+        window.marked = marked;
+
         return function () {
         }
     }

@@ -27,7 +27,9 @@ define(
         cmAddonPath + "display/fullscreen",
         cmAddonPath + "search/match-highlighter"
     ],
-    function () {
+    function (CodeMirror) {
+        window.CodeMirror = CodeMirror;
+
         [
             CODEMIRROR_LIB_PATH + "lib/codemirror.css"
         ].forEach(function (href) {

@@ -178,12 +178,8 @@ define(
 
                             function toggleTextMode($el, state) {
                                 var widgetObj = $el.data("widgetObject"),
-                                    $text = $("#widgetText"),
-                                    editingWidget = $text.data("widgetObject"),
-                                    left = $el.offset().left,
-                                    top = $el.offset().top,
-                                    width = $el.width(),
-                                    height = $el.height();
+                                    $text = $("#widgetTextHolder"),
+                                    editingWidget = $text.data("widgetObject");
 
                                 if (state == null)
                                     state = !editingWidget || editingWidget.id !== widgetObj.id;
@@ -191,33 +187,11 @@ define(
                                 $text.toggle(state);
 
                                 if (state) {
-                                    left = Math.floor(left * angularConstants.precision) / angularConstants.precision;
-                                    top = Math.floor(top * angularConstants.precision) / angularConstants.precision;
-                                    width = Math.floor(width * angularConstants.precision) / angularConstants.precision;
-                                    height = Math.floor(height * angularConstants.precision) / angularConstants.precision;
+                                    var editor = $text.data("editor");
+                                    !editor && $text.data("editor", editormd.inline('widgetText'));
 
-                                    $text.width(width);
-                                    $text.height(height);
-                                    $text.offset({left: left, top: top});
-
-                                    var backgroundColor = $el.css("background-color"),
-                                        borderColor = backgroundColor;
-                                    if (backgroundColor) {
-                                        backgroundColor = uiUtilService.rgbToHex(backgroundColor);
-                                        borderColor = uiUtilService.contrastColor(backgroundColor) === "#ffffff" ? uiUtilService.lighterColor(backgroundColor, 0.5) : uiUtilService.lighterColor(backgroundColor, -0.5);
-                                    } else {
-                                        borderColor = "#000000";
-                                    }
-                                    $text.css("color", borderColor);
                                     $text.data("widgetObject", widgetObj);
-                                    $text.focus();
                                 } else {
-                                    if (editingWidget) {
-                                        $text.css("width", "auto");
-                                        if ($text.width()) {
-                                            editingWidget.setHtml($text.html());
-                                        }
-                                    }
                                     $text.removeData("widgetObject");
                                 }
 

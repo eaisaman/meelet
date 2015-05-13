@@ -5,6 +5,7 @@ requirejs.config(
         },
         shim: {
             "sequence-diagram": {
+                exports: "Diagram",
                 deps: ["raphael-lib"]
             }
         },
