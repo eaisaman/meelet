@@ -19,7 +19,7 @@ var ANGULAR_LIB_PATH = "javascripts/angular/1.3.0-beta.8/",
     CODEMIRROR_LIB_PATH = "javascripts/codemirror/5.2.0/",//Depended by editormd
     MARKED_LIB_PATH = "javascripts/marked/0.3.3/",//Depended by editormd
     PRETTIFY_LIB_PATH = "javascripts/prettify/r298/",//Depended by editormd
-    EDITORMD_LIB_PATH = "javascripts/editormd/1.4.3/", //Not used for project exported html
+    EDITORMD_LIB_PATH = "javascripts/editormd/1.4.3/",
     APP_LIB_PATH = "app/",
     DIRECTIVE_LIB_PATH = "directive/",
     isBrowser = !!(typeof window !== 'undefined' && typeof navigator !== 'undefined' && !/jsDom$/i.test(navigator.appName) && window.document);

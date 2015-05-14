@@ -698,6 +698,7 @@ Commons.prototype.convertToHtml = function (projectPath, callback) {
                                     if (/\/main\.js$/.test(pathname)) {
                                         amdModules.push(pathname);
                                     }
+                                    self.config.logger.debug(pathname);
 
                                     resource.defaultFetch(callback);
                                 },

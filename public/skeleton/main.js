@@ -11,6 +11,15 @@ var ANGULAR_LIB_PATH = "javascripts/angular/1.3.0-beta.8/",
     CLASSIE_LIB_PATH = "javascripts/classie/",
     MODERNIZR_LIB_PATH = "javascripts/modernizr/",
     STRING_LIB_PATH = "javascripts/String/",
+    RAPHAEL_LIB_PATH = "javascripts/raphael/2.1.2/",//Depended by flowchart, sequence-diagram
+    FLOWCHART_LIB_PATH = "javascripts/flowchart/1.4.0/", //Depended by editormd
+    JQUERY_FLOWCHART_LIB_PATH = "javascripts/jquery.flowchart/1.0.0/", //Depended by editormd
+    SEQUENCE_DIAGRAM_LIB_PATH = "javascripts/sequence-diagram/1.0.4/", //Depended by editormd
+    KATEX_LIB_PATH = "javascripts/katex/0.3.0/",//Depended by editormd
+    CODEMIRROR_LIB_PATH = "javascripts/codemirror/5.2.0/",//Depended by editormd
+    MARKED_LIB_PATH = "javascripts/marked/0.3.3/",//Depended by editormd
+    PRETTIFY_LIB_PATH = "javascripts/prettify/r298/",//Depended by editormd
+    EDITORMD_LIB_PATH = "javascripts/editormd/1.4.3/",
     APP_LIB_PATH = "app/",
     DIRECTIVE_LIB_PATH = "directive/",
     isBrowser = !!(typeof window !== 'undefined' && typeof navigator !== 'undefined' && !/jsDom$/i.test(navigator.appName) && window.document);
@@ -33,12 +42,21 @@ requirejs.config({
         "classie-lib": CLASSIE_LIB_PATH + "main",
         "modernizr-lib": MODERNIZR_LIB_PATH + "main",
         "string-lib": STRING_LIB_PATH + "main",
+        "raphael-lib": RAPHAEL_LIB_PATH + "main",
+        "flowchart-lib": FLOWCHART_LIB_PATH + "main",
+        "jquery-flowchart-lib": JQUERY_FLOWCHART_LIB_PATH + "main",
+        "sequence-diagram-lib": SEQUENCE_DIAGRAM_LIB_PATH + "main",
+        "katex-lib": KATEX_LIB_PATH + "main",
+        "codemirror-lib": CODEMIRROR_LIB_PATH + "main",
+        "marked-lib": MARKED_LIB_PATH + "main",
+        "prettify-lib": PRETTIFY_LIB_PATH + "main",
+        "editormd-lib": EDITORMD_LIB_PATH + "main",
         "app-lib": APP_LIB_PATH + "main",
         "directive-lib": DIRECTIVE_LIB_PATH + "main"
     }
 });
 
-requirejs(["jquery-lib", "jquery-plugins-lib", "hammer-lib", "jquery-ui-lib", "jquery-ui-plugins-lib", "angular-lib", "angular-modules-lib", "underscore-lib", "classie-lib", "modernizr-lib", "string-lib"], function () {
+requirejs(["jquery-lib", "jquery-plugins-lib", "hammer-lib", "jquery-ui-lib", "jquery-ui-plugins-lib", "angular-lib", "angular-modules-lib", "underscore-lib", "classie-lib", "modernizr-lib", "string-lib", "editormd-lib"], function () {
     if (isBrowser) {
         window.appModule = angular.module(APP_MODULE_NAME, APP_MODULE_DEPS);
         window.appModule.value("angularEventTypes", {
