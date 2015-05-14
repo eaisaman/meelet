@@ -40,13 +40,34 @@ define(
             imageUpload: false
         });
 
+        _.extend(window.editormd.defaults.toolbarCustomIcons, {
+            exit: "<a href=\"javascript:;\" title=\"Exit\" unselectable=\"on\"><i class=\"fa icon-frame-sketch icon-frame-sketch-exit\" name=\"exit\"></i></a>"
+        });
+
+        _.extend(window.editormd.toolbarHandlers, {
+            exit: function () {
+                var $editorHolder = $("#" + this.id).parent();
+                $editorHolder.trigger("editormd.hide", {
+                    markdown: this.getMarkdown(),
+                    html: this.getPreviewedHTML()
+                }).toggle(false);
+            }
+        });
+
+        _.extend(window.editormd.defaults.toolbarHandlers, {
+            exit: function () {
+                return window.editormd.toolbarHandlers.exit;
+            }
+        });
+
         window.editormd.toolbarModes.full = [
             "undo", "redo", "|",
-            "bold", "del", "italic", "quote", "ucwords", "uppercase", "lowercase", "|",
+            "bold", "del", "italic", "quote", "|",
             "h1", "h2", "h3", "h4", "h5", "h6", "|",
             "list-ul", "list-ol", "hr", "|",
-            "link", "reference-link", "image", "code", "preformatted-text", "code-block", "table", "datetime", "emoji", "html-entities", "pagebreak", "|",
-            "watch", "preview", "clear", "search"
+            "link", "reference-link", "image", "code", "preformatted-text", "code-block", "table", "datetime", "emoji", "|",
+            "watch", "preview", "search", "|",
+            "exit"
         ];
 
         window.editormd.inline = function (id) {

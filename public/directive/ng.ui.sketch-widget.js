@@ -178,21 +178,20 @@ define(
 
                             function toggleTextMode($el, state) {
                                 var widgetObj = $el.data("widgetObject"),
-                                    $text = $("#widgetTextHolder"),
-                                    editingWidget = $text.data("widgetObject");
+                                    $textHolder = $("#widgetTextHolder"),
+                                    editingWidget = $textHolder.data("widgetObject");
 
                                 if (state == null)
                                     state = !editingWidget || editingWidget.id !== widgetObj.id;
 
-                                $text.toggle(state);
+                                $textHolder.toggle(state);
 
                                 if (state) {
-                                    var editor = $text.data("editor");
-                                    !editor && $text.data("editor", editormd.inline('widgetText'));
+                                    uiService.createEditor("#widgetTextHolder", widgetObj.markdown);
 
-                                    $text.data("widgetObject", widgetObj);
+                                    $textHolder.data("widgetObject", widgetObj);
                                 } else {
-                                    $text.removeData("widgetObject");
+                                    $textHolder.removeData("widgetObject");
                                 }
 
                                 return state;

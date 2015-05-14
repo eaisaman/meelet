@@ -761,7 +761,8 @@ var State = Class({
     CLASS_NAME: "ElementSketchWidget",
     MEMBERS: {
         isElement: true,
-        html: ""
+        html: "",
+        markdown: ""
     },
     initialize: function (id, widgetsArr) {
         this.initialize.prototype.__proto__.initialize.apply(this, [id]);
@@ -777,6 +778,7 @@ var State = Class({
 
         ElementSketchWidgetClass.prototype.__proto__.fromObject.apply(ret, [obj, context]);
         ret.html = obj.html;
+        ret.markdown = obj.markdown;
 
         return ret;
     },
@@ -786,7 +788,11 @@ var State = Class({
         var self = this,
             offspring = self.eventMap.offspring;
 
-        self.html && $(self.html).appendTo(self.$element);
+        if (self.html) {
+            var $textNode = $("<div />").addClass("widgetText markdown-body editormd-preview-container").prependTo(self.$element);
+            $textNode.html(self.html);
+        }
+
         self.childWidgets && self.childWidgets.forEach(function (child) {
             child.appendTo($, $document, self.$element);
 

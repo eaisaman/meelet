@@ -2990,6 +2990,7 @@ define(
                 MEMBERS: {
                     isElement: true,
                     isTemporary: false,
+                    markdown: "",
                     html: ""
                 },
                 initialize: function (id, widgetsArr, isTemporary) {
@@ -3003,6 +3004,7 @@ define(
 
                     this.isElement = true;
                     this.isTemporary = false;
+                    this.markdown = "";
                     this.html = "";
 
                     if (isTemporary != null) {
@@ -3022,7 +3024,7 @@ define(
                 },
                 toJSON: function () {
                     var jsonObj = ElementSketchWidgetClass.prototype.__proto__.toJSON.apply(this);
-                    _.extend(jsonObj, _.pick(this, ["CLASS_NAME", "html"]));
+                    _.extend(jsonObj, _.pick(this, ["CLASS_NAME", "html", "markdown"]));
 
                     return jsonObj;
                 },
@@ -3030,6 +3032,7 @@ define(
                     var ret = new ElementSketchWidgetClass(obj.id);
 
                     ElementSketchWidgetClass.prototype.__proto__.fromObject.apply(ret, [obj]);
+                    ret.markdown = obj.markdown;
                     ret.setHtml(obj.html);
 
                     return ret;
@@ -3580,7 +3583,7 @@ define(
                         var $textNode = self.$element.find(".widgetText");
                         if (self.html) {
                             if (!$textNode.length) {
-                                $textNode = $("<div />").addClass("widgetText").prependTo(self.$element);
+                                $textNode = $("<div />").addClass("widgetText markdown-body editormd-preview-container").prependTo(self.$element);
                             }
                             $textNode.empty();
                             $textNode.html(self.html);
@@ -4817,6 +4820,41 @@ define(
                     }
                 ]
             );
+        }
+
+        Service.prototype.createEditor = function (holder, markdown) {
+            var $textHolder;
+
+            if (holder.jquery) {
+                $textHolder = holder;
+            } else if (typeof holder === "string" || angular.isElement(holder)) {
+                $textHolder = $(holder);
+            }
+
+            if ($textHolder) {
+                var $text = $textHolder.children(":first-child"),
+                    id = $text.attr("id"),
+                    editor;
+
+                if (id) {
+                    editor = $textHolder.data("editor") || editormd.inline(id);
+                    editor.setMarkdown(markdown || "");
+                    $textHolder.data("editor", editor);
+
+                    $textHolder.on("editormd.hide", function (event, data) {
+                        var $this = $(this),
+                            widgetObject = $this.data("widgetObject");
+
+                        if (widgetObject) {
+                            widgetObject.markdown = data.markdown;
+                            widgetObject.setHtml(data.html);
+                            $this.removeData("widgetObject");
+                        }
+                    });
+                }
+
+                return editor;
+            }
         }
 
         return function (appModule) {
