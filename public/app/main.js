@@ -12,13 +12,14 @@ requirejs.config(
 );
 
 define(
-    ["app-util", "app-route", "app-filter", "app-service", "app-controller"],
+    ["ng.ui.extension", "app-util", "app-route", "app-filter", "app-service", "app-controller"],
     function () {
-        var appConfigs = Array.prototype.slice.call(arguments);
+        var extension = arguments[0],
+            appConfigs = Array.prototype.slice.call(arguments, 1);
 
         return function (appModule) {
             appConfigs.forEach(function (config) {
-                config(appModule);
+                config(appModule, extension);
             });
         }
     }

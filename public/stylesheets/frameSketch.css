@@ -7499,6 +7499,10 @@
   animation-name: twisterInDown;
 }
 
+/*
+ * Used by directive ng.ui.project
+ * Found in _border-eidtor.html, _gradient-editor.html, _border-editor.html, _text-shadow.html
+ */
 #borderWidthDropdown {
   /* Stack the items with a slight offset */
   /* Stack the items with a slight offset, and expand them with a slight random angle/left values.

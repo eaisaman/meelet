@@ -4,6 +4,7 @@ var rimraf = require('rimraf');
 var async = require('async');
 var _ = require('underscore');
 var bson = require('bson');
+var qr = require('qr-image');
 _.string = require('underscore.string');
 _.mixin(_.string.exports());
 var commons = require('../../../commons');
@@ -505,6 +506,28 @@ UserFileController.prototype.postProject = function (project, sketchWorks, succe
                     }
                 });
 
+            },
+            function (data, next) {
+                var projectId = data._id.toString(),
+                    projectPath = path.join(self.config.userFile.sketchFolder, projectId),
+                    filePath = path.join(projectPath, "qrcode.svg");
+
+                try {
+                    var out = fs.createWriteStream(filePath),
+                        qr_svg = qr.image(projectId, {type: 'svg'});
+
+                    out.on('finish', function () {
+                        next(null, data);
+                    });
+
+                    out.on('error', function (err) {
+                        next(err);
+                    });
+
+                    qr_svg.pipe(out);
+                } catch (err2) {
+                    next(err2);
+                }
             }
         ], function (err, data) {
             if (!err) {
@@ -752,20 +775,24 @@ UserFileController.prototype.deleteProjectArtifactXref = function (xrefFilter, s
     //Cannot delete record with refCount greater than 0
     xrefFilter["artifactList.refCount"] = {$not: {$gt: 0}}
 
-    (!self.isDBReady && fail(new Error('DB not initialized'))) || self.schema.ProjectArtifactXref.remove(xrefFilter, function (err, data) {
-        if (!err) {
-            success(data);
-        } else {
-            fail(err);
-        }
-    });
+        (!self.isDBReady && fail(new Error('DB not initialized'))) || self.schema.ProjectArtifactXref.remove(xrefFilter, function (err, data) {
+            if (!err) {
+                success(data);
+            } else {
+                fail(err);
+            }
+        });
 }
 
 UserFileController.prototype.postConvertToHtml = function (userId, projectId, success, fail) {
     var self = this;
 
     if (projectId) {
-        (!self.isDBReady && fail(new Error('DB not initialized'))) || self.schema.UserProject.find({_id: new self.db.Types.ObjectId(projectId), lock: true, lockUser: new self.db.Types.ObjectId(userId)}, function (err, data) {
+        (!self.isDBReady && fail(new Error('DB not initialized'))) || self.schema.UserProject.find({
+            _id: new self.db.Types.ObjectId(projectId),
+            lock: true,
+            lockUser: new self.db.Types.ObjectId(userId)
+        }, function (err, data) {
             if (err) {
                 fail(err);
             } else {

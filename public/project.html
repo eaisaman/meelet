@@ -20,19 +20,31 @@
             </div>
             <div class="projectContent col-as-12">
                 <div class="fs-x-small projectItem" ng-repeat="projectItem in userDetail.projectList"
+                     ng-attr-id="{{projectItem._id}}"
                      ng-click="toggleEditMode && displayProjectEdit(projectItem, $event) || selectProject(projectItem, $event)"
                      ng-style="{'cursor':toggleEditMode?'pointer':'default'}">
                     <div class="projectItemCheck fs-x-large icon-project-before"
                          ng-class="{'icon-project-uncheck-before':!projectItem.checked, 'icon-project-check-before':projectItem.checked}"
                          ng-click="toggleCheck(projectItem, $event)" ng-show="toggleCheckMode"></div>
 
-                    <div class="projectItemInfo projectItemDesc col-as-12">
-                        <span class="col-as-12">{{projectItem.desc}}</span>
-                    </div>
-                    <div class="projectItemInfo col-as-12 input-group">
-                        <label class="col-as-6 no-padding-right control-label">Name</label>
+                    <div class="projectItemDisplayQrCode fs-x-large icon-project-before icon-project-qr-code-before"
+                         ng-click="toggleDisplay('#{0} .projectItemQrCode'.format(projectItem._id), $event)"></div>
 
-                        <div class="col-as-6 no-padding-left"><span>{{projectItem.name}}</span>
+                    <div class="projectItemInfoList col-as-12 no-padding">
+                        <div class="projectItemInfo projectItemDesc col-as-12">
+                            <span class="col-as-12">{{projectItem.desc}}</span>
+                        </div>
+                        <div class="projectItemInfo col-as-12 input-group">
+                            <label class="col-as-6 no-padding-right control-label">Name</label>
+
+                            <div class="col-as-6 no-padding-left"><span>{{projectItem.name}}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="projectItemQrCode"
+                         ng-click="toggleDisplay('#{0} .projectItemQrCode'.format(projectItem._id), $event)">
+                        <div class="qrCodeImg" ng-include="'project/{0}/qrcode.svg'.format(projectItem._id)">
                         </div>
                     </div>
                     <div class="projectItemButton col-as-12" ng-click="removeProject(projectItem, $event)">

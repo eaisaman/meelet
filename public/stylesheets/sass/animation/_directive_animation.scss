@@ -116,3 +116,15 @@
  * Found in _border-eidtor.html, _gradient-editor.html, _border-editor.html, _text-shadow.html
  */
 @include baseAnimation(twisterInDown);
+
+/*
+ * Used by directive ng.ui.project
+ * Found in project.html
+ */
+@include baseAnimation(puffIn);
+
+/*
+ * Used by directive ng.ui.project
+ * Found in project.html
+ */
+@include baseAnimation(puffOut);
