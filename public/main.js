@@ -54,6 +54,9 @@ requirejs.config({
         "app-lib": APP_LIB_PATH + "main",
         "directive-lib": DIRECTIVE_LIB_PATH + "main"
     },
+    shim: {
+        "app-lib": {deps: ["directive-lib"]}
+    },
     waitSeconds: 0
 });
 

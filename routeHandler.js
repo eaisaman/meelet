@@ -30,6 +30,17 @@ RouteHandler.prototype.routeOnFunctionName = function (holder) {
         return args;
     }
 
+    var responseHeaders = {};
+
+    if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+        _.extend(responseHeaders, {
+            "Access-Control-Allow-Origin": "http://localhost",
+            'Access-Control-Allow-Methods': 'OPTIONS,GET,POST,PUT,DELETE',
+            "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept",
+            "Access-Control-Allow-Credentials": true
+        });
+    }
+
     for (var key in holder) {
         var member = holder[key];
 
@@ -64,6 +75,8 @@ RouteHandler.prototype.routeOnFunctionName = function (holder) {
 
             if (method) {
                 this.router[method]('/' + key, function (req, res) {
+                    res.header(responseHeaders);
+
                     var fnItem = RouteHandler.prototype.functionMap[req.method.toLowerCase()][req._parsedUrl.pathname];
 
                     if (fnItem) {
