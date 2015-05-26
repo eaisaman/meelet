@@ -92,7 +92,7 @@
         "parameters": [
           {
             "resource": "securityDb",
-            "collectionName": "Users"
+            "collectionName": "User"
           }
         ]
       }
@@ -137,6 +137,7 @@
   "settings": {
     "views": "views",
     "view engine": "jade",
+    "salt": "d21xMzQ6Kg==",
     "applicationDb": "mongooseDb",
     "download": {
       "folder": "download"

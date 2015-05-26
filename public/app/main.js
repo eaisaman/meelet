@@ -7,6 +7,9 @@ requirejs.config(
             "app-service": window.cordova && APP_LIB_PATH + "embedded/service" || APP_LIB_PATH + "browser/service",
             "app-controller": APP_LIB_PATH + "controller"
         },
+        shim: {
+            "app-service": {deps: ["app-util"]}
+        },
         waitSeconds: 0
     }
 );

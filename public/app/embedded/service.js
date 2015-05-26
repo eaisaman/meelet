@@ -70,13 +70,19 @@ define(
 
         appService.prototype.removeProjectImage = appService.prototype.NOOP;
 
-        appService.prototype.getUser = appService.prototype.NOOP;
+        appService.prototype.refreshUser = appService.prototype.NOOP;
+
+        appService.prototype.doLogin = appService.prototype.NOOP;
+
+        appService.prototype.doLogout = appService.prototype.NOOP;
+
+        appService.prototype.restoreUserFromStorage = appService.prototype.NOOP;
+
+        appService.prototype.getUserDetail = appService.prototype.NOOP;
 
         appService.prototype.getRepoLibrary = appService.prototype.NOOP;
 
         appService.prototype.getRepoArtifact = appService.prototype.NOOP;
-
-        appService.prototype.getUserDetail = appService.prototype.NOOP;
 
         appService.prototype.getProjectDependency = appService.prototype.NOOP;
 

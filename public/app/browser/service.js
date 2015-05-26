@@ -1,7 +1,7 @@
 define(
     ["jquery", "angular"],
     function () {
-        var appService = function ($rootScope, $http, $timeout, $q, $compile, $cookies, $cookieStore) {
+        var appService = function ($rootScope, $http, $timeout, $q, $compile, $cookies, $cookieStore, utilService) {
             this.$rootScope = $rootScope;
             this.$http = $http;
             this.$timeout = $timeout;
@@ -9,9 +9,10 @@ define(
             this.$compile = $compile;
             this.$cookies = $cookies;
             this.$cookieStore = $cookieStore;
+            this.utilService = utilService;
         };
 
-        appService.$inject = ["$rootScope", "$http", "$timeout", "$q", "$compile", "$cookies", "$cookieStore"];
+        appService.$inject = ["$rootScope", "$http", "$timeout", "$q", "$compile", "$cookies", "$cookieStore", "utilService"];
 
         appService.prototype.NOOP = function () {
             var self = this,
@@ -645,12 +646,103 @@ define(
             });
         }
 
-        appService.prototype.getUser = function (userFilter) {
+        appService.prototype.refreshUser = function (loginName) {
+            var self = this;
+
+            return self.$http({
+                method: 'get',
+                url: '/api/private/user',
+                params: {
+                    userFilter: JSON.stringify({loginName: loginName})
+                }
+            }).then(function (result) {
+                var defer = self.$q.defer(),
+                    userObj = result.data && result.data.resultValue && result.data.resultValue.length && result.data.resultValue[0];
+
+                self.$timeout(function () {
+                    if (userObj) {
+                        localStorage.loginUser = JSON.stringify(userObj);
+                        self.$rootScope.loginUser = self.$rootScope.loginUser || {};
+                        for (var key in self.$rootScope.loginUser) {
+                            delete self.$rootScope.loginUser[key];
+                        }
+
+                        _.extend(self.$rootScope.loginUser, userObj);
+
+                        defer.resolve(userObj);
+                    } else {
+                        defer.reject("User object not returned.");
+                    }
+                });
+
+                return defer.promise;
+            }, function (err) {
+                return self.getRejectDefer(err);
+            });
+        }
+
+        appService.prototype.doLogin = function (loginName, password) {
+            var self = this,
+                encoded = self.utilService.encode(loginName + ':' + password);
+
+            this.$http.defaults.headers.common.Authorization = 'Basic ' + encoded;
+
+            return self.refreshUser(loginName);
+        }
+
+        appService.prototype.doLogout = function () {
+            var self = this,
+                defer = self.$q.defer();
+
+            self.$timeout(function () {
+                delete localStorage.loginUser;
+
+                for (var key in self.$rootScope.loginUser) {
+                    delete self.$rootScope.loginUser[key];
+                }
+                self.$cookieStore.remove("connect.sid");
+                self.$http.defaults.headers.common.Authorization = "";
+
+                defer.resolve();
+            });
+
+            return defer.promise;
+        }
+
+        appService.prototype.restoreUserFromStorage = function () {
+            var self = this,
+                defer = self.$q.defer();
+
+            self.$timeout(
+                function () {
+                    var sid = self.$cookies["connect.sid"];
+
+                    !sid && delete localStorage.loginUser;
+
+                    self.$rootScope.loginUser = self.$rootScope.loginUser || {};
+
+                    var userObj = eval("(" + localStorage.loginUser + ")");
+
+                    for (var key in self.$rootScope.loginUser) {
+                        delete self.$rootScope.loginUser[key];
+                    }
+
+                    _.extend(self.$rootScope.loginUser, userObj);
+
+                    defer.resolve(userObj);
+                }
+            );
+
+            return defer.promise;
+        }
+
+        appService.prototype.getUserDetail = function (userFilter) {
             return this.$http({
                 method: 'GET',
-                url: '/api/public/user',
+                url: '/api/private/userDetail',
                 params: {userFilter: JSON.stringify(userFilter || {})}
             });
+
         }
 
         appService.prototype.getRepoLibrary = function (libraryFilter) {
@@ -667,15 +759,6 @@ define(
                 method: 'GET',
                 url: '/api/public/repoArtifact',
                 params: {artifactFilter: JSON.stringify(artifactFilter || {})}
-            });
-
-        }
-
-        appService.prototype.getUserDetail = function (userFilter) {
-            return this.$http({
-                method: 'GET',
-                url: '/api/public/userDetail',
-                params: {userFilter: JSON.stringify(userFilter || {})}
             });
 
         }

@@ -2,14 +2,66 @@ define(
     ["angular", "jquery", "jquery-ui", "app-util", "app-route", "app-filter", "app-service"],
     function () {
         return function (appModule, extension) {
-            function RootController($scope, $rootScope, $q, appService, urlService) {
-                $q.all([appService.getRepoLibrary(), appService.getUserDetail({"_id": "52591a12c763d5e4585563d0"}), appService.getUser({"loginName": "wangxinyun28"})]).then(function (result) {
-                    $rootScope.repoLibraryList = result[0] && result[0].data.result == "OK" && result[0].data.resultValue || [];
-                    result[1] && result[1].data.result == "OK" && _.extend($rootScope.userDetail, result[1].data.resultValue[0]);
-                    result[2] && result[2].data.result == "OK" && _.extend($rootScope.loginUser, result[2].data.resultValue[0]);
+            function RootController($scope, $rootScope, $q, appService, urlService, uiUtilService) {
+                //For development convenience, we do fake login or restore user info if already authenticated.
+                function initMaster() {
+                    return $q.all([
+                        appService.getRepoLibrary().then(
+                            function (result) {
+                                $rootScope.repoLibraryList = result && result.data.result == "OK" && result.data.resultValue || [];
+                            }, function (err) {
+                                return uiUtilService.getRejectDefer(err);
+                            }
+                        ),
+                        appService.restoreUserFromStorage().then(
+                            function () {
+                                var arr = [];
+                                if (!$rootScope.loginUser._id) {
+                                    arr.push(
+                                        function () {
+                                            return appService.doLogin("wangxinyun28", "*").then(
+                                                function (userObj) {
+                                                    userObj && _.extend($rootScope.loginUser, userObj);
 
-                    urlService.project();
-                });
+                                                    return uiUtilService.getResolveDefer();
+                                                },
+                                                function (err) {
+                                                    return uiUtilService.getRejectDefer(err);
+                                                }
+                                            )
+                                        }
+                                    );
+                                }
+
+                                arr.push(function () {
+                                    return appService.getUserDetail({"loginName": "wangxinyun28"}).then(
+                                        function (result) {
+                                            result && result.data.result == "OK" && _.extend($rootScope.userDetail, result.data.resultValue[0]);
+
+                                            return uiUtilService.getResolveDefer();
+                                        },
+                                        function (err) {
+                                            return uiUtilService.getRejectDefer(err);
+                                        }
+                                    );
+                                });
+
+                                return uiUtilService.chain(arr).then(
+                                    function (err) {
+                                        if (err) {
+                                            return uiUtilService.getRejectDefer(err);
+                                        } else {
+                                            return uiUtilService.getResolveDefer();
+                                        }
+                                    }
+                                );
+                            }, function (err) {
+                                return uiUtilService.getRejectDefer(err);
+                            }
+                        )
+                    ]);
+                }
+
                 $rootScope.repoLibraryList = [];
                 $rootScope.effectLibraryList = [];
                 $rootScope.iconLibraryList = [];
@@ -58,6 +110,11 @@ define(
                     return target;
                 };
 
+                initMaster().then(
+                    function () {
+                        urlService.project();
+                    }
+                );
             }
 
             function FrameSketchController($scope, $rootScope, $timeout, $q, $log, $compile, $parse, angularEventTypes, angularConstants, appService, uiService, uiUtilService) {
@@ -1018,7 +1075,7 @@ define(
             }
 
             appModule.
-                controller('RootController', ["$scope", "$rootScope", "$q", "appService", "urlService", RootController]).
+                controller('RootController', ["$scope", "$rootScope", "$q", "appService", "urlService", "uiUtilService", RootController]).
                 controller('FrameSketchController', ["$scope", "$rootScope", "$timeout", "$q", "$log", "$compile", "$parse", "angularEventTypes", "angularConstants", "appService", "uiService", "uiUtilService", FrameSketchController]).
                 controller('ProjectController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "uiService", "urlService", "uiUtilService", ProjectController]).
                 controller('RepoController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "urlService", RepoController]).

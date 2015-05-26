@@ -326,7 +326,7 @@ Commons.prototype.authenticate = function (options) {
 
     function checkPassword(plain, enc, salt) {
         var enc2 = crypto.createHmac('sha1', salt).update(plain).digest('hex');
-        return enc2 == enc;
+        return enc2 === enc;
     }
 
     (function () {
