@@ -146,6 +146,7 @@
       "folder": "upload"
     },
     "userFile": {
+      "tmpFolder": "tmp",
       "sketchFolder": "project",
       "repoFolder": "repo",
       "skeletonFolder": "public/skeleton",

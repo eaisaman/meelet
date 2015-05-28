@@ -816,4 +816,120 @@ UserFileController.prototype.postConvertToHtml = function (userId, projectId, su
     }
 }
 
+UserFileController.prototype.getProjectFile = function (projectId, request, success, fail) {
+    var self = this;
+
+    if (projectId) {
+        var projectPath = path.join(self.config.userFile.sketchFolder, projectId),
+            meeletPath = path.join(projectPath, self.config.settings.meeletFile),
+            zipPath = path.join(self.config.settings.download.folder, projectId + ".zip");
+
+        if (fs.existsSync(projectPath)) {
+            async.waterfall(
+                [
+                    function (next) {
+                        var pObj = {
+                            meeletTime: function (pCallback) {
+                                fs.stat(meeletPath, function (err, stat) {
+                                    if (err) {
+                                        pCallback(err);
+                                    } else {
+                                        pCallback(null, stat.mtime.getTime());
+                                    }
+                                });
+                            },
+                            projectObj: function (pCallback) {
+                                self.schema.UserProject.find({_id: new self.db.Types.ObjectId(projectId)}, function (err, data) {
+                                    pCallback(err, data[0]);
+                                });
+                            }
+                        };
+
+                        pObj.zipFileTime = function (pCallback) {
+                            fs.stat(zipPath, function (err, stat) {
+                                if (err) {
+                                    if (err.code !== "ENOENT") //Not Found
+                                        pCallback(err);
+                                    else
+                                        pCallback(null, 0);
+                                } else {
+                                    pCallback(null, stat.mtime.getTime());
+                                }
+                            });
+                        }
+
+                        async.parallel(pObj, function (err, results) {
+                            if (err) next(err);
+
+                            next(null, results.meeletTime > results.zipFileTime && results.projectObj);
+                        })
+                    },
+                    function (projectObj, next) {
+                        if (projectObj) {
+                            var tmpPath = path.join(self.config.userFile.tmpFolder, _.string.sprintf("%s-%d.zip", projectId, new Date().getTime())),
+                                zip = require('archiver')('zip'),
+                                out = fs.createWriteStream(tmpPath);
+
+                            out.on('finish', function () {
+                                next(null, tmpPath);
+                            });
+
+                            zip.on('error', function (err) {
+                                next(err);
+                            });
+
+                            out.on('error', function (err) {
+                                next(err);
+                            });
+
+                            zip.pipe(out);
+                            zip.directory(projectPath, false);
+                            zip.append(JSON.stringify(projectObj), {name: "project.json"});
+
+                            zip.finalize();
+                        } else {
+                            next(null, null);
+                        }
+                    },
+                    function (tmpPath, next) {
+                        var fileName = path.basename(zipPath);
+
+                        if (tmpPath) {
+                            var src = fs.createReadStream(tmpPath),
+                                dest = fs.createWriteStream(zipPath);
+
+                            dest.on('finish', function () {
+                                next(null, fileName);
+                            });
+
+                            src.on('error', function (err) {
+                                next(err);
+                            });
+
+                            dest.on('error', function (err) {
+                                next(err);
+                            });
+
+                            src.pipe(dest);
+                        } else {
+                            next(null, fileName);
+                        }
+                    }
+                ],
+                function (err, fileName) {
+                    if (err) {
+                        fail(err);
+                    } else {
+                        self.fileController.getFile(fileName, request.headers, success, fail);
+                    }
+                }
+            );
+        } else {
+            fail("Project does not exist");
+        }
+    } else {
+        fail("Empty project id");
+    }
+}
+
 module.exports = UserFileController;

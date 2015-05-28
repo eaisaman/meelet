@@ -27,7 +27,7 @@
     "rimraf": "~2.2.8",
     "fluent-ffmpeg": "~1.7.1",
     "gm": "~1.14.2",
-    "archiver": "~0.9.1",
+    "archiver": "~0.14.4",
     "passport": "~0.2.0",
     "passport-http": "~0.2.2",
     "passport-http-bearer": "~1.0.1",
