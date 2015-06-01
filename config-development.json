@@ -51,6 +51,12 @@
             }
         },
         {
+            "/": {
+                "module": "./commons",
+                "function": "allowXDomain"
+            }
+        },
+        {
             "/api/public/": {
                 "module": "./routes/api/public"
             }

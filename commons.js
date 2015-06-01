@@ -162,6 +162,19 @@ Commons.prototype.multipart = function () {
 
 }
 
+Commons.prototype.allowXDomain = function () {
+    return function addXDomainHeaders(req, res, next) {
+        if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+            res.setHeader("Access-Control-Allow-Origin", "http://localhost");
+            res.setHeader("Access-Control-Allow-Methods", "OPTIONS,GET,POST,PUT,DELETE");
+            res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+            res.setHeader("Access-Control-Allow-Credentials", true);
+        }
+
+        next();
+    }
+}
+
 Commons.prototype.static = function (options) {
     var folder = options.localFolder,
         _folder = _(folder);
