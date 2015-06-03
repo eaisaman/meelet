@@ -36,7 +36,11 @@ FileController.prototype.getFile = function (fileName, requestHeader, success, f
                             } else {
                                 fs.stat(filePath, function (err, stat) {
                                     if (err) {
-                                        next(err, {statusCode: 500});
+                                        if (err.code !== "ENOENT") {
+                                            next(err, {statusCode: 500});
+                                        } else {
+                                            next(null);
+                                        }
                                     } else {
                                         var lastModified = stat.mtime;
                                         if (lastModified.getTime() <= ifModifiedSince) {
