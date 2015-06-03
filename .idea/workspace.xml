@@ -6,10 +6,9 @@
       <change type="DELETED" beforePath="$PROJECT_DIR$/project/54aa095281dea526028dd7fd/stylesheets/sass/548e48d1708048063a0041a8/_configuration-Widget_1425018388663.scss" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/project/54aa095281dea526028dd7fd/stylesheets/sass/548e48d1708048063a0041a8/configurable-widget-Widget_1425018388663.scss" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/project/54aa095281dea526028dd7fd/stylesheets/sass/548e48d1708048063a0041a8/sass" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/commons.js" afterPath="$PROJECT_DIR$/commons.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config-development.json" afterPath="$PROJECT_DIR$/config-development.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/project/54aa095281dea526028dd7fd/meelet.json" afterPath="$PROJECT_DIR$/project/54aa095281dea526028dd7fd/meelet.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routeHandler.js" afterPath="$PROJECT_DIR$/routeHandler.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/api/public/userfile.js" afterPath="$PROJECT_DIR$/routes/api/public/userfile.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="meelet.iws" />
@@ -35,10 +34,8 @@
         <entry file="file://$PROJECT_DIR$/routes/api/public/file.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="22" column="44" selection-start-line="22" selection-start-column="44" selection-end-line="22" selection-end-column="44" />
-              <folding>
-                <element signature="e#5898#7223#0" expanded="false" />
-              </folding>
+              <caret line="57" column="39" selection-start-line="57" selection-start-column="39" selection-end-line="57" selection-end-column="39" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -53,31 +50,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="userfile.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="userfile.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/routes/api/public/userfile.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="888" column="43" selection-start-line="888" selection-start-column="43" selection-end-line="888" selection-end-column="43" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="routeHandler.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/routeHandler.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="102" column="53" selection-start-line="102" selection-start-column="49" selection-end-line="102" selection-end-column="53" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="config-development.json" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/config-development.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3608903">
-              <caret line="127" column="61" selection-start-line="127" selection-start-column="61" selection-end-line="127" selection-end-column="61" />
+            <state vertical-scroll-proportion="1.2076336">
+              <caret line="886" column="0" selection-start-line="886" selection-start-column="0" selection-end-line="886" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -97,7 +74,7 @@
         <entry file="file://$PROJECT_DIR$/commons.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="175" column="1" selection-start-line="175" selection-start-column="1" selection-end-line="175" selection-end-column="1" />
+              <caret line="835" column="49" selection-start-line="835" selection-start-column="46" selection-end-line="835" selection-end-column="49" />
               <folding />
             </state>
           </provider>
@@ -118,7 +95,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/public/include/_topbar.html" />
         <option value="$PROJECT_DIR$/public/directive/ng.ui.extension.js" />
         <option value="$PROJECT_DIR$/public/fonts/icon-frame-sketch/style.css" />
         <option value="$PROJECT_DIR$/public/directive/ng.ui.topbar.js" />
@@ -165,10 +141,11 @@
         <option value="$PROJECT_DIR$/config-production.json" />
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/config.js" />
-        <option value="$PROJECT_DIR$/routes/api/public/userfile.js" />
         <option value="$PROJECT_DIR$/routeHandler.js" />
-        <option value="$PROJECT_DIR$/commons.js" />
         <option value="$PROJECT_DIR$/config-development.json" />
+        <option value="$PROJECT_DIR$/commons.js" />
+        <option value="$PROJECT_DIR$/routes/api/public/file.js" />
+        <option value="$PROJECT_DIR$/routes/api/public/userfile.js" />
       </list>
     </option>
   </component>
@@ -245,6 +222,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -280,7 +258,6 @@
         </subPane>
       </pane>
       <pane id="Scratches" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -382,18 +359,6 @@
       <created>1422867219159</created>
       <option name="number" value="Default" />
       <updated>1422867219159</updated>
-    </task>
-    <task id="LOCAL-00004" summary="Bug Fix.">
-      <created>1427188552583</created>
-      <option name="number" value="00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1427188552583</updated>
-    </task>
-    <task id="LOCAL-00005" summary="Bug Fix.">
-      <created>1427252525653</created>
-      <option name="number" value="00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1427252525653</updated>
     </task>
     <task id="LOCAL-00006" summary="Bug Fix.">
       <created>1427254866907</created>
@@ -677,7 +642,19 @@
       <option name="project" value="LOCAL" />
       <updated>1432794159343</updated>
     </task>
-    <option name="localTasksCounter" value="53" />
+    <task id="LOCAL-00053" summary="Add CORS headers. Allow CORS in debug mode.">
+      <created>1433140846525</created>
+      <option name="number" value="00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1433140846525</updated>
+    </task>
+    <task id="LOCAL-00054" summary="Bug Fix.">
+      <created>1433307279084</created>
+      <option name="number" value="00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1433307279125</updated>
+    </task>
+    <option name="localTasksCounter" value="55" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -689,9 +666,7 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32892805" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2494043" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25893566" sideWeight="0.49339208" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.34801763" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32892805" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25893566" sideWeight="0.49339208" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.37410644" sideWeight="0.50660795" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32452276" sideWeight="0.50039715" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32892805" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -699,10 +674,12 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.329429" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30307466" sideWeight="0.49960285" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3001464" sideWeight="0.49960285" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.34801763" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Grunt" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32796487" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32892805" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39970717" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
     </layout>
@@ -747,7 +724,6 @@
     <MESSAGE value="Alignment &amp; Layout Enhancement." />
     <MESSAGE value="Add Position Tool Button." />
     <MESSAGE value="Replace ckeditor with editormd to edit the text in widget." />
-    <MESSAGE value="Bug Fix." />
     <MESSAGE value="Add markdown support" />
     <MESSAGE value="Update html convert for markdown introduction." />
     <MESSAGE value="Add project QR Code." />
@@ -755,39 +731,20 @@
     <MESSAGE value="Add Basic Authentication." />
     <MESSAGE value="Add 'Project Download' feature." />
     <MESSAGE value="Add CORS headers" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add CORS headers" />
+    <MESSAGE value="Add CORS headers. Allow CORS in debug mode." />
+    <MESSAGE value="Bug Fix." />
+    <option name="LAST_COMMIT_MESSAGE" value="Bug Fix." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="305" />
+      <option name="time" value="310" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/public/stylesheets/sass/_sketch_widget.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="59" column="5" selection-start-line="50" selection-start-column="4" selection-end-line="59" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/include/_gradient-editor.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.35629454">
-          <caret line="10" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/project.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-13.791667">
-          <caret line="46" column="45" selection-start-line="46" selection-start-column="36" selection-end-line="46" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/stylesheets/sass/_gradient_editor.scss">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.6709062">
@@ -931,13 +888,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/app/controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.34456354">
-          <caret line="20" column="26" selection-start-line="20" selection-start-column="26" selection-end-line="20" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/mongoose/lib/types/objectid.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.45801526">
@@ -1044,16 +994,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/api/public/file.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="22" column="44" selection-start-line="22" selection-start-column="44" selection-end-line="22" selection-end-column="44" />
-          <folding>
-            <element signature="e#5898#7223#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/config-production.json">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5213946">
@@ -1085,19 +1025,10 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/api/public/userfile.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="888" column="43" selection-start-line="888" selection-start-column="43" selection-end-line="888" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/log4js/lib/connect-logger.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.8824428">
           <caret line="65" column="12" selection-start-line="65" selection-start-column="12" selection-end-line="65" selection-end-column="12" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1105,15 +1036,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.34961832">
           <caret line="136" column="29" selection-start-line="136" selection-start-column="23" selection-end-line="136" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routeHandler.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="102" column="53" selection-start-line="102" selection-start-column="49" selection-end-line="102" selection-end-column="53" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1125,18 +1047,69 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/public/app/controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.32061067">
+          <caret line="35" column="38" selection-start-line="35" selection-start-column="38" selection-end-line="35" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/commons.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="175" column="1" selection-start-line="175" selection-start-column="1" selection-end-line="175" selection-end-column="1" />
+          <caret line="835" column="49" selection-start-line="835" selection-start-column="46" selection-end-line="835" selection-end-column="49" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/config-development.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3608903">
-          <caret line="127" column="61" selection-start-line="127" selection-start-column="61" selection-end-line="127" selection-end-column="61" />
+        <state vertical-scroll-proportion="0.6481775">
+          <caret line="138" column="65" selection-start-line="138" selection-start-column="52" selection-end-line="138" selection-end-column="65" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routeHandler.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.37559807">
+          <caret line="74" column="37" selection-start-line="74" selection-start-column="35" selection-end-line="74" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/express/node_modules/send/lib/send.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6993318">
+          <caret line="229" column="49" selection-start-line="229" selection-start-column="49" selection-end-line="229" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/grunt-contrib-uglify/node_modules/maxmin/node_modules/gzip-size/node_modules/browserify-zlib/test/ignored/test-zlib-dictionary.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33184856">
+          <caret line="30" column="38" selection-start-line="30" selection-start-column="38" selection-end-line="30" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/express/node_modules/fresh/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8666667">
+          <caret line="52" column="1" selection-start-line="52" selection-start-column="1" selection-end-line="52" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/api/public/file.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="57" column="39" selection-start-line="57" selection-start-column="39" selection-end-line="57" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/api/public/userfile.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.2076336">
+          <caret line="886" column="0" selection-start-line="886" selection-start-column="0" selection-end-line="886" selection-end-column="0" />
           <folding />
         </state>
       </provider>

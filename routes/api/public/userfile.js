@@ -884,7 +884,6 @@ UserFileController.prototype.getProjectFile = function (projectId, request, succ
 
                             zip.pipe(out);
                             zip.directory(projectPath, false);
-                            zip.append(JSON.stringify(projectObj), {name: "project.json"});
 
                             zip.finalize();
                         } else {
