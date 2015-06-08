@@ -1531,7 +1531,8 @@ define(
                             source: source,
                             style: {},
                             beforeStyle: {},
-                            afterStyle: {}
+                            afterStyle: {},
+                            classList: []
                         });
                     }
                     var sourceStyle = styleSource[stylePseudoPrefix];
@@ -1760,7 +1761,7 @@ define(
                                 beforeStyle: {},
                                 afterStyle: {},
                                 styleSource: [],
-                                classList: _.clone(stateValue.classList)
+                                classList: _.clone(stateValue.classList) || []
                             };
 
                             var style = stateValue.style,
@@ -2215,11 +2216,8 @@ define(
                                 self.childWidgets.forEach(function (child) {
                                     if (child.$element) {
                                         child.$element.detach();
-                                    } else {
-                                        child.$element = $("<div />").data("widgetObject", child).attr("id", child.id);
                                     }
-                                    child.$element.attr(child.attr);
-                                    self.$element.append(child.$element);
+                                    child.appendTo(self.$element);
                                 })
                             } else {
                                 if (!self.$element.parent()) {
@@ -4636,7 +4634,7 @@ define(
             return null;
         }
 
-        Service.prototype.createPage = function (holderElement, pageObj) {
+        Service.prototype.createPage = function (holderElement, pageObj, showHide) {
             var self = this,
                 defer = self.$q.defer();
 
@@ -4662,6 +4660,8 @@ define(
                     if (!err) {
                         pageObj.relink(holderElement).then(
                             function () {
+                                pageObj.showHide(showHide);
+
                                 var scope = angular.element(holderElement).scope();
                                 self.$compile(holderElement)(scope);
 
@@ -4679,6 +4679,17 @@ define(
                 self.angularConstants.renderTimeout);
 
             return defer.promise;
+        }
+
+        Service.prototype.createPages = function (holderElement, pageObjs) {
+            var self = this,
+                arr = [];
+
+            pageObjs.forEach(function (pageObj, i) {
+                arr.push(self.createPage(holderElement, pageObj, i === 0));
+            });
+
+            return self.$q.all(arr);
         }
 
         Service.prototype.copyPage = function (pageObj, holderElement) {

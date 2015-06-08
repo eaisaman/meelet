@@ -55,8 +55,8 @@ define(
                                                     pageObj.name = name;
                                                     pageObj.addOmniClass(angularConstants.widgetClasses.activeClass);
                                                     pageObj.addClass(options.pageClass);
-                                                    scope.sketchObject.pickedPage && scope.sketchObject.pickedPage.removeOmniClass(angularConstants.widgetClasses.activeClass);
-                                                    scope.sketchObject.pickedPage = pageObj;
+                                                    $rootScope.sketchObject.pickedPage && $rootScope.sketchObject.pickedPage.removeOmniClass(angularConstants.widgetClasses.activeClass);
+                                                    $rootScope.sketchObject.pickedPage = pageObj;
                                                     scope.project.sketchWorks.pages.push(pageObj);
                                                 });
                                             }
@@ -67,14 +67,16 @@ define(
                                 scope.removePage = function (event) {
                                     event && event.stopPropagation && event.stopPropagation();
 
-                                    var i = $(".pageList select").val();
                                     if (scope.project.sketchWorks.pages.length > 1) {
+                                        var i = parseInt($(".pageList select").val());
+
                                         var pageObj = scope.project.sketchWorks.pages[i],
                                             j = (i + 1) == scope.project.sketchWorks.pages.length ? 0 : i;
 
+                                        scope.project.sketchWorks.pages[i].showHide(false);
                                         scope.project.sketchWorks.pages.splice(i, 1);
-                                        if (pageObj == scope.sketchObject.pickedPage) {
-                                            scope.sketchObject.pickedPage = scope.project.sketchWorks.pages[j];
+                                        if (pageObj == $rootScope.sketchObject.pickedPage) {
+                                            $rootScope.sketchObject.pickedPage = scope.project.sketchWorks.pages[j];
                                         }
                                     }
                                 }
@@ -90,10 +92,11 @@ define(
                                                     pageObj = scope.project.sketchWorks.pages[i];
 
                                                 uiService.copyPage(pageObj, $("." + options.pageHolderClass)).then(function (cloneObj) {
+                                                    cloneObj.name = name;
                                                     cloneObj.addOmniClass(angularConstants.widgetClasses.activeClass);
                                                     cloneObj.addClass(options.pageClass);
-                                                    scope.sketchObject.pickedPage && scope.sketchObject.pickedPage.removeOmniClass(angularConstants.widgetClasses.activeClass);
-                                                    scope.sketchObject.pickedPage = cloneObj;
+                                                    $rootScope.sketchObject.pickedPage && $rootScope.sketchObject.pickedPage.removeOmniClass(angularConstants.widgetClasses.activeClass);
+                                                    $rootScope.sketchObject.pickedPage = cloneObj;
                                                     scope.project.sketchWorks.pages.splice(i + 1, 0, cloneObj);
                                                 });
                                             }
@@ -160,26 +163,39 @@ define(
                                 }
 
 
-                                uiUtilService.latestOnce(
+                                uiUtilService.whilst(
                                     function () {
-                                        return $timeout(function () {
-                                            $(".pageList select").change(function () {
-                                                var i = $(this).val(),
-                                                    pageObj = scope.project.sketchWorks.pages[i];
-
-                                                if (pageObj.id != scope.sketchObject.pickedPage.id) {
-                                                    scope.sketchObject.pickedPage = pageObj;
-                                                    scope.$apply();
-                                                }
-                                            });
-
-                                            scope.$broadcast("collapseAll");
-                                        });
+                                        return $(".pageList select option").length !== scope.project.sketchWorks.pages.lenth;
                                     },
-                                    null,
-                                    angularConstants.unresponsiveInterval,
-                                    "ui-page.compile.post.init"
-                                )();
+                                    function (callback) {
+                                        callback();
+                                    },
+                                    function (err) {
+                                        uiUtilService.latestOnce(
+                                            function () {
+                                                return $timeout(function () {
+                                                    $(".pageList select").change(function () {
+                                                        var i = $(this).val(),
+                                                            pageObj = scope.project.sketchWorks.pages[i];
+
+                                                        if (pageObj.id != $rootScope.sketchObject.pickedPage.id) {
+                                                            $rootScope.sketchObject.pickedPage = pageObj;
+                                                            $rootScope.$apply();
+                                                        }
+                                                    });
+
+                                                    scope.$broadcast("collapseAll");
+                                                });
+                                            },
+                                            null,
+                                            angularConstants.unresponsiveInterval,
+                                            "ui-page.compile.post.init.pageListListener." + $rootScope.loadedProject._id
+                                        )();
+                                    },
+                                    angularConstants.checkInterval,
+                                    "ui-page.compile.post.init.pageList." + $rootScope.loadedProject._id,
+                                    angularConstants.renderTimeout
+                                );
                             }
                         }
                     }

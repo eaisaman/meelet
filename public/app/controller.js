@@ -511,9 +511,8 @@ define(
                             callback();
                         }, function () {
                             if ($rootScope.loadedProject.sketchWorks.pages.length) {
-                                uiService.createPage("." + angularConstants.widgetClasses.deviceHolderClass, $rootScope.loadedProject.sketchWorks.pages[0]).then(function (pageObj) {
-                                    $scope.sketchObject.pickedPage = pageObj;
-                                });
+                                $scope.sketchObject.pickedPage = $rootScope.loadedProject.sketchWorks.pages[0];
+                                uiService.createPages("." + angularConstants.widgetClasses.deviceHolderClass, $rootScope.loadedProject.sketchWorks.pages);
                             } else {
                                 uiService.createPage("." + angularConstants.widgetClasses.deviceHolderClass).then(function (pageObj) {
                                     $scope.sketchObject.pickedPage = pageObj;
