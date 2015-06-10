@@ -1,0 +1,173 @@
+<div class="widgetDemoContainer" ng-controller="PageTransitionDemoController">
+    <div class="pt-triggers">
+        <button id="iterateEffects" class="pt-touch-button" ng-click="nextPage()">Show next page transition
+        </button>
+        <div id="dl-menu" class="dl-menuwrapper">
+            <button class="dl-trigger">Choose a transition</button>
+            <ul class="dl-menu">
+                <li>
+                    <a href="#">Move</a>
+                    <ul class="dl-submenu">
+                        <li data-animation="moveToLeft"><a href="#">Move to left/ from right</a></li>
+                        <li data-animation="moveToRight"><a href="#">Move to right/ from left</a></li>
+                        <li data-animation="moveToTop"><a href="#">Move to top/ from bottom</a></li>
+                        <li data-animation="moveToBottom"><a href="#">Move to bottom/ from top</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Fade</a>
+                    <ul class="dl-submenu">
+                        <li data-animation="fadeToLeft"><a href="#">Fade / from right</a></li>
+                        <li data-animation="fadeToRight"><a href="#">Fade / from left</a></li>
+                        <li data-animation="fadeToTop"><a href="#">Fade / from bottom</a></li>
+                        <li data-animation="fadeToBottom"><a href="#">Fade / from top</a></li>
+                        <li data-animation="fadeLeftFadeRight"><a href="#">Fade left / Fade right</a></li>
+                        <li data-animation="fadeRightFadeLeft"><a href="#">Fade right / Fade left</a></li>
+                        <li data-animation="fadeTopFadeBottom"><a href="#">Fade top / Fade bottom</a></li>
+                        <li data-animation="fadeBottomFadeTop"><a href="#">Fade bottom / Fade top</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Different easing</a>
+                    <ul class="dl-submenu">
+                        <li data-animation="easingToLeft"><a href="#">Different easing / from right</a></li>
+                        <li data-animation="easingToRight"><a href="#">Different easing / from left</a></li>
+                        <li data-animation="easingToTop"><a href="#">Different easing / from bottom</a></li>
+                        <li data-animation="easingToBottom"><a href="#">Different easing / from top</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Scale</a>
+                    <ul class="dl-submenu">
+                        <li data-animation="scaleDownMoveToLeft"><a href="#">Scale down / from right</a></li>
+                        <li data-animation="scaleDownMoveToRight"><a href="#">Scale down / from left</a></li>
+                        <li data-animation="scaleDownMoveToTop"><a href="#">Scale down / from bottom</a></li>
+                        <li data-animation="scaleDownMoveToBottom"><a href="#">Scale down / from top</a></li>
+                        <li data-animation="scaleDown"><a href="#">Scale down / scale down</a></li>
+                        <li data-animation="scaleUp"><a href="#">Scale up / scale up</a></li>
+                        <li data-animation="moveToLeftScaleUp"><a href="#">Move to left / scale up</a></li>
+                        <li data-animation="moveToRightScaleUp"><a href="#">Move to right / scale up</a></li>
+                        <li data-animation="moveToBottomScaleUp"><a href="#">Move to top / scale up</a></li>
+                        <li data-animation="moveToTopScaleUp"><a href="#">Move to bottom / scale up</a></li>
+                        <li data-animation="scaleDownScaleUp"><a href="#">Scale down / scale up</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Rotate</a>
+                    <ul class="dl-submenu">
+                        <li>
+                            <a href="#">Glue</a>
+                            <ul class="dl-submenu">
+                                <li data-animation="glueLeftMoveFromRight"><a href="#">Glue left / from right</a></li>
+                                <li data-animation="glueRightMoveFromLeft"><a href="#">Glue right / from left</a></li>
+                                <li data-animation="glueBottomMoveFromTop"><a href="#">Glue bottom / from top</a></li>
+                                <li data-animation="glueTopMoveFromBottom"><a href="#">Glue top / from bottom</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">Flip</a>
+                            <ul class="dl-submenu">
+                                <li data-animation="flipRight"><a href="#">Flip right</a></li>
+                                <li data-animation="flipLeft"><a href="#">Flip left</a></li>
+                                <li data-animation="flipTop"><a href="#">Flip top</a></li>
+                                <li data-animation="flipBottom"><a href="#">Flip bottom</a></li>
+                            </ul>
+                        </li>
+                        <li data-animation="fall"><a href="#">Fall</a></li>
+                        <li data-animation="newspaper"><a href="#">Newspaper</a></li>
+                        <li>
+                            <a href="#">Push / Pull</a>
+                            <ul class="dl-submenu">
+                                <li data-animation="pushLeftMoveFromRight"><a href="#">Push left / from right</a></li>
+                                <li data-animation="pushRightMoveFromLeft"><a href="#">Push right / from left</a></li>
+                                <li data-animation="pushTopMoveFromBottom"><a href="#">Push top / from bottom</a></li>
+                                <li data-animation="pushBottomMoveFromTop"><a href="#">Push bottom / from top</a></li>
+
+                                <li data-animation="pushLeftPullRight"><a href="#">Push left / pull right</a></li>
+                                <li data-animation="pushRightPullLeft"><a href="#">Push right / pull left</a></li>
+                                <li data-animation="pushTopPullBottom"><a href="#">Push top / pull bottom</a></li>
+                                <li data-animation="pushBottomPullTop"><a href="#">Push bottom / pull top</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">Fold / Unfold</a>
+                            <ul class="dl-submenu">
+                                <li data-animation="foldLeftMoveFromRight"><a href="#">Fold left / from right</a></li>
+                                <li data-animation="foldRightMoveFromLeft"><a href="#">Fold right / from left</a></li>
+                                <li data-animation="foldTopMoveFromBottom"><a href="#">Fold top / from bottom</a></li>
+                                <li data-animation="foldBottomMoveFromTop"><a href="#">Fold bottom / from top</a></li>
+                                <li data-animation="moveToRightUnfoldLeft"><a href="#">Move to right / unfold left</a>
+                                </li>
+                                <li data-animation="moveToLeftUnfoldRight"><a href="#">Move to left / unfold right</a>
+                                </li>
+                                <li data-animation="moveToBottomUnfoldTop"><a href="#">Move to bottom / unfold top</a>
+                                </li>
+                                <li data-animation="moveToTopUnfoldBottom"><a href="#">Move to top / unfold bottom</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">Room</a>
+                            <ul class="dl-submenu">
+                                <li data-animation="roomToLeft"><a href="#">Room to left</a></li>
+                                <li data-animation="roomToRight"><a href="#">Room to right</a></li>
+                                <li data-animation="roomToTop"><a href="#">Room to top</a></li>
+                                <li data-animation="roomToBottom"><a href="#">Room to bottom</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">Cube</a>
+                            <ul class="dl-submenu">
+                                <li data-animation="cubeToLeft"><a href="#">Cube to left</a></li>
+                                <li data-animation="cubeToRight"><a href="#">Cube to right</a></li>
+                                <li data-animation="cubeToTop"><a href="#">Cube to top</a></li>
+                                <li data-animation="cubeToBottom"><a href="#">Cube to bottom</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">Carousel</a>
+                            <ul class="dl-submenu">
+                                <li data-animation="carouselToLeft"><a href="#">Carousel to left</a></li>
+                                <li data-animation="carouselToRight"><a href="#">Carousel to right</a></li>
+                                <li data-animation="carouselToTop"><a href="#">Carousel to top</a></li>
+                                <li data-animation="carouselToBottom"><a href="#">Carousel to bottom</a></li>
+                            </ul>
+                        </li>
+                        <li data-animation="sides"><a href="#">Sides</a></li>
+                    </ul>
+                </li>
+                <li data-animation="slide"><a href="#">Slide</a></li>
+            </ul>
+        </div>
+        <!-- /dl-menu-wrapper-->
+    </div>
+    <!-- /triggers -->
+
+    <div id="pt-main" class="pt-perspective">
+        <div class="pt-page pt-page-1 pt-page-current pageHolder" style="z-index: 6" ui-effect-page-transition-1-0-0><h1>
+            <span>A collection of</span><strong>Page</strong> Transitions</h1></div>
+        <div class="pt-page pt-page-2 pageHolder" style="z-index: 5" ui-effect-page-transition-1-0-0><h1>
+            <span>A collection of</span><strong>Page</strong> Transitions</h1></div>
+        <div class="pt-page pt-page-3 pageHolder" style="z-index: 4" ui-effect-page-transition-1-0-0><h1>
+            <span>A collection of</span><strong>Page</strong> Transitions</h1></div>
+        <div class="pt-page pt-page-4 pageHolder" style="z-index: 3" ui-effect-page-transition-1-0-0><h1>
+            <span>A collection of</span><strong>Page</strong> Transitions</h1></div>
+        <div class="pt-page pt-page-5 pageHolder" style="z-index: 2" ui-effect-page-transition-1-0-0><h1>
+            <span>A collection of</span><strong>Page</strong> Transitions</h1></div>
+        <div class="pt-page pt-page-6 pageHolder" style="z-index: 1" ui-effect-page-transition-1-0-0><h1>
+            <span>A collection of</span><strong>Page</strong> Transitions</h1></div>
+    </div>
+
+    <script type="application/javascript">
+        $('#dl-menu').dlmenu({
+            animationClasses: {in: 'dl-animate-in-2', out: 'dl-animate-out-2'},
+            onLinkClick: function ($el, ev) {
+                ev.preventDefault();
+
+                var transitionName = $el.attr("data-animation"),
+                        scope = angular.element("#pt-main").scope();
+                scope.nextPage && scope.nextPage(transitionName);
+            }
+        });
+    </script>
+</div>

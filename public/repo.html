@@ -15,7 +15,7 @@
             </div>
         </div>
     </div>
-    <div class="repoContent col-as-12">
+    <div class="repoContent">
         <div class="fs-x-small repoLib"
              ng-repeat="repoLib in markSelection(repoLibraryList, $root.loadedProject && $root.loadedProject.xrefRecord, [{target:'_id',source:'libraryId'}])"
              ng-click="urlService.repoLib(false, {repoLib:repoLib})">
@@ -31,6 +31,12 @@
                 <label class="col-as-6 no-padding-right control-label">Name</label>
 
                 <div class="col-as-6 no-padding-left"><span>{{repoLib.name}}</span>
+                </div>
+            </div>
+            <div class="repoLibInfo repoLibDesc col-as-12 input-group">
+                <label class="col-as-6 no-padding-right control-label">Description</label>
+
+                <div class="col-as-6 no-padding-left"><span>{{repoLib.desc}}</span>
                 </div>
             </div>
             <div class="repoLibInfo col-as-12 input-group">

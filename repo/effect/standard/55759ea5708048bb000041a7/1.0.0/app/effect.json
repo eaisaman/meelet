@@ -1,0 +1,330 @@
+[
+  {
+    "name": "Move",
+    "list": [
+      {
+        "name": "moveToLeft",
+        "value": "moveToLeft+Animation"
+      },
+      {
+        "name": "moveToRight",
+        "value": "moveToRight+Animation"
+      },
+      {
+        "name": "moveToTop",
+        "value": "moveToTop+Animation"
+      },
+      {
+        "name": "moveToBottom",
+        "value": "moveToBottom+Animation"
+      }
+    ]
+  },
+  {
+    "name": "Fade",
+    "list": [
+      {
+        "name": "fadeToLeft",
+        "value": "fadeToLeft+Animation"
+      },
+      {
+        "name": "fadeToRight",
+        "value": "fadeToRight+Animation"
+      },
+      {
+        "name": "fadeToTop",
+        "value": "fadeToTop+Animation"
+      },
+      {
+        "name": "fadeToBottom",
+        "value": "fadeToBottom+Animation"
+      },
+      {
+        "name": "fadeLeftFadeRight",
+        "value": "fadeLeftFadeRight+Animation"
+      },
+      {
+        "name": "fadeRightFadeLeft",
+        "value": "fadeRightFadeLeft+Animation"
+      },
+      {
+        "name": "fadeTopFadeBottom",
+        "value": "fadeTopFadeBottom+Animation"
+      },
+      {
+        "name": "fadeBottomFadeTop",
+        "value": "fadeBottomFadeTop+Animation"
+      }
+    ]
+  },
+  {
+    "name": "Different Easing",
+    "list": [
+      {
+        "name": "easingToLeft",
+        "value": "easingToLeft+Animation"
+      },
+      {
+        "name": "easingToRight",
+        "value": "easingToRight+Animation"
+      },
+      {
+        "name": "easingToTop",
+        "value": "easingToTop+Animation"
+      },
+      {
+        "name": "easingToBottom",
+        "value": "easingToBottom+Animation"
+      }
+    ]
+  },
+  {
+    "name": "Scale",
+    "list": [
+      {
+        "name": "scaleDownMoveToLeft",
+        "value": "scaleDownMoveToLeft+Animation"
+      },
+      {
+        "name": "scaleDownMoveToRight",
+        "value": "scaleDownMoveToRight+Animation"
+      },
+      {
+        "name": "scaleDownMoveToTop",
+        "value": "scaleDownMoveToTop+Animation"
+      },
+      {
+        "name": "scaleDownMoveToBottom",
+        "value": "scaleDownMoveToBottom+Animation"
+      },
+      {
+        "name": "scaleDown",
+        "value": "scaleDown+Animation"
+      },
+      {
+        "name": "scaleUp",
+        "value": "scaleUp+Animation"
+      },
+      {
+        "name": "moveToLeftScaleUp",
+        "value": "moveToLeftScaleUp+Animation"
+      },
+      {
+        "name": "moveToRightScaleUp",
+        "value": "moveToRightScaleUp+Animation"
+      },
+      {
+        "name": "moveToBottomScaleUp",
+        "value": "moveToBottomScaleUp+Animation"
+      },
+      {
+        "name": "moveToTopScaleUp",
+        "value": "moveToTopScaleUp+Animation"
+      },
+      {
+        "name": "scaleDownScaleUp",
+        "value": "scaleDownScaleUp+Animation"
+      }
+    ]
+  },
+  {
+    "name": "Rotate",
+    "list": [
+      {
+        "name": "Glue",
+        "list": [
+          {
+            "name": "glueLeftMoveFromRight",
+            "value": "glueLeftMoveFromRight+Animation"
+          },
+          {
+            "name": "glueRightMoveFromLeft",
+            "value": "glueRightMoveFromLeft+Animation"
+          },
+          {
+            "name": "glueBottomMoveFromTop",
+            "value": "glueBottomMoveFromTop+Animation"
+          },
+          {
+            "name": "glueTopMoveFromBottom",
+            "value": "glueTopMoveFromBottom+Animation"
+          }
+        ]
+      },
+      {
+        "name": "Flip",
+        "list": [
+          {
+            "name": "flipRight",
+            "value": "flipRight+Animation"
+          },
+          {
+            "name": "flipLeft",
+            "value": "flipLeft+Animation"
+          },
+          {
+            "name": "flipTop",
+            "value": "flipTop+Animation"
+          },
+          {
+            "name": "flipBottom",
+            "value": "flipBottom+Animation"
+          }
+        ]
+      },
+      {
+        "name": "fall",
+        "value": "fall+Animation"
+      },
+      {
+        "name": "newspaper",
+        "value": "newspaper+Animation"
+      },
+      {
+        "name": "Push/Pull",
+        "list": [
+          {
+            "name": "pushLeftMoveFromRight",
+            "value": "pushLeftMoveFromRight+Animation"
+          },
+          {
+            "name": "pushRightMoveFromLeft",
+            "value": "pushRightMoveFromLeft+Animation"
+          },
+          {
+            "name": "pushTopMoveFromBottom",
+            "value": "pushTopMoveFromBottom+Animation"
+          },
+          {
+            "name": "pushBottomMoveFromTop",
+            "value": "pushBottomMoveFromTop+Animation"
+          },
+          {
+            "name": "pushLeftPullRight",
+            "value": "pushLeftPullRight+Animation"
+          },
+          {
+            "name": "pushRightPullLeft",
+            "value": "pushRightPullLeft+Animation"
+          },
+          {
+            "name": "pushTopPullBottom",
+            "value": "pushTopPullBottom+Animation"
+          },
+          {
+            "name": "pushBottomPullTop",
+            "value": "pushBottomPullTop+Animation"
+          }
+        ]
+      },
+      {
+        "name": "Fold/Unfold",
+        "list": [
+          {
+            "name": "foldLeftMoveFromRight",
+            "value": "foldLeftMoveFromRight+Animation"
+          },
+          {
+            "name": "foldRightMoveFromLeft",
+            "value": "foldRightMoveFromLeft+Animation"
+          },
+          {
+            "name": "foldTopMoveFromBottom",
+            "value": "foldTopMoveFromBottom+Animation"
+          },
+          {
+            "name": "foldBottomMoveFromTop",
+            "value": "foldBottomMoveFromTop+Animation"
+          },
+          {
+            "name": "moveToRightUnfoldLeft",
+            "value": "moveToRightUnfoldLeft+Animation"
+          },
+          {
+            "name": "moveToLeftUnfoldRight",
+            "value": "moveToLeftUnfoldRight+Animation"
+          },
+          {
+            "name": "moveToBottomUnfoldTop",
+            "value": "moveToBottomUnfoldTop+Animation"
+          },
+          {
+            "name": "moveToTopUnfoldBottom",
+            "value": "moveToTopUnfoldBottom+Animation"
+          }
+        ]
+      },
+      {
+        "name": "Room",
+        "list": [
+          {
+            "name": "roomToLeft",
+            "value": "roomToLeft+Animation"
+          },
+          {
+            "name": "roomToRight",
+            "value": "roomToRight+Animation"
+          },
+          {
+            "name": "roomToTop",
+            "value": "roomToTop+Animation"
+          },
+          {
+            "name": "roomToBottom",
+            "value": "roomToBottom+Animation"
+          }
+        ]
+      },
+      {
+        "name": "Cube",
+        "list": [
+          {
+            "name": "cubeToLeft",
+            "value": "cubeToLeft+Animation"
+          },
+          {
+            "name": "cubeToRight",
+            "value": "cubeToRight+Animation"
+          },
+          {
+            "name": "cubeToTop",
+            "value": "cubeToTop+Animation"
+          },
+          {
+            "name": "cubeToBottom",
+            "value": "cubeToBottom+Animation"
+          }
+        ]
+      },
+      {
+        "name": "Carousel",
+        "list": [
+          {
+            "name": "carouselToLeft",
+            "value": "carouselToLeft+Animation"
+          },
+          {
+            "name": "carouselToRight",
+            "value": "carouselToRight+Animation"
+          },
+          {
+            "name": "carouselToTop",
+            "value": "carouselToTop+Animation"
+          },
+          {
+            "name": "carouselToBottom",
+            "value": "carouselToBottom+Animation"
+          }
+        ]
+      },
+      {
+        "name": "sides",
+        "value": "sides+Animation"
+      }
+    ]
+  },
+  {
+    "name": "slide",
+    "value": "slide+Animation"
+  }
+]

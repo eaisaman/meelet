@@ -68,7 +68,7 @@ define(
                 $rootScope.widgetLibraryList = [];
                 $rootScope.loginUser = {};
                 $rootScope.userDetail = {projectList: []};
-                $rootScope.loadedProject = null;
+                $rootScope.loadedProject = {};
                 $rootScope.sketchObject = {};
                 $rootScope.sketchWidgetSetting = {
                     isPlaying: false
@@ -716,7 +716,9 @@ define(
                     createWidgetPositionInputAssign("pickedWidgetWidth", "width");
                     createWidgetPositionInputAssign("pickedWidgetHeight", "height");
 
-                    $scope.renderProject();
+                    $rootScope.$on(angularEventTypes.switchProjectEvent, function () {
+                        $scope.renderProject();
+                    });
                 }
 
                 initMaster();
@@ -1013,7 +1015,10 @@ define(
                     }
                 };
 
-                initMaster();
+                $scope.$on("$routeChangeSuccess", function (scope, next, current) {
+                    current && initMaster();
+                });
+
 
                 $scope.classie = classie;
                 $scope._ = _;

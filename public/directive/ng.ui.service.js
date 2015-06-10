@@ -4809,11 +4809,11 @@ define(
         Service.prototype.loadProject = function (dbObject) {
             var self = this;
 
-            if (self.$rootScope.loadedProject) {
+            if (_.isEmpty(self.$rootScope.loadedProject)) {
+                self.$rootScope.loadedProject = new Project(dbObject);
+            } else {
                 self.$rootScope.loadedProject.unload();
                 self.$rootScope.loadedProject.populate(dbObject);
-            } else {
-                self.$rootScope.loadedProject = new Project(dbObject);
             }
 
             return this.uiUtilService.chain(

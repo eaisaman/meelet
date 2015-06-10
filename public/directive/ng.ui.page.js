@@ -28,8 +28,6 @@ define(
                                 }));
 
                                 options = _.extend(_.clone(options), $parse(attrs['uiPageOpts'])(scope, {}));
-
-                                scope.project = $rootScope.loadedProject;
                             },
                             post: function (scope, element, attrs) {
                                 scope.togglePage = function (event) {
@@ -47,36 +45,39 @@ define(
                                 scope.insertPage = function (event) {
                                     event && event.stopPropagation && event.stopPropagation();
 
-                                    uiUtilService.broadcast(scope,
-                                        angularEventTypes.beforeWidgetCreationEvent,
-                                        function (name) {
-                                            if (name) {
-                                                uiService.createPage($("." + options.pageHolderClass)).then(function (pageObj) {
-                                                    pageObj.name = name;
-                                                    pageObj.addOmniClass(angularConstants.widgetClasses.activeClass);
-                                                    pageObj.addClass(options.pageClass);
-                                                    $rootScope.sketchObject.pickedPage && $rootScope.sketchObject.pickedPage.removeOmniClass(angularConstants.widgetClasses.activeClass);
-                                                    $rootScope.sketchObject.pickedPage = pageObj;
-                                                    scope.project.sketchWorks.pages.push(pageObj);
-                                                });
+                                    if ($rootScope.loadedProject) {
+                                        uiUtilService.broadcast(scope,
+                                            angularEventTypes.beforeWidgetCreationEvent,
+                                            function (name) {
+                                                if (name) {
+                                                    uiService.createPage($("." + options.pageHolderClass)).then(function (pageObj) {
+                                                        pageObj.name = name;
+                                                        pageObj.addOmniClass(angularConstants.widgetClasses.activeClass);
+                                                        pageObj.addClass(options.pageClass);
+                                                        $rootScope.sketchObject.pickedPage && $rootScope.sketchObject.pickedPage.removeOmniClass(angularConstants.widgetClasses.activeClass);
+                                                        $rootScope.sketchObject.pickedPage = pageObj;
+                                                        $rootScope.loadedProject.sketchWorks.pages.push(pageObj);
+                                                    });
+                                                }
                                             }
-                                        }
-                                    );
+                                        );                                    }
                                 }
 
                                 scope.removePage = function (event) {
                                     event && event.stopPropagation && event.stopPropagation();
 
-                                    if (scope.project.sketchWorks.pages.length > 1) {
-                                        var i = parseInt($(".pageList select").val());
+                                    if ($rootScope.loadedProject) {
+                                        if ($rootScope.loadedProject.sketchWorks.pages.length > 1) {
+                                            var i = parseInt($(".pageList select").val());
 
-                                        var pageObj = scope.project.sketchWorks.pages[i],
-                                            j = (i + 1) == scope.project.sketchWorks.pages.length ? 0 : i;
+                                            var pageObj = $rootScope.loadedProject.sketchWorks.pages[i],
+                                                j = (i + 1) == $rootScope.loadedProject.sketchWorks.pages.length ? 0 : i;
 
-                                        scope.project.sketchWorks.pages[i].showHide(false);
-                                        scope.project.sketchWorks.pages.splice(i, 1);
-                                        if (pageObj == $rootScope.sketchObject.pickedPage) {
-                                            $rootScope.sketchObject.pickedPage = scope.project.sketchWorks.pages[j];
+                                            $rootScope.loadedProject.sketchWorks.pages[i].showHide(false);
+                                            $rootScope.loadedProject.sketchWorks.pages.splice(i, 1);
+                                            if (pageObj == $rootScope.sketchObject.pickedPage) {
+                                                $rootScope.sketchObject.pickedPage = $rootScope.loadedProject.sketchWorks.pages[j];
+                                            }
                                         }
                                     }
                                 }
@@ -84,24 +85,26 @@ define(
                                 scope.copyPage = function (event) {
                                     event && event.stopPropagation && event.stopPropagation();
 
-                                    uiUtilService.broadcast(scope,
-                                        angularEventTypes.beforeWidgetCreationEvent,
-                                        function (name) {
-                                            if (name) {
-                                                var i = $(".pageList select").val(),
-                                                    pageObj = scope.project.sketchWorks.pages[i];
+                                    if ($rootScope.loadedProject) {
+                                        uiUtilService.broadcast(scope,
+                                            angularEventTypes.beforeWidgetCreationEvent,
+                                            function (name) {
+                                                if (name) {
+                                                    var i = $(".pageList select").val(),
+                                                        pageObj = $rootScope.loadedProject.sketchWorks.pages[i];
 
-                                                uiService.copyPage(pageObj, $("." + options.pageHolderClass)).then(function (cloneObj) {
-                                                    cloneObj.name = name;
-                                                    cloneObj.addOmniClass(angularConstants.widgetClasses.activeClass);
-                                                    cloneObj.addClass(options.pageClass);
-                                                    $rootScope.sketchObject.pickedPage && $rootScope.sketchObject.pickedPage.removeOmniClass(angularConstants.widgetClasses.activeClass);
-                                                    $rootScope.sketchObject.pickedPage = cloneObj;
-                                                    scope.project.sketchWorks.pages.splice(i + 1, 0, cloneObj);
-                                                });
+                                                    uiService.copyPage(pageObj, $("." + options.pageHolderClass)).then(function (cloneObj) {
+                                                        cloneObj.name = name;
+                                                        cloneObj.addOmniClass(angularConstants.widgetClasses.activeClass);
+                                                        cloneObj.addClass(options.pageClass);
+                                                        $rootScope.sketchObject.pickedPage && $rootScope.sketchObject.pickedPage.removeOmniClass(angularConstants.widgetClasses.activeClass);
+                                                        $rootScope.sketchObject.pickedPage = cloneObj;
+                                                        $rootScope.loadedProject.sketchWorks.pages.splice(i + 1, 0, cloneObj);
+                                                    });
+                                                }
                                             }
-                                        }
-                                    );
+                                        );
+                                    }
                                 }
 
                                 scope.toggleSelectState = function (item, event) {
@@ -162,40 +165,41 @@ define(
                                     return true;
                                 }
 
+                                $rootScope.$on(angularEventTypes.switchProjectEvent, function (event, project) {
+                                    uiUtilService.whilst(
+                                        function () {
+                                            return $(".pageList select option").length !== project.sketchWorks.pages.lenth;
+                                        },
+                                        function (callback) {
+                                            callback();
+                                        },
+                                        function (err) {
+                                            uiUtilService.latestOnce(
+                                                function () {
+                                                    return $timeout(function () {
+                                                        $(".pageList select").change(function () {
+                                                            var i = $(this).val(),
+                                                                pageObj = project.sketchWorks.pages[i];
 
-                                uiUtilService.whilst(
-                                    function () {
-                                        return $(".pageList select option").length !== scope.project.sketchWorks.pages.lenth;
-                                    },
-                                    function (callback) {
-                                        callback();
-                                    },
-                                    function (err) {
-                                        uiUtilService.latestOnce(
-                                            function () {
-                                                return $timeout(function () {
-                                                    $(".pageList select").change(function () {
-                                                        var i = $(this).val(),
-                                                            pageObj = scope.project.sketchWorks.pages[i];
+                                                            if (pageObj.id != $rootScope.sketchObject.pickedPage.id) {
+                                                                $rootScope.sketchObject.pickedPage = pageObj;
+                                                                $rootScope.$apply();
+                                                            }
+                                                        });
 
-                                                        if (pageObj.id != $rootScope.sketchObject.pickedPage.id) {
-                                                            $rootScope.sketchObject.pickedPage = pageObj;
-                                                            $rootScope.$apply();
-                                                        }
+                                                        scope.$broadcast("collapseAll");
                                                     });
-
-                                                    scope.$broadcast("collapseAll");
-                                                });
-                                            },
-                                            null,
-                                            angularConstants.unresponsiveInterval,
-                                            "ui-page.compile.post.init.pageListListener." + $rootScope.loadedProject._id
-                                        )();
-                                    },
-                                    angularConstants.checkInterval,
-                                    "ui-page.compile.post.init.pageList." + $rootScope.loadedProject._id,
-                                    angularConstants.renderTimeout
-                                );
+                                                },
+                                                null,
+                                                angularConstants.unresponsiveInterval,
+                                                "ui-page.compile.post.init.pageListListener." + project.projectRecord._id
+                                            )();
+                                        },
+                                        angularConstants.checkInterval,
+                                        "ui-page.compile.post.init.pageList." + project.projectRecord._id,
+                                        angularConstants.renderTimeout
+                                    );
+                                });
                             }
                         }
                     }

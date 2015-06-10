@@ -1,0 +1,786 @@
+@import "animation/keyframes";
+
+@mixin page-transition($artifactName, $version) {
+    [#{$artifactName}-#{str_replace($version, '.', '-')}] {
+        //Move
+        &[effect=moveToLeft] {
+            &.forward {
+                &.currentPage {
+                    @extend %_effect_pageTransition_moveToLeft;
+
+                    & + .pageHolder {
+                        @extend %_effect_pageTransition_moveFromRight;
+                    }
+                }
+            }
+        }
+
+        &[effect=moveToRight] {
+            &.forward {
+                &.currentPage {
+                    @extend %_effect_pageTransition_moveToRight;
+                }
+                & + .pageHolder {
+                    @extend %_effect_pageTransition_moveFromLeft;
+                }
+            }
+        }
+        &[effect=moveToTop] {
+            &.forward {
+                @extend %_effect_pageTransition_moveToTop;
+
+                & + .pageHolder {
+                    @extend %_effect_pageTransition_moveFromBottom;
+                }
+            }
+        }
+        &[effect=moveToBottom] {
+            &.forward {
+                &.currentPage {
+                    @extend %_effect_pageTransition_moveToBottom;
+                }
+                & + .pageHolder {
+                    @extend %_effect_pageTransition_moveFromTop;
+                }
+            }
+        }
+
+        //Fade
+        &[effect=fadeToLeft] {
+            &.forward {
+                &.currentPage {
+                    @extend %_effect_pageTransition_fade;
+                }
+                & + .pageHolder {
+                    @extend %_effect_pageTransition_moveFromRight;
+                }
+            }
+        }
+        &[effect=fadeToRight] {
+            &.forward {
+                &.currentPage {
+                    @extend %_effect_pageTransition_fade;
+                }
+                & + .pageHolder {
+                    @extend %_effect_pageTransition_moveFromLeft;
+                }
+            }
+        }
+        &[effect=fadeToTop] {
+            &.forward {
+                &.currentPage {
+                    @extend %_effect_pageTransition_fade;
+                }
+                & + .pageHolder {
+                    @extend %_effect_pageTransition_moveFromBottom;
+                }
+            }
+        }
+        &[effect=fadeToBottom] {
+            &.forward {
+                &.currentPage {
+                    @extend %_effect_pageTransition_fade;
+                }
+                & + .pageHolder {
+                    @extend %_effect_pageTransition_moveFromTop;
+                }
+            }
+        }
+        &[effect=fadeLeftFadeRight] {
+            &.forward {
+                &.currentPage {
+                    @extend %_effect_pageTransition_moveToLeftFade;
+                }
+                & + .pageHolder {
+                    @extend %_effect_pageTransition_moveFromRightFade;
+                }
+            }
+        }
+        &[effect=fadeRightFadeLeft] {
+            &.forward {
+                &.currentPage {
+                    @extend %_effect_pageTransition_moveToRightFade;
+                }
+                & + .pageHolder {
+                    @extend %_effect_pageTransition_moveFromLeftFade;
+                }
+            }
+        }
+        &[effect=fadeTopFadeBottom] {
+            &.forward {
+                &.currentPage {
+                    @extend %_effect_pageTransition_moveToTopFade;
+                }
+                & + .pageHolder {
+                    @extend %_effect_pageTransition_moveFromBottomFade;
+                }
+            }
+        }
+        &[effect=fadeBottomFadeTop] {
+            &.forward {
+                &.currentPage {
+                    @extend %_effect_pageTransition_moveToBottomFade;
+                }
+                & + .pageHolder {
+                    @extend %_effect_pageTransition_moveFromTopFade;
+                }
+            }
+        }
+
+        //Different Easing
+        &[effect=easingToLeft] {
+            &.forward {
+                &.currentPage {
+                    @extend %_effect_pageTransition_moveToLeftEasing;
+                }
+                & + .pageHolder {
+                    @extend %_effect_pageTransition_moveFromRight;
+                }
+            }
+        }
+        &[effect=easingToRight] {
+            &.forward {
+                &.currentPage {
+                    @extend %_effect_pageTransition_moveToRightEasing;
+                }
+                & + .pageHolder {
+                    @extend %_effect_pageTransition_moveFromLeft;
+                }
+            }
+        }
+        &[effect=easingToTop] {
+            &.forward {
+                &.currentPage {
+                    @extend %_effect_pageTransition_moveToTopEasing;
+                }
+                & + .pageHolder {
+                    @extend %_effect_pageTransition_moveFromBottom;
+                }
+            }
+        }
+        &[effect=easingToBottom] {
+            &.forward {
+                &.currentPage {
+                    @extend %_effect_pageTransition_moveToBottomEasing;
+                }
+                & + .pageHolder {
+                    @extend %_effect_pageTransition_moveFromTop;
+                }
+            }
+        }
+
+        //Scale
+        &[effect=scaleDownMoveToLeft] {
+            &.forward {
+                &.currentPage {
+                    @extend %_effect_pageTransition_scaleDown;
+                }
+                & + .pageHolder {
+                    @extend %_effect_pageTransition_moveFromRight;
+                }
+            }
+        }
+        &[effect=scaleDownMoveToRight] {
+            &.forward {
+                &.currentPage {
+                    @extend %_effect_pageTransition_scaleDown;
+                }
+                & + .pageHolder {
+                    @extend %_effect_pageTransition_moveFromLeft;
+                }
+            }
+        }
+        &[effect=scaleDownMoveToTop] {
+            &.forward {
+                &.currentPage {
+                    @extend %_effect_pageTransition_scaleDown;
+                }
+                & + .pageHolder {
+                    @extend %_effect_pageTransition_moveFromBottom;
+                }
+            }
+        }
+        &[effect=scaleDownMoveToBottom] {
+            &.forward {
+                &.currentPage {
+                    @extend %_effect_pageTransition_scaleDown;
+                }
+                & + .pageHolder {
+                    @extend %_effect_pageTransition_moveFromTop;
+                }
+            }
+        }
+        &[effect=scaleDown] {
+            &.forward {
+                &.currentPage {
+                    @extend %_effect_pageTransition_scaleDown;
+                }
+                & + .pageHolder {
+                    @extend %_effect_pageTransition_scaleUpDown;
+                    @include animation-delay(.3s);
+                }
+            }
+        }
+        &[effect=scaleUp] {
+            &.forward {
+                &.currentPage {
+                    @extend %_effect_pageTransition_scaleDownUp;
+                }
+                & + .pageHolder {
+                    @extend %_effect_pageTransition_scaleUp;
+                    @include animation-delay(.3s);
+                }
+            }
+        }
+        &[effect=moveToLeftScaleUp] {
+            &.forward {
+                &.currentPage {
+                    @extend %_effect_pageTransition_moveToLeft;
+                }
+                & + .pageHolder {
+                    @extend %_effect_pageTransition_scaleUp;
+                }
+            }
+        }
+        &[effect=moveToRightScaleUp] {
+            &.forward {
+                &.currentPage {
+                    @extend %_effect_pageTransition_moveToRight;
+                }
+                & + .pageHolder {
+                    @extend %_effect_pageTransition_scaleUp;
+                }
+            }
+        }
+        &[effect=moveToBottomScaleUp] {
+            &.forward {
+                &.currentPage {
+                    @extend %_effect_pageTransition_moveToBottom;
+                }
+                & + .pageHolder {
+                    @extend %_effect_pageTransition_scaleUp;
+                }
+            }
+        }
+        &[effect=moveToTopScaleUp] {
+            &.forward {
+                &.currentPage {
+                    @extend %_effect_pageTransition_moveToTop;
+                }
+                & + .pageHolder {
+                    @extend %_effect_pageTransition_scaleUp;
+                }
+            }
+        }
+        &[effect=scaleDownScaleUp] {
+            &.forward {
+                &.currentPage {
+                    @extend %_effect_pageTransition_scaleDownCenter;
+                }
+                & + .pageHolder {
+                    @extend %_effect_pageTransition_scaleUpCenter;
+                    @include animation-delay(.4s);
+                }
+            }
+        }
+
+        //Rotate
+        ////Glue
+        &[effect=glueLeftMoveFromRight] {
+            &.forward {
+                &.currentPage {
+                    @extend %_effect_pageTransition_rotateRightSideFirst;
+                    @include transform-origin(0% 50%);
+                }
+                & + .pageHolder {
+                    @extend %_effect_pageTransition_moveFromRight;
+                    @include animation-delay(.2s);
+                }
+            }
+        }
+        &[effect=glueRightMoveFromLeft] {
+            &.forward {
+                &.currentPage {
+                    @extend %_effect_pageTransition_rotateLeftSideFirst;
+                    @include transform-origin(100% 50%);
+                }
+                & + .pageHolder {
+                    @extend %_effect_pageTransition_moveFromLeft;
+                    @include animation-delay(.2s);
+                }
+            }
+        }
+        &[effect=glueBottomMoveFromTop] {
+            &.forward {
+                &.currentPage {
+                    @extend %_effect_pageTransition_rotateTopSideFirst;
+                    @include transform-origin(50% 100%);
+                }
+                & + .pageHolder {
+                    @extend %_effect_pageTransition_moveFromTop;
+                    @include animation-delay(.2s);
+                }
+            }
+        }
+        &[effect=glueTopMoveFromBottom] {
+            &.forward {
+                &.currentPage {
+                    @extend %_effect_pageTransition_rotateBottomSideFirst;
+                    @include transform-origin(50% 0%);
+                }
+                & + .pageHolder {
+                    @extend %_effect_pageTransition_moveFromBottom;
+                    @include animation-delay(.2s);
+                }
+            }
+        }
+
+        ////Flip
+        &[effect=flipRight] {
+            &.forward {
+                &.currentPage {
+                    @extend %_effect_pageTransition_flipOutRight;
+                    @include transform-origin(50% 50%);
+                }
+                & + .pageHolder {
+                    @extend %_effect_pageTransition_flipInLeft;
+                    @include transform-origin(50% 50%);
+                    @include animation-delay(.5s);
+                }
+            }
+        }
+        &[effect=flipLeft] {
+            &.forward {
+                &.currentPage {
+                    @extend %_effect_pageTransition_flipOutLeft;
+                    @include transform-origin(50% 50%);
+                }
+                & + .pageHolder {
+                    @extend %_effect_pageTransition_flipInRight;
+                    @include transform-origin(50% 50%);
+                    @include animation-delay(.5s);
+                }
+            }
+        }
+        &[effect=flipTop] {
+            &.forward {
+                &.currentPage {
+                    @extend %_effect_pageTransition_flipOutTop;
+                    @include transform-origin(50% 50%);
+                }
+                & + .pageHolder {
+                    @extend %_effect_pageTransition_flipInBottom;
+                    @include transform-origin(50% 50%);
+                    @include animation-delay(.5s);
+                }
+            }
+        }
+        &[effect=flipBottom] {
+            &.forward {
+                &.currentPage {
+                    @extend %_effect_pageTransition_flipOutBottom;
+                    @include transform-origin(50% 50%);
+                }
+                & + .pageHolder {
+                    @extend %_effect_pageTransition_flipInTop;
+                    @include transform-origin(50% 50%);
+                    @include animation-delay(.5s);
+                }
+            }
+        }
+
+        ////fall
+        &[effect=fall] {
+            &.forward {
+                &.currentPage {
+                    @extend %_effect_pageTransition_rotateFall;
+                    @include transform-origin(0% 0%);
+                }
+                & + .pageHolder {
+                    @extend %_effect_pageTransition_scaleUp;
+                }
+            }
+        }
+
+        ////newspaper
+        &[effect=newspaper] {
+            &.forward {
+                &.currentPage {
+                    @extend %_effect_pageTransition_rotateOutNewspaper;
+                    @include transform-origin(50% 50%);
+                }
+                & + .pageHolder {
+                    @extend %_effect_pageTransition_rotateInNewspaper;
+                    @include transform-origin(50% 50%);
+                    @include animation-delay(.5s);
+                }
+            }
+        }
+
+        ////Push/Pull
+        &[effect=pushLeftMoveFromRight] {
+            &.forward {
+                &.currentPage {
+                    @extend %_effect_pageTransition_rotatePushLeft;
+                    @include transform-origin(0% 50%);
+                }
+                & + .pageHolder {
+                    @extend %_effect_pageTransition_moveFromRight;
+                }
+            }
+        }
+        &[effect=pushRightMoveFromLeft] {
+            &.forward {
+                &.currentPage {
+                    @extend %_effect_pageTransition_rotatePushRight;
+                    @include transform-origin(100% 50%);
+                }
+                & + .pageHolder {
+                    @extend %_effect_pageTransition_moveFromLeft;
+                }
+            }
+        }
+        &[effect=pushTopMoveFromBottom] {
+            &.forward {
+                &.currentPage {
+                    @extend %_effect_pageTransition_rotatePushTop;
+                    @include transform-origin(50% 0%);
+                }
+                & + .pageHolder {
+                    @extend %_effect_pageTransition_moveFromBottom;
+                }
+            }
+        }
+        &[effect=pushBottomMoveFromTop] {
+            &.forward {
+                &.currentPage {
+                    @extend %_effect_pageTransition_rotatePushBottom;
+                    @include transform-origin(50% 100%);
+                }
+                & + .pageHolder {
+                    @extend %_effect_pageTransition_moveFromTop;
+                }
+            }
+        }
+        &[effect=pushLeftPullRight] {
+            &.forward {
+                &.currentPage {
+                    @extend %_effect_pageTransition_rotatePushLeft;
+                    @include transform-origin(0% 50%);
+                }
+                & + .pageHolder {
+                    @extend %_effect_pageTransition_rotatePullRight;
+                    @include transform-origin(100% 50%);
+                    @include animation-delay(.2s);
+                }
+            }
+        }
+        &[effect=pushRightPullLeft] {
+            &.forward {
+                &.currentPage {
+                    @extend %_effect_pageTransition_rotatePushRight;
+                    @include transform-origin(100% 50%);
+                }
+                & + .pageHolder {
+                    @extend %_effect_pageTransition_rotatePullLeft;
+                    @include transform-origin(0% 50%);
+                    @include animation-delay(.2s);
+                }
+            }
+        }
+        &[effect=pushTopPullBottom] {
+            &.forward {
+                &.currentPage {
+                    @extend %_effect_pageTransition_rotatePushTop;
+                    @include transform-origin(50% 0%);
+                }
+                & + .pageHolder {
+                    @extend %_effect_pageTransition_rotatePullBottom;
+                    @include transform-origin(50% 100%);
+                    @include animation-delay(.2s);
+                }
+            }
+        }
+        &[effect=pushBottomPullTop] {
+            &.forward {
+                &.currentPage {
+                    @extend %_effect_pageTransition_rotatePushBottom;
+                    @include transform-origin(50% 100%);
+                }
+                & + .pageHolder {
+                    @extend %_effect_pageTransition_rotatePullTop;
+                    @include transform-origin(50% 0%);
+                    @include animation-delay(.2s);
+                }
+            }
+        }
+
+        ////Fold/Unfold
+        &[effect=foldLeftMoveFromRight] {
+            &.forward {
+                &.currentPage {
+                    @extend %_effect_pageTransition_rotateFoldLeft;
+                    @include transform-origin(100% 50%);
+                }
+                & + .pageHolder {
+                    @extend %_effect_pageTransition_moveFromRightFade;
+                }
+            }
+        }
+        &[effect=foldRightMoveFromLeft] {
+            &.forward {
+                &.currentPage {
+                    @extend %_effect_pageTransition_rotateFoldRight;
+                    @include transform-origin(0% 50%);
+                }
+                & + .pageHolder {
+                    @extend %_effect_pageTransition_moveFromLeftFade;
+                }
+            }
+        }
+        &[effect=foldTopMoveFromBottom] {
+            &.forward {
+                &.currentPage {
+                    @extend %_effect_pageTransition_rotateFoldTop;
+                    @include transform-origin(50% 100%);
+                }
+                & + .pageHolder {
+                    @extend %_effect_pageTransition_moveFromBottomFade;
+                }
+            }
+        }
+        &[effect=foldBottomMoveFromTop] {
+            &.forward {
+                &.currentPage {
+                    @extend %_effect_pageTransition_rotateFoldBottom;
+                    @include transform-origin(50% 0%);
+                }
+                & + .pageHolder {
+                    @extend %_effect_pageTransition_moveFromTopFade;
+                }
+            }
+        }
+        &[effect=moveToRightUnfoldLeft] {
+            &.forward {
+                &.currentPage {
+                    @extend %_effect_pageTransition_moveToRightFade;
+                }
+                & + .pageHolder {
+                    @extend %_effect_pageTransition_rotateUnfoldLeft;
+                    @include transform-origin(100% 50%);
+                }
+            }
+        }
+        &[effect=moveToLeftUnfoldRight] {
+            &.forward {
+                &.currentPage {
+                    @extend %_effect_pageTransition_moveToLeftFade;
+                }
+                & + .pageHolder {
+                    @extend %_effect_pageTransition_rotateUnfoldRight;
+                    @include transform-origin(0% 50%);
+                }
+            }
+        }
+        &[effect=moveToBottomUnfoldTop] {
+            &.forward {
+                &.currentPage {
+                    @extend %_effect_pageTransition_moveToBottomFade;
+                }
+                & + .pageHolder {
+                    @extend %_effect_pageTransition_rotateUnfoldTop;
+                    @include transform-origin(50% 100%);
+                }
+            }
+            &[effect=moveToTopUnfoldBottom] {
+                &.forward {
+                    &.currentPage {
+                        @extend %_effect_pageTransition_moveToTopFade;
+                    }
+                    & + .pageHolder {
+                        @extend %_effect_pageTransition_rotateUnfoldBottom;
+                        @include transform-origin(50% 0%);
+                    }
+                }
+            }
+
+            ////Room
+            &[effect=roomToLeft] {
+                &.forward {
+                    &.currentPage {
+                        @extend %_effect_pageTransition_rotateRoomLeftOut;
+                        @include transform-origin(100% 50%);
+                    }
+                    & + .pageHolder {
+                        @extend %_effect_pageTransition_rotateRoomLeftIn;
+                        @include transform-origin(0% 50%);
+                    }
+                }
+            }
+            &[effect=roomToRight] {
+                &.forward {
+                    &.currentPage {
+                        @extend %_effect_pageTransition_rotateRoomRightOut;
+                        @include transform-origin(0% 50%);
+                    }
+                    & + .pageHolder {
+                        @extend %_effect_pageTransition_rotateRoomRightIn;
+                        @include transform-origin(100% 50%);
+                    }
+                }
+            }
+            &[effect=roomToTop] {
+                &.forward {
+                    &.currentPage {
+                        @extend %_effect_pageTransition_rotateRoomTopOut;
+                        @include transform-origin(50% 100%);
+                    }
+                    & + .pageHolder {
+                        @extend %_effect_pageTransition_rotateRoomTopIn;
+                        @include transform-origin(50% 0%);
+                    }
+                }
+            }
+            &[effect=roomToBottom] {
+                &.forward {
+                    &.currentPage {
+                        @extend %_effect_pageTransition_rotateRoomBottomOut;
+                        @include transform-origin(50% 0%);
+                    }
+                    & + .pageHolder {
+                        @extend %_effect_pageTransition_rotateRoomBottomIn;
+                        @include transform-origin(50% 100%);
+                    }
+                }
+            }
+
+            ////Cube
+            &[effect=cubeToLeft] {
+                &.forward {
+                    &.currentPage {
+                        @extend %_effect_pageTransition_rotateCubeLeftOut;
+                        @include transform-origin(100% 50%);
+                    }
+                    & + .pageHolder {
+                        @extend %_effect_pageTransition_rotateCubeLeftIn;
+                        @include transform-origin(0% 50%);
+                    }
+                }
+            }
+            &[effect=cubeToRight] {
+                &.forward {
+                    &.currentPage {
+                        @extend %_effect_pageTransition_rotateCubeRightOut;
+                        @include transform-origin(0% 50%);
+                    }
+                    & + .pageHolder {
+                        @extend %_effect_pageTransition_rotateCubeRightIn;
+                        @include transform-origin(100% 50%);
+                    }
+                }
+            }
+            &[effect=cubeToTop] {
+                &.forward {
+                    &.currentPage {
+                        @extend %_effect_pageTransition_rotateCubeTopOut;
+                        @include transform-origin(50% 100%);
+                    }
+                    & + .pageHolder {
+                        @extend %_effect_pageTransition_rotateCubeTopIn;
+                        @include transform-origin(50% 0%);
+                    }
+                }
+            }
+            &[effect=cubeToBottom] {
+                &.forward {
+                    &.currentPage {
+                        @extend %_effect_pageTransition_rotateCubeBottomOut;
+                        @include transform-origin(50% 0%);
+                    }
+                    & + .pageHolder {
+                        @extend %_effect_pageTransition_rotateCubeBottomIn;
+                        @include transform-origin(50% 100%);
+                    }
+                }
+            }
+
+            ////Carousel
+            &[effect=carouselToLeft] {
+                &.forward {
+                    &.currentPage {
+                        @extend %_effect_pageTransition_rotateCarouselLeftOut;
+                        @include transform-origin(100% 50%);
+                    }
+                    & + .pageHolder {
+                        @extend %_effect_pageTransition_rotateCarouselLeftIn;
+                        @include transform-origin(0% 50%);
+                    }
+                }
+            }
+            &[effect=carouselToRight] {
+                &.forward {
+                    &.currentPage {
+                        @extend %_effect_pageTransition_rotateCarouselRightOut;
+                        @include transform-origin(0% 50%);
+                    }
+                    & + .pageHolder {
+                        @extend %_effect_pageTransition_rotateCarouselRightIn;
+                        @include transform-origin(100% 50%);
+                    }
+                }
+            }
+            &[effect=carouselToTop] {
+                &.forward {
+                    &.currentPage {
+                        @extend %_effect_pageTransition_rotateCarouselTopOut;
+                        @include transform-origin(50% 100%);
+                    }
+                    & + .pageHolder {
+                        @extend %_effect_pageTransition_rotateCarouselTopIn;
+                        @include transform-origin(50% 0%);
+                    }
+                }
+            }
+            &[effect=carouselToBottom] {
+                &.forward {
+
+                    &.currentPage {
+                        @extend %_effect_pageTransition_rotateCarouselBottomOut;
+                        @include transform-origin(50% 0%);
+                    }
+                    & + .pageHolder {
+                        @extend %_effect_pageTransition_rotateCarouselBottomIn;
+                        @include transform-origin(50% 100%);
+                    }
+                }
+            }
+
+            ////sides
+            &[effect=sides] {
+                &.forward {
+                    &.currentPage {
+                        @extend %_effect_pageTransition_rotateSidesOut;
+                        @include transform-origin(-50% 50%);
+                    }
+                    & + .pageHolder {
+                        @extend %_effect_pageTransition_rotateSidesIn;
+                        @include transform-origin(150% 50%);
+                        @include animation-delay(.2s);
+                    }
+                }
+            }
+
+            //slide
+            &[effect=slide] {
+                &.forward {
+                    &.currentPage {
+                        @extend %_effect_pageTransition_rotateSlideOut;
+                    }
+                    & + .pageHolder {
+                        @extend %_effect_pageTransition_rotateSlideIn;
+                    }
+                }
+            }
+        }
+    }
+}

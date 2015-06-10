@@ -309,68 +309,48 @@ define(
                                     }
                                 }
 
-                                scope.$on(angularEventTypes.switchProjectEvent, function (event, data) {
-                                    if (data) {
-                                        var arr = scope.filterLibraryList(scope.widgetLibraryList, $rootScope.loadedProject.xrefRecord);
-                                        arr.splice(0, 0, 0, 0);
-                                        scope.filterWidgetLibraryList.splice(0, scope.filterWidgetLibraryList.length);
-                                        Array.prototype.splice.apply(scope.filterWidgetLibraryList, arr);
-                                    }
-                                });
-
                                 scope.widgetLibraryList = $rootScope.widgetLibraryList;
                                 scope.filterWidgetLibraryList = [];
 
-                                uiUtilService.latestOnce(
-                                    function () {
-                                        return $timeout(
-                                            function () {
-                                                var $wrapper = element.find(".ui-control-wrapper"),
-                                                    $panel = element.find(".ui-control-panel");
+                                $rootScope.$on(angularEventTypes.switchProjectEvent, function (event, project) {
+                                    uiUtilService.latestOnce(
+                                        function () {
+                                            return $timeout(
+                                                function () {
+                                                    var $wrapper = element.find(".ui-control-wrapper"),
+                                                        $panel = element.find(".ui-control-panel");
 
-                                                $wrapper.addClass("expanded");
-                                                $panel.addClass("show");
+                                                    $wrapper.addClass("expanded");
+                                                    $panel.addClass("show");
 
-                                                var $el = element.find(".pickerPane");
+                                                    var $el = element.find(".pickerPane");
 
-                                                mc = $el.data("hammer");
-                                                if (!mc) {
-                                                    mc = new Hammer.Manager($el.get(0));
-                                                    mc.add(new Hammer.Pan());
-                                                    mc.on("panstart panmove panend", addWidgetHandler);
-                                                    $el.data("hammer", mc);
+                                                    mc = $el.data("hammer");
+                                                    if (!mc) {
+                                                        mc = new Hammer.Manager($el.get(0));
+                                                        mc.add(new Hammer.Pan());
+                                                        mc.on("panstart panmove panend", addWidgetHandler);
+                                                        $el.data("hammer", mc);
 
-                                                    scope.$on('$destroy', function () {
-                                                        mc.off("panstart panmove panend", addWidgetHandler);
+                                                        scope.$on('$destroy', function () {
+                                                            mc.off("panstart panmove panend", addWidgetHandler);
+                                                        });
+                                                    }
+
+                                                    appService.loadWidgetArtifactList().then(function () {
+                                                        var arr = scope.filterLibraryList(scope.widgetLibraryList, project.xrefRecord);
+                                                        arr.splice(0, 0, 0, 0);
+                                                        scope.filterWidgetLibraryList.splice(0, scope.filterWidgetLibraryList.length);
+                                                        Array.prototype.splice.apply(scope.filterWidgetLibraryList, arr);
                                                     });
                                                 }
-
-                                                uiUtilService.whilst(
-                                                    function () {
-                                                        return !$rootScope.loadedProject;
-                                                    },
-                                                    function (callback) {
-                                                        callback();
-                                                    },
-                                                    function (err) {
-                                                        appService.loadWidgetArtifactList().then(function () {
-                                                            var arr = scope.filterLibraryList(scope.widgetLibraryList, $rootScope.loadedProject.xrefRecord);
-                                                            arr.splice(0, 0, 0, 0);
-                                                            scope.filterWidgetLibraryList.splice(0, scope.filterWidgetLibraryList.length);
-                                                            Array.prototype.splice.apply(scope.filterWidgetLibraryList, arr);
-                                                        });
-                                                    },
-                                                    angularConstants.checkInterval,
-                                                    "ui-widget.compile.post.filterWidgetLibraryList",
-                                                    angularConstants.renderTimeout
-                                                );
-                                            }
-                                        );
-                                    },
-                                    null,
-                                    angularConstants.unresponsiveInterval,
-                                    "ui-widget.compile.post.init"
-                                )();
+                                            );
+                                        },
+                                        null,
+                                        angularConstants.unresponsiveInterval,
+                                        "ui-widget.compile.post.init"
+                                    )();
+                                });
                             }
                         }
                     }

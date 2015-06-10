@@ -12,6 +12,7 @@
     width: 100%;
     height: 100%;
     color: $color;
+    overflow: hidden;
 
     #repoTypes {
         position: relative;
@@ -28,15 +29,21 @@
     }
 
     .repoContent {
-        height: calc(100% - 4em);
+        position: relative;
+        float: left;
+        width: 100%;
+        height: calc(100% - 1em);
         margin: 0.5em 0;
+        padding-bottom: 2em;
         overflow: auto;
 
         .repoLib {
             position: relative;
             float: left;
-            width: 480px;
+            width: 500px;
+            height: 630px;
             margin-right: 1em;
+            margin-bottom: 1em;
             padding: 15px;
             box-shadow: 0 15px 10px -10px #6D6D6D, 0 1px 4px #A4A4A4, 0 0 40px #E0E0E0 inset;
 
@@ -83,11 +90,30 @@
             .repoLibInfo {
                 height: 1.5em;
 
-                label {
+                &.repoLibDesc {
+                    height: 4em;
+
+                    > div {
+                        span {
+                            position: relative;
+                            float: left;
+                            width: 100%;
+                            height: 100%;
+                            text-align: right;
+                            display: -webkit-box;
+                            -webkit-box-orient: vertical;
+                            -webkit-line-clamp: 3;
+                            text-overflow: ellipsis;
+                            overflow: hidden;
+                        }
+                    }
+                }
+
+                > label {
                     height: 100%;
                 }
 
-                div {
+                > div {
                     height: 100%;
 
                     span {
@@ -95,6 +121,7 @@
                         float: left;
                         width: 100%;
                         height: 100%;
+                        line-height: 1.5;
                         display: -webkit-box;
                         -webkit-box-orient: vertical;
                         -webkit-line-clamp: 1;

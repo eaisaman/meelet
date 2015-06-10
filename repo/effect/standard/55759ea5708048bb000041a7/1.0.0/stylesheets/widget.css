@@ -1,0 +1,3225 @@
+[ui-effect-page-transition-1-0-0][effect=moveToLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToLeftScaleUp].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeToRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=easingToRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=glueRightMoveFromLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushRightMoveFromLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToRightScaleUp].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToLeft].forward.currentPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeToLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=easingToLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=glueLeftMoveFromRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushLeftMoveFromRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToTop].forward, [ui-effect-page-transition-1-0-0][effect=moveToTopScaleUp].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeToBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=easingToBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=glueBottomMoveFromTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushBottomMoveFromTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToBottom].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToBottomScaleUp].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeToTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=easingToTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=glueTopMoveFromBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushTopMoveFromBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeToLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=fadeToRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=fadeToTop].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=fadeToBottom].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=fadeLeftFadeRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToLeftUnfoldRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=fadeRightFadeLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=foldRightMoveFromLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeRightFadeLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToRightUnfoldLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=fadeLeftFadeRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=foldLeftMoveFromRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeTopFadeBottom].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=moveToTopUnfoldBottom].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=fadeBottomFadeTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=foldBottomMoveFromTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeBottomFadeTop].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=fadeTopFadeBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=foldTopMoveFromBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToTop].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToBottom].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=scaleDown].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=scaleUp].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToLeftScaleUp].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToRightScaleUp].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToBottomScaleUp].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToTopScaleUp].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fall].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDown].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleUp].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=scaleDownScaleUp].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=scaleDownScaleUp].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=glueLeftMoveFromRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=glueRightMoveFromLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=glueBottomMoveFromTop].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=glueTopMoveFromBottom].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=flipRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=flipRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=flipLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=flipLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=flipTop].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=flipTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=flipBottom].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=flipBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fall].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=newspaper].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=newspaper].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushLeftMoveFromRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=pushLeftPullRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=pushRightMoveFromLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=pushRightPullLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=pushTopMoveFromBottom].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=pushTopPullBottom].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=pushBottomMoveFromTop].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=pushBottomPullTop].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=pushLeftPullRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushRightPullLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushBottomPullTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushTopPullBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=foldRightMoveFromLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=foldLeftMoveFromRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=foldTopMoveFromBottom].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=foldBottomMoveFromTop].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToRightUnfoldLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToLeftUnfoldRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=moveToTopUnfoldBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=roomToLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=roomToLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=roomToRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=roomToRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=roomToTop].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=roomToTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=roomToBottom].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=roomToBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=cubeToLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=cubeToLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=cubeToRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=cubeToRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=cubeToTop].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=cubeToTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=cubeToBottom].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=cubeToBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=carouselToLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=carouselToLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=carouselToRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=carouselToRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=carouselToTop].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=carouselToTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=carouselToBottom].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=carouselToBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=sides].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=sides].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=slide].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=slide].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=easingToLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=easingToRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=easingToTop].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=easingToBottom].forward.currentPage {
+  -moz-animation-duration: 1s;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -moz-animation-fill-mode: both;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  -webkit-backface-visibility: none;
+  -moz-backface-visibility: none;
+  -o-backface-visibility: none;
+  backface-visibility: none;
+}
+
+@-moz-keyframes _effect_pageTransition_moveToLeft {
+  to {
+    -moz-transform: translateX(-100%);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_moveToLeft {
+  to {
+    -webkit-transform: translateX(-100%);
+  }
+}
+@keyframes _effect_pageTransition_moveToLeft {
+  to {
+    transform: translateX(-100%);
+  }
+}
+@-moz-keyframes _effect_pageTransition_moveFromLeft {
+  from {
+    -moz-transform: translateX(-100%);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_moveFromLeft {
+  from {
+    -webkit-transform: translateX(-100%);
+  }
+}
+@keyframes _effect_pageTransition_moveFromLeft {
+  from {
+    transform: translateX(-100%);
+  }
+}
+@-moz-keyframes _effect_pageTransition_moveToRight {
+  to {
+    -webkit-transform: translateX(100%);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_moveToRight {
+  to {
+    -moz-transform: translateX(100%);
+  }
+}
+@keyframes _effect_pageTransition_moveToRight {
+  to {
+    transform: translateX(100%);
+  }
+}
+@-moz-keyframes _effect_pageTransition_moveFromRight {
+  from {
+    -webkit-transform: translateX(100%);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_moveFromRight {
+  from {
+    -moz-transform: translateX(100%);
+  }
+}
+@keyframes _effect_pageTransition_moveFromRight {
+  from {
+    transform: translateX(100%);
+  }
+}
+@-moz-keyframes _effect_pageTransition_moveToTop {
+  to {
+    -moz-transform: translateY(-100%);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_moveToTop {
+  to {
+    -webkit-transform: translateY(-100%);
+  }
+}
+@keyframes _effect_pageTransition_moveToTop {
+  to {
+    transform: translateY(-100%);
+  }
+}
+@-moz-keyframes _effect_pageTransition_moveFromTop {
+  from {
+    -webkit-transform: translateY(-100%);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_moveFromTop {
+  from {
+    -moz-transform: translateY(-100%);
+  }
+}
+@keyframes _effect_pageTransition_moveFromTop {
+  from {
+    transform: translateY(-100%);
+  }
+}
+@-moz-keyframes _effect_pageTransition_moveToBottom {
+  to {
+    -moz-transform: translateY(100%);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_moveToBottom {
+  to {
+    -webkit-transform: translateY(100%);
+  }
+}
+@keyframes _effect_pageTransition_moveToBottom {
+  to {
+    transform: translateY(100%);
+  }
+}
+@-moz-keyframes _effect_pageTransition_moveFromBottom {
+  from {
+    -webkit-transform: translateY(100%);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_moveFromBottom {
+  from {
+    -moz-transform: translateY(100%);
+  }
+}
+@keyframes _effect_pageTransition_moveFromBottom {
+  from {
+    transform: translateY(100%);
+  }
+}
+@-moz-keyframes _effect_pageTransition_fade {
+  to {
+    opacity: 0.3;
+  }
+}
+@-webkit-keyframes _effect_pageTransition_fade {
+  to {
+    opacity: 0.3;
+  }
+}
+@keyframes _effect_pageTransition_fade {
+  to {
+    opacity: 0.3;
+  }
+}
+@-moz-keyframes _effect_pageTransition_moveToLeftFade {
+  to {
+    opacity: 0.3;
+    -moz-transform: translateX(-100%);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_moveToLeftFade {
+  to {
+    opacity: 0.3;
+    -webkit-transform: translateX(-100%);
+  }
+}
+@keyframes _effect_pageTransition_moveToLeftFade {
+  to {
+    opacity: 0.3;
+    transform: translateX(-100%);
+  }
+}
+@-moz-keyframes _effect_pageTransition_moveFromLeftFade {
+  from {
+    opacity: 0.3;
+    -moz-transform: translateX(-100%);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_moveFromLeftFade {
+  from {
+    opacity: 0.3;
+    -webkit-transform: translateX(-100%);
+  }
+}
+@keyframes _effect_pageTransition_moveFromLeftFade {
+  from {
+    opacity: 0.3;
+    transform: translateX(-100%);
+  }
+}
+@-moz-keyframes _effect_pageTransition_moveToRightFade {
+  to {
+    opacity: 0.3;
+    -moz-transform: translateX(100%);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_moveToRightFade {
+  to {
+    opacity: 0.3;
+    -webkit-transform: translateX(100%);
+  }
+}
+@keyframes _effect_pageTransition_moveToRightFade {
+  to {
+    opacity: 0.3;
+    transform: translateX(100%);
+  }
+}
+@-moz-keyframes _effect_pageTransition_moveFromRightFade {
+  from {
+    opacity: 0.3;
+    -moz-transform: translateX(100%);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_moveFromRightFade {
+  from {
+    opacity: 0.3;
+    -webkit-transform: translateX(100%);
+  }
+}
+@keyframes _effect_pageTransition_moveFromRightFade {
+  from {
+    opacity: 0.3;
+    transform: translateX(100%);
+  }
+}
+@-moz-keyframes _effect_pageTransition_moveToTopFade {
+  to {
+    opacity: 0.3;
+    -moz-transform: translateY(-100%);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_moveToTopFade {
+  to {
+    opacity: 0.3;
+    -webkit-transform: translateY(-100%);
+  }
+}
+@keyframes _effect_pageTransition_moveToTopFade {
+  to {
+    opacity: 0.3;
+    transform: translateY(-100%);
+  }
+}
+@-moz-keyframes _effect_pageTransition_moveFromTopFade {
+  from {
+    opacity: 0.3;
+    -moz-transform: translateY(-100%);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_moveFromTopFade {
+  from {
+    opacity: 0.3;
+    -webkit-transform: translateY(-100%);
+  }
+}
+@keyframes _effect_pageTransition_moveFromTopFade {
+  from {
+    opacity: 0.3;
+    transform: translateY(-100%);
+  }
+}
+@-moz-keyframes _effect_pageTransition_moveToBottomFade {
+  to {
+    opacity: 0.3;
+    -webkit-transform: translateY(100%);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_moveToBottomFade {
+  to {
+    opacity: 0.3;
+    -moz-transform: translateY(100%);
+  }
+}
+@keyframes _effect_pageTransition_moveToBottomFade {
+  to {
+    opacity: 0.3;
+    transform: translateY(100%);
+  }
+}
+@-moz-keyframes _effect_pageTransition_moveFromBottomFade {
+  from {
+    opacity: 0.3;
+    -webkit-transform: translateY(100%);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_moveFromBottomFade {
+  from {
+    opacity: 0.3;
+    -moz-transform: translateY(100%);
+  }
+}
+@keyframes _effect_pageTransition_moveFromBottomFade {
+  from {
+    opacity: 0.3;
+    transform: translateY(100%);
+  }
+}
+@-moz-keyframes _effect_pageTransition_scaleDown {
+  to {
+    opacity: 0;
+    -moz-transform: scale(0.8);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_scaleDown {
+  to {
+    opacity: 0;
+    -webkit-transform: scale(0.8);
+  }
+}
+@keyframes _effect_pageTransition_scaleDown {
+  to {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+@-moz-keyframes _effect_pageTransition_scaleUp {
+  from {
+    opacity: 0;
+    -moz-transform: scale(0.8);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_scaleUp {
+  from {
+    opacity: 0;
+    -webkit-transform: scale(0.8);
+  }
+}
+@keyframes _effect_pageTransition_scaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+@-moz-keyframes _effect_pageTransition_scaleUpDown {
+  from {
+    opacity: 0;
+    -moz-transform: scale(1.2);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_scaleUpDown {
+  from {
+    opacity: 0;
+    -webkit-transform: scale(1.2);
+  }
+}
+@keyframes _effect_pageTransition_scaleUpDown {
+  from {
+    opacity: 0;
+    transform: scale(1.2);
+  }
+}
+@-moz-keyframes _effect_pageTransition_scaleDownUp {
+  to {
+    opacity: 0;
+    -moz-transform: scale(1.2);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_scaleDownUp {
+  to {
+    opacity: 0;
+    -webkit-transform: scale(1.2);
+  }
+}
+@keyframes _effect_pageTransition_scaleDownUp {
+  to {
+    opacity: 0;
+    transform: scale(1.2);
+  }
+}
+@-moz-keyframes _effect_pageTransition_scaleDownCenter {
+  to {
+    opacity: 0;
+    -moz-transform: scale(0.7);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_scaleDownCenter {
+  to {
+    opacity: 0;
+    -webkit-transform: scale(0.7);
+  }
+}
+@keyframes _effect_pageTransition_scaleDownCenter {
+  to {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+}
+@-moz-keyframes _effect_pageTransition_scaleUpCenter {
+  from {
+    opacity: 0;
+    -moz-transform: scale(0.7);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_scaleUpCenter {
+  from {
+    opacity: 0;
+    -webkit-transform: scale(0.7);
+  }
+}
+@keyframes _effect_pageTransition_scaleUpCenter {
+  from {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_rotateRightSideFirst {
+  40% {
+    -webkit-transform: rotateY(15deg);
+    opacity: .8;
+    -webkit-animation-timing-function: ease-out;
+  }
+  100% {
+    -webkit-transform: scale(0.8) translateZ(-200px);
+    opacity: 0;
+  }
+}
+@-moz-keyframes _effect_pageTransition_rotateRightSideFirst {
+  40% {
+    -moz-transform: rotateY(15deg);
+    opacity: .8;
+    -moz-animation-timing-function: ease-out;
+  }
+  100% {
+    -moz-transform: scale(0.8) translateZ(-200px);
+    opacity: 0;
+  }
+}
+@keyframes _effect_pageTransition_rotateRightSideFirst {
+  40% {
+    transform: rotateY(15deg);
+    opacity: .8;
+    animation-timing-function: ease-out;
+  }
+  100% {
+    transform: scale(0.8) translateZ(-200px);
+    opacity: 0;
+  }
+}
+@-webkit-keyframes _effect_pageTransition_rotateLeftSideFirst {
+  40% {
+    -webkit-transform: rotateY(-15deg);
+    opacity: .8;
+    -webkit-animation-timing-function: ease-out;
+  }
+  100% {
+    -webkit-transform: scale(0.8) translateZ(-200px);
+    opacity: 0;
+  }
+}
+@-moz-keyframes _effect_pageTransition_rotateLeftSideFirst {
+  40% {
+    -moz-transform: rotateY(-15deg);
+    opacity: .8;
+    -moz-animation-timing-function: ease-out;
+  }
+  100% {
+    -moz-transform: scale(0.8) translateZ(-200px);
+    opacity: 0;
+  }
+}
+@keyframes _effect_pageTransition_rotateLeftSideFirst {
+  40% {
+    transform: rotateY(-15deg);
+    opacity: .8;
+    animation-timing-function: ease-out;
+  }
+  100% {
+    transform: scale(0.8) translateZ(-200px);
+    opacity: 0;
+  }
+}
+@-webkit-keyframes _effect_pageTransition_rotateTopSideFirst {
+  40% {
+    -webkit-transform: rotateX(15deg);
+    opacity: .8;
+    -webkit-animation-timing-function: ease-out;
+  }
+  100% {
+    -webkit-transform: scale(0.8) translateZ(-200px);
+    opacity: 0;
+  }
+}
+@-moz-keyframes _effect_pageTransition_rotateTopSideFirst {
+  40% {
+    -moz-transform: rotateX(15deg);
+    opacity: .8;
+    -moz-animation-timing-function: ease-out;
+  }
+  100% {
+    -moz-transform: scale(0.8) translateZ(-200px);
+    opacity: 0;
+  }
+}
+@keyframes _effect_pageTransition_rotateTopSideFirst {
+  40% {
+    transform: rotateX(15deg);
+    opacity: .8;
+    animation-timing-function: ease-out;
+  }
+  100% {
+    transform: scale(0.8) translateZ(-200px);
+    opacity: 0;
+  }
+}
+@-webkit-keyframes _effect_pageTransition_rotateBottomSideFirst {
+  40% {
+    -webkit-transform: rotateX(-15deg);
+    opacity: .8;
+    -webkit-animation-timing-function: ease-out;
+  }
+  100% {
+    -webkit-transform: scale(0.8) translateZ(-200px);
+    opacity: 0;
+  }
+}
+@-moz-keyframes _effect_pageTransition_rotateBottomSideFirst {
+  40% {
+    -moz-transform: rotateX(-15deg);
+    opacity: .8;
+    -moz-animation-timing-function: ease-out;
+  }
+  100% {
+    -moz-transform: scale(0.8) translateZ(-200px);
+    opacity: 0;
+  }
+}
+@keyframes _effect_pageTransition_rotateBottomSideFirst {
+  40% {
+    transform: rotateX(-15deg);
+    opacity: .8;
+    animation-timing-function: ease-out;
+  }
+  100% {
+    transform: scale(0.8) translateZ(-200px);
+    opacity: 0;
+  }
+}
+@-webkit-keyframes _effect_pageTransition_flipOutRight {
+  to {
+    -webkit-transform: translateZ(-1000px) rotateY(90deg);
+    opacity: 0.2;
+  }
+}
+@-moz-keyframes _effect_pageTransition_flipOutRight {
+  to {
+    -moz-transform: translateZ(-1000px) rotateY(90deg);
+    opacity: 0.2;
+  }
+}
+@keyframes _effect_pageTransition_flipOutRight {
+  to {
+    transform: translateZ(-1000px) rotateY(90deg);
+    opacity: 0.2;
+  }
+}
+@-webkit-keyframes _effect_pageTransition_flipInLeft {
+  from {
+    -webkit-transform: translateZ(-1000px) rotateY(-90deg);
+    opacity: 0.2;
+  }
+}
+@-moz-keyframes _effect_pageTransition_flipInLeft {
+  from {
+    -moz-transform: translateZ(-1000px) rotateY(-90deg);
+    opacity: 0.2;
+  }
+}
+@keyframes _effect_pageTransition_flipInLeft {
+  from {
+    transform: translateZ(-1000px) rotateY(-90deg);
+    opacity: 0.2;
+  }
+}
+@-webkit-keyframes _effect_pageTransition_flipOutLeft {
+  to {
+    -webkit-transform: translateZ(-1000px) rotateY(-90deg);
+    opacity: 0.2;
+  }
+}
+@-moz-keyframes _effect_pageTransition_flipOutLeft {
+  to {
+    -moz-transform: translateZ(-1000px) rotateY(-90deg);
+    opacity: 0.2;
+  }
+}
+@keyframes _effect_pageTransition_flipOutLeft {
+  to {
+    transform: translateZ(-1000px) rotateY(-90deg);
+    opacity: 0.2;
+  }
+}
+@-webkit-keyframes _effect_pageTransition_flipInRight {
+  from {
+    -webkit-transform: translateZ(-1000px) rotateY(90deg);
+    opacity: 0.2;
+  }
+}
+@-moz-keyframes _effect_pageTransition_flipInRight {
+  from {
+    -moz-transform: translateZ(-1000px) rotateY(90deg);
+    opacity: 0.2;
+  }
+}
+@keyframes _effect_pageTransition_flipInRight {
+  from {
+    transform: translateZ(-1000px) rotateY(90deg);
+    opacity: 0.2;
+  }
+}
+@-webkit-keyframes _effect_pageTransition_flipOutTop {
+  to {
+    -webkit-transform: translateZ(-1000px) rotateX(90deg);
+    opacity: 0.2;
+  }
+}
+@-moz-keyframes _effect_pageTransition_flipOutTop {
+  to {
+    -moz-transform: translateZ(-1000px) rotateX(90deg);
+    opacity: 0.2;
+  }
+}
+@keyframes _effect_pageTransition_flipOutTop {
+  to {
+    transform: translateZ(-1000px) rotateX(90deg);
+    opacity: 0.2;
+  }
+}
+@-webkit-keyframes _effect_pageTransition_flipInBottom {
+  from {
+    -webkit-transform: translateZ(-1000px) rotateX(-90deg);
+    opacity: 0.2;
+  }
+}
+@-moz-keyframes _effect_pageTransition_flipInBottom {
+  from {
+    -moz-transform: translateZ(-1000px) rotateX(-90deg);
+    opacity: 0.2;
+  }
+}
+@keyframes _effect_pageTransition_flipInBottom {
+  from {
+    transform: translateZ(-1000px) rotateX(-90deg);
+    opacity: 0.2;
+  }
+}
+@-webkit-keyframes _effect_pageTransition_flipOutBottom {
+  to {
+    -webkit-transform: translateZ(-1000px) rotateX(-90deg);
+    opacity: 0.2;
+  }
+}
+@-moz-keyframes _effect_pageTransition_flipOutBottom {
+  to {
+    -moz-transform: translateZ(-1000px) rotateX(-90deg);
+    opacity: 0.2;
+  }
+}
+@keyframes _effect_pageTransition_flipOutBottom {
+  to {
+    transform: translateZ(-1000px) rotateX(-90deg);
+    opacity: 0.2;
+  }
+}
+@-webkit-keyframes _effect_pageTransition_flipInTop {
+  from {
+    -webkit-transform: translateZ(-1000px) rotateX(90deg);
+    opacity: 0.2;
+  }
+}
+@-moz-keyframes _effect_pageTransition_flipInTop {
+  from {
+    -moz-transform: translateZ(-1000px) rotateX(90deg);
+    opacity: 0.2;
+  }
+}
+@keyframes _effect_pageTransition_flipInTop {
+  from {
+    transform: translateZ(-1000px) rotateX(90deg);
+    opacity: 0.2;
+  }
+}
+@-webkit-keyframes _effect_pageTransition_rotateFall {
+  0% {
+    -webkit-transform: rotateZ(0deg);
+  }
+  20% {
+    -webkit-transform: rotateZ(10deg);
+    -webkit-animation-timing-function: ease-out;
+  }
+  40% {
+    -webkit-transform: rotateZ(17deg);
+  }
+  60% {
+    -webkit-transform: rotateZ(16deg);
+  }
+  100% {
+    -webkit-transform: translateY(100%) rotateZ(17deg);
+  }
+}
+@-moz-keyframes _effect_pageTransition_rotateFall {
+  0% {
+    -moz-transform: rotateZ(0deg);
+  }
+  20% {
+    -moz-transform: rotateZ(10deg);
+    -moz-animation-timing-function: ease-out;
+  }
+  40% {
+    -moz-transform: rotateZ(17deg);
+  }
+  60% {
+    -moz-transform: rotateZ(16deg);
+  }
+  100% {
+    -moz-transform: translateY(100%) rotateZ(17deg);
+  }
+}
+@keyframes _effect_pageTransition_rotateFall {
+  0% {
+    transform: rotateZ(0deg);
+  }
+  20% {
+    transform: rotateZ(10deg);
+    animation-timing-function: ease-out;
+  }
+  40% {
+    transform: rotateZ(17deg);
+  }
+  60% {
+    transform: rotateZ(16deg);
+  }
+  100% {
+    transform: translateY(100%) rotateZ(17deg);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_rotateOutNewspaper {
+  to {
+    -webkit-transform: translateZ(-3000px) rotateZ(360deg);
+    opacity: 0;
+  }
+}
+@-moz-keyframes _effect_pageTransition_rotateOutNewspaper {
+  to {
+    -moz-transform: translateZ(-3000px) rotateZ(360deg);
+    opacity: 0;
+  }
+}
+@keyframes _effect_pageTransition_rotateOutNewspaper {
+  to {
+    transform: translateZ(-3000px) rotateZ(360deg);
+    opacity: 0;
+  }
+}
+@-webkit-keyframes _effect_pageTransition_rotateInNewspaper {
+  from {
+    -webkit-transform: translateZ(-3000px) rotateZ(-360deg);
+    opacity: 0;
+  }
+}
+@-moz-keyframes _effect_pageTransition_rotateInNewspaper {
+  from {
+    -moz-transform: translateZ(-3000px) rotateZ(-360deg);
+    opacity: 0;
+  }
+}
+@keyframes _effect_pageTransition_rotateInNewspaper {
+  from {
+    transform: translateZ(-3000px) rotateZ(-360deg);
+    opacity: 0;
+  }
+}
+@-webkit-keyframes _effect_pageTransition_rotatePushLeft {
+  to {
+    opacity: 0;
+    -webkit-transform: rotateY(90deg);
+  }
+}
+@-moz-keyframes _effect_pageTransition_rotatePushLeft {
+  to {
+    opacity: 0;
+    -moz-transform: rotateY(90deg);
+  }
+}
+@keyframes _effect_pageTransition_rotatePushLeft {
+  to {
+    opacity: 0;
+    transform: rotateY(90deg);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_rotatePushRight {
+  to {
+    opacity: 0;
+    -webkit-transform: rotateY(-90deg);
+  }
+}
+@-moz-keyframes _effect_pageTransition_rotatePushRight {
+  to {
+    opacity: 0;
+    -moz-transform: rotateY(-90deg);
+  }
+}
+@keyframes _effect_pageTransition_rotatePushRight {
+  to {
+    opacity: 0;
+    transform: rotateY(-90deg);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_rotatePushTop {
+  to {
+    opacity: 0;
+    -webkit-transform: rotateX(-90deg);
+  }
+}
+@-moz-keyframes _effect_pageTransition_rotatePushTop {
+  to {
+    opacity: 0;
+    -moz-transform: rotateX(-90deg);
+  }
+}
+@keyframes _effect_pageTransition_rotatePushTop {
+  to {
+    opacity: 0;
+    transform: rotateX(-90deg);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_rotatePushBottom {
+  to {
+    opacity: 0;
+    -webkit-transform: rotateX(90deg);
+  }
+}
+@-moz-keyframes _effect_pageTransition_rotatePushBottom {
+  to {
+    opacity: 0;
+    -moz-transform: rotateX(90deg);
+  }
+}
+@keyframes _effect_pageTransition_rotatePushBottom {
+  to {
+    opacity: 0;
+    transform: rotateX(90deg);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_rotatePullRight {
+  from {
+    opacity: 0;
+    -webkit-transform: rotateY(-90deg);
+  }
+}
+@-moz-keyframes _effect_pageTransition_rotatePullRight {
+  from {
+    opacity: 0;
+    -moz-transform: rotateY(-90deg);
+  }
+}
+@keyframes _effect_pageTransition_rotatePullRight {
+  from {
+    opacity: 0;
+    transform: rotateY(-90deg);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_rotatePullLeft {
+  from {
+    opacity: 0;
+    -webkit-transform: rotateY(90deg);
+  }
+}
+@-moz-keyframes _effect_pageTransition_rotatePullLeft {
+  from {
+    opacity: 0;
+    -moz-transform: rotateY(90deg);
+  }
+}
+@keyframes _effect_pageTransition_rotatePullLeft {
+  from {
+    opacity: 0;
+    transform: rotateY(90deg);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_rotatePullTop {
+  from {
+    opacity: 0;
+    -webkit-transform: rotateX(-90deg);
+  }
+}
+@-moz-keyframes _effect_pageTransition_rotatePullTop {
+  from {
+    opacity: 0;
+    -moz-transform: rotateX(-90deg);
+  }
+}
+@keyframes _effect_pageTransition_rotatePullTop {
+  from {
+    opacity: 0;
+    transform: rotateX(-90deg);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_rotatePullBottom {
+  from {
+    opacity: 0;
+    -webkit-transform: rotateX(90deg);
+  }
+}
+@-moz-keyframes _effect_pageTransition_rotatePullBottom {
+  from {
+    opacity: 0;
+    -moz-transform: rotateX(90deg);
+  }
+}
+@keyframes _effect_pageTransition_rotatePullBottom {
+  from {
+    opacity: 0;
+    transform: rotateX(90deg);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_rotateFoldRight {
+  to {
+    opacity: 0;
+    -webkit-transform: translateX(100%) rotateY(90deg);
+  }
+}
+@-moz-keyframes _effect_pageTransition_rotateFoldRight {
+  to {
+    opacity: 0;
+    -moz-transform: translateX(100%) rotateY(90deg);
+  }
+}
+@keyframes _effect_pageTransition_rotateFoldRight {
+  to {
+    opacity: 0;
+    transform: translateX(100%) rotateY(90deg);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_rotateFoldLeft {
+  to {
+    opacity: 0;
+    -webkit-transform: translateX(-100%) rotateY(-90deg);
+  }
+}
+@-moz-keyframes _effect_pageTransition_rotateFoldLeft {
+  to {
+    opacity: 0;
+    -moz-transform: translateX(-100%) rotateY(-90deg);
+  }
+}
+@keyframes _effect_pageTransition_rotateFoldLeft {
+  to {
+    opacity: 0;
+    transform: translateX(-100%) rotateY(-90deg);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_rotateFoldTop {
+  to {
+    opacity: 0;
+    -webkit-transform: translateY(-100%) rotateX(90deg);
+  }
+}
+@-moz-keyframes _effect_pageTransition_rotateFoldTop {
+  to {
+    opacity: 0;
+    -moz-transform: translateY(-100%) rotateX(90deg);
+  }
+}
+@keyframes _effect_pageTransition_rotateFoldTop {
+  to {
+    opacity: 0;
+    transform: translateY(-100%) rotateX(90deg);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_rotateFoldBottom {
+  to {
+    opacity: 0;
+    -webkit-transform: translateY(100%) rotateX(-90deg);
+  }
+}
+@-moz-keyframes _effect_pageTransition_rotateFoldBottom {
+  to {
+    opacity: 0;
+    -moz-transform: translateY(100%) rotateX(-90deg);
+  }
+}
+@keyframes _effect_pageTransition_rotateFoldBottom {
+  to {
+    opacity: 0;
+    transform: translateY(100%) rotateX(-90deg);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_rotateUnfoldLeft {
+  from {
+    opacity: 0;
+    -webkit-transform: translateX(-100%) rotateY(-90deg);
+  }
+}
+@-moz-keyframes _effect_pageTransition_rotateUnfoldLeft {
+  from {
+    opacity: 0;
+    -moz-transform: translateX(-100%) rotateY(-90deg);
+  }
+}
+@keyframes _effect_pageTransition_rotateUnfoldLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-100%) rotateY(-90deg);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_rotateUnfoldRight {
+  from {
+    opacity: 0;
+    -webkit-transform: translateX(100%) rotateY(90deg);
+  }
+}
+@-moz-keyframes _effect_pageTransition_rotateUnfoldRight {
+  from {
+    opacity: 0;
+    -moz-transform: translateX(100%) rotateY(90deg);
+  }
+}
+@keyframes _effect_pageTransition_rotateUnfoldRight {
+  from {
+    opacity: 0;
+    transform: translateX(100%) rotateY(90deg);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_rotateUnfoldTop {
+  from {
+    opacity: 0;
+    -webkit-transform: translateY(-100%) rotateX(90deg);
+  }
+}
+@-moz-keyframes _effect_pageTransition_rotateUnfoldTop {
+  from {
+    opacity: 0;
+    -moz-transform: translateY(-100%) rotateX(90deg);
+  }
+}
+@keyframes _effect_pageTransition_rotateUnfoldTop {
+  from {
+    opacity: 0;
+    transform: translateY(-100%) rotateX(90deg);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_rotateUnfoldBottom {
+  from {
+    opacity: 0;
+    -webkit-transform: translateY(100%) rotateX(-90deg);
+  }
+}
+@-moz-keyframes _effect_pageTransition_rotateUnfoldBottom {
+  from {
+    opacity: 0;
+    -moz-transform: translateY(100%) rotateX(-90deg);
+  }
+}
+@keyframes _effect_pageTransition_rotateUnfoldBottom {
+  from {
+    opacity: 0;
+    transform: translateY(100%) rotateX(-90deg);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_rotateRoomLeftOut {
+  to {
+    opacity: .3;
+    -webkit-transform: translateX(-100%) rotateY(90deg);
+  }
+}
+@-moz-keyframes _effect_pageTransition_rotateRoomLeftOut {
+  to {
+    opacity: .3;
+    -moz-transform: translateX(-100%) rotateY(90deg);
+  }
+}
+@keyframes _effect_pageTransition_rotateRoomLeftOut {
+  to {
+    opacity: .3;
+    transform: translateX(-100%) rotateY(90deg);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_rotateRoomLeftIn {
+  from {
+    opacity: .3;
+    -webkit-transform: translateX(100%) rotateY(-90deg);
+  }
+}
+@-moz-keyframes _effect_pageTransition_rotateRoomLeftIn {
+  from {
+    opacity: .3;
+    -moz-transform: translateX(100%) rotateY(-90deg);
+  }
+}
+@keyframes _effect_pageTransition_rotateRoomLeftIn {
+  from {
+    opacity: .3;
+    transform: translateX(100%) rotateY(-90deg);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_rotateRoomRightOut {
+  to {
+    opacity: .3;
+    -webkit-transform: translateX(100%) rotateY(-90deg);
+  }
+}
+@-moz-keyframes _effect_pageTransition_rotateRoomRightOut {
+  to {
+    opacity: .3;
+    -moz-transform: translateX(100%) rotateY(-90deg);
+  }
+}
+@keyframes _effect_pageTransition_rotateRoomRightOut {
+  to {
+    opacity: .3;
+    transform: translateX(100%) rotateY(-90deg);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_rotateRoomRightIn {
+  from {
+    opacity: .3;
+    -webkit-transform: translateX(-100%) rotateY(90deg);
+  }
+}
+@-moz-keyframes _effect_pageTransition_rotateRoomRightIn {
+  from {
+    opacity: .3;
+    -moz-transform: translateX(-100%) rotateY(90deg);
+  }
+}
+@keyframes _effect_pageTransition_rotateRoomRightIn {
+  from {
+    opacity: .3;
+    transform: translateX(-100%) rotateY(90deg);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_rotateRoomTopOut {
+  to {
+    opacity: .3;
+    -webkit-transform: translateY(-100%) rotateX(-90deg);
+  }
+}
+@-moz-keyframes _effect_pageTransition_rotateRoomTopOut {
+  to {
+    opacity: .3;
+    -moz-transform: translateY(-100%) rotateX(-90deg);
+  }
+}
+@keyframes _effect_pageTransition_rotateRoomTopOut {
+  to {
+    opacity: .3;
+    transform: translateY(-100%) rotateX(-90deg);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_rotateRoomTopIn {
+  from {
+    opacity: .3;
+    -webkit-transform: translateY(100%) rotateX(90deg);
+  }
+}
+@-moz-keyframes _effect_pageTransition_rotateRoomTopIn {
+  from {
+    opacity: .3;
+    -moz-transform: translateY(100%) rotateX(90deg);
+  }
+}
+@keyframes _effect_pageTransition_rotateRoomTopIn {
+  from {
+    opacity: .3;
+    transform: translateY(100%) rotateX(90deg);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_rotateRoomBottomOut {
+  to {
+    opacity: .3;
+    -webkit-transform: translateY(100%) rotateX(90deg);
+  }
+}
+@-moz-keyframes _effect_pageTransition_rotateRoomBottomOut {
+  to {
+    opacity: .3;
+    -moz-transform: translateY(100%) rotateX(90deg);
+  }
+}
+@keyframes _effect_pageTransition_rotateRoomBottomOut {
+  to {
+    opacity: .3;
+    transform: translateY(100%) rotateX(90deg);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_rotateRoomBottomIn {
+  from {
+    opacity: .3;
+    -webkit-transform: translateY(-100%) rotateX(-90deg);
+  }
+}
+@-moz-keyframes _effect_pageTransition_rotateRoomBottomIn {
+  from {
+    opacity: .3;
+    -moz-transform: translateY(-100%) rotateX(-90deg);
+  }
+}
+@keyframes _effect_pageTransition_rotateRoomBottomIn {
+  from {
+    opacity: .3;
+    transform: translateY(-100%) rotateX(-90deg);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_rotateCubeLeftOut {
+  50% {
+    -webkit-animation-timing-function: ease-out;
+    -webkit-transform: translateX(-50%) translateZ(-200px) rotateY(-45deg);
+  }
+  100% {
+    opacity: .3;
+    -webkit-transform: translateX(-100%) rotateY(-90deg);
+  }
+}
+@-moz-keyframes _effect_pageTransition_rotateCubeLeftOut {
+  50% {
+    -moz-animation-timing-function: ease-out;
+    -moz-transform: translateX(-50%) translateZ(-200px) rotateY(-45deg);
+  }
+  100% {
+    opacity: .3;
+    -moz-transform: translateX(-100%) rotateY(-90deg);
+  }
+}
+@keyframes _effect_pageTransition_rotateCubeLeftOut {
+  50% {
+    animation-timing-function: ease-out;
+    transform: translateX(-50%) translateZ(-200px) rotateY(-45deg);
+  }
+  100% {
+    opacity: .3;
+    transform: translateX(-100%) rotateY(-90deg);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_rotateCubeLeftIn {
+  0% {
+    opacity: .3;
+    -webkit-transform: translateX(100%) rotateY(90deg);
+  }
+  50% {
+    -webkit-animation-timing-function: ease-out;
+    -webkit-transform: translateX(50%) translateZ(-200px) rotateY(45deg);
+  }
+}
+@-moz-keyframes _effect_pageTransition_rotateCubeLeftIn {
+  0% {
+    opacity: .3;
+    -moz-transform: translateX(100%) rotateY(90deg);
+  }
+  50% {
+    -moz-animation-timing-function: ease-out;
+    -moz-transform: translateX(50%) translateZ(-200px) rotateY(45deg);
+  }
+}
+@keyframes _effect_pageTransition_rotateCubeLeftIn {
+  0% {
+    opacity: .3;
+    transform: translateX(100%) rotateY(90deg);
+  }
+  50% {
+    animation-timing-function: ease-out;
+    transform: translateX(50%) translateZ(-200px) rotateY(45deg);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_rotateCubeRightOut {
+  50% {
+    -webkit-animation-timing-function: ease-out;
+    -webkit-transform: translateX(50%) translateZ(-200px) rotateY(45deg);
+  }
+  100% {
+    opacity: .3;
+    -webkit-transform: translateX(100%) rotateY(90deg);
+  }
+}
+@-moz-keyframes _effect_pageTransition_rotateCubeRightOut {
+  50% {
+    -moz-animation-timing-function: ease-out;
+    -moz-transform: translateX(50%) translateZ(-200px) rotateY(45deg);
+  }
+  100% {
+    opacity: .3;
+    -moz-transform: translateX(100%) rotateY(90deg);
+  }
+}
+@keyframes _effect_pageTransition_rotateCubeRightOut {
+  50% {
+    animation-timing-function: ease-out;
+    transform: translateX(50%) translateZ(-200px) rotateY(45deg);
+  }
+  100% {
+    opacity: .3;
+    transform: translateX(100%) rotateY(90deg);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_rotateCubeRightIn {
+  0% {
+    opacity: .3;
+    -webkit-transform: translateX(-100%) rotateY(-90deg);
+  }
+  50% {
+    -webkit-animation-timing-function: ease-out;
+    -webkit-transform: translateX(-50%) translateZ(-200px) rotateY(-45deg);
+  }
+}
+@-moz-keyframes _effect_pageTransition_rotateCubeRightIn {
+  0% {
+    opacity: .3;
+    -moz-transform: translateX(-100%) rotateY(-90deg);
+  }
+  50% {
+    -moz-animation-timing-function: ease-out;
+    -moz-transform: translateX(-50%) translateZ(-200px) rotateY(-45deg);
+  }
+}
+@keyframes _effect_pageTransition_rotateCubeRightIn {
+  0% {
+    opacity: .3;
+    transform: translateX(-100%) rotateY(-90deg);
+  }
+  50% {
+    animation-timing-function: ease-out;
+    transform: translateX(-50%) translateZ(-200px) rotateY(-45deg);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_rotateCubeTopOut {
+  50% {
+    -webkit-animation-timing-function: ease-out;
+    -webkit-transform: translateY(-50%) translateZ(-200px) rotateX(45deg);
+  }
+  100% {
+    opacity: .3;
+    -webkit-transform: translateY(-100%) rotateX(90deg);
+  }
+}
+@-moz-keyframes _effect_pageTransition_rotateCubeTopOut {
+  50% {
+    -moz-animation-timing-function: ease-out;
+    -moz-transform: translateY(-50%) translateZ(-200px) rotateX(45deg);
+  }
+  100% {
+    opacity: .3;
+    -moz-transform: translateY(-100%) rotateX(90deg);
+  }
+}
+@keyframes _effect_pageTransition_rotateCubeTopOut {
+  50% {
+    animation-timing-function: ease-out;
+    transform: translateY(-50%) translateZ(-200px) rotateX(45deg);
+  }
+  100% {
+    opacity: .3;
+    transform: translateY(-100%) rotateX(90deg);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_rotateCubeTopIn {
+  0% {
+    opacity: .3;
+    -webkit-transform: translateY(100%) rotateX(-90deg);
+  }
+  50% {
+    -webkit-animation-timing-function: ease-out;
+    -webkit-transform: translateY(50%) translateZ(-200px) rotateX(-45deg);
+  }
+}
+@-moz-keyframes _effect_pageTransition_rotateCubeTopIn {
+  0% {
+    opacity: .3;
+    -moz-transform: translateY(100%) rotateX(-90deg);
+  }
+  50% {
+    -moz-animation-timing-function: ease-out;
+    -moz-transform: translateY(50%) translateZ(-200px) rotateX(-45deg);
+  }
+}
+@keyframes _effect_pageTransition_rotateCubeTopIn {
+  0% {
+    opacity: .3;
+    transform: translateY(100%) rotateX(-90deg);
+  }
+  50% {
+    animation-timing-function: ease-out;
+    transform: translateY(50%) translateZ(-200px) rotateX(-45deg);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_rotateCubeBottomOut {
+  50% {
+    -webkit-animation-timing-function: ease-out;
+    -webkit-transform: translateY(50%) translateZ(-200px) rotateX(-45deg);
+  }
+  100% {
+    opacity: .3;
+    -webkit-transform: translateY(100%) rotateX(-90deg);
+  }
+}
+@-moz-keyframes _effect_pageTransition_rotateCubeBottomOut {
+  50% {
+    -moz-animation-timing-function: ease-out;
+    -moz-transform: translateY(50%) translateZ(-200px) rotateX(-45deg);
+  }
+  100% {
+    opacity: .3;
+    -moz-transform: translateY(100%) rotateX(-90deg);
+  }
+}
+@keyframes _effect_pageTransition_rotateCubeBottomOut {
+  50% {
+    animation-timing-function: ease-out;
+    transform: translateY(50%) translateZ(-200px) rotateX(-45deg);
+  }
+  100% {
+    opacity: .3;
+    transform: translateY(100%) rotateX(-90deg);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_rotateCubeBottomIn {
+  0% {
+    opacity: .3;
+    -webkit-transform: translateY(-100%) rotateX(90deg);
+  }
+  50% {
+    -webkit-animation-timing-function: ease-out;
+    -webkit-transform: translateY(-50%) translateZ(-200px) rotateX(45deg);
+  }
+}
+@-moz-keyframes _effect_pageTransition_rotateCubeBottomIn {
+  0% {
+    opacity: .3;
+    -moz-transform: translateY(-100%) rotateX(90deg);
+  }
+  50% {
+    -moz-animation-timing-function: ease-out;
+    -moz-transform: translateY(-50%) translateZ(-200px) rotateX(45deg);
+  }
+}
+@keyframes _effect_pageTransition_rotateCubeBottomIn {
+  0% {
+    opacity: .3;
+    transform: translateY(-100%) rotateX(90deg);
+  }
+  50% {
+    animation-timing-function: ease-out;
+    transform: translateY(-50%) translateZ(-200px) rotateX(45deg);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_rotateCarouselLeftOut {
+  to {
+    opacity: .3;
+    -webkit-transform: translateX(-150%) scale(0.4) rotateY(-65deg);
+  }
+}
+@-moz-keyframes _effect_pageTransition_rotateCarouselLeftOut {
+  to {
+    opacity: .3;
+    -moz-transform: translateX(-150%) scale(0.4) rotateY(-65deg);
+  }
+}
+@keyframes _effect_pageTransition_rotateCarouselLeftOut {
+  to {
+    opacity: .3;
+    transform: translateX(-150%) scale(0.4) rotateY(-65deg);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_rotateCarouselLeftIn {
+  from {
+    opacity: .3;
+    -webkit-transform: translateX(200%) scale(0.4) rotateY(65deg);
+  }
+}
+@-moz-keyframes _effect_pageTransition_rotateCarouselLeftIn {
+  from {
+    opacity: .3;
+    -moz-transform: translateX(200%) scale(0.4) rotateY(65deg);
+  }
+}
+@keyframes _effect_pageTransition_rotateCarouselLeftIn {
+  from {
+    opacity: .3;
+    transform: translateX(200%) scale(0.4) rotateY(65deg);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_rotateCarouselRightOut {
+  to {
+    opacity: .3;
+    -webkit-transform: translateX(200%) scale(0.4) rotateY(65deg);
+  }
+}
+@-moz-keyframes _effect_pageTransition_rotateCarouselRightOut {
+  to {
+    opacity: .3;
+    -moz-transform: translateX(200%) scale(0.4) rotateY(65deg);
+  }
+}
+@keyframes _effect_pageTransition_rotateCarouselRightOut {
+  to {
+    opacity: .3;
+    transform: translateX(200%) scale(0.4) rotateY(65deg);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_rotateCarouselRightIn {
+  from {
+    opacity: .3;
+    -webkit-transform: translateX(-200%) scale(0.4) rotateY(-65deg);
+  }
+}
+@-moz-keyframes _effect_pageTransition_rotateCarouselRightIn {
+  from {
+    opacity: .3;
+    -moz-transform: translateX(-200%) scale(0.4) rotateY(-65deg);
+  }
+}
+@keyframes _effect_pageTransition_rotateCarouselRightIn {
+  from {
+    opacity: .3;
+    transform: translateX(-200%) scale(0.4) rotateY(-65deg);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_rotateCarouselTopOut {
+  to {
+    opacity: .3;
+    -webkit-transform: translateY(-200%) scale(0.4) rotateX(65deg);
+  }
+}
+@-moz-keyframes _effect_pageTransition_rotateCarouselTopOut {
+  to {
+    opacity: .3;
+    -moz-transform: translateY(-200%) scale(0.4) rotateX(65deg);
+  }
+}
+@keyframes _effect_pageTransition_rotateCarouselTopOut {
+  to {
+    opacity: .3;
+    transform: translateY(-200%) scale(0.4) rotateX(65deg);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_rotateCarouselTopIn {
+  from {
+    opacity: .3;
+    -webkit-transform: translateY(200%) scale(0.4) rotateX(-65deg);
+  }
+}
+@-moz-keyframes _effect_pageTransition_rotateCarouselTopIn {
+  from {
+    opacity: .3;
+    -moz-transform: translateY(200%) scale(0.4) rotateX(-65deg);
+  }
+}
+@keyframes _effect_pageTransition_rotateCarouselTopIn {
+  from {
+    opacity: .3;
+    transform: translateY(200%) scale(0.4) rotateX(-65deg);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_rotateCarouselBottomOut {
+  to {
+    opacity: .3;
+    -webkit-transform: translateY(200%) scale(0.4) rotateX(-65deg);
+  }
+}
+@-moz-keyframes _effect_pageTransition_rotateCarouselBottomOut {
+  to {
+    opacity: .3;
+    -moz-transform: translateY(200%) scale(0.4) rotateX(-65deg);
+  }
+}
+@keyframes _effect_pageTransition_rotateCarouselBottomOut {
+  to {
+    opacity: .3;
+    transform: translateY(200%) scale(0.4) rotateX(-65deg);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_rotateCarouselBottomIn {
+  from {
+    opacity: .3;
+    -webkit-transform: translateY(-200%) scale(0.4) rotateX(65deg);
+  }
+}
+@-moz-keyframes _effect_pageTransition_rotateCarouselBottomIn {
+  from {
+    opacity: .3;
+    -moz-transform: translateY(-200%) scale(0.4) rotateX(65deg);
+  }
+}
+@keyframes _effect_pageTransition_rotateCarouselBottomIn {
+  from {
+    opacity: .3;
+    transform: translateY(-200%) scale(0.4) rotateX(65deg);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_rotateSidesOut {
+  to {
+    opacity: 0;
+    -webkit-transform: translateZ(-500px) rotateY(90deg);
+  }
+}
+@-moz-keyframes _effect_pageTransition_rotateSidesOut {
+  to {
+    opacity: 0;
+    -moz-transform: translateZ(-500px) rotateY(90deg);
+  }
+}
+@keyframes _effect_pageTransition_rotateSidesOut {
+  to {
+    opacity: 0;
+    transform: translateZ(-500px) rotateY(90deg);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_rotateSidesIn {
+  from {
+    opacity: 0;
+    -webkit-transform: translateZ(-500px) rotateY(-90deg);
+  }
+}
+@-moz-keyframes _effect_pageTransition_rotateSidesIn {
+  from {
+    opacity: 0;
+    -moz-transform: translateZ(-500px) rotateY(-90deg);
+  }
+}
+@keyframes _effect_pageTransition_rotateSidesIn {
+  from {
+    opacity: 0;
+    transform: translateZ(-500px) rotateY(-90deg);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_rotateSlideOut {
+  25% {
+    opacity: .5;
+    -webkit-transform: translateZ(-500px);
+  }
+  75% {
+    opacity: .5;
+    -webkit-transform: translateZ(-500px) translateX(-200%);
+  }
+  100% {
+    opacity: .5;
+    -webkit-transform: translateZ(-500px) translateX(-200%);
+  }
+}
+@-moz-keyframes _effect_pageTransition_rotateSlideOut {
+  25% {
+    opacity: .5;
+    -moz-transform: translateZ(-500px);
+  }
+  75% {
+    opacity: .5;
+    -moz-transform: translateZ(-500px) translateX(-200%);
+  }
+  100% {
+    opacity: .5;
+    -moz-transform: translateZ(-500px) translateX(-200%);
+  }
+}
+@keyframes _effect_pageTransition_rotateSlideOut {
+  25% {
+    opacity: .5;
+    transform: translateZ(-500px);
+  }
+  75% {
+    opacity: .5;
+    transform: translateZ(-500px) translateX(-200%);
+  }
+  100% {
+    opacity: .5;
+    transform: translateZ(-500px) translateX(-200%);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_rotateSlideIn {
+  0%, 25% {
+    opacity: .5;
+    -webkit-transform: translateZ(-500px) translateX(200%);
+  }
+  75% {
+    opacity: .5;
+    -webkit-transform: translateZ(-500px);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateZ(0) translateX(0);
+  }
+}
+@-moz-keyframes _effect_pageTransition_rotateSlideIn {
+  0%, 25% {
+    opacity: .5;
+    -moz-transform: translateZ(-500px) translateX(200%);
+  }
+  75% {
+    opacity: .5;
+    -moz-transform: translateZ(-500px);
+  }
+  100% {
+    opacity: 1;
+    -moz-transform: translateZ(0) translateX(0);
+  }
+}
+@keyframes _effect_pageTransition_rotateSlideIn {
+  0%, 25% {
+    opacity: .5;
+    transform: translateZ(-500px) translateX(200%);
+  }
+  75% {
+    opacity: .5;
+    transform: translateZ(-500px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateZ(0) translateX(0);
+  }
+}
+@-moz-keyframes _effect_pageTransition_moveToLeftEasing {
+  to {
+    -moz-transform: translateX(-100%);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_moveToLeftEasing {
+  to {
+    -webkit-transform: translateX(-100%);
+  }
+}
+@keyframes _effect_pageTransition_moveToLeftEasing {
+  to {
+    transform: translateX(-100%);
+  }
+}
+@-moz-keyframes _effect_pageTransition_moveToRightEasing {
+  to {
+    -webkit-transform: translateX(100%);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_moveToRightEasing {
+  to {
+    -moz-transform: translateX(100%);
+  }
+}
+@keyframes _effect_pageTransition_moveToRightEasing {
+  to {
+    transform: translateX(100%);
+  }
+}
+@-moz-keyframes _effect_pageTransition_moveToTopEasing {
+  to {
+    -moz-transform: translateY(-100%);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_moveToTopEasing {
+  to {
+    -webkit-transform: translateY(-100%);
+  }
+}
+@keyframes _effect_pageTransition_moveToTopEasing {
+  to {
+    transform: translateY(-100%);
+  }
+}
+@-moz-keyframes _effect_pageTransition_moveToBottomEasing {
+  to {
+    -moz-transform: translateY(100%);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_moveToBottomEasing {
+  to {
+    -webkit-transform: translateY(100%);
+  }
+}
+@keyframes _effect_pageTransition_moveToBottomEasing {
+  to {
+    transform: translateY(100%);
+  }
+}
+[ui-effect-page-transition-1-0-0][effect=moveToLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToLeftScaleUp].forward.currentPage {
+  -moz-animation-name: _effect_pageTransition_moveToLeft;
+  -webkit-animation-name: _effect_pageTransition_moveToLeft;
+  animation-name: _effect_pageTransition_moveToLeft;
+  -moz-animation-duration: 0.6s;
+  -webkit-animation-duration: 0.6s;
+  animation-duration: 0.6s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=moveToRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeToRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=easingToRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=glueRightMoveFromLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushRightMoveFromLeft].forward + .pageHolder {
+  -moz-animation-name: _effect_pageTransition_moveFromLeft;
+  -webkit-animation-name: _effect_pageTransition_moveFromLeft;
+  animation-name: _effect_pageTransition_moveFromLeft;
+  -moz-animation-duration: 0.6s;
+  -webkit-animation-duration: 0.6s;
+  animation-duration: 0.6s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=moveToRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToRightScaleUp].forward.currentPage {
+  -moz-animation-name: _effect_pageTransition_moveToRight;
+  -webkit-animation-name: _effect_pageTransition_moveToRight;
+  animation-name: _effect_pageTransition_moveToRight;
+  -moz-animation-duration: 0.6s;
+  -webkit-animation-duration: 0.6s;
+  animation-duration: 0.6s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=moveToLeft].forward.currentPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeToLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=easingToLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=glueLeftMoveFromRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushLeftMoveFromRight].forward + .pageHolder {
+  -moz-animation-name: _effect_pageTransition_moveFromRight;
+  -webkit-animation-name: _effect_pageTransition_moveFromRight;
+  animation-name: _effect_pageTransition_moveFromRight;
+  -moz-animation-duration: 0.6s;
+  -webkit-animation-duration: 0.6s;
+  animation-duration: 0.6s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=moveToTop].forward, [ui-effect-page-transition-1-0-0][effect=moveToTopScaleUp].forward.currentPage {
+  -moz-animation-name: _effect_pageTransition_moveToTop;
+  -webkit-animation-name: _effect_pageTransition_moveToTop;
+  animation-name: _effect_pageTransition_moveToTop;
+  -moz-animation-duration: 0.6s;
+  -webkit-animation-duration: 0.6s;
+  animation-duration: 0.6s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=moveToBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeToBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=easingToBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=glueBottomMoveFromTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushBottomMoveFromTop].forward + .pageHolder {
+  -moz-animation-name: _effect_pageTransition_moveFromTop;
+  -webkit-animation-name: _effect_pageTransition_moveFromTop;
+  animation-name: _effect_pageTransition_moveFromTop;
+  -moz-animation-duration: 0.6s;
+  -webkit-animation-duration: 0.6s;
+  animation-duration: 0.6s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=moveToBottom].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToBottomScaleUp].forward.currentPage {
+  -moz-animation-name: _effect_pageTransition_moveToBottom;
+  -webkit-animation-name: _effect_pageTransition_moveToBottom;
+  animation-name: _effect_pageTransition_moveToBottom;
+  -moz-animation-duration: 0.6s;
+  -webkit-animation-duration: 0.6s;
+  animation-duration: 0.6s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=moveToTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeToTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=easingToTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=glueTopMoveFromBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushTopMoveFromBottom].forward + .pageHolder {
+  -moz-animation-name: _effect_pageTransition_moveFromBottom;
+  -webkit-animation-name: _effect_pageTransition_moveFromBottom;
+  animation-name: _effect_pageTransition_moveFromBottom;
+  -moz-animation-duration: 0.6s;
+  -webkit-animation-duration: 0.6s;
+  animation-duration: 0.6s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=fadeToLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=fadeToRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=fadeToTop].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=fadeToBottom].forward.currentPage {
+  -moz-animation-name: _effect_pageTransition_fade;
+  -webkit-animation-name: _effect_pageTransition_fade;
+  animation-name: _effect_pageTransition_fade;
+  -moz-animation-duration: 0.7s;
+  -webkit-animation-duration: 0.7s;
+  animation-duration: 0.7s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=fadeLeftFadeRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToLeftUnfoldRight].forward.currentPage {
+  -moz-animation-name: _effect_pageTransition_moveToLeftFade;
+  -webkit-animation-name: _effect_pageTransition_moveToLeftFade;
+  animation-name: _effect_pageTransition_moveToLeftFade;
+  -moz-animation-duration: 0.7s;
+  -webkit-animation-duration: 0.7s;
+  animation-duration: 0.7s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=fadeRightFadeLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=foldRightMoveFromLeft].forward + .pageHolder {
+  -moz-animation-name: _effect_pageTransition_moveFromLeftFade;
+  -webkit-animation-name: _effect_pageTransition_moveFromLeftFade;
+  animation-name: _effect_pageTransition_moveFromLeftFade;
+  -moz-animation-duration: 0.7s;
+  -webkit-animation-duration: 0.7s;
+  animation-duration: 0.7s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=fadeRightFadeLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToRightUnfoldLeft].forward.currentPage {
+  -moz-animation-name: _effect_pageTransition_moveToRightFade;
+  -webkit-animation-name: _effect_pageTransition_moveToRightFade;
+  animation-name: _effect_pageTransition_moveToRightFade;
+  -moz-animation-duration: 0.7s;
+  -webkit-animation-duration: 0.7s;
+  animation-duration: 0.7s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=fadeLeftFadeRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=foldLeftMoveFromRight].forward + .pageHolder {
+  -moz-animation-name: _effect_pageTransition_moveFromRightFade;
+  -webkit-animation-name: _effect_pageTransition_moveFromRightFade;
+  animation-name: _effect_pageTransition_moveFromRightFade;
+  -moz-animation-duration: 0.7s;
+  -webkit-animation-duration: 0.7s;
+  animation-duration: 0.7s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=fadeTopFadeBottom].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=moveToTopUnfoldBottom].forward.currentPage {
+  -moz-animation-name: _effect_pageTransition_moveToTopFade;
+  -webkit-animation-name: _effect_pageTransition_moveToTopFade;
+  animation-name: _effect_pageTransition_moveToTopFade;
+  -moz-animation-duration: 0.7s;
+  -webkit-animation-duration: 0.7s;
+  animation-duration: 0.7s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=fadeBottomFadeTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=foldBottomMoveFromTop].forward + .pageHolder {
+  -moz-animation-name: _effect_pageTransition_moveFromTopFade;
+  -webkit-animation-name: _effect_pageTransition_moveFromTopFade;
+  animation-name: _effect_pageTransition_moveFromTopFade;
+  -moz-animation-duration: 0.7s;
+  -webkit-animation-duration: 0.7s;
+  animation-duration: 0.7s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=fadeBottomFadeTop].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop].forward.currentPage {
+  -moz-animation-name: _effect_pageTransition_moveToBottomFade;
+  -webkit-animation-name: _effect_pageTransition_moveToBottomFade;
+  animation-name: _effect_pageTransition_moveToBottomFade;
+  -moz-animation-duration: 0.7s;
+  -webkit-animation-duration: 0.7s;
+  animation-duration: 0.7s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=fadeTopFadeBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=foldTopMoveFromBottom].forward + .pageHolder {
+  -moz-animation-name: _effect_pageTransition_moveFromBottomFade;
+  -webkit-animation-name: _effect_pageTransition_moveFromBottomFade;
+  animation-name: _effect_pageTransition_moveFromBottomFade;
+  -moz-animation-duration: 0.7s;
+  -webkit-animation-duration: 0.7s;
+  animation-duration: 0.7s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=scaleDownMoveToLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToTop].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToBottom].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=scaleDown].forward.currentPage {
+  -moz-animation-name: _effect_pageTransition_scaleDown;
+  -webkit-animation-name: _effect_pageTransition_scaleDown;
+  animation-name: _effect_pageTransition_scaleDown;
+  -moz-animation-duration: 0.7s;
+  -webkit-animation-duration: 0.7s;
+  animation-duration: 0.7s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=scaleUp].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToLeftScaleUp].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToRightScaleUp].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToBottomScaleUp].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToTopScaleUp].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fall].forward + .pageHolder {
+  -moz-animation-name: _effect_pageTransition_scaleUp;
+  -webkit-animation-name: _effect_pageTransition_scaleUp;
+  animation-name: _effect_pageTransition_scaleUp;
+  -moz-animation-duration: 0.7s;
+  -webkit-animation-duration: 0.7s;
+  animation-duration: 0.7s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=scaleDown].forward + .pageHolder {
+  -moz-animation-name: _effect_pageTransition_scaleUpDown;
+  -webkit-animation-name: _effect_pageTransition_scaleUpDown;
+  animation-name: _effect_pageTransition_scaleUpDown;
+  -moz-animation-duration: 0.5s;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=scaleUp].forward.currentPage {
+  -moz-animation-name: _effect_pageTransition_scaleDownUp;
+  -webkit-animation-name: _effect_pageTransition_scaleDownUp;
+  animation-name: _effect_pageTransition_scaleDownUp;
+  -moz-animation-duration: 0.5s;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=scaleDownScaleUp].forward.currentPage {
+  -moz-animation-name: _effect_pageTransition_scaleDownCenter;
+  -webkit-animation-name: _effect_pageTransition_scaleDownCenter;
+  animation-name: _effect_pageTransition_scaleDownCenter;
+  -moz-animation-duration: 0.4s;
+  -webkit-animation-duration: 0.4s;
+  animation-duration: 0.4s;
+  -moz-animation-timing-function: ease-in;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+}
+
+[ui-effect-page-transition-1-0-0][effect=scaleDownScaleUp].forward + .pageHolder {
+  -moz-animation-name: _effect_pageTransition_scaleUpCenter;
+  -webkit-animation-name: _effect_pageTransition_scaleUpCenter;
+  animation-name: _effect_pageTransition_scaleUpCenter;
+  -moz-animation-duration: 0.4s;
+  -webkit-animation-duration: 0.4s;
+  animation-duration: 0.4s;
+  -moz-animation-timing-function: ease-in;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+}
+
+[ui-effect-page-transition-1-0-0][effect=glueLeftMoveFromRight].forward.currentPage {
+  -moz-animation-name: _effect_pageTransition_rotateRightSideFirst;
+  -webkit-animation-name: _effect_pageTransition_rotateRightSideFirst;
+  animation-name: _effect_pageTransition_rotateRightSideFirst;
+  -moz-animation-duration: 0.8s;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -moz-animation-timing-function: ease-in;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+}
+
+[ui-effect-page-transition-1-0-0][effect=glueRightMoveFromLeft].forward.currentPage {
+  -moz-animation-name: _effect_pageTransition_rotateLeftSideFirst;
+  -webkit-animation-name: _effect_pageTransition_rotateLeftSideFirst;
+  animation-name: _effect_pageTransition_rotateLeftSideFirst;
+  -moz-animation-duration: 0.8s;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -moz-animation-timing-function: ease-in;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+}
+
+[ui-effect-page-transition-1-0-0][effect=glueBottomMoveFromTop].forward.currentPage {
+  -moz-animation-name: _effect_pageTransition_rotateTopSideFirst;
+  -webkit-animation-name: _effect_pageTransition_rotateTopSideFirst;
+  animation-name: _effect_pageTransition_rotateTopSideFirst;
+  -moz-animation-duration: 0.8s;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -moz-animation-timing-function: ease-in;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+}
+
+[ui-effect-page-transition-1-0-0][effect=glueTopMoveFromBottom].forward.currentPage {
+  -moz-animation-name: _effect_pageTransition_rotateBottomSideFirst;
+  -webkit-animation-name: _effect_pageTransition_rotateBottomSideFirst;
+  animation-name: _effect_pageTransition_rotateBottomSideFirst;
+  -moz-animation-duration: 0.8s;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -moz-animation-timing-function: ease-in;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+}
+
+[ui-effect-page-transition-1-0-0][effect=flipRight].forward.currentPage {
+  -moz-animation-name: _effect_pageTransition_flipOutRight;
+  -webkit-animation-name: _effect_pageTransition_flipOutRight;
+  animation-name: _effect_pageTransition_flipOutRight;
+  -moz-animation-duration: 0.5s;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  -moz-animation-timing-function: ease-in;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+}
+
+[ui-effect-page-transition-1-0-0][effect=flipRight].forward + .pageHolder {
+  -moz-animation-name: _effect_pageTransition_flipInLeft;
+  -webkit-animation-name: _effect_pageTransition_flipInLeft;
+  animation-name: _effect_pageTransition_flipInLeft;
+  -moz-animation-duration: 0.5s;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  -moz-animation-timing-function: ease-in;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+}
+
+[ui-effect-page-transition-1-0-0][effect=flipLeft].forward.currentPage {
+  -moz-animation-name: _effect_pageTransition_flipOutLeft;
+  -webkit-animation-name: _effect_pageTransition_flipOutLeft;
+  animation-name: _effect_pageTransition_flipOutLeft;
+  -moz-animation-duration: 0.5s;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  -moz-animation-timing-function: ease-in;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+}
+
+[ui-effect-page-transition-1-0-0][effect=flipLeft].forward + .pageHolder {
+  -moz-animation-name: _effect_pageTransition_flipInRight;
+  -webkit-animation-name: _effect_pageTransition_flipInRight;
+  animation-name: _effect_pageTransition_flipInRight;
+  -moz-animation-duration: 0.5s;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  -moz-animation-timing-function: ease-in;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+}
+
+[ui-effect-page-transition-1-0-0][effect=flipTop].forward.currentPage {
+  -moz-animation-name: _effect_pageTransition_flipOutTop;
+  -webkit-animation-name: _effect_pageTransition_flipOutTop;
+  animation-name: _effect_pageTransition_flipOutTop;
+  -moz-animation-duration: 0.5s;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  -moz-animation-timing-function: ease-in;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+}
+
+[ui-effect-page-transition-1-0-0][effect=flipTop].forward + .pageHolder {
+  -moz-animation-name: _effect_pageTransition_flipInBottom;
+  -webkit-animation-name: _effect_pageTransition_flipInBottom;
+  animation-name: _effect_pageTransition_flipInBottom;
+  -moz-animation-duration: 0.5s;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  -moz-animation-timing-function: ease-in;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+}
+
+[ui-effect-page-transition-1-0-0][effect=flipBottom].forward.currentPage {
+  -moz-animation-name: _effect_pageTransition_flipOutBottom;
+  -webkit-animation-name: _effect_pageTransition_flipOutBottom;
+  animation-name: _effect_pageTransition_flipOutBottom;
+  -moz-animation-duration: 0.5s;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  -moz-animation-timing-function: ease-in;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+}
+
+[ui-effect-page-transition-1-0-0][effect=flipBottom].forward + .pageHolder {
+  -moz-animation-name: _effect_pageTransition_flipInTop;
+  -webkit-animation-name: _effect_pageTransition_flipInTop;
+  animation-name: _effect_pageTransition_flipInTop;
+  -moz-animation-duration: 0.5s;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  -moz-animation-timing-function: ease-in;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+}
+
+[ui-effect-page-transition-1-0-0][effect=fall].forward.currentPage {
+  -moz-animation-name: _effect_pageTransition_rotateFall;
+  -webkit-animation-name: _effect_pageTransition_rotateFall;
+  animation-name: _effect_pageTransition_rotateFall;
+  -moz-animation-duration: 1s;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -moz-animation-timing-function: ease-in;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+}
+
+[ui-effect-page-transition-1-0-0][effect=newspaper].forward.currentPage {
+  -moz-animation-name: _effect_pageTransition_rotateOutNewspaper;
+  -webkit-animation-name: _effect_pageTransition_rotateOutNewspaper;
+  animation-name: _effect_pageTransition_rotateOutNewspaper;
+  -moz-animation-duration: 0.5s;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  -moz-animation-timing-function: ease-in;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+}
+
+[ui-effect-page-transition-1-0-0][effect=newspaper].forward + .pageHolder {
+  -moz-animation-name: _effect_pageTransition_rotateInNewspaper;
+  -webkit-animation-name: _effect_pageTransition_rotateInNewspaper;
+  animation-name: _effect_pageTransition_rotateInNewspaper;
+  -moz-animation-duration: 0.5s;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  -moz-animation-timing-function: ease-out;
+  -webkit-animation-timing-function: ease-out;
+  animation-timing-function: ease-out;
+}
+
+[ui-effect-page-transition-1-0-0][effect=pushLeftMoveFromRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=pushLeftPullRight].forward.currentPage {
+  -moz-animation-name: _effect_pageTransition_rotatePushLeft;
+  -webkit-animation-name: _effect_pageTransition_rotatePushLeft;
+  animation-name: _effect_pageTransition_rotatePushLeft;
+  -moz-animation-duration: 0.8s;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=pushRightMoveFromLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=pushRightPullLeft].forward.currentPage {
+  -moz-animation-name: _effect_pageTransition_rotatePushRight;
+  -webkit-animation-name: _effect_pageTransition_rotatePushRight;
+  animation-name: _effect_pageTransition_rotatePushRight;
+  -moz-animation-duration: 0.8s;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=pushTopMoveFromBottom].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=pushTopPullBottom].forward.currentPage {
+  -moz-animation-name: _effect_pageTransition_rotatePushTop;
+  -webkit-animation-name: _effect_pageTransition_rotatePushTop;
+  animation-name: _effect_pageTransition_rotatePushTop;
+  -moz-animation-duration: 0.8s;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=pushBottomMoveFromTop].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=pushBottomPullTop].forward.currentPage {
+  -moz-animation-name: _effect_pageTransition_rotatePushBottom;
+  -webkit-animation-name: _effect_pageTransition_rotatePushBottom;
+  animation-name: _effect_pageTransition_rotatePushBottom;
+  -moz-animation-duration: 0.8s;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=pushLeftPullRight].forward + .pageHolder {
+  -moz-animation-name: _effect_pageTransition_rotatePullRight;
+  -webkit-animation-name: _effect_pageTransition_rotatePullRight;
+  animation-name: _effect_pageTransition_rotatePullRight;
+  -moz-animation-duration: 0.5s;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=pushRightPullLeft].forward + .pageHolder {
+  -moz-animation-name: _effect_pageTransition_rotatePullLeft;
+  -webkit-animation-name: _effect_pageTransition_rotatePullLeft;
+  animation-name: _effect_pageTransition_rotatePullLeft;
+  -moz-animation-duration: 0.5s;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=pushBottomPullTop].forward + .pageHolder {
+  -moz-animation-name: _effect_pageTransition_rotatePullTop;
+  -webkit-animation-name: _effect_pageTransition_rotatePullTop;
+  animation-name: _effect_pageTransition_rotatePullTop;
+  -moz-animation-duration: 0.5s;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=pushTopPullBottom].forward + .pageHolder {
+  -moz-animation-name: _effect_pageTransition_rotatePullBottom;
+  -webkit-animation-name: _effect_pageTransition_rotatePullBottom;
+  animation-name: _effect_pageTransition_rotatePullBottom;
+  -moz-animation-duration: 0.5s;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=foldRightMoveFromLeft].forward.currentPage {
+  -moz-animation-name: _effect_pageTransition_rotateFoldRight;
+  -webkit-animation-name: _effect_pageTransition_rotateFoldRight;
+  animation-name: _effect_pageTransition_rotateFoldRight;
+  -moz-animation-duration: 0.7s;
+  -webkit-animation-duration: 0.7s;
+  animation-duration: 0.7s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=foldLeftMoveFromRight].forward.currentPage {
+  -moz-animation-name: _effect_pageTransition_rotateFoldLeft;
+  -webkit-animation-name: _effect_pageTransition_rotateFoldLeft;
+  animation-name: _effect_pageTransition_rotateFoldLeft;
+  -moz-animation-duration: 0.7s;
+  -webkit-animation-duration: 0.7s;
+  animation-duration: 0.7s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=foldTopMoveFromBottom].forward.currentPage {
+  -moz-animation-name: _effect_pageTransition_rotateFoldTop;
+  -webkit-animation-name: _effect_pageTransition_rotateFoldTop;
+  animation-name: _effect_pageTransition_rotateFoldTop;
+  -moz-animation-duration: 0.7s;
+  -webkit-animation-duration: 0.7s;
+  animation-duration: 0.7s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=foldBottomMoveFromTop].forward.currentPage {
+  -moz-animation-name: _effect_pageTransition_rotateFoldBottom;
+  -webkit-animation-name: _effect_pageTransition_rotateFoldBottom;
+  animation-name: _effect_pageTransition_rotateFoldBottom;
+  -moz-animation-duration: 0.7s;
+  -webkit-animation-duration: 0.7s;
+  animation-duration: 0.7s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=moveToRightUnfoldLeft].forward + .pageHolder {
+  -moz-animation-name: _effect_pageTransition_rotateUnfoldLeft;
+  -webkit-animation-name: _effect_pageTransition_rotateUnfoldLeft;
+  animation-name: _effect_pageTransition_rotateUnfoldLeft;
+  -moz-animation-duration: 0.7s;
+  -webkit-animation-duration: 0.7s;
+  animation-duration: 0.7s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=moveToLeftUnfoldRight].forward + .pageHolder {
+  -moz-animation-name: _effect_pageTransition_rotateUnfoldRight;
+  -webkit-animation-name: _effect_pageTransition_rotateUnfoldRight;
+  animation-name: _effect_pageTransition_rotateUnfoldRight;
+  -moz-animation-duration: 0.7s;
+  -webkit-animation-duration: 0.7s;
+  animation-duration: 0.7s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop].forward + .pageHolder {
+  -moz-animation-name: _effect_pageTransition_rotateUnfoldTop;
+  -webkit-animation-name: _effect_pageTransition_rotateUnfoldTop;
+  animation-name: _effect_pageTransition_rotateUnfoldTop;
+  -moz-animation-duration: 0.7s;
+  -webkit-animation-duration: 0.7s;
+  animation-duration: 0.7s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=moveToTopUnfoldBottom].forward + .pageHolder {
+  -moz-animation-name: _effect_pageTransition_rotateUnfoldBottom;
+  -webkit-animation-name: _effect_pageTransition_rotateUnfoldBottom;
+  animation-name: _effect_pageTransition_rotateUnfoldBottom;
+  -moz-animation-duration: 0.7s;
+  -webkit-animation-duration: 0.7s;
+  animation-duration: 0.7s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=roomToLeft].forward.currentPage {
+  -moz-animation-name: _effect_pageTransition_rotateRoomLeftOut;
+  -webkit-animation-name: _effect_pageTransition_rotateRoomLeftOut;
+  animation-name: _effect_pageTransition_rotateRoomLeftOut;
+  -moz-animation-duration: 0.8s;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=roomToLeft].forward + .pageHolder {
+  -moz-animation-name: _effect_pageTransition_rotateRoomLeftIn;
+  -webkit-animation-name: _effect_pageTransition_rotateRoomLeftIn;
+  animation-name: _effect_pageTransition_rotateRoomLeftIn;
+  -moz-animation-duration: 0.8s;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=roomToRight].forward.currentPage {
+  -moz-animation-name: _effect_pageTransition_rotateRoomRightOut;
+  -webkit-animation-name: _effect_pageTransition_rotateRoomRightOut;
+  animation-name: _effect_pageTransition_rotateRoomRightOut;
+  -moz-animation-duration: 0.8s;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=roomToRight].forward + .pageHolder {
+  -moz-animation-name: _effect_pageTransition_rotateRoomRightIn;
+  -webkit-animation-name: _effect_pageTransition_rotateRoomRightIn;
+  animation-name: _effect_pageTransition_rotateRoomRightIn;
+  -moz-animation-duration: 0.8s;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=roomToTop].forward.currentPage {
+  -moz-animation-name: _effect_pageTransition_rotateRoomTopOut;
+  -webkit-animation-name: _effect_pageTransition_rotateRoomTopOut;
+  animation-name: _effect_pageTransition_rotateRoomTopOut;
+  -moz-animation-duration: 0.8s;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=roomToTop].forward + .pageHolder {
+  -moz-animation-name: _effect_pageTransition_rotateRoomTopIn;
+  -webkit-animation-name: _effect_pageTransition_rotateRoomTopIn;
+  animation-name: _effect_pageTransition_rotateRoomTopIn;
+  -moz-animation-duration: 0.8s;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=roomToBottom].forward.currentPage {
+  -moz-animation-name: _effect_pageTransition_rotateRoomBottomOut;
+  -webkit-animation-name: _effect_pageTransition_rotateRoomBottomOut;
+  animation-name: _effect_pageTransition_rotateRoomBottomOut;
+  -moz-animation-duration: 0.8s;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=roomToBottom].forward + .pageHolder {
+  -moz-animation-name: _effect_pageTransition_rotateRoomBottomIn;
+  -webkit-animation-name: _effect_pageTransition_rotateRoomBottomIn;
+  animation-name: _effect_pageTransition_rotateRoomBottomIn;
+  -moz-animation-duration: 0.8s;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=cubeToLeft].forward.currentPage {
+  -moz-animation-name: _effect_pageTransition_rotateCubeLeftOut;
+  -webkit-animation-name: _effect_pageTransition_rotateCubeLeftOut;
+  animation-name: _effect_pageTransition_rotateCubeLeftOut;
+  -moz-animation-duration: 0.6s;
+  -webkit-animation-duration: 0.6s;
+  animation-duration: 0.6s;
+  -moz-animation-timing-function: ease-in;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+}
+
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=cubeToLeft].forward + .pageHolder {
+  -moz-animation-name: _effect_pageTransition_rotateCubeLeftIn;
+  -webkit-animation-name: _effect_pageTransition_rotateCubeLeftIn;
+  animation-name: _effect_pageTransition_rotateCubeLeftIn;
+  -moz-animation-duration: 0.6s;
+  -webkit-animation-duration: 0.6s;
+  animation-duration: 0.6s;
+  -moz-animation-timing-function: ease-in;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+}
+
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=cubeToRight].forward.currentPage {
+  -moz-animation-name: _effect_pageTransition_rotateCubeRightOut;
+  -webkit-animation-name: _effect_pageTransition_rotateCubeRightOut;
+  animation-name: _effect_pageTransition_rotateCubeRightOut;
+  -moz-animation-duration: 0.6s;
+  -webkit-animation-duration: 0.6s;
+  animation-duration: 0.6s;
+  -moz-animation-timing-function: ease-in;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+}
+
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=cubeToRight].forward + .pageHolder {
+  -moz-animation-name: _effect_pageTransition_rotateCubeRightIn;
+  -webkit-animation-name: _effect_pageTransition_rotateCubeRightIn;
+  animation-name: _effect_pageTransition_rotateCubeRightIn;
+  -moz-animation-duration: 0.6s;
+  -webkit-animation-duration: 0.6s;
+  animation-duration: 0.6s;
+  -moz-animation-timing-function: ease-in;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+}
+
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=cubeToTop].forward.currentPage {
+  -moz-animation-name: _effect_pageTransition_rotateCubeTopOut;
+  -webkit-animation-name: _effect_pageTransition_rotateCubeTopOut;
+  animation-name: _effect_pageTransition_rotateCubeTopOut;
+  -moz-animation-duration: 0.6s;
+  -webkit-animation-duration: 0.6s;
+  animation-duration: 0.6s;
+  -moz-animation-timing-function: ease-in;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+}
+
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=cubeToTop].forward + .pageHolder {
+  -moz-animation-name: _effect_pageTransition_rotateCubeTopIn;
+  -webkit-animation-name: _effect_pageTransition_rotateCubeTopIn;
+  animation-name: _effect_pageTransition_rotateCubeTopIn;
+  -moz-animation-duration: 0.6s;
+  -webkit-animation-duration: 0.6s;
+  animation-duration: 0.6s;
+  -moz-animation-timing-function: ease-in;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+}
+
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=cubeToBottom].forward.currentPage {
+  -moz-animation-name: _effect_pageTransition_rotateCubeBottomOut;
+  -webkit-animation-name: _effect_pageTransition_rotateCubeBottomOut;
+  animation-name: _effect_pageTransition_rotateCubeBottomOut;
+  -moz-animation-duration: 0.6s;
+  -webkit-animation-duration: 0.6s;
+  animation-duration: 0.6s;
+  -moz-animation-timing-function: ease-in;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+}
+
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=cubeToBottom].forward + .pageHolder {
+  -moz-animation-name: _effect_pageTransition_rotateCubeBottomIn;
+  -webkit-animation-name: _effect_pageTransition_rotateCubeBottomIn;
+  animation-name: _effect_pageTransition_rotateCubeBottomIn;
+  -moz-animation-duration: 0.6s;
+  -webkit-animation-duration: 0.6s;
+  animation-duration: 0.6s;
+  -moz-animation-timing-function: ease-in;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+}
+
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=carouselToLeft].forward.currentPage {
+  -moz-animation-name: _effect_pageTransition_rotateCarouselLeftOut;
+  -webkit-animation-name: _effect_pageTransition_rotateCarouselLeftOut;
+  animation-name: _effect_pageTransition_rotateCarouselLeftOut;
+  -moz-animation-duration: 0.8s;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=carouselToLeft].forward + .pageHolder {
+  -moz-animation-name: _effect_pageTransition_rotateCarouselLeftIn;
+  -webkit-animation-name: _effect_pageTransition_rotateCarouselLeftIn;
+  animation-name: _effect_pageTransition_rotateCarouselLeftIn;
+  -moz-animation-duration: 0.8s;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=carouselToRight].forward.currentPage {
+  -moz-animation-name: _effect_pageTransition_rotateCarouselRightOut;
+  -webkit-animation-name: _effect_pageTransition_rotateCarouselRightOut;
+  animation-name: _effect_pageTransition_rotateCarouselRightOut;
+  -moz-animation-duration: 0.8s;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=carouselToRight].forward + .pageHolder {
+  -moz-animation-name: _effect_pageTransition_rotateCarouselRightIn;
+  -webkit-animation-name: _effect_pageTransition_rotateCarouselRightIn;
+  animation-name: _effect_pageTransition_rotateCarouselRightIn;
+  -moz-animation-duration: 0.8s;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=carouselToTop].forward.currentPage {
+  -moz-animation-name: _effect_pageTransition_rotateCarouselTopOut;
+  -webkit-animation-name: _effect_pageTransition_rotateCarouselTopOut;
+  animation-name: _effect_pageTransition_rotateCarouselTopOut;
+  -moz-animation-duration: 0.8s;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=carouselToTop].forward + .pageHolder {
+  -moz-animation-name: _effect_pageTransition_rotateCarouselTopIn;
+  -webkit-animation-name: _effect_pageTransition_rotateCarouselTopIn;
+  animation-name: _effect_pageTransition_rotateCarouselTopIn;
+  -moz-animation-duration: 0.8s;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=carouselToBottom].forward.currentPage {
+  -moz-animation-name: _effect_pageTransition_rotateCarouselBottomOut;
+  -webkit-animation-name: _effect_pageTransition_rotateCarouselBottomOut;
+  animation-name: _effect_pageTransition_rotateCarouselBottomOut;
+  -moz-animation-duration: 0.8s;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=carouselToBottom].forward + .pageHolder {
+  -moz-animation-name: _effect_pageTransition_rotateCarouselBottomIn;
+  -webkit-animation-name: _effect_pageTransition_rotateCarouselBottomIn;
+  animation-name: _effect_pageTransition_rotateCarouselBottomIn;
+  -moz-animation-duration: 0.8s;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=sides].forward.currentPage {
+  -moz-animation-name: _effect_pageTransition_rotateSidesOut;
+  -webkit-animation-name: _effect_pageTransition_rotateSidesOut;
+  animation-name: _effect_pageTransition_rotateSidesOut;
+  -moz-animation-duration: 0.5s;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  -moz-animation-timing-function: ease-in;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+}
+
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=sides].forward + .pageHolder {
+  -moz-animation-name: _effect_pageTransition_rotateSidesIn;
+  -webkit-animation-name: _effect_pageTransition_rotateSidesIn;
+  animation-name: _effect_pageTransition_rotateSidesIn;
+  -moz-animation-duration: 0.5s;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  -moz-animation-timing-function: ease-in;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+}
+
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=slide].forward.currentPage {
+  -moz-animation-name: _effect_pageTransition_rotateSlideOut;
+  -webkit-animation-name: _effect_pageTransition_rotateSlideOut;
+  animation-name: _effect_pageTransition_rotateSlideOut;
+  -moz-animation-duration: 1s;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=slide].forward + .pageHolder {
+  -moz-animation-name: _effect_pageTransition_rotateSlideIn;
+  -webkit-animation-name: _effect_pageTransition_rotateSlideIn;
+  animation-name: _effect_pageTransition_rotateSlideIn;
+  -moz-animation-duration: 1s;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=easingToLeft].forward.currentPage {
+  -moz-animation-name: _effect_pageTransition_moveToLeftEasing;
+  -webkit-animation-name: _effect_pageTransition_moveToLeftEasing;
+  animation-name: _effect_pageTransition_moveToLeftEasing;
+  -moz-animation-duration: 0.7s;
+  -webkit-animation-duration: 0.7s;
+  animation-duration: 0.7s;
+  -moz-animation-timing-function: ease-in-out;
+  -webkit-animation-timing-function: ease-in-out;
+  animation-timing-function: ease-in-out;
+}
+
+[ui-effect-page-transition-1-0-0][effect=easingToRight].forward.currentPage {
+  -moz-animation-name: _effect_pageTransition_moveToRightEasing;
+  -webkit-animation-name: _effect_pageTransition_moveToRightEasing;
+  animation-name: _effect_pageTransition_moveToRightEasing;
+  -moz-animation-duration: 0.7s;
+  -webkit-animation-duration: 0.7s;
+  animation-duration: 0.7s;
+  -moz-animation-timing-function: ease-in-out;
+  -webkit-animation-timing-function: ease-in-out;
+  animation-timing-function: ease-in-out;
+}
+
+[ui-effect-page-transition-1-0-0][effect=easingToTop].forward.currentPage {
+  -moz-animation-name: _effect_pageTransition_moveToTopEasing;
+  -webkit-animation-name: _effect_pageTransition_moveToTopEasing;
+  animation-name: _effect_pageTransition_moveToTopEasing;
+  -moz-animation-duration: 0.7s;
+  -webkit-animation-duration: 0.7s;
+  animation-duration: 0.7s;
+  -moz-animation-timing-function: ease-in-out;
+  -webkit-animation-timing-function: ease-in-out;
+  animation-timing-function: ease-in-out;
+}
+
+[ui-effect-page-transition-1-0-0][effect=easingToBottom].forward.currentPage {
+  -moz-animation-name: _effect_pageTransition_moveToBottomEasing;
+  -webkit-animation-name: _effect_pageTransition_moveToBottomEasing;
+  animation-name: _effect_pageTransition_moveToBottomEasing;
+  -moz-animation-duration: 0.7s;
+  -webkit-animation-duration: 0.7s;
+  animation-duration: 0.7s;
+  -moz-animation-timing-function: ease-in-out;
+  -webkit-animation-timing-function: ease-in-out;
+  animation-timing-function: ease-in-out;
+}
+
+[ui-effect-page-transition-1-0-0][effect=scaleDown].forward + .pageHolder {
+  -moz-animation-delay: 0.3s;
+  -webkit-animation-delay: 0.3s;
+  animation-delay: 0.3s;
+}
+[ui-effect-page-transition-1-0-0][effect=scaleUp].forward + .pageHolder {
+  -moz-animation-delay: 0.3s;
+  -webkit-animation-delay: 0.3s;
+  animation-delay: 0.3s;
+}
+[ui-effect-page-transition-1-0-0][effect=scaleDownScaleUp].forward + .pageHolder {
+  -moz-animation-delay: 0.4s;
+  -webkit-animation-delay: 0.4s;
+  animation-delay: 0.4s;
+}
+[ui-effect-page-transition-1-0-0][effect=glueLeftMoveFromRight].forward.currentPage {
+  -moz-transform-origin: 0% 50% 50%;
+  -ms-transform-origin: 0% 50% 50%;
+  -webkit-transform-origin: 0% 50% 50%;
+  transform-origin: 0% 50% 50%;
+}
+[ui-effect-page-transition-1-0-0][effect=glueLeftMoveFromRight].forward + .pageHolder {
+  -moz-animation-delay: 0.2s;
+  -webkit-animation-delay: 0.2s;
+  animation-delay: 0.2s;
+}
+[ui-effect-page-transition-1-0-0][effect=glueRightMoveFromLeft].forward.currentPage {
+  -moz-transform-origin: 100% 50% 50%;
+  -ms-transform-origin: 100% 50% 50%;
+  -webkit-transform-origin: 100% 50% 50%;
+  transform-origin: 100% 50% 50%;
+}
+[ui-effect-page-transition-1-0-0][effect=glueRightMoveFromLeft].forward + .pageHolder {
+  -moz-animation-delay: 0.2s;
+  -webkit-animation-delay: 0.2s;
+  animation-delay: 0.2s;
+}
+[ui-effect-page-transition-1-0-0][effect=glueBottomMoveFromTop].forward.currentPage {
+  -moz-transform-origin: 50% 100% 50%;
+  -ms-transform-origin: 50% 100% 50%;
+  -webkit-transform-origin: 50% 100% 50%;
+  transform-origin: 50% 100% 50%;
+}
+[ui-effect-page-transition-1-0-0][effect=glueBottomMoveFromTop].forward + .pageHolder {
+  -moz-animation-delay: 0.2s;
+  -webkit-animation-delay: 0.2s;
+  animation-delay: 0.2s;
+}
+[ui-effect-page-transition-1-0-0][effect=glueTopMoveFromBottom].forward.currentPage {
+  -moz-transform-origin: 50% 0% 50%;
+  -ms-transform-origin: 50% 0% 50%;
+  -webkit-transform-origin: 50% 0% 50%;
+  transform-origin: 50% 0% 50%;
+}
+[ui-effect-page-transition-1-0-0][effect=glueTopMoveFromBottom].forward + .pageHolder {
+  -moz-animation-delay: 0.2s;
+  -webkit-animation-delay: 0.2s;
+  animation-delay: 0.2s;
+}
+[ui-effect-page-transition-1-0-0][effect=flipRight].forward.currentPage {
+  -moz-transform-origin: 50% 50% 50%;
+  -ms-transform-origin: 50% 50% 50%;
+  -webkit-transform-origin: 50% 50% 50%;
+  transform-origin: 50% 50% 50%;
+}
+[ui-effect-page-transition-1-0-0][effect=flipRight].forward + .pageHolder {
+  -moz-transform-origin: 50% 50% 50%;
+  -ms-transform-origin: 50% 50% 50%;
+  -webkit-transform-origin: 50% 50% 50%;
+  transform-origin: 50% 50% 50%;
+  -moz-animation-delay: 0.5s;
+  -webkit-animation-delay: 0.5s;
+  animation-delay: 0.5s;
+}
+[ui-effect-page-transition-1-0-0][effect=flipLeft].forward.currentPage {
+  -moz-transform-origin: 50% 50% 50%;
+  -ms-transform-origin: 50% 50% 50%;
+  -webkit-transform-origin: 50% 50% 50%;
+  transform-origin: 50% 50% 50%;
+}
+[ui-effect-page-transition-1-0-0][effect=flipLeft].forward + .pageHolder {
+  -moz-transform-origin: 50% 50% 50%;
+  -ms-transform-origin: 50% 50% 50%;
+  -webkit-transform-origin: 50% 50% 50%;
+  transform-origin: 50% 50% 50%;
+  -moz-animation-delay: 0.5s;
+  -webkit-animation-delay: 0.5s;
+  animation-delay: 0.5s;
+}
+[ui-effect-page-transition-1-0-0][effect=flipTop].forward.currentPage {
+  -moz-transform-origin: 50% 50% 50%;
+  -ms-transform-origin: 50% 50% 50%;
+  -webkit-transform-origin: 50% 50% 50%;
+  transform-origin: 50% 50% 50%;
+}
+[ui-effect-page-transition-1-0-0][effect=flipTop].forward + .pageHolder {
+  -moz-transform-origin: 50% 50% 50%;
+  -ms-transform-origin: 50% 50% 50%;
+  -webkit-transform-origin: 50% 50% 50%;
+  transform-origin: 50% 50% 50%;
+  -moz-animation-delay: 0.5s;
+  -webkit-animation-delay: 0.5s;
+  animation-delay: 0.5s;
+}
+[ui-effect-page-transition-1-0-0][effect=flipBottom].forward.currentPage {
+  -moz-transform-origin: 50% 50% 50%;
+  -ms-transform-origin: 50% 50% 50%;
+  -webkit-transform-origin: 50% 50% 50%;
+  transform-origin: 50% 50% 50%;
+}
+[ui-effect-page-transition-1-0-0][effect=flipBottom].forward + .pageHolder {
+  -moz-transform-origin: 50% 50% 50%;
+  -ms-transform-origin: 50% 50% 50%;
+  -webkit-transform-origin: 50% 50% 50%;
+  transform-origin: 50% 50% 50%;
+  -moz-animation-delay: 0.5s;
+  -webkit-animation-delay: 0.5s;
+  animation-delay: 0.5s;
+}
+[ui-effect-page-transition-1-0-0][effect=fall].forward.currentPage {
+  -moz-transform-origin: 0% 0% 50%;
+  -ms-transform-origin: 0% 0% 50%;
+  -webkit-transform-origin: 0% 0% 50%;
+  transform-origin: 0% 0% 50%;
+}
+[ui-effect-page-transition-1-0-0][effect=newspaper].forward.currentPage {
+  -moz-transform-origin: 50% 50% 50%;
+  -ms-transform-origin: 50% 50% 50%;
+  -webkit-transform-origin: 50% 50% 50%;
+  transform-origin: 50% 50% 50%;
+}
+[ui-effect-page-transition-1-0-0][effect=newspaper].forward + .pageHolder {
+  -moz-transform-origin: 50% 50% 50%;
+  -ms-transform-origin: 50% 50% 50%;
+  -webkit-transform-origin: 50% 50% 50%;
+  transform-origin: 50% 50% 50%;
+  -moz-animation-delay: 0.5s;
+  -webkit-animation-delay: 0.5s;
+  animation-delay: 0.5s;
+}
+[ui-effect-page-transition-1-0-0][effect=pushLeftMoveFromRight].forward.currentPage {
+  -moz-transform-origin: 0% 50% 50%;
+  -ms-transform-origin: 0% 50% 50%;
+  -webkit-transform-origin: 0% 50% 50%;
+  transform-origin: 0% 50% 50%;
+}
+[ui-effect-page-transition-1-0-0][effect=pushRightMoveFromLeft].forward.currentPage {
+  -moz-transform-origin: 100% 50% 50%;
+  -ms-transform-origin: 100% 50% 50%;
+  -webkit-transform-origin: 100% 50% 50%;
+  transform-origin: 100% 50% 50%;
+}
+[ui-effect-page-transition-1-0-0][effect=pushTopMoveFromBottom].forward.currentPage {
+  -moz-transform-origin: 50% 0% 50%;
+  -ms-transform-origin: 50% 0% 50%;
+  -webkit-transform-origin: 50% 0% 50%;
+  transform-origin: 50% 0% 50%;
+}
+[ui-effect-page-transition-1-0-0][effect=pushBottomMoveFromTop].forward.currentPage {
+  -moz-transform-origin: 50% 100% 50%;
+  -ms-transform-origin: 50% 100% 50%;
+  -webkit-transform-origin: 50% 100% 50%;
+  transform-origin: 50% 100% 50%;
+}
+[ui-effect-page-transition-1-0-0][effect=pushLeftPullRight].forward.currentPage {
+  -moz-transform-origin: 0% 50% 50%;
+  -ms-transform-origin: 0% 50% 50%;
+  -webkit-transform-origin: 0% 50% 50%;
+  transform-origin: 0% 50% 50%;
+}
+[ui-effect-page-transition-1-0-0][effect=pushLeftPullRight].forward + .pageHolder {
+  -moz-transform-origin: 100% 50% 50%;
+  -ms-transform-origin: 100% 50% 50%;
+  -webkit-transform-origin: 100% 50% 50%;
+  transform-origin: 100% 50% 50%;
+  -moz-animation-delay: 0.2s;
+  -webkit-animation-delay: 0.2s;
+  animation-delay: 0.2s;
+}
+[ui-effect-page-transition-1-0-0][effect=pushRightPullLeft].forward.currentPage {
+  -moz-transform-origin: 100% 50% 50%;
+  -ms-transform-origin: 100% 50% 50%;
+  -webkit-transform-origin: 100% 50% 50%;
+  transform-origin: 100% 50% 50%;
+}
+[ui-effect-page-transition-1-0-0][effect=pushRightPullLeft].forward + .pageHolder {
+  -moz-transform-origin: 0% 50% 50%;
+  -ms-transform-origin: 0% 50% 50%;
+  -webkit-transform-origin: 0% 50% 50%;
+  transform-origin: 0% 50% 50%;
+  -moz-animation-delay: 0.2s;
+  -webkit-animation-delay: 0.2s;
+  animation-delay: 0.2s;
+}
+[ui-effect-page-transition-1-0-0][effect=pushTopPullBottom].forward.currentPage {
+  -moz-transform-origin: 50% 0% 50%;
+  -ms-transform-origin: 50% 0% 50%;
+  -webkit-transform-origin: 50% 0% 50%;
+  transform-origin: 50% 0% 50%;
+}
+[ui-effect-page-transition-1-0-0][effect=pushTopPullBottom].forward + .pageHolder {
+  -moz-transform-origin: 50% 100% 50%;
+  -ms-transform-origin: 50% 100% 50%;
+  -webkit-transform-origin: 50% 100% 50%;
+  transform-origin: 50% 100% 50%;
+  -moz-animation-delay: 0.2s;
+  -webkit-animation-delay: 0.2s;
+  animation-delay: 0.2s;
+}
+[ui-effect-page-transition-1-0-0][effect=pushBottomPullTop].forward.currentPage {
+  -moz-transform-origin: 50% 100% 50%;
+  -ms-transform-origin: 50% 100% 50%;
+  -webkit-transform-origin: 50% 100% 50%;
+  transform-origin: 50% 100% 50%;
+}
+[ui-effect-page-transition-1-0-0][effect=pushBottomPullTop].forward + .pageHolder {
+  -moz-transform-origin: 50% 0% 50%;
+  -ms-transform-origin: 50% 0% 50%;
+  -webkit-transform-origin: 50% 0% 50%;
+  transform-origin: 50% 0% 50%;
+  -moz-animation-delay: 0.2s;
+  -webkit-animation-delay: 0.2s;
+  animation-delay: 0.2s;
+}
+[ui-effect-page-transition-1-0-0][effect=foldLeftMoveFromRight].forward.currentPage {
+  -moz-transform-origin: 100% 50% 50%;
+  -ms-transform-origin: 100% 50% 50%;
+  -webkit-transform-origin: 100% 50% 50%;
+  transform-origin: 100% 50% 50%;
+}
+[ui-effect-page-transition-1-0-0][effect=foldRightMoveFromLeft].forward.currentPage {
+  -moz-transform-origin: 0% 50% 50%;
+  -ms-transform-origin: 0% 50% 50%;
+  -webkit-transform-origin: 0% 50% 50%;
+  transform-origin: 0% 50% 50%;
+}
+[ui-effect-page-transition-1-0-0][effect=foldTopMoveFromBottom].forward.currentPage {
+  -moz-transform-origin: 50% 100% 50%;
+  -ms-transform-origin: 50% 100% 50%;
+  -webkit-transform-origin: 50% 100% 50%;
+  transform-origin: 50% 100% 50%;
+}
+[ui-effect-page-transition-1-0-0][effect=foldBottomMoveFromTop].forward.currentPage {
+  -moz-transform-origin: 50% 0% 50%;
+  -ms-transform-origin: 50% 0% 50%;
+  -webkit-transform-origin: 50% 0% 50%;
+  transform-origin: 50% 0% 50%;
+}
+[ui-effect-page-transition-1-0-0][effect=moveToRightUnfoldLeft].forward + .pageHolder {
+  -moz-transform-origin: 100% 50% 50%;
+  -ms-transform-origin: 100% 50% 50%;
+  -webkit-transform-origin: 100% 50% 50%;
+  transform-origin: 100% 50% 50%;
+}
+[ui-effect-page-transition-1-0-0][effect=moveToLeftUnfoldRight].forward + .pageHolder {
+  -moz-transform-origin: 0% 50% 50%;
+  -ms-transform-origin: 0% 50% 50%;
+  -webkit-transform-origin: 0% 50% 50%;
+  transform-origin: 0% 50% 50%;
+}
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop].forward + .pageHolder {
+  -moz-transform-origin: 50% 100% 50%;
+  -ms-transform-origin: 50% 100% 50%;
+  -webkit-transform-origin: 50% 100% 50%;
+  transform-origin: 50% 100% 50%;
+}
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=moveToTopUnfoldBottom].forward + .pageHolder {
+  -moz-transform-origin: 50% 0% 50%;
+  -ms-transform-origin: 50% 0% 50%;
+  -webkit-transform-origin: 50% 0% 50%;
+  transform-origin: 50% 0% 50%;
+}
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=roomToLeft].forward.currentPage {
+  -moz-transform-origin: 100% 50% 50%;
+  -ms-transform-origin: 100% 50% 50%;
+  -webkit-transform-origin: 100% 50% 50%;
+  transform-origin: 100% 50% 50%;
+}
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=roomToLeft].forward + .pageHolder {
+  -moz-transform-origin: 0% 50% 50%;
+  -ms-transform-origin: 0% 50% 50%;
+  -webkit-transform-origin: 0% 50% 50%;
+  transform-origin: 0% 50% 50%;
+}
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=roomToRight].forward.currentPage {
+  -moz-transform-origin: 0% 50% 50%;
+  -ms-transform-origin: 0% 50% 50%;
+  -webkit-transform-origin: 0% 50% 50%;
+  transform-origin: 0% 50% 50%;
+}
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=roomToRight].forward + .pageHolder {
+  -moz-transform-origin: 100% 50% 50%;
+  -ms-transform-origin: 100% 50% 50%;
+  -webkit-transform-origin: 100% 50% 50%;
+  transform-origin: 100% 50% 50%;
+}
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=roomToTop].forward.currentPage {
+  -moz-transform-origin: 50% 100% 50%;
+  -ms-transform-origin: 50% 100% 50%;
+  -webkit-transform-origin: 50% 100% 50%;
+  transform-origin: 50% 100% 50%;
+}
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=roomToTop].forward + .pageHolder {
+  -moz-transform-origin: 50% 0% 50%;
+  -ms-transform-origin: 50% 0% 50%;
+  -webkit-transform-origin: 50% 0% 50%;
+  transform-origin: 50% 0% 50%;
+}
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=roomToBottom].forward.currentPage {
+  -moz-transform-origin: 50% 0% 50%;
+  -ms-transform-origin: 50% 0% 50%;
+  -webkit-transform-origin: 50% 0% 50%;
+  transform-origin: 50% 0% 50%;
+}
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=roomToBottom].forward + .pageHolder {
+  -moz-transform-origin: 50% 100% 50%;
+  -ms-transform-origin: 50% 100% 50%;
+  -webkit-transform-origin: 50% 100% 50%;
+  transform-origin: 50% 100% 50%;
+}
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=cubeToLeft].forward.currentPage {
+  -moz-transform-origin: 100% 50% 50%;
+  -ms-transform-origin: 100% 50% 50%;
+  -webkit-transform-origin: 100% 50% 50%;
+  transform-origin: 100% 50% 50%;
+}
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=cubeToLeft].forward + .pageHolder {
+  -moz-transform-origin: 0% 50% 50%;
+  -ms-transform-origin: 0% 50% 50%;
+  -webkit-transform-origin: 0% 50% 50%;
+  transform-origin: 0% 50% 50%;
+}
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=cubeToRight].forward.currentPage {
+  -moz-transform-origin: 0% 50% 50%;
+  -ms-transform-origin: 0% 50% 50%;
+  -webkit-transform-origin: 0% 50% 50%;
+  transform-origin: 0% 50% 50%;
+}
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=cubeToRight].forward + .pageHolder {
+  -moz-transform-origin: 100% 50% 50%;
+  -ms-transform-origin: 100% 50% 50%;
+  -webkit-transform-origin: 100% 50% 50%;
+  transform-origin: 100% 50% 50%;
+}
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=cubeToTop].forward.currentPage {
+  -moz-transform-origin: 50% 100% 50%;
+  -ms-transform-origin: 50% 100% 50%;
+  -webkit-transform-origin: 50% 100% 50%;
+  transform-origin: 50% 100% 50%;
+}
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=cubeToTop].forward + .pageHolder {
+  -moz-transform-origin: 50% 0% 50%;
+  -ms-transform-origin: 50% 0% 50%;
+  -webkit-transform-origin: 50% 0% 50%;
+  transform-origin: 50% 0% 50%;
+}
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=cubeToBottom].forward.currentPage {
+  -moz-transform-origin: 50% 0% 50%;
+  -ms-transform-origin: 50% 0% 50%;
+  -webkit-transform-origin: 50% 0% 50%;
+  transform-origin: 50% 0% 50%;
+}
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=cubeToBottom].forward + .pageHolder {
+  -moz-transform-origin: 50% 100% 50%;
+  -ms-transform-origin: 50% 100% 50%;
+  -webkit-transform-origin: 50% 100% 50%;
+  transform-origin: 50% 100% 50%;
+}
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=carouselToLeft].forward.currentPage {
+  -moz-transform-origin: 100% 50% 50%;
+  -ms-transform-origin: 100% 50% 50%;
+  -webkit-transform-origin: 100% 50% 50%;
+  transform-origin: 100% 50% 50%;
+}
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=carouselToLeft].forward + .pageHolder {
+  -moz-transform-origin: 0% 50% 50%;
+  -ms-transform-origin: 0% 50% 50%;
+  -webkit-transform-origin: 0% 50% 50%;
+  transform-origin: 0% 50% 50%;
+}
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=carouselToRight].forward.currentPage {
+  -moz-transform-origin: 0% 50% 50%;
+  -ms-transform-origin: 0% 50% 50%;
+  -webkit-transform-origin: 0% 50% 50%;
+  transform-origin: 0% 50% 50%;
+}
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=carouselToRight].forward + .pageHolder {
+  -moz-transform-origin: 100% 50% 50%;
+  -ms-transform-origin: 100% 50% 50%;
+  -webkit-transform-origin: 100% 50% 50%;
+  transform-origin: 100% 50% 50%;
+}
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=carouselToTop].forward.currentPage {
+  -moz-transform-origin: 50% 100% 50%;
+  -ms-transform-origin: 50% 100% 50%;
+  -webkit-transform-origin: 50% 100% 50%;
+  transform-origin: 50% 100% 50%;
+}
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=carouselToTop].forward + .pageHolder {
+  -moz-transform-origin: 50% 0% 50%;
+  -ms-transform-origin: 50% 0% 50%;
+  -webkit-transform-origin: 50% 0% 50%;
+  transform-origin: 50% 0% 50%;
+}
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=carouselToBottom].forward.currentPage {
+  -moz-transform-origin: 50% 0% 50%;
+  -ms-transform-origin: 50% 0% 50%;
+  -webkit-transform-origin: 50% 0% 50%;
+  transform-origin: 50% 0% 50%;
+}
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=carouselToBottom].forward + .pageHolder {
+  -moz-transform-origin: 50% 100% 50%;
+  -ms-transform-origin: 50% 100% 50%;
+  -webkit-transform-origin: 50% 100% 50%;
+  transform-origin: 50% 100% 50%;
+}
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=sides].forward.currentPage {
+  -moz-transform-origin: -50% 50% 50%;
+  -ms-transform-origin: -50% 50% 50%;
+  -webkit-transform-origin: -50% 50% 50%;
+  transform-origin: -50% 50% 50%;
+}
+[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop][effect=sides].forward + .pageHolder {
+  -moz-transform-origin: 150% 50% 50%;
+  -ms-transform-origin: 150% 50% 50%;
+  -webkit-transform-origin: 150% 50% 50%;
+  transform-origin: 150% 50% 50%;
+  -moz-animation-delay: 0.2s;
+  -webkit-animation-delay: 0.2s;
+  animation-delay: 0.2s;
+}

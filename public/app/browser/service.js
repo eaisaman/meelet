@@ -59,7 +59,7 @@ define(
                     libraryName: repoLibName,
                     version: version,
                     type: repoArtifact.type,
-                    projectId: self.$rootScope.loadedProject && self.$rootScope.loadedProject.projectRecord._id || ""
+                    projectId: self.$rootScope.loadedProject && self.$rootScope.loadedProject.projectRecord && self.$rootScope.loadedProject.projectRecord._id || ""
                 },
                 repoUrl = "repo/{0}/{1}/{2}/{3}".format(
                     repoArtifact.type,
@@ -137,7 +137,7 @@ define(
                                         extension = args[0];
 
                                     configs.forEach(function (config) {
-                                        config(self.$injector, self.$compileProvider, self.$controllerProvider, extension, repoUrl);
+                                        config && config(self.$injector, self.$compileProvider, self.$controllerProvider, extension, repoUrl);
                                     });
 
                                     jsDefer.resolve();
@@ -202,7 +202,7 @@ define(
                                         extension = arguments[0];
 
                                     configs.forEach(function (config) {
-                                        config(self.$injector, self.$compileProvider, self.$controllerProvider, extension, repoUrl);
+                                        config && config(self.$injector, self.$compileProvider, self.$controllerProvider, extension, repoUrl);
                                     });
 
                                     demoRequireDefer.resolve();

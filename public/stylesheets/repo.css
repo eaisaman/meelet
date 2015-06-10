@@ -296,6 +296,7 @@
   width: 100%;
   height: 100%;
   color: rgba(0, 0, 0, 0.4);
+  overflow: hidden;
 }
 .repoContainer #repoTypes {
   position: relative;
@@ -310,15 +311,21 @@
   height: 100%;
 }
 .repoContainer .repoContent {
-  height: calc(100% - 4em);
+  position: relative;
+  float: left;
+  width: 100%;
+  height: calc(100% - 1em);
   margin: 0.5em 0;
+  padding-bottom: 2em;
   overflow: auto;
 }
 .repoContainer .repoContent .repoLib {
   position: relative;
   float: left;
-  width: 480px;
+  width: 500px;
+  height: 630px;
   margin-right: 1em;
+  margin-bottom: 1em;
   padding: 15px;
   box-shadow: 0 15px 10px -10px #6D6D6D, 0 1px 4px #A4A4A4, 0 0 40px #E0E0E0 inset;
 }
@@ -357,17 +364,33 @@
 .repoContainer .repoContent .repoLib .repoLibInfo {
   height: 1.5em;
 }
-.repoContainer .repoContent .repoLib .repoLibInfo label {
-  height: 100%;
+.repoContainer .repoContent .repoLib .repoLibInfo.repoLibDesc {
+  height: 4em;
 }
-.repoContainer .repoContent .repoLib .repoLibInfo div {
-  height: 100%;
-}
-.repoContainer .repoContent .repoLib .repoLibInfo div span {
+.repoContainer .repoContent .repoLib .repoLibInfo.repoLibDesc > div span {
   position: relative;
   float: left;
   width: 100%;
   height: 100%;
+  text-align: right;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.repoContainer .repoContent .repoLib .repoLibInfo > label {
+  height: 100%;
+}
+.repoContainer .repoContent .repoLib .repoLibInfo > div {
+  height: 100%;
+}
+.repoContainer .repoContent .repoLib .repoLibInfo > div span {
+  position: relative;
+  float: left;
+  width: 100%;
+  height: 100%;
+  line-height: 1.5;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1;
