@@ -2,12 +2,10 @@
 @import "compass/css3/transition";
 @import "bootstrap/mixins/gradients";
 @import "global";
-@import "multilevel-menu";
 @import "simple-dropdown";
 @import "multilevel-menu";
 @import "angular-ui-tree";
 
-$underlineLinearGradient: (rgb(235, 235, 235) 0%, rgb(235, 235, 235) 50%, #fff 100%);
 $tabHeaderWidth: 6em;
 $maxNumOfConfigurationItems: 10;
 

@@ -4,9 +4,12 @@
 @import "global";
 @import "angular-ui-tree";
 @import "simple-dropdown";
+@import "multilevel-menu";
 
 @include angular-ui-tree(pageDetailsTree);
 @include simple-dropdown(widgetStateDropdown, null, $activeColor);
+@include multilevel-menu(null, pageEffectMultilevelMenu, $activeColor);
+@include multilevel-menu(null, pageEffectArtifactMultilevelMenu, $activeColor);
 
 @mixin page($pageEditorId) {
     ##{$pageEditorId} {
@@ -127,14 +130,340 @@
             }
 
             > .pageDetails {
-                height: auto;
+                height: auto !important;
                 background: inherit;
-                overflow: auto;
+                border: 1px solid $borderColor;
 
-                > ui-tree {
+                &:after {
+                    position: absolute;
+                    bottom: -2px;
+                    left: 0px;
+                    width: 100%;
+                    height: 0px;
+                    content: '';
+                    border-top: 1px solid $borderColor;
+                    border-bottom: 1px solid #FFF;
+                }
+
+                > .topBar {
+                    position: relative;
+                    float: left;
+                    width: 100%;
+
+                    @include box-shadow(0 8px 6px -6px black);
+
+                    > .pageDetailsToolBar {
+                        position: relative;
+                        width: calc(100% - 0.4em);
+                        height: 2em;
+                        margin: 0.2em;
+                        background: $borderColor;
+                        color: #fff;
+
+                        .toolButton {
+                            position: relative;
+                            float: left;
+                            width: 2em;
+                            height: 100%;
+                            margin-left: -1px;
+
+                            &:before {
+                                position: absolute;
+                                text-align: center;
+                                width: 100%;
+                                height: 100%;
+                                top: 0px;
+                                line-height: 2;
+                                border-right: 1px solid #fff;
+                                color: #fff;
+                                overflow: hidden;
+                                @include transition(all 0.5s);
+                            }
+
+                            &.select:before {
+                                top: 100%;
+                                height: 0px;
+                            }
+
+                            &:after {
+                                position: absolute;
+                                text-align: center;
+                                width: 100%;
+                                height: 0px;
+                                color: $borderColor;
+                                background: $borderColor;
+                                overflow: hidden;
+                                @include transition(all 0.5s);
+                            }
+
+                            &.select:after {
+                                height: 100%;
+                                line-height: 2;
+                                border-right: 1px solid $borderColor;
+                                background: #fff;
+                            }
+                        }
+                    }
+                }
+
+                > .tabContents {
+                    position: relative;
+                    float: left;
+                    top: 5px;
+                    width: 100%;
+
+                    @include transition(opacity 0.3s);
+
+                    > div[tab-sel^='tab-content'] {
+                        position: absolute;
+                        top: 5px;
+                        width: 100%;
+                        height: 450px;
+                        opacity: 0;
+                        pointer-events: none;
+                        border: 1px solid $borderColor;
+                        background: #fff;
+                        overflow: auto;
+
+                        &.select {
+                            pointer-events: auto;
+                            opacity: 1;
+
+                            @extend %flipDown;
+                        }
+
+                        @include box-shadow(0 4px 3px #555);
+                        @include flipDownOrigin();
+                        @include animation-duration(0.3s);
+                    }
+                }
+
+                ui-tree {
                     position: relative;
                     float: left;
                     min-width: 40em;
+                    background: #fff;
+                }
+
+                .effectArtifactTitle, .effectArtifactContainer, .pageEffectMultilevelMenu {
+                    position: relative;
+                    float: left;
+                    width: calc(100% - 1em);
+                    height: 2em;
+                    line-height: 2;
+                    margin: 0.5em;
+                }
+
+                .effectArtifactTitle {
+                    &:after {
+                        position: absolute;
+                        right: 0;
+                        bottom: 0;
+                        content: '';
+                        width: 100%;
+                        height: 2px;
+                        @include background(linear-gradient(right, $underlineLinearGradient));
+                    }
+
+                    span {
+                        position: relative;
+                        float: left;
+                        line-height: 1;
+                        width: 100%;
+                    }
+                }
+
+                .effectArtifactContainer .toggleLibraryButton {
+                    span {
+                        position: relative;
+                        float: left;
+                        line-height: 1;
+                        width: 100%;
+                        text-align: center;
+
+                        @include emboss-title(':before', true);
+                    }
+                }
+
+                .effectLibraryList {
+                    z-index: 101;
+                    position: absolute;
+                    width: 100%;
+                    height: auto;
+                    left: 0;
+                    opacity: 0;
+                    pointer-events: none;
+                    background: #fff;
+
+                    @extend %slideLeft;
+                    @include animation-duration(0.3s);
+
+                    &.select {
+                        opacity: 1;
+                        pointer-events: auto;
+
+                        @extend %slideLeftRetourn;
+                        @include animation-duration(0.3s);
+                    }
+
+                    .toggleSelectionButton {
+                        height: 2em;
+
+                        &:before {
+                            position: absolute;
+                            left: 0;
+                            top: 0;
+                            width: 100%;
+                            height: 2em;
+                            line-height: 2;
+                            text-align: center;
+                        }
+
+                        &.partialSelect:before {
+                            color: darken(#fff, $activeDarkenPercent);
+                        }
+                    }
+
+                    .hideLibraryListButton {
+                        position: absolute;
+                        top: 0.5em;
+                        width: 2em;
+                        height: 2em;
+                        background-color: #ddd;
+                        box-shadow: inset 0 -2px 0 rgba(0, 0, 0, .135);
+                        border-radius: 0.2em;
+                        display: inline-block;
+                        margin: 0 0.5em;
+
+                        &:active {
+                            background-color: #555;
+                            color: $activeColor;
+                            box-shadow: none;
+                        }
+
+                        &:before {
+                            position: absolute;
+                            width: 100%;
+                            height: 100%;
+                            text-align: center;
+                            line-height: 2;
+                        }
+                    }
+
+                    .hideLibraryListButton+.accordianGroup {
+                        margin-top: 2.5em;
+                    }
+
+                    .accordianGroup {
+                        position: relative;
+                        float: left;
+                        width: 100%;
+                        overflow: hidden;
+
+                        > .accordianTitle {
+                            z-index: 1;
+                            position: relative;
+                            float: left;
+                            width: 100%;
+                            line-height: 2;
+                            font-weight: 900;
+                            text-shadow: 0px 3px 4px rgba(0, 0, 0, 0.4);
+                            background: #fff;
+
+                            &:after {
+                                position: absolute;
+                                right: 0;
+                                bottom: 0;
+                                content: '';
+                                width: 100%;
+                                height: 2px;
+                                @include background(linear-gradient(right, $underlineLinearGradient));
+                            }
+
+                            &:before {
+                                position: absolute;
+                                left: 0;
+                                top: 0;
+                                line-height: 2;
+                                text-align: center;
+                                width: 1em;
+                                height: 2em;
+
+                                @include transform(rotateZ(0deg));
+                                @include transition(transform 0.3s);
+                            }
+
+                            span {
+                                line-height: 2;
+                                height: 2em;
+                                display: -webkit-box;
+                                -webkit-box-orient: vertical;
+                                -webkit-line-clamp: 1;
+                                text-overflow: ellipsis;
+                                text-align: left;
+                                text-indent: 2em;
+                                overflow: hidden;
+                            }
+                        }
+
+                        > .accordianBody {
+                            position: relative;
+                            float: left;
+                            width: 100%;
+                            margin-top: 0.5em;
+                            margin-bottom: 0.5em;
+
+                            @include transition(transform 0.3s);
+
+                            .effectPane {
+                                opacity: 0;
+                                pointer-events: none;
+                                height: 0px;
+                                overflow: hidden;
+                            }
+                        }
+
+                        &.select {
+                            > .accordianTitle:before {
+                                @extend %rotateUpSideDown;
+                                @include animation-duration(0.3s);
+                            }
+
+                            > .accordianBody {
+
+                                .effectPane {
+                                    opacity: 1;
+                                    pointer-events: auto;
+                                    height: 2em;
+                                    line-height: 2;
+                                    margin-top: 1em;
+                                    margin-right: 1em;
+                                    overflow: visible;
+
+                                    span {
+                                        position: relative;
+                                        float: left;
+                                        width: calc(100% - 3em);
+                                        line-height: 2;
+                                        height: 100%;
+                                        margin-left: 0.25em;
+                                        display: -webkit-box;
+                                        -webkit-box-orient: vertical;
+                                        -webkit-line-clamp: 1;
+                                        text-overflow: ellipsis;
+                                        overflow: hidden;
+                                    }
+
+                                    .toggleSelectionButton {
+                                        position: relative;
+                                        float: left;
+                                        width: 2em;
+                                        height: 2em;
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
 

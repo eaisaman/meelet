@@ -287,9 +287,30 @@ define(
                                 scope.iconLibraryList = $rootScope.iconLibraryList;
                                 scope.filterIconLibraryList = [];
 
-                                $rootScope.$on(angularEventTypes.switchProjectEvent, function (event, project) {
+                                function refreshArtifactList(project) {
                                     uiUtilService.latestOnce(
                                         function () {
+                                            return $timeout(function () {
+                                                appService.loadIconArtifactList().then(function () {
+                                                    var arr = scope.filterLibraryList(scope.iconLibraryList, project.xrefRecord);
+                                                    arr.splice(0, 0, 0, 0);
+                                                    scope.filterIconLibraryList.splice(0, scope.filterIconLibraryList.length);
+                                                    Array.prototype.splice.apply(scope.filterIconLibraryList, arr);
+                                                });                                            });
+                                        },
+                                        null,
+                                        angularConstants.unresponsiveInterval,
+                                        "ui-shape.compile.post.refreshArtifactList"
+                                    )();
+                                }
+
+                                scope.$on(angularEventTypes.switchProjectEvent, function (event, project) {
+                                    refreshArtifactList(project);
+                                });
+
+                                uiUtilService.latestOnce(
+                                    function () {
+                                        return $timeout(function () {
                                             var $wrapper = element.find(".ui-control-wrapper"),
                                                 $panel = element.find(".ui-control-panel");
 
@@ -309,19 +330,16 @@ define(
                                                     mc.off("panstart panmove panend", addWidgetHandler);
                                                 });
                                             }
+                                        });
+                                    },
+                                    null,
+                                    angularConstants.unresponsiveInterval,
+                                    "ui-shape.compile.post.init"
+                                )();
 
-                                            appService.loadIconArtifactList().then(function () {
-                                                var arr = scope.filterLibraryList(scope.iconLibraryList, project.xrefRecord);
-                                                arr.splice(0, 0, 0, 0);
-                                                scope.filterIconLibraryList.splice(0, scope.filterIconLibraryList.length);
-                                                Array.prototype.splice.apply(scope.filterIconLibraryList, arr);
-                                            });
-                                        },
-                                        null,
-                                        angularConstants.unresponsiveInterval,
-                                        "ui-shape.compile.post.init"
-                                    )();
-                                });
+                                if ($rootScope.loadedProject.projectRecord && $rootScope.loadedProject.projectRecord._id) {
+                                    refreshArtifactList($rootScope.loadedProject);
+                                }
                             }
                         }
                     }

@@ -472,21 +472,31 @@ define(
                                 scope.effectLibraryList = $rootScope.effectLibraryList;
                                 scope.filterEffectLibraryList = [];
 
-                                scope.$on(angularEventTypes.switchProjectEvent, function (event, project) {
+                                function refreshArtifactList(project) {
                                     uiUtilService.latestOnce(
                                         function () {
-                                            appService.loadEffectArtifactList().then(function () {
-                                                var arr = scope.filterLibraryList(_.where(scope.effectLibraryList, {uiControl: "uiTextShadowEditor"}), project.xrefRecord);
-                                                arr.splice(0, 0, 0, 0);
-                                                scope.filterEffectLibraryList.splice(0, scope.filterEffectLibraryList.length);
-                                                Array.prototype.splice.apply(scope.filterEffectLibraryList, arr);
+                                            return $timeout(function () {
+                                                appService.loadEffectArtifactList().then(function () {
+                                                    var arr = scope.filterLibraryList(_.where(scope.effectLibraryList, {uiControl: "uiTextShadowEditor"}), project.xrefRecord);
+                                                    arr.splice(0, 0, 0, 0);
+                                                    scope.filterEffectLibraryList.splice(0, scope.filterEffectLibraryList.length);
+                                                    Array.prototype.splice.apply(scope.filterEffectLibraryList, arr);
+                                                });
                                             });
                                         },
                                         null,
                                         angularConstants.unresponsiveInterval,
-                                        "ui-text-shadow-editor.compile.post.init"
+                                        "ui-text-shadow-editor.compile.post.refreshArtifactList"
                                     )();
+                                }
+
+                                scope.$on(angularEventTypes.switchProjectEvent, function (event, project) {
+                                    refreshArtifactList(project);
                                 });
+
+                                if ($rootScope.loadedProject.projectRecord && $rootScope.loadedProject.projectRecord._id) {
+                                    refreshArtifactList($rootScope.loadedProject);
+                                }
                             }
                         }
                     }

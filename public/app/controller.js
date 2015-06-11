@@ -510,15 +510,24 @@ define(
                         }, function (callback) {
                             callback();
                         }, function () {
-                            if ($rootScope.loadedProject.sketchWorks.pages.length) {
-                                $scope.sketchObject.pickedPage = $rootScope.loadedProject.sketchWorks.pages[0];
-                                uiService.createPages("." + angularConstants.widgetClasses.deviceHolderClass, $rootScope.loadedProject.sketchWorks.pages);
-                            } else {
-                                uiService.createPage("." + angularConstants.widgetClasses.deviceHolderClass).then(function (pageObj) {
-                                    $scope.sketchObject.pickedPage = pageObj;
-                                    $rootScope.loadedProject.sketchWorks.pages.push(pageObj);
-                                });
-                            }
+                            uiUtilService.latestOnce(
+                                function () {
+                                    return $timeout(function () {
+                                        if ($rootScope.loadedProject.sketchWorks.pages.length) {
+                                            $scope.sketchObject.pickedPage = $rootScope.loadedProject.sketchWorks.pages[0];
+                                            uiService.createPages("." + angularConstants.widgetClasses.deviceHolderClass, $rootScope.loadedProject.sketchWorks.pages);
+                                        } else {
+                                            uiService.createPage("." + angularConstants.widgetClasses.deviceHolderClass).then(function (pageObj) {
+                                                $scope.sketchObject.pickedPage = pageObj;
+                                                $rootScope.loadedProject.sketchWorks.pages.push(pageObj);
+                                            });
+                                        }
+                                    });
+                                },
+                                null,
+                                angularConstants.unresponsiveInterval,
+                                "FrameSketchController.renderProject"
+                            )();
                         },
                         angularConstants.checkInterval,
                         "FrameSketchController.renderProject",

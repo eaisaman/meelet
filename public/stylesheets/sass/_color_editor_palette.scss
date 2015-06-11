@@ -1,8 +1,8 @@
 @import "compass/css3/transform";
 @import "compass/css3/transition";
+@import "global";
 
 $activeBackgroundColor: rgba(0, 0, 0, 0.3);
-$underlineLinearGradient: ($color 0%, $color 75%, #fff 100%);
 
 @mixin color-editor-palette($colorEditorPaletteId, $colorEditorPaletteClass) {
     $colorEditorPalette: null;

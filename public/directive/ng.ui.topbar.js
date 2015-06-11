@@ -115,9 +115,13 @@ define(
                                     }
                                 }
 
-                                $rootScope.$on(angularEventTypes.switchProjectEvent, function (event, project) {
-                                    scope.pickedProjectId = project && project.projectRecord._id || "";
+                                scope.$on(angularEventTypes.switchProjectEvent, function (event, project) {
+                                    scope.pickedProjectId = project.projectRecord._id;
                                 });
+
+                                if ($rootScope.loadedProject.projectRecord && $rootScope.loadedProject.projectRecord._id) {
+                                    scope.pickedProjectId = $rootScope.loadedProject.projectRecord._id;
+                                }
                             }
                         }
                     }

@@ -461,27 +461,46 @@ define(
                                 scope.effectLibraryList = $rootScope.effectLibraryList;
                                 scope.filterEffectLibraryList = [];
 
-                                scope.$on(angularEventTypes.switchProjectEvent, function (event, project) {
+                                function refreshArtifactList(project) {
                                     uiUtilService.latestOnce(
                                         function () {
+                                            return $timeout(function () {
+                                                appService.loadEffectArtifactList().then(function () {
+                                                    var arr = scope.filterLibraryList(scope.effectLibraryList, project.xrefRecord);
+                                                    arr.splice(0, 0, 0, 0);
+                                                    scope.filterEffectLibraryList.splice(0, scope.filterEffectLibraryList.length);
+                                                    Array.prototype.splice.apply(scope.filterEffectLibraryList, arr);
+                                                });
+                                            });
+                                        },
+                                        null,
+                                        angularConstants.unresponsiveInterval,
+                                        "ui-state-transition.compile.post.refreshArtifactList"
+                                    )();
+                                }
+
+                                scope.$on(angularEventTypes.switchProjectEvent, function (event, project) {
+                                    refreshArtifactList(project);
+                                });
+
+                                uiUtilService.latestOnce(
+                                    function () {
+                                        return $timeout(function () {
                                             var $wrapper = element.find(".ui-control-wrapper"),
                                                 $panel = element.find(".ui-control-panel");
 
                                             $wrapper.addClass("expanded");
                                             $panel.addClass("show");
+                                        });
+                                    },
+                                    null,
+                                    angularConstants.unresponsiveInterval,
+                                    "ui-state-transition.compile.post.init"
+                                )();
 
-                                            appService.loadEffectArtifactList().then(function () {
-                                                var arr = scope.filterLibraryList(scope.effectLibraryList, project.xrefRecord);
-                                                arr.splice(0, 0, 0, 0);
-                                                scope.filterEffectLibraryList.splice(0, scope.filterEffectLibraryList.length);
-                                                Array.prototype.splice.apply(scope.filterEffectLibraryList, arr);
-                                            });
-                                        },
-                                        null,
-                                        angularConstants.unresponsiveInterval,
-                                        "ui-state-transition.compile.post.init"
-                                    )();
-                                });
+                                if ($rootScope.loadedProject.projectRecord && $rootScope.loadedProject.projectRecord._id) {
+                                    refreshArtifactList($rootScope.loadedProject);
+                                }
                             }
                         }
                     }

@@ -1,12 +1,10 @@
-@import "compass/css3/transform";
-@import "compass/css3/transition";
-@import "compass/css3/flexbox";
+@import "compass/css3";
+@import "global";
 @import "color_editor_palette";
 @import "simple-dropdown";
 
 $borderColor: rgba(0, 0, 0, 0.4);
 $activeBorderShadow: rgba(192, 192, 192, 0.8);
-$underlineLinearGradient: (rgb(235, 235, 235) 0%, rgb(235, 235, 235) 50%, #fff 100%);
 $activeColor: #669933;
 
 @include simple-dropdown(borderWidthDropdown, null, $activeColor);

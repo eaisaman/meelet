@@ -312,31 +312,11 @@ define(
                                 scope.widgetLibraryList = $rootScope.widgetLibraryList;
                                 scope.filterWidgetLibraryList = [];
 
-                                $rootScope.$on(angularEventTypes.switchProjectEvent, function (event, project) {
+                                function refreshArtifactList(project) {
                                     uiUtilService.latestOnce(
                                         function () {
                                             return $timeout(
                                                 function () {
-                                                    var $wrapper = element.find(".ui-control-wrapper"),
-                                                        $panel = element.find(".ui-control-panel");
-
-                                                    $wrapper.addClass("expanded");
-                                                    $panel.addClass("show");
-
-                                                    var $el = element.find(".pickerPane");
-
-                                                    mc = $el.data("hammer");
-                                                    if (!mc) {
-                                                        mc = new Hammer.Manager($el.get(0));
-                                                        mc.add(new Hammer.Pan());
-                                                        mc.on("panstart panmove panend", addWidgetHandler);
-                                                        $el.data("hammer", mc);
-
-                                                        scope.$on('$destroy', function () {
-                                                            mc.off("panstart panmove panend", addWidgetHandler);
-                                                        });
-                                                    }
-
                                                     appService.loadWidgetArtifactList().then(function () {
                                                         var arr = scope.filterLibraryList(scope.widgetLibraryList, project.xrefRecord);
                                                         arr.splice(0, 0, 0, 0);
@@ -348,9 +328,48 @@ define(
                                         },
                                         null,
                                         angularConstants.unresponsiveInterval,
-                                        "ui-widget.compile.post.init"
+                                        "ui-widget.compile.pre.refreshArtifactList"
                                     )();
+                                }
+
+                                scope.$on(angularEventTypes.switchProjectEvent, function (event, project) {
+                                    refreshArtifactList(project);
                                 });
+
+                                uiUtilService.latestOnce(
+                                    function () {
+                                        return $timeout(
+                                            function () {
+                                                var $wrapper = element.find(".ui-control-wrapper"),
+                                                    $panel = element.find(".ui-control-panel");
+
+                                                $wrapper.addClass("expanded");
+                                                $panel.addClass("show");
+
+                                                var $el = element.find(".pickerPane");
+
+                                                mc = $el.data("hammer");
+                                                if (!mc) {
+                                                    mc = new Hammer.Manager($el.get(0));
+                                                    mc.add(new Hammer.Pan());
+                                                    mc.on("panstart panmove panend", addWidgetHandler);
+                                                    $el.data("hammer", mc);
+
+                                                    scope.$on('$destroy', function () {
+                                                        mc.off("panstart panmove panend", addWidgetHandler);
+                                                    });
+                                                }
+                                            }
+                                        );
+                                    },
+                                    null,
+                                    angularConstants.unresponsiveInterval,
+                                    "ui-widget.compile.post.init"
+                                )();
+
+                                if ($rootScope.loadedProject.projectRecord && $rootScope.loadedProject.projectRecord._id) {
+                                    refreshArtifactList($rootScope.loadedProject);
+                                }
                             }
                         }
                     }

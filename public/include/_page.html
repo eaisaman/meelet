@@ -66,14 +66,83 @@
         </div>
     </div>
     <div class="pageDetails ui-control-panel">
-        <ui-tree id="pageDetailsTree" class="fs-x-small" drag-enabled="false" spacing="20" coverage="50"
-                 collapseAll="true">
-            <ol ui-tree-nodes ng-model="$root.sketchObject.pickedPage.childWidgets">
-                <li ng-repeat="item in $root.sketchObject.pickedPage.childWidgets" ui-tree-node
-                    ng-attr-id="{{treeNodeIdPrefix + item.id}}" ng-include="'_pageWidgets.html'"
-                    ng-class="{ 'selected': selected }"></li>
-            </ol>
-        </ui-tree>
+        <div class="topBar" ng-click="selectTab($event.currentTarget.parentNode, $event.target, $event)">
+            <div class="pageDetailsToolBar fs-x-toolButton-normal">
+                <div tab-sel="tab-head-page-details-1" tab-content="page-details"
+                     class="toolButton icon-page-before icon-page-after icon-page-page-settings-before icon-page-page-settings-after"></div>
+                <div tab-sel="tab-head-page-details-2" tab-content="page-details"
+                     class="toolButton icon-page-before icon-page-after icon-page-list-before  icon-page-list-after"></div>
+            </div>
+        </div>
+        <div class="tabContents">
+            <div tab-sel="tab-content-page-details-1">
+                <div class="effectArtifactTitle fs-x-small">
+                    <span class="fs-x-medium-before icon-page-before icon-page-transition-before">Page Transition Effect</span>
+                </div>
+
+                <div class="effectArtifactContainer fs-x-smaller">
+                    <div class="pageEffectArtifactMultilevelMenu col-as-9 no-padding" ui-multilevel-menu
+                         menu-list="filterEffectLibraryList"
+                         ui-multilevel-menu-opts="{dataField:'_id', labelField:'name', listField:'artifactList', listFilter:{_selected:true}, zIndex:100}"
+                         picked-menu-item="pickedEffectArtifactId"
+                         on-menu-select="pickEffectArtifact(pickedEffectArtifactId)">
+                        {{pickedEffectArtifact && pickedEffectArtifact.name || "Choose an Artifact"}}
+                    </div>
+                    <div class="toggleLibraryButton col-as-3 no-padding-right">
+                    <span class="fs-x-medium-before icon-page-before icon-page-library-before"
+                          ng-click="toggleSelectLibraryList($event)">
+                    </span>
+                    </div>
+                </div>
+
+                <div class="pageEffectMultilevelMenu fs-x-smaller" ui-multilevel-menu menu-list="effectList"
+                     ui-multilevel-menu-opts="{dataField:'value', labelField:'name', zIndex:101}"
+                     picked-menu-item="pickedEffect"
+                     on-menu-select="$root.sketchObject.pickedPage.pageTransition = createEffectObj(pickedEffect)">
+                    {{$root.sketchObject.pickedPage.pageTransition &&
+                    $root.sketchObject.pickedPage.pageTransition.effect.name || 'Choose an Effect'}}
+                </div>
+
+                <div class="effectLibraryList">
+                    <div class="hideLibraryListButton fs-x-small icon-page-before icon-page-exit-before"
+                         ng-click="toggleSelectLibraryList($event)"></div>
+
+                    <div class="accordianGroup fs-x-small"
+                         ng-repeat="effectLibrary in markLibrarySelection(effectLibraryList, $root.loadedProject.xrefRecord)"
+                         ng-click="toggleSelect($event.currentTarget, $event)">
+                        <div class="accordianTitle col-as-12 icon-widget-before icon-widget-angle-double-up-before">
+                            <span class="col-as-10 no-padding" ng-attr-title="{{effectLibrary.desc}}">{{effectLibrary.desc}}</span>
+
+                            <div class="toggleSelectionButton col-as-2 no-padding-right icon-widget-before"
+                                 ng-class="{'icon-widget-square-before':!effectLibrary._selected, 'icon-widget-square-check-before':effectLibrary._selected, 'partialSelect':isPartialSelection(effectLibrary, $root.loadedProject.xrefRecord)}"
+                                 ng-click="toggleLibrarySelection(effectLibrary, $event)"></div>
+                        </div>
+                        <div class="accordianBody fs-x-small col-as-12 no-padding">
+                            <div class="effectPane col-as-12 no-padding"
+                                 ng-repeat="artifact in markArtifactSelection(effectLibrary, $root.loadedProject.xrefRecord)"
+                                 ng-click="$event.stopPropagation()">
+                                <span class="col-as-10 no-padding"
+                                      ng-attr-title="{{artifact.name}}">{{artifact.name}}</span>
+
+                                <div class="col-as-2 no-padding-right toggleSelectionButton icon-widget-before"
+                                     ng-class="{'icon-widget-square-before':!artifact._selected, 'icon-widget-square-check-before':artifact._selected}"
+                                     ng-click="toggleArtifactSelection(artifact, effectLibrary, $event)"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div tab-sel="tab-content-page-details-2">
+                <ui-tree id="pageDetailsTree" class="fs-x-small" drag-enabled="false" spacing="20" coverage="50"
+                         collapseAll="true">
+                    <ol ui-tree-nodes ng-model="$root.sketchObject.pickedPage.childWidgets">
+                        <li ng-repeat="item in $root.sketchObject.pickedPage.childWidgets" ui-tree-node
+                            ng-attr-id="{{treeNodeIdPrefix + item.id}}" ng-include="'_pageWidgets.html'"
+                            ng-class="{ 'selected': selected }"></li>
+                    </ol>
+                </ui-tree>
+            </div>
+        </div>
     </div>
     <div id="widgetStateDropdown" class="fs-x-smaller stackAndRotateSelect" ng-if="stateTreeNodeItem" ui-simple-dropdown
          ui-simple-dropdown-opts="{dataField:'name', labelField:'name', zIndex:1000, gutter: 5, showTitle: false, displayUnsetOption: false}"

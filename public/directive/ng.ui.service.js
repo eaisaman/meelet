@@ -4240,7 +4240,9 @@ define(
             }),
             PageSketchWidgetClass = Class(BaseSketchWidgetClass, {
                 CLASS_NAME: "PageSketchWidget",
-                MEMBERS: {},
+                MEMBERS: {
+                    pageTransition: null
+                },
                 initialize: function (id) {
                     this.initialize.prototype.__proto__.initialize.apply(this, [id]);
                     var MEMBERS = arguments.callee.prototype.MEMBERS;
@@ -4253,7 +4255,7 @@ define(
                 },
                 toJSON: function () {
                     var jsonObj = PageSketchWidgetClass.prototype.__proto__.toJSON.apply(this);
-                    _.extend(jsonObj, _.pick(this, ["CLASS_NAME"]));
+                    _.extend(jsonObj, _.pick(this, ["CLASS_NAME", "pageTransition"]));
 
                     return jsonObj;
                 },
@@ -4263,6 +4265,7 @@ define(
                     PageSketchWidgetClass.prototype.__proto__.startMatchReference.apply(null);
 
                     var ret = new PageSketchWidgetClass(obj.id);
+                    ret.pageTransition = obj.pageTransition;
                     PageSketchWidgetClass.prototype.__proto__.fromObject.apply(ret, [obj]);
 
                     PageSketchWidgetClass.prototype.__proto__.endMatchReference.apply(null);
@@ -4270,8 +4273,13 @@ define(
                     return ret;
                 },
                 clone: function (cloneObj, MEMBERS) {
+                    var self = this;
+
                     cloneObj = cloneObj || new PageSketchWidgetClass();
                     _.extend(MEMBERS = MEMBERS || {}, PageSketchWidgetClass.prototype.MEMBERS);
+                    _.keys(MEMBERS).forEach(function (member) {
+                        cloneObj[member] = angular.copy(self[member]);
+                    });
 
                     PageSketchWidgetClass.prototype.__proto__.clone.apply(this, [cloneObj, MEMBERS]);
 
