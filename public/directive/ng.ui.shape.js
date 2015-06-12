@@ -14,8 +14,7 @@ define(
                 return {
                     restrict: "A",
                     scope: {
-                        dockAlign: "=",
-                        isPlaying: "="
+                        dockAlign: "="
                     },
                     replace: false,
                     templateUrl: "include/_shape.html",
@@ -125,14 +124,14 @@ define(
 
                                             var $to = $(event.srcEvent.toElement);
 
-                                            if (!scope.isPlaying && ($to.hasClass(options.widgetClass) || $to.hasClass(options.holderClass) || $to.attr(options.anchorAttr))) {
+                                            if (!$rootScope.sketchWidgetSetting.isPlaying && ($to.hasClass(options.widgetClass) || $to.hasClass(options.holderClass) || $to.attr(options.anchorAttr))) {
                                                 var x = event.srcEvent.clientX - $to.offset().left,
                                                     y = event.srcEvent.clientY - $to.offset().top;
 
                                                 x = Math.floor(x * angularConstants.precision) / angularConstants.precision;
                                                 y = Math.floor(y * angularConstants.precision) / angularConstants.precision;
 
-                                                if (!scope.isPlaying) {
+                                                if (!$rootScope.sketchWidgetSetting.isPlaying) {
                                                     uiUtilService.broadcast(scope,
                                                         angularEventTypes.beforeWidgetCreationEvent,
                                                         function (name) {

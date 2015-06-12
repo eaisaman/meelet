@@ -717,7 +717,7 @@ var State = Class({
         var self = this;
 
         self.$element = $("<div />").attr("id", self.id);
-        self.$element.attr(_.omit(self.attr, ["ui-sketch-widget", "is-playing", "scale", "ng-class", "sketch-object"]));
+        self.$element.attr(_.omit(self.attr, ["ui-sketch-widget", "scale", "ng-class", "sketch-object"]));
         self.$element.attr("state", self.state.name);
         self.styleManager.insertClass();
 
@@ -893,8 +893,7 @@ var State = Class({
         var templateStr = config.cache.get(artifactPath) || fs.readFileSync(path.join(artifactPath, "app", "widget.html"), "utf8");
         config.cache.set(artifactPath, templateStr);
         self.$template = $(templateStr).appendTo(self.$element);
-        self.$template.removeAttr("ui-sketch-widget").removeAttr("is-playing").removeAttr("scale").removeAttr("ng-class").removeAttr("sketch-object");
-        self.$template.find("[is-playing]").removeAttr("is-playing");
+        self.$template.removeAttr("ui-sketch-widget").removeAttr("scale").removeAttr("ng-class").removeAttr("sketch-object");
 
         //widget container
         var containerWidget = self.childWidgets[0],
@@ -902,7 +901,7 @@ var State = Class({
 
         $widgetContainer.attr("id", containerWidget.id);
         containerWidget.$element = $widgetContainer;
-        containerWidget.$element.attr(_.omit(containerWidget.attr, ["ui-sketch-widget", "is-playing", "scale", "ng-class", "sketch-object"]));
+        containerWidget.$element.attr(_.omit(containerWidget.attr, ["ui-sketch-widget", "scale", "ng-class", "sketch-object"]));
         containerWidget.$element.attr("state", containerWidget.state.name);
         containerWidget.styleManager.insertClass();
 

@@ -39,6 +39,7 @@ define(
                         var widgetObj = element.data("widgetObject");
 
                         if (widgetObj && !widgetObj.hasClass(angularConstants.widgetClasses.widgetContainerClass)) {
+                            //'sketch-widget-hammer' stores the configuration hammer gestures
                             var mc = element.data("sketch-widget-hammer");
 
                             if (!mc) {
@@ -118,7 +119,7 @@ define(
                                     return defer.promise;
                                 }
 
-                                if (!scope.isPlaying && !event.srcEvent.defaultPrevented) {
+                                if (!$rootScope.sketchWidgetSetting.isPlaying && !event.srcEvent.defaultPrevented) {
                                     var target = angular.isElement(event) && event || event.target,
                                         $target = $(target);
 
@@ -160,7 +161,7 @@ define(
                                     return defer.promise;
                                 }
 
-                                if (!scope.isPlaying && !event.srcEvent.defaultPrevented) {
+                                if (!$rootScope.sketchWidgetSetting.isPlaying && !event.srcEvent.defaultPrevented) {
                                     var target = angular.isElement(event) && event || event.target,
                                         $target = $(target);
 
@@ -325,7 +326,7 @@ define(
                                     return defer.promise;
                                 }
 
-                                if (!scope.isPlaying && !event.srcEvent.defaultPrevented) {
+                                if (!$rootScope.sketchWidgetSetting.isPlaying && !event.srcEvent.defaultPrevented) {
                                     if (event.srcEvent.target.id === widgetObj.id && $(event.srcEvent.target).hasClass(angularConstants.widgetClasses.activeClass)) {
                                         uiUtilService.once(handler, null, angularConstants.unresponsiveInterval, "sketch-widget.registerHandlers.dragHandler.handler." + widgetObj.id)(event);
                                     }
@@ -373,7 +374,7 @@ define(
 
                     return {
                         restrict: "A",
-                        scope: {isPlaying: "=", scale: "=?", widgetName: "@"},
+                        scope: {scale: "=?", widgetName: "@"},
                         replace: false,
                         compile: function (element, attrs) {
                             return {
@@ -387,27 +388,24 @@ define(
                                     scope.options.widgetClass = angularConstants.widgetClasses.widgetClass;
                                     scope.options.direction = directionOpt[options.direction] || DIRECTION_ALL;
 
+                                    /* FIXME
+                                    * Some widgets' elements append to dom without angular compilation, so the directive logic won't be processed,
+                                    * which will cause the gesture in design mode not to work on such widgets.
+                                    * */
                                     //Since widget setting gesture may collide with actual playing gesture, we disable it for play.
-                                    scope.$watch("isPlaying", function (value) {
-                                        function watchHandler(el, watchFlag) {
-                                            var widgetObj = uiService.createWidgetObj(el);
-                                            if (widgetObj) {
-                                                if (scope.widgetName) {
-                                                    widgetObj.name = scope.widgetName;
-                                                }
-                                                widgetObj.setIsPlaying && widgetObj.setIsPlaying(watchFlag);
-                                                if (watchFlag) {
-                                                    unregisterHandlers(el);
-                                                } else {
-                                                    registerHandlers(scope, el);
-                                                }
+                                    scope.$on(angularEventTypes.playProjectEvent, function (event, value) {
+                                        function watchHandler(el, isPlaying) {
+                                            if (isPlaying) {
+                                                unregisterHandlers(el);
+                                            } else {
+                                                registerHandlers(scope, el);
                                             }
 
                                             return uiUtilService.getResolveDefer();
                                         }
 
-                                        //Directive ng-include will recreate element which have no widget id attribute.
                                         if (element.parent().length) {
+                                            //Directive ng-include will recreate element which have no widget id attribute.
                                             var id = element.attr("id") || element.parent().attr("id");
 
                                             id && uiUtilService.latestOnce(watchHandler, null, angularConstants.unresponsiveInterval, "sketch-widget.watchHandler.{0}".format(id))(element, value);
@@ -423,7 +421,7 @@ define(
                                                 }
                                                 widgetObj.attach();
 
-                                                scope.isPlaying && registerHandlers(scope, el);
+                                                $rootScope.sketchWidgetSetting.isPlaying && registerHandlers(scope, el);
                                             }
 
                                             return uiUtilService.getResolveDefer();

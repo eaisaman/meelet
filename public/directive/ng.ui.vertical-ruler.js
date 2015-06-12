@@ -17,7 +17,6 @@ define(
                     restrict: "A",
                     scope: {
                         dockAlign: "=",
-                        isPlaying: "=",
                         scale: "=",
                         markerCount: "=",
                         deviceWidth: "=",

@@ -482,6 +482,8 @@ define(
 
                 $scope.togglePlayWidget = function (event) {
                     $rootScope.sketchWidgetSetting.isPlaying = !$rootScope.sketchWidgetSetting.isPlaying;
+
+                    $rootScope.$broadcast(angularEventTypes.playProjectEvent, $rootScope.sketchWidgetSetting.isPlaying);
                 }
 
                 $scope.saveProject = function (event) {
@@ -515,9 +517,9 @@ define(
                                     return $timeout(function () {
                                         if ($rootScope.loadedProject.sketchWorks.pages.length) {
                                             $scope.sketchObject.pickedPage = $rootScope.loadedProject.sketchWorks.pages[0];
-                                            uiService.createPages("." + angularConstants.widgetClasses.deviceHolderClass, $rootScope.loadedProject.sketchWorks.pages);
+                                            uiService.loadPages($rootScope.loadedProject.sketchWorks.pages);
                                         } else {
-                                            uiService.createPage("." + angularConstants.widgetClasses.deviceHolderClass).then(function (pageObj) {
+                                            uiService.loadPage(uiService.createPage()).then(function (pageObj) {
                                                 $scope.sketchObject.pickedPage = pageObj;
                                                 $rootScope.loadedProject.sketchWorks.pages.push(pageObj);
                                             });
@@ -592,6 +594,32 @@ define(
 
                 $scope.isConfigurable = function (widgetObj) {
                     return uiService.isConfigurable(widgetObj);
+                }
+
+                $scope.nextPage = function (event) {
+                    event && event.stopPropagation && event.stopPropagation();
+
+                    uiUtilService.latestOnce(
+                        function () {
+                            return uiService.nextPage($rootScope.sketchObject.pickedPage);
+                        },
+                        null,
+                        angularConstants.unresponsiveInterval,
+                        "FrameSketchController.nextPage." + $rootScope.sketchObject.pickedPage.id
+                    )();
+                }
+
+                $scope.prevPage = function (event) {
+                    event && event.stopPropagation && event.stopPropagation();
+
+                    uiUtilService.latestOnce(
+                        function () {
+                            return uiService.prevPage($rootScope.sketchObject.pickedPage);
+                        },
+                        null,
+                        angularConstants.unresponsiveInterval,
+                        "FrameSketchController.prevPage." + $rootScope.sketchObject.pickedPage.id
+                    )();
                 }
 
                 function setterFactory(obj, name, source) {

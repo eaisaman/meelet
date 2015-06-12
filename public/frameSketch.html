@@ -146,7 +146,15 @@
                         <div class="deviceScreen"
                              ng-style="{'width': '{{sketchDevice.width + 90}}', 'height': '{{sketchDevice.height + 90}}'}">
                             <div id="deviceHolder" class="deviceHolder"
-                                 ng-style="{'left': 45, 'top': 45, 'width': '{{sketchDevice.width}}', 'height': '{{sketchDevice.height}}'}"></div>
+                                 ng-style="{'left': 45, 'top': 45, 'width': '{{sketchDevice.width}}', 'height': '{{sketchDevice.height}}'}">
+                                <div id="pageNavigationControl" class="fs-x-medium"
+                                     ng-show="$root.sketchWidgetSetting.isPlaying">
+                                    <div class="icon-frame-sketch-before icon-frame-sketch-navigate_before-before"
+                                         ng-click="prevPage($event)"></div>
+                                    <div class="icon-frame-sketch-before icon-frame-sketch-navigate_next-before"
+                                         ng-click="nextPage($event)"></div>
+                                </div>
+                            </div>
                             <div id="verticalRuler" class="ruler fs-x-smaller"
                                  ng-if="$root.sketchWidgetSetting.showRuler"
                                  ng-style="{'left':0, 'top': 45, 'width': 45, 'height': '{{sketchDevice.height}}'}"
@@ -278,14 +286,12 @@
                     </div>
                     <div id="shape-control-group" tab-sel="tab-content-control-group-2" class="ui-control-group">
                         <div id="shape-control" class="ui-control ui-control-inline enable" ui-shape
-                             is-playing="$root.sketchWidgetSetting.isPlaying"
                              dock-align="dockAlign">
                         </div>
                     </div>
                     <div id="widget-control-group" tab-sel="tab-content-control-group-3" class="ui-control-group">
                         <div id="widget-control" class="ui-control ui-control-inline enable" ui-widget
                              ui-widget-opts="{elementZIndex: 99}"
-                             is-playing="$root.sketchWidgetSetting.isPlaying"
                              picked-artifact="$root.sketchWidgetSetting.pickedArtifact"
                              picked-library="$root.sketchWidgetSetting.pickedLibrary"
                              dock-align="dockAlign" show-demo="showDemo()">

@@ -2,9 +2,9 @@ define(
     ["angular", "jquery"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$http", "$timeout", "$q", "$exceptionHandler", "$parse", "angularEventTypes", "uiUtilService"];
+            var inject = ["$http", "$timeout", "$q", "$exceptionHandler", "$parse", "$rootScope", "angularEventTypes", "uiUtilService"];
 
-            appModule.directive("uiModalWindow", _.union(inject, [function ($http, $timeout, $q, $exceptionHandler, $parse, angularEventTypes, uiUtilService) {
+            appModule.directive("uiModalWindow", _.union(inject, [function ($http, $timeout, $q, $exceptionHandler, $parse, $rootScope, angularEventTypes, uiUtilService) {
                 'use strict';
 
                 var injectObj = _.object(inject, Array.prototype.slice.call(arguments));
@@ -12,7 +12,6 @@ define(
                 return {
                     restrict: "A",
                     scope: {
-                        isPlaying: "=?",
                         /**
                          * Valid transitions include 'fadeInScaleUp', 'slideFromRight', 'slideFromBottom', 'newspaper', 'fall', 'sideFall',
                          * 'slideStickTop', 'flipHorizontal3D', 'flipVertical3D', 'sign3D', 'superScaled', 'justMe', 'slit3D', 'rotateFromBottom3D',
@@ -36,7 +35,7 @@ define(
                                 scope.toggleModalWindow = function (event) {
                                     event && event.stopPropagation && event.stopPropagation();
 
-                                    if (scope.isPlaying == null || scope.isPlaying) {
+                                    if ($rootScope.sketchWidgetSetting == null || $rootScope.sketchWidgetSetting.isPlaying) {
                                         return scope.toggleDisplay('> .md-modal', event).then(function () {
                                             var defer = $q.defer();
                                             $timeout(function () {

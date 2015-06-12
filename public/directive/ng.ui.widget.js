@@ -17,7 +17,6 @@ define(
                     restrict: "A",
                     scope: {
                         dockAlign: "=",
-                        isPlaying: "=",
                         pickedArtifact: "=",
                         pickedLibrary: "=",
                         showDemo: "&"
@@ -117,7 +116,7 @@ define(
                                             x = Math.floor(x * angularConstants.precision) / angularConstants.precision;
                                             y = Math.floor(y * angularConstants.precision) / angularConstants.precision;
 
-                                            if (!scope.isPlaying && ($to.hasClass(options.widgetClass) || $to.hasClass(options.holderClass) || $to.attr(options.anchorAttr))) {
+                                            if (!$rootScope.sketchWidgetSetting.isPlaying && ($to.hasClass(options.widgetClass) || $to.hasClass(options.holderClass) || $to.attr(options.anchorAttr))) {
                                                 uiUtilService.broadcast(scope,
                                                     angularEventTypes.beforeWidgetCreationEvent,
                                                     function (name) {

@@ -148,14 +148,21 @@ define(
                                             angularEventTypes.beforeWidgetCreationEvent,
                                             function (name) {
                                                 if (name) {
-                                                    uiService.createPage($("." + options.pageHolderClass)).then(function (pageObj) {
-                                                        pageObj.name = name;
-                                                        pageObj.addOmniClass(angularConstants.widgetClasses.activeClass);
-                                                        pageObj.addClass(options.pageClass);
-                                                        $rootScope.sketchObject.pickedPage && $rootScope.sketchObject.pickedPage.removeOmniClass(angularConstants.widgetClasses.activeClass);
-                                                        $rootScope.sketchObject.pickedPage = pageObj;
-                                                        $rootScope.loadedProject.sketchWorks.pages.push(pageObj);
-                                                    });
+                                                    var pageObj = uiService.createPage();
+                                                    pageObj.name = name;
+                                                    pageObj.addOmniClass(angularConstants.widgetClasses.activeClass);
+                                                    pageObj.addClass(options.pageClass);
+                                                    $rootScope.sketchObject.pickedPage && $rootScope.sketchObject.pickedPage.removeOmniClass(angularConstants.widgetClasses.activeClass);
+                                                    $rootScope.sketchObject.pickedPage = pageObj;
+                                                    $rootScope.loadedProject.sketchWorks.pages.push(pageObj);
+
+                                                    var prev = $rootScope.loadedProject.sketchWorks.pages[$rootScope.loadedProject.sketchWorks.pages.length - 1];
+                                                    if (prev) {
+                                                        prev.nextSibling = pageObj;
+                                                        pageObj.prevSibling = prev;
+                                                    }
+
+                                                    uiService.loadPage(pageObj);
                                                 }
                                             }
                                         );
@@ -176,6 +183,16 @@ define(
                                             $rootScope.loadedProject.sketchWorks.pages.splice(i, 1);
                                             if (pageObj == $rootScope.sketchObject.pickedPage) {
                                                 $rootScope.sketchObject.pickedPage = $rootScope.loadedProject.sketchWorks.pages[j];
+                                            }
+
+                                            var prev = pageObj.prevSibling,
+                                                next = pageObj.nextSibling;
+
+                                            if (prev) {
+                                                prev.nextSibling = next;
+                                            }
+                                            if (next) {
+                                                next.prevSibling = prev;
                                             }
                                         }
                                     }
@@ -199,6 +216,15 @@ define(
                                                         $rootScope.sketchObject.pickedPage && $rootScope.sketchObject.pickedPage.removeOmniClass(angularConstants.widgetClasses.activeClass);
                                                         $rootScope.sketchObject.pickedPage = cloneObj;
                                                         $rootScope.loadedProject.sketchWorks.pages.splice(i + 1, 0, cloneObj);
+
+                                                        var next = pageObj.nextSibling;
+                                                        pageObj.nextSibling = cloneObj;
+                                                        cloneObj.prevSibling = pageObj;
+
+                                                        if (next) {
+                                                            next.prevSibling = cloneObj;
+                                                            cloneObj.nextSibling = next;
+                                                        }
                                                     });
                                                 }
                                             }

@@ -67,6 +67,7 @@ requirejs(["jquery-lib", "jquery-plugins-lib", "hammer-lib", "jquery-ui-lib", "j
             boundPropertiesEvent: "boundPropertiesEvent",
             beforeWidgetCreationEvent: "beforeWidgetCreationEvent",
             switchProjectEvent: "switchProjectEvent",
+            playProjectEvent: "playProjectEvent",
             widgetContentIncludedEvent: "widgetContentIncluded"
         });
         window.appModule.value("angularConstants", {
@@ -93,6 +94,7 @@ requirejs(["jquery-lib", "jquery-plugins-lib", "hammer-lib", "jquery-ui-lib", "j
             repoWidgetClass: "ui-widget",
             stateGroupEventPattern: "State Change Event of State Group {0}",
             widgetEventPattern: "Event {0} of widget {1}",
+            maxPageCountInDom: 10,
             draggingShapeZIndex: 101,
             actionDelay: 100,
             checkInterval: 20,

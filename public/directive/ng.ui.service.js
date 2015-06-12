@@ -444,9 +444,17 @@ define(
                         self.sketchWorks.pages.splice(0, self.sketchWorks.pages.length);
                         return $inject.appService.loadSketch(self.projectRecord._id).then(function (pages) {
                             if (pages && pages.length) {
+                                var p;
                                 pages.forEach(function (pageObj) {
                                     var page = Service.prototype.fromObject(pageObj);
-                                    page && self.sketchWorks.pages.push(page);
+                                    if (page) {
+                                        if (p) {
+                                            p.nextSibling = page;
+                                            page.prevSibling = p;
+                                        }
+                                        p = page;
+                                        self.sketchWorks.pages.push(page);
+                                    }
                                 });
                             }
 
@@ -644,7 +652,7 @@ define(
                     }
                 },
                 registerTrigger: function (widgetObj) {
-                    this.trigger && widgetObj.isPlaying && this.trigger.on(widgetObj);
+                    this.trigger && $inject.$rootScope.sketchWidgetSetting.isPlaying && this.trigger.on(widgetObj);
                 },
                 unregisterTrigger: function () {
                     this.trigger && this.trigger.off();
@@ -1183,6 +1191,7 @@ define(
                     if (widgetObj && widgetObj.$element && widgetObj.$element[0].nodeType == 1 && widgetObj.$element.parent().length && self.eventName) {
                         self.initialize.prototype.__proto__.on.apply(self, [widgetObj]);
 
+                        //'gesture-hammer' stores the widget playing gestures
                         var mc = widgetObj.$element.data("gesture-hammer");
                         if (!mc) {
                             mc = new Hammer.Manager(widgetObj.$element[0]);
@@ -1222,16 +1231,15 @@ define(
                         });
 
                         self.hammer = mc;
-                        self.recognizer = self.hammer.get(self.eventName);
                     }
                 },
                 off: function () {
                     this.initialize.prototype.__proto__.off.apply(this, []);
 
                     if (this.hammer) {
-                        this.hammer.off(this.eventName);
-                        this.hammer.remove(this.recognizer);
                         $(this.hammer.element).removeData("gesture-hammer");
+                        this.hammer.off(this.eventName);
+                        this.hammer.remove(this.eventName);
                         this.hammer.destroy();
                         this.hammer = null;
                     }
@@ -2073,6 +2081,9 @@ define(
                                 }
                             }
 
+                            self.deregisterOnPlaying && self.deregisterOnPlaying();
+                            self.deregisterOnPlaying = null;
+
                             self.$element.detach();
 
                             return true;
@@ -2122,6 +2133,9 @@ define(
                             }
                         }
 
+                        self.deregisterOnPlaying && self.deregisterOnPlaying();
+                        self.deregisterOnPlaying = null;
+
                         if (self.$element) {
                             self.$element.remove();
                             self.$element = null;
@@ -2162,6 +2176,24 @@ define(
 
                                     self.anchor = anchor;
                                 }
+
+                                self.deregisterOnPlaying = self.deregisterOnPlaying || $inject.$rootScope.$on(
+                                        $inject.angularEventTypes.playProjectEvent,
+                                        function (event, value) {
+                                            $inject.uiUtilService.latestOnce(
+                                                function () {
+                                                    return $inject.$timeout(
+                                                        function () {
+                                                            self.setIsPlaying(value);
+                                                        }
+                                                    );
+                                                },
+                                                null,
+                                                $inject.angularConstants.unresponsiveInterval,
+                                                "BaseSketchWidgetClass.attach.deregisterOnPlaying." + self.id
+                                            )();
+                                        }
+                                    );
                             }
                         }
                     },
@@ -2381,6 +2413,24 @@ define(
                                     self.$element.removeClass("tempElement");
                                 }
                             }
+
+                            self.deregisterOnPlaying = self.deregisterOnPlaying || $inject.$rootScope.$on(
+                                    $inject.angularEventTypes.playProjectEvent,
+                                    function (event, value) {
+                                        $inject.uiUtilService.latestOnce(
+                                            function () {
+                                                return $inject.$timeout(
+                                                    function () {
+                                                        self.setIsPlaying(value);
+                                                    }
+                                                );
+                                            },
+                                            null,
+                                            $inject.angularConstants.unresponsiveInterval,
+                                            "BaseSketchWidgetClass.appendTo.deregisterOnPlaying." + self.id
+                                        )();
+                                    }
+                                );
                         }
 
                         return $inject.uiUtilService.getResolveDefer(self);
@@ -2528,7 +2578,7 @@ define(
                                     });
                                     self.styleManager.draw();
 
-                                    self.isPlaying && self.registerTrigger();
+                                    $inject.$rootScope.sketchWidgetSetting.isPlaying && self.registerTrigger();
                                 }
                             }
                         }
@@ -2970,11 +3020,8 @@ define(
                         return colorObj;
                     },
                     setIsPlaying: function (value) {
-                        if (!!this.isPlaying != !!value) {
-                            this.unregisterTrigger(true);
-                            this.isPlaying = value;
-                            this.isPlaying && this.registerTrigger();
-                        }
+                        this.unregisterTrigger();
+                        value && this.registerTrigger();
                     }
                 }
             ),
@@ -4375,6 +4422,171 @@ define(
                 }
             });
 
+        Service.prototype.nextPage = function (pageObj) {
+            var self = this;
+
+            if (pageObj.nextSibling) {
+                return self.loadPage(pageObj, pageObj.nextSibling).then(
+                    function () {
+                        var $current = pageObj.$element,
+                            $next = pageObj.nextSibling.$element,
+                            hasAnimation = false;
+
+                        $current.addClass("forward currentPage");
+
+                        if (pageObj.pageTransition) {
+                            hasAnimation = pageObj.pageTransition.effect.type === "Animation";
+
+                            var fullName = pageObj.pageTransition.artifactSpec.directiveName;
+                            if (pageObj.pageTransition.artifactSpec.version) {
+                                fullName = fullName + "-" + pageObj.pageTransition.artifactSpec.version.replace(/\./g, "-")
+                            }
+                            $current.attr(fullName, "");
+                            $current.attr("effect", pageObj.pageTransition.effect.name);
+                        }
+
+                        if (hasAnimation) {
+                            self.$timeout(function () {
+                                $next.addClass("currentPage");
+                            });
+
+                            return self.$q.all([
+                                self.uiUtilService.onAnimationEnd($current),
+                                self.uiUtilService.onAnimationEnd($next)
+                            ]).then(function () {
+                                $current.removeClass("forward currentPage");
+                                $current.removeAttr("effect");
+                                $rootScope.sketchObject.pickedPage = pageObj.nextSibling;
+
+                                return self.uiUtilService.getResolveDefer();
+                            });
+
+                        } else {
+                            return self.$timeout(function () {
+                                $next.addClass("currentPage");
+                                $current.removeClass("forward currentPage");
+                                $current.removeAttr("effect");
+                                $rootScope.sketchObject.pickedPage = pageObj.nextSibling;
+
+                                return self.uiUtilService.getResolveDefer();
+                            });
+                        }
+                    },
+                    function (err) {
+                        return self.uiUtilService.getRejectDefer(err);
+                    }
+                );
+            }
+
+            return self.uiUtilService.getResolveDefer();
+        }
+
+        Service.prototype.prevPage = function (pageObj) {
+            var self = this;
+
+            if (pageObj.prebSibling && self.loadPage(pageObj, pageObj.prebSibling)) {
+                return self.loadPage(pageObj, pageObj.prebSibling).then(
+                    function () {
+                        var $current = pageObj.$element,
+                            $prev = pageObj.prebSibling.$element,
+                            hasAnimation = false;
+
+                        $current.addClass("forward currentPage");
+
+                        if (pageObj.pageTransition) {
+                            hasAnimation = pageObj.pageTransition.effect.type === "Animation";
+
+                            var fullName = pageObj.pageTransition.artifactSpec.directiveName;
+                            if (pageObj.pageTransition.artifactSpec.version) {
+                                fullName = fullName + "-" + pageObj.pageTransition.artifactSpec.version.replace(/\./g, "-")
+                            }
+                            $current.attr(fullName, "");
+                            $current.attr("effect", pageObj.pageTransition.effect.name);
+                        }
+
+                        if (hasAnimation) {
+                            self.$timeout(function () {
+                                $prev.addClass("currentPage");
+                            });
+
+                            return self.$q.all([
+                                self.uiUtilService.onAnimationEnd($current),
+                                self.uiUtilService.onAnimationEnd($prev)
+                            ]).then(function () {
+                                $current.removeClass("backward currentPage");
+                                $current.removeAttr("effect");
+                                $rootScope.sketchObject.pickedPage = pageObj.prevSibling;
+
+                                return self.uiUtilService.getResolveDefer();
+                            });
+
+                        } else {
+                            return self.$timeout(function () {
+                                $prev.addClass("currentPage");
+                                $current.removeClass("backward currentPage");
+                                $current.removeAttr("effect");
+                                $rootScope.sketchObject.pickedPage = pageObj.prevSibling;
+
+                                return self.uiUtilService.getResolveDefer();
+                            });
+                        }
+                    },
+                    function (err) {
+                        return self.uiUtilService.getRejectDefer(err);
+                    }
+                );
+            }
+
+            return self.uiUtilService.getResolveDefer();
+        }
+
+        Service.prototype.loadPage = function (currentPageObj, pageObj) {
+            var self = this,
+                $container = $("." + self.angularConstants.widgetClasses.deviceHolderClass),
+                $pages = $container.children("." + self.angularConstants.widgetClasses.holderClass),
+                pageCount = $pages.length;
+
+            if (!$container.children("#" + pageObj.id).length) {
+                if (pageCount >= self.angularConstants.maxPageCountInDom) {
+                    var $unloaded,
+                        unloadedPageObj;
+
+                    if (currentPageObj) {
+                        $unloaded = $container.children("." + self.angularConstants.widgetClasses.holderClass + ":not(#" + currentPageObj.id + ")").eq(0);
+                    } else {
+                        $unloaded = $pages.eq(0);
+                    }
+                    unloadedPageObj = $unloaded.data("widgetObject");
+
+                    if (unloadedPageObj) {
+                        unloadedPageObj.remove();
+                        pageCount--;
+                    }
+                }
+
+                if (pageCount < self.angularConstants.maxPageCountInDom) {
+                    return pageObj.appendTo($container).then(function () {
+                        var prev = pageObj.prevSibling;
+
+                        for (; prev && !prev.$element.parent().length; prev = prev.prevSibling);
+
+                        pageObj.$element.detach();
+                        if (prev && prev.$element.parent().length) {
+                            pageObj.$element.insertAfter(prev.$element);
+                        } else {
+                            pageObj.$element.prependTo($container);
+                        }
+
+                        return self.uiUtilService.getResolveDefer(pageObj);
+                    });
+                } else {
+                    return self.uiUtilService.getRejectDefer("The number of pages in dom exceeds maximum limit.");
+                }
+            }
+
+            return self.uiUtilService.getResolveDefer(pageObj);
+        }
+
         Service.prototype.createWidgetObj = function (element) {
             var self = this,
                 $el,
@@ -4432,7 +4644,6 @@ define(
                             widgetObj = new ElementSketchWidgetClass();
 
                             widgetObj.attr["ui-sketch-widget"] = "";
-                            widgetObj.attr["is-playing"] = "$root.sketchWidgetSetting.isPlaying";
                             widgetObj.attr["scale"] = "$root.sketchWidgetSetting.scale";
                             widgetObj.attr["ng-class"] = "{'isPlaying': $root.sketchWidgetSetting.isPlaying}";
                             widgetObj.addOmniClass(self.angularConstants.widgetClasses.widgetClass);
@@ -4481,7 +4692,6 @@ define(
                     widgetObj = widgetObj || new ElementSketchWidgetClass();
                     widgetObj.anchor = anchor;
                     widgetObj.attr["ui-sketch-widget"] = "";
-                    widgetObj.attr["is-playing"] = "$root.sketchWidgetSetting.isPlaying";
                     widgetObj.attr["scale"] = "$root.sketchWidgetSetting.scale";
                     widgetObj.attr["ng-class"] = "{'isPlaying': $root.sketchWidgetSetting.isPlaying}";
                     widgetObj.addOmniClass(self.angularConstants.widgetClasses.widgetClass);
@@ -4499,7 +4709,6 @@ define(
             var self = this,
                 widgetObj = new RepoSketchWidgetClass(null, widgetSpec);
             widgetObj.attr["ui-sketch-widget"] = "";
-            widgetObj.attr["is-playing"] = "$root.sketchWidgetSetting.isPlaying";
             widgetObj.attr["scale"] = "$root.sketchWidgetSetting.scale";
             widgetObj.attr["ng-class"] = "{'isPlaying': $root.sketchWidgetSetting.isPlaying}";
             widgetObj.addOmniClass(self.angularConstants.widgetClasses.widgetClass);
@@ -4626,7 +4835,6 @@ define(
                     var compositeObj = new ElementSketchWidgetClass(null, widgetArr, isTemporary);
 
                     compositeObj.attr["ui-sketch-widget"] = "";
-                    compositeObj.attr["is-playing"] = "$root.sketchWidgetSetting.isPlaying";
                     compositeObj.attr["scale"] = "$root.sketchWidgetSetting.scale";
                     compositeObj.attr["ng-class"] = "{'isPlaying': $root.sketchWidgetSetting.isPlaying}";
                     compositeObj.addOmniClass(self.angularConstants.widgetClasses.widgetClass);
@@ -4642,60 +4850,23 @@ define(
             return null;
         }
 
-        Service.prototype.createPage = function (holderElement, pageObj, showHide) {
-            var self = this,
-                defer = self.$q.defer();
+        Service.prototype.createPage = function () {
+            var pageObj = new PageSketchWidgetClass();
+            pageObj.attr["ui-sketch-widget"] = "";
+            pageObj.attr["scale"] = "$root.sketchWidgetSetting.scale";
+            pageObj.attr["ng-class"] = "{'isPlaying': $root.sketchWidgetSetting.isPlaying}";
+            pageObj.addOmniClass(self.angularConstants.widgetClasses.holderClass);
 
-            if (typeof holderElement === "string" || angular.isElement(holderElement)) {
-                holderElement = $(holderElement);
-            }
-
-            if (!pageObj) {
-                pageObj = new PageSketchWidgetClass();
-                pageObj.attr["ui-sketch-widget"] = "";
-                pageObj.attr["is-playing"] = "$root.sketchWidgetSetting.isPlaying";
-                pageObj.attr["scale"] = "$root.sketchWidgetSetting.scale";
-                pageObj.attr["ng-class"] = "{'isPlaying': $root.sketchWidgetSetting.isPlaying}";
-                pageObj.addOmniClass(self.angularConstants.widgetClasses.holderClass);
-            }
-
-            self.uiUtilService.whilst(
-                function () {
-                    return !angular.element(holderElement).scope();
-                }, function (callback) {
-                    callback();
-                }, function (err) {
-                    if (!err) {
-                        pageObj.relink(holderElement).then(
-                            function () {
-                                pageObj.showHide(showHide);
-
-                                var scope = angular.element(holderElement).scope();
-                                self.$compile(holderElement)(scope);
-
-                                defer.resolve(pageObj);
-                            }, function (err) {
-                                defer.reject(err);
-                            }
-                        );
-                    } else {
-                        defer.reject(err);
-                    }
-                },
-                self.angularConstants.checkInterval,
-                "Service.createPage." + pageObj.id,
-                self.angularConstants.renderTimeout);
-
-            return defer.promise;
+            return pageObj;
         }
 
-        Service.prototype.createPages = function (holderElement, pageObjs) {
+        Service.prototype.loadPages = function (pageObjs) {
             var self = this,
                 arr = [];
 
-            pageObjs.forEach(function (pageObj, i) {
-                arr.push(self.createPage(holderElement, pageObj, i === 0));
-            });
+            for (var i = 0; i < Math.min(pageObjs.length, self.angularConstants.maxPageCountInDom); i++) {
+                arr.push(self.loadPage(pageObjs[i]));
+            }
 
             return self.$q.all(arr);
         }
