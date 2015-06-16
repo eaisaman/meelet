@@ -71,11 +71,11 @@ define(
                                                                     widget.appendTo(prevWidget);
                                                                 }
                                                             } else {
-                                                                prevWidget.removeOmniClass(angularConstants.widgetClasses.activeClass);
+                                                                prevWidget.$element.removeClass(angularConstants.widgetClasses.activeClass);
                                                                 $rootScope.sketchObject.pickedWidget = null;
                                                             }
                                                         } else {
-                                                            prevWidget.removeOmniClass(angularConstants.widgetClasses.activeClass);
+                                                            prevWidget.$element.removeClass(angularConstants.widgetClasses.activeClass);
 
                                                             if (!prevWidget.directContains(widget)) {
                                                                 if (prevWidget.id != widget.id) {
@@ -87,7 +87,7 @@ define(
                                                                         composite.addClass(scope.options.widgetClass);
                                                                         $rootScope.sketchObject.pickedWidget = composite;
                                                                     }
-                                                                    $rootScope.sketchObject.pickedWidget.addOmniClass(angularConstants.widgetClasses.activeClass);
+                                                                    $rootScope.sketchObject.pickedWidget.$element.addClass(angularConstants.widgetClasses.activeClass);
                                                                 } else {
                                                                     $rootScope.sketchObject.pickedWidget = null;
                                                                 }
@@ -96,17 +96,17 @@ define(
                                                     }
                                                 } else {
                                                     $rootScope.sketchObject.pickedWidget = widget;
-                                                    $rootScope.sketchObject.pickedWidget.addOmniClass(angularConstants.widgetClasses.activeClass);
+                                                    $rootScope.sketchObject.pickedWidget.$element.addClass(angularConstants.widgetClasses.activeClass);
                                                 }
                                             }
                                         } else {
                                             if (!$rootScope.sketchObject.pickedWidget || $rootScope.sketchObject.pickedWidget.id != widget.id) {
                                                 $rootScope.sketchObject.pickedWidget = widget;
-                                                $rootScope.sketchObject.pickedWidget.addOmniClass(angularConstants.widgetClasses.activeClass);
+                                                $rootScope.sketchObject.pickedWidget.$element.addClass(angularConstants.widgetClasses.activeClass);
                                             }
 
                                             if (prevWidget) {
-                                                prevWidget.removeOmniClass(angularConstants.widgetClasses.activeClass);
+                                                prevWidget.$element.removeClass(angularConstants.widgetClasses.activeClass);
                                                 if ($rootScope.sketchObject.pickedWidget == prevWidget)
                                                     $rootScope.sketchObject.pickedWidget = null;
                                                 !prevWidget.isTemporary && prevWidget.isElement && prevWidget.$element && toggleTextMode(prevWidget.$element, false);
@@ -145,14 +145,14 @@ define(
                                         prevWidget && !prevWidget.isTemporary && prevWidget.isElement && toggleTextMode(prevWidget.$element, false);
 
                                         if (!prevWidget || prevWidget.id != widget.id) {
-                                            prevWidget && prevWidget.removeOmniClass(angularConstants.widgetClasses.activeClass);
+                                            prevWidget && prevWidget.$element.removeClass(angularConstants.widgetClasses.activeClass);
                                             $rootScope.sketchObject.pickedWidget = widget;
                                             !widget.isTemporary && widget.isElement && toggleTextMode(widget.$element);
                                         } else {
                                             if (!toggleTextMode(widget.$element)) {
                                                 $rootScope.sketchObject.pickedWidget = null;
                                             }
-                                            widget.removeOmniClass(angularConstants.widgetClasses.activeClass);
+                                            widget.$element.removeClass(angularConstants.widgetClasses.activeClass);
                                         }
 
                                         defer.resolve();
@@ -421,7 +421,7 @@ define(
                                                 }
                                                 widgetObj.attach();
 
-                                                $rootScope.sketchWidgetSetting.isPlaying && registerHandlers(scope, el);
+                                                $rootScope.sketchWidgetSetting.isPlaying || registerHandlers(scope, el);
                                             }
 
                                             return uiUtilService.getResolveDefer();
@@ -429,6 +429,10 @@ define(
 
                                         if (element.parent().length) {
                                             var id = element.attr("id");
+
+                                            if (!id && element.hasClass(angularConstants.widgetClasses.widgetContainerClass)) {
+                                                id =  element.parent().attr("id") + ".containerWidget";
+                                            }
 
                                             id && uiUtilService.latestOnce(attachHandler, null, angularConstants.unresponsiveInterval, "sketch-widget.attachHandler.{0}".format(id))(element);
                                         }

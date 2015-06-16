@@ -88,7 +88,8 @@ requirejs(["jquery-lib", "jquery-plugins-lib", "hammer-lib", "jquery-ui-lib", "j
                 hoverClass: "widgetHover",
                 activeClass: "pickedWidget",
                 widgetContainerClass: "widgetContainer",
-                widgetIncludeAnchorClass: "widgetIncludeAnchor"
+                widgetIncludeAnchorClass: "widgetIncludeAnchor",
+                currentPageClass: "currentPage"
             },
             anchorAttr: "widget-anchor",
             repoWidgetClass: "ui-widget",

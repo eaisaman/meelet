@@ -111,13 +111,12 @@
                 background: #f68dbb;
             }
 
-            &.pt-page-current {
-                visibility: visible;
-                z-index: 1;
-            }
-
             &.pt-page-ontop {
                 z-index: 999;
+            }
+
+            &.currentPage {
+                visibility: visible;
             }
 
             h1 {

@@ -45,11 +45,11 @@
 @mixin moveToRightKeyframes($keyframe: moveToRight) {
 
     @-moz-keyframes #{$keyframe} {
-        to { -webkit-transform: translateX(100%); }
+        to { -moz-transform: translateX(100%); }
     }
 
     @-webkit-keyframes #{$keyframe} {
-        to { -moz-transform: translateX(100%); }
+        to { -webkit-transform: translateX(100%); }
     }
 
     @keyframes #{$keyframe} {
@@ -60,11 +60,11 @@
 @mixin moveFromRightKeyframes($keyframe: moveFromRight) {
 
     @-moz-keyframes #{$keyframe} {
-        from { -webkit-transform: translateX(100%); }
+        from { -moz-transform: translateX(100%); }
     }
 
     @-webkit-keyframes #{$keyframe} {
-        from { -moz-transform: translateX(100%); }
+        from { -webkit-transform: translateX(100%); }
     }
 
     @keyframes #{$keyframe} {
@@ -90,11 +90,11 @@
 @mixin moveFromTopKeyframes($keyframe: moveFromTop) {
 
     @-moz-keyframes #{$keyframe} {
-        from { -webkit-transform: translateY(-100%); }
+        from { -moz-transform: translateY(-100%); }
     }
 
     @-webkit-keyframes #{$keyframe} {
-        from { -moz-transform: translateY(-100%); }
+        from { -webkit-transform: translateY(-100%); }
     }
 
     @keyframes #{$keyframe} {
@@ -120,11 +120,11 @@
 @mixin moveFromBottomKeyframes($keyframe: moveFromBottom) {
 
     @-moz-keyframes #{$keyframe} {
-        from { -webkit-transform: translateY(100%); }
+        from { -moz-transform: translateY(100%); }
     }
 
     @-webkit-keyframes #{$keyframe} {
-        from { -moz-transform: translateY(100%); }
+        from { -webkit-transform: translateY(100%); }
     }
 
     @keyframes #{$keyframe} {
@@ -240,11 +240,11 @@
 @mixin moveToBottomFadeKeyframes($keyframe: moveToBottomFade) {
 
     @-moz-keyframes #{$keyframe} {
-        to { opacity: 0.3; -webkit-transform: translateY(100%); }
+        to { opacity: 0.3; -moz-transform: translateY(100%); }
     }
 
     @-webkit-keyframes #{$keyframe} {
-        to { opacity: 0.3; -moz-transform: translateY(100%); }
+        to { opacity: 0.3; -webkit-transform: translateY(100%); }
     }
 
     @keyframes #{$keyframe} {
@@ -255,11 +255,11 @@
 @mixin moveFromBottomFadeKeyframes($keyframe: moveFromBottomFade) {
 
     @-moz-keyframes #{$keyframe} {
-        from { opacity: 0.3; -webkit-transform: translateY(100%); }
+        from { opacity: 0.3; -moz-transform: translateY(100%); }
     }
 
     @-webkit-keyframes #{$keyframe} {
-        from { opacity: 0.3; -moz-transform: translateY(100%); }
+        from { opacity: 0.3; -webkit-transform: translateY(100%); }
     }
 
     @keyframes #{$keyframe} {

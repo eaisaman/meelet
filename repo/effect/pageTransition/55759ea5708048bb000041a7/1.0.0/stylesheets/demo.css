@@ -94,12 +94,11 @@
 .widgetDemoContainer .pt-perspective .pt-page.pt-page-6 {
   background: #f68dbb;
 }
-.widgetDemoContainer .pt-perspective .pt-page.pt-page-current {
-  visibility: visible;
-  z-index: 1;
-}
 .widgetDemoContainer .pt-perspective .pt-page.pt-page-ontop {
   z-index: 999;
+}
+.widgetDemoContainer .pt-perspective .pt-page.currentPage {
+  visibility: visible;
 }
 .widgetDemoContainer .pt-perspective .pt-page h1 {
   position: absolute;

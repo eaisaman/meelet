@@ -72,7 +72,7 @@ define(
                                     scope.hideTopMenu();
 
                                     if (projectId) {
-                                        var _id = $rootScope.loadedProject && $rootScope.loadedProject.projectRecord._id || "";
+                                        var _id = $rootScope.loadedProject.projectRecord && $rootScope.loadedProject.projectRecord._id || "";
 
                                         if (projectId !== _id) {
                                             var projectItem;

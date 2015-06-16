@@ -16,7 +16,7 @@ define(
                         $scope.transitionName = transitionName;
                     }
 
-                    var $current = $(".pt-page.pt-page-current"),
+                    var $current = $(".pt-page.currentPage"),
                         $next = $current.next();
 
                     if (!$next.length) {
@@ -25,21 +25,18 @@ define(
                         $next.insertAfter($current);
                     }
 
-                    $current.addClass("forward currentPage");
-                    $current.attr("effect", $scope.transitionName);
-
-                    $timeout(function () {
-                        $next.addClass("pt-page-current");
-                    });
-
                     $q.all([
                         uiUtilService.onAnimationEnd($current),
                         uiUtilService.onAnimationEnd($next)
                     ]).then(function () {
-                        $current.removeClass("pt-page-current forward currentPage");
+                        $current.removeClass("forward currentPage");
                         $current.removeAttr("effect");
+                        $next.addClass("currentPage");
                         $scope.isAnimating = false;
                     });
+
+                    $current.addClass("forward");
+                    $current.attr("effect", $scope.transitionName);
                 }
             }
         }

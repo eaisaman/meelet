@@ -402,32 +402,40 @@ define(
                 "uiUtilService.broadcast.{0}-{1}".format(eventName, new Date().getTime()))
         }
 
-        Util.prototype.timeout = function (callback, timeout) {
-            var self = this,
-                defer = self.$q.defer();
+        Util.prototype.timeout = function (callback, timeoutId, timeout) {
+            var self = this;
 
-            if (callback) {
-                var t = timeout > 0 && self.$timeout(function () {
-                        defer.reject("TIMEOUT");
-                    }, timeout) || null;
+            timeoutId = timeoutId || "timeout_" + new Date().getTime();
+            self.timeoutMap = self.timeoutMap || {};
+            self.timeoutMap[timeoutId] = self.timeoutMap[timeoutId] || {}
+            self.timeoutMap[timeoutId].defer = self.timeoutMap[timeoutId].defer || self.$q.defer();
 
-                callback().then(function () {
-                    var args = Array.prototype.slice.call(arguments);
+            var t = timeout > 0 && self.$timeout(function () {
+                    if (self.timeoutMap[timeoutId]) {
+                        try {
+                            callback && callback("TIMEOUT");
+                        } catch (e) {
+                            self.$exceptionHandler(e);
+                        }
 
-                    t && self.$timeout.cancel(t);
-                    defer.resolve.apply(defer, args);
-                }, function () {
-                    var args = Array.prototype.slice.call(arguments);
+                        self.timeoutMap[timeoutId].defer.resolve("TIMEOUT");
+                        delete self.timeoutMap[timeoutId];
 
-                    defer.reject.apply(defer, args);
-                });
-            } else {
-                self.$timeout(function () {
-                    defer.resolve();
-                });
-            }
+                        self.angularConstants.VERBOSE && self.$log.debug("TIMEOUT occurred on timeoutId " + timeoutId);
+                    }
+                }, timeout) || null;
 
-            return defer.promise;
+            callback().then(function (result) {
+                t && self.$timeout.cancel(t);
+                self.timeoutMap[timeoutId].defer.resolve();
+                delete self.timeoutMap[timeoutId];
+            }, function (err) {
+                t && self.$timeout.cancel(t);
+                self.timeoutMap[timeoutId].defer.resolve(err);
+                delete self.timeoutMap[timeoutId];
+            });
+
+            return self.timeoutMap[timeoutId].defer.promise;
         }
 
         Util.prototype.whilst = function (test, iterator, callback, interval, whilstId, timeout) {

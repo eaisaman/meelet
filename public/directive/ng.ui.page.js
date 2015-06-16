@@ -8,8 +8,6 @@ define(
                 'use strict';
 
                 var defaults = {
-                        pageHolderClass: "deviceHolder",
-                        pageClass: "pageHolder"
                     },
                     options = _.extend(defaults, opts),
                     injectObj = _.object(inject, Array.prototype.slice.call(arguments));
@@ -150,10 +148,6 @@ define(
                                                 if (name) {
                                                     var pageObj = uiService.createPage();
                                                     pageObj.name = name;
-                                                    pageObj.addOmniClass(angularConstants.widgetClasses.activeClass);
-                                                    pageObj.addClass(options.pageClass);
-                                                    $rootScope.sketchObject.pickedPage && $rootScope.sketchObject.pickedPage.removeOmniClass(angularConstants.widgetClasses.activeClass);
-                                                    $rootScope.sketchObject.pickedPage = pageObj;
                                                     $rootScope.loadedProject.sketchWorks.pages.push(pageObj);
 
                                                     var prev = $rootScope.loadedProject.sketchWorks.pages[$rootScope.loadedProject.sketchWorks.pages.length - 1];
@@ -162,7 +156,9 @@ define(
                                                         pageObj.prevSibling = prev;
                                                     }
 
-                                                    uiService.loadPage(pageObj);
+                                                    uiService.loadPage(pageObj).then(function () {
+                                                        uiService.setCurrentPage(pageObj);
+                                                    });
                                                 }
                                             }
                                         );
@@ -179,7 +175,7 @@ define(
                                             var pageObj = $rootScope.loadedProject.sketchWorks.pages[i],
                                                 j = (i + 1) == $rootScope.loadedProject.sketchWorks.pages.length ? 0 : i;
 
-                                            $rootScope.loadedProject.sketchWorks.pages[i].showHide(false);
+                                            $rootScope.loadedProject.sketchWorks.pages[i].remove();
                                             $rootScope.loadedProject.sketchWorks.pages.splice(i, 1);
                                             if (pageObj == $rootScope.sketchObject.pickedPage) {
                                                 $rootScope.sketchObject.pickedPage = $rootScope.loadedProject.sketchWorks.pages[j];
@@ -207,24 +203,23 @@ define(
                                             function (name) {
                                                 if (name) {
                                                     var i = $(".pageList select").val(),
-                                                        pageObj = $rootScope.loadedProject.sketchWorks.pages[i];
+                                                        pageObj = $rootScope.loadedProject.sketchWorks.pages[i],
+                                                        cloneObj = uiService.copyPage(pageObj);
 
-                                                    uiService.copyPage(pageObj, $("." + options.pageHolderClass)).then(function (cloneObj) {
-                                                        cloneObj.name = name;
-                                                        cloneObj.addOmniClass(angularConstants.widgetClasses.activeClass);
-                                                        cloneObj.addClass(options.pageClass);
-                                                        $rootScope.sketchObject.pickedPage && $rootScope.sketchObject.pickedPage.removeOmniClass(angularConstants.widgetClasses.activeClass);
-                                                        $rootScope.sketchObject.pickedPage = cloneObj;
-                                                        $rootScope.loadedProject.sketchWorks.pages.splice(i + 1, 0, cloneObj);
+                                                    cloneObj.name = name;
+                                                    $rootScope.loadedProject.sketchWorks.pages.splice(i + 1, 0, cloneObj);
 
-                                                        var next = pageObj.nextSibling;
-                                                        pageObj.nextSibling = cloneObj;
-                                                        cloneObj.prevSibling = pageObj;
+                                                    var next = pageObj.nextSibling;
+                                                    pageObj.nextSibling = cloneObj;
+                                                    cloneObj.prevSibling = pageObj;
 
-                                                        if (next) {
-                                                            next.prevSibling = cloneObj;
-                                                            cloneObj.nextSibling = next;
-                                                        }
+                                                    if (next) {
+                                                        next.prevSibling = cloneObj;
+                                                        cloneObj.nextSibling = next;
+                                                    }
+
+                                                    uiService.loadPage(cloneObj).then(function () {
+                                                        uiService.setCurrentPage(cloneObj);
                                                     });
                                                 }
                                             }
@@ -457,10 +452,9 @@ define(
                                                                     var i = $(this).val(),
                                                                         pageObj = $rootScope.loadedProject.sketchWorks.pages[i];
 
-                                                                    if (pageObj.id != $rootScope.sketchObject.pickedPage.id) {
-                                                                        $rootScope.sketchObject.pickedPage = pageObj;
-                                                                        $rootScope.$apply();
-                                                                    }
+                                                                    uiService.loadPage($rootScope.sketchObject.pickedPage, pageObj).then(function() {
+                                                                        uiService.setCurrentPage(pageObj);
+                                                                    });
                                                                 });
 
                                                                 scope.$broadcast("collapseAll");

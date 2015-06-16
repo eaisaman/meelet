@@ -19410,40 +19410,6 @@
   float: left;
   overflow: hidden;
 }
-#sketchContainer #sketchHolder .deviceBackground .deviceScreenBackground .deviceScreen .deviceHolder .pageHolder {
-  z-index: 0;
-  position: absolute;
-  top: 0px !important;
-  left: 0px !important;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  color: #000;
-  visibility: hidden;
-}
-#sketchContainer #sketchHolder .deviceBackground .deviceScreenBackground .deviceScreen .deviceHolder .pageHolder.currentPage {
-  visibility: visible;
-  z-index: 1;
-}
-#sketchContainer #sketchHolder .deviceBackground .deviceScreenBackground .deviceScreen .deviceHolder .pageHolder .sketchWidget {
-  position: absolute;
-}
-#sketchContainer #sketchHolder .deviceBackground .deviceScreenBackground .deviceScreen .deviceHolder .pageHolder .sketchWidget.widgetHover {
-  -moz-box-shadow: 3px 3px 5px 6px rgba(0, 0, 0, 0.4);
-  -webkit-box-shadow: 3px 3px 5px 6px rgba(0, 0, 0, 0.4);
-  box-shadow: 3px 3px 5px 6px rgba(0, 0, 0, 0.4);
-}
-#sketchContainer #sketchHolder .deviceBackground .deviceScreenBackground .deviceScreen .deviceHolder .pageHolder .sketchWidget.widgetIncludeAnchor .widgetContainer {
-  position: absolute;
-  width: 100% !important;
-  height: 100% !important;
-  background: transparent !important;
-}
-#sketchContainer #sketchHolder .deviceBackground .deviceScreenBackground .deviceScreen .deviceHolder .pageHolder .sketchWidget.widgetIncludeAnchor .widgetContainer > div {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-}
 #sketchContainer #sketchHolder .deviceBackground .deviceScreenBackground .deviceScreen .deviceHolder #pageNavigationControl {
   z-index: 1;
   position: absolute;
@@ -19488,4 +19454,47 @@
 }
 #sketchContainer #sketchHolder .deviceBackground .deviceScreenBackground .deviceScreen #widgetTextHolder #widgetText {
   position: absolute;
+}
+#sketchContainer #sketchHolder .pageHolder {
+  z-index: 0;
+  position: absolute;
+  top: 0px !important;
+  left: 0px !important;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  color: #000;
+  visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -moz-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  -moz-transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+#sketchContainer #sketchHolder .pageHolder.currentPage {
+  visibility: visible;
+}
+#sketchContainer #sketchHolder .pageHolder .sketchWidget {
+  position: absolute;
+}
+#sketchContainer #sketchHolder .pageHolder .sketchWidget.widgetHover {
+  -moz-box-shadow: 3px 3px 5px 6px rgba(0, 0, 0, 0.4);
+  -webkit-box-shadow: 3px 3px 5px 6px rgba(0, 0, 0, 0.4);
+  box-shadow: 3px 3px 5px 6px rgba(0, 0, 0, 0.4);
+}
+#sketchContainer #sketchHolder .pageHolder .sketchWidget.widgetIncludeAnchor .widgetContainer {
+  position: absolute;
+  width: 100% !important;
+  height: 100% !important;
+  background: transparent !important;
+}
+#sketchContainer #sketchHolder .pageHolder .sketchWidget.widgetIncludeAnchor .widgetContainer > div {
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }

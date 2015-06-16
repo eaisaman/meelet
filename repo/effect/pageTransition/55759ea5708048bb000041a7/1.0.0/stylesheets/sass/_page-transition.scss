@@ -7,9 +7,23 @@
             &.forward {
                 &.currentPage {
                     @extend %_effect_pageTransition_moveToLeft;
+                    z-index: 1;
 
                     & + .pageHolder {
+                        visibility: visible;
                         @extend %_effect_pageTransition_moveFromRight;
+                    }
+                }
+            }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveFromLeft;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveToRight;
                     }
                 }
             }
@@ -18,29 +32,75 @@
         &[effect=moveToRight] {
             &.forward {
                 &.currentPage {
+                    z-index: 1;
                     @extend %_effect_pageTransition_moveToRight;
+
+                    & + .pageHolder {
+                        visibility: visible;
+                        @extend %_effect_pageTransition_moveFromLeft;
+                    }
                 }
-                & + .pageHolder {
-                    @extend %_effect_pageTransition_moveFromLeft;
+            }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveToLeft;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromRight;
+                    }
                 }
             }
         }
+
         &[effect=moveToTop] {
             &.forward {
+                z-index: 1;
                 @extend %_effect_pageTransition_moveToTop;
 
                 & + .pageHolder {
+                    visibility: visible;
                     @extend %_effect_pageTransition_moveFromBottom;
                 }
             }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveToBottom;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromTop;
+                    }
+                }
+            }
         }
+
         &[effect=moveToBottom] {
             &.forward {
                 &.currentPage {
+                    z-index: 1;
                     @extend %_effect_pageTransition_moveToBottom;
                 }
+
                 & + .pageHolder {
+                    visibility: visible;
                     @extend %_effect_pageTransition_moveFromTop;
+                }
+            }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveToTop;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromBottom;
+                    }
                 }
             }
         }
@@ -49,80 +109,207 @@
         &[effect=fadeToLeft] {
             &.forward {
                 &.currentPage {
+                    z-index: 1;
                     @extend %_effect_pageTransition_fade;
                 }
+
                 & + .pageHolder {
+                    visibility: visible;
                     @extend %_effect_pageTransition_moveFromRight;
                 }
             }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_fade;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromLeft;
+                    }
+                }
+            }
         }
+
         &[effect=fadeToRight] {
             &.forward {
                 &.currentPage {
+                    z-index: 1;
                     @extend %_effect_pageTransition_fade;
                 }
+
                 & + .pageHolder {
+                    visibility: visible;
                     @extend %_effect_pageTransition_moveFromLeft;
                 }
             }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_fade;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromRight;
+                    }
+                }
+            }
         }
+
         &[effect=fadeToTop] {
             &.forward {
                 &.currentPage {
+                    z-index: 1;
                     @extend %_effect_pageTransition_fade;
                 }
+
                 & + .pageHolder {
+                    visibility: visible;
                     @extend %_effect_pageTransition_moveFromBottom;
                 }
             }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_fade;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromTop;
+                    }
+                }
+            }
         }
+
         &[effect=fadeToBottom] {
             &.forward {
                 &.currentPage {
+                    z-index: 1;
                     @extend %_effect_pageTransition_fade;
                 }
+
                 & + .pageHolder {
+                    visibility: visible;
                     @extend %_effect_pageTransition_moveFromTop;
                 }
             }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_fade;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromBottom;
+                    }
+                }
+            }
         }
+
         &[effect=fadeLeftFadeRight] {
             &.forward {
                 &.currentPage {
+                    z-index: 1;
                     @extend %_effect_pageTransition_moveToLeftFade;
                 }
+
                 & + .pageHolder {
+                    visibility: visible;
                     @extend %_effect_pageTransition_moveFromRightFade;
                 }
             }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveToRightFade;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromLeftFade;
+                    }
+                }
+            }
         }
+
         &[effect=fadeRightFadeLeft] {
             &.forward {
                 &.currentPage {
+                    z-index: 1;
                     @extend %_effect_pageTransition_moveToRightFade;
                 }
+
                 & + .pageHolder {
+                    visibility: visible;
                     @extend %_effect_pageTransition_moveFromLeftFade;
                 }
             }
-        }
-        &[effect=fadeTopFadeBottom] {
-            &.forward {
-                &.currentPage {
-                    @extend %_effect_pageTransition_moveToTopFade;
-                }
-                & + .pageHolder {
-                    @extend %_effect_pageTransition_moveFromBottomFade;
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveToLeftFade;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromRightFade;
+                    }
                 }
             }
         }
+
+        &[effect=fadeTopFadeBottom] {
+            &.forward {
+                &.currentPage {
+                    z-index: 1;
+                    @extend %_effect_pageTransition_moveToTopFade;
+                }
+
+                & + .pageHolder {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveFromBottomFade;
+                }
+            }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveToBottomFade;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromTopFade;
+                    }
+                }
+            }
+        }
+
         &[effect=fadeBottomFadeTop] {
             &.forward {
                 &.currentPage {
+                    z-index: 1;
                     @extend %_effect_pageTransition_moveToBottomFade;
                 }
+
                 & + .pageHolder {
+                    visibility: visible;
                     @extend %_effect_pageTransition_moveFromTopFade;
+                }
+            }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveToTopFade;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromBottomFade;
+                    }
                 }
             }
         }
@@ -131,40 +318,103 @@
         &[effect=easingToLeft] {
             &.forward {
                 &.currentPage {
+                    z-index: 1;
                     @extend %_effect_pageTransition_moveToLeftEasing;
                 }
+
                 & + .pageHolder {
+                    visibility: visible;
                     @extend %_effect_pageTransition_moveFromRight;
                 }
             }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveToRightEasing;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromLeft;
+                    }
+                }
+            }
         }
+
         &[effect=easingToRight] {
             &.forward {
                 &.currentPage {
+                    z-index: 1;
                     @extend %_effect_pageTransition_moveToRightEasing;
                 }
+
                 & + .pageHolder {
+                    visibility: visible;
                     @extend %_effect_pageTransition_moveFromLeft;
                 }
             }
-        }
-        &[effect=easingToTop] {
-            &.forward {
-                &.currentPage {
-                    @extend %_effect_pageTransition_moveToTopEasing;
-                }
-                & + .pageHolder {
-                    @extend %_effect_pageTransition_moveFromBottom;
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveToLeftEasing;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromRight;
+                    }
                 }
             }
         }
+
+        &[effect=easingToTop] {
+            &.forward {
+                &.currentPage {
+                    z-index: 1;
+                    @extend %_effect_pageTransition_moveToTopEasing;
+                }
+
+                & + .pageHolder {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveFromBottom;
+                }
+            }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveToBottomEasing;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromTop;
+                    }
+                }
+            }
+        }
+
         &[effect=easingToBottom] {
             &.forward {
                 &.currentPage {
+                    z-index: 1;
                     @extend %_effect_pageTransition_moveToBottomEasing;
                 }
+
                 & + .pageHolder {
+                    visibility: visible;
                     @extend %_effect_pageTransition_moveFromTop;
+                }
+            }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveToTopEasing;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromBottom;
+                    }
                 }
             }
         }
@@ -173,113 +423,291 @@
         &[effect=scaleDownMoveToLeft] {
             &.forward {
                 &.currentPage {
+                    z-index: 1;
                     @extend %_effect_pageTransition_scaleDown;
                 }
+
                 & + .pageHolder {
+                    visibility: visible;
                     @extend %_effect_pageTransition_moveFromRight;
                 }
             }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_scaleDown;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromLeft;
+                    }
+                }
+            }
         }
+
         &[effect=scaleDownMoveToRight] {
             &.forward {
                 &.currentPage {
+                    z-index: 1;
                     @extend %_effect_pageTransition_scaleDown;
                 }
+
                 & + .pageHolder {
+                    visibility: visible;
                     @extend %_effect_pageTransition_moveFromLeft;
                 }
             }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_scaleDown;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromRight;
+                    }
+                }
+            }
         }
+
         &[effect=scaleDownMoveToTop] {
             &.forward {
                 &.currentPage {
+                    z-index: 1;
                     @extend %_effect_pageTransition_scaleDown;
                 }
+
                 & + .pageHolder {
+                    visibility: visible;
                     @extend %_effect_pageTransition_moveFromBottom;
                 }
             }
-        }
-        &[effect=scaleDownMoveToBottom] {
-            &.forward {
-                &.currentPage {
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
                     @extend %_effect_pageTransition_scaleDown;
-                }
-                & + .pageHolder {
-                    @extend %_effect_pageTransition_moveFromTop;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromTop;
+                    }
                 }
             }
         }
+
+        &[effect=scaleDownMoveToBottom] {
+            &.forward {
+                &.currentPage {
+                    z-index: 1;
+                    @extend %_effect_pageTransition_scaleDown;
+                }
+
+                & + .pageHolder {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveFromTop;
+                }
+            }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_scaleDown;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromBottom;
+                    }
+                }
+            }
+        }
+
         &[effect=scaleDown] {
             &.forward {
                 &.currentPage {
+                    z-index: 1;
                     @extend %_effect_pageTransition_scaleDown;
                 }
+
                 & + .pageHolder {
+                    visibility: visible;
                     @extend %_effect_pageTransition_scaleUpDown;
                     @include animation-delay(.3s);
                 }
             }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_scaleDownUp;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_scaleUp;
+                        @include animation-delay(.3s);
+                    }
+                }
+            }
         }
+
         &[effect=scaleUp] {
             &.forward {
                 &.currentPage {
+                    z-index: 1;
                     @extend %_effect_pageTransition_scaleDownUp;
                 }
+
                 & + .pageHolder {
+                    visibility: visible;
                     @extend %_effect_pageTransition_scaleUp;
                     @include animation-delay(.3s);
                 }
             }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_scaleDown;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_scaleUpDown;
+                        @include animation-delay(.3s);
+                    }
+                }
+            }
         }
+
         &[effect=moveToLeftScaleUp] {
             &.forward {
                 &.currentPage {
+                    z-index: 1;
                     @extend %_effect_pageTransition_moveToLeft;
                 }
+
                 & + .pageHolder {
+                    visibility: visible;
                     @extend %_effect_pageTransition_scaleUp;
                 }
             }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_scaleDown;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveToRight;
+                    }
+                }
+            }
         }
+
         &[effect=moveToRightScaleUp] {
             &.forward {
                 &.currentPage {
+                    z-index: 1;
                     @extend %_effect_pageTransition_moveToRight;
                 }
+
                 & + .pageHolder {
+                    visibility: visible;
                     @extend %_effect_pageTransition_scaleUp;
                 }
             }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_scaleDown;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveToLeft;
+                    }
+                }
+            }
         }
+
         &[effect=moveToBottomScaleUp] {
             &.forward {
                 &.currentPage {
+                    z-index: 1;
                     @extend %_effect_pageTransition_moveToBottom;
                 }
+
                 & + .pageHolder {
+                    visibility: visible;
                     @extend %_effect_pageTransition_scaleUp;
                 }
             }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_scaleDown;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveToTop;
+                    }
+                }
+            }
         }
+
         &[effect=moveToTopScaleUp] {
             &.forward {
                 &.currentPage {
+                    z-index: 1;
                     @extend %_effect_pageTransition_moveToTop;
                 }
+
                 & + .pageHolder {
+                    visibility: visible;
                     @extend %_effect_pageTransition_scaleUp;
                 }
             }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_scaleDown;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveToBottom;
+                    }
+                }
+            }
         }
+
         &[effect=scaleDownScaleUp] {
             &.forward {
                 &.currentPage {
+                    z-index: 1;
                     @extend %_effect_pageTransition_scaleDownCenter;
                 }
+
                 & + .pageHolder {
+                    visibility: visible;
                     @extend %_effect_pageTransition_scaleUpCenter;
                     @include animation-delay(.4s);
+                }
+            }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_scaleUpCenter;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_scaleDownCenter;
+                        @include animation-delay(.4s);
+                    }
                 }
             }
         }
@@ -289,48 +717,111 @@
         &[effect=glueLeftMoveFromRight] {
             &.forward {
                 &.currentPage {
+                    z-index: 1;
                     @extend %_effect_pageTransition_rotateRightSideFirst;
                     @include transform-origin(0% 50%);
                 }
+
                 & + .pageHolder {
+                    visibility: visible;
                     @extend %_effect_pageTransition_moveFromRight;
                     @include animation-delay(.2s);
                 }
             }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveToTopEasing;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromBottom;
+                    }
+                }
+            }
         }
+
         &[effect=glueRightMoveFromLeft] {
             &.forward {
                 &.currentPage {
+                    z-index: 1;
                     @extend %_effect_pageTransition_rotateLeftSideFirst;
                     @include transform-origin(100% 50%);
                 }
+
                 & + .pageHolder {
+                    visibility: visible;
                     @extend %_effect_pageTransition_moveFromLeft;
                     @include animation-delay(.2s);
                 }
             }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveToTopEasing;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromBottom;
+                    }
+                }
+            }
         }
+
         &[effect=glueBottomMoveFromTop] {
             &.forward {
                 &.currentPage {
+                    z-index: 1;
                     @extend %_effect_pageTransition_rotateTopSideFirst;
                     @include transform-origin(50% 100%);
                 }
+
                 & + .pageHolder {
+                    visibility: visible;
                     @extend %_effect_pageTransition_moveFromTop;
                     @include animation-delay(.2s);
                 }
             }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveToTopEasing;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromBottom;
+                    }
+                }
+            }
         }
+
         &[effect=glueTopMoveFromBottom] {
             &.forward {
                 &.currentPage {
+                    z-index: 1;
                     @extend %_effect_pageTransition_rotateBottomSideFirst;
                     @include transform-origin(50% 0%);
                 }
+
                 & + .pageHolder {
+                    visibility: visible;
                     @extend %_effect_pageTransition_moveFromBottom;
                     @include animation-delay(.2s);
+                }
+            }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveToTopEasing;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromBottom;
+                    }
                 }
             }
         }
@@ -339,52 +830,115 @@
         &[effect=flipRight] {
             &.forward {
                 &.currentPage {
+                    z-index: 1;
                     @extend %_effect_pageTransition_flipOutRight;
                     @include transform-origin(50% 50%);
                 }
+
                 & + .pageHolder {
+                    visibility: visible;
                     @extend %_effect_pageTransition_flipInLeft;
                     @include transform-origin(50% 50%);
                     @include animation-delay(.5s);
                 }
             }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveToTopEasing;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromBottom;
+                    }
+                }
+            }
         }
+
         &[effect=flipLeft] {
             &.forward {
                 &.currentPage {
+                    z-index: 1;
                     @extend %_effect_pageTransition_flipOutLeft;
                     @include transform-origin(50% 50%);
                 }
+
                 & + .pageHolder {
+                    visibility: visible;
                     @extend %_effect_pageTransition_flipInRight;
                     @include transform-origin(50% 50%);
                     @include animation-delay(.5s);
                 }
             }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveToTopEasing;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromBottom;
+                    }
+                }
+            }
         }
+
         &[effect=flipTop] {
             &.forward {
                 &.currentPage {
+                    z-index: 1;
                     @extend %_effect_pageTransition_flipOutTop;
                     @include transform-origin(50% 50%);
                 }
+
                 & + .pageHolder {
+                    visibility: visible;
                     @extend %_effect_pageTransition_flipInBottom;
                     @include transform-origin(50% 50%);
                     @include animation-delay(.5s);
                 }
             }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveToTopEasing;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromBottom;
+                    }
+                }
+            }
         }
+
         &[effect=flipBottom] {
             &.forward {
                 &.currentPage {
+                    z-index: 1;
                     @extend %_effect_pageTransition_flipOutBottom;
                     @include transform-origin(50% 50%);
                 }
+
                 & + .pageHolder {
+                    visibility: visible;
                     @extend %_effect_pageTransition_flipInTop;
                     @include transform-origin(50% 50%);
                     @include animation-delay(.5s);
+                }
+            }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveToTopEasing;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromBottom;
+                    }
                 }
             }
         }
@@ -393,11 +947,26 @@
         &[effect=fall] {
             &.forward {
                 &.currentPage {
+                    z-index: 1;
                     @extend %_effect_pageTransition_rotateFall;
                     @include transform-origin(0% 0%);
                 }
+
                 & + .pageHolder {
+                    visibility: visible;
                     @extend %_effect_pageTransition_scaleUp;
+                }
+            }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveToTopEasing;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromBottom;
+                    }
                 }
             }
         }
@@ -406,13 +975,28 @@
         &[effect=newspaper] {
             &.forward {
                 &.currentPage {
+                    z-index: 1;
                     @extend %_effect_pageTransition_rotateOutNewspaper;
                     @include transform-origin(50% 50%);
                 }
+
                 & + .pageHolder {
+                    visibility: visible;
                     @extend %_effect_pageTransition_rotateInNewspaper;
                     @include transform-origin(50% 50%);
                     @include animation-delay(.5s);
+                }
+            }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveToTopEasing;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromBottom;
+                    }
                 }
             }
         }
@@ -421,96 +1005,223 @@
         &[effect=pushLeftMoveFromRight] {
             &.forward {
                 &.currentPage {
+                    z-index: 1;
                     @extend %_effect_pageTransition_rotatePushLeft;
                     @include transform-origin(0% 50%);
                 }
+
                 & + .pageHolder {
+                    visibility: visible;
                     @extend %_effect_pageTransition_moveFromRight;
                 }
             }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveToTopEasing;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromBottom;
+                    }
+                }
+            }
         }
+
         &[effect=pushRightMoveFromLeft] {
             &.forward {
                 &.currentPage {
+                    z-index: 1;
                     @extend %_effect_pageTransition_rotatePushRight;
                     @include transform-origin(100% 50%);
                 }
+
                 & + .pageHolder {
+                    visibility: visible;
                     @extend %_effect_pageTransition_moveFromLeft;
                 }
             }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveToTopEasing;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromBottom;
+                    }
+                }
+            }
         }
+
         &[effect=pushTopMoveFromBottom] {
             &.forward {
                 &.currentPage {
+                    z-index: 1;
                     @extend %_effect_pageTransition_rotatePushTop;
                     @include transform-origin(50% 0%);
                 }
+
                 & + .pageHolder {
+                    visibility: visible;
                     @extend %_effect_pageTransition_moveFromBottom;
                 }
             }
-        }
-        &[effect=pushBottomMoveFromTop] {
-            &.forward {
-                &.currentPage {
-                    @extend %_effect_pageTransition_rotatePushBottom;
-                    @include transform-origin(50% 100%);
-                }
-                & + .pageHolder {
-                    @extend %_effect_pageTransition_moveFromTop;
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveToTopEasing;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromBottom;
+                    }
                 }
             }
         }
+
+        &[effect=pushBottomMoveFromTop] {
+            &.forward {
+                &.currentPage {
+                    z-index: 1;
+                    @extend %_effect_pageTransition_rotatePushBottom;
+                    @include transform-origin(50% 100%);
+                }
+
+                & + .pageHolder {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveFromTop;
+                }
+            }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveToTopEasing;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromBottom;
+                    }
+                }
+            }
+        }
+
         &[effect=pushLeftPullRight] {
             &.forward {
                 &.currentPage {
+                    z-index: 1;
                     @extend %_effect_pageTransition_rotatePushLeft;
                     @include transform-origin(0% 50%);
                 }
+
                 & + .pageHolder {
+                    visibility: visible;
                     @extend %_effect_pageTransition_rotatePullRight;
                     @include transform-origin(100% 50%);
                     @include animation-delay(.2s);
                 }
             }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveToTopEasing;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromBottom;
+                    }
+                }
+            }
         }
+
         &[effect=pushRightPullLeft] {
             &.forward {
                 &.currentPage {
+                    z-index: 1;
                     @extend %_effect_pageTransition_rotatePushRight;
                     @include transform-origin(100% 50%);
                 }
+
                 & + .pageHolder {
+                    visibility: visible;
                     @extend %_effect_pageTransition_rotatePullLeft;
                     @include transform-origin(0% 50%);
                     @include animation-delay(.2s);
                 }
             }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveToTopEasing;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromBottom;
+                    }
+                }
+            }
         }
+
         &[effect=pushTopPullBottom] {
             &.forward {
                 &.currentPage {
+                    z-index: 1;
                     @extend %_effect_pageTransition_rotatePushTop;
                     @include transform-origin(50% 0%);
                 }
+
                 & + .pageHolder {
+                    visibility: visible;
                     @extend %_effect_pageTransition_rotatePullBottom;
                     @include transform-origin(50% 100%);
                     @include animation-delay(.2s);
                 }
             }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveToTopEasing;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromBottom;
+                    }
+                }
+            }
         }
+
         &[effect=pushBottomPullTop] {
             &.forward {
                 &.currentPage {
+                    z-index: 1;
                     @extend %_effect_pageTransition_rotatePushBottom;
                     @include transform-origin(50% 100%);
                 }
+
                 & + .pageHolder {
+                    visibility: visible;
                     @extend %_effect_pageTransition_rotatePullTop;
                     @include transform-origin(50% 0%);
                     @include animation-delay(.2s);
+                }
+            }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveToTopEasing;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromBottom;
+                    }
                 }
             }
         }
@@ -519,265 +1230,606 @@
         &[effect=foldLeftMoveFromRight] {
             &.forward {
                 &.currentPage {
+                    z-index: 1;
                     @extend %_effect_pageTransition_rotateFoldLeft;
                     @include transform-origin(100% 50%);
                 }
+
                 & + .pageHolder {
+                    visibility: visible;
                     @extend %_effect_pageTransition_moveFromRightFade;
                 }
             }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveToTopEasing;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromBottom;
+                    }
+                }
+            }
         }
+
         &[effect=foldRightMoveFromLeft] {
             &.forward {
                 &.currentPage {
+                    z-index: 1;
                     @extend %_effect_pageTransition_rotateFoldRight;
                     @include transform-origin(0% 50%);
                 }
+
                 & + .pageHolder {
+                    visibility: visible;
                     @extend %_effect_pageTransition_moveFromLeftFade;
                 }
             }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveToTopEasing;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromBottom;
+                    }
+                }
+            }
         }
+
         &[effect=foldTopMoveFromBottom] {
             &.forward {
                 &.currentPage {
+                    z-index: 1;
                     @extend %_effect_pageTransition_rotateFoldTop;
                     @include transform-origin(50% 100%);
                 }
+
                 & + .pageHolder {
+                    visibility: visible;
                     @extend %_effect_pageTransition_moveFromBottomFade;
                 }
             }
-        }
-        &[effect=foldBottomMoveFromTop] {
-            &.forward {
-                &.currentPage {
-                    @extend %_effect_pageTransition_rotateFoldBottom;
-                    @include transform-origin(50% 0%);
-                }
-                & + .pageHolder {
-                    @extend %_effect_pageTransition_moveFromTopFade;
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveToTopEasing;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromBottom;
+                    }
                 }
             }
         }
+
+        &[effect=foldBottomMoveFromTop] {
+            &.forward {
+                &.currentPage {
+                    z-index: 1;
+                    @extend %_effect_pageTransition_rotateFoldBottom;
+                    @include transform-origin(50% 0%);
+                }
+
+                & + .pageHolder {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveFromTopFade;
+                }
+            }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveToTopEasing;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromBottom;
+                    }
+                }
+            }
+        }
+
         &[effect=moveToRightUnfoldLeft] {
             &.forward {
                 &.currentPage {
+                    z-index: 1;
                     @extend %_effect_pageTransition_moveToRightFade;
                 }
+
                 & + .pageHolder {
+                    visibility: visible;
                     @extend %_effect_pageTransition_rotateUnfoldLeft;
                     @include transform-origin(100% 50%);
                 }
             }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveToTopEasing;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromBottom;
+                    }
+                }
+            }
         }
+
         &[effect=moveToLeftUnfoldRight] {
             &.forward {
                 &.currentPage {
+                    z-index: 1;
                     @extend %_effect_pageTransition_moveToLeftFade;
                 }
+
                 & + .pageHolder {
+                    visibility: visible;
                     @extend %_effect_pageTransition_rotateUnfoldRight;
                     @include transform-origin(0% 50%);
                 }
             }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveToTopEasing;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromBottom;
+                    }
+                }
+            }
         }
+
         &[effect=moveToBottomUnfoldTop] {
             &.forward {
                 &.currentPage {
+                    z-index: 1;
                     @extend %_effect_pageTransition_moveToBottomFade;
                 }
+
                 & + .pageHolder {
+                    visibility: visible;
                     @extend %_effect_pageTransition_rotateUnfoldTop;
                     @include transform-origin(50% 100%);
                 }
             }
-            &[effect=moveToTopUnfoldBottom] {
-                &.forward {
-                    &.currentPage {
-                        @extend %_effect_pageTransition_moveToTopFade;
-                    }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveToTopEasing;
+
                     & + .pageHolder {
-                        @extend %_effect_pageTransition_rotateUnfoldBottom;
-                        @include transform-origin(50% 0%);
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromBottom;
                     }
+                }
+            }
+        }
+
+        &[effect=moveToTopUnfoldBottom] {
+            &.forward {
+                &.currentPage {
+                    z-index: 1;
+                    @extend %_effect_pageTransition_moveToTopFade;
+                }
+
+                & + .pageHolder {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_rotateUnfoldBottom;
+                    @include transform-origin(50% 0%);
                 }
             }
 
-            ////Room
-            &[effect=roomToLeft] {
-                &.forward {
-                    &.currentPage {
-                        @extend %_effect_pageTransition_rotateRoomLeftOut;
-                        @include transform-origin(100% 50%);
-                    }
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveToTopEasing;
+
                     & + .pageHolder {
-                        @extend %_effect_pageTransition_rotateRoomLeftIn;
-                        @include transform-origin(0% 50%);
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromBottom;
                     }
                 }
             }
-            &[effect=roomToRight] {
-                &.forward {
-                    &.currentPage {
-                        @extend %_effect_pageTransition_rotateRoomRightOut;
-                        @include transform-origin(0% 50%);
-                    }
-                    & + .pageHolder {
-                        @extend %_effect_pageTransition_rotateRoomRightIn;
-                        @include transform-origin(100% 50%);
-                    }
+        }
+
+        ////Room
+        &[effect=roomToLeft] {
+            &.forward {
+                &.currentPage {
+                    z-index: 1;
+                    @extend %_effect_pageTransition_rotateRoomLeftOut;
+                    @include transform-origin(100% 50%);
                 }
-            }
-            &[effect=roomToTop] {
-                &.forward {
-                    &.currentPage {
-                        @extend %_effect_pageTransition_rotateRoomTopOut;
-                        @include transform-origin(50% 100%);
-                    }
-                    & + .pageHolder {
-                        @extend %_effect_pageTransition_rotateRoomTopIn;
-                        @include transform-origin(50% 0%);
-                    }
-                }
-            }
-            &[effect=roomToBottom] {
-                &.forward {
-                    &.currentPage {
-                        @extend %_effect_pageTransition_rotateRoomBottomOut;
-                        @include transform-origin(50% 0%);
-                    }
-                    & + .pageHolder {
-                        @extend %_effect_pageTransition_rotateRoomBottomIn;
-                        @include transform-origin(50% 100%);
-                    }
+
+                & + .pageHolder {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_rotateRoomLeftIn;
+                    @include transform-origin(0% 50%);
                 }
             }
 
-            ////Cube
-            &[effect=cubeToLeft] {
-                &.forward {
-                    &.currentPage {
-                        @extend %_effect_pageTransition_rotateCubeLeftOut;
-                        @include transform-origin(100% 50%);
-                    }
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveToTopEasing;
+
                     & + .pageHolder {
-                        @extend %_effect_pageTransition_rotateCubeLeftIn;
-                        @include transform-origin(0% 50%);
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromBottom;
                     }
                 }
             }
-            &[effect=cubeToRight] {
-                &.forward {
-                    &.currentPage {
-                        @extend %_effect_pageTransition_rotateCubeRightOut;
-                        @include transform-origin(0% 50%);
-                    }
-                    & + .pageHolder {
-                        @extend %_effect_pageTransition_rotateCubeRightIn;
-                        @include transform-origin(100% 50%);
-                    }
+        }
+
+        &[effect=roomToRight] {
+            &.forward {
+                &.currentPage {
+                    z-index: 1;
+                    @extend %_effect_pageTransition_rotateRoomRightOut;
+                    @include transform-origin(0% 50%);
                 }
-            }
-            &[effect=cubeToTop] {
-                &.forward {
-                    &.currentPage {
-                        @extend %_effect_pageTransition_rotateCubeTopOut;
-                        @include transform-origin(50% 100%);
-                    }
-                    & + .pageHolder {
-                        @extend %_effect_pageTransition_rotateCubeTopIn;
-                        @include transform-origin(50% 0%);
-                    }
-                }
-            }
-            &[effect=cubeToBottom] {
-                &.forward {
-                    &.currentPage {
-                        @extend %_effect_pageTransition_rotateCubeBottomOut;
-                        @include transform-origin(50% 0%);
-                    }
-                    & + .pageHolder {
-                        @extend %_effect_pageTransition_rotateCubeBottomIn;
-                        @include transform-origin(50% 100%);
-                    }
+
+                & + .pageHolder {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_rotateRoomRightIn;
+                    @include transform-origin(100% 50%);
                 }
             }
 
-            ////Carousel
-            &[effect=carouselToLeft] {
-                &.forward {
-                    &.currentPage {
-                        @extend %_effect_pageTransition_rotateCarouselLeftOut;
-                        @include transform-origin(100% 50%);
-                    }
-                    & + .pageHolder {
-                        @extend %_effect_pageTransition_rotateCarouselLeftIn;
-                        @include transform-origin(0% 50%);
-                    }
-                }
-            }
-            &[effect=carouselToRight] {
-                &.forward {
-                    &.currentPage {
-                        @extend %_effect_pageTransition_rotateCarouselRightOut;
-                        @include transform-origin(0% 50%);
-                    }
-                    & + .pageHolder {
-                        @extend %_effect_pageTransition_rotateCarouselRightIn;
-                        @include transform-origin(100% 50%);
-                    }
-                }
-            }
-            &[effect=carouselToTop] {
-                &.forward {
-                    &.currentPage {
-                        @extend %_effect_pageTransition_rotateCarouselTopOut;
-                        @include transform-origin(50% 100%);
-                    }
-                    & + .pageHolder {
-                        @extend %_effect_pageTransition_rotateCarouselTopIn;
-                        @include transform-origin(50% 0%);
-                    }
-                }
-            }
-            &[effect=carouselToBottom] {
-                &.forward {
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveToTopEasing;
 
-                    &.currentPage {
-                        @extend %_effect_pageTransition_rotateCarouselBottomOut;
-                        @include transform-origin(50% 0%);
-                    }
                     & + .pageHolder {
-                        @extend %_effect_pageTransition_rotateCarouselBottomIn;
-                        @include transform-origin(50% 100%);
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromBottom;
                     }
+                }
+            }
+        }
+        &[effect=roomToTop] {
+            &.forward {
+                &.currentPage {
+                    z-index: 1;
+                    @extend %_effect_pageTransition_rotateRoomTopOut;
+                    @include transform-origin(50% 100%);
+                }
+
+                & + .pageHolder {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_rotateRoomTopIn;
+                    @include transform-origin(50% 0%);
                 }
             }
 
-            ////sides
-            &[effect=sides] {
-                &.forward {
-                    &.currentPage {
-                        @extend %_effect_pageTransition_rotateSidesOut;
-                        @include transform-origin(-50% 50%);
-                    }
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveToTopEasing;
+
                     & + .pageHolder {
-                        @extend %_effect_pageTransition_rotateSidesIn;
-                        @include transform-origin(150% 50%);
-                        @include animation-delay(.2s);
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromBottom;
                     }
                 }
             }
+        }
+        &[effect=roomToBottom] {
+            &.forward {
+                &.currentPage {
+                    z-index: 1;
+                    @extend %_effect_pageTransition_rotateRoomBottomOut;
+                    @include transform-origin(50% 0%);
+                }
 
-            //slide
-            &[effect=slide] {
-                &.forward {
-                    &.currentPage {
-                        @extend %_effect_pageTransition_rotateSlideOut;
-                    }
+                & + .pageHolder {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_rotateRoomBottomIn;
+                    @include transform-origin(50% 100%);
+                }
+            }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveToTopEasing;
+
                     & + .pageHolder {
-                        @extend %_effect_pageTransition_rotateSlideIn;
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromBottom;
+                    }
+                }
+            }
+        }
+
+        ////Cube
+        &[effect=cubeToLeft] {
+            &.forward {
+                &.currentPage {
+                    z-index: 1;
+                    @extend %_effect_pageTransition_rotateCubeLeftOut;
+                    @include transform-origin(100% 50%);
+                }
+
+                & + .pageHolder {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_rotateCubeLeftIn;
+                    @include transform-origin(0% 50%);
+                }
+            }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveToTopEasing;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromBottom;
+                    }
+                }
+            }
+        }
+
+        &[effect=cubeToRight] {
+            &.forward {
+                &.currentPage {
+                    z-index: 1;
+                    @extend %_effect_pageTransition_rotateCubeRightOut;
+                    @include transform-origin(0% 50%);
+                }
+
+                & + .pageHolder {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_rotateCubeRightIn;
+                    @include transform-origin(100% 50%);
+                }
+            }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveToTopEasing;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromBottom;
+                    }
+                }
+            }
+        }
+        &[effect=cubeToTop] {
+            &.forward {
+                &.currentPage {
+                    z-index: 1;
+                    @extend %_effect_pageTransition_rotateCubeTopOut;
+                    @include transform-origin(50% 100%);
+                }
+
+                & + .pageHolder {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_rotateCubeTopIn;
+                    @include transform-origin(50% 0%);
+                }
+            }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveToTopEasing;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromBottom;
+                    }
+                }
+            }
+        }
+        &[effect=cubeToBottom] {
+            &.forward {
+                &.currentPage {
+                    z-index: 1;
+                    @extend %_effect_pageTransition_rotateCubeBottomOut;
+                    @include transform-origin(50% 0%);
+                }
+
+                & + .pageHolder {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_rotateCubeBottomIn;
+                    @include transform-origin(50% 100%);
+                }
+            }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveToTopEasing;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromBottom;
+                    }
+                }
+            }
+        }
+
+        ////Carousel
+        &[effect=carouselToLeft] {
+            &.forward {
+                &.currentPage {
+                    z-index: 1;
+                    @extend %_effect_pageTransition_rotateCarouselLeftOut;
+                    @include transform-origin(100% 50%);
+                }
+
+                & + .pageHolder {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_rotateCarouselLeftIn;
+                    @include transform-origin(0% 50%);
+                }
+            }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveToTopEasing;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromBottom;
+                    }
+                }
+            }
+        }
+
+        &[effect=carouselToRight] {
+            &.forward {
+                &.currentPage {
+                    z-index: 1;
+                    @extend %_effect_pageTransition_rotateCarouselRightOut;
+                    @include transform-origin(0% 50%);
+                }
+
+                & + .pageHolder {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_rotateCarouselRightIn;
+                    @include transform-origin(100% 50%);
+                }
+            }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveToTopEasing;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromBottom;
+                    }
+                }
+            }
+        }
+
+        &[effect=carouselToTop] {
+            &.forward {
+                &.currentPage {
+                    z-index: 1;
+                    @extend %_effect_pageTransition_rotateCarouselTopOut;
+                    @include transform-origin(50% 100%);
+                }
+
+                & + .pageHolder {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_rotateCarouselTopIn;
+                    @include transform-origin(50% 0%);
+                }
+            }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveToTopEasing;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromBottom;
+                    }
+                }
+            }
+        }
+
+        &[effect=carouselToBottom] {
+            &.forward {
+                &.currentPage {
+                    z-index: 1;
+                    @extend %_effect_pageTransition_rotateCarouselBottomOut;
+                    @include transform-origin(50% 0%);
+                }
+
+                & + .pageHolder {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_rotateCarouselBottomIn;
+                    @include transform-origin(50% 100%);
+                }
+            }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveToTopEasing;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromBottom;
+                    }
+                }
+            }
+        }
+
+        ////sides
+        &[effect=sides] {
+            &.forward {
+                &.currentPage {
+                    z-index: 1;
+                    @extend %_effect_pageTransition_rotateSidesOut;
+                    @include transform-origin(-50% 50%);
+                }
+
+                & + .pageHolder {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_rotateSidesIn;
+                    @include transform-origin(150% 50%);
+                    @include animation-delay(.2s);
+                }
+            }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveToTopEasing;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromBottom;
+                    }
+                }
+            }
+        }
+
+        //slide
+        &[effect=slide] {
+            &.forward {
+                &.currentPage {
+                    z-index: 1;
+                    @extend %_effect_pageTransition_rotateSlideOut;
+                }
+
+                & + .pageHolder {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_rotateSlideIn;
+                }
+            }
+
+            &.backward {
+                &.previousPage {
+                    visibility: visible;
+                    @extend %_effect_pageTransition_moveToTopEasing;
+
+                    & + .pageHolder {
+                        z-index: 1;
+                        @extend %_effect_pageTransition_moveFromBottom;
                     }
                 }
             }

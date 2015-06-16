@@ -35,7 +35,7 @@ define(
                                 scope.toggleModalWindow = function (event) {
                                     event && event.stopPropagation && event.stopPropagation();
 
-                                    if ($rootScope.sketchWidgetSetting == null || $rootScope.sketchWidgetSetting.isPlaying) {
+                                    if ($rootScope.sketchWidgetSetting == null || !$rootScope.sketchWidgetSetting.isPlaying) {
                                         return scope.toggleDisplay('> .md-modal', event).then(function () {
                                             var defer = $q.defer();
                                             $timeout(function () {
