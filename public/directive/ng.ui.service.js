@@ -1227,7 +1227,7 @@ define(
                                 event.srcEvent.stopPropagation && event.srcEvent.stopPropagation();
                             }
 
-                            self.callback && widgetObj.handleEvent(self.callback)();
+                            self.callback && widgetObj.handleEventOnce(self.callback)();
                         });
 
                         self.hammer = mc;
@@ -2020,14 +2020,14 @@ define(
 
                         return cloneObj;
                     },
-                    handleEvent: function (fn) {
+                    handleEventOnce: function (fn) {
                         var self = this;
 
                         return $inject.uiUtilService.once(function () {
                             var result = fn() || {};
 
                             return result.then && result || $inject.uiUtilService.getResolveDefer();
-                        }, null, $inject.angularConstants.eventThrottleInterval, "BaseSketchWidgetClass.handleEvent.{0}".format(self.id));
+                        }, null, $inject.angularConstants.eventThrottleInterval, "BaseSketchWidgetClass.handleEventOnce.{0}".format(self.id));
                     },
                     parent: function () {
                         var self = this,

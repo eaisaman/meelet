@@ -39,7 +39,7 @@ define(
                             /**
                              * Valid states include '*', 'select'.
                              */
-                            state: "=?",
+                            pickedState: "=?",
                             isPlaying: "=?",
                             linkTitle: "=?",
                             stateGroup: "=?",
@@ -70,7 +70,7 @@ define(
                                                     widgetId: scope.widgetId
                                                 });
                                             } else {
-                                                scope.state = scope.state === scope.activeState && "*" || scope.activeState;
+                                                scope.pickedState = scope.pickedState === scope.activeState && "*" || scope.activeState;
                                             }
                                         }
                                     }
@@ -85,9 +85,9 @@ define(
                                                 scope.stateGroupListener = scope.$on(angularConstants.stateGroupEventPattern.format(scope.configuration.stateGroup || scope.stateGroup), function (event, obj) {
                                                     if (obj.widgetId) {
                                                         if (obj.widgetId === scope.widgetId) {
-                                                            scope.state = scope.activeState;
+                                                            scope.pickedState = scope.activeState;
                                                         } else {
-                                                            scope.state = "*";
+                                                            scope.pickedState = "*";
                                                         }
                                                     }
                                                 });
@@ -97,7 +97,7 @@ define(
                                         }
                                     }
 
-                                    scope.state = scope.state || "*";
+                                    scope.pickedState = scope.pickedState || "*";
                                     scope.activeState = scope.activeState || "select";
                                     scope.effect = scope.effect || "brackets";
                                     scope.configuration = {};

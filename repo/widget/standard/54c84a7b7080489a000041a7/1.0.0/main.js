@@ -12,8 +12,8 @@ define(
             },
             template: "app/widget.html",
             configuration: {
-                state: {
-                    name: "State",
+                pickedState: {
+                    name: "Picked State",
                     type: "list",
                     options: [
                         {name: "*", value: "*"},

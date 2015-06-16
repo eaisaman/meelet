@@ -15,12 +15,12 @@ define(
             var self = this,
                 defer = self.$q.defer();
 
-            function handleEvent(widgetId, fn) {
+            function handleEventOnce(widgetId, fn) {
                 return self.uiUtilService.once(function () {
                     var result = fn() || {};
 
                     return result.then && result || self.uiUtilService.getResolveDefer();
-                }, null, self.angularConstants.eventThrottleInterval, "handleEvent.{0}".format(widgetId));
+                }, null, self.angularConstants.eventThrottleInterval, "handleEventOnce.{0}".format(widgetId));
             }
 
             function createWidgetObject(action) {
@@ -33,8 +33,8 @@ define(
                     function (err) {
                         if (!err) {
                             $("#" + action.widgetObj).data("widgetObject", {
-                                handleEvent: function (fn) {
-                                    return handleEvent(action.widgetObj, fn);
+                                handleEventOnce: function (fn) {
+                                    return handleEventOnce(action.widgetObj, fn);
                                 }
                             });
 
@@ -64,7 +64,7 @@ define(
             function doAction(action) {
                 var defer = self.$q.defer();
 
-                handleEvent(action.widgetObj, function () {
+                handleEventOnce(action.widgetObj, function () {
                     return actionHandler(action).then(function () {
                         defer.resolve();
 
@@ -193,7 +193,7 @@ define(
 
             function createActionCallback(actions) {
                 //Some widget may be triggered by hammer gesture and ng mouse event at the same time, which is
-                //to be prevented. A widget object with handleEvent function can stop widget event handling if
+                //to be prevented. A widget object with handleEventOnce function can stop widget event handling if
                 //hammer handling is processed first.
                 actions.forEach(function (action) {
                     createWidgetObject(action.actionObj);

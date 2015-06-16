@@ -7711,6 +7711,7 @@ button.close {
   display: inline-block;
   margin: 0 0.5em;
   color: rgba(0, 0, 0, 0.4);
+  overflow: hidden;
 }
 #appTopBar .topbarButton:active, #appTopBar .topbarMenu:active, #appTopBar .topbarDropdown:active {
   background-color: #555;

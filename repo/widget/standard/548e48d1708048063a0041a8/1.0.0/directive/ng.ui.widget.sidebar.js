@@ -48,7 +48,7 @@ define(
                                         var defer = $q.defer();
 
                                         $timeout(function () {
-                                            if (element.find("._widget_sideBarContainer").hasClass("select")) {
+                                            if (element.find("> ._widget_sideBarContainer").hasClass("select")) {
                                                 scope.state = "select";
                                             } else {
                                                 scope.state = "*";
@@ -69,24 +69,24 @@ define(
                                     function createStateWatch() {
                                         return scope.$watch("state", function (value) {
                                             if (value != null) {
-                                                scope.toggleSelect("._widget_sideBarContainer", null, value === "select");
+                                                scope.toggleSelect("> ._widget_sideBarContainer", null, value === "select");
                                             }
                                         });
                                     }
 
                                     scope.toggleSideBar = function (event) {
                                         function toggleHandler() {
-                                            return scope.toggleSelect("._widget_sideBarContainer", event).then(function () {
+                                            return scope.toggleSelect("> ._widget_sideBarContainer", event).then(function () {
                                                 return checkState();
                                             });
                                         }
 
                                         if (scope.isPlaying == null || scope.isPlaying) {
-                                            var widgetObj = element.closest(".widgetContainer").parent().data("widgetObject");
+                                            var widgetObj = $(event.target).data("widgetObject") || element.closest(".widgetContainer").parent().data("widgetObject");
 
                                             if (widgetObj) {
                                                 return $timeout(function () {
-                                                    widgetObj.handleEvent(toggleHandler)();
+                                                    widgetObj.handleEventOnce(toggleHandler)();
                                                 });
                                             } else {
                                                 return toggleHandler();
@@ -96,17 +96,17 @@ define(
 
                                     scope.hideSideBar = function (event) {
                                         function hideHandler() {
-                                            return scope.toggleSelect("._widget_sideBarContainer", event, false).then(function () {
+                                            return scope.toggleSelect("> ._widget_sideBarContainer", event, false).then(function () {
                                                 return checkState();
                                             });
                                         }
 
                                         if (scope.isPlaying == null || scope.isPlaying) {
-                                            var widgetObj = element.closest(".widgetContainer").parent().data("widgetObject");
+                                            var widgetObj = $(event.target).data("widgetObject") || element.closest(".widgetContainer").parent().data("widgetObject");
 
                                             if (widgetObj) {
                                                 return $timeout(function() {
-                                                    widgetObj.handleEvent(hideHandler)();
+                                                    widgetObj.handleEventOnce(hideHandler)();
                                                 });
                                             } else {
                                                 return hideHandler();

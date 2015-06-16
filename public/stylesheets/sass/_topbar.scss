@@ -24,6 +24,7 @@
             display: inline-block;
             margin: 0 0.5em;
             color: $color;
+            overflow: hidden;
 
             &:active {
                 background-color: #555;
