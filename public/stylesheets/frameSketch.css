@@ -19409,6 +19409,9 @@
   position: relative;
   float: left;
   overflow: hidden;
+  -moz-perspective: 1200px;
+  -webkit-perspective: 1200px;
+  perspective: 1200px;
 }
 #sketchContainer #sketchHolder .deviceBackground .deviceScreenBackground .deviceScreen .deviceHolder #pageNavigationControl {
   z-index: 1;

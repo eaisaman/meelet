@@ -421,6 +421,70 @@
     }
 }
 
+@mixin reverseRotateRightSideFirstKeyframes($keyframe: reverseRotateRightSideFirst) {
+
+    @-webkit-keyframes #{$keyframe} {
+        0% { -webkit-transform: scale(0.8) translateZ(-200px); opacity:0; }
+        60% { -webkit-transform: rotateY(15deg); opacity: .8; -webkit-animation-timing-function: ease-in; }
+    }
+    @-moz-keyframes #{$keyframe} {
+        0% { -moz-transform: scale(0.8) translateZ(-200px); opacity:0; }
+        60% { -moz-transform: rotateY(15deg); opacity: .8; -moz-animation-timing-function: ease-in; }
+    }
+    @keyframes #{$keyframe} {
+        0% { transform: scale(0.8) translateZ(-200px); opacity:0; }
+        60% { transform: rotateY(15deg); opacity: .8; animation-timing-function: ease-in; }
+    }
+}
+
+@mixin reverseRotateLeftSideFirstKeyframes($keyframe: reverseRotateLeftSideFirst) {
+
+    @-webkit-keyframes #{$keyframe} {
+        0% { -webkit-transform: scale(0.8) translateZ(-200px); opacity:0; }
+        60% { -webkit-transform: rotateY(-15deg); opacity: .8; -webkit-animation-timing-function: ease-in; }
+    }
+    @-moz-keyframes #{$keyframe} {
+        0% { -moz-transform: scale(0.8) translateZ(-200px); opacity:0; }
+        60% { -moz-transform: rotateY(-15deg); opacity: .8; -moz-animation-timing-function: ease-in; }
+    }
+    @keyframes #{$keyframe} {
+        0% { transform: scale(0.8) translateZ(-200px); opacity:0; }
+        60% { transform: rotateY(-15deg); opacity: .8; animation-timing-function: ease-in; }
+    }
+}
+
+@mixin reverseRotateTopSideFirstKeyframes($keyframe: reverseRotateTopSideFirst) {
+
+    @-webkit-keyframes #{$keyframe} {
+        0% { -webkit-transform: scale(0.8) translateZ(-200px); opacity:0; }
+        60% { -webkit-transform: rotateX(15deg); opacity: .8; -webkit-animation-timing-function: ease-in; }
+    }
+    @-moz-keyframes #{$keyframe} {
+        0% { -moz-transform: scale(0.8) translateZ(-200px); opacity:0; }
+        60% { -moz-transform: rotateX(15deg); opacity: .8; -moz-animation-timing-function: ease-in; }
+    }
+    @keyframes #{$keyframe} {
+        0% { transform: scale(0.8) translateZ(-200px); opacity:0; }
+        60% { transform: rotateX(15deg); opacity: .8; animation-timing-function: ease-in; }
+    }
+}
+
+@mixin reverseRotateBottomSideFirstKeyframes($keyframe: reverseRotateBottomSideFirst) {
+
+    @-webkit-keyframes #{$keyframe} {
+        0% { -webkit-transform: scale(0.8) translateZ(-200px); opacity:0; }
+        60% { -webkit-transform: rotateX(-15deg); opacity: .8; -webkit-animation-timing-function: ease-in; }
+    }
+    @-moz-keyframes #{$keyframe} {
+        0% { -moz-transform: scale(0.8) translateZ(-200px); opacity:0; }
+        60% { -moz-transform: rotateX(-15deg); opacity: .8; -moz-animation-timing-function: ease-in; }
+    }
+    @keyframes #{$keyframe} {
+        0% { transform: scale(0.8) translateZ(-200px); opacity:0; }
+        60% { transform: rotateX(-15deg); opacity: .8; animation-timing-function: ease-in; }
+    }
+}
+
 @mixin flipOutRightKeyframes($keyframe: flipOutRight) {
 
     @-webkit-keyframes #{$keyframe} {
@@ -550,6 +614,31 @@
     }
 }
 
+@mixin reverseRotateFallKeyframes($keyframe: reverseRotateFall) {
+
+    @-webkit-keyframes #{$keyframe} {
+        0% { -webkit-transform: translateY(100%) rotateZ(17deg); }
+        20% { -webkit-transform: rotateZ(16deg); }
+        40% { -webkit-transform: rotateZ(17deg); }
+        60% { -webkit-transform: rotateZ(10deg); -webkit-animation-timing-function: ease-out; }
+        100% { -webkit-transform: rotateZ(0deg); }
+    }
+    @-moz-keyframes #{$keyframe} {
+        0% { -moz-transform: translateY(100%) rotateZ(17deg); }
+        20% { -moz-transform: rotateZ(16deg); }
+        40% { -moz-transform: rotateZ(17deg); }
+        60% { -moz-transform: rotateZ(10deg); -moz-animation-timing-function: ease-out; }
+        100% { -moz-transform: rotateZ(0deg); }
+    }
+    @keyframes #{$keyframe} {
+        0% { transform: translateY(100%) rotateZ(17deg); }
+        20% { transform: rotateZ(16deg); }
+        40% { transform: rotateZ(17deg); }
+        60% { transform: rotateZ(10deg); animation-timing-function: ease-out; }
+        100% { transform: rotateZ(0deg); }
+    }
+}
+
 @mixin rotateOutNewspaperKeyframes($keyframe: rotateOutNewspaper) {
 
     @-webkit-keyframes #{$keyframe} {
@@ -573,6 +662,32 @@
     }
     @keyframes #{$keyframe} {
         from { transform: translateZ(-3000px) rotateZ(-360deg); opacity: 0; }
+    }
+}
+
+@mixin reverseRotateOutNewspaperKeyframes($keyframe: reverseRotateOutNewspaper) {
+
+    @-webkit-keyframes #{$keyframe} {
+        from { -webkit-transform: translateZ(-3000px) rotateZ(360deg); opacity: 0; }
+    }
+    @-moz-keyframes #{$keyframe} {
+        from { -moz-transform: translateZ(-3000px) rotateZ(360deg); opacity: 0; }
+    }
+    @keyframes #{$keyframe} {
+        from { transform: translateZ(-3000px) rotateZ(360deg); opacity: 0; }
+    }
+}
+
+@mixin reverseRotateInNewspaperKeyframes($keyframe: reverseRotateInNewspaper) {
+
+    @-webkit-keyframes #{$keyframe} {
+        to { -webkit-transform: translateZ(-3000px) rotateZ(-360deg); opacity: 0; }
+    }
+    @-moz-keyframes #{$keyframe} {
+        to { -moz-transform: translateZ(-3000px) rotateZ(-360deg); opacity: 0; }
+    }
+    @keyframes #{$keyframe} {
+        to { transform: translateZ(-3000px) rotateZ(-360deg); opacity: 0; }
     }
 }
 
@@ -1120,33 +1235,7 @@
     }
 }
 
-@mixin rotateSidesOutKeyframes($keyframe: rotateSidesOut) {
-
-    @-webkit-keyframes #{$keyframe} {
-        to { opacity: 0; -webkit-transform: translateZ(-500px) rotateY(90deg); }
-    }
-    @-moz-keyframes #{$keyframe} {
-        to { opacity: 0; -moz-transform: translateZ(-500px) rotateY(90deg); }
-    }
-    @keyframes #{$keyframe} {
-        to { opacity: 0; transform: translateZ(-500px) rotateY(90deg); }
-    }
-}
-
-@mixin rotateSidesInKeyframes($keyframe: rotateSidesIn) {
-
-    @-webkit-keyframes #{$keyframe} {
-        from { opacity: 0; -webkit-transform: translateZ(-500px) rotateY(-90deg); }
-    }
-    @-moz-keyframes #{$keyframe} {
-        from { opacity: 0; -moz-transform: translateZ(-500px) rotateY(-90deg); }
-    }
-    @keyframes #{$keyframe} {
-        from { opacity: 0; transform: translateZ(-500px) rotateY(-90deg); }
-    }
-}
-
-@mixin rotateSlideOutKeyframes($keyframe: rotateSlideOut) {
+@mixin slideLeftOutKeyframes($keyframe: slideLeftOut) {
 
     @-webkit-keyframes #{$keyframe} {
         25% { opacity: .5; -webkit-transform: translateZ(-500px); }
@@ -1165,7 +1254,26 @@
     }
 }
 
-@mixin rotateSlideInKeyframes($keyframe: rotateSlideIn) {
+@mixin slideRightOutKeyframes($keyframe: slideRightOut) {
+
+    @-webkit-keyframes #{$keyframe} {
+        25% { opacity: .5; -webkit-transform: translateZ(-500px); }
+        75% { opacity: .5; -webkit-transform: translateZ(-500px) translateX(200%); }
+        100% { opacity: .5; -webkit-transform: translateZ(-500px) translateX(200%); }
+    }
+    @-moz-keyframes #{$keyframe} {
+        25% { opacity: .5; -moz-transform: translateZ(-500px); }
+        75% { opacity: .5; -moz-transform: translateZ(-500px) translateX(200%); }
+        100% { opacity: .5; -moz-transform: translateZ(-500px) translateX(200%); }
+    }
+    @keyframes #{$keyframe} {
+        25% { opacity: .5; transform: translateZ(-500px); }
+        75% { opacity: .5; transform: translateZ(-500px) translateX(200%); }
+        100% { opacity: .5; transform: translateZ(-500px) translateX(200%); }
+    }
+}
+
+@mixin slideRightInKeyframes($keyframe: slideRightIn) {
 
     @-webkit-keyframes #{$keyframe} {
         0%, 25% { opacity: .5; -webkit-transform: translateZ(-500px) translateX(200%); }
@@ -1179,6 +1287,25 @@
     }
     @keyframes #{$keyframe} {
         0%, 25% { opacity: .5; transform: translateZ(-500px) translateX(200%); }
+        75% { opacity: .5; transform: translateZ(-500px); }
+        100% { opacity: 1; transform: translateZ(0) translateX(0); }
+    }
+}
+
+@mixin slideLeftInKeyframes($keyframe: slideLeftIn) {
+
+    @-webkit-keyframes #{$keyframe} {
+        0%, 25% { opacity: .5; -webkit-transform: translateZ(-500px) translateX(-200%); }
+        75% { opacity: .5; -webkit-transform: translateZ(-500px); }
+        100% { opacity: 1; -webkit-transform: translateZ(0) translateX(0); }
+    }
+    @-moz-keyframes #{$keyframe} {
+        0%, 25% { opacity: .5; -moz-transform: translateZ(-500px) translateX(-200%); }
+        75% { opacity: .5; -moz-transform: translateZ(-500px); }
+        100% { opacity: 1; -moz-transform: translateZ(0) translateX(0); }
+    }
+    @keyframes #{$keyframe} {
+        0%, 25% { opacity: .5; transform: translateZ(-500px) translateX(-200%); }
         75% { opacity: .5; transform: translateZ(-500px); }
         100% { opacity: 1; transform: translateZ(0) translateX(0); }
     }
@@ -1207,10 +1334,17 @@
 @include scaleDownUpKeyframes(_effect_pageTransition_scaleDownUp);
 @include scaleDownCenterKeyframes(_effect_pageTransition_scaleDownCenter);
 @include scaleUpCenterKeyframes(_effect_pageTransition_scaleUpCenter);
+
 @include rotateRightSideFirstKeyframes(_effect_pageTransition_rotateRightSideFirst);
 @include rotateLeftSideFirstKeyframes(_effect_pageTransition_rotateLeftSideFirst);
 @include rotateTopSideFirstKeyframes(_effect_pageTransition_rotateTopSideFirst);
 @include rotateBottomSideFirstKeyframes(_effect_pageTransition_rotateBottomSideFirst);
+
+@include reverseRotateRightSideFirstKeyframes(_effect_pageTransition_reverseRotateRightSideFirst);
+@include reverseRotateLeftSideFirstKeyframes(_effect_pageTransition_reverseRotateLeftSideFirst);
+@include reverseRotateTopSideFirstKeyframes(_effect_pageTransition_reverseRotateTopSideFirst);
+@include reverseRotateBottomSideFirstKeyframes(_effect_pageTransition_reverseRotateBottomSideFirst);
+
 @include flipOutRightKeyframes(_effect_pageTransition_flipOutRight);
 @include flipInLeftKeyframes(_effect_pageTransition_flipInLeft);
 @include flipOutLeftKeyframes(_effect_pageTransition_flipOutLeft);
@@ -1220,8 +1354,11 @@
 @include flipOutBottomKeyframes(_effect_pageTransition_flipOutBottom);
 @include flipInTopKeyframes(_effect_pageTransition_flipInTop);
 @include rotateFallKeyframes(_effect_pageTransition_rotateFall);
+@include reverseRotateFallKeyframes(_effect_pageTransition_reverseRotateFall);
 @include rotateOutNewspaperKeyframes(_effect_pageTransition_rotateOutNewspaper);
 @include rotateInNewspaperKeyframes(_effect_pageTransition_rotateInNewspaper);
+@include reverseRotateOutNewspaperKeyframes(_effect_pageTransition_reverseRotateOutNewspaper);
+@include reverseRotateInNewspaperKeyframes(_effect_pageTransition_reverseRotateInNewspaper);
 @include rotatePushLeftKeyframes(_effect_pageTransition_rotatePushLeft);
 @include rotatePushRightKeyframes(_effect_pageTransition_rotatePushRight);
 @include rotatePushTopKeyframes(_effect_pageTransition_rotatePushTop);
@@ -1262,10 +1399,10 @@
 @include rotateCarouselTopInKeyframes(_effect_pageTransition_rotateCarouselTopIn);
 @include rotateCarouselBottomOutKeyframes(_effect_pageTransition_rotateCarouselBottomOut);
 @include rotateCarouselBottomInKeyframes(_effect_pageTransition_rotateCarouselBottomIn);
-@include rotateSidesOutKeyframes(_effect_pageTransition_rotateSidesOut);
-@include rotateSidesInKeyframes(_effect_pageTransition_rotateSidesIn);
-@include rotateSlideOutKeyframes(_effect_pageTransition_rotateSlideOut);
-@include rotateSlideInKeyframes(_effect_pageTransition_rotateSlideIn);
+@include slideLeftOutKeyframes(_effect_pageTransition_slideLeftOut);
+@include slideRightOutKeyframes(_effect_pageTransition_slideRightOut);
+@include slideRightInKeyframes(_effect_pageTransition_slideRightIn);
+@include slideLeftInKeyframes(_effect_pageTransition_slideLeftIn);
 @include moveToLeftKeyframes(_effect_pageTransition_moveToLeftEasing);
 @include moveToRightKeyframes(_effect_pageTransition_moveToRightEasing);
 @include moveToTopKeyframes(_effect_pageTransition_moveToTopEasing);
@@ -1298,6 +1435,10 @@
 @include baseAnimation(_effect_pageTransition_rotateLeftSideFirst, .8s, ease-in);
 @include baseAnimation(_effect_pageTransition_rotateTopSideFirst, .8s, ease-in);
 @include baseAnimation(_effect_pageTransition_rotateBottomSideFirst, .8s, ease-in);
+@include baseAnimation(_effect_pageTransition_reverseRotateRightSideFirst, .8s, ease-in);
+@include baseAnimation(_effect_pageTransition_reverseRotateLeftSideFirst, .8s, ease-in);
+@include baseAnimation(_effect_pageTransition_reverseRotateTopSideFirst, .8s, ease-in);
+@include baseAnimation(_effect_pageTransition_reverseRotateBottomSideFirst, .8s, ease-in);
 @include baseAnimation(_effect_pageTransition_flipOutRight, .5s, ease-in);
 @include baseAnimation(_effect_pageTransition_flipInLeft, .5s, ease-in);
 @include baseAnimation(_effect_pageTransition_flipOutLeft, .5s, ease-in);
@@ -1307,8 +1448,11 @@
 @include baseAnimation(_effect_pageTransition_flipOutBottom, .5s, ease-in);
 @include baseAnimation(_effect_pageTransition_flipInTop, .5s, ease-in);
 @include baseAnimation(_effect_pageTransition_rotateFall, 1s, ease-in);
+@include baseAnimation(_effect_pageTransition_reverseRotateFall, 1s, ease-in);
 @include baseAnimation(_effect_pageTransition_rotateOutNewspaper, .5s, ease-in);
 @include baseAnimation(_effect_pageTransition_rotateInNewspaper, .5s, ease-out);
+@include baseAnimation(_effect_pageTransition_reverseRotateOutNewspaper, .5s, ease-out);
+@include baseAnimation(_effect_pageTransition_reverseRotateInNewspaper, .5s, ease-in);
 @include baseAnimation(_effect_pageTransition_rotatePushLeft, .8s, ease);
 @include baseAnimation(_effect_pageTransition_rotatePushRight, .8s, ease);
 @include baseAnimation(_effect_pageTransition_rotatePushTop, .8s, ease);
@@ -1349,10 +1493,10 @@
 @include baseAnimation(_effect_pageTransition_rotateCarouselTopIn, .8s, ease);
 @include baseAnimation(_effect_pageTransition_rotateCarouselBottomOut, .8s, ease);
 @include baseAnimation(_effect_pageTransition_rotateCarouselBottomIn, .8s, ease);
-@include baseAnimation(_effect_pageTransition_rotateSidesOut, .5s, ease-in);
-@include baseAnimation(_effect_pageTransition_rotateSidesIn, .5s, ease-in);
-@include baseAnimation(_effect_pageTransition_rotateSlideOut, 1s, ease);
-@include baseAnimation(_effect_pageTransition_rotateSlideIn, 1s, ease);
+@include baseAnimation(_effect_pageTransition_slideLeftOut, 1s, ease);
+@include baseAnimation(_effect_pageTransition_slideRightOut, 1s, ease);
+@include baseAnimation(_effect_pageTransition_slideRightIn, 1s, ease);
+@include baseAnimation(_effect_pageTransition_slideLeftIn, 1s, ease);
 @include baseAnimation(_effect_pageTransition_moveToLeftEasing, .7s, ease-in-out);
 @include baseAnimation(_effect_pageTransition_moveToRightEasing, .7s, ease-in-out);
 @include baseAnimation(_effect_pageTransition_moveToTopEasing, .7s, ease-in-out);

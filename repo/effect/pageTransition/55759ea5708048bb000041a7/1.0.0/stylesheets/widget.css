@@ -1,4 +1,4 @@
-[ui-effect-page-transition-1-0-0][effect=moveToLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToRight].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=moveToLeftScaleUp].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToRightScaleUp].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToLeft].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=moveToRight].forward.currentPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeToLeft].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeToRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=easingToLeft].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=easingToRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToLeft].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=glueRightMoveFromLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushRightMoveFromLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToLeft].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToLeftScaleUp].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToRightScaleUp].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToLeft].forward.currentPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToRight].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeToLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeToRight].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=easingToLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=easingToRight].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToRight].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=glueLeftMoveFromRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushLeftMoveFromRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToTop].forward, [ui-effect-page-transition-1-0-0][effect=moveToBottom].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=moveToBottomScaleUp].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToTopScaleUp].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToTop].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeToTop].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeToBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=easingToTop].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=easingToBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToTop].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=glueBottomMoveFromTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushBottomMoveFromTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToTop].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=moveToBottom].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToBottomScaleUp].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToTopScaleUp].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToBottom].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeToTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeToBottom].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=easingToTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=easingToBottom].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToBottom].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=glueLeftMoveFromRight].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=glueRightMoveFromLeft].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=glueBottomMoveFromTop].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=glueTopMoveFromBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=glueTopMoveFromBottom].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=flipRight].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=flipLeft].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=flipTop].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=flipBottom].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fall].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=newspaper].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushLeftMoveFromRight].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushRightMoveFromLeft].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushTopMoveFromBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushTopMoveFromBottom].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushBottomMoveFromTop].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushLeftPullRight].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushRightPullLeft].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushTopPullBottom].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushBottomPullTop].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=foldLeftMoveFromRight].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=foldRightMoveFromLeft].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=foldTopMoveFromBottom].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=foldBottomMoveFromTop].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToRightUnfoldLeft].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToLeftUnfoldRight].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToTopUnfoldBottom].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=roomToLeft].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=roomToRight].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=roomToTop].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=roomToBottom].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=cubeToLeft].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=cubeToRight].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=cubeToTop].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=cubeToBottom].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=carouselToLeft].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=carouselToRight].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=carouselToTop].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=carouselToBottom].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=sides].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=slide].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeToLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=fadeToLeft].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=fadeToRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=fadeToRight].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=fadeToTop].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=fadeToTop].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=fadeToBottom].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=fadeToBottom].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=fadeLeftFadeRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=fadeRightFadeLeft].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=moveToLeftUnfoldRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=fadeLeftFadeRight].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeRightFadeLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=foldRightMoveFromLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeLeftFadeRight].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=fadeRightFadeLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToRightUnfoldLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=fadeLeftFadeRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeRightFadeLeft].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=foldLeftMoveFromRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeTopFadeBottom].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=fadeBottomFadeTop].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=moveToTopUnfoldBottom].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=fadeTopFadeBottom].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeBottomFadeTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=foldBottomMoveFromTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeTopFadeBottom].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=fadeBottomFadeTop].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=fadeTopFadeBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeBottomFadeTop].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=foldTopMoveFromBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToLeft].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToRight].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToTop].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToTop].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToBottom].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToBottom].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=scaleDown].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=scaleUp].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=moveToLeftScaleUp].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=moveToRightScaleUp].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=moveToBottomScaleUp].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=moveToTopScaleUp].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=scaleDown].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleUp].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToLeftScaleUp].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToRightScaleUp].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToBottomScaleUp].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToTopScaleUp].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fall].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDown].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleUp].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDown].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=scaleUp].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=scaleDownScaleUp].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=scaleDownScaleUp].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDownScaleUp].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDownScaleUp].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=glueLeftMoveFromRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=glueRightMoveFromLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=glueBottomMoveFromTop].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=glueTopMoveFromBottom].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=flipRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=flipRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=flipLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=flipLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=flipTop].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=flipTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=flipBottom].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=flipBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fall].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=newspaper].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=newspaper].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushLeftMoveFromRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=pushLeftPullRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=pushRightMoveFromLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=pushRightPullLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=pushTopMoveFromBottom].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=pushTopPullBottom].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=pushBottomMoveFromTop].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=pushBottomPullTop].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=pushLeftPullRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushRightPullLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushBottomPullTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushTopPullBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=foldRightMoveFromLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=foldLeftMoveFromRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=foldTopMoveFromBottom].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=foldBottomMoveFromTop].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToRightUnfoldLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToLeftUnfoldRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToTopUnfoldBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=roomToLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=roomToLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=roomToRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=roomToRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=roomToTop].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=roomToTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=roomToBottom].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=roomToBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=cubeToLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=cubeToLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=cubeToRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=cubeToRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=cubeToTop].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=cubeToTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=cubeToBottom].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=cubeToBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=carouselToLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=carouselToLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=carouselToRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=carouselToRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=carouselToTop].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=carouselToTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=carouselToBottom].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=carouselToBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=sides].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=sides].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=slide].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=slide].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=easingToLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=easingToRight].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=easingToLeft].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=easingToRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=easingToTop].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=easingToBottom].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=glueLeftMoveFromRight].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=glueRightMoveFromLeft].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=glueBottomMoveFromTop].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=glueTopMoveFromBottom].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=flipRight].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=flipLeft].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=flipTop].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=flipBottom].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=fall].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=newspaper].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=pushLeftMoveFromRight].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=pushRightMoveFromLeft].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=pushTopMoveFromBottom].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=pushBottomMoveFromTop].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=pushLeftPullRight].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=pushRightPullLeft].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=pushTopPullBottom].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=pushBottomPullTop].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=foldLeftMoveFromRight].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=foldRightMoveFromLeft].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=foldTopMoveFromBottom].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=foldBottomMoveFromTop].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=moveToRightUnfoldLeft].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=moveToLeftUnfoldRight].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=moveToTopUnfoldBottom].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=roomToLeft].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=roomToRight].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=roomToTop].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=roomToBottom].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=cubeToLeft].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=cubeToRight].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=cubeToTop].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=cubeToBottom].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=carouselToLeft].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=carouselToRight].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=carouselToTop].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=carouselToBottom].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=sides].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=slide].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=easingToTop].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=easingToBottom].forward.currentPage {
+[ui-effect-page-transition-1-0-0][effect=moveToLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToRight].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=moveToLeftScaleUp].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToRightScaleUp].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=glueRightMoveFromLeft].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushRightMoveFromLeft].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToLeft].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=moveToRight].forward.currentPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeToLeft].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeToRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=easingToLeft].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=easingToRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToLeft].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=glueRightMoveFromLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushRightMoveFromLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToLeft].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToLeftScaleUp].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToRightScaleUp].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=glueLeftMoveFromRight].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushLeftMoveFromRight].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToLeft].forward.currentPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToRight].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeToLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeToRight].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=easingToLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=easingToRight].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToRight].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=glueLeftMoveFromRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushLeftMoveFromRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToTop].forward, [ui-effect-page-transition-1-0-0][effect=moveToBottom].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=moveToBottomScaleUp].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToTopScaleUp].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=glueBottomMoveFromTop].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushBottomMoveFromTop].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToTop].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeToTop].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeToBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=easingToTop].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=easingToBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToTop].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=glueBottomMoveFromTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushBottomMoveFromTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToTop].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=moveToBottom].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToBottomScaleUp].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToTopScaleUp].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=glueTopMoveFromBottom].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushTopMoveFromBottom].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToBottom].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeToTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeToBottom].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=easingToTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=easingToBottom].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToBottom].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=glueTopMoveFromBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushTopMoveFromBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeToLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=fadeToLeft].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=fadeToRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=fadeToRight].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=fadeToTop].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=fadeToTop].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=fadeToBottom].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=fadeToBottom].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=fadeLeftFadeRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=fadeRightFadeLeft].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=foldRightMoveFromLeft].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToLeftUnfoldRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=fadeLeftFadeRight].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeRightFadeLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=foldRightMoveFromLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToLeftUnfoldRight].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=fadeLeftFadeRight].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=fadeRightFadeLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=foldLeftMoveFromRight].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToRightUnfoldLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=fadeLeftFadeRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeRightFadeLeft].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=foldLeftMoveFromRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToRightUnfoldLeft].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=fadeTopFadeBottom].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=fadeBottomFadeTop].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=foldBottomMoveFromTop].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToTopUnfoldBottom].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=fadeTopFadeBottom].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeBottomFadeTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=foldBottomMoveFromTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToTopUnfoldBottom].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=fadeTopFadeBottom].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=fadeBottomFadeTop].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=foldTopMoveFromBottom].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=fadeTopFadeBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeBottomFadeTop].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=foldTopMoveFromBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToLeft].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToRight].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToTop].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToTop].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToBottom].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToBottom].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDown].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=scaleDown].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fall].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleUp].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleUp].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=moveToLeftScaleUp].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToLeftScaleUp].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=moveToRightScaleUp].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToRightScaleUp].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=moveToBottomScaleUp].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToBottomScaleUp].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=moveToTopScaleUp].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToTopScaleUp].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=fall].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDown].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDown].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=scaleUp].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=scaleUp].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDownScaleUp].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=scaleDownScaleUp].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDownScaleUp].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDownScaleUp].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=glueLeftMoveFromRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=glueRightMoveFromLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=glueBottomMoveFromTop].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=glueTopMoveFromBottom].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=glueLeftMoveFromRight].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=glueRightMoveFromLeft].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=glueBottomMoveFromTop].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=glueTopMoveFromBottom].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=flipRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=flipLeft].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=flipRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=flipLeft].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=flipRight].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=flipLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=flipRight].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=flipLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=flipTop].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=flipBottom].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=flipTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=flipBottom].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=flipTop].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=flipBottom].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=flipTop].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=flipBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fall].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=fall].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=newspaper].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=newspaper].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=newspaper].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=newspaper].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushLeftMoveFromRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=pushLeftPullRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=pushRightPullLeft].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushRightMoveFromLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=pushLeftPullRight].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushRightPullLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=pushTopMoveFromBottom].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=pushTopPullBottom].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=pushBottomPullTop].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushBottomMoveFromTop].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=pushTopPullBottom].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushBottomPullTop].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=pushRightMoveFromLeft].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=pushLeftPullRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushRightPullLeft].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=pushLeftMoveFromRight].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=pushLeftPullRight].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=pushRightPullLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushTopMoveFromBottom].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=pushTopPullBottom].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=pushBottomPullTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushBottomMoveFromTop].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=pushTopPullBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushBottomPullTop].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=foldRightMoveFromLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToLeftUnfoldRight].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=foldLeftMoveFromRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToRightUnfoldLeft].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=foldTopMoveFromBottom].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=foldBottomMoveFromTop].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToTopUnfoldBottom].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=foldLeftMoveFromRight].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=moveToRightUnfoldLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=foldRightMoveFromLeft].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=moveToLeftUnfoldRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=foldTopMoveFromBottom].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=foldBottomMoveFromTop].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=moveToTopUnfoldBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=roomToLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=roomToRight].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=roomToLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=roomToRight].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=roomToLeft].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=roomToRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=roomToLeft].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=roomToRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=roomToTop].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=roomToBottom].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=roomToTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=roomToBottom].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=roomToTop].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=roomToBottom].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=roomToTop].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=roomToBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=cubeToLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=cubeToRight].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=cubeToLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=cubeToRight].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=cubeToLeft].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=cubeToRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=cubeToLeft].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=cubeToRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=cubeToTop].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=cubeToBottom].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=cubeToTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=cubeToBottom].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=cubeToTop].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=cubeToBottom].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=cubeToTop].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=cubeToBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=carouselToLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=carouselToRight].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=carouselToLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=carouselToRight].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=carouselToLeft].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=carouselToRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=carouselToLeft].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=carouselToRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=carouselToTop].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=carouselToBottom].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=carouselToTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=carouselToBottom].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=carouselToTop].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=carouselToBottom].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=carouselToTop].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=carouselToBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=slide].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=slide].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=slide].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=slide].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=easingToLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=easingToRight].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=easingToLeft].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=easingToRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=easingToTop].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=easingToBottom].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=easingToTop].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=easingToBottom].forward.currentPage {
   -moz-animation-duration: 1s;
   -webkit-animation-duration: 1s;
   animation-duration: 1s;
@@ -530,6 +530,138 @@
     opacity: 0;
   }
 }
+@-webkit-keyframes _effect_pageTransition_reverseRotateRightSideFirst {
+  0% {
+    -webkit-transform: scale(0.8) translateZ(-200px);
+    opacity: 0;
+  }
+  60% {
+    -webkit-transform: rotateY(15deg);
+    opacity: .8;
+    -webkit-animation-timing-function: ease-in;
+  }
+}
+@-moz-keyframes _effect_pageTransition_reverseRotateRightSideFirst {
+  0% {
+    -moz-transform: scale(0.8) translateZ(-200px);
+    opacity: 0;
+  }
+  60% {
+    -moz-transform: rotateY(15deg);
+    opacity: .8;
+    -moz-animation-timing-function: ease-in;
+  }
+}
+@keyframes _effect_pageTransition_reverseRotateRightSideFirst {
+  0% {
+    transform: scale(0.8) translateZ(-200px);
+    opacity: 0;
+  }
+  60% {
+    transform: rotateY(15deg);
+    opacity: .8;
+    animation-timing-function: ease-in;
+  }
+}
+@-webkit-keyframes _effect_pageTransition_reverseRotateLeftSideFirst {
+  0% {
+    -webkit-transform: scale(0.8) translateZ(-200px);
+    opacity: 0;
+  }
+  60% {
+    -webkit-transform: rotateY(-15deg);
+    opacity: .8;
+    -webkit-animation-timing-function: ease-in;
+  }
+}
+@-moz-keyframes _effect_pageTransition_reverseRotateLeftSideFirst {
+  0% {
+    -moz-transform: scale(0.8) translateZ(-200px);
+    opacity: 0;
+  }
+  60% {
+    -moz-transform: rotateY(-15deg);
+    opacity: .8;
+    -moz-animation-timing-function: ease-in;
+  }
+}
+@keyframes _effect_pageTransition_reverseRotateLeftSideFirst {
+  0% {
+    transform: scale(0.8) translateZ(-200px);
+    opacity: 0;
+  }
+  60% {
+    transform: rotateY(-15deg);
+    opacity: .8;
+    animation-timing-function: ease-in;
+  }
+}
+@-webkit-keyframes _effect_pageTransition_reverseRotateTopSideFirst {
+  0% {
+    -webkit-transform: scale(0.8) translateZ(-200px);
+    opacity: 0;
+  }
+  60% {
+    -webkit-transform: rotateX(15deg);
+    opacity: .8;
+    -webkit-animation-timing-function: ease-in;
+  }
+}
+@-moz-keyframes _effect_pageTransition_reverseRotateTopSideFirst {
+  0% {
+    -moz-transform: scale(0.8) translateZ(-200px);
+    opacity: 0;
+  }
+  60% {
+    -moz-transform: rotateX(15deg);
+    opacity: .8;
+    -moz-animation-timing-function: ease-in;
+  }
+}
+@keyframes _effect_pageTransition_reverseRotateTopSideFirst {
+  0% {
+    transform: scale(0.8) translateZ(-200px);
+    opacity: 0;
+  }
+  60% {
+    transform: rotateX(15deg);
+    opacity: .8;
+    animation-timing-function: ease-in;
+  }
+}
+@-webkit-keyframes _effect_pageTransition_reverseRotateBottomSideFirst {
+  0% {
+    -webkit-transform: scale(0.8) translateZ(-200px);
+    opacity: 0;
+  }
+  60% {
+    -webkit-transform: rotateX(-15deg);
+    opacity: .8;
+    -webkit-animation-timing-function: ease-in;
+  }
+}
+@-moz-keyframes _effect_pageTransition_reverseRotateBottomSideFirst {
+  0% {
+    -moz-transform: scale(0.8) translateZ(-200px);
+    opacity: 0;
+  }
+  60% {
+    -moz-transform: rotateX(-15deg);
+    opacity: .8;
+    -moz-animation-timing-function: ease-in;
+  }
+}
+@keyframes _effect_pageTransition_reverseRotateBottomSideFirst {
+  0% {
+    transform: scale(0.8) translateZ(-200px);
+    opacity: 0;
+  }
+  60% {
+    transform: rotateX(-15deg);
+    opacity: .8;
+    animation-timing-function: ease-in;
+  }
+}
 @-webkit-keyframes _effect_pageTransition_flipOutRight {
   to {
     -webkit-transform: translateZ(-1000px) rotateY(90deg);
@@ -728,6 +860,60 @@
     transform: translateY(100%) rotateZ(17deg);
   }
 }
+@-webkit-keyframes _effect_pageTransition_reverseRotateFall {
+  0% {
+    -webkit-transform: translateY(100%) rotateZ(17deg);
+  }
+  20% {
+    -webkit-transform: rotateZ(16deg);
+  }
+  40% {
+    -webkit-transform: rotateZ(17deg);
+  }
+  60% {
+    -webkit-transform: rotateZ(10deg);
+    -webkit-animation-timing-function: ease-out;
+  }
+  100% {
+    -webkit-transform: rotateZ(0deg);
+  }
+}
+@-moz-keyframes _effect_pageTransition_reverseRotateFall {
+  0% {
+    -moz-transform: translateY(100%) rotateZ(17deg);
+  }
+  20% {
+    -moz-transform: rotateZ(16deg);
+  }
+  40% {
+    -moz-transform: rotateZ(17deg);
+  }
+  60% {
+    -moz-transform: rotateZ(10deg);
+    -moz-animation-timing-function: ease-out;
+  }
+  100% {
+    -moz-transform: rotateZ(0deg);
+  }
+}
+@keyframes _effect_pageTransition_reverseRotateFall {
+  0% {
+    transform: translateY(100%) rotateZ(17deg);
+  }
+  20% {
+    transform: rotateZ(16deg);
+  }
+  40% {
+    transform: rotateZ(17deg);
+  }
+  60% {
+    transform: rotateZ(10deg);
+    animation-timing-function: ease-out;
+  }
+  100% {
+    transform: rotateZ(0deg);
+  }
+}
 @-webkit-keyframes _effect_pageTransition_rotateOutNewspaper {
   to {
     -webkit-transform: translateZ(-3000px) rotateZ(360deg);
@@ -760,6 +946,42 @@
 }
 @keyframes _effect_pageTransition_rotateInNewspaper {
   from {
+    transform: translateZ(-3000px) rotateZ(-360deg);
+    opacity: 0;
+  }
+}
+@-webkit-keyframes _effect_pageTransition_reverseRotateOutNewspaper {
+  from {
+    -webkit-transform: translateZ(-3000px) rotateZ(360deg);
+    opacity: 0;
+  }
+}
+@-moz-keyframes _effect_pageTransition_reverseRotateOutNewspaper {
+  from {
+    -moz-transform: translateZ(-3000px) rotateZ(360deg);
+    opacity: 0;
+  }
+}
+@keyframes _effect_pageTransition_reverseRotateOutNewspaper {
+  from {
+    transform: translateZ(-3000px) rotateZ(360deg);
+    opacity: 0;
+  }
+}
+@-webkit-keyframes _effect_pageTransition_reverseRotateInNewspaper {
+  to {
+    -webkit-transform: translateZ(-3000px) rotateZ(-360deg);
+    opacity: 0;
+  }
+}
+@-moz-keyframes _effect_pageTransition_reverseRotateInNewspaper {
+  to {
+    -moz-transform: translateZ(-3000px) rotateZ(-360deg);
+    opacity: 0;
+  }
+}
+@keyframes _effect_pageTransition_reverseRotateInNewspaper {
+  to {
     transform: translateZ(-3000px) rotateZ(-360deg);
     opacity: 0;
   }
@@ -1580,43 +1802,7 @@
     transform: translateY(-200%) scale(0.4) rotateX(65deg);
   }
 }
-@-webkit-keyframes _effect_pageTransition_rotateSidesOut {
-  to {
-    opacity: 0;
-    -webkit-transform: translateZ(-500px) rotateY(90deg);
-  }
-}
-@-moz-keyframes _effect_pageTransition_rotateSidesOut {
-  to {
-    opacity: 0;
-    -moz-transform: translateZ(-500px) rotateY(90deg);
-  }
-}
-@keyframes _effect_pageTransition_rotateSidesOut {
-  to {
-    opacity: 0;
-    transform: translateZ(-500px) rotateY(90deg);
-  }
-}
-@-webkit-keyframes _effect_pageTransition_rotateSidesIn {
-  from {
-    opacity: 0;
-    -webkit-transform: translateZ(-500px) rotateY(-90deg);
-  }
-}
-@-moz-keyframes _effect_pageTransition_rotateSidesIn {
-  from {
-    opacity: 0;
-    -moz-transform: translateZ(-500px) rotateY(-90deg);
-  }
-}
-@keyframes _effect_pageTransition_rotateSidesIn {
-  from {
-    opacity: 0;
-    transform: translateZ(-500px) rotateY(-90deg);
-  }
-}
-@-webkit-keyframes _effect_pageTransition_rotateSlideOut {
+@-webkit-keyframes _effect_pageTransition_slideLeftOut {
   25% {
     opacity: .5;
     -webkit-transform: translateZ(-500px);
@@ -1630,7 +1816,7 @@
     -webkit-transform: translateZ(-500px) translateX(-200%);
   }
 }
-@-moz-keyframes _effect_pageTransition_rotateSlideOut {
+@-moz-keyframes _effect_pageTransition_slideLeftOut {
   25% {
     opacity: .5;
     -moz-transform: translateZ(-500px);
@@ -1644,7 +1830,7 @@
     -moz-transform: translateZ(-500px) translateX(-200%);
   }
 }
-@keyframes _effect_pageTransition_rotateSlideOut {
+@keyframes _effect_pageTransition_slideLeftOut {
   25% {
     opacity: .5;
     transform: translateZ(-500px);
@@ -1658,7 +1844,49 @@
     transform: translateZ(-500px) translateX(-200%);
   }
 }
-@-webkit-keyframes _effect_pageTransition_rotateSlideIn {
+@-webkit-keyframes _effect_pageTransition_slideRightOut {
+  25% {
+    opacity: .5;
+    -webkit-transform: translateZ(-500px);
+  }
+  75% {
+    opacity: .5;
+    -webkit-transform: translateZ(-500px) translateX(200%);
+  }
+  100% {
+    opacity: .5;
+    -webkit-transform: translateZ(-500px) translateX(200%);
+  }
+}
+@-moz-keyframes _effect_pageTransition_slideRightOut {
+  25% {
+    opacity: .5;
+    -moz-transform: translateZ(-500px);
+  }
+  75% {
+    opacity: .5;
+    -moz-transform: translateZ(-500px) translateX(200%);
+  }
+  100% {
+    opacity: .5;
+    -moz-transform: translateZ(-500px) translateX(200%);
+  }
+}
+@keyframes _effect_pageTransition_slideRightOut {
+  25% {
+    opacity: .5;
+    transform: translateZ(-500px);
+  }
+  75% {
+    opacity: .5;
+    transform: translateZ(-500px) translateX(200%);
+  }
+  100% {
+    opacity: .5;
+    transform: translateZ(-500px) translateX(200%);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_slideRightIn {
   0%, 25% {
     opacity: .5;
     -webkit-transform: translateZ(-500px) translateX(200%);
@@ -1672,7 +1900,7 @@
     -webkit-transform: translateZ(0) translateX(0);
   }
 }
-@-moz-keyframes _effect_pageTransition_rotateSlideIn {
+@-moz-keyframes _effect_pageTransition_slideRightIn {
   0%, 25% {
     opacity: .5;
     -moz-transform: translateZ(-500px) translateX(200%);
@@ -1686,10 +1914,52 @@
     -moz-transform: translateZ(0) translateX(0);
   }
 }
-@keyframes _effect_pageTransition_rotateSlideIn {
+@keyframes _effect_pageTransition_slideRightIn {
   0%, 25% {
     opacity: .5;
     transform: translateZ(-500px) translateX(200%);
+  }
+  75% {
+    opacity: .5;
+    transform: translateZ(-500px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateZ(0) translateX(0);
+  }
+}
+@-webkit-keyframes _effect_pageTransition_slideLeftIn {
+  0%, 25% {
+    opacity: .5;
+    -webkit-transform: translateZ(-500px) translateX(-200%);
+  }
+  75% {
+    opacity: .5;
+    -webkit-transform: translateZ(-500px);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateZ(0) translateX(0);
+  }
+}
+@-moz-keyframes _effect_pageTransition_slideLeftIn {
+  0%, 25% {
+    opacity: .5;
+    -moz-transform: translateZ(-500px) translateX(-200%);
+  }
+  75% {
+    opacity: .5;
+    -moz-transform: translateZ(-500px);
+  }
+  100% {
+    opacity: 1;
+    -moz-transform: translateZ(0) translateX(0);
+  }
+}
+@keyframes _effect_pageTransition_slideLeftIn {
+  0%, 25% {
+    opacity: .5;
+    transform: translateZ(-500px) translateX(-200%);
   }
   75% {
     opacity: .5;
@@ -1760,7 +2030,7 @@
     transform: translateY(100%);
   }
 }
-[ui-effect-page-transition-1-0-0][effect=moveToLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToRight].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=moveToLeftScaleUp].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToRightScaleUp].backward.previousPage + .pageHolder {
+[ui-effect-page-transition-1-0-0][effect=moveToLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToRight].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=moveToLeftScaleUp].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToRightScaleUp].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=glueRightMoveFromLeft].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushRightMoveFromLeft].backward.previousPage + .pageHolder {
   -moz-animation-name: _effect_pageTransition_moveToLeft;
   -webkit-animation-name: _effect_pageTransition_moveToLeft;
   animation-name: _effect_pageTransition_moveToLeft;
@@ -1772,7 +2042,7 @@
   animation-timing-function: ease;
 }
 
-[ui-effect-page-transition-1-0-0][effect=moveToLeft].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=moveToRight].forward.currentPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeToLeft].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeToRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=easingToLeft].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=easingToRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToLeft].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=glueRightMoveFromLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushRightMoveFromLeft].forward + .pageHolder {
+[ui-effect-page-transition-1-0-0][effect=moveToLeft].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=moveToRight].forward.currentPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeToLeft].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeToRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=easingToLeft].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=easingToRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToLeft].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=glueRightMoveFromLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushRightMoveFromLeft].forward + .pageHolder {
   -moz-animation-name: _effect_pageTransition_moveFromLeft;
   -webkit-animation-name: _effect_pageTransition_moveFromLeft;
   animation-name: _effect_pageTransition_moveFromLeft;
@@ -1784,7 +2054,7 @@
   animation-timing-function: ease;
 }
 
-[ui-effect-page-transition-1-0-0][effect=moveToLeft].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToLeftScaleUp].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToRightScaleUp].forward.currentPage {
+[ui-effect-page-transition-1-0-0][effect=moveToLeft].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToLeftScaleUp].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToRightScaleUp].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=glueLeftMoveFromRight].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushLeftMoveFromRight].backward.previousPage + .pageHolder {
   -moz-animation-name: _effect_pageTransition_moveToRight;
   -webkit-animation-name: _effect_pageTransition_moveToRight;
   animation-name: _effect_pageTransition_moveToRight;
@@ -1796,7 +2066,7 @@
   animation-timing-function: ease;
 }
 
-[ui-effect-page-transition-1-0-0][effect=moveToLeft].forward.currentPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToRight].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeToLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeToRight].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=easingToLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=easingToRight].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToRight].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=glueLeftMoveFromRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushLeftMoveFromRight].forward + .pageHolder {
+[ui-effect-page-transition-1-0-0][effect=moveToLeft].forward.currentPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToRight].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeToLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeToRight].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=easingToLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=easingToRight].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToRight].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=glueLeftMoveFromRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushLeftMoveFromRight].forward + .pageHolder {
   -moz-animation-name: _effect_pageTransition_moveFromRight;
   -webkit-animation-name: _effect_pageTransition_moveFromRight;
   animation-name: _effect_pageTransition_moveFromRight;
@@ -1808,7 +2078,7 @@
   animation-timing-function: ease;
 }
 
-[ui-effect-page-transition-1-0-0][effect=moveToTop].forward, [ui-effect-page-transition-1-0-0][effect=moveToBottom].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=moveToBottomScaleUp].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToTopScaleUp].forward.currentPage {
+[ui-effect-page-transition-1-0-0][effect=moveToTop].forward, [ui-effect-page-transition-1-0-0][effect=moveToBottom].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=moveToBottomScaleUp].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToTopScaleUp].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=glueBottomMoveFromTop].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushBottomMoveFromTop].backward.previousPage + .pageHolder {
   -moz-animation-name: _effect_pageTransition_moveToTop;
   -webkit-animation-name: _effect_pageTransition_moveToTop;
   animation-name: _effect_pageTransition_moveToTop;
@@ -1820,7 +2090,7 @@
   animation-timing-function: ease;
 }
 
-[ui-effect-page-transition-1-0-0][effect=moveToTop].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeToTop].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeToBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=easingToTop].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=easingToBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToTop].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=glueBottomMoveFromTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushBottomMoveFromTop].forward + .pageHolder {
+[ui-effect-page-transition-1-0-0][effect=moveToTop].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeToTop].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeToBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=easingToTop].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=easingToBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToTop].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=glueBottomMoveFromTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushBottomMoveFromTop].forward + .pageHolder {
   -moz-animation-name: _effect_pageTransition_moveFromTop;
   -webkit-animation-name: _effect_pageTransition_moveFromTop;
   animation-name: _effect_pageTransition_moveFromTop;
@@ -1832,7 +2102,7 @@
   animation-timing-function: ease;
 }
 
-[ui-effect-page-transition-1-0-0][effect=moveToTop].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=moveToBottom].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToBottomScaleUp].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToTopScaleUp].backward.previousPage + .pageHolder {
+[ui-effect-page-transition-1-0-0][effect=moveToTop].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=moveToBottom].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToBottomScaleUp].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToTopScaleUp].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=glueTopMoveFromBottom].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushTopMoveFromBottom].backward.previousPage + .pageHolder {
   -moz-animation-name: _effect_pageTransition_moveToBottom;
   -webkit-animation-name: _effect_pageTransition_moveToBottom;
   animation-name: _effect_pageTransition_moveToBottom;
@@ -1844,7 +2114,7 @@
   animation-timing-function: ease;
 }
 
-[ui-effect-page-transition-1-0-0][effect=moveToTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToBottom].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeToTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeToBottom].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=easingToTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=easingToBottom].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToBottom].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=glueLeftMoveFromRight].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=glueRightMoveFromLeft].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=glueBottomMoveFromTop].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=glueTopMoveFromBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=glueTopMoveFromBottom].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=flipRight].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=flipLeft].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=flipTop].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=flipBottom].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fall].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=newspaper].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushLeftMoveFromRight].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushRightMoveFromLeft].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushTopMoveFromBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushTopMoveFromBottom].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushBottomMoveFromTop].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushLeftPullRight].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushRightPullLeft].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushTopPullBottom].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushBottomPullTop].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=foldLeftMoveFromRight].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=foldRightMoveFromLeft].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=foldTopMoveFromBottom].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=foldBottomMoveFromTop].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToRightUnfoldLeft].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToLeftUnfoldRight].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToTopUnfoldBottom].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=roomToLeft].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=roomToRight].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=roomToTop].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=roomToBottom].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=cubeToLeft].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=cubeToRight].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=cubeToTop].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=cubeToBottom].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=carouselToLeft].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=carouselToRight].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=carouselToTop].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=carouselToBottom].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=sides].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=slide].backward.previousPage + .pageHolder {
+[ui-effect-page-transition-1-0-0][effect=moveToTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToBottom].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeToTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeToBottom].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=easingToTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=easingToBottom].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToBottom].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=glueTopMoveFromBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushTopMoveFromBottom].forward + .pageHolder {
   -moz-animation-name: _effect_pageTransition_moveFromBottom;
   -webkit-animation-name: _effect_pageTransition_moveFromBottom;
   animation-name: _effect_pageTransition_moveFromBottom;
@@ -1868,7 +2138,7 @@
   animation-timing-function: ease;
 }
 
-[ui-effect-page-transition-1-0-0][effect=fadeLeftFadeRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=fadeRightFadeLeft].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=moveToLeftUnfoldRight].forward.currentPage {
+[ui-effect-page-transition-1-0-0][effect=fadeLeftFadeRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=fadeRightFadeLeft].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=foldRightMoveFromLeft].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToLeftUnfoldRight].forward.currentPage {
   -moz-animation-name: _effect_pageTransition_moveToLeftFade;
   -webkit-animation-name: _effect_pageTransition_moveToLeftFade;
   animation-name: _effect_pageTransition_moveToLeftFade;
@@ -1880,7 +2150,7 @@
   animation-timing-function: ease;
 }
 
-[ui-effect-page-transition-1-0-0][effect=fadeLeftFadeRight].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeRightFadeLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=foldRightMoveFromLeft].forward + .pageHolder {
+[ui-effect-page-transition-1-0-0][effect=fadeLeftFadeRight].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeRightFadeLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=foldRightMoveFromLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToLeftUnfoldRight].backward.previousPage {
   -moz-animation-name: _effect_pageTransition_moveFromLeftFade;
   -webkit-animation-name: _effect_pageTransition_moveFromLeftFade;
   animation-name: _effect_pageTransition_moveFromLeftFade;
@@ -1892,7 +2162,7 @@
   animation-timing-function: ease;
 }
 
-[ui-effect-page-transition-1-0-0][effect=fadeLeftFadeRight].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=fadeRightFadeLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToRightUnfoldLeft].forward.currentPage {
+[ui-effect-page-transition-1-0-0][effect=fadeLeftFadeRight].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=fadeRightFadeLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=foldLeftMoveFromRight].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToRightUnfoldLeft].forward.currentPage {
   -moz-animation-name: _effect_pageTransition_moveToRightFade;
   -webkit-animation-name: _effect_pageTransition_moveToRightFade;
   animation-name: _effect_pageTransition_moveToRightFade;
@@ -1904,7 +2174,7 @@
   animation-timing-function: ease;
 }
 
-[ui-effect-page-transition-1-0-0][effect=fadeLeftFadeRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeRightFadeLeft].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=foldLeftMoveFromRight].forward + .pageHolder {
+[ui-effect-page-transition-1-0-0][effect=fadeLeftFadeRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeRightFadeLeft].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=foldLeftMoveFromRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToRightUnfoldLeft].backward.previousPage {
   -moz-animation-name: _effect_pageTransition_moveFromRightFade;
   -webkit-animation-name: _effect_pageTransition_moveFromRightFade;
   animation-name: _effect_pageTransition_moveFromRightFade;
@@ -1916,7 +2186,7 @@
   animation-timing-function: ease;
 }
 
-[ui-effect-page-transition-1-0-0][effect=fadeTopFadeBottom].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=fadeBottomFadeTop].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=moveToTopUnfoldBottom].forward.currentPage {
+[ui-effect-page-transition-1-0-0][effect=fadeTopFadeBottom].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=fadeBottomFadeTop].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=foldBottomMoveFromTop].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToTopUnfoldBottom].forward.currentPage {
   -moz-animation-name: _effect_pageTransition_moveToTopFade;
   -webkit-animation-name: _effect_pageTransition_moveToTopFade;
   animation-name: _effect_pageTransition_moveToTopFade;
@@ -1928,7 +2198,7 @@
   animation-timing-function: ease;
 }
 
-[ui-effect-page-transition-1-0-0][effect=fadeTopFadeBottom].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeBottomFadeTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=foldBottomMoveFromTop].forward + .pageHolder {
+[ui-effect-page-transition-1-0-0][effect=fadeTopFadeBottom].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeBottomFadeTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=foldBottomMoveFromTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToTopUnfoldBottom].backward.previousPage {
   -moz-animation-name: _effect_pageTransition_moveFromTopFade;
   -webkit-animation-name: _effect_pageTransition_moveFromTopFade;
   animation-name: _effect_pageTransition_moveFromTopFade;
@@ -1940,7 +2210,7 @@
   animation-timing-function: ease;
 }
 
-[ui-effect-page-transition-1-0-0][effect=fadeTopFadeBottom].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=fadeBottomFadeTop].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop].forward.currentPage {
+[ui-effect-page-transition-1-0-0][effect=fadeTopFadeBottom].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=fadeBottomFadeTop].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=foldTopMoveFromBottom].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop].forward.currentPage {
   -moz-animation-name: _effect_pageTransition_moveToBottomFade;
   -webkit-animation-name: _effect_pageTransition_moveToBottomFade;
   animation-name: _effect_pageTransition_moveToBottomFade;
@@ -1952,7 +2222,7 @@
   animation-timing-function: ease;
 }
 
-[ui-effect-page-transition-1-0-0][effect=fadeTopFadeBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeBottomFadeTop].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=foldTopMoveFromBottom].forward + .pageHolder {
+[ui-effect-page-transition-1-0-0][effect=fadeTopFadeBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fadeBottomFadeTop].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=foldTopMoveFromBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop].backward.previousPage {
   -moz-animation-name: _effect_pageTransition_moveFromBottomFade;
   -webkit-animation-name: _effect_pageTransition_moveFromBottomFade;
   animation-name: _effect_pageTransition_moveFromBottomFade;
@@ -1964,7 +2234,7 @@
   animation-timing-function: ease;
 }
 
-[ui-effect-page-transition-1-0-0][effect=scaleDownMoveToLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToLeft].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToRight].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToTop].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToTop].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToBottom].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToBottom].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=scaleDown].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=scaleUp].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=moveToLeftScaleUp].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=moveToRightScaleUp].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=moveToBottomScaleUp].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=moveToTopScaleUp].backward.previousPage {
+[ui-effect-page-transition-1-0-0][effect=scaleDownMoveToLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToLeft].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToRight].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToTop].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToTop].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToBottom].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=scaleDownMoveToBottom].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDown].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=scaleDown].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fall].backward.previousPage + .pageHolder {
   -moz-animation-name: _effect_pageTransition_scaleDown;
   -webkit-animation-name: _effect_pageTransition_scaleDown;
   animation-name: _effect_pageTransition_scaleDown;
@@ -1976,7 +2246,7 @@
   animation-timing-function: ease;
 }
 
-[ui-effect-page-transition-1-0-0][effect=scaleDown].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleUp].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToLeftScaleUp].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToRightScaleUp].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToBottomScaleUp].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToTopScaleUp].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=fall].forward + .pageHolder {
+[ui-effect-page-transition-1-0-0][effect=scaleUp].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleUp].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=moveToLeftScaleUp].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToLeftScaleUp].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=moveToRightScaleUp].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToRightScaleUp].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=moveToBottomScaleUp].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToBottomScaleUp].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=moveToTopScaleUp].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=moveToTopScaleUp].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=fall].forward + .pageHolder {
   -moz-animation-name: _effect_pageTransition_scaleUp;
   -webkit-animation-name: _effect_pageTransition_scaleUp;
   animation-name: _effect_pageTransition_scaleUp;
@@ -1988,7 +2258,7 @@
   animation-timing-function: ease;
 }
 
-[ui-effect-page-transition-1-0-0][effect=scaleDown].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleUp].backward.previousPage + .pageHolder {
+[ui-effect-page-transition-1-0-0][effect=scaleDown].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=scaleDown].backward.previousPage {
   -moz-animation-name: _effect_pageTransition_scaleUpDown;
   -webkit-animation-name: _effect_pageTransition_scaleUpDown;
   animation-name: _effect_pageTransition_scaleUpDown;
@@ -2000,7 +2270,7 @@
   animation-timing-function: ease;
 }
 
-[ui-effect-page-transition-1-0-0][effect=scaleDown].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=scaleUp].forward.currentPage {
+[ui-effect-page-transition-1-0-0][effect=scaleUp].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=scaleUp].backward.previousPage + .pageHolder {
   -moz-animation-name: _effect_pageTransition_scaleDownUp;
   -webkit-animation-name: _effect_pageTransition_scaleDownUp;
   animation-name: _effect_pageTransition_scaleDownUp;
@@ -2084,7 +2354,55 @@
   animation-timing-function: ease-in;
 }
 
-[ui-effect-page-transition-1-0-0][effect=flipRight].forward.currentPage {
+[ui-effect-page-transition-1-0-0][effect=glueLeftMoveFromRight].backward.previousPage {
+  -moz-animation-name: _effect_pageTransition_reverseRotateRightSideFirst;
+  -webkit-animation-name: _effect_pageTransition_reverseRotateRightSideFirst;
+  animation-name: _effect_pageTransition_reverseRotateRightSideFirst;
+  -moz-animation-duration: 0.8s;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -moz-animation-timing-function: ease-in;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+}
+
+[ui-effect-page-transition-1-0-0][effect=glueRightMoveFromLeft].backward.previousPage {
+  -moz-animation-name: _effect_pageTransition_reverseRotateLeftSideFirst;
+  -webkit-animation-name: _effect_pageTransition_reverseRotateLeftSideFirst;
+  animation-name: _effect_pageTransition_reverseRotateLeftSideFirst;
+  -moz-animation-duration: 0.8s;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -moz-animation-timing-function: ease-in;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+}
+
+[ui-effect-page-transition-1-0-0][effect=glueBottomMoveFromTop].backward.previousPage {
+  -moz-animation-name: _effect_pageTransition_reverseRotateTopSideFirst;
+  -webkit-animation-name: _effect_pageTransition_reverseRotateTopSideFirst;
+  animation-name: _effect_pageTransition_reverseRotateTopSideFirst;
+  -moz-animation-duration: 0.8s;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -moz-animation-timing-function: ease-in;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+}
+
+[ui-effect-page-transition-1-0-0][effect=glueTopMoveFromBottom].backward.previousPage {
+  -moz-animation-name: _effect_pageTransition_reverseRotateBottomSideFirst;
+  -webkit-animation-name: _effect_pageTransition_reverseRotateBottomSideFirst;
+  animation-name: _effect_pageTransition_reverseRotateBottomSideFirst;
+  -moz-animation-duration: 0.8s;
+  -webkit-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -moz-animation-timing-function: ease-in;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+}
+
+[ui-effect-page-transition-1-0-0][effect=flipRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=flipLeft].backward.previousPage + .pageHolder {
   -moz-animation-name: _effect_pageTransition_flipOutRight;
   -webkit-animation-name: _effect_pageTransition_flipOutRight;
   animation-name: _effect_pageTransition_flipOutRight;
@@ -2096,7 +2414,7 @@
   animation-timing-function: ease-in;
 }
 
-[ui-effect-page-transition-1-0-0][effect=flipRight].forward + .pageHolder {
+[ui-effect-page-transition-1-0-0][effect=flipRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=flipLeft].backward.previousPage {
   -moz-animation-name: _effect_pageTransition_flipInLeft;
   -webkit-animation-name: _effect_pageTransition_flipInLeft;
   animation-name: _effect_pageTransition_flipInLeft;
@@ -2108,7 +2426,7 @@
   animation-timing-function: ease-in;
 }
 
-[ui-effect-page-transition-1-0-0][effect=flipLeft].forward.currentPage {
+[ui-effect-page-transition-1-0-0][effect=flipRight].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=flipLeft].forward.currentPage {
   -moz-animation-name: _effect_pageTransition_flipOutLeft;
   -webkit-animation-name: _effect_pageTransition_flipOutLeft;
   animation-name: _effect_pageTransition_flipOutLeft;
@@ -2120,7 +2438,7 @@
   animation-timing-function: ease-in;
 }
 
-[ui-effect-page-transition-1-0-0][effect=flipLeft].forward + .pageHolder {
+[ui-effect-page-transition-1-0-0][effect=flipRight].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=flipLeft].forward + .pageHolder {
   -moz-animation-name: _effect_pageTransition_flipInRight;
   -webkit-animation-name: _effect_pageTransition_flipInRight;
   animation-name: _effect_pageTransition_flipInRight;
@@ -2132,7 +2450,7 @@
   animation-timing-function: ease-in;
 }
 
-[ui-effect-page-transition-1-0-0][effect=flipTop].forward.currentPage {
+[ui-effect-page-transition-1-0-0][effect=flipTop].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=flipBottom].backward.previousPage + .pageHolder {
   -moz-animation-name: _effect_pageTransition_flipOutTop;
   -webkit-animation-name: _effect_pageTransition_flipOutTop;
   animation-name: _effect_pageTransition_flipOutTop;
@@ -2144,7 +2462,7 @@
   animation-timing-function: ease-in;
 }
 
-[ui-effect-page-transition-1-0-0][effect=flipTop].forward + .pageHolder {
+[ui-effect-page-transition-1-0-0][effect=flipTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=flipBottom].backward.previousPage {
   -moz-animation-name: _effect_pageTransition_flipInBottom;
   -webkit-animation-name: _effect_pageTransition_flipInBottom;
   animation-name: _effect_pageTransition_flipInBottom;
@@ -2156,7 +2474,7 @@
   animation-timing-function: ease-in;
 }
 
-[ui-effect-page-transition-1-0-0][effect=flipBottom].forward.currentPage {
+[ui-effect-page-transition-1-0-0][effect=flipTop].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=flipBottom].forward.currentPage {
   -moz-animation-name: _effect_pageTransition_flipOutBottom;
   -webkit-animation-name: _effect_pageTransition_flipOutBottom;
   animation-name: _effect_pageTransition_flipOutBottom;
@@ -2168,7 +2486,7 @@
   animation-timing-function: ease-in;
 }
 
-[ui-effect-page-transition-1-0-0][effect=flipBottom].forward + .pageHolder {
+[ui-effect-page-transition-1-0-0][effect=flipTop].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=flipBottom].forward + .pageHolder {
   -moz-animation-name: _effect_pageTransition_flipInTop;
   -webkit-animation-name: _effect_pageTransition_flipInTop;
   animation-name: _effect_pageTransition_flipInTop;
@@ -2184,6 +2502,18 @@
   -moz-animation-name: _effect_pageTransition_rotateFall;
   -webkit-animation-name: _effect_pageTransition_rotateFall;
   animation-name: _effect_pageTransition_rotateFall;
+  -moz-animation-duration: 1s;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -moz-animation-timing-function: ease-in;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+}
+
+[ui-effect-page-transition-1-0-0][effect=fall].backward.previousPage {
+  -moz-animation-name: _effect_pageTransition_reverseRotateFall;
+  -webkit-animation-name: _effect_pageTransition_reverseRotateFall;
+  animation-name: _effect_pageTransition_reverseRotateFall;
   -moz-animation-duration: 1s;
   -webkit-animation-duration: 1s;
   animation-duration: 1s;
@@ -2216,7 +2546,31 @@
   animation-timing-function: ease-out;
 }
 
-[ui-effect-page-transition-1-0-0][effect=pushLeftMoveFromRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=pushLeftPullRight].forward.currentPage {
+[ui-effect-page-transition-1-0-0][effect=newspaper].backward.previousPage {
+  -moz-animation-name: _effect_pageTransition_reverseRotateOutNewspaper;
+  -webkit-animation-name: _effect_pageTransition_reverseRotateOutNewspaper;
+  animation-name: _effect_pageTransition_reverseRotateOutNewspaper;
+  -moz-animation-duration: 0.5s;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  -moz-animation-timing-function: ease-out;
+  -webkit-animation-timing-function: ease-out;
+  animation-timing-function: ease-out;
+}
+
+[ui-effect-page-transition-1-0-0][effect=newspaper].backward.previousPage + .pageHolder {
+  -moz-animation-name: _effect_pageTransition_reverseRotateInNewspaper;
+  -webkit-animation-name: _effect_pageTransition_reverseRotateInNewspaper;
+  animation-name: _effect_pageTransition_reverseRotateInNewspaper;
+  -moz-animation-duration: 0.5s;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  -moz-animation-timing-function: ease-in;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+}
+
+[ui-effect-page-transition-1-0-0][effect=pushLeftMoveFromRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=pushLeftPullRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=pushRightPullLeft].backward.previousPage + .pageHolder {
   -moz-animation-name: _effect_pageTransition_rotatePushLeft;
   -webkit-animation-name: _effect_pageTransition_rotatePushLeft;
   animation-name: _effect_pageTransition_rotatePushLeft;
@@ -2228,7 +2582,7 @@
   animation-timing-function: ease;
 }
 
-[ui-effect-page-transition-1-0-0][effect=pushRightMoveFromLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=pushRightPullLeft].forward.currentPage {
+[ui-effect-page-transition-1-0-0][effect=pushRightMoveFromLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=pushLeftPullRight].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushRightPullLeft].forward.currentPage {
   -moz-animation-name: _effect_pageTransition_rotatePushRight;
   -webkit-animation-name: _effect_pageTransition_rotatePushRight;
   animation-name: _effect_pageTransition_rotatePushRight;
@@ -2240,7 +2594,7 @@
   animation-timing-function: ease;
 }
 
-[ui-effect-page-transition-1-0-0][effect=pushTopMoveFromBottom].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=pushTopPullBottom].forward.currentPage {
+[ui-effect-page-transition-1-0-0][effect=pushTopMoveFromBottom].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=pushTopPullBottom].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=pushBottomPullTop].backward.previousPage + .pageHolder {
   -moz-animation-name: _effect_pageTransition_rotatePushTop;
   -webkit-animation-name: _effect_pageTransition_rotatePushTop;
   animation-name: _effect_pageTransition_rotatePushTop;
@@ -2252,7 +2606,7 @@
   animation-timing-function: ease;
 }
 
-[ui-effect-page-transition-1-0-0][effect=pushBottomMoveFromTop].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=pushBottomPullTop].forward.currentPage {
+[ui-effect-page-transition-1-0-0][effect=pushBottomMoveFromTop].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=pushTopPullBottom].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushBottomPullTop].forward.currentPage {
   -moz-animation-name: _effect_pageTransition_rotatePushBottom;
   -webkit-animation-name: _effect_pageTransition_rotatePushBottom;
   animation-name: _effect_pageTransition_rotatePushBottom;
@@ -2264,7 +2618,7 @@
   animation-timing-function: ease;
 }
 
-[ui-effect-page-transition-1-0-0][effect=pushLeftPullRight].forward + .pageHolder {
+[ui-effect-page-transition-1-0-0][effect=pushRightMoveFromLeft].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=pushLeftPullRight].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushRightPullLeft].backward.previousPage {
   -moz-animation-name: _effect_pageTransition_rotatePullRight;
   -webkit-animation-name: _effect_pageTransition_rotatePullRight;
   animation-name: _effect_pageTransition_rotatePullRight;
@@ -2276,7 +2630,7 @@
   animation-timing-function: ease;
 }
 
-[ui-effect-page-transition-1-0-0][effect=pushRightPullLeft].forward + .pageHolder {
+[ui-effect-page-transition-1-0-0][effect=pushLeftMoveFromRight].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=pushLeftPullRight].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=pushRightPullLeft].forward + .pageHolder {
   -moz-animation-name: _effect_pageTransition_rotatePullLeft;
   -webkit-animation-name: _effect_pageTransition_rotatePullLeft;
   animation-name: _effect_pageTransition_rotatePullLeft;
@@ -2288,7 +2642,7 @@
   animation-timing-function: ease;
 }
 
-[ui-effect-page-transition-1-0-0][effect=pushBottomPullTop].forward + .pageHolder {
+[ui-effect-page-transition-1-0-0][effect=pushTopMoveFromBottom].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=pushTopPullBottom].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=pushBottomPullTop].forward + .pageHolder {
   -moz-animation-name: _effect_pageTransition_rotatePullTop;
   -webkit-animation-name: _effect_pageTransition_rotatePullTop;
   animation-name: _effect_pageTransition_rotatePullTop;
@@ -2300,7 +2654,7 @@
   animation-timing-function: ease;
 }
 
-[ui-effect-page-transition-1-0-0][effect=pushTopPullBottom].forward + .pageHolder {
+[ui-effect-page-transition-1-0-0][effect=pushBottomMoveFromTop].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=pushTopPullBottom].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=pushBottomPullTop].backward.previousPage {
   -moz-animation-name: _effect_pageTransition_rotatePullBottom;
   -webkit-animation-name: _effect_pageTransition_rotatePullBottom;
   animation-name: _effect_pageTransition_rotatePullBottom;
@@ -2312,7 +2666,7 @@
   animation-timing-function: ease;
 }
 
-[ui-effect-page-transition-1-0-0][effect=foldRightMoveFromLeft].forward.currentPage {
+[ui-effect-page-transition-1-0-0][effect=foldRightMoveFromLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToLeftUnfoldRight].backward.previousPage + .pageHolder {
   -moz-animation-name: _effect_pageTransition_rotateFoldRight;
   -webkit-animation-name: _effect_pageTransition_rotateFoldRight;
   animation-name: _effect_pageTransition_rotateFoldRight;
@@ -2324,7 +2678,7 @@
   animation-timing-function: ease;
 }
 
-[ui-effect-page-transition-1-0-0][effect=foldLeftMoveFromRight].forward.currentPage {
+[ui-effect-page-transition-1-0-0][effect=foldLeftMoveFromRight].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToRightUnfoldLeft].backward.previousPage + .pageHolder {
   -moz-animation-name: _effect_pageTransition_rotateFoldLeft;
   -webkit-animation-name: _effect_pageTransition_rotateFoldLeft;
   animation-name: _effect_pageTransition_rotateFoldLeft;
@@ -2336,7 +2690,7 @@
   animation-timing-function: ease;
 }
 
-[ui-effect-page-transition-1-0-0][effect=foldTopMoveFromBottom].forward.currentPage {
+[ui-effect-page-transition-1-0-0][effect=foldTopMoveFromBottom].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop].backward.previousPage + .pageHolder {
   -moz-animation-name: _effect_pageTransition_rotateFoldTop;
   -webkit-animation-name: _effect_pageTransition_rotateFoldTop;
   animation-name: _effect_pageTransition_rotateFoldTop;
@@ -2348,7 +2702,7 @@
   animation-timing-function: ease;
 }
 
-[ui-effect-page-transition-1-0-0][effect=foldBottomMoveFromTop].forward.currentPage {
+[ui-effect-page-transition-1-0-0][effect=foldBottomMoveFromTop].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=moveToTopUnfoldBottom].backward.previousPage + .pageHolder {
   -moz-animation-name: _effect_pageTransition_rotateFoldBottom;
   -webkit-animation-name: _effect_pageTransition_rotateFoldBottom;
   animation-name: _effect_pageTransition_rotateFoldBottom;
@@ -2360,7 +2714,7 @@
   animation-timing-function: ease;
 }
 
-[ui-effect-page-transition-1-0-0][effect=moveToRightUnfoldLeft].forward + .pageHolder {
+[ui-effect-page-transition-1-0-0][effect=foldLeftMoveFromRight].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=moveToRightUnfoldLeft].forward + .pageHolder {
   -moz-animation-name: _effect_pageTransition_rotateUnfoldLeft;
   -webkit-animation-name: _effect_pageTransition_rotateUnfoldLeft;
   animation-name: _effect_pageTransition_rotateUnfoldLeft;
@@ -2372,7 +2726,7 @@
   animation-timing-function: ease;
 }
 
-[ui-effect-page-transition-1-0-0][effect=moveToLeftUnfoldRight].forward + .pageHolder {
+[ui-effect-page-transition-1-0-0][effect=foldRightMoveFromLeft].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=moveToLeftUnfoldRight].forward + .pageHolder {
   -moz-animation-name: _effect_pageTransition_rotateUnfoldRight;
   -webkit-animation-name: _effect_pageTransition_rotateUnfoldRight;
   animation-name: _effect_pageTransition_rotateUnfoldRight;
@@ -2384,7 +2738,7 @@
   animation-timing-function: ease;
 }
 
-[ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop].forward + .pageHolder {
+[ui-effect-page-transition-1-0-0][effect=foldTopMoveFromBottom].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop].forward + .pageHolder {
   -moz-animation-name: _effect_pageTransition_rotateUnfoldTop;
   -webkit-animation-name: _effect_pageTransition_rotateUnfoldTop;
   animation-name: _effect_pageTransition_rotateUnfoldTop;
@@ -2396,7 +2750,7 @@
   animation-timing-function: ease;
 }
 
-[ui-effect-page-transition-1-0-0][effect=moveToTopUnfoldBottom].forward + .pageHolder {
+[ui-effect-page-transition-1-0-0][effect=foldBottomMoveFromTop].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=moveToTopUnfoldBottom].forward + .pageHolder {
   -moz-animation-name: _effect_pageTransition_rotateUnfoldBottom;
   -webkit-animation-name: _effect_pageTransition_rotateUnfoldBottom;
   animation-name: _effect_pageTransition_rotateUnfoldBottom;
@@ -2408,7 +2762,7 @@
   animation-timing-function: ease;
 }
 
-[ui-effect-page-transition-1-0-0][effect=roomToLeft].forward.currentPage {
+[ui-effect-page-transition-1-0-0][effect=roomToLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=roomToRight].backward.previousPage + .pageHolder {
   -moz-animation-name: _effect_pageTransition_rotateRoomLeftOut;
   -webkit-animation-name: _effect_pageTransition_rotateRoomLeftOut;
   animation-name: _effect_pageTransition_rotateRoomLeftOut;
@@ -2420,7 +2774,7 @@
   animation-timing-function: ease;
 }
 
-[ui-effect-page-transition-1-0-0][effect=roomToLeft].forward + .pageHolder {
+[ui-effect-page-transition-1-0-0][effect=roomToLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=roomToRight].backward.previousPage {
   -moz-animation-name: _effect_pageTransition_rotateRoomLeftIn;
   -webkit-animation-name: _effect_pageTransition_rotateRoomLeftIn;
   animation-name: _effect_pageTransition_rotateRoomLeftIn;
@@ -2432,7 +2786,7 @@
   animation-timing-function: ease;
 }
 
-[ui-effect-page-transition-1-0-0][effect=roomToRight].forward.currentPage {
+[ui-effect-page-transition-1-0-0][effect=roomToLeft].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=roomToRight].forward.currentPage {
   -moz-animation-name: _effect_pageTransition_rotateRoomRightOut;
   -webkit-animation-name: _effect_pageTransition_rotateRoomRightOut;
   animation-name: _effect_pageTransition_rotateRoomRightOut;
@@ -2444,7 +2798,7 @@
   animation-timing-function: ease;
 }
 
-[ui-effect-page-transition-1-0-0][effect=roomToRight].forward + .pageHolder {
+[ui-effect-page-transition-1-0-0][effect=roomToLeft].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=roomToRight].forward + .pageHolder {
   -moz-animation-name: _effect_pageTransition_rotateRoomRightIn;
   -webkit-animation-name: _effect_pageTransition_rotateRoomRightIn;
   animation-name: _effect_pageTransition_rotateRoomRightIn;
@@ -2456,7 +2810,7 @@
   animation-timing-function: ease;
 }
 
-[ui-effect-page-transition-1-0-0][effect=roomToTop].forward.currentPage {
+[ui-effect-page-transition-1-0-0][effect=roomToTop].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=roomToBottom].backward.previousPage + .pageHolder {
   -moz-animation-name: _effect_pageTransition_rotateRoomTopOut;
   -webkit-animation-name: _effect_pageTransition_rotateRoomTopOut;
   animation-name: _effect_pageTransition_rotateRoomTopOut;
@@ -2468,7 +2822,7 @@
   animation-timing-function: ease;
 }
 
-[ui-effect-page-transition-1-0-0][effect=roomToTop].forward + .pageHolder {
+[ui-effect-page-transition-1-0-0][effect=roomToTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=roomToBottom].backward.previousPage {
   -moz-animation-name: _effect_pageTransition_rotateRoomTopIn;
   -webkit-animation-name: _effect_pageTransition_rotateRoomTopIn;
   animation-name: _effect_pageTransition_rotateRoomTopIn;
@@ -2480,7 +2834,7 @@
   animation-timing-function: ease;
 }
 
-[ui-effect-page-transition-1-0-0][effect=roomToBottom].forward.currentPage {
+[ui-effect-page-transition-1-0-0][effect=roomToTop].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=roomToBottom].forward.currentPage {
   -moz-animation-name: _effect_pageTransition_rotateRoomBottomOut;
   -webkit-animation-name: _effect_pageTransition_rotateRoomBottomOut;
   animation-name: _effect_pageTransition_rotateRoomBottomOut;
@@ -2492,7 +2846,7 @@
   animation-timing-function: ease;
 }
 
-[ui-effect-page-transition-1-0-0][effect=roomToBottom].forward + .pageHolder {
+[ui-effect-page-transition-1-0-0][effect=roomToTop].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=roomToBottom].forward + .pageHolder {
   -moz-animation-name: _effect_pageTransition_rotateRoomBottomIn;
   -webkit-animation-name: _effect_pageTransition_rotateRoomBottomIn;
   animation-name: _effect_pageTransition_rotateRoomBottomIn;
@@ -2504,7 +2858,7 @@
   animation-timing-function: ease;
 }
 
-[ui-effect-page-transition-1-0-0][effect=cubeToLeft].forward.currentPage {
+[ui-effect-page-transition-1-0-0][effect=cubeToLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=cubeToRight].backward.previousPage + .pageHolder {
   -moz-animation-name: _effect_pageTransition_rotateCubeLeftOut;
   -webkit-animation-name: _effect_pageTransition_rotateCubeLeftOut;
   animation-name: _effect_pageTransition_rotateCubeLeftOut;
@@ -2516,7 +2870,7 @@
   animation-timing-function: ease-in;
 }
 
-[ui-effect-page-transition-1-0-0][effect=cubeToLeft].forward + .pageHolder {
+[ui-effect-page-transition-1-0-0][effect=cubeToLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=cubeToRight].backward.previousPage {
   -moz-animation-name: _effect_pageTransition_rotateCubeLeftIn;
   -webkit-animation-name: _effect_pageTransition_rotateCubeLeftIn;
   animation-name: _effect_pageTransition_rotateCubeLeftIn;
@@ -2528,7 +2882,7 @@
   animation-timing-function: ease-in;
 }
 
-[ui-effect-page-transition-1-0-0][effect=cubeToRight].forward.currentPage {
+[ui-effect-page-transition-1-0-0][effect=cubeToLeft].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=cubeToRight].forward.currentPage {
   -moz-animation-name: _effect_pageTransition_rotateCubeRightOut;
   -webkit-animation-name: _effect_pageTransition_rotateCubeRightOut;
   animation-name: _effect_pageTransition_rotateCubeRightOut;
@@ -2540,7 +2894,7 @@
   animation-timing-function: ease-in;
 }
 
-[ui-effect-page-transition-1-0-0][effect=cubeToRight].forward + .pageHolder {
+[ui-effect-page-transition-1-0-0][effect=cubeToLeft].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=cubeToRight].forward + .pageHolder {
   -moz-animation-name: _effect_pageTransition_rotateCubeRightIn;
   -webkit-animation-name: _effect_pageTransition_rotateCubeRightIn;
   animation-name: _effect_pageTransition_rotateCubeRightIn;
@@ -2552,7 +2906,7 @@
   animation-timing-function: ease-in;
 }
 
-[ui-effect-page-transition-1-0-0][effect=cubeToTop].forward.currentPage {
+[ui-effect-page-transition-1-0-0][effect=cubeToTop].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=cubeToBottom].backward.previousPage + .pageHolder {
   -moz-animation-name: _effect_pageTransition_rotateCubeTopOut;
   -webkit-animation-name: _effect_pageTransition_rotateCubeTopOut;
   animation-name: _effect_pageTransition_rotateCubeTopOut;
@@ -2564,7 +2918,7 @@
   animation-timing-function: ease-in;
 }
 
-[ui-effect-page-transition-1-0-0][effect=cubeToTop].forward + .pageHolder {
+[ui-effect-page-transition-1-0-0][effect=cubeToTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=cubeToBottom].backward.previousPage {
   -moz-animation-name: _effect_pageTransition_rotateCubeTopIn;
   -webkit-animation-name: _effect_pageTransition_rotateCubeTopIn;
   animation-name: _effect_pageTransition_rotateCubeTopIn;
@@ -2576,7 +2930,7 @@
   animation-timing-function: ease-in;
 }
 
-[ui-effect-page-transition-1-0-0][effect=cubeToBottom].forward.currentPage {
+[ui-effect-page-transition-1-0-0][effect=cubeToTop].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=cubeToBottom].forward.currentPage {
   -moz-animation-name: _effect_pageTransition_rotateCubeBottomOut;
   -webkit-animation-name: _effect_pageTransition_rotateCubeBottomOut;
   animation-name: _effect_pageTransition_rotateCubeBottomOut;
@@ -2588,7 +2942,7 @@
   animation-timing-function: ease-in;
 }
 
-[ui-effect-page-transition-1-0-0][effect=cubeToBottom].forward + .pageHolder {
+[ui-effect-page-transition-1-0-0][effect=cubeToTop].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=cubeToBottom].forward + .pageHolder {
   -moz-animation-name: _effect_pageTransition_rotateCubeBottomIn;
   -webkit-animation-name: _effect_pageTransition_rotateCubeBottomIn;
   animation-name: _effect_pageTransition_rotateCubeBottomIn;
@@ -2600,7 +2954,7 @@
   animation-timing-function: ease-in;
 }
 
-[ui-effect-page-transition-1-0-0][effect=carouselToLeft].forward.currentPage {
+[ui-effect-page-transition-1-0-0][effect=carouselToLeft].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=carouselToRight].backward.previousPage + .pageHolder {
   -moz-animation-name: _effect_pageTransition_rotateCarouselLeftOut;
   -webkit-animation-name: _effect_pageTransition_rotateCarouselLeftOut;
   animation-name: _effect_pageTransition_rotateCarouselLeftOut;
@@ -2612,7 +2966,7 @@
   animation-timing-function: ease;
 }
 
-[ui-effect-page-transition-1-0-0][effect=carouselToLeft].forward + .pageHolder {
+[ui-effect-page-transition-1-0-0][effect=carouselToLeft].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=carouselToRight].backward.previousPage {
   -moz-animation-name: _effect_pageTransition_rotateCarouselLeftIn;
   -webkit-animation-name: _effect_pageTransition_rotateCarouselLeftIn;
   animation-name: _effect_pageTransition_rotateCarouselLeftIn;
@@ -2624,7 +2978,7 @@
   animation-timing-function: ease;
 }
 
-[ui-effect-page-transition-1-0-0][effect=carouselToRight].forward.currentPage {
+[ui-effect-page-transition-1-0-0][effect=carouselToLeft].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=carouselToRight].forward.currentPage {
   -moz-animation-name: _effect_pageTransition_rotateCarouselRightOut;
   -webkit-animation-name: _effect_pageTransition_rotateCarouselRightOut;
   animation-name: _effect_pageTransition_rotateCarouselRightOut;
@@ -2636,7 +2990,7 @@
   animation-timing-function: ease;
 }
 
-[ui-effect-page-transition-1-0-0][effect=carouselToRight].forward + .pageHolder {
+[ui-effect-page-transition-1-0-0][effect=carouselToLeft].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=carouselToRight].forward + .pageHolder {
   -moz-animation-name: _effect_pageTransition_rotateCarouselRightIn;
   -webkit-animation-name: _effect_pageTransition_rotateCarouselRightIn;
   animation-name: _effect_pageTransition_rotateCarouselRightIn;
@@ -2648,7 +3002,7 @@
   animation-timing-function: ease;
 }
 
-[ui-effect-page-transition-1-0-0][effect=carouselToTop].forward.currentPage {
+[ui-effect-page-transition-1-0-0][effect=carouselToTop].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=carouselToBottom].backward.previousPage + .pageHolder {
   -moz-animation-name: _effect_pageTransition_rotateCarouselTopOut;
   -webkit-animation-name: _effect_pageTransition_rotateCarouselTopOut;
   animation-name: _effect_pageTransition_rotateCarouselTopOut;
@@ -2660,7 +3014,7 @@
   animation-timing-function: ease;
 }
 
-[ui-effect-page-transition-1-0-0][effect=carouselToTop].forward + .pageHolder {
+[ui-effect-page-transition-1-0-0][effect=carouselToTop].forward + .pageHolder, [ui-effect-page-transition-1-0-0][effect=carouselToBottom].backward.previousPage {
   -moz-animation-name: _effect_pageTransition_rotateCarouselTopIn;
   -webkit-animation-name: _effect_pageTransition_rotateCarouselTopIn;
   animation-name: _effect_pageTransition_rotateCarouselTopIn;
@@ -2672,7 +3026,7 @@
   animation-timing-function: ease;
 }
 
-[ui-effect-page-transition-1-0-0][effect=carouselToBottom].forward.currentPage {
+[ui-effect-page-transition-1-0-0][effect=carouselToTop].backward.previousPage + .pageHolder, [ui-effect-page-transition-1-0-0][effect=carouselToBottom].forward.currentPage {
   -moz-animation-name: _effect_pageTransition_rotateCarouselBottomOut;
   -webkit-animation-name: _effect_pageTransition_rotateCarouselBottomOut;
   animation-name: _effect_pageTransition_rotateCarouselBottomOut;
@@ -2684,7 +3038,7 @@
   animation-timing-function: ease;
 }
 
-[ui-effect-page-transition-1-0-0][effect=carouselToBottom].forward + .pageHolder {
+[ui-effect-page-transition-1-0-0][effect=carouselToTop].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=carouselToBottom].forward + .pageHolder {
   -moz-animation-name: _effect_pageTransition_rotateCarouselBottomIn;
   -webkit-animation-name: _effect_pageTransition_rotateCarouselBottomIn;
   animation-name: _effect_pageTransition_rotateCarouselBottomIn;
@@ -2696,34 +3050,22 @@
   animation-timing-function: ease;
 }
 
-[ui-effect-page-transition-1-0-0][effect=sides].forward.currentPage {
-  -moz-animation-name: _effect_pageTransition_rotateSidesOut;
-  -webkit-animation-name: _effect_pageTransition_rotateSidesOut;
-  animation-name: _effect_pageTransition_rotateSidesOut;
-  -moz-animation-duration: 0.5s;
-  -webkit-animation-duration: 0.5s;
-  animation-duration: 0.5s;
-  -moz-animation-timing-function: ease-in;
-  -webkit-animation-timing-function: ease-in;
-  animation-timing-function: ease-in;
-}
-
-[ui-effect-page-transition-1-0-0][effect=sides].forward + .pageHolder {
-  -moz-animation-name: _effect_pageTransition_rotateSidesIn;
-  -webkit-animation-name: _effect_pageTransition_rotateSidesIn;
-  animation-name: _effect_pageTransition_rotateSidesIn;
-  -moz-animation-duration: 0.5s;
-  -webkit-animation-duration: 0.5s;
-  animation-duration: 0.5s;
-  -moz-animation-timing-function: ease-in;
-  -webkit-animation-timing-function: ease-in;
-  animation-timing-function: ease-in;
-}
-
 [ui-effect-page-transition-1-0-0][effect=slide].forward.currentPage {
-  -moz-animation-name: _effect_pageTransition_rotateSlideOut;
-  -webkit-animation-name: _effect_pageTransition_rotateSlideOut;
-  animation-name: _effect_pageTransition_rotateSlideOut;
+  -moz-animation-name: _effect_pageTransition_slideLeftOut;
+  -webkit-animation-name: _effect_pageTransition_slideLeftOut;
+  animation-name: _effect_pageTransition_slideLeftOut;
+  -moz-animation-duration: 1s;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=slide].backward.previousPage + .pageHolder {
+  -moz-animation-name: _effect_pageTransition_slideRightOut;
+  -webkit-animation-name: _effect_pageTransition_slideRightOut;
+  animation-name: _effect_pageTransition_slideRightOut;
   -moz-animation-duration: 1s;
   -webkit-animation-duration: 1s;
   animation-duration: 1s;
@@ -2733,9 +3075,21 @@
 }
 
 [ui-effect-page-transition-1-0-0][effect=slide].forward + .pageHolder {
-  -moz-animation-name: _effect_pageTransition_rotateSlideIn;
-  -webkit-animation-name: _effect_pageTransition_rotateSlideIn;
-  animation-name: _effect_pageTransition_rotateSlideIn;
+  -moz-animation-name: _effect_pageTransition_slideRightIn;
+  -webkit-animation-name: _effect_pageTransition_slideRightIn;
+  animation-name: _effect_pageTransition_slideRightIn;
+  -moz-animation-duration: 1s;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -moz-animation-timing-function: ease;
+  -webkit-animation-timing-function: ease;
+  animation-timing-function: ease;
+}
+
+[ui-effect-page-transition-1-0-0][effect=slide].backward.previousPage {
+  -moz-animation-name: _effect_pageTransition_slideLeftIn;
+  -webkit-animation-name: _effect_pageTransition_slideLeftIn;
+  animation-name: _effect_pageTransition_slideLeftIn;
   -moz-animation-duration: 1s;
   -webkit-animation-duration: 1s;
   animation-duration: 1s;
@@ -2768,7 +3122,7 @@
   animation-timing-function: ease-in-out;
 }
 
-[ui-effect-page-transition-1-0-0][effect=easingToTop].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=easingToBottom].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=glueLeftMoveFromRight].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=glueRightMoveFromLeft].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=glueBottomMoveFromTop].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=glueTopMoveFromBottom].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=flipRight].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=flipLeft].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=flipTop].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=flipBottom].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=fall].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=newspaper].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=pushLeftMoveFromRight].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=pushRightMoveFromLeft].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=pushTopMoveFromBottom].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=pushBottomMoveFromTop].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=pushLeftPullRight].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=pushRightPullLeft].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=pushTopPullBottom].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=pushBottomPullTop].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=foldLeftMoveFromRight].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=foldRightMoveFromLeft].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=foldTopMoveFromBottom].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=foldBottomMoveFromTop].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=moveToRightUnfoldLeft].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=moveToLeftUnfoldRight].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=moveToTopUnfoldBottom].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=roomToLeft].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=roomToRight].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=roomToTop].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=roomToBottom].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=cubeToLeft].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=cubeToRight].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=cubeToTop].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=cubeToBottom].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=carouselToLeft].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=carouselToRight].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=carouselToTop].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=carouselToBottom].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=sides].backward.previousPage, [ui-effect-page-transition-1-0-0][effect=slide].backward.previousPage {
+[ui-effect-page-transition-1-0-0][effect=easingToTop].forward.currentPage, [ui-effect-page-transition-1-0-0][effect=easingToBottom].backward.previousPage {
   -moz-animation-name: _effect_pageTransition_moveToTopEasing;
   -webkit-animation-name: _effect_pageTransition_moveToTopEasing;
   animation-name: _effect_pageTransition_moveToTopEasing;
@@ -3043,12 +3397,12 @@
 }
 [ui-effect-page-transition-1-0-0][effect=scaleDown].backward.previousPage {
   visibility: visible;
-}
-[ui-effect-page-transition-1-0-0][effect=scaleDown].backward.previousPage + .pageHolder {
-  z-index: 1;
   -moz-animation-delay: 0.3s;
   -webkit-animation-delay: 0.3s;
   animation-delay: 0.3s;
+}
+[ui-effect-page-transition-1-0-0][effect=scaleDown].backward.previousPage + .pageHolder {
+  z-index: 1;
 }
 [ui-effect-page-transition-1-0-0][effect=scaleUp].forward.currentPage {
   z-index: 1;
@@ -3061,12 +3415,12 @@
 }
 [ui-effect-page-transition-1-0-0][effect=scaleUp].backward.previousPage {
   visibility: visible;
-}
-[ui-effect-page-transition-1-0-0][effect=scaleUp].backward.previousPage + .pageHolder {
-  z-index: 1;
   -moz-animation-delay: 0.3s;
   -webkit-animation-delay: 0.3s;
   animation-delay: 0.3s;
+}
+[ui-effect-page-transition-1-0-0][effect=scaleUp].backward.previousPage + .pageHolder {
+  z-index: 1;
 }
 [ui-effect-page-transition-1-0-0][effect=moveToLeftScaleUp].forward.currentPage {
   z-index: 1;
@@ -3127,12 +3481,12 @@
 }
 [ui-effect-page-transition-1-0-0][effect=scaleDownScaleUp].backward.previousPage {
   visibility: visible;
-}
-[ui-effect-page-transition-1-0-0][effect=scaleDownScaleUp].backward.previousPage + .pageHolder {
-  z-index: 1;
   -moz-animation-delay: 0.4s;
   -webkit-animation-delay: 0.4s;
   animation-delay: 0.4s;
+}
+[ui-effect-page-transition-1-0-0][effect=scaleDownScaleUp].backward.previousPage + .pageHolder {
+  z-index: 1;
 }
 [ui-effect-page-transition-1-0-0][effect=glueLeftMoveFromRight].forward.currentPage {
   z-index: 1;
@@ -3149,6 +3503,13 @@
 }
 [ui-effect-page-transition-1-0-0][effect=glueLeftMoveFromRight].backward.previousPage {
   visibility: visible;
+  -moz-transform-origin: 0% 50% 50%;
+  -ms-transform-origin: 0% 50% 50%;
+  -webkit-transform-origin: 0% 50% 50%;
+  transform-origin: 0% 50% 50%;
+  -moz-animation-delay: 0.2s;
+  -webkit-animation-delay: 0.2s;
+  animation-delay: 0.2s;
 }
 [ui-effect-page-transition-1-0-0][effect=glueLeftMoveFromRight].backward.previousPage + .pageHolder {
   z-index: 1;
@@ -3168,6 +3529,13 @@
 }
 [ui-effect-page-transition-1-0-0][effect=glueRightMoveFromLeft].backward.previousPage {
   visibility: visible;
+  -moz-transform-origin: 100% 50% 50%;
+  -ms-transform-origin: 100% 50% 50%;
+  -webkit-transform-origin: 100% 50% 50%;
+  transform-origin: 100% 50% 50%;
+  -moz-animation-delay: 0.2s;
+  -webkit-animation-delay: 0.2s;
+  animation-delay: 0.2s;
 }
 [ui-effect-page-transition-1-0-0][effect=glueRightMoveFromLeft].backward.previousPage + .pageHolder {
   z-index: 1;
@@ -3187,6 +3555,13 @@
 }
 [ui-effect-page-transition-1-0-0][effect=glueBottomMoveFromTop].backward.previousPage {
   visibility: visible;
+  -moz-transform-origin: 50% 100% 50%;
+  -ms-transform-origin: 50% 100% 50%;
+  -webkit-transform-origin: 50% 100% 50%;
+  transform-origin: 50% 100% 50%;
+  -moz-animation-delay: 0.2s;
+  -webkit-animation-delay: 0.2s;
+  animation-delay: 0.2s;
 }
 [ui-effect-page-transition-1-0-0][effect=glueBottomMoveFromTop].backward.previousPage + .pageHolder {
   z-index: 1;
@@ -3206,6 +3581,13 @@
 }
 [ui-effect-page-transition-1-0-0][effect=glueTopMoveFromBottom].backward.previousPage {
   visibility: visible;
+  -moz-transform-origin: 50% 0% 50%;
+  -ms-transform-origin: 50% 0% 50%;
+  -webkit-transform-origin: 50% 0% 50%;
+  transform-origin: 50% 0% 50%;
+  -moz-animation-delay: 0.2s;
+  -webkit-animation-delay: 0.2s;
+  animation-delay: 0.2s;
 }
 [ui-effect-page-transition-1-0-0][effect=glueTopMoveFromBottom].backward.previousPage + .pageHolder {
   z-index: 1;
@@ -3229,9 +3611,20 @@
 }
 [ui-effect-page-transition-1-0-0][effect=flipRight].backward.previousPage {
   visibility: visible;
+  -moz-transform-origin: 50% 50% 50%;
+  -ms-transform-origin: 50% 50% 50%;
+  -webkit-transform-origin: 50% 50% 50%;
+  transform-origin: 50% 50% 50%;
+  -moz-animation-delay: 0.5s;
+  -webkit-animation-delay: 0.5s;
+  animation-delay: 0.5s;
 }
 [ui-effect-page-transition-1-0-0][effect=flipRight].backward.previousPage + .pageHolder {
   z-index: 1;
+  -moz-transform-origin: 50% 50% 50%;
+  -ms-transform-origin: 50% 50% 50%;
+  -webkit-transform-origin: 50% 50% 50%;
+  transform-origin: 50% 50% 50%;
 }
 [ui-effect-page-transition-1-0-0][effect=flipLeft].forward.currentPage {
   z-index: 1;
@@ -3252,9 +3645,20 @@
 }
 [ui-effect-page-transition-1-0-0][effect=flipLeft].backward.previousPage {
   visibility: visible;
+  -moz-transform-origin: 50% 50% 50%;
+  -ms-transform-origin: 50% 50% 50%;
+  -webkit-transform-origin: 50% 50% 50%;
+  transform-origin: 50% 50% 50%;
+  -moz-animation-delay: 0.5s;
+  -webkit-animation-delay: 0.5s;
+  animation-delay: 0.5s;
 }
 [ui-effect-page-transition-1-0-0][effect=flipLeft].backward.previousPage + .pageHolder {
   z-index: 1;
+  -moz-transform-origin: 50% 50% 50%;
+  -ms-transform-origin: 50% 50% 50%;
+  -webkit-transform-origin: 50% 50% 50%;
+  transform-origin: 50% 50% 50%;
 }
 [ui-effect-page-transition-1-0-0][effect=flipTop].forward.currentPage {
   z-index: 1;
@@ -3275,9 +3679,20 @@
 }
 [ui-effect-page-transition-1-0-0][effect=flipTop].backward.previousPage {
   visibility: visible;
+  -moz-transform-origin: 50% 50% 50%;
+  -ms-transform-origin: 50% 50% 50%;
+  -webkit-transform-origin: 50% 50% 50%;
+  transform-origin: 50% 50% 50%;
+  -moz-animation-delay: 0.5s;
+  -webkit-animation-delay: 0.5s;
+  animation-delay: 0.5s;
 }
 [ui-effect-page-transition-1-0-0][effect=flipTop].backward.previousPage + .pageHolder {
   z-index: 1;
+  -moz-transform-origin: 50% 50% 50%;
+  -ms-transform-origin: 50% 50% 50%;
+  -webkit-transform-origin: 50% 50% 50%;
+  transform-origin: 50% 50% 50%;
 }
 [ui-effect-page-transition-1-0-0][effect=flipBottom].forward.currentPage {
   z-index: 1;
@@ -3298,9 +3713,20 @@
 }
 [ui-effect-page-transition-1-0-0][effect=flipBottom].backward.previousPage {
   visibility: visible;
+  -moz-transform-origin: 50% 50% 50%;
+  -ms-transform-origin: 50% 50% 50%;
+  -webkit-transform-origin: 50% 50% 50%;
+  transform-origin: 50% 50% 50%;
+  -moz-animation-delay: 0.5s;
+  -webkit-animation-delay: 0.5s;
+  animation-delay: 0.5s;
 }
 [ui-effect-page-transition-1-0-0][effect=flipBottom].backward.previousPage + .pageHolder {
   z-index: 1;
+  -moz-transform-origin: 50% 50% 50%;
+  -ms-transform-origin: 50% 50% 50%;
+  -webkit-transform-origin: 50% 50% 50%;
+  transform-origin: 50% 50% 50%;
 }
 [ui-effect-page-transition-1-0-0][effect=fall].forward.currentPage {
   z-index: 1;
@@ -3311,9 +3737,19 @@
 }
 [ui-effect-page-transition-1-0-0][effect=fall].forward + .pageHolder {
   visibility: visible;
+  -moz-animation-delay: 0.7s;
+  -webkit-animation-delay: 0.7s;
+  animation-delay: 0.7s;
 }
 [ui-effect-page-transition-1-0-0][effect=fall].backward.previousPage {
   visibility: visible;
+  -moz-transform-origin: 0% 0% 50%;
+  -ms-transform-origin: 0% 0% 50%;
+  -webkit-transform-origin: 0% 0% 50%;
+  transform-origin: 0% 0% 50%;
+  -moz-animation-delay: 0.7s;
+  -webkit-animation-delay: 0.7s;
+  animation-delay: 0.7s;
 }
 [ui-effect-page-transition-1-0-0][effect=fall].backward.previousPage + .pageHolder {
   z-index: 1;
@@ -3337,9 +3773,20 @@
 }
 [ui-effect-page-transition-1-0-0][effect=newspaper].backward.previousPage {
   visibility: visible;
+  -moz-transform-origin: 50% 50% 50%;
+  -ms-transform-origin: 50% 50% 50%;
+  -webkit-transform-origin: 50% 50% 50%;
+  transform-origin: 50% 50% 50%;
+  -moz-animation-delay: 0.5s;
+  -webkit-animation-delay: 0.5s;
+  animation-delay: 0.5s;
 }
 [ui-effect-page-transition-1-0-0][effect=newspaper].backward.previousPage + .pageHolder {
   z-index: 1;
+  -moz-transform-origin: 50% 50% 50%;
+  -ms-transform-origin: 50% 50% 50%;
+  -webkit-transform-origin: 50% 50% 50%;
+  transform-origin: 50% 50% 50%;
 }
 [ui-effect-page-transition-1-0-0][effect=pushLeftMoveFromRight].forward.currentPage {
   z-index: 1;
@@ -3350,9 +3797,19 @@
 }
 [ui-effect-page-transition-1-0-0][effect=pushLeftMoveFromRight].forward + .pageHolder {
   visibility: visible;
+  -moz-animation-delay: 0.4s;
+  -webkit-animation-delay: 0.4s;
+  animation-delay: 0.4s;
 }
 [ui-effect-page-transition-1-0-0][effect=pushLeftMoveFromRight].backward.previousPage {
   visibility: visible;
+  -moz-transform-origin: 0% 50% 50%;
+  -ms-transform-origin: 0% 50% 50%;
+  -webkit-transform-origin: 0% 50% 50%;
+  transform-origin: 0% 50% 50%;
+  -moz-animation-delay: 0.4s;
+  -webkit-animation-delay: 0.4s;
+  animation-delay: 0.4s;
 }
 [ui-effect-page-transition-1-0-0][effect=pushLeftMoveFromRight].backward.previousPage + .pageHolder {
   z-index: 1;
@@ -3366,9 +3823,19 @@
 }
 [ui-effect-page-transition-1-0-0][effect=pushRightMoveFromLeft].forward + .pageHolder {
   visibility: visible;
+  -moz-animation-delay: 0.4s;
+  -webkit-animation-delay: 0.4s;
+  animation-delay: 0.4s;
 }
 [ui-effect-page-transition-1-0-0][effect=pushRightMoveFromLeft].backward.previousPage {
   visibility: visible;
+  -moz-transform-origin: 0% 50% 50%;
+  -ms-transform-origin: 0% 50% 50%;
+  -webkit-transform-origin: 0% 50% 50%;
+  transform-origin: 0% 50% 50%;
+  -moz-animation-delay: 0.4s;
+  -webkit-animation-delay: 0.4s;
+  animation-delay: 0.4s;
 }
 [ui-effect-page-transition-1-0-0][effect=pushRightMoveFromLeft].backward.previousPage + .pageHolder {
   z-index: 1;
@@ -3382,9 +3849,19 @@
 }
 [ui-effect-page-transition-1-0-0][effect=pushTopMoveFromBottom].forward + .pageHolder {
   visibility: visible;
+  -moz-animation-delay: 0.4s;
+  -webkit-animation-delay: 0.4s;
+  animation-delay: 0.4s;
 }
 [ui-effect-page-transition-1-0-0][effect=pushTopMoveFromBottom].backward.previousPage {
   visibility: visible;
+  -moz-transform-origin: 0% 50% 50%;
+  -ms-transform-origin: 0% 50% 50%;
+  -webkit-transform-origin: 0% 50% 50%;
+  transform-origin: 0% 50% 50%;
+  -moz-animation-delay: 0.4s;
+  -webkit-animation-delay: 0.4s;
+  animation-delay: 0.4s;
 }
 [ui-effect-page-transition-1-0-0][effect=pushTopMoveFromBottom].backward.previousPage + .pageHolder {
   z-index: 1;
@@ -3398,9 +3875,19 @@
 }
 [ui-effect-page-transition-1-0-0][effect=pushBottomMoveFromTop].forward + .pageHolder {
   visibility: visible;
+  -moz-animation-delay: 0.4s;
+  -webkit-animation-delay: 0.4s;
+  animation-delay: 0.4s;
 }
 [ui-effect-page-transition-1-0-0][effect=pushBottomMoveFromTop].backward.previousPage {
   visibility: visible;
+  -moz-transform-origin: 0% 50% 50%;
+  -ms-transform-origin: 0% 50% 50%;
+  -webkit-transform-origin: 0% 50% 50%;
+  transform-origin: 0% 50% 50%;
+  -moz-animation-delay: 0.4s;
+  -webkit-animation-delay: 0.4s;
+  animation-delay: 0.4s;
 }
 [ui-effect-page-transition-1-0-0][effect=pushBottomMoveFromTop].backward.previousPage + .pageHolder {
   z-index: 1;
@@ -3418,15 +3905,26 @@
   -ms-transform-origin: 100% 50% 50%;
   -webkit-transform-origin: 100% 50% 50%;
   transform-origin: 100% 50% 50%;
-  -moz-animation-delay: 0.2s;
-  -webkit-animation-delay: 0.2s;
-  animation-delay: 0.2s;
+  -moz-animation-delay: 0.4s;
+  -webkit-animation-delay: 0.4s;
+  animation-delay: 0.4s;
 }
 [ui-effect-page-transition-1-0-0][effect=pushLeftPullRight].backward.previousPage {
   visibility: visible;
+  -moz-transform-origin: 0% 50% 50%;
+  -ms-transform-origin: 0% 50% 50%;
+  -webkit-transform-origin: 0% 50% 50%;
+  transform-origin: 0% 50% 50%;
+  -moz-animation-delay: 0.4s;
+  -webkit-animation-delay: 0.4s;
+  animation-delay: 0.4s;
 }
 [ui-effect-page-transition-1-0-0][effect=pushLeftPullRight].backward.previousPage + .pageHolder {
   z-index: 1;
+  -moz-transform-origin: 100% 50% 50%;
+  -ms-transform-origin: 100% 50% 50%;
+  -webkit-transform-origin: 100% 50% 50%;
+  transform-origin: 100% 50% 50%;
 }
 [ui-effect-page-transition-1-0-0][effect=pushRightPullLeft].forward.currentPage {
   z-index: 1;
@@ -3441,15 +3939,26 @@
   -ms-transform-origin: 0% 50% 50%;
   -webkit-transform-origin: 0% 50% 50%;
   transform-origin: 0% 50% 50%;
-  -moz-animation-delay: 0.2s;
-  -webkit-animation-delay: 0.2s;
-  animation-delay: 0.2s;
+  -moz-animation-delay: 0.4s;
+  -webkit-animation-delay: 0.4s;
+  animation-delay: 0.4s;
 }
 [ui-effect-page-transition-1-0-0][effect=pushRightPullLeft].backward.previousPage {
   visibility: visible;
+  -moz-transform-origin: 100% 50% 50%;
+  -ms-transform-origin: 100% 50% 50%;
+  -webkit-transform-origin: 100% 50% 50%;
+  transform-origin: 100% 50% 50%;
+  -moz-animation-delay: 0.4s;
+  -webkit-animation-delay: 0.4s;
+  animation-delay: 0.4s;
 }
 [ui-effect-page-transition-1-0-0][effect=pushRightPullLeft].backward.previousPage + .pageHolder {
   z-index: 1;
+  -moz-transform-origin: 0% 50% 50%;
+  -ms-transform-origin: 0% 50% 50%;
+  -webkit-transform-origin: 0% 50% 50%;
+  transform-origin: 0% 50% 50%;
 }
 [ui-effect-page-transition-1-0-0][effect=pushTopPullBottom].forward.currentPage {
   z-index: 1;
@@ -3464,15 +3973,26 @@
   -ms-transform-origin: 50% 100% 50%;
   -webkit-transform-origin: 50% 100% 50%;
   transform-origin: 50% 100% 50%;
-  -moz-animation-delay: 0.2s;
-  -webkit-animation-delay: 0.2s;
-  animation-delay: 0.2s;
+  -moz-animation-delay: 0.4s;
+  -webkit-animation-delay: 0.4s;
+  animation-delay: 0.4s;
 }
 [ui-effect-page-transition-1-0-0][effect=pushTopPullBottom].backward.previousPage {
   visibility: visible;
+  -moz-transform-origin: 50% 0% 50%;
+  -ms-transform-origin: 50% 0% 50%;
+  -webkit-transform-origin: 50% 0% 50%;
+  transform-origin: 50% 0% 50%;
+  -moz-animation-delay: 0.4s;
+  -webkit-animation-delay: 0.4s;
+  animation-delay: 0.4s;
 }
 [ui-effect-page-transition-1-0-0][effect=pushTopPullBottom].backward.previousPage + .pageHolder {
   z-index: 1;
+  -moz-transform-origin: 50% 100% 50%;
+  -ms-transform-origin: 50% 100% 50%;
+  -webkit-transform-origin: 50% 100% 50%;
+  transform-origin: 50% 100% 50%;
 }
 [ui-effect-page-transition-1-0-0][effect=pushBottomPullTop].forward.currentPage {
   z-index: 1;
@@ -3487,15 +4007,26 @@
   -ms-transform-origin: 50% 0% 50%;
   -webkit-transform-origin: 50% 0% 50%;
   transform-origin: 50% 0% 50%;
-  -moz-animation-delay: 0.2s;
-  -webkit-animation-delay: 0.2s;
-  animation-delay: 0.2s;
+  -moz-animation-delay: 0.4s;
+  -webkit-animation-delay: 0.4s;
+  animation-delay: 0.4s;
 }
 [ui-effect-page-transition-1-0-0][effect=pushBottomPullTop].backward.previousPage {
   visibility: visible;
+  -moz-transform-origin: 50% 100% 50%;
+  -ms-transform-origin: 50% 100% 50%;
+  -webkit-transform-origin: 50% 100% 50%;
+  transform-origin: 50% 100% 50%;
+  -moz-animation-delay: 0.4s;
+  -webkit-animation-delay: 0.4s;
+  animation-delay: 0.4s;
 }
 [ui-effect-page-transition-1-0-0][effect=pushBottomPullTop].backward.previousPage + .pageHolder {
   z-index: 1;
+  -moz-transform-origin: 50% 0% 50%;
+  -ms-transform-origin: 50% 0% 50%;
+  -webkit-transform-origin: 50% 0% 50%;
+  transform-origin: 50% 0% 50%;
 }
 [ui-effect-page-transition-1-0-0][effect=foldLeftMoveFromRight].forward.currentPage {
   z-index: 1;
@@ -3506,9 +4037,19 @@
 }
 [ui-effect-page-transition-1-0-0][effect=foldLeftMoveFromRight].forward + .pageHolder {
   visibility: visible;
+  -moz-animation-delay: 0.4s;
+  -webkit-animation-delay: 0.4s;
+  animation-delay: 0.4s;
 }
 [ui-effect-page-transition-1-0-0][effect=foldLeftMoveFromRight].backward.previousPage {
   visibility: visible;
+  -moz-transform-origin: 100% 50% 50%;
+  -ms-transform-origin: 100% 50% 50%;
+  -webkit-transform-origin: 100% 50% 50%;
+  transform-origin: 100% 50% 50%;
+  -moz-animation-delay: 0.4s;
+  -webkit-animation-delay: 0.4s;
+  animation-delay: 0.4s;
 }
 [ui-effect-page-transition-1-0-0][effect=foldLeftMoveFromRight].backward.previousPage + .pageHolder {
   z-index: 1;
@@ -3522,9 +4063,19 @@
 }
 [ui-effect-page-transition-1-0-0][effect=foldRightMoveFromLeft].forward + .pageHolder {
   visibility: visible;
+  -moz-animation-delay: 0.4s;
+  -webkit-animation-delay: 0.4s;
+  animation-delay: 0.4s;
 }
 [ui-effect-page-transition-1-0-0][effect=foldRightMoveFromLeft].backward.previousPage {
   visibility: visible;
+  -moz-transform-origin: 0% 50% 50%;
+  -ms-transform-origin: 0% 50% 50%;
+  -webkit-transform-origin: 0% 50% 50%;
+  transform-origin: 0% 50% 50%;
+  -moz-animation-delay: 0.4s;
+  -webkit-animation-delay: 0.4s;
+  animation-delay: 0.4s;
 }
 [ui-effect-page-transition-1-0-0][effect=foldRightMoveFromLeft].backward.previousPage + .pageHolder {
   z-index: 1;
@@ -3538,9 +4089,19 @@
 }
 [ui-effect-page-transition-1-0-0][effect=foldTopMoveFromBottom].forward + .pageHolder {
   visibility: visible;
+  -moz-animation-delay: 0.4s;
+  -webkit-animation-delay: 0.4s;
+  animation-delay: 0.4s;
 }
 [ui-effect-page-transition-1-0-0][effect=foldTopMoveFromBottom].backward.previousPage {
   visibility: visible;
+  -moz-transform-origin: 50% 100% 50%;
+  -ms-transform-origin: 50% 100% 50%;
+  -webkit-transform-origin: 50% 100% 50%;
+  transform-origin: 50% 100% 50%;
+  -moz-animation-delay: 0.4s;
+  -webkit-animation-delay: 0.4s;
+  animation-delay: 0.4s;
 }
 [ui-effect-page-transition-1-0-0][effect=foldTopMoveFromBottom].backward.previousPage + .pageHolder {
   z-index: 1;
@@ -3554,9 +4115,19 @@
 }
 [ui-effect-page-transition-1-0-0][effect=foldBottomMoveFromTop].forward + .pageHolder {
   visibility: visible;
+  -moz-animation-delay: 0.4s;
+  -webkit-animation-delay: 0.4s;
+  animation-delay: 0.4s;
 }
 [ui-effect-page-transition-1-0-0][effect=foldBottomMoveFromTop].backward.previousPage {
   visibility: visible;
+  -moz-transform-origin: 50% 0% 50%;
+  -ms-transform-origin: 50% 0% 50%;
+  -webkit-transform-origin: 50% 0% 50%;
+  transform-origin: 50% 0% 50%;
+  -moz-animation-delay: 0.4s;
+  -webkit-animation-delay: 0.4s;
+  animation-delay: 0.4s;
 }
 [ui-effect-page-transition-1-0-0][effect=foldBottomMoveFromTop].backward.previousPage + .pageHolder {
   z-index: 1;
@@ -3570,12 +4141,22 @@
   -ms-transform-origin: 100% 50% 50%;
   -webkit-transform-origin: 100% 50% 50%;
   transform-origin: 100% 50% 50%;
+  -moz-animation-delay: 0.4s;
+  -webkit-animation-delay: 0.4s;
+  animation-delay: 0.4s;
 }
 [ui-effect-page-transition-1-0-0][effect=moveToRightUnfoldLeft].backward.previousPage {
   visibility: visible;
+  -moz-animation-delay: 0.4s;
+  -webkit-animation-delay: 0.4s;
+  animation-delay: 0.4s;
 }
 [ui-effect-page-transition-1-0-0][effect=moveToRightUnfoldLeft].backward.previousPage + .pageHolder {
   z-index: 1;
+  -moz-transform-origin: 100% 50% 50%;
+  -ms-transform-origin: 100% 50% 50%;
+  -webkit-transform-origin: 100% 50% 50%;
+  transform-origin: 100% 50% 50%;
 }
 [ui-effect-page-transition-1-0-0][effect=moveToLeftUnfoldRight].forward.currentPage {
   z-index: 1;
@@ -3586,12 +4167,22 @@
   -ms-transform-origin: 0% 50% 50%;
   -webkit-transform-origin: 0% 50% 50%;
   transform-origin: 0% 50% 50%;
+  -moz-animation-delay: 0.4s;
+  -webkit-animation-delay: 0.4s;
+  animation-delay: 0.4s;
 }
 [ui-effect-page-transition-1-0-0][effect=moveToLeftUnfoldRight].backward.previousPage {
   visibility: visible;
+  -moz-animation-delay: 0.4s;
+  -webkit-animation-delay: 0.4s;
+  animation-delay: 0.4s;
 }
 [ui-effect-page-transition-1-0-0][effect=moveToLeftUnfoldRight].backward.previousPage + .pageHolder {
   z-index: 1;
+  -moz-transform-origin: 0% 50% 50%;
+  -ms-transform-origin: 0% 50% 50%;
+  -webkit-transform-origin: 0% 50% 50%;
+  transform-origin: 0% 50% 50%;
 }
 [ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop].forward.currentPage {
   z-index: 1;
@@ -3602,12 +4193,22 @@
   -ms-transform-origin: 50% 100% 50%;
   -webkit-transform-origin: 50% 100% 50%;
   transform-origin: 50% 100% 50%;
+  -moz-animation-delay: 0.4s;
+  -webkit-animation-delay: 0.4s;
+  animation-delay: 0.4s;
 }
 [ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop].backward.previousPage {
   visibility: visible;
+  -moz-animation-delay: 0.4s;
+  -webkit-animation-delay: 0.4s;
+  animation-delay: 0.4s;
 }
 [ui-effect-page-transition-1-0-0][effect=moveToBottomUnfoldTop].backward.previousPage + .pageHolder {
   z-index: 1;
+  -moz-transform-origin: 50% 100% 50%;
+  -ms-transform-origin: 50% 100% 50%;
+  -webkit-transform-origin: 50% 100% 50%;
+  transform-origin: 50% 100% 50%;
 }
 [ui-effect-page-transition-1-0-0][effect=moveToTopUnfoldBottom].forward.currentPage {
   z-index: 1;
@@ -3618,12 +4219,22 @@
   -ms-transform-origin: 50% 0% 50%;
   -webkit-transform-origin: 50% 0% 50%;
   transform-origin: 50% 0% 50%;
+  -moz-animation-delay: 0.4s;
+  -webkit-animation-delay: 0.4s;
+  animation-delay: 0.4s;
 }
 [ui-effect-page-transition-1-0-0][effect=moveToTopUnfoldBottom].backward.previousPage {
   visibility: visible;
+  -moz-animation-delay: 0.4s;
+  -webkit-animation-delay: 0.4s;
+  animation-delay: 0.4s;
 }
 [ui-effect-page-transition-1-0-0][effect=moveToTopUnfoldBottom].backward.previousPage + .pageHolder {
   z-index: 1;
+  -moz-transform-origin: 50% 0% 50%;
+  -ms-transform-origin: 50% 0% 50%;
+  -webkit-transform-origin: 50% 0% 50%;
+  transform-origin: 50% 0% 50%;
 }
 [ui-effect-page-transition-1-0-0][effect=roomToLeft].forward.currentPage {
   z-index: 1;
@@ -3641,9 +4252,17 @@
 }
 [ui-effect-page-transition-1-0-0][effect=roomToLeft].backward.previousPage {
   visibility: visible;
+  -moz-transform-origin: 100% 50% 50%;
+  -ms-transform-origin: 100% 50% 50%;
+  -webkit-transform-origin: 100% 50% 50%;
+  transform-origin: 100% 50% 50%;
 }
 [ui-effect-page-transition-1-0-0][effect=roomToLeft].backward.previousPage + .pageHolder {
   z-index: 1;
+  -moz-transform-origin: 0% 50% 50%;
+  -ms-transform-origin: 0% 50% 50%;
+  -webkit-transform-origin: 0% 50% 50%;
+  transform-origin: 0% 50% 50%;
 }
 [ui-effect-page-transition-1-0-0][effect=roomToRight].forward.currentPage {
   z-index: 1;
@@ -3661,9 +4280,17 @@
 }
 [ui-effect-page-transition-1-0-0][effect=roomToRight].backward.previousPage {
   visibility: visible;
+  -moz-transform-origin: 0% 50% 50%;
+  -ms-transform-origin: 0% 50% 50%;
+  -webkit-transform-origin: 0% 50% 50%;
+  transform-origin: 0% 50% 50%;
 }
 [ui-effect-page-transition-1-0-0][effect=roomToRight].backward.previousPage + .pageHolder {
   z-index: 1;
+  -moz-transform-origin: 100% 50% 50%;
+  -ms-transform-origin: 100% 50% 50%;
+  -webkit-transform-origin: 100% 50% 50%;
+  transform-origin: 100% 50% 50%;
 }
 [ui-effect-page-transition-1-0-0][effect=roomToTop].forward.currentPage {
   z-index: 1;
@@ -3681,9 +4308,17 @@
 }
 [ui-effect-page-transition-1-0-0][effect=roomToTop].backward.previousPage {
   visibility: visible;
+  -moz-transform-origin: 50% 100% 50%;
+  -ms-transform-origin: 50% 100% 50%;
+  -webkit-transform-origin: 50% 100% 50%;
+  transform-origin: 50% 100% 50%;
 }
 [ui-effect-page-transition-1-0-0][effect=roomToTop].backward.previousPage + .pageHolder {
   z-index: 1;
+  -moz-transform-origin: 50% 0% 50%;
+  -ms-transform-origin: 50% 0% 50%;
+  -webkit-transform-origin: 50% 0% 50%;
+  transform-origin: 50% 0% 50%;
 }
 [ui-effect-page-transition-1-0-0][effect=roomToBottom].forward.currentPage {
   z-index: 1;
@@ -3701,9 +4336,17 @@
 }
 [ui-effect-page-transition-1-0-0][effect=roomToBottom].backward.previousPage {
   visibility: visible;
+  -moz-transform-origin: 50% 0% 50%;
+  -ms-transform-origin: 50% 0% 50%;
+  -webkit-transform-origin: 50% 0% 50%;
+  transform-origin: 50% 0% 50%;
 }
 [ui-effect-page-transition-1-0-0][effect=roomToBottom].backward.previousPage + .pageHolder {
   z-index: 1;
+  -moz-transform-origin: 50% 100% 50%;
+  -ms-transform-origin: 50% 100% 50%;
+  -webkit-transform-origin: 50% 100% 50%;
+  transform-origin: 50% 100% 50%;
 }
 [ui-effect-page-transition-1-0-0][effect=cubeToLeft].forward.currentPage {
   z-index: 1;
@@ -3721,9 +4364,17 @@
 }
 [ui-effect-page-transition-1-0-0][effect=cubeToLeft].backward.previousPage {
   visibility: visible;
+  -moz-transform-origin: 100% 50% 50%;
+  -ms-transform-origin: 100% 50% 50%;
+  -webkit-transform-origin: 100% 50% 50%;
+  transform-origin: 100% 50% 50%;
 }
 [ui-effect-page-transition-1-0-0][effect=cubeToLeft].backward.previousPage + .pageHolder {
   z-index: 1;
+  -moz-transform-origin: 0% 50% 50%;
+  -ms-transform-origin: 0% 50% 50%;
+  -webkit-transform-origin: 0% 50% 50%;
+  transform-origin: 0% 50% 50%;
 }
 [ui-effect-page-transition-1-0-0][effect=cubeToRight].forward.currentPage {
   z-index: 1;
@@ -3741,9 +4392,17 @@
 }
 [ui-effect-page-transition-1-0-0][effect=cubeToRight].backward.previousPage {
   visibility: visible;
+  -moz-transform-origin: 0% 50% 50%;
+  -ms-transform-origin: 0% 50% 50%;
+  -webkit-transform-origin: 0% 50% 50%;
+  transform-origin: 0% 50% 50%;
 }
 [ui-effect-page-transition-1-0-0][effect=cubeToRight].backward.previousPage + .pageHolder {
   z-index: 1;
+  -moz-transform-origin: 100% 50% 50%;
+  -ms-transform-origin: 100% 50% 50%;
+  -webkit-transform-origin: 100% 50% 50%;
+  transform-origin: 100% 50% 50%;
 }
 [ui-effect-page-transition-1-0-0][effect=cubeToTop].forward.currentPage {
   z-index: 1;
@@ -3761,9 +4420,17 @@
 }
 [ui-effect-page-transition-1-0-0][effect=cubeToTop].backward.previousPage {
   visibility: visible;
+  -moz-transform-origin: 50% 100% 50%;
+  -ms-transform-origin: 50% 100% 50%;
+  -webkit-transform-origin: 50% 100% 50%;
+  transform-origin: 50% 100% 50%;
 }
 [ui-effect-page-transition-1-0-0][effect=cubeToTop].backward.previousPage + .pageHolder {
   z-index: 1;
+  -moz-transform-origin: 50% 0% 50%;
+  -ms-transform-origin: 50% 0% 50%;
+  -webkit-transform-origin: 50% 0% 50%;
+  transform-origin: 50% 0% 50%;
 }
 [ui-effect-page-transition-1-0-0][effect=cubeToBottom].forward.currentPage {
   z-index: 1;
@@ -3781,9 +4448,17 @@
 }
 [ui-effect-page-transition-1-0-0][effect=cubeToBottom].backward.previousPage {
   visibility: visible;
+  -moz-transform-origin: 50% 0% 50%;
+  -ms-transform-origin: 50% 0% 50%;
+  -webkit-transform-origin: 50% 0% 50%;
+  transform-origin: 50% 0% 50%;
 }
 [ui-effect-page-transition-1-0-0][effect=cubeToBottom].backward.previousPage + .pageHolder {
   z-index: 1;
+  -moz-transform-origin: 50% 100% 50%;
+  -ms-transform-origin: 50% 100% 50%;
+  -webkit-transform-origin: 50% 100% 50%;
+  transform-origin: 50% 100% 50%;
 }
 [ui-effect-page-transition-1-0-0][effect=carouselToLeft].forward.currentPage {
   z-index: 1;
@@ -3801,9 +4476,17 @@
 }
 [ui-effect-page-transition-1-0-0][effect=carouselToLeft].backward.previousPage {
   visibility: visible;
+  -moz-transform-origin: 100% 50% 50%;
+  -ms-transform-origin: 100% 50% 50%;
+  -webkit-transform-origin: 100% 50% 50%;
+  transform-origin: 100% 50% 50%;
 }
 [ui-effect-page-transition-1-0-0][effect=carouselToLeft].backward.previousPage + .pageHolder {
   z-index: 1;
+  -moz-transform-origin: 0% 50% 50%;
+  -ms-transform-origin: 0% 50% 50%;
+  -webkit-transform-origin: 0% 50% 50%;
+  transform-origin: 0% 50% 50%;
 }
 [ui-effect-page-transition-1-0-0][effect=carouselToRight].forward.currentPage {
   z-index: 1;
@@ -3821,9 +4504,17 @@
 }
 [ui-effect-page-transition-1-0-0][effect=carouselToRight].backward.previousPage {
   visibility: visible;
+  -moz-transform-origin: 0% 50% 50%;
+  -ms-transform-origin: 0% 50% 50%;
+  -webkit-transform-origin: 0% 50% 50%;
+  transform-origin: 0% 50% 50%;
 }
 [ui-effect-page-transition-1-0-0][effect=carouselToRight].backward.previousPage + .pageHolder {
   z-index: 1;
+  -moz-transform-origin: 100% 50% 50%;
+  -ms-transform-origin: 100% 50% 50%;
+  -webkit-transform-origin: 100% 50% 50%;
+  transform-origin: 100% 50% 50%;
 }
 [ui-effect-page-transition-1-0-0][effect=carouselToTop].forward.currentPage {
   z-index: 1;
@@ -3841,9 +4532,17 @@
 }
 [ui-effect-page-transition-1-0-0][effect=carouselToTop].backward.previousPage {
   visibility: visible;
+  -moz-transform-origin: 50% 100% 50%;
+  -ms-transform-origin: 50% 100% 50%;
+  -webkit-transform-origin: 50% 100% 50%;
+  transform-origin: 50% 100% 50%;
 }
 [ui-effect-page-transition-1-0-0][effect=carouselToTop].backward.previousPage + .pageHolder {
   z-index: 1;
+  -moz-transform-origin: 50% 0% 50%;
+  -ms-transform-origin: 50% 0% 50%;
+  -webkit-transform-origin: 50% 0% 50%;
+  transform-origin: 50% 0% 50%;
 }
 [ui-effect-page-transition-1-0-0][effect=carouselToBottom].forward.currentPage {
   z-index: 1;
@@ -3861,32 +4560,17 @@
 }
 [ui-effect-page-transition-1-0-0][effect=carouselToBottom].backward.previousPage {
   visibility: visible;
+  -moz-transform-origin: 50% 0% 50%;
+  -ms-transform-origin: 50% 0% 50%;
+  -webkit-transform-origin: 50% 0% 50%;
+  transform-origin: 50% 0% 50%;
 }
 [ui-effect-page-transition-1-0-0][effect=carouselToBottom].backward.previousPage + .pageHolder {
   z-index: 1;
-}
-[ui-effect-page-transition-1-0-0][effect=sides].forward.currentPage {
-  z-index: 1;
-  -moz-transform-origin: -50% 50% 50%;
-  -ms-transform-origin: -50% 50% 50%;
-  -webkit-transform-origin: -50% 50% 50%;
-  transform-origin: -50% 50% 50%;
-}
-[ui-effect-page-transition-1-0-0][effect=sides].forward + .pageHolder {
-  visibility: visible;
-  -moz-transform-origin: 150% 50% 50%;
-  -ms-transform-origin: 150% 50% 50%;
-  -webkit-transform-origin: 150% 50% 50%;
-  transform-origin: 150% 50% 50%;
-  -moz-animation-delay: 0.2s;
-  -webkit-animation-delay: 0.2s;
-  animation-delay: 0.2s;
-}
-[ui-effect-page-transition-1-0-0][effect=sides].backward.previousPage {
-  visibility: visible;
-}
-[ui-effect-page-transition-1-0-0][effect=sides].backward.previousPage + .pageHolder {
-  z-index: 1;
+  -moz-transform-origin: 50% 100% 50%;
+  -ms-transform-origin: 50% 100% 50%;
+  -webkit-transform-origin: 50% 100% 50%;
+  transform-origin: 50% 100% 50%;
 }
 [ui-effect-page-transition-1-0-0][effect=slide].forward.currentPage {
   z-index: 1;

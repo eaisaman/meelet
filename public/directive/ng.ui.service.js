@@ -4448,6 +4448,7 @@ define(
                                 $current.removeClass("forward");
                                 $current.removeAttr("effect");
                                 fullName && $current.removeAttr(fullName);
+                                $next.css("visibility", "");
                                 self.setCurrentPage(pageObj.nextSibling);
 
                                 return self.uiUtilService.getResolveDefer();
@@ -4487,7 +4488,6 @@ define(
                         $prev.addClass("backward previousPage");
 
                         if (pageObj.pageTransition) {
-                            $current.removeClass("currentPage");
                             hasAnimation = pageObj.pageTransition.effect.type === "Animation";
 
                             fullName = pageObj.pageTransition.artifactSpec.directiveName;
@@ -4508,6 +4508,7 @@ define(
                                 $prev.removeClass("backward previousPage");
                                 $prev.removeAttr("effect");
                                 fullName && $prev.removeAttr(fullName);
+                                $prev.css("visibility", "");
                                 self.setCurrentPage(pageObj.prevSibling);
 
                                 return self.uiUtilService.getResolveDefer();

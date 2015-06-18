@@ -436,11 +436,11 @@
             &.backward {
                 &.previousPage {
                     visibility: visible;
-                    @extend %_effect_pageTransition_scaleDown;
+                    @extend %_effect_pageTransition_moveFromLeft;
 
                     & + .pageHolder {
                         z-index: 1;
-                        @extend %_effect_pageTransition_moveFromLeft;
+                        @extend %_effect_pageTransition_scaleDown;
                     }
                 }
             }
@@ -462,11 +462,11 @@
             &.backward {
                 &.previousPage {
                     visibility: visible;
-                    @extend %_effect_pageTransition_scaleDown;
+                    @extend %_effect_pageTransition_moveFromRight;
 
                     & + .pageHolder {
                         z-index: 1;
-                        @extend %_effect_pageTransition_moveFromRight;
+                        @extend %_effect_pageTransition_scaleDown;
                     }
                 }
             }
@@ -488,11 +488,11 @@
             &.backward {
                 &.previousPage {
                     visibility: visible;
-                    @extend %_effect_pageTransition_scaleDown;
+                    @extend %_effect_pageTransition_moveFromTop;
 
                     & + .pageHolder {
                         z-index: 1;
-                        @extend %_effect_pageTransition_moveFromTop;
+                        @extend %_effect_pageTransition_scaleDown;
                     }
                 }
             }
@@ -514,11 +514,11 @@
             &.backward {
                 &.previousPage {
                     visibility: visible;
-                    @extend %_effect_pageTransition_scaleDown;
+                    @extend %_effect_pageTransition_moveFromBottom;
 
                     & + .pageHolder {
                         z-index: 1;
-                        @extend %_effect_pageTransition_moveFromBottom;
+                        @extend %_effect_pageTransition_scaleDown;
                     }
                 }
             }
@@ -541,12 +541,12 @@
             &.backward {
                 &.previousPage {
                     visibility: visible;
-                    @extend %_effect_pageTransition_scaleDownUp;
+                    @extend %_effect_pageTransition_scaleUpDown;
+                    @include animation-delay(.3s);
 
                     & + .pageHolder {
                         z-index: 1;
-                        @extend %_effect_pageTransition_scaleUp;
-                        @include animation-delay(.3s);
+                        @extend %_effect_pageTransition_scaleDown;
                     }
                 }
             }
@@ -569,12 +569,12 @@
             &.backward {
                 &.previousPage {
                     visibility: visible;
-                    @extend %_effect_pageTransition_scaleDown;
+                    @extend %_effect_pageTransition_scaleUp;
+                    @include animation-delay(.3s);
 
                     & + .pageHolder {
                         z-index: 1;
-                        @extend %_effect_pageTransition_scaleUpDown;
-                        @include animation-delay(.3s);
+                        @extend %_effect_pageTransition_scaleDownUp;
                     }
                 }
             }
@@ -596,7 +596,7 @@
             &.backward {
                 &.previousPage {
                     visibility: visible;
-                    @extend %_effect_pageTransition_scaleDown;
+                    @extend %_effect_pageTransition_scaleUp;
 
                     & + .pageHolder {
                         z-index: 1;
@@ -622,7 +622,7 @@
             &.backward {
                 &.previousPage {
                     visibility: visible;
-                    @extend %_effect_pageTransition_scaleDown;
+                    @extend %_effect_pageTransition_scaleUp;
 
                     & + .pageHolder {
                         z-index: 1;
@@ -648,7 +648,7 @@
             &.backward {
                 &.previousPage {
                     visibility: visible;
-                    @extend %_effect_pageTransition_scaleDown;
+                    @extend %_effect_pageTransition_scaleUp;
 
                     & + .pageHolder {
                         z-index: 1;
@@ -674,7 +674,7 @@
             &.backward {
                 &.previousPage {
                     visibility: visible;
-                    @extend %_effect_pageTransition_scaleDown;
+                    @extend %_effect_pageTransition_scaleUp;
 
                     & + .pageHolder {
                         z-index: 1;
@@ -702,11 +702,11 @@
                 &.previousPage {
                     visibility: visible;
                     @extend %_effect_pageTransition_scaleUpCenter;
+                    @include animation-delay(.4s);
 
                     & + .pageHolder {
                         z-index: 1;
                         @extend %_effect_pageTransition_scaleDownCenter;
-                        @include animation-delay(.4s);
                     }
                 }
             }
@@ -732,11 +732,13 @@
             &.backward {
                 &.previousPage {
                     visibility: visible;
-                    @extend %_effect_pageTransition_moveToTopEasing;
+                    @extend %_effect_pageTransition_reverseRotateRightSideFirst;
+                    @include transform-origin(0% 50%);
+                    @include animation-delay(.2s);
 
                     & + .pageHolder {
                         z-index: 1;
-                        @extend %_effect_pageTransition_moveFromBottom;
+                        @extend %_effect_pageTransition_moveToRight;
                     }
                 }
             }
@@ -760,11 +762,13 @@
             &.backward {
                 &.previousPage {
                     visibility: visible;
-                    @extend %_effect_pageTransition_moveToTopEasing;
+                    @extend %_effect_pageTransition_reverseRotateLeftSideFirst;
+                    @include transform-origin(100% 50%);
+                    @include animation-delay(.2s);
 
                     & + .pageHolder {
                         z-index: 1;
-                        @extend %_effect_pageTransition_moveFromBottom;
+                        @extend %_effect_pageTransition_moveToLeft;
                     }
                 }
             }
@@ -788,11 +792,13 @@
             &.backward {
                 &.previousPage {
                     visibility: visible;
-                    @extend %_effect_pageTransition_moveToTopEasing;
+                    @extend %_effect_pageTransition_reverseRotateTopSideFirst;
+                    @include transform-origin(50% 100%);
+                    @include animation-delay(.2s);
 
                     & + .pageHolder {
                         z-index: 1;
-                        @extend %_effect_pageTransition_moveFromBottom;
+                        @extend %_effect_pageTransition_moveToTop;
                     }
                 }
             }
@@ -816,11 +822,13 @@
             &.backward {
                 &.previousPage {
                     visibility: visible;
-                    @extend %_effect_pageTransition_moveToTopEasing;
+                    @extend %_effect_pageTransition_reverseRotateBottomSideFirst;
+                    @include transform-origin(50% 0%);
+                    @include animation-delay(.2s);
 
                     & + .pageHolder {
                         z-index: 1;
-                        @extend %_effect_pageTransition_moveFromBottom;
+                        @extend %_effect_pageTransition_moveToBottom;
                     }
                 }
             }
@@ -846,11 +854,14 @@
             &.backward {
                 &.previousPage {
                     visibility: visible;
-                    @extend %_effect_pageTransition_moveToTopEasing;
+                    @extend %_effect_pageTransition_flipInRight;
+                    @include transform-origin(50% 50%);
+                    @include animation-delay(.5s);
 
                     & + .pageHolder {
                         z-index: 1;
-                        @extend %_effect_pageTransition_moveFromBottom;
+                        @extend %_effect_pageTransition_flipOutLeft;
+                        @include transform-origin(50% 50%);
                     }
                 }
             }
@@ -875,11 +886,14 @@
             &.backward {
                 &.previousPage {
                     visibility: visible;
-                    @extend %_effect_pageTransition_moveToTopEasing;
+                    @extend %_effect_pageTransition_flipInLeft;
+                    @include transform-origin(50% 50%);
+                    @include animation-delay(.5s);
 
                     & + .pageHolder {
                         z-index: 1;
-                        @extend %_effect_pageTransition_moveFromBottom;
+                        @extend %_effect_pageTransition_flipOutRight;
+                        @include transform-origin(50% 50%);
                     }
                 }
             }
@@ -904,11 +918,14 @@
             &.backward {
                 &.previousPage {
                     visibility: visible;
-                    @extend %_effect_pageTransition_moveToTopEasing;
+                    @extend %_effect_pageTransition_flipInTop;
+                    @include transform-origin(50% 50%);
+                    @include animation-delay(.5s);
 
                     & + .pageHolder {
                         z-index: 1;
-                        @extend %_effect_pageTransition_moveFromBottom;
+                        @extend %_effect_pageTransition_flipOutBottom;
+                        @include transform-origin(50% 50%);
                     }
                 }
             }
@@ -933,11 +950,14 @@
             &.backward {
                 &.previousPage {
                     visibility: visible;
-                    @extend %_effect_pageTransition_moveToTopEasing;
+                    @extend %_effect_pageTransition_flipInBottom;
+                    @include transform-origin(50% 50%);
+                    @include animation-delay(.5s);
 
                     & + .pageHolder {
                         z-index: 1;
-                        @extend %_effect_pageTransition_moveFromBottom;
+                        @extend %_effect_pageTransition_flipOutTop;
+                        @include transform-origin(50% 50%);
                     }
                 }
             }
@@ -955,17 +975,20 @@
                 & + .pageHolder {
                     visibility: visible;
                     @extend %_effect_pageTransition_scaleUp;
+                    @include animation-delay(0.7s);
                 }
             }
 
             &.backward {
                 &.previousPage {
                     visibility: visible;
-                    @extend %_effect_pageTransition_moveToTopEasing;
+                    @extend %_effect_pageTransition_reverseRotateFall;
+                    @include transform-origin(0% 0%);
+                    @include animation-delay(0.7s);
 
                     & + .pageHolder {
                         z-index: 1;
-                        @extend %_effect_pageTransition_moveFromBottom;
+                        @extend %_effect_pageTransition_scaleDown;
                     }
                 }
             }
@@ -991,11 +1014,14 @@
             &.backward {
                 &.previousPage {
                     visibility: visible;
-                    @extend %_effect_pageTransition_moveToTopEasing;
+                    @extend %_effect_pageTransition_reverseRotateOutNewspaper;
+                    @include transform-origin(50% 50%);
+                    @include animation-delay(.5s);
 
                     & + .pageHolder {
                         z-index: 1;
-                        @extend %_effect_pageTransition_moveFromBottom;
+                        @extend %_effect_pageTransition_reverseRotateInNewspaper;
+                        @include transform-origin(50% 50%);
                     }
                 }
             }
@@ -1013,17 +1039,20 @@
                 & + .pageHolder {
                     visibility: visible;
                     @extend %_effect_pageTransition_moveFromRight;
+                    @include animation-delay(.4s);
                 }
             }
 
             &.backward {
                 &.previousPage {
                     visibility: visible;
-                    @extend %_effect_pageTransition_moveToTopEasing;
+                    @extend %_effect_pageTransition_rotatePullLeft;
+                    @include transform-origin(0% 50%);
+                    @include animation-delay(.4s);
 
                     & + .pageHolder {
                         z-index: 1;
-                        @extend %_effect_pageTransition_moveFromBottom;
+                        @extend %_effect_pageTransition_moveToRight;
                     }
                 }
             }
@@ -1040,17 +1069,20 @@
                 & + .pageHolder {
                     visibility: visible;
                     @extend %_effect_pageTransition_moveFromLeft;
+                    @include animation-delay(.4s);
                 }
             }
 
             &.backward {
                 &.previousPage {
                     visibility: visible;
-                    @extend %_effect_pageTransition_moveToTopEasing;
+                    @extend %_effect_pageTransition_rotatePullRight;
+                    @include transform-origin(0% 50%);
+                    @include animation-delay(.4s);
 
                     & + .pageHolder {
                         z-index: 1;
-                        @extend %_effect_pageTransition_moveFromBottom;
+                        @extend %_effect_pageTransition_moveToLeft;
                     }
                 }
             }
@@ -1067,17 +1099,20 @@
                 & + .pageHolder {
                     visibility: visible;
                     @extend %_effect_pageTransition_moveFromBottom;
+                    @include animation-delay(.4s);
                 }
             }
 
             &.backward {
                 &.previousPage {
                     visibility: visible;
-                    @extend %_effect_pageTransition_moveToTopEasing;
+                    @extend %_effect_pageTransition_rotatePullTop;
+                    @include transform-origin(0% 50%);
+                    @include animation-delay(.4s);
 
                     & + .pageHolder {
                         z-index: 1;
-                        @extend %_effect_pageTransition_moveFromBottom;
+                        @extend %_effect_pageTransition_moveToBottom;
                     }
                 }
             }
@@ -1094,17 +1129,20 @@
                 & + .pageHolder {
                     visibility: visible;
                     @extend %_effect_pageTransition_moveFromTop;
+                    @include animation-delay(.4s);
                 }
             }
 
             &.backward {
                 &.previousPage {
                     visibility: visible;
-                    @extend %_effect_pageTransition_moveToTopEasing;
+                    @extend %_effect_pageTransition_rotatePullBottom;
+                    @include transform-origin(0% 50%);
+                    @include animation-delay(.4s);
 
                     & + .pageHolder {
                         z-index: 1;
-                        @extend %_effect_pageTransition_moveFromBottom;
+                        @extend %_effect_pageTransition_moveToTop;
                     }
                 }
             }
@@ -1122,18 +1160,21 @@
                     visibility: visible;
                     @extend %_effect_pageTransition_rotatePullRight;
                     @include transform-origin(100% 50%);
-                    @include animation-delay(.2s);
+                    @include animation-delay(.4s);
                 }
             }
 
             &.backward {
                 &.previousPage {
                     visibility: visible;
-                    @extend %_effect_pageTransition_moveToTopEasing;
+                    @extend %_effect_pageTransition_rotatePullLeft;
+                    @include transform-origin(0% 50%);
+                    @include animation-delay(.4s);
 
                     & + .pageHolder {
                         z-index: 1;
-                        @extend %_effect_pageTransition_moveFromBottom;
+                        @extend %_effect_pageTransition_rotatePushRight;
+                        @include transform-origin(100% 50%);
                     }
                 }
             }
@@ -1151,18 +1192,21 @@
                     visibility: visible;
                     @extend %_effect_pageTransition_rotatePullLeft;
                     @include transform-origin(0% 50%);
-                    @include animation-delay(.2s);
+                    @include animation-delay(.4s);
                 }
             }
 
             &.backward {
                 &.previousPage {
                     visibility: visible;
-                    @extend %_effect_pageTransition_moveToTopEasing;
+                    @extend %_effect_pageTransition_rotatePullRight;
+                    @include transform-origin(100% 50%);
+                    @include animation-delay(.4s);
 
                     & + .pageHolder {
                         z-index: 1;
-                        @extend %_effect_pageTransition_moveFromBottom;
+                        @extend %_effect_pageTransition_rotatePushLeft;
+                        @include transform-origin(0% 50%);
                     }
                 }
             }
@@ -1180,18 +1224,21 @@
                     visibility: visible;
                     @extend %_effect_pageTransition_rotatePullBottom;
                     @include transform-origin(50% 100%);
-                    @include animation-delay(.2s);
+                    @include animation-delay(.4s);
                 }
             }
 
             &.backward {
                 &.previousPage {
                     visibility: visible;
-                    @extend %_effect_pageTransition_moveToTopEasing;
+                    @extend %_effect_pageTransition_rotatePullTop;
+                    @include transform-origin(50% 0%);
+                    @include animation-delay(.4s);
 
                     & + .pageHolder {
                         z-index: 1;
-                        @extend %_effect_pageTransition_moveFromBottom;
+                        @extend %_effect_pageTransition_rotatePushBottom;
+                        @include transform-origin(50% 100%);
                     }
                 }
             }
@@ -1209,18 +1256,21 @@
                     visibility: visible;
                     @extend %_effect_pageTransition_rotatePullTop;
                     @include transform-origin(50% 0%);
-                    @include animation-delay(.2s);
+                    @include animation-delay(.4s);
                 }
             }
 
             &.backward {
                 &.previousPage {
                     visibility: visible;
-                    @extend %_effect_pageTransition_moveToTopEasing;
+                    @extend %_effect_pageTransition_rotatePullBottom;
+                    @include transform-origin(50% 100%);
+                    @include animation-delay(.4s);
 
                     & + .pageHolder {
                         z-index: 1;
-                        @extend %_effect_pageTransition_moveFromBottom;
+                        @extend %_effect_pageTransition_rotatePushTop;
+                        @include transform-origin(50% 0%);
                     }
                 }
             }
@@ -1238,17 +1288,20 @@
                 & + .pageHolder {
                     visibility: visible;
                     @extend %_effect_pageTransition_moveFromRightFade;
+                    @include animation-delay(.4s);
                 }
             }
 
             &.backward {
                 &.previousPage {
                     visibility: visible;
-                    @extend %_effect_pageTransition_moveToTopEasing;
+                    @extend %_effect_pageTransition_rotateUnfoldLeft;
+                    @include transform-origin(100% 50%);
+                    @include animation-delay(.4s);
 
                     & + .pageHolder {
                         z-index: 1;
-                        @extend %_effect_pageTransition_moveFromBottom;
+                        @extend %_effect_pageTransition_moveToRightFade;
                     }
                 }
             }
@@ -1265,17 +1318,20 @@
                 & + .pageHolder {
                     visibility: visible;
                     @extend %_effect_pageTransition_moveFromLeftFade;
+                    @include animation-delay(.4s);
                 }
             }
 
             &.backward {
                 &.previousPage {
                     visibility: visible;
-                    @extend %_effect_pageTransition_moveToTopEasing;
+                    @extend %_effect_pageTransition_rotateUnfoldRight;
+                    @include transform-origin(0% 50%);
+                    @include animation-delay(.4s);
 
                     & + .pageHolder {
                         z-index: 1;
-                        @extend %_effect_pageTransition_moveFromBottom;
+                        @extend %_effect_pageTransition_moveToLeftFade;
                     }
                 }
             }
@@ -1292,17 +1348,20 @@
                 & + .pageHolder {
                     visibility: visible;
                     @extend %_effect_pageTransition_moveFromBottomFade;
+                    @include animation-delay(.4s);
                 }
             }
 
             &.backward {
                 &.previousPage {
                     visibility: visible;
-                    @extend %_effect_pageTransition_moveToTopEasing;
+                    @extend %_effect_pageTransition_rotateUnfoldTop;
+                    @include transform-origin(50% 100%);
+                    @include animation-delay(.4s);
 
                     & + .pageHolder {
                         z-index: 1;
-                        @extend %_effect_pageTransition_moveFromBottom;
+                        @extend %_effect_pageTransition_moveToBottomFade;
                     }
                 }
             }
@@ -1319,17 +1378,20 @@
                 & + .pageHolder {
                     visibility: visible;
                     @extend %_effect_pageTransition_moveFromTopFade;
+                    @include animation-delay(.4s);
                 }
             }
 
             &.backward {
                 &.previousPage {
                     visibility: visible;
-                    @extend %_effect_pageTransition_moveToTopEasing;
+                    @extend %_effect_pageTransition_rotateUnfoldBottom;
+                    @include transform-origin(50% 0%);
+                    @include animation-delay(.4s);
 
                     & + .pageHolder {
                         z-index: 1;
-                        @extend %_effect_pageTransition_moveFromBottom;
+                        @extend %_effect_pageTransition_moveToTopFade;
                     }
                 }
             }
@@ -1346,17 +1408,20 @@
                     visibility: visible;
                     @extend %_effect_pageTransition_rotateUnfoldLeft;
                     @include transform-origin(100% 50%);
+                    @include animation-delay(.4s);
                 }
             }
 
             &.backward {
                 &.previousPage {
                     visibility: visible;
-                    @extend %_effect_pageTransition_moveToTopEasing;
+                    @extend %_effect_pageTransition_moveFromRightFade;
+                    @include animation-delay(.4s);
 
                     & + .pageHolder {
                         z-index: 1;
-                        @extend %_effect_pageTransition_moveFromBottom;
+                        @extend %_effect_pageTransition_rotateFoldLeft;
+                        @include transform-origin(100% 50%);
                     }
                 }
             }
@@ -1373,17 +1438,20 @@
                     visibility: visible;
                     @extend %_effect_pageTransition_rotateUnfoldRight;
                     @include transform-origin(0% 50%);
+                    @include animation-delay(.4s);
                 }
             }
 
             &.backward {
                 &.previousPage {
                     visibility: visible;
-                    @extend %_effect_pageTransition_moveToTopEasing;
+                    @extend %_effect_pageTransition_moveFromLeftFade;
+                    @include animation-delay(.4s);
 
                     & + .pageHolder {
                         z-index: 1;
-                        @extend %_effect_pageTransition_moveFromBottom;
+                        @extend %_effect_pageTransition_rotateFoldRight;
+                        @include transform-origin(0% 50%);
                     }
                 }
             }
@@ -1400,17 +1468,20 @@
                     visibility: visible;
                     @extend %_effect_pageTransition_rotateUnfoldTop;
                     @include transform-origin(50% 100%);
+                    @include animation-delay(.4s);
                 }
             }
 
             &.backward {
                 &.previousPage {
                     visibility: visible;
-                    @extend %_effect_pageTransition_moveToTopEasing;
+                    @extend %_effect_pageTransition_moveFromBottomFade;
+                    @include animation-delay(.4s);
 
                     & + .pageHolder {
                         z-index: 1;
-                        @extend %_effect_pageTransition_moveFromBottom;
+                        @extend %_effect_pageTransition_rotateFoldTop;
+                        @include transform-origin(50% 100%);
                     }
                 }
             }
@@ -1427,17 +1498,20 @@
                     visibility: visible;
                     @extend %_effect_pageTransition_rotateUnfoldBottom;
                     @include transform-origin(50% 0%);
+                    @include animation-delay(.4s);
                 }
             }
 
             &.backward {
                 &.previousPage {
                     visibility: visible;
-                    @extend %_effect_pageTransition_moveToTopEasing;
+                    @extend %_effect_pageTransition_moveFromTopFade;
+                    @include animation-delay(.4s);
 
                     & + .pageHolder {
                         z-index: 1;
-                        @extend %_effect_pageTransition_moveFromBottom;
+                        @extend %_effect_pageTransition_rotateFoldBottom;
+                        @include transform-origin(50% 0%);
                     }
                 }
             }
@@ -1462,11 +1536,13 @@
             &.backward {
                 &.previousPage {
                     visibility: visible;
-                    @extend %_effect_pageTransition_moveToTopEasing;
+                    @extend %_effect_pageTransition_rotateRoomRightIn;
+                    @include transform-origin(100% 50%);
 
                     & + .pageHolder {
                         z-index: 1;
-                        @extend %_effect_pageTransition_moveFromBottom;
+                        @extend %_effect_pageTransition_rotateRoomRightOut;
+                        @include transform-origin(0% 50%);
                     }
                 }
             }
@@ -1490,15 +1566,18 @@
             &.backward {
                 &.previousPage {
                     visibility: visible;
-                    @extend %_effect_pageTransition_moveToTopEasing;
+                    @extend %_effect_pageTransition_rotateRoomLeftIn;
+                    @include transform-origin(0% 50%);
 
                     & + .pageHolder {
                         z-index: 1;
-                        @extend %_effect_pageTransition_moveFromBottom;
+                        @extend %_effect_pageTransition_rotateRoomLeftOut;
+                        @include transform-origin(100% 50%);
                     }
                 }
             }
         }
+
         &[effect=roomToTop] {
             &.forward {
                 &.currentPage {
@@ -1517,15 +1596,18 @@
             &.backward {
                 &.previousPage {
                     visibility: visible;
-                    @extend %_effect_pageTransition_moveToTopEasing;
+                    @extend %_effect_pageTransition_rotateRoomBottomIn;
+                    @include transform-origin(50% 100%);
 
                     & + .pageHolder {
                         z-index: 1;
-                        @extend %_effect_pageTransition_moveFromBottom;
+                        @extend %_effect_pageTransition_rotateRoomBottomOut;
+                        @include transform-origin(50% 0%);
                     }
                 }
             }
         }
+
         &[effect=roomToBottom] {
             &.forward {
                 &.currentPage {
@@ -1544,11 +1626,13 @@
             &.backward {
                 &.previousPage {
                     visibility: visible;
-                    @extend %_effect_pageTransition_moveToTopEasing;
+                    @extend %_effect_pageTransition_rotateRoomTopIn;
+                    @include transform-origin(50% 0%);
 
                     & + .pageHolder {
                         z-index: 1;
-                        @extend %_effect_pageTransition_moveFromBottom;
+                        @extend %_effect_pageTransition_rotateRoomTopOut;
+                        @include transform-origin(50% 100%);
                     }
                 }
             }
@@ -1573,11 +1657,13 @@
             &.backward {
                 &.previousPage {
                     visibility: visible;
-                    @extend %_effect_pageTransition_moveToTopEasing;
+                    @extend %_effect_pageTransition_rotateCubeRightIn;
+                    @include transform-origin(100% 50%);
 
                     & + .pageHolder {
                         z-index: 1;
-                        @extend %_effect_pageTransition_moveFromBottom;
+                        @extend %_effect_pageTransition_rotateCubeRightOut;
+                        @include transform-origin(0% 50%);
                     }
                 }
             }
@@ -1601,15 +1687,18 @@
             &.backward {
                 &.previousPage {
                     visibility: visible;
-                    @extend %_effect_pageTransition_moveToTopEasing;
+                    @extend %_effect_pageTransition_rotateCubeLeftIn;
+                    @include transform-origin(0% 50%);
 
                     & + .pageHolder {
                         z-index: 1;
-                        @extend %_effect_pageTransition_moveFromBottom;
+                        @extend %_effect_pageTransition_rotateCubeLeftOut;
+                        @include transform-origin(100% 50%);
                     }
                 }
             }
         }
+
         &[effect=cubeToTop] {
             &.forward {
                 &.currentPage {
@@ -1628,15 +1717,18 @@
             &.backward {
                 &.previousPage {
                     visibility: visible;
-                    @extend %_effect_pageTransition_moveToTopEasing;
+                    @extend %_effect_pageTransition_rotateCubeBottomIn;
+                    @include transform-origin(50% 100%);
 
                     & + .pageHolder {
                         z-index: 1;
-                        @extend %_effect_pageTransition_moveFromBottom;
+                        @extend %_effect_pageTransition_rotateCubeBottomOut;
+                        @include transform-origin(50% 0%);
                     }
                 }
             }
         }
+
         &[effect=cubeToBottom] {
             &.forward {
                 &.currentPage {
@@ -1655,11 +1747,13 @@
             &.backward {
                 &.previousPage {
                     visibility: visible;
-                    @extend %_effect_pageTransition_moveToTopEasing;
+                    @extend %_effect_pageTransition_rotateCubeTopIn;
+                    @include transform-origin(50% 0%);
 
                     & + .pageHolder {
                         z-index: 1;
-                        @extend %_effect_pageTransition_moveFromBottom;
+                        @extend %_effect_pageTransition_rotateCubeTopOut;
+                        @include transform-origin(50% 100%);
                     }
                 }
             }
@@ -1684,11 +1778,13 @@
             &.backward {
                 &.previousPage {
                     visibility: visible;
-                    @extend %_effect_pageTransition_moveToTopEasing;
+                    @extend %_effect_pageTransition_rotateCarouselRightIn;
+                    @include transform-origin(100% 50%);
 
                     & + .pageHolder {
                         z-index: 1;
-                        @extend %_effect_pageTransition_moveFromBottom;
+                        @extend %_effect_pageTransition_rotateCarouselRightOut;
+                        @include transform-origin(0% 50%);
                     }
                 }
             }
@@ -1712,11 +1808,13 @@
             &.backward {
                 &.previousPage {
                     visibility: visible;
-                    @extend %_effect_pageTransition_moveToTopEasing;
+                    @extend %_effect_pageTransition_rotateCarouselLeftIn;
+                    @include transform-origin(0% 50%);
 
                     & + .pageHolder {
                         z-index: 1;
-                        @extend %_effect_pageTransition_moveFromBottom;
+                        @extend %_effect_pageTransition_rotateCarouselLeftOut;
+                        @include transform-origin(100% 50%);
                     }
                 }
             }
@@ -1740,11 +1838,13 @@
             &.backward {
                 &.previousPage {
                     visibility: visible;
-                    @extend %_effect_pageTransition_moveToTopEasing;
+                    @extend %_effect_pageTransition_rotateCarouselBottomIn;
+                    @include transform-origin(50% 100%);
 
                     & + .pageHolder {
                         z-index: 1;
-                        @extend %_effect_pageTransition_moveFromBottom;
+                        @extend %_effect_pageTransition_rotateCarouselBottomOut;
+                        @include transform-origin(50% 0%);
                     }
                 }
             }
@@ -1768,41 +1868,13 @@
             &.backward {
                 &.previousPage {
                     visibility: visible;
-                    @extend %_effect_pageTransition_moveToTopEasing;
+                    @extend %_effect_pageTransition_rotateCarouselTopIn;
+                    @include transform-origin(50% 0%);
 
                     & + .pageHolder {
                         z-index: 1;
-                        @extend %_effect_pageTransition_moveFromBottom;
-                    }
-                }
-            }
-        }
-
-        ////sides
-        &[effect=sides] {
-            &.forward {
-                &.currentPage {
-                    z-index: 1;
-                    @extend %_effect_pageTransition_rotateSidesOut;
-                    @include transform-origin(-50% 50%);
-                }
-
-                & + .pageHolder {
-                    visibility: visible;
-                    @extend %_effect_pageTransition_rotateSidesIn;
-                    @include transform-origin(150% 50%);
-                    @include animation-delay(.2s);
-                }
-            }
-
-            &.backward {
-                &.previousPage {
-                    visibility: visible;
-                    @extend %_effect_pageTransition_moveToTopEasing;
-
-                    & + .pageHolder {
-                        z-index: 1;
-                        @extend %_effect_pageTransition_moveFromBottom;
+                        @extend %_effect_pageTransition_rotateCarouselTopOut;
+                        @include transform-origin(50% 100%);
                     }
                 }
             }
@@ -1813,23 +1885,23 @@
             &.forward {
                 &.currentPage {
                     z-index: 1;
-                    @extend %_effect_pageTransition_rotateSlideOut;
+                    @extend %_effect_pageTransition_slideLeftOut;
                 }
 
                 & + .pageHolder {
                     visibility: visible;
-                    @extend %_effect_pageTransition_rotateSlideIn;
+                    @extend %_effect_pageTransition_slideRightIn;
                 }
             }
 
             &.backward {
                 &.previousPage {
                     visibility: visible;
-                    @extend %_effect_pageTransition_moveToTopEasing;
+                    @extend %_effect_pageTransition_slideLeftIn;
 
                     & + .pageHolder {
                         z-index: 1;
-                        @extend %_effect_pageTransition_moveFromBottom;
+                        @extend %_effect_pageTransition_slideRightOut;
                     }
                 }
             }

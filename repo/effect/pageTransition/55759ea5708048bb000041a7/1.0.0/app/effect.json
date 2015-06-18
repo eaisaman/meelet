@@ -316,10 +316,6 @@
             "value": "carouselToBottom+Animation"
           }
         ]
-      },
-      {
-        "name": "sides",
-        "value": "sides+Animation"
       }
     ]
   },

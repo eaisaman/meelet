@@ -244,6 +244,7 @@ $zIndexWidgetText: 100;
                         position: relative;
                         float: left;
                         overflow: hidden;
+                        @include perspective(1200px);
 
                         #pageNavigationControl {
                             z-index: 1;
