@@ -399,13 +399,13 @@ define(
                 }, function () {
                     scope.$root.$broadcast(eventName, boundObj);
                 }, self.angularConstants.checkInterval,
-                "uiUtilService.broadcast.{0}-{1}".format(eventName, new Date().getTime()))
+                "uiUtilService.broadcast.{0}-{1}".format(eventName, _.now()))
         }
 
         Util.prototype.timeout = function (callback, timeoutId, timeout) {
             var self = this;
 
-            timeoutId = timeoutId || "timeout_" + new Date().getTime();
+            timeoutId = timeoutId || "timeout_" + _.now();
             self.timeoutMap = self.timeoutMap || {};
             self.timeoutMap[timeoutId] = self.timeoutMap[timeoutId] || {}
             self.timeoutMap[timeoutId].defer = self.timeoutMap[timeoutId].defer || self.$q.defer();
@@ -441,7 +441,7 @@ define(
         Util.prototype.whilst = function (test, iterator, callback, interval, whilstId, timeout) {
             var self = this;
 
-            whilstId = whilstId || "whilst_" + new Date().getTime();
+            whilstId = whilstId || "whilst_" + _.now();
             self.whilstMap = self.whilstMap || {};
             self.whilstMap[whilstId] = self.whilstMap[whilstId] || {}
             self.whilstMap[whilstId].defer = self.whilstMap[whilstId].defer || self.$q.defer();
@@ -497,7 +497,7 @@ define(
         Util.prototype.chain = function (arr, chainId, timeout) {
             var self = this;
 
-            chainId = chainId || "chain_" + new Date().getTime();
+            chainId = chainId || "chain_" + _.now();
             self.chainMap = self.chainMap || {};
             self.chainMap[chainId] = self.chainMap[chainId] || {}
             self.chainMap[chainId].defer = self.chainMap[chainId].defer || self.$q.defer();
@@ -644,7 +644,7 @@ define(
                 self.latestOnceMap[onceId] = self.latestOnceMap[onceId] || {isExecuted: false};
                 self.latestOnceMap[onceId].fn = fn;
                 self.latestOnceMap[onceId].callback = callback;
-                self.latestOnceMap[onceId].timestamp = new Date().getTime();
+                self.latestOnceMap[onceId].timestamp = _.now();
                 self.latestOnceMap[onceId].args = args;
 
                 if (!self.latestOnceMap[onceId].isExecuted) {

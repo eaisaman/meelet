@@ -404,11 +404,13 @@ Commons.prototype.addConfigurableArtifact = function (projectId, widgetId, libra
 
     if (projectId) {
         var projectPath = path.join(self.config.userFile.sketchFolder, projectId),
+            stagingProjectPath = path.join(self.config.userFile.stagingFolder, projectId),
             cssPath = path.join(projectPath, "stylesheets"),
             sassPath = path.join(cssPath, "repo"),
             configPath = path.join(sassPath, artifactId),
             artifactSassPath = path.join(self.config.userFile.repoFolder, type, libraryName, artifactId, version, "stylesheets", "sass"),
             ejsPath = path.join(artifactSassPath, "configurable-widget.ejs"),
+            widgetConfigurationPath = path.join(configPath, _.string.sprintf("_configuration-%s.scss", widgetId)),
             widgetScssPath = path.join(configPath, _.string.sprintf("configurable-widget-%s.scss", widgetId)),
             widgetCssPath = path.join(cssPath, _.string.sprintf("configurable-widget-%s.css", widgetId));
 
@@ -455,7 +457,7 @@ Commons.prototype.addConfigurableArtifact = function (projectId, widgetId, libra
                         function (next) {
                             //save empty configuration file _configuration-<widget id>.scss
                             fs.writeFile(
-                                path.join(configPath, _.string.sprintf("_configuration-%s.scss", widgetId)),
+                                widgetConfigurationPath,
                                 _.string.sprintf("$configuration-%s: ();", widgetId),
                                 function (err) {
                                     next(err);
@@ -509,6 +511,20 @@ Commons.prototype.addConfigurableArtifact = function (projectId, widgetId, libra
                                     next(err);
                                 }
                             );
+                        },
+                        function (next) {
+                            //Save links of generated files to project staging folder
+                            async.each([widgetConfigurationPath, widgetScssPath, widgetCssPath], function (pathItem, callback) {
+                                fs.symlink(pathItem, path.join(stagingProjectPath, path.basename(pathItem)), function (fsError) {
+                                    if (!fsError || fsError.code === "EEXIST") {
+                                        callback(null);
+                                    } else {
+                                        callback(fsError);
+                                    }
+                                });
+                            }, function (err) {
+                                next(err);
+                            });
                         }
                     ], function (err) {
                         callback(err, path.basename(widgetCssPath));
@@ -538,26 +554,53 @@ Commons.prototype.removeConfigurableArtifact = function (projectId, widgetId, ar
                 async.parallel([
                     function (callback) {
                         fs.unlink(widgetConfigPath, function (err) {
-                            if (err && err.code !== "ENOENT") //Not Found
-                                callback(err);
-                            else
+                            if (err) {
+                                if (err.code !== "ENOENT") //Not Found
+                                {
+                                    self.config.logger.error(err);
+                                    callback(err);
+                                }
+                                else {
+                                    self.config.logger.warn(err);
+                                    callback(null);
+                                }
+                            } else {
                                 callback(null);
+                            }
                         });
                     },
                     function (callback) {
                         fs.unlink(widgetScssPath, function (err) {
-                            if (err && err.code !== "ENOENT") //Not Found
-                                callback(err);
-                            else
+                            if (err) {
+                                if (err.code !== "ENOENT") //Not Found
+                                {
+                                    self.config.logger.error(err);
+                                    callback(err);
+                                }
+                                else {
+                                    self.config.logger.warn(err);
+                                    callback(null);
+                                }
+                            } else {
                                 callback(null);
+                            }
                         });
                     },
                     function (callback) {
                         fs.unlink(widgetCssPath, function (err) {
-                            if (err && err.code !== "ENOENT") //Not Found
-                                callback(err);
-                            else
+                            if (err) {
+                                if (err.code !== "ENOENT") //Not Found
+                                {
+                                    self.config.logger.error(err);
+                                    callback(err);
+                                }
+                                else {
+                                    self.config.logger.warn(err);
+                                    callback(null);
+                                }
+                            } else {
                                 callback(null);
+                            }
                         });
                     }
                 ], function (errs) {

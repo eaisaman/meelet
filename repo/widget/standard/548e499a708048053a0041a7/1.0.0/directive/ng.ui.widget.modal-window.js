@@ -87,6 +87,13 @@ define(
                                     scope.modalContentWidth = scope.modalContentWidth || "50%";
                                     scope.modalContentHeight = scope.modalContentHeight || "50%";
                                     scope.deregisterWatchState = createStateWatch();
+
+                                    scope.$on('$destroy', function () {
+                                        if (scope.deregisterWatchState) {
+                                            scope.deregisterWatchState();
+                                            scope.deregisterWatchState = null;
+                                        }
+                                    });
                                 },
                                 post: function (scope, element, attrs) {
                                     if (element.hasClass(angularConstants.repoWidgetClass)) {

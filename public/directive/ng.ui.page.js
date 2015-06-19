@@ -7,8 +7,7 @@ define(
             appModule.directive("uiPage", _.union(inject, [function ($timeout, $q, $exceptionHandler, $parse, $rootScope, angularEventTypes, angularConstants, uiUtilService, uiService, appService) {
                 'use strict';
 
-                var defaults = {
-                    },
+                var defaults = {},
                     options = _.extend(defaults, opts),
                     injectObj = _.object(inject, Array.prototype.slice.call(arguments));
 
@@ -28,7 +27,7 @@ define(
                                 options = _.extend(_.clone(options), $parse(attrs['uiPageOpts'])(scope, {}));
 
                                 scope.pickEffectArtifact = function (artifactId) {
-                                    scope.effectList.splice(0, scope.effectList.length);
+                                    scope.effectList.splice(0);
 
                                     scope.filterEffectLibraryList.every(function (library) {
                                         return library.artifactList.every(function (artifact) {
@@ -156,7 +155,7 @@ define(
                                                         pageObj.prevSibling = prev;
                                                     }
 
-                                                    uiService.loadPage(pageObj).then(function () {
+                                                    uiService.loadPage($rootScope.sketchObject.pickedPage, pageObj).then(function () {
                                                         uiService.setCurrentPage(pageObj);
                                                     });
                                                 }
@@ -175,7 +174,7 @@ define(
                                             var pageObj = $rootScope.loadedProject.sketchWorks.pages[i],
                                                 j = (i + 1) == $rootScope.loadedProject.sketchWorks.pages.length ? 0 : i;
 
-                                            $rootScope.loadedProject.sketchWorks.pages[i].remove();
+                                            $rootScope.loadedProject.sketchWorks.pages[i].dispose();
                                             $rootScope.loadedProject.sketchWorks.pages.splice(i, 1);
                                             if (pageObj == $rootScope.sketchObject.pickedPage) {
                                                 $rootScope.sketchObject.pickedPage = $rootScope.loadedProject.sketchWorks.pages[j];
@@ -202,7 +201,8 @@ define(
                                             angularEventTypes.beforeWidgetCreationEvent,
                                             function (name) {
                                                 if (name) {
-                                                    var i = $(".pageList select").val(),
+                                                    var $select = $(".pageList select"),
+                                                        i = parseInt($select.val()),
                                                         pageObj = $rootScope.loadedProject.sketchWorks.pages[i],
                                                         cloneObj = uiService.copyPage(pageObj);
 
@@ -218,8 +218,9 @@ define(
                                                         cloneObj.nextSibling = next;
                                                     }
 
-                                                    uiService.loadPage(cloneObj).then(function () {
+                                                    uiService.loadPage($rootScope.sketchObject.pickedPage, cloneObj).then(function () {
                                                         uiService.setCurrentPage(cloneObj);
+                                                        $select.val(i + 1);
                                                     });
                                                 }
                                             }
@@ -418,7 +419,7 @@ define(
                                                     appService.loadEffectArtifactList().then(function () {
                                                         var arr = scope.filterLibraryList(_.where(scope.effectLibraryList, {uiControl: "uiPage"}), project.xrefRecord);
                                                         arr.splice(0, 0, 0, 0);
-                                                        scope.filterEffectLibraryList.splice(0, scope.filterEffectLibraryList.length);
+                                                        scope.filterEffectLibraryList.splice(0);
                                                         Array.prototype.splice.apply(scope.filterEffectLibraryList, arr);
                                                     });
                                                 }
@@ -452,7 +453,7 @@ define(
                                                                     var i = $(this).val(),
                                                                         pageObj = $rootScope.loadedProject.sketchWorks.pages[i];
 
-                                                                    uiService.loadPage($rootScope.sketchObject.pickedPage, pageObj).then(function() {
+                                                                    uiService.loadPage($rootScope.sketchObject.pickedPage, pageObj).then(function () {
                                                                         uiService.setCurrentPage(pageObj);
                                                                     });
                                                                 });

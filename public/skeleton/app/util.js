@@ -319,6 +319,18 @@ define(
             return defer.promise;
         }
 
+        utilService.prototype.nextPage = function (widgetId) {
+
+        }
+
+        utilService.prototype.prevPage = function (widgetId) {
+
+        }
+
+        utilService.prototype.loadPage = function (widgetId, markCurrent) {
+
+        }
+
         return function (appModule) {
             appModule.
                 config(["$provide", function ($provide) {

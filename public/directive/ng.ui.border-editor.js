@@ -44,6 +44,14 @@ define(
                                                     scope.pickedBorderWidth = scope.pickBorderWidthValue(value);
                                                     scope.pickedBorderStyle = scope.pickBorderStyleValue(value);
                                                     scope.pickedBorderRadius = scope.pickBorderRadiusValue(value);
+
+                                                    scope.borderIsSet = false;
+                                                    scope.borderColorPaneBackgroundColor = "";
+                                                    scope.borderColorPaneColor = uiUtilService.contrastColor(scope.pickedBorderColor.color);
+                                                    $timeout(function () {
+                                                        scope.borderColorPaneBackgroundColor = scope.pickedBorderColor && (scope.pickedBorderColor.alphaColor || scope.pickedBorderColor.color) || "";
+                                                        scope.borderIsSet = true;
+                                                    });
                                                     scope.enableControl();
                                                 } else {
                                                     scope.disableControl();

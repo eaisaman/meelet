@@ -34,7 +34,7 @@ define(
                                 });
 
                                 scope.pickEffectArtifact = function (action, artifactId) {
-                                    scope.effectList.splice(0, scope.effectList.length);
+                                    scope.effectList.splice(0);
 
                                     scope.filterEffectLibraryList.every(function (library) {
                                         return library.artifactList.every(function (artifact) {
@@ -468,7 +468,7 @@ define(
                                                 appService.loadEffectArtifactList().then(function () {
                                                     var arr = scope.filterLibraryList(scope.effectLibraryList, project.xrefRecord);
                                                     arr.splice(0, 0, 0, 0);
-                                                    scope.filterEffectLibraryList.splice(0, scope.filterEffectLibraryList.length);
+                                                    scope.filterEffectLibraryList.splice(0);
                                                     Array.prototype.splice.apply(scope.filterEffectLibraryList, arr);
                                                 });
                                             });

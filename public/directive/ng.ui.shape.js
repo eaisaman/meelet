@@ -293,7 +293,7 @@ define(
                                                 appService.loadIconArtifactList().then(function () {
                                                     var arr = scope.filterLibraryList(scope.iconLibraryList, project.xrefRecord);
                                                     arr.splice(0, 0, 0, 0);
-                                                    scope.filterIconLibraryList.splice(0, scope.filterIconLibraryList.length);
+                                                    scope.filterIconLibraryList.splice(0);
                                                     Array.prototype.splice.apply(scope.filterIconLibraryList, arr);
                                                 });                                            });
                                         },

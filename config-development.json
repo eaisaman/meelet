@@ -125,7 +125,7 @@
             "function": "instantiateMongooseDb",
             "parameters": [
                 {
-                    "url": "mongodb://meelet:meelet@localhost/meelet",
+                    "url": "mongodb://meelet:meelet@192.168.0.103/meelet",
                     "dbSchema": "./schema.json"
                 }
             ]
@@ -136,7 +136,7 @@
             "function": "instantiateMongoDb",
             "parameters": [
                 {
-                    "url": "mongodb://meelet:meelet@localhost/meelet",
+                    "url": "mongodb://meelet:meelet@192.168.0.103/meelet",
                     "auto_reconnect": true
                 }
             ]
@@ -156,6 +156,7 @@
         "userFile": {
             "tmpFolder": "tmp",
             "sketchFolder": "project",
+            "stagingFolder": "staging",
             "repoFolder": "repo",
             "skeletonFolder": "public/skeleton",
             "skeletonHtml": "public/skeleton/meelet.skeleton.html"

@@ -148,6 +148,7 @@
     "userFile": {
       "tmpFolder": "tmp",
       "sketchFolder": "project",
+      "stagingFolder": "staging",
       "repoFolder": "repo",
       "skeletonFolder": "public/skeleton",
       "skeletonHtml": "public/skeleton/meelet.skeleton.html"

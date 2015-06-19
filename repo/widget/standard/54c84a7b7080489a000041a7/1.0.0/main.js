@@ -12,14 +12,6 @@ define(
             },
             template: "app/widget.html",
             configuration: {
-                pickedState: {
-                    name: "Picked State",
-                    type: "list",
-                    options: [
-                        {name: "*", value: "*"},
-                        {name: "select", value: "select"}
-                    ]
-                },
                 effect: {
                     name: "Effect",
                     type: "list",

@@ -82,7 +82,7 @@ var State = Class({
         }
         this.context = context;
         this.name = name;
-        this.id = id || "State_" + new Date().getTime();
+        this.id = id || "State_" + _.now();
     },
     fromObject: function (obj, context) {
         var ret = new State(obj.node, obj.name, obj.context, obj.id);
@@ -112,7 +112,7 @@ var State = Class({
 
         this.name = name;
         this.state = state;
-        this.id = id || "Transition_" + new Date().getTime();
+        this.id = id || "Transition_" + _.now();
         this.actionObj = new SequenceTransitionAction();
 
         if (state != null && typeof state === "object") {
@@ -174,7 +174,7 @@ var State = Class({
 
         this.widgetObj = widgetObj;
         this.actionType = actionType;
-        this.id = id || "TransitionAction_" + new Date().getTime();
+        this.id = id || "TransitionAction_" + _.now();
     },
     toJSON: function () {
         return _.extend(_.pick(this, ["id", "actionType"]), {
@@ -537,7 +537,16 @@ var State = Class({
             arr.length && out.write(_.string.sprintf("@include text-shadow(%s);", arr.join(",")));
         } else if (styleName === "background-image") {
             if (styleValue) {
-                out.write(_.string.sprintf("background-image: url(%s);", styleValue));
+                if (styleValue.match(/^https?:\/\//)) {
+                    //External hyperlink
+                    out.write(_.string.sprintf("background-image: url(%s);", styleValue));
+                } else {
+                    var m = styleValue.match(/images\/.+$/);
+
+                    if (m) {
+                        out.write(_.string.sprintf("background-image: url(../%s);", m[0]));
+                    }
+                }
             } else {
                 out.write("background-image: '';");
             }
@@ -623,7 +632,7 @@ var State = Class({
         for (var member in MEMBERS) {
             this[member] = _.clone(MEMBERS[member]);
         }
-        this.id = id || ("Widget_" + new Date().getTime());
+        this.id = id || ("Widget_" + _.now());
         this.stateContext = this.STATE_CONTEXT;
         this.state = new State(this, this.initialStateOption.name, this.STATE_CONTEXT);
         this.states.push(this.state);

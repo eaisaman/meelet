@@ -105,7 +105,7 @@ define(
                                             var widgetObj = $(event.target).data("widgetObject") || element.closest(".widgetContainer").parent().data("widgetObject");
 
                                             if (widgetObj) {
-                                                return $timeout(function() {
+                                                return $timeout(function () {
                                                     widgetObj.handleEventOnce(hideHandler)();
                                                 });
                                             } else {
@@ -119,6 +119,13 @@ define(
                                     scope.overlay = scope.overlay || "overlay";
                                     scope.barContentWidth = scope.barContentWidth || "300px";
                                     scope.deregisterWatchState = createStateWatch();
+
+                                    scope.$on('$destroy', function () {
+                                        if (scope.deregisterWatchState) {
+                                            scope.deregisterWatchState();
+                                            scope.deregisterWatchState = null;
+                                        }
+                                    });
                                 },
                                 post: function (scope, element, attrs) {
                                     if (element.hasClass(angularConstants.repoWidgetClass)) {

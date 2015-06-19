@@ -570,7 +570,8 @@ define(
                         };
                     }
                     var scope = angular.element($("#frameSketchContainer > .modalWindowContainer > .md-modal")).scope();
-                    scope.toggleModalWindow();
+
+                    return scope.toggleModalWindow();
                 }
 
                 $scope.hideModal = function (event) {
@@ -660,49 +661,6 @@ define(
                     }
                 }
 
-                $scope.$watch("sketchObject.pickedPage", function (to) {
-                    if (to) {
-                        $scope.sketchObject.pickedWidget = to;
-                    }
-                });
-
-                $scope.$watch("sketchObject.pickedWidget", function (to) {
-                    if (!to) {
-                        $rootScope.sketchObject.pickedWidget = $rootScope.sketchObject.pickedPage;
-                    } else {
-                        $scope.initWidgetPosition();
-                    }
-                });
-
-                $scope.$watch("sketchObject.pickedWidget.state", function (to) {
-                    if (to) {
-                        widgetSettingList.forEach(function (setting) {
-                            initWidgetSettingWatch(setting);
-                        });
-                    }
-                });
-
-                //Receive control directive settings of bound properties
-                $scope.$on(angularEventTypes.boundPropertiesEvent, function (event, data) {
-                    for (var key in data) {
-                        var prop = data[key].prop;
-                        if (typeof prop === "string") {
-                            var m = prop.match(/sketchWidgetSetting\.(\w+)$/);
-                            if (m && m.length == 2) {
-                                var name = m[1],
-                                    setting = {name: name, initFn: data[key].initFn, source: data[key].source};
-
-                                widgetSettingList.push(setting);
-                                initWidgetSettingWatch(setting);
-                            }
-                        }
-                    }
-                });
-
-                $scope.$on(angularEventTypes.beforeWidgetCreationEvent, function (event, fn) {
-                    $scope.showWidgetName(fn);
-                });
-
                 function initMaster() {
                     function createWidgetPositionInputAssign(name, cssName) {
                         var fn = $parse(name),
@@ -749,13 +707,73 @@ define(
                     createWidgetPositionInputAssign("pickedWidgetWidth", "width");
                     createWidgetPositionInputAssign("pickedWidgetHeight", "height");
 
-                    $rootScope.$on(angularEventTypes.switchProjectEvent, function () {
+                    $scope.pickedPageWatcher = $rootScope.$watch("sketchObject.pickedPage", function (to) {
+                        if (to) {
+                            $rootScope.sketchObject.pickedWidget = to;
+                        }
+                    });
+
+                    $scope.pickedWidgetWatcher = $rootScope.$watch("sketchObject.pickedWidget", function (to) {
+                        if (!to) {
+                            $rootScope.sketchObject.pickedWidget = $rootScope.sketchObject.pickedPage;
+                        } else {
+                            $scope.initWidgetPosition();
+                        }
+                    });
+
+                    $scope.pickedWidgetStateWatcher = $rootScope.$watch("sketchObject.pickedWidget.state", function (to) {
+                        if (to) {
+                            widgetSettingList.forEach(function (setting) {
+                                initWidgetSettingWatch(setting);
+                            });
+                        }
+                    });
+
+                    //Receive control directive settings of bound properties
+                    $scope.$on(angularEventTypes.boundPropertiesEvent, function (event, data) {
+                        for (var key in data) {
+                            var prop = data[key].prop;
+                            if (typeof prop === "string") {
+                                var m = prop.match(/sketchWidgetSetting\.(\w+)$/);
+                                if (m && m.length == 2) {
+                                    var name = m[1],
+                                        setting = {name: name, initFn: data[key].initFn, source: data[key].source};
+
+                                    widgetSettingList.push(setting);
+                                    initWidgetSettingWatch(setting);
+                                }
+                            }
+                        }
+                    });
+
+                    $scope.$on(angularEventTypes.beforeWidgetCreationEvent, function (event, fn) {
+                        uiUtilService.once(function (fn) {
+                            return $scope.showWidgetName(fn);
+                        }, null, angularConstants.unresponsiveInterval, "FrameSketchController.initMaster.beforeWidgetCreation")(fn);
+                    });
+
+                    $scope.$on(angularEventTypes.switchProjectEvent, function () {
                         $scope.renderProject();
                     });
 
                     if ($rootScope.loadedProject.projectRecord && $rootScope.loadedProject.projectRecord._id) {
                         $scope.renderProject();
                     }
+
+                    $scope.$on('$destroy', function () {
+                        if ($scope.pickedPageWatcher) {
+                            $scope.pickedPageWatcher();
+                            $scope.pickedPageWatcher = null;
+                        }
+                        if ($scope.pickedWidgetWatcher) {
+                            $scope.pickedWidgetWatcher();
+                            $scope.pickedWidgetWatcher = null;
+                        }
+                        if ($scope.pickedWidgetStateWatcher) {
+                            $scope.pickedWidgetStateWatcher();
+                            $scope.pickedWidgetStateWatcher = null;
+                        }
+                    });
                 }
 
                 initMaster();

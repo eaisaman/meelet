@@ -472,42 +472,6 @@ define(
             });
         };
 
-        appService.prototype.deleteConfigurableArtifact = function (projectId, widgetId, artifactId) {
-            var self = this;
-
-            return self.$http({
-                method: 'DELETE',
-                url: '/api/public/configurableArtifact',
-                params: {
-                    projectId: projectId,
-                    widgetId: widgetId,
-                    artifactId: artifactId
-                }
-            }).then(function (result) {
-                var defer = self.$q.defer();
-
-                if (result.data.result === "OK") {
-                    $("head link[type='text/css'][widget='{0}']".format(widgetId)).remove();
-
-                    defer.resolve();
-                } else {
-                    self.$timeout(function () {
-                        defer.reject();
-                    });
-                }
-
-                return defer.promise;
-            }, function () {
-                var errDefer = self.$q.defer();
-
-                self.$timeout(function () {
-                    errDefer.reject();
-                });
-
-                return errDefer.promise;
-            });
-        };
-
         appService.prototype.updateConfigurableArtifact = function (projectId, widgetId, artifactId, configurationArray) {
             var self = this,
                 configuration = {};
@@ -549,12 +513,16 @@ define(
 
         //FIXME Cache sketch to cookies
 
-        appService.prototype.saveSketch = function (projectId, sketchWorks) {
+        appService.prototype.saveSketch = function (projectId, sketchWorks, stagingContent) {
             return this.$http({
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                 method: 'POST',
                 url: '/api/public/sketch',
-                data: $.param({projectId: projectId, sketchWorks: JSON.stringify(sketchWorks)})
+                data: $.param({
+                    projectId: projectId,
+                    sketchWorks: JSON.stringify(sketchWorks),
+                    stagingContent: JSON.stringify(stagingContent)
+                })
             });
         }
 

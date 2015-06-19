@@ -59,31 +59,177 @@ UserFileController.prototype.postConfiguration = function (projectId, artifactId
     }
 }
 
-UserFileController.prototype.postSketch = function (projectId, sketchWorks, request, success, fail) {
+UserFileController.prototype.postSketch = function (projectId, sketchWorks, stagingContent, request, success, fail) {
     var self = this;
 
     if (projectId) {
-        var projectPath = path.join(self.config.userFile.sketchFolder, projectId);
+        var projectPath = path.join(self.config.userFile.sketchFolder, projectId),
+            cssPath = path.join(projectPath, "stylesheets"),
+            sassPath = path.join(cssPath, "repo"),
+            stagingProjectPath = path.join(self.config.userFile.stagingFolder, projectId);
 
-        fs.mkdir(projectPath, 0777, function (fsError) {
-            if (!fsError || fsError.code === "EEXIST") {
-                var filePath = path.join(projectPath, "meelet.json"),
-                    out = fs.createWriteStream(filePath);
+        stagingContent = (stagingContent && JSON.parse(stagingContent)) || {};
 
-                out.on('finish', function () {
+        async.waterfall(
+            [
+                function (next) {
+                    fs.mkdir(projectPath, 0777, function (fsError) {
+                        if (!fsError || fsError.code === "EEXIST") {
+                            var filePath = path.join(projectPath, "meelet.json"),
+                                out = fs.createWriteStream(filePath);
+
+                            out.on('finish', function () {
+                                next(null);
+                            });
+
+                            out.on('error', function (err) {
+                                next(err);
+                            });
+
+                            out.write(sketchWorks);
+                            out.end();
+                        } else {
+                            next(fsError);
+                        }
+                    });
+                },
+                function (next) {
+                    var pendingWidgetList = stagingContent.widgetList || [];
+
+                    async.waterfall(
+                        [
+                            function (wCallback) {
+                                async.each(pendingWidgetList, function (widgetItem, callback) {
+                                    var widgetId = widgetItem.widgetId,
+                                        widgetConfigurationPath = path.join(stagingProjectPath, _.string.sprintf("_configuration-%s.scss", widgetId)),
+                                        widgetScssPath = path.join(stagingProjectPath, _.string.sprintf("configurable-widget-%s.scss", widgetId)),
+                                        widgetCssPath = path.join(stagingProjectPath, _.string.sprintf("configurable-widget-%s.css", widgetId));
+
+                                    async.each([widgetConfigurationPath, widgetScssPath, widgetCssPath],
+                                        function (pathItem, cb) {
+                                            fs.unlink(pathItem, function (err) {
+                                                if (err) {
+                                                    if (err.code !== "ENOENT") //Not Found
+                                                    {
+                                                        self.config.logger.error(err);
+                                                        cb(err);
+                                                    }
+                                                    else {
+                                                        self.config.logger.warn(err);
+                                                        cb(null);
+                                                    }
+                                                } else {
+                                                    cb(null);
+                                                }
+                                            });
+                                        }, function (err) {
+                                            callback(err);
+                                        }
+                                    );
+                                }, function (err) {
+                                    wCallback(err);
+                                });
+                            },
+                            function (wCallback) {
+                                //Read remaining links in staging folder
+                                fs.readdir(stagingProjectPath, function (err, fileNames) {
+                                    if (err) {
+                                        wCallback(err);
+                                    } else {
+                                        var orphanLinkList = [];
+
+                                        _.each(fileNames, function (fileName) {
+                                            var pathItem = path.join(stagingProjectPath, fileName);
+                                            if (fs.lstatSync(pathItem).isSymbolicLink()) {
+                                                orphanLinkList.push(pathItem);
+                                            }
+                                        });
+
+                                        wCallback(null, orphanLinkList);
+                                    }
+                                });
+                            },
+                            function (orphanLinkList, wCallback) {
+                                //Get staging links' targeted files.
+                                var arr = [];
+                                _.each(orphanLinkList, function (linkItem) {
+                                    arr.push(function (cb) {
+                                        fs.readlink(linkItem, function (err, resolvedPath) {
+                                            if (err) {
+                                                self.config.logger.warn(err);
+                                            }
+
+                                            cb(null, resolvedPath);
+                                        });
+                                    });
+                                });
+
+                                async.parallel(arr, function (err, results) {
+                                    if (err) {
+                                        self.config.logger.warn(err);
+                                    }
+
+                                    var orphanFileList = [];
+                                    _.each(results, function (result) {
+                                        result && orphanFileList.push(result);
+                                    })
+                                    orphanFileList = Array.prototype.concat.apply(Array.prototype, [orphanFileList, orphanLinkList]);
+
+                                    wCallback(null, orphanFileList);
+                                });
+                            },
+                            function (orphanFileList, wCallback) {
+                                //Remove targeted files
+                                var removeFileList = [];
+
+                                _.each(stagingContent.removeWidgetList, function (widgetItem) {
+                                    var artifactId = widgetItem.artifactId,
+                                        widgetId = widgetItem.widgetId,
+                                        configPath = path.join(sassPath, artifactId),
+                                        widgetConfigPath = path.join(configPath, _.string.sprintf("_configuration-%s.scss", widgetId)),
+                                        widgetScssPath = path.join(configPath, _.string.sprintf("configurable-widget-%s.scss", widgetId)),
+                                        widgetCssPath = path.join(cssPath, _.string.sprintf("configurable-widget-%s.css", widgetId));
+
+                                    removeFileList.push(widgetConfigPath);
+                                    removeFileList.push(widgetScssPath);
+                                    removeFileList.push(widgetCssPath);
+                                });
+
+                                removeFileList = Array.prototype.concat.apply(Array.prototype, [removeFileList, orphanFileList]);
+
+                                async.each(removeFileList, function (pathItem, callback) {
+                                    fs.unlink(pathItem, function (err) {
+                                        if (err) {
+                                            if (err.code !== "ENOENT") //Not Found
+                                            {
+                                                self.config.logger.error(err);
+                                                callback(err);
+                                            }
+                                            else {
+                                                self.config.logger.warn(err);
+                                                callback(null);
+                                            }
+                                        } else {
+                                            callback(null);
+                                        }
+                                    });
+                                }, function (err) {
+                                    wCallback(err);
+                                });
+                            }
+                        ], function (err) {
+                            next(err);
+                        }
+                    );
+                }
+            ], function (err) {
+                if (!err) {
                     success();
-                });
-
-                out.on('error', function (err) {
+                } else {
                     fail(err);
-                });
-
-                out.write(sketchWorks);
-                out.end();
-            } else {
-                fail(fsError);
+                }
             }
-        });
+        );
     } else {
         fail("Empty project id");
     }
@@ -261,10 +407,19 @@ UserFileController.prototype.postProjectImageChunk = function (request, projectI
                             [
                                 function (next) {
                                     fs.unlink(finalPath, function (err) {
-                                        if (err && err.code !== "ENOENT") //Not Found
-                                            next(err);
-                                        else
+                                        if (err) {
+                                            if (err.code !== "ENOENT") //Not Found
+                                            {
+                                                self.config.logger.error(err);
+                                                next(err);
+                                            }
+                                            else {
+                                                self.config.logger.warn(err);
+                                                next(null);
+                                            }
+                                        } else {
                                             next(null);
+                                        }
                                     });
                                 },
                                 function (next) {
@@ -312,10 +467,19 @@ UserFileController.prototype.postProjectImageChunk = function (request, projectI
                                                 filePath = path.join(folder, partName);
 
                                             fs.unlink(filePath, function (err) {
-                                                if (err && err.code !== "ENOENT") //Not Found
-                                                    wCallback(err);
-                                                else
+                                                if (err) {
+                                                    if (err.code !== "ENOENT") //Not Found
+                                                    {
+                                                        self.config.logger.error(err);
+                                                        wCallback(err);
+                                                    }
+                                                    else {
+                                                        self.config.logger.warn(err);
+                                                        wCallback(null);
+                                                    }
+                                                } else {
                                                     wCallback(null);
+                                                }
                                             });
                                         },
                                         function (err) {
@@ -484,10 +648,19 @@ UserFileController.prototype.postProject = function (project, sketchWorks, succe
             },
             function (data, next) {
                 var projectId = data._id.toString(),
-                    projectPath = path.join(self.config.userFile.sketchFolder, projectId);
+                    projectPath = path.join(self.config.userFile.sketchFolder, projectId),
+                    stagingProjectPath = path.join(self.config.userFile.stagingFolder, projectId);
 
-                fs.mkdir(projectPath, 0777, function (fsError) {
-                    if (!fsError || fsError.code === "EEXIST") {
+                async.each([projectPath, stagingProjectPath], function (pathItem, callback) {
+                    fs.mkdir(pathItem, 0777, function (fsError) {
+                        if (!fsError || fsError.code === "EEXIST") {
+                            callback(null);
+                        } else {
+                            callback(fsError);
+                        }
+                    });
+                }, function (err) {
+                    if (!err) {
                         var filePath = path.join(projectPath, "meelet.json"),
                             out = fs.createWriteStream(filePath);
 
@@ -502,10 +675,9 @@ UserFileController.prototype.postProject = function (project, sketchWorks, succe
                         out.write(sketchWorks);
                         out.end();
                     } else {
-                        next(fsError);
+                        next(err);
                     }
                 });
-
             },
             function (data, next) {
                 var projectId = data._id.toString(),
@@ -607,11 +779,50 @@ UserFileController.prototype.deleteProject = function (projectFilter, success, f
                 if (data && data.length) {
                     async.each(data, function (item, callback) {
                         var projectId = item._id.toString(),
-                            projectPath = path.join(self.config.userFile.sketchFolder, projectId);
+                            projectPath = path.join(self.config.userFile.sketchFolder, projectId),
+                            stagingProjectPath = path.join(self.config.userFile.stagingFolder, projectId);
 
-                        rimraf(projectPath, function (err) {
-                            callback(err);
-                        });
+                        async.waterfall(
+                            [
+                                function (wCallback) {
+                                    rimraf(projectPath, function (err) {
+                                        if (err) {
+                                            if (err.code !== "ENOENT") //Not Found
+                                            {
+                                                self.config.logger.error(err);
+                                                wCallback(err);
+                                            }
+                                            else {
+                                                self.config.logger.warn(err);
+                                                wCallback(null);
+                                            }
+                                        } else {
+                                            wCallback(null);
+                                        }
+                                    });
+                                },
+                                function (wCallback) {
+                                    rimraf(stagingProjectPath, function (err) {
+                                        if (err) {
+                                            if (err.code !== "ENOENT") //Not Found
+                                            {
+                                                self.config.logger.error(err);
+                                                wCallback(err);
+                                            }
+                                            else {
+                                                self.config.logger.warn(err);
+                                                wCallback(null);
+                                            }
+                                        } else {
+                                            wCallback(null);
+                                        }
+                                    });
+                                }
+                            ],
+                            function (err) {
+                                callback(err);
+                            }
+                        );
                     }, function (err) {
                         next(err, data);
                     });
@@ -866,7 +1077,7 @@ UserFileController.prototype.getProjectFile = function (projectId, request, succ
                     },
                     function (projectObj, next) {
                         if (projectObj) {
-                            var tmpPath = path.join(self.config.userFile.tmpFolder, _.string.sprintf("%s-%d.zip", projectId, new Date().getTime())),
+                            var tmpPath = path.join(self.config.userFile.tmpFolder, _.string.sprintf("%s-%d.zip", projectId, _.now())),
                                 zip = require('archiver')('zip'),
                                 out = fs.createWriteStream(tmpPath);
 

@@ -59,6 +59,10 @@ define(
                     artifactSpecs: [],
                     sketchWorks: {
                         pages: []
+                    },
+                    stagingContent: {
+                        widgetList: [],
+                        removeWidgetList: []
                     }
                 },
                 initialize: function (projectRecord) {
@@ -72,9 +76,9 @@ define(
                     _.extend(this.projectRecord, projectRecord);
                 },
                 populate: function (projectRecord) {
-                    this.xrefRecord.splice(0, this.xrefRecord.length);
-                    this.artifactSpecs.splice(0, this.artifactSpecs.length);
-                    this.sketchWorks.pages.splice(0, this.sketchWorks.pages.length);
+                    this.xrefRecord.splice(0);
+                    this.artifactSpecs.splice(0);
+                    this.sketchWorks.pages.splice(0);
 
                     this.projectRecord = projectRecord;
                 },
@@ -82,8 +86,8 @@ define(
                     var self = this;
 
                     if (self.projectRecord._id) {
-                        self.xrefRecord.splice(0, self.xrefRecord.length);
-                        self.artifactSpecs.splice(0, self.artifactSpecs.length);
+                        self.xrefRecord.splice(0);
+                        self.artifactSpecs.splice(0);
                         return $inject.appService.getProjectDependency({projectId: self.projectRecord._id}).then(
                             function (result) {
                                 if (result.data.result == "OK") {
@@ -143,7 +147,7 @@ define(
                             artifactList.splice(0, 0, arr.length, 0);
                             Array.prototype.splice.apply(arr, artifactList);
                         }
-                        xref.artifactList.splice(0, xref.artifactList.length);
+                        xref.artifactList.splice(0);
                         if (arr.length) {
                             arr.splice(0, 0, 0, 0);
                             Array.prototype.splice.apply(xref.artifactList, arr);
@@ -214,11 +218,11 @@ define(
                                 }
                             );
                         } else {
-                            return $inject.uiUtilService.getRejectDefer();
+                            return $inject.uiUtilService.getRejectDefer("Cannot find artifact {0} reference record in project {1}.".format(artifactId, self.projectRecord._id));
                         }
                     }
                 },
-                refArtifact: function (libraryId, artifactId, name, version) {
+                refArtifact: function (libraryId, artifactId, widgetId, name, version) {
                     var self = this;
 
                     if (self.projectRecord._id) {
@@ -240,41 +244,37 @@ define(
                                     refCount: 1
                                 });
                             }
+
+                            self.stagingContent.widgetList.push({artifactId: artifactId, widgetId: widgetId});
                         }
                     }
                 },
-                unrefArtifact: function (artifactId) {
+                unrefArtifact: function (artifactId, widgetId) {
                     var self = this;
 
                     if (self.projectRecord._id) {
-                        var xrefIndex;
-
-                        this.xrefRecord.every(function (xref, i) {
-                            var index, found;
-
-                            found = !xref.artifactList.every(function (a, j) {
+                        self.xrefRecord.every(function (xref) {
+                            return xref.artifactList.every(function (a) {
                                 if (a.artifactId == artifactId) {
                                     if (a.refCount) {
                                         a.refCount--;
-                                        index = j;
+
+                                        !a.refCount && delete a.refCount;
                                     }
                                     return false;
                                 }
                                 return true;
                             });
-
-                            if (index != null) {
-                                xref.artifactList.splice(index, 1);
-                                if (!xref.artifactList.length)
-                                    xrefIndex = i;
-                            }
-
-                            return !found;
                         });
 
-                        if (xrefIndex != null) {
-                            self.xrefRecord.splice(xrefIndex, 1);
-                        }
+                        var index;
+                        !self.stagingContent.widgetList.every(function (widgetItem, i) {
+                            if (widgetItem.widgetId == widgetId) {
+                                index = i;
+                                return false;
+                            }
+                            return true;
+                        }) && self.stagingContent.widgetList.splice(index, 1);
                     }
                 },
                 selectArtifact: function (libraryId, artifactId, name, version) {
@@ -301,6 +301,17 @@ define(
                     }
 
                     return false;
+                },
+                deleteConfigurableArtifact: function (widgetId, artifactId) {
+                    var self = this;
+
+                    self.stagingContent.removeWidgetList.every(function (widgetItem) {
+                        if (widgetItem.widgetId === widgetId) {
+                            return false;
+                        }
+
+                        return true;
+                    }) && self.stagingContent.removeWidgetList.push({widgetId: widgetId, artifactId: artifactId});
                 },
                 unselectArtifact: function (libraryId, artifactId) {
                     var self = this,
@@ -355,7 +366,7 @@ define(
 
                                 return $inject.uiUtilService.getResolveDefer(self);
                             },
-                            function (err) {
+                            function () {
                                 return $inject.uiUtilService.getResolveDefer(self);
                             }
                         );
@@ -422,6 +433,9 @@ define(
 
                     if (self.projectRecord._id) {
                         return self.saveSketch().then(function () {
+                            self.stagingContent.removeWidgetList.splice(0);
+                            self.stagingContent.widgetList.splice(0);
+
                             var promiseArr = [];
                             self.xrefRecord.forEach(
                                 function (xref) {
@@ -441,7 +455,7 @@ define(
                     var self = this;
 
                     if (self.projectRecord._id) {
-                        self.sketchWorks.pages.splice(0, self.sketchWorks.pages.length);
+                        self.sketchWorks.pages.splice(0);
                         return $inject.appService.loadSketch(self.projectRecord._id).then(function (pages) {
                             if (pages && pages.length) {
                                 var p;
@@ -470,7 +484,7 @@ define(
                     var self = this;
 
                     if (self.projectRecord._id && self.sketchWorks.pages.length) {
-                        return $inject.appService.saveSketch(self.projectRecord._id, self.sketchWorks);
+                        return $inject.appService.saveSketch(self.projectRecord._id, self.sketchWorks, self.stagingContent);
                     } else {
                         return $inject.uiUtilService.getResolveDefer();
                     }
@@ -508,7 +522,7 @@ define(
                     }
                     this.context = context;
                     this.name = name;
-                    this.id = id || "State_" + new Date().getTime();
+                    this.id = id || "State_" + _.now();
                 },
                 toJSON: function () {
                     return _.extend(_.pick(this, ["id", "node", "name"], "CLASS_NAME"), {
@@ -573,7 +587,7 @@ define(
 
                     this.name = name;
                     this.state = state;
-                    this.id = id || "Transition_" + new Date().getTime();
+                    this.id = id || "Transition_" + _.now();
                     this.actionObj = new SequenceTransitionAction();
 
                     if (state != null && typeof state === "object") {
@@ -674,7 +688,7 @@ define(
 
                     this.widgetObj = widgetObj;
                     this.actionType = actionType;
-                    this.id = id || "TransitionAction_" + new Date().getTime();
+                    this.id = id || "TransitionAction_" + _.now();
                 },
                 toJSON: function () {
                     return _.extend(_.pick(this, ["id", "actionType"], "CLASS_NAME"), {
@@ -1046,7 +1060,7 @@ define(
                     var self = this;
 
                     if (self.widgetObj && widgetObj.id !== self.widgetObj.id) {
-                        self.configuration.splice(0, self.configuration.length);
+                        self.configuration.splice(0);
                     }
 
                     ConfigurationTransitionAction.prototype.__proto__.setWidget.apply(self, [widgetObj]);
@@ -1789,9 +1803,16 @@ define(
                             var afterStyle = stateValue.afterStyle,
                                 cloneAfterStyle = cloneObj.stateMaps[stateContext][stateName].afterStyle;
 
-                            for (var styleName in beforeStyle) {
+                            for (var styleName in afterStyle) {
                                 cloneAfterStyle[styleName] = angular.copy(afterStyle[styleName]);
                             }
+
+                            var styleSource = stateValue.styleSource,
+                                cloneStyleSource = cloneObj.stateMaps[stateContext][stateName].styleSource;
+
+                            styleSource.forEach(function (source) {
+                                cloneStyleSource.push(angular.copy(source));
+                            });
                         }
                     }
 
@@ -1871,7 +1892,7 @@ define(
                         for (var member in MEMBERS) {
                             this[member] = angular.copy(MEMBERS[member]);
                         }
-                        this.id = id || ("Widget_" + new Date().getTime());
+                        this.id = id || ("Widget_" + _.now());
                         this.stateContext = this.STATE_CONTEXT;
                         this.state = new State(this, this.initialStateOption.name, this.STATE_CONTEXT);
                         this.states.push(this.state);
@@ -1885,7 +1906,7 @@ define(
                             value.callbacks.forEach(function (callback) {
                                 callback(value.item);
                             });
-                            value.callbacks.splice(0, value.callbacks.length);
+                            value.callbacks.splice(0);
                         }
                     },
                     dispose: function () {
@@ -1954,7 +1975,7 @@ define(
                             self.stateOptions.push(_.omit(stateOption, ["$$hashKey"]));
                         });
 
-                        self.states.splice(0, self.states.length);
+                        self.states.splice(0);
                         var stateMap = {};
                         obj.states.forEach(function (s) {
                             var state = State.prototype.fromObject(s);
@@ -2008,7 +2029,7 @@ define(
 
                         cloneObj.styleManager = self.styleManager.clone(cloneObj);
 
-                        cloneObj.states.splice(0, cloneObj.states.length);
+                        cloneObj.states.splice(0);
                         self.states.forEach(function (s) {
                             cloneObj.states.push(s.clone(cloneObj));
                         });
@@ -2729,7 +2750,7 @@ define(
 
                         self.watchedStates = self.watchedStates || {};
                         self.watchedStates[context.id] = self.watchedStates[context.id] || [];
-                        self.watchedStates[context.id].splice(0, self.watchedStates[context.id].length);
+                        self.watchedStates[context.id].splice(0);
 
                         states.splice(0, 0, 0, 0);
                         Array.prototype.splice.apply(self.watchedStates[context.id], states);
@@ -3661,6 +3682,26 @@ define(
 
                     this.template = template;
                 },
+                dispose: function () {
+                    var self = this;
+
+                    if (self.contentIncludeWatcher) {
+                        self.contentIncludeWatcher();
+                        self.contentIncludeWatcher = null;
+                    }
+
+                    return IncludeSketchWidgetClass.prototype.__proto__.dispose.apply(self);
+                },
+                remove: function () {
+                    var self = this;
+
+                    if (self.contentIncludeWatcher) {
+                        self.contentIncludeWatcher();
+                        self.contentIncludeWatcher = null;
+                    }
+
+                    return IncludeSketchWidgetClass.prototype.__proto__.remove.apply(self);
+                },
                 toJSON: function () {
                     var jsonObj = IncludeSketchWidgetClass.prototype.__proto__.toJSON.apply(this);
                     _.extend(jsonObj, _.pick(this, ["CLASS_NAME", "template"]));
@@ -3750,7 +3791,7 @@ define(
                 onContentIncluded: function () {
                     var self = this;
 
-                    return function(event, obj) {
+                    return function (event, obj) {
                         $inject.uiUtilService.whilst(
                             function () {
                                 var widgetScope = angular.element(self.$element.find("[widget-container]:nth-of-type(1)").first().children()[0]).scope();
@@ -3891,10 +3932,10 @@ define(
 
                     //Unreference artifact
                     $("head link[type='text/css'][widget={0}]".format(self.id)).remove();
-                    $inject.$rootScope.loadedProject.unrefArtifact(self.widgetSpec.artifactId);
+                    $inject.$rootScope.loadedProject.unrefArtifact(self.widgetSpec.artifactId, self.id);
 
                     return RepoSketchWidgetClass.prototype.__proto__.dispose.apply(self).then(function () {
-                        return $inject.appService.deleteConfigurableArtifact(self.widgetSpec.projectId, self.id, self.widgetSpec.artifactId);
+                        return $inject.$rootScope.loadedProject.deleteConfigurableArtifact(self.id, self.widgetSpec.artifactId);
                     }, function (err) {
                         return $inject.uiUtilService.getRejectDefer(err);
                     });
@@ -3948,6 +3989,14 @@ define(
                     _.extend(MEMBERS = MEMBERS || {}, RepoSketchWidgetClass.prototype.MEMBERS);
 
                     RepoSketchWidgetClass.prototype.__proto__.clone.apply(this, [cloneObj, MEMBERS]);
+
+                    //Add refCount
+                    $inject.$rootScope.loadedProject.refArtifact(cloneObj.widgetSpec.libraryId, cloneObj.widgetSpec.artifactId, cloneObj.id, cloneObj.widgetSpec.name, cloneObj.widgetSpec.version);
+
+                    //call method setHandDownConfiguration for later applying configuration to backend
+                    _.each(cloneObj.widgetSpec.configuration.handDownConfiguration, function (config, key) {
+                        config.pickedValue && cloneObj.setHandDownConfiguration(key, config.pickedValue);
+                    });
 
                     return cloneObj;
                 },
@@ -4019,20 +4068,25 @@ define(
                                 });
                             }
 
-                            return $inject.appService.addConfigurableArtifact(
-                                self.widgetSpec.projectId,
-                                self.id,
-                                self.widgetSpec.libraryName,
-                                self.widgetSpec.artifactId,
-                                self.widgetSpec.type,
-                                self.widgetSpec.version
-                            ).then(
-                                function () {
-                                    return RepoSketchWidgetClass.prototype.__proto__.appendTo.apply(self, [container]);
-                                },
-                                function (err) {
-                                    return $inject.uiUtilService.getRejectDefer(err);
-                                }
+                            return $inject.uiUtilService.chain(
+                                [
+                                    function () {
+                                        return $inject.appService.addConfigurableArtifact(
+                                            self.widgetSpec.projectId,
+                                            self.id,
+                                            self.widgetSpec.libraryName,
+                                            self.widgetSpec.artifactId,
+                                            self.widgetSpec.type,
+                                            self.widgetSpec.version
+                                        );
+                                    },
+                                    function () {
+                                        return self.applyHandDownConfiguration();
+                                    },
+                                    function () {
+                                        return RepoSketchWidgetClass.prototype.__proto__.appendTo.apply(self, [container]);
+                                    }
+                                ]
                             );
                         },
                         function (err) {
@@ -4229,7 +4283,7 @@ define(
                                 $inject.$rootScope.loadedProject.save(),
                                 $inject.appService.updateConfigurableArtifact(self.widgetSpec.projectId, self.id, self.widgetSpec.artifactId, configurationArr).then(
                                     function () {
-                                        self.handDownConfigurationList.splice(0, self.handDownConfigurationList.length);
+                                        self.handDownConfigurationList.splice(0);
 
                                         return $inject.uiUtilService.getResolveDefer();
                                     },
@@ -4576,6 +4630,8 @@ define(
                         self.$compile(pageObj.$element)(scope);
 
                         return self.uiUtilService.getResolveDefer(pageObj);
+                    }, function (err) {
+                        self.$exceptionHandler(err);
                     });
                 } else {
                     return self.uiUtilService.getRejectDefer("The number of pages in dom exceeds maximum limit.");
@@ -4723,7 +4779,7 @@ define(
             widgetObj.attr["ng-class"] = "{'isPlaying': $root.sketchWidgetSetting.isPlaying}";
             widgetObj.addOmniClass(self.angularConstants.widgetClasses.widgetClass);
 
-            self.$rootScope.loadedProject.refArtifact(widgetSpec.libraryId, widgetSpec.artifactId, widgetSpec.name, widgetSpec.version);
+            self.$rootScope.loadedProject.refArtifact(widgetSpec.libraryId, widgetSpec.artifactId, widgetObj.id, widgetSpec.name, widgetSpec.version);
 
             if (containerElement.jquery) {
                 $container = containerElement;
@@ -4887,11 +4943,12 @@ define(
 
         Service.prototype.loadPages = function (pageObjs) {
             var self = this,
-                arr = [];
+                arr = [],
+                len = Math.min(pageObjs.length, self.angularConstants.maxPageCountInDom);
 
             arr.push(self.loadPage(null, pageObjs[0], true));
 
-            for (var i = 1; i < Math.min(pageObjs.length, self.angularConstants.maxPageCountInDom); i++) {
+            for (var i = 1; i < len; i++) {
                 arr.push(self.loadPage(null, pageObjs[i]));
             }
 

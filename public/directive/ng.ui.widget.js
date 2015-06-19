@@ -319,7 +319,7 @@ define(
                                                     appService.loadWidgetArtifactList().then(function () {
                                                         var arr = scope.filterLibraryList(scope.widgetLibraryList, project.xrefRecord);
                                                         arr.splice(0, 0, 0, 0);
-                                                        scope.filterWidgetLibraryList.splice(0, scope.filterWidgetLibraryList.length);
+                                                        scope.filterWidgetLibraryList.splice(0);
                                                         Array.prototype.splice.apply(scope.filterWidgetLibraryList, arr);
                                                     });
                                                 }
