@@ -63,41 +63,51 @@ function handleEventMap(eventMap) {
 define(
     ["angular", "jquery", "jquery-ui", "app-route", "app-service"],
     function () {
-        function RootController($scope, $rootScope, $q, appService, urlService) {
-            $rootScope.initFns = [];
+        return function (appModule, meta) {
+            function RootController($scope, $rootScope, $q, appService, urlService, utilService) {
+                $rootScope.initFns = [];
 <%if (pages && pages.length) {
-        pages.forEach(function(page) {
-            if (page.initMap) {
-                for(var widgetId in page.initMap) {
+    pages.forEach(function(page) {
+        if (page.initMap) {
+            for(var widgetId in page.initMap) {
 %>
-            $rootScope.initFns.push(function() {
-                $rootScope['<%= widgetId %>'] = {};
+                $rootScope.initFns.push(function() {
+                    $rootScope['<%= widgetId %>'] = {};
 <%for(var key in page.initMap[widgetId]) {%>
-                $rootScope['<%= widgetId %>']['<%= key %>'] = <%= page.initMap[widgetId][key] %>;
+                    $rootScope['<%= widgetId %>']['<%= key %>'] = <%= page.initMap[widgetId][key] %>;
 <%}%>
-            });
+                });
 <%
-                }
             }
-        });
-}%>
-            $rootScope.initFns.forEach(function(fn) {fn.apply($rootScope)});
-            urlService.firstPage();
         }
+    });
+}%>
+                $rootScope.initFns.forEach(function(fn) {fn.apply($rootScope)});
+
+                $rootScope.pickedPage = meta.locations[0];
+                $scope.nextPage = function(event) {
+                    event && event.stopPropagation();
+                    utilService.nextPage($rootScope.pickedPage);
+                }
+                $scope.prevPage = function(event) {
+                    event && event.stopPropagation();
+                    utilService.prevPage($rootScope.pickedPage);
+                }
+                utilService.loadPage(null, $rootScope.pickedPage, true);
+            }
 <%if (pages && pages.length) {
     pages.forEach(function(page) {
 %>
-        function <%= page.id %>_Controller($scope, $rootScope, $q, appService, urlService, utilService) {
-<%handleEventMap(page.eventMap)%>
-        }
+            function <%= page.id %>_Controller($scope, $rootScope, $q, appService, urlService, utilService) {
+    <%handleEventMap(page.eventMap)%>
+            }
 <%
     });
-%>
-<%}%>
-        return function (appModule) {
+}%>
+
             if (isBrowser) {
                 appModule.
-                    controller('RootController', ["$scope", "$rootScope", "$q", "appService", "urlService", RootController]);
+                    controller('RootController', ["$scope", "$rootScope", "$q", "appService", "urlService", "utilService", RootController]);
 <%if (pages && pages.length) {
     pages.forEach(function(page) {
 %>

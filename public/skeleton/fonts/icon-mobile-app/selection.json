@@ -1,0 +1,104 @@
+{
+	"IcoMoonType": "selection",
+	"icons": [
+		{
+			"icon": {
+				"paths": [
+					"M658 316l-196 196 196 196-60 60-256-256 256-256z"
+				],
+				"attrs": [
+					{}
+				],
+				"isMulticolor": false,
+				"tags": [
+					"navigate_before"
+				],
+				"defaultCode": 57754,
+				"grid": 24
+			},
+			"attrs": [
+				{}
+			],
+			"properties": {
+				"order": 42,
+				"id": 410,
+				"prevSize": 32,
+				"code": 58880,
+				"name": "navigate_before",
+				"ligatures": "navigate_before"
+			},
+			"setIdx": 0,
+			"setId": 23,
+			"iconIdx": 0
+		},
+		{
+			"icon": {
+				"paths": [
+					"M426 256l256 256-256 256-60-60 196-196-196-196z"
+				],
+				"attrs": [
+					{}
+				],
+				"isMulticolor": false,
+				"tags": [
+					"navigate_next"
+				],
+				"defaultCode": 57755,
+				"grid": 24
+			},
+			"attrs": [
+				{}
+			],
+			"properties": {
+				"order": 41,
+				"id": 411,
+				"prevSize": 32,
+				"code": 58881,
+				"name": "navigate_next",
+				"ligatures": "navigate_next"
+			},
+			"setIdx": 0,
+			"setId": 23,
+			"iconIdx": 1
+		}
+	],
+	"height": 1024,
+	"metadata": {
+		"name": "icon-mobile-app"
+	},
+	"preferences": {
+		"showGlyphs": true,
+		"showQuickUse": true,
+		"showQuickUse2": true,
+		"showSVGs": true,
+		"fontPref": {
+			"prefix": "icon-mobile-app-",
+			"metadata": {
+				"fontFamily": "icon-mobile-app",
+				"majorVersion": 1,
+				"minorVersion": 0
+			},
+			"metrics": {
+				"emSize": 1024,
+				"baseline": 6.25,
+				"whitespace": 50
+			},
+			"resetPoint": 58880,
+			"showSelector": true,
+			"selector": "class",
+			"classSelector": ".icon-mobile-app",
+			"showMetrics": false
+		},
+		"imagePref": {
+			"prefix": "icon-",
+			"png": true,
+			"useClassSelector": true,
+			"color": 4473924,
+			"bgColor": 16777215,
+			"classSelector": ".icon"
+		},
+		"historySize": 100,
+		"showCodes": false,
+		"gridSize": 16
+	}
+}

@@ -722,7 +722,7 @@ Commons.prototype.updateConfigurableArtifact = function (projectId, widgetId, ar
     }
 }
 
-Commons.prototype.convertToHtml = function (projectPath, callback) {
+Commons.prototype.convertToHtml = function (projectPath, artifactList, callback) {
     var self = this,
         skeletonPath = self.config.userFile.skeletonFolder,
         skeletonLibLoadTimeout = self.config.settings.skeletonLibLoadTimeout,
@@ -870,7 +870,7 @@ Commons.prototype.convertToHtml = function (projectPath, callback) {
                                             pages.push(classes.fromObject(pageObj));
                                         });
 
-                                        cb(null, pages, {artifacts: [], locations: []});
+                                        cb(null, pages, {artifacts: [], locations: [], pageTransition: obj.pageTransition || {}});
                                     } catch (err2) {
                                         cb(err2);
                                     }
@@ -945,7 +945,7 @@ Commons.prototype.convertToHtml = function (projectPath, callback) {
                         //Copy skeleton html file to project path if not exists;
                         fnArr.push(function (cb) {
                             ncp(skeletonHtml, path.join(projectPath, "index.html"), {
-                                clobber: false,
+                                clobber: true,
                                 stopOnErr: true
                             }, function (err) {
                                 cb(err);
@@ -980,10 +980,10 @@ Commons.prototype.convertToHtml = function (projectPath, callback) {
                                                     });
 
                                                     $document.find("link[type='text/css']").each(function () {
-                                                        out.write(window.$(this).prop('outerHTML'));
+                                                        $container.children(":first-child").prepend(window.$(this).prop('outerHTML'));
                                                     });
                                                     $document.find("script[type='text/ng-template']").each(function () {
-                                                        out.write(window.$(this).prop('outerHTML'));
+                                                        $container.children(":first-child").prepend(window.$(this).prop('outerHTML'));
                                                     });
                                                     out.write($container.html());
                                                     out.end();
@@ -1025,14 +1025,6 @@ Commons.prototype.convertToHtml = function (projectPath, callback) {
                     //Copy artifact modules
 
                     if (pages && pages.length) {
-                        var artifactList = [];
-                        pages.forEach(function (page) {
-                            artifactList.push(page.artifactList);
-                        });
-                        artifactList = Array.prototype.concat.apply(Array.prototype, artifactList);
-                        artifactList = _.uniq(artifactList, false, function (artifact) {
-                            return artifact.artifactId;
-                        });
                         meta.artifacts = artifactList;
 
                         if (artifactList.length) {
@@ -1154,7 +1146,21 @@ Commons.prototype.convertToHtml = function (projectPath, callback) {
                                 target = path.join(projectPath, "stylesheets");
 
                             ncp(cssPath, target, {
-                                clobber: false,
+                                clobber: true,
+                                stopOnErr: true,
+                                dereference: true
+                            }, function (err) {
+                                cb(err);
+                            });
+                        });
+
+                        //Copy folder fonts to project path if not exist
+                        fnArr.push(function (cb) {
+                            var fontPath = path.join(skeletonPath, "fonts"),
+                                target = path.join(projectPath, "fonts");
+
+                            ncp(fontPath, target, {
+                                clobber: true,
                                 stopOnErr: true,
                                 dereference: true
                             }, function (err) {

@@ -999,29 +999,62 @@ UserFileController.prototype.postConvertToHtml = function (userId, projectId, su
     var self = this;
 
     if (projectId) {
-        (!self.isDBReady && fail(new Error('DB not initialized'))) || self.schema.UserProject.find({
-            _id: new self.db.Types.ObjectId(projectId),
-            lock: true,
-            lockUser: new self.db.Types.ObjectId(userId)
-        }, function (err, data) {
-            if (err) {
-                fail(err);
-            } else {
-                if (data && data.length) {
+        (!self.isDBReady && fail(new Error('DB not initialized'))) || async.waterfall(
+            [
+                function (wCallback) {
+                    self.schema.UserProject.find({
+                        _id: new self.db.Types.ObjectId(projectId),
+                        lock: true,
+                        lockUser: new self.db.Types.ObjectId(userId)
+                    }, function (err, data) {
+                        if (err) {
+                            wCallback(err);
+                        } else {
+                            if (data && data.length) {
+                                wCallback(null);
+                            } else {
+                                wCallback("Cannot find project record");
+                            }
+                        }
+                    });
+                },
+                function (wCallback) {
+                    self.schema.ProjectArtifactXref.find({projectId: new self.db.Types.ObjectId(projectId)}, function (err, data) {
+                        if (err) {
+                            wCallback(err);
+                        } else {
+                            var artifactList = [];
+                            data && data.forEach(function (xref) {
+                                xref.artifactList && xref.artifactList.forEach(function (artifact) {
+                                    artifactList.push({
+                                        type: xref.type,
+                                        libraryName: xref.libraryName,
+                                        artifactId: artifact.artifactId.toString(),
+                                        version: artifact.version
+                                    });
+                                });
+                            });
+
+                            wCallback(null, artifactList);
+                        }
+                    });
+                },
+                function (artifactList, wCallback) {
                     var projectPath = path.join(self.config.userFile.sketchFolder, projectId);
 
-                    commons.convertToHtml(projectPath, function (err, htmlPath) {
+                    commons.convertToHtml(projectPath, artifactList, function (err, htmlPath) {
                         if (err) {
-                            fail(err);
+                            wCallback(err);
                         } else {
-                            success({htmlPath: htmlPath});
+                            wCallback(null, htmlPath);
                         }
                     })
-                } else {
-                    fail("Cannot find project record");
                 }
+            ],
+            function (err, htmlPath) {
+                err && fail(err) || success({htmlPath: htmlPath});
             }
-        });
+        );
     } else {
         fail("Empty project id");
     }

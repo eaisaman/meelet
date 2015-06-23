@@ -58,6 +58,7 @@ define(
                     xrefRecord: [],
                     artifactSpecs: [],
                     sketchWorks: {
+                        pageTransition: {},
                         pages: []
                     },
                     stagingContent: {
@@ -79,6 +80,7 @@ define(
                     this.xrefRecord.splice(0);
                     this.artifactSpecs.splice(0);
                     this.sketchWorks.pages.splice(0);
+                    this.sketchWorks.pageTransition = {};
 
                     this.projectRecord = projectRecord;
                 },
@@ -423,6 +425,7 @@ define(
                     if (self.projectRecord._id) {
                         $("head link[type='text/css'][projectId='{0}']".format(self.projectRecord._id)).remove();
 
+                        self.sketchWorks.pageTransition = {};
                         self.sketchWorks.pages.forEach(function (pageObj) {
                             pageObj.remove();
                         });
@@ -456,7 +459,10 @@ define(
 
                     if (self.projectRecord._id) {
                         self.sketchWorks.pages.splice(0);
-                        return $inject.appService.loadSketch(self.projectRecord._id).then(function (pages) {
+                        self.sketchWorks.pageTransition = {};
+                        return $inject.appService.loadSketch(self.projectRecord._id).then(function (sketchWorks) {
+                            var pages = sketchWorks.pages;
+
                             if (pages && pages.length) {
                                 var p;
                                 pages.forEach(function (pageObj) {
@@ -471,6 +477,8 @@ define(
                                     }
                                 });
                             }
+
+                            self.sketchWorks.pageTransition = sketchWorks.pageTransition || {};
 
                             return $inject.uiUtilService.getResolveDefer(self);
                         }, function (err) {
@@ -4333,7 +4341,6 @@ define(
             PageSketchWidgetClass = Class(BaseSketchWidgetClass, {
                 CLASS_NAME: "PageSketchWidget",
                 MEMBERS: {
-                    pageTransition: null
                 },
                 initialize: function (id) {
                     this.initialize.prototype.__proto__.initialize.apply(this, [id]);
@@ -4347,7 +4354,7 @@ define(
                 },
                 toJSON: function () {
                     var jsonObj = PageSketchWidgetClass.prototype.__proto__.toJSON.apply(this);
-                    _.extend(jsonObj, _.pick(this, ["CLASS_NAME", "pageTransition"]));
+                    _.extend(jsonObj, _.pick(this, ["CLASS_NAME"]));
 
                     return jsonObj;
                 },
@@ -4357,7 +4364,6 @@ define(
                     PageSketchWidgetClass.prototype.__proto__.startMatchReference.apply(null);
 
                     var ret = new PageSketchWidgetClass(obj.id);
-                    ret.pageTransition = obj.pageTransition;
                     PageSketchWidgetClass.prototype.__proto__.fromObject.apply(ret, [obj]);
 
                     PageSketchWidgetClass.prototype.__proto__.endMatchReference.apply(null);
@@ -4476,20 +4482,21 @@ define(
                         var $current = pageObj.$element,
                             $next = pageObj.nextSibling.$element,
                             hasAnimation = false,
-                            fullName;
+                            fullName,
+                            pageTransition = self.$rootScope.loadedProject.sketchWorks.pageTransition;
 
                         $current.addClass("forward");
 
-                        if (pageObj.pageTransition) {
-                            hasAnimation = pageObj.pageTransition.effect.type === "Animation";
+                        if (!_.isEmpty(pageTransition)) {
+                            hasAnimation = pageTransition.effect.type === "Animation";
 
-                            fullName = pageObj.pageTransition.artifactSpec.directiveName;
-                            if (pageObj.pageTransition.artifactSpec.version) {
-                                fullName = fullName + "-" + pageObj.pageTransition.artifactSpec.version.replace(/\./g, "-")
+                            fullName = pageTransition.artifactSpec.directiveName;
+                            if (pageTransition.artifactSpec.version) {
+                                fullName = fullName + "-" + pageTransition.artifactSpec.version.replace(/\./g, "-")
                             }
 
                             $current.attr(fullName, "");
-                            $current.attr("effect", pageObj.pageTransition.effect.name);
+                            $current.attr("effect", pageTransition.effect.name);
                         }
 
                         if (hasAnimation) {
@@ -4537,19 +4544,20 @@ define(
                         var $current = pageObj.$element,
                             $prev = pageObj.prevSibling.$element,
                             hasAnimation = false,
-                            fullName;
+                            fullName,
+                            pageTransition = self.$rootScope.loadedProject.sketchWorks.pageTransition;
 
                         $prev.addClass("backward previousPage");
 
-                        if (pageObj.pageTransition) {
-                            hasAnimation = pageObj.pageTransition.effect.type === "Animation";
+                        if (pageTransition) {
+                            hasAnimation = pageTransition.effect.type === "Animation";
 
-                            fullName = pageObj.pageTransition.artifactSpec.directiveName;
-                            if (pageObj.pageTransition.artifactSpec.version) {
-                                fullName = fullName + "-" + pageObj.pageTransition.artifactSpec.version.replace(/\./g, "-")
+                            fullName = pageTransition.artifactSpec.directiveName;
+                            if (pageTransition.artifactSpec.version) {
+                                fullName = fullName + "-" + pageTransition.artifactSpec.version.replace(/\./g, "-")
                             }
                             $prev.attr(fullName, "");
-                            $prev.attr("effect", pageObj.pageTransition.effect.name);
+                            $prev.attr("effect", pageTransition.effect.name);
                         }
 
                         if (hasAnimation) {
@@ -4632,6 +4640,7 @@ define(
                         return self.uiUtilService.getResolveDefer(pageObj);
                     }, function (err) {
                         self.$exceptionHandler(err);
+                        return self.uiUtilService.getRejectDefer(err);
                     });
                 } else {
                     return self.uiUtilService.getRejectDefer("The number of pages in dom exceeds maximum limit.");

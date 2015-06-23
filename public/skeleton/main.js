@@ -83,12 +83,14 @@ requirejs(["jquery-lib", "jquery-plugins-lib", "hammer-lib", "jquery-ui-lib", "j
                 hoverClass: "widgetHover",
                 activeClass: "pickedWidget",
                 widgetContainerClass: "widgetContainer",
-                widgetIncludeAnchorClass: "widgetIncludeAnchor"
+                widgetIncludeAnchorClass: "widgetIncludeAnchor",
+                currentPageClass: "currentPage"
             },
             anchorAttr: "widget-anchor",
             repoWidgetClass: "ui-widget",
             stateGroupEventPattern: "State Change Event of State Group {0}",
             widgetEventPattern: "Event {0} of widget {1}",
+            maxPageCountInDom: 10,
             draggingShapeZIndex: 101,
             actionDelay: 100,
             checkInterval: 20,

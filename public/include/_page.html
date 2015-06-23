@@ -98,9 +98,9 @@
                 <div class="pageEffectMultilevelMenu fs-x-smaller" ui-multilevel-menu menu-list="effectList"
                      ui-multilevel-menu-opts="{dataField:'value', labelField:'name', zIndex:101}"
                      picked-menu-item="pickedEffect"
-                     on-menu-select="$root.sketchObject.pickedPage.pageTransition = createEffectObj(pickedEffect)">
-                    {{$root.sketchObject.pickedPage.pageTransition &&
-                    $root.sketchObject.pickedPage.pageTransition.effect.name || 'Choose an Effect'}}
+                     on-menu-select="$root.loadedProject.sketchWorks.pageTransition = createEffectObj(pickedEffect)">
+                    {{$root.loadedProject.sketchWorks.pageTransition.effect &&
+                    $root.loadedProject.sketchWorks.pageTransition.effect.name || 'Choose an Effect'}}
                 </div>
 
                 <div class="effectLibraryList">

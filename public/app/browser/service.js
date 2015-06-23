@@ -539,7 +539,7 @@ define(
                     if (result.data.result === "OK") {
                         var resultValue = JSON.parse(result.data.resultValue);
                         self.$timeout(function () {
-                            defer.resolve(resultValue.pages);
+                            defer.resolve(resultValue);
                         });
                     } else {
                         self.$timeout(function () {

@@ -20,10 +20,12 @@ define(
         var extension = arguments[0],
             appConfigs = Array.prototype.slice.call(arguments, 1);
 
-        return function (appModule) {
+        return function (appModule, callback) {
             appConfigs.forEach(function (config) {
                 config(appModule, extension);
             });
+
+            callback && callback();
         }
     }
 );

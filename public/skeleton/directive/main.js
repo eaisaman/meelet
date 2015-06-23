@@ -6,7 +6,8 @@ requirejs.config(
             "ng.ui.extension": DIRECTIVE_LIB_PATH + "ng.ui.extension",
             "ng.ui.hammer-gestures": DIRECTIVE_LIB_PATH + "ng.ui.hammer-gestures",
             "ng.ui.draggable": DIRECTIVE_LIB_PATH + "ng.ui.draggable",
-            "widget.anchor": DIRECTIVE_LIB_PATH + "widget.anchor"
+            "widget.anchor": DIRECTIVE_LIB_PATH + "widget.anchor",
+            "ng.ui.include.replace": DIRECTIVE_LIB_PATH + "ng.ui.include.replace"
         }
     }
 );
@@ -18,7 +19,8 @@ define([
         "ng.ui.extension",
         "ng.ui.hammer-gestures",
         "ng.ui.draggable",
-        "widget.anchor"
+        "widget.anchor",
+        "ng.ui.include.replace"
     ],
     function () {
         var utilConfig = arguments[0],
@@ -39,6 +41,9 @@ define([
 
             //widget-anchor directive
             directiveConfigs[2](appModule);
+
+            //Include Replace directive
+            directiveConfigs[3](appModule);
         }
     }
 );

@@ -25,12 +25,11 @@ define(
 
             return function (appModule, callback) {
                 //Configure route
-                var locations = meta.locations;
-                routeConfig(appModule, locations);
+                routeConfig(appModule, meta);
 
                 //Load app relevant controller, filter, service, etc.
                 appConfigs && appConfigs.forEach(function (config) {
-                    config(appModule);
+                    config(appModule, meta);
                 });
 
                 //Load artifact spec and configure each artifact
