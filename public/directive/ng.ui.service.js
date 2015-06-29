@@ -1,7 +1,7 @@
 define(
     ["angular", "jquery", "underscore", "ng.ui.util"],
     function () {
-        var Service = function ($parse, $timeout, $q, $exceptionHandler, $compile, $rootScope, angularEventTypes, angularConstants, appService, uiUtilService, uiCanvasService) {
+        var Service = function ($parse, $timeout, $q, $exceptionHandler, $compile, $rootScope, angularEventTypes, angularConstants, appService, uiUtilService, uiCanvasService, uiAnimationService) {
             this.$parse = $parse;
             this.$timeout = $timeout;
             this.$q = $q;
@@ -13,11 +13,12 @@ define(
             this.appService = appService;
             this.uiUtilService = uiUtilService;
             this.uiCanvasService = uiCanvasService;
+            this.uiAnimationService = uiAnimationService;
 
             _.extend($inject, _.pick(this, Service.$inject));
         };
 
-        Service.$inject = ["$parse", "$timeout", "$q", "$exceptionHandler", "$compile", "$rootScope", "angularEventTypes", "angularConstants", "appService", "uiUtilService", "uiCanvasService"];
+        Service.$inject = ["$parse", "$timeout", "$q", "$exceptionHandler", "$compile", "$rootScope", "angularEventTypes", "angularConstants", "appService", "uiUtilService", "uiCanvasService", "uiAnimationService"];
         var $inject = {};
 
         //Define sketch widget class
@@ -1134,7 +1135,7 @@ define(
             MovementTransitionAction = Class(BaseTransitionAction, {
                 CLASS_NAME: "MovementTransitionAction",
                 MEMBERS: {
-                    coordinates: []
+                    routeIndex: null
                 },
                 initialize: function (widgetObj, id) {
                     this.initialize.prototype.__proto__.initialize.apply(this, [widgetObj, "Movement", id]);
@@ -1147,19 +1148,21 @@ define(
                 toJSON: function () {
                     var jsonObj = MovementTransitionAction.prototype.__proto__.toJSON.apply(this);
 
-                    _.extend(jsonObj, _.pick(this, ["CLASS_NAME", "coordinates"]));
+                    _.extend(jsonObj, _.pick(this, ["CLASS_NAME", "routeIndex"]));
 
                     return jsonObj;
                 },
                 fromObject: function (obj) {
                     var ret = new MovementTransitionAction(null, obj.coordinates, obj.id);
+                    ret.routeIndex = obj.routeIndex;
 
                     MovementTransitionAction.prototype.__proto__.fromObject.apply(ret, [obj]);
 
                     return ret;
                 },
                 clone: function (cloneObj, MEMBERS) {
-                    cloneObj = cloneObj || new MovementTransitionAction(this.widgetObj, this.coordinates);
+                    cloneObj = cloneObj || new MovementTransitionAction(this.widgetObj);
+                    cloneObj.routeIndex = this.routeIndex;
 
                     _.extend(MEMBERS = MEMBERS || {}, MovementTransitionAction.prototype.MEMBERS);
 
@@ -1168,14 +1171,7 @@ define(
                     return cloneObj;
                 },
                 doAction: function () {
-                    var self = this,
-                        defer = $inject.$q.defer();
-
-                    $inject.$timeout(function () {
-                        defer.resolve(self);
-                    });
-
-                    return defer.promise;
+                    return $inject.uiAnimationService.moveWidget(this.widgetObj, this.routeIndex);
                 }
             }),
             BaseTrigger = Class({
@@ -3162,7 +3158,7 @@ define(
                 toJSON: function () {
                     var jsonObj = ElementSketchWidgetClass.prototype.__proto__.toJSON.apply(this);
                     _.extend(jsonObj, _.pick(this, ["CLASS_NAME", "html", "markdown"]), {
-                        routes: $inject.uiUtilService.arrayOmit(this.routes, "point", "$$hashKey")
+                        routes: $inject.uiUtilService.arrayOmit(this.routes, "currentStop", "point", "$$hashKey")
                     });
 
                     return jsonObj;

@@ -100,13 +100,16 @@ define(
                 self.canvas.on("object:moving", function (event) {
                     var p = event.target;
 
+                    var left = Math.floor(p.left * self.angularConstants.precision) / self.angularConstants.precision;
+                    var top = Math.floor(p.top * self.angularConstants.precision) / self.angularConstants.precision;
+
                     if (p.meeletCanvasObject === CanvasObject_Point) {
                         self.hideMenu();
                         p.meeletCanvasObject = CanvasObject_LineEnd;
                     }
                     if (p.meeletCanvasObject === CanvasObject_LineEnd) {
-                        p.lineIn && p.lineIn.set({'x2': p.left, 'y2': p.top});
-                        p.lineOut && p.lineOut.set({'x1': p.left, 'y1': p.top});
+                        p.lineIn && p.lineIn.set({'x2': left, 'y2': top});
+                        p.lineOut && p.lineOut.set({'x1': left, 'y1': top});
 
                         self.canvas.renderAll();
                     }
@@ -116,9 +119,12 @@ define(
                     var p = event.target;
 
                     if (p) {
+                        var left = Math.floor(p.left * self.angularConstants.precision) / self.angularConstants.precision;
+                        var top = Math.floor(p.top * self.angularConstants.precision) / self.angularConstants.precision;
+
                         if (p.meeletCanvasObject === CanvasObject_LineEnd) {
-                            p.lineIn && p.lineIn.set({'x2': p.left, 'y2': p.top});
-                            p.lineOut && p.lineOut.set({'x1': p.left, 'y1': p.top});
+                            p.lineIn && p.lineIn.set({'x2': left, 'y2': top});
+                            p.lineOut && p.lineOut.set({'x1': left, 'y1': top});
 
                             p.meeletCanvasObject = CanvasObject_Point;
 
@@ -190,6 +196,9 @@ define(
             var p = this.canvas.getActiveObject();
 
             if (p) {
+                left = Math.floor(left * self.angularConstants.precision) / self.angularConstants.precision;
+                top = Math.floor(top * self.angularConstants.precision) / self.angularConstants.precision;
+
                 if (p.meeletCanvasObject === CanvasObject_Origin || (p.meeletCanvasObject === CanvasObject_Point && !p.lineOut)) {
                     var nextStop = {left: left, top: top, nextStop: null},
                         end = makePoint(nextStop),
