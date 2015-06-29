@@ -1,7 +1,7 @@
 define(
     ["angular", "jquery", "underscore", "ng.ui.util"],
     function () {
-        var Service = function ($parse, $timeout, $q, $exceptionHandler, $compile, $rootScope, angularEventTypes, angularConstants, appService, uiUtilService) {
+        var Service = function ($parse, $timeout, $q, $exceptionHandler, $compile, $rootScope, angularEventTypes, angularConstants, appService, uiUtilService, uiCanvasService) {
             this.$parse = $parse;
             this.$timeout = $timeout;
             this.$q = $q;
@@ -12,11 +12,12 @@ define(
             this.angularConstants = angularConstants;
             this.appService = appService;
             this.uiUtilService = uiUtilService;
+            this.uiCanvasService = uiCanvasService;
 
             _.extend($inject, _.pick(this, Service.$inject));
         };
 
-        Service.$inject = ["$parse", "$timeout", "$q", "$exceptionHandler", "$compile", "$rootScope", "angularEventTypes", "angularConstants", "appService", "uiUtilService"];
+        Service.$inject = ["$parse", "$timeout", "$q", "$exceptionHandler", "$compile", "$rootScope", "angularEventTypes", "angularConstants", "appService", "uiUtilService", "uiCanvasService"];
         var $inject = {};
 
         //Define sketch widget class
@@ -1128,6 +1129,56 @@ define(
                     });
                 }
             }),
+            MovementTransitionAction = Class(BaseTransitionAction, {
+                CLASS_NAME: "MovementTransitionAction",
+                MEMBERS: {
+                    coordinates: []
+                },
+                initialize: function (widgetObj, coordinates, id) {
+                    this.initialize.prototype.__proto__.initialize.apply(this, [widgetObj, "Movement", id]);
+                    var MEMBERS = arguments.callee.prototype.MEMBERS;
+
+                    for (var member in MEMBERS) {
+                        this[member] = angular.copy(MEMBERS[member]);
+                    }
+                    if (coordinates) {
+                        this.coordinates = coordinates;
+                    }
+                },
+                toJSON: function () {
+                    var jsonObj = MovementTransitionAction.prototype.__proto__.toJSON.apply(this);
+
+                    _.extend(jsonObj, _.pick(this, ["CLASS_NAME", "coordinates"]));
+
+                    return jsonObj;
+                },
+                fromObject: function (obj) {
+                    var ret = new MovementTransitionAction(null, obj.coordinates, obj.id);
+
+                    MovementTransitionAction.prototype.__proto__.fromObject.apply(ret, [obj]);
+
+                    return ret;
+                },
+                clone: function (cloneObj, MEMBERS) {
+                    cloneObj = cloneObj || new MovementTransitionAction(this.widgetObj, this.coordinates);
+
+                    _.extend(MEMBERS = MEMBERS || {}, MovementTransitionAction.prototype.MEMBERS);
+
+                    MovementTransitionAction.prototype.__proto__.clone.apply(this, [cloneObj, MEMBERS]);
+
+                    return cloneObj;
+                },
+                doAction: function () {
+                    var self = this,
+                        defer = $inject.$q.defer();
+
+                    $inject.$timeout(function () {
+                        defer.resolve(self);
+                    });
+
+                    return defer.promise;
+                }
+            }),
             BaseTrigger = Class({
                 CLASS_NAME: "BaseTrigger",
                 MEMBERS: {
@@ -1892,6 +1943,7 @@ define(
                         states: [],
                         stateOptions: [],
                         $element: null,
+                        routes: [],
                         resizable: true
                     },
                     initialize: function (id) {
@@ -1963,7 +2015,7 @@ define(
                         delete proto.objectMap;
                     },
                     toJSON: function () {
-                        return _.extend(_.pick(this, ["id", "name", "anchor", "attr", "styleManager"]), {
+                        return _.extend(_.pick(this, ["id", "name", "anchor", "attr", "styleManager", "routes"]), {
                             state: this.state.id,
                             stateContext: this.stateContext.node !== "?" && this.stateContext.id || "",
                             childWidgets: $inject.uiUtilService.arrayOmit(this.childWidgets, "$$hashKey"),
@@ -1979,6 +2031,7 @@ define(
                         self.attr = _.omit(obj.attr, ["$$hashKey"]);
                         self.styleManager = StyleManager.prototype.fromObject(obj.styleManager);
                         self.styleManager.widgetObj = self;
+                        self.routes = obj.routes || [];
                         obj.stateOptions.forEach(function (stateOption) {
                             self.stateOptions.push(_.omit(stateOption, ["$$hashKey"]));
                         });
@@ -2036,6 +2089,7 @@ define(
                         });
 
                         cloneObj.styleManager = self.styleManager.clone(cloneObj);
+                        cloneObj.routes = angular.copy(self.routes);
 
                         cloneObj.states.splice(0);
                         self.states.forEach(function (s) {
@@ -3059,6 +3113,10 @@ define(
                     setIsPlaying: function (value) {
                         this.unregisterTrigger();
                         value && this.registerTrigger();
+                    },
+                    displayRoute: function () {
+                    },
+                    hideRoute: function () {
                     }
                 }
             ),
@@ -3073,7 +3131,8 @@ define(
                     isElement: true,
                     isTemporary: false,
                     markdown: "",
-                    html: ""
+                    html: "",
+                    routes: []
                 },
                 initialize: function (id, widgetsArr, isTemporary) {
                     this.initialize.prototype.__proto__.initialize.apply(this, [id]);
@@ -3106,7 +3165,7 @@ define(
                 },
                 toJSON: function () {
                     var jsonObj = ElementSketchWidgetClass.prototype.__proto__.toJSON.apply(this);
-                    _.extend(jsonObj, _.pick(this, ["CLASS_NAME", "html", "markdown"]));
+                    _.extend(jsonObj, _.pick(this, ["CLASS_NAME", "html", "markdown", "routes"]));
 
                     return jsonObj;
                 },
@@ -3116,6 +3175,7 @@ define(
                     ElementSketchWidgetClass.prototype.__proto__.fromObject.apply(ret, [obj]);
                     ret.markdown = obj.markdown;
                     ret.setHtml(obj.html);
+                    ret.routes = obj.routes || [];
 
                     return ret;
                 },
@@ -3672,6 +3732,20 @@ define(
                         } else {
                             $textNode.remove();
                         }
+                    }
+                },
+                displayRoute: function () {
+                    var self = this;
+
+                    if (self.$element && self.$element[0].nodeType == 1 && self.$element.parent().length) {
+                        $inject.uiCanvasService.setWidget(self);
+                    }
+                },
+                hideRoute: function () {
+                    var self = this;
+
+                    if (self.$element && self.$element[0].nodeType == 1 && self.$element.parent().length) {
+                        $inject.uiCanvasService.setWidget(null);
                     }
                 }
             }),
@@ -4340,8 +4414,7 @@ define(
             }),
             PageSketchWidgetClass = Class(BaseSketchWidgetClass, {
                 CLASS_NAME: "PageSketchWidget",
-                MEMBERS: {
-                },
+                MEMBERS: {},
                 initialize: function (id) {
                     this.initialize.prototype.__proto__.initialize.apply(this, [id]);
                     var MEMBERS = arguments.callee.prototype.MEMBERS;

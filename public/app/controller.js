@@ -117,7 +117,7 @@ define(
                 );
             }
 
-            function FrameSketchController($scope, $rootScope, $timeout, $q, $log, $compile, $parse, angularEventTypes, angularConstants, appService, uiService, uiUtilService) {
+            function FrameSketchController($scope, $rootScope, $timeout, $q, $log, $compile, $parse, angularEventTypes, angularConstants, appService, uiService, uiUtilService, uiCanvasService) {
                 $scope.zoomWidget = function (event) {
                     event && event.stopPropagation && event.stopPropagation();
 
@@ -549,6 +549,82 @@ define(
                     return $rootScope.loadedProject.convertToHtml($rootScope.loginUser._id);
                 }
 
+                $scope.toggleDisplayRoute = function (event) {
+                    event && event.stopPropagation && event.stopPropagation();
+
+                    var $deviceHolder = $("." + angularConstants.widgetClasses.deviceHolderClass),
+                        $canvasContainer = $('#canvasContainer'),
+                        $editButton = $("#toggleCanvasEditButton"),
+                        canvas = uiCanvasService.getCanvas();
+
+                    $rootScope.sketchWidgetSetting.isDefingRoute = !$rootScope.sketchWidgetSetting.isDefingRoute;
+                    $canvasContainer.removeClass("select"), $editButton.removeClass("select");
+
+                    if ($rootScope.sketchWidgetSetting.isDefingRoute) {
+                        $timeout(function () {
+                            var paddingLeft = 0, paddingTop = 0, canvasOffset = $deviceHolder.offset();
+
+                            var m = ($canvasContainer.css("padding-left") || "").match(/([-\d\.]+)px$/);
+                            if (m && m.length == 2) paddingLeft = Math.floor(parseFloat(m[1]) * angularConstants.precision) / angularConstants.precision;
+                            m = ($canvasContainer.css("padding-top") || "").match(/([-\d\.]+)px$/);
+                            if (m && m.length == 2) paddingTop = Math.floor(parseFloat(m[1]) * angularConstants.precision) / angularConstants.precision;
+
+                            canvasOffset.left -= paddingLeft;
+                            canvasOffset.top -= paddingTop;
+
+                            $canvasContainer.offset(canvasOffset);
+
+                            if (!canvas) {
+                                canvas = new fabric.Canvas('sketchCanvas', {
+                                    width: $scope.sketchDevice.width,
+                                    height: $scope.sketchDevice.height
+                                });
+
+                                //Mouse event from canvas should not be propagated outside.
+                                $canvasContainer.children("div").attr("ng-click", "$event.stopPropagation()");
+                                $compile($canvasContainer)($scope);
+
+                                uiCanvasService.setCanvas(canvas);
+                            }
+
+                            $rootScope.$broadcast(angularEventTypes.defineWidgetRouteEvent, $rootScope.sketchWidgetSetting.isDefingRoute);
+                            $rootScope.sketchObject.pickedWidget && $rootScope.sketchObject.pickedWidget.displayRoute();
+                        }, angularConstants.actionDelay);
+                    } else {
+                        $rootScope.$broadcast(angularEventTypes.defineWidgetRouteEvent, $rootScope.sketchWidgetSetting.isDefingRoute);
+                        $rootScope.sketchObject.pickedWidget && $rootScope.sketchObject.pickedWidget.hideRoute();
+                    }
+                }
+
+                $scope.toggleDefineRoute = function (event) {
+                    event && event.stopPropagation && event.stopPropagation();
+
+                    var $canvasContainer = $('#canvasContainer'),
+                        $editButton = $("#toggleCanvasEditButton");
+
+                    $canvasContainer.toggleClass("select"), $editButton.toggleClass("select");
+
+                }
+
+                $scope.startLink = function (event) {
+                    event && event.stopPropagation && event.stopPropagation();
+
+                    var offset = $("#sketchCanvas").offset();
+
+                    uiCanvasService.startLink(event.clientX - offset.left, event.clientY - offset.top), uiCanvasService.hideMenu();
+                }
+
+                $scope.removePoint = function (event) {
+                    event && event.stopPropagation && event.stopPropagation();
+
+                    uiCanvasService.removePoint(), uiCanvasService.hideMenu();
+                }
+
+                $scope.locateOutsideCanvas = function (event) {
+                    event && event.stopPropagation && event.stopPropagation();
+
+                }
+
                 $scope.showDemo = function (event) {
                     event && event.stopPropagation && event.stopPropagation();
 
@@ -718,6 +794,12 @@ define(
                             $rootScope.sketchObject.pickedWidget = $rootScope.sketchObject.pickedPage;
                         } else {
                             $scope.initWidgetPosition();
+
+                            if ($rootScope.sketchWidgetSetting.isDefingRoute) {
+                                if ($rootScope.sketchObject.pickedWidget && !$rootScope.sketchObject.pickedWidget.isTemporary && $rootScope.sketchObject.pickedWidget.isKindOf("ElementSketchWidget")) {
+                                    $rootScope.sketchObject.pickedWidget.displayRoute();
+                                }
+                            }
                         }
                     });
 
@@ -730,7 +812,7 @@ define(
                     });
 
                     //Receive control directive settings of bound properties
-                    $scope.$on(angularEventTypes.boundPropertiesEvent, function (event, data) {
+                    $scope.boundPropertiesWatcher = $scope.$on(angularEventTypes.boundPropertiesEvent, function (event, data) {
                         for (var key in data) {
                             var prop = data[key].prop;
                             if (typeof prop === "string") {
@@ -746,13 +828,13 @@ define(
                         }
                     });
 
-                    $scope.$on(angularEventTypes.beforeWidgetCreationEvent, function (event, fn) {
+                    $scope.beforeWidgetCreationWatcher = $scope.$on(angularEventTypes.beforeWidgetCreationEvent, function (event, fn) {
                         uiUtilService.once(function (fn) {
                             return $scope.showWidgetName(fn);
                         }, null, angularConstants.unresponsiveInterval, "FrameSketchController.initMaster.beforeWidgetCreation")(fn);
                     });
 
-                    $scope.$on(angularEventTypes.switchProjectEvent, function () {
+                    $scope.switchProjectWatcher = $scope.$on(angularEventTypes.switchProjectEvent, function () {
                         $scope.renderProject();
                     });
 
@@ -773,6 +855,20 @@ define(
                             $scope.pickedWidgetStateWatcher();
                             $scope.pickedWidgetStateWatcher = null;
                         }
+                        if ($scope.boundPropertiesWatcher) {
+                            $scope.boundPropertiesWatcher();
+                            $scope.boundPropertiesWatcher = null;
+                        }
+                        if ($scope.beforeWidgetCreationWatcher) {
+                            $scope.beforeWidgetCreationWatcher();
+                            $scope.beforeWidgetCreationWatcher = null;
+                        }
+                        if ($scope.switchProjectWatcher) {
+                            $scope.switchProjectWatcher();
+                            $scope.switchProjectWatcher = null;
+                        }
+
+                        uiCanvasService.setCanvas(null);
                     });
                 }
 
@@ -1135,7 +1231,7 @@ define(
 
             appModule.
                 controller('RootController', ["$scope", "$rootScope", "$q", "appService", "urlService", "uiUtilService", RootController]).
-                controller('FrameSketchController', ["$scope", "$rootScope", "$timeout", "$q", "$log", "$compile", "$parse", "angularEventTypes", "angularConstants", "appService", "uiService", "uiUtilService", FrameSketchController]).
+                controller('FrameSketchController', ["$scope", "$rootScope", "$timeout", "$q", "$log", "$compile", "$parse", "angularEventTypes", "angularConstants", "appService", "uiService", "uiUtilService", "uiCanvasService", FrameSketchController]).
                 controller('ProjectController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "uiService", "urlService", "uiUtilService", ProjectController]).
                 controller('RepoController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "urlService", RepoController]).
                 controller('RepoLibController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "urlService", RepoLibController]);

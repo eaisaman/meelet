@@ -392,8 +392,9 @@ define(
                                     * Some widgets' elements append to dom without angular compilation, so the directive logic won't be processed,
                                     * which will cause the gesture in design mode not to work on such widgets.
                                     * */
+
                                     //Since widget setting gesture may collide with actual playing gesture, we disable it for play.
-                                    scope.$on(angularEventTypes.playProjectEvent, function (event, value) {
+                                    scope.playProjectWatcher = scope.$on(angularEventTypes.playProjectEvent, function (event, value) {
                                         function watchHandler(el, isPlaying) {
                                             if (isPlaying) {
                                                 unregisterHandlers(el);
@@ -408,7 +409,27 @@ define(
                                             //Directive ng-include will recreate element which have no widget id attribute.
                                             var id = element.attr("id") || element.parent().attr("id");
 
-                                            id && uiUtilService.latestOnce(watchHandler, null, angularConstants.unresponsiveInterval, "sketch-widget.watchHandler.{0}".format(id))(element, value);
+                                            id && uiUtilService.latestOnce(watchHandler, null, angularConstants.unresponsiveInterval, "sketch-widget.playProjectEvent.watchHandler.{0}".format(id))(element, value);
+                                        }
+                                    });
+
+                                    //Defining widget route depends on mouse click event which collides with widget setting gesture,  we disable it temporarily.
+                                    scope.defineWidgetRouteWatcher = scope.$on(angularEventTypes.defineWidgetRouteEvent, function (event, value) {
+                                        function watchHandler(el, isPlaying) {
+                                            if (isPlaying) {
+                                                unregisterHandlers(el);
+                                            } else {
+                                                registerHandlers(scope, el);
+                                            }
+
+                                            return uiUtilService.getResolveDefer();
+                                        }
+
+                                        if (element.parent().length) {
+                                            //Directive ng-include will recreate element which have no widget id attribute.
+                                            var id = element.attr("id") || element.parent().attr("id");
+
+                                            id && uiUtilService.latestOnce(watchHandler, null, angularConstants.unresponsiveInterval, "sketch-widget.defineWidgetRouteEvent.watchHandler.{0}".format(id))(element, value);
                                         }
                                     });
 
@@ -440,6 +461,16 @@ define(
 
                                     scope.$on('$destroy', function () {
                                         unregisterHandlers(element);
+
+                                        if (scope.playProjectWatcher) {
+                                            scope.playProjectWatcher();
+                                            scope.playProjectWatcher = null;
+                                        }
+
+                                        if (scope.defineWidgetRouteWatcher) {
+                                            scope.defineWidgetRouteWatcher();
+                                            scope.defineWidgetRouteWatcher = null;
+                                        }
                                     });
                                 },
                                 post: function (scope, element, attrs) {

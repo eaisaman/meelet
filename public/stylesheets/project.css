@@ -4137,6 +4137,132 @@
     transform: scale(1, 1) rotate(0deg) translateY(0%);
   }
 }
+/*
+ * Found in frameSketch.html
+ */
+@-webkit-keyframes bounceEffect {
+  0% {
+    -webkit-transform: translateY(-100%);
+  }
+  5% {
+    -webkit-transform: translateY(-100%);
+  }
+  15% {
+    -webkit-transform: translateY(0);
+  }
+  30% {
+    -webkit-transform: translateY(-50%);
+  }
+  40% {
+    -webkit-transform: translateY(0%);
+  }
+  50% {
+    -webkit-transform: translateY(-30%);
+  }
+  70% {
+    -webkit-transform: translateY(0%);
+  }
+  80% {
+    -webkit-transform: translateY(-15%);
+  }
+  90% {
+    -webkit-transform: translateY(0%);
+  }
+  95% {
+    -webkit-transform: translateY(-10%);
+  }
+  97% {
+    -webkit-transform: translateY(0%);
+  }
+  99% {
+    -webkit-transform: translateY(-5%);
+  }
+  100% {
+    -webkit-transform: translateY(0);
+  }
+}
+@-moz-keyframes bounceEffect {
+  0% {
+    -moz-transform: translateY(-100%);
+  }
+  5% {
+    -moz-transform: translateY(-100%);
+  }
+  15% {
+    -moz-transform: translateY(0);
+  }
+  30% {
+    -moz-transform: translateY(-50%);
+  }
+  40% {
+    -moz-transform: translateY(0%);
+  }
+  50% {
+    -moz-transform: translateY(-30%);
+  }
+  70% {
+    -moz-transform: translateY(0%);
+  }
+  80% {
+    -moz-transform: translateY(-15%);
+  }
+  90% {
+    -moz-transform: translateY(0%);
+  }
+  95% {
+    -moz-transform: translateY(-10%);
+  }
+  97% {
+    -moz-transform: translateY(0%);
+  }
+  99% {
+    -moz-transform: translateY(-5%);
+  }
+  100% {
+    -moz-transform: translateY(0);
+  }
+}
+@keyframes bounceEffect {
+  0% {
+    transform: translateY(-100%);
+  }
+  5% {
+    transform: translateY(-100%);
+  }
+  15% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-50%);
+  }
+  40% {
+    transform: translateY(0%);
+  }
+  50% {
+    transform: translateY(-30%);
+  }
+  70% {
+    transform: translateY(0%);
+  }
+  80% {
+    transform: translateY(-15%);
+  }
+  90% {
+    transform: translateY(0%);
+  }
+  95% {
+    transform: translateY(-10%);
+  }
+  97% {
+    transform: translateY(0%);
+  }
+  99% {
+    transform: translateY(-5%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
 .projectContainer .modalWindowContainer .projectMainContent .projectContent .projectItem .projectItemQrCode.show, .projectContainer .modalWindowContainer .projectMainContent .projectContent .projectItem .projectItemQrCode.hiding {
   -moz-animation-duration: 1s;
   -webkit-animation-duration: 1s;
@@ -7417,6 +7543,9 @@
   animation-name: puffOut;
 }
 
+/*
+ * Found in frameSketch.html
+ */
 #repoTypeDropdown {
   /* Stack the items with a slight offset */
   /* Stack the items with a slight offset, and expand them with a slight random angle/left values.
@@ -7742,7 +7871,7 @@
 .projectContainer .modalWindowContainer .projectMainContent .projectContent .projectItem {
   position: relative;
   float: left;
-  width: 480px;
+  width: 360px;
   margin-right: 1em;
   margin-bottom: 15px;
   padding: 15px;

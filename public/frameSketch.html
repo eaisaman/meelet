@@ -123,6 +123,9 @@
                             </div>
                         </div>
                     </div>
+                    <div ng-click="toggleDisplayRoute($event)"
+                         ng-class="{'select':$root.sketchWidgetSetting.isDefingRoute}"
+                         class="topbarButton topbarToggleButton icon-frame-sketch-before icon-frame-sketch-move-route-before"></div>
                     <div ng-click="togglePlayWidget($event)" class="topbarButton icon-frame-sketch-before"
                          ng-class="{'icon-frame-sketch-play-before':!$root.sketchWidgetSetting.isPlaying, 'icon-frame-sketch-pause-before':$root.sketchWidgetSetting.isPlaying}"></div>
                     <div ng-click="saveProject($event)" ng-if="$root.loadedProject.projectRecord.lock"
@@ -182,6 +185,27 @@
                     </div>
                 </div>
             </div>
+
+            <div id="canvasContainer" ng-show="$root.sketchWidgetSetting.isDefingRoute"
+                 ng-style="{'padding':45, 'width': '{{sketchDevice.width + 90}}', 'height': '{{sketchDevice.height + 90}}'}"
+                 ng-click="locateOutsideCanvas($event)">
+                <canvas id="sketchCanvas"></canvas>
+            </div>
+
+            <div id="canvasPopupMenu">
+                <div class="btn-group open">
+                    <ul class="dropdown-menu fs-x-medium" role="menu">
+                        <li class="icon-frame-sketch-before icon-frame-sketch-pencil-before"
+                            ng-click="startLink($event)"><a href="">Link To</a></li>
+                        <li class="icon-frame-sketch-before icon-frame-sketch-delete-before"
+                            ng-click="removePoint($event)"><a href="">Delete</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="toggleCanvasEditButton" ng-show="$root.sketchWidgetSetting.isDefingRoute"
+                 class="fs-x-medium icon-frame-sketch-before icon-frame-sketch-pen-checkbox-before"
+                 ng-click="toggleDefineRoute($event)"></div>
 
             <div id="sketchControls" class="fs-x-large" ng-class="dockAlign" ui-dock
                  visible-pseudo-enabled-widgets="visiblePseudoEnabledWidgets">

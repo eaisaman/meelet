@@ -411,6 +411,155 @@
     }
 }
 
+@mixin bounceEffectKeyframes($keyframe: bounceEffect) {
+    @-webkit-keyframes #{$keyframe} {
+        0% {
+            -webkit-transform:translateY(-100%);
+
+        }
+        5% {
+            -webkit-transform:translateY(-100%);
+
+        }
+        15% {
+            -webkit-transform:translateY(0);
+
+        }
+        30% {
+            -webkit-transform:translateY(-50%);
+        }
+        40% {
+            -webkit-transform:translateY(0%);
+
+        }
+        50% {
+            -webkit-transform:translateY(-30%);
+        }
+        70% {
+            -webkit-transform:translateY(0%);
+
+        }
+        80% {
+            -webkit-transform:translateY(-15%);
+        }
+        90% {
+            -webkit-transform:translateY(0%);
+
+        }
+        95% {
+            -webkit-transform:translateY(-10%);
+        }
+        97% {
+            -webkit-transform:translateY(0%);
+
+        }
+        99% {
+            -webkit-transform:translateY(-5%);
+        }
+        100% {
+            -webkit-transform:translateY(0);
+        }
+    }
+
+    @-moz-keyframes #{$keyframe} {
+        0% {
+            -moz-transform:translateY(-100%);
+
+        }
+        5% {
+            -moz-transform:translateY(-100%);
+
+        }
+        15% {
+            -moz-transform:translateY(0);
+
+        }
+        30% {
+            -moz-transform:translateY(-50%);
+        }
+        40% {
+            -moz-transform:translateY(0%);
+
+        }
+        50% {
+            -moz-transform:translateY(-30%);
+        }
+        70% {
+            -moz-transform:translateY(0%);
+
+        }
+        80% {
+            -moz-transform:translateY(-15%);
+        }
+        90% {
+            -moz-transform:translateY(0%);
+
+        }
+        95% {
+            -moz-transform:translateY(-10%);
+        }
+        97% {
+            -moz-transform:translateY(0%);
+
+        }
+        99% {
+            -moz-transform:translateY(-5%);
+        }
+        100% {
+            -moz-transform:translateY(0);
+        }
+    }
+
+    @keyframes #{$keyframe} {
+        0% {
+            transform:translateY(-100%);
+
+        }
+        5% {
+            transform:translateY(-100%);
+
+        }
+        15% {
+            transform:translateY(0);
+
+        }
+        30% {
+            transform:translateY(-50%);
+        }
+        40% {
+            transform:translateY(0%);
+
+        }
+        50% {
+            transform:translateY(-30%);
+        }
+        70% {
+            transform:translateY(0%);
+
+        }
+        80% {
+            transform:translateY(-15%);
+        }
+        90% {
+            transform:translateY(0%);
+
+        }
+        95% {
+            transform:translateY(-10%);
+        }
+        97% {
+            transform:translateY(0%);
+
+        }
+        99% {
+            transform:translateY(-5%);
+        }
+        100% {
+            transform:translateY(0);
+        }
+    }
+}
+
 /* Slide 100% width from current position to right
  * Used by directive ng.ui.dock, ng.ui-color-editor-palette
  * Found in _dock.html, _color-editor-palette.html
@@ -512,3 +661,8 @@
  * Found in _border-eidtor.html, _gradient-editor.html, _border-editor.html, _text-shadow.html
  */
 @include twisterInDown(twisterInDown);
+
+/*
+ * Found in frameSketch.html
+ */
+@include bounceEffectKeyframes(bounceEffect);

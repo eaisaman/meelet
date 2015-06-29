@@ -2,6 +2,7 @@ requirejs.config(
     {
         paths: {
             "ng.ui.util": DIRECTIVE_LIB_PATH + "ng.ui.util",
+            "ng.ui.canvas": DIRECTIVE_LIB_PATH + "ng.ui.canvas",
             "ng.ui.service": DIRECTIVE_LIB_PATH + "ng.ui.service",
             "ng.ui.extension": DIRECTIVE_LIB_PATH + "ng.ui.extension",
             "ng.ui.hammer-gestures": DIRECTIVE_LIB_PATH + "ng.ui.hammer-gestures",
@@ -35,6 +36,7 @@ requirejs.config(
 
 define([
         "ng.ui.util",
+        "ng.ui.canvas",
         "ng.ui.service",
         "ng.ui.extension",
         "ng.ui.hammer-gestures",
@@ -63,12 +65,15 @@ define([
     ],
     function () {
         var utilConfig = arguments[0],
-            serviceConfig = arguments[1],
-            extension = arguments[2],
-            directiveConfigs = Array.prototype.slice.call(arguments, 3);
+            canvasConfig = arguments[1],
+            serviceConfig = arguments[2],
+            extension = arguments[3],
+            directiveConfigs = Array.prototype.slice.call(arguments, 4);
 
         return function (appModule) {
             utilConfig(appModule);
+
+            canvasConfig(appModule);
 
             serviceConfig(appModule);
 

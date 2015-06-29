@@ -52,7 +52,7 @@
             .btn-group {
                 pointer-events: none;
                 visibility: hidden;
-                left: -9em;
+                left: -8em;
                 top: 100%;
 
                 .dropdown-menu {
@@ -102,6 +102,8 @@
             }
 
             &.select {
+                overflow: visible;
+
                 &:active {
                     color: $color;
                     background: #ddd;

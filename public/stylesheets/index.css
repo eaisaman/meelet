@@ -7735,7 +7735,7 @@ button.close {
 #appTopBar .topbarMenu .btn-group {
   pointer-events: none;
   visibility: hidden;
-  left: -9em;
+  left: -8em;
   top: 100%;
 }
 #appTopBar .topbarMenu .btn-group .dropdown-menu {
@@ -7774,6 +7774,9 @@ button.close {
 }
 #appTopBar .topbarMenu .btn-group .dropdown-menu #topbarProjectDropdown span {
   font-weight: normal;
+}
+#appTopBar .topbarMenu.select {
+  overflow: visible;
 }
 #appTopBar .topbarMenu.select:active {
   color: rgba(0, 0, 0, 0.4);
@@ -7915,8 +7918,4 @@ button.close {
 
 *:not(input), *:not(textarea) {
   -webkit-user-select: none;
-}
-
-#rootBody {
-  zoom: 0.67;
 }
