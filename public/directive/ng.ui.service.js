@@ -812,6 +812,8 @@ define(
                         action = new StateTransitionAction(this.widgetObj, this.widgetObj.initialStateOption.name);
                     } else if (actionType === "Configuration") {
                         action = new ConfigurationTransitionAction(this.widgetObj);
+                    } else if (actionType === "Movement") {
+                        action = new MovementTransitionAction(this.widgetObj);
                     }
 
                     action && this.childActions.push(action);
@@ -1134,15 +1136,12 @@ define(
                 MEMBERS: {
                     coordinates: []
                 },
-                initialize: function (widgetObj, coordinates, id) {
+                initialize: function (widgetObj, id) {
                     this.initialize.prototype.__proto__.initialize.apply(this, [widgetObj, "Movement", id]);
                     var MEMBERS = arguments.callee.prototype.MEMBERS;
 
                     for (var member in MEMBERS) {
                         this[member] = angular.copy(MEMBERS[member]);
-                    }
-                    if (coordinates) {
-                        this.coordinates = coordinates;
                     }
                 },
                 toJSON: function () {
@@ -1943,7 +1942,6 @@ define(
                         states: [],
                         stateOptions: [],
                         $element: null,
-                        routes: [],
                         resizable: true
                     },
                     initialize: function (id) {
@@ -2015,7 +2013,7 @@ define(
                         delete proto.objectMap;
                     },
                     toJSON: function () {
-                        return _.extend(_.pick(this, ["id", "name", "anchor", "attr", "styleManager", "routes"]), {
+                        return _.extend(_.pick(this, ["id", "name", "anchor", "attr", "styleManager"]), {
                             state: this.state.id,
                             stateContext: this.stateContext.node !== "?" && this.stateContext.id || "",
                             childWidgets: $inject.uiUtilService.arrayOmit(this.childWidgets, "$$hashKey"),
@@ -2031,7 +2029,6 @@ define(
                         self.attr = _.omit(obj.attr, ["$$hashKey"]);
                         self.styleManager = StyleManager.prototype.fromObject(obj.styleManager);
                         self.styleManager.widgetObj = self;
-                        self.routes = obj.routes || [];
                         obj.stateOptions.forEach(function (stateOption) {
                             self.stateOptions.push(_.omit(stateOption, ["$$hashKey"]));
                         });
@@ -2089,7 +2086,6 @@ define(
                         });
 
                         cloneObj.styleManager = self.styleManager.clone(cloneObj);
-                        cloneObj.routes = angular.copy(self.routes);
 
                         cloneObj.states.splice(0);
                         self.states.forEach(function (s) {
@@ -3165,7 +3161,9 @@ define(
                 },
                 toJSON: function () {
                     var jsonObj = ElementSketchWidgetClass.prototype.__proto__.toJSON.apply(this);
-                    _.extend(jsonObj, _.pick(this, ["CLASS_NAME", "html", "markdown", "routes"]));
+                    _.extend(jsonObj, _.pick(this, ["CLASS_NAME", "html", "markdown"]), {
+                        routes: $inject.uiUtilService.arrayOmit(this.routes, "point", "$$hashKey")
+                    });
 
                     return jsonObj;
                 },
@@ -3187,6 +3185,7 @@ define(
                 clone: function (cloneObj, MEMBERS) {
                     cloneObj = cloneObj || new ElementSketchWidgetClass();
                     _.extend(MEMBERS = MEMBERS || {}, ElementSketchWidgetClass.prototype.MEMBERS);
+                    MEMBERS = _.omit(MEMBERS, ["routes"]);
 
                     ElementSketchWidgetClass.prototype.__proto__.clone.apply(this, [cloneObj, MEMBERS]);
 

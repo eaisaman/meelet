@@ -552,40 +552,15 @@ define(
                 $scope.toggleDisplayRoute = function (event) {
                     event && event.stopPropagation && event.stopPropagation();
 
-                    var $deviceHolder = $("." + angularConstants.widgetClasses.deviceHolderClass),
-                        $canvasContainer = $('#canvasContainer'),
-                        $editButton = $("#toggleCanvasEditButton"),
-                        canvas = uiCanvasService.getCanvas();
+                    var $canvasContainer = $('#canvasContainer'),
+                        $editButton = $("#toggleCanvasEditButton");
 
                     $rootScope.sketchWidgetSetting.isDefingRoute = !$rootScope.sketchWidgetSetting.isDefingRoute;
                     $canvasContainer.removeClass("select"), $editButton.removeClass("select");
 
                     if ($rootScope.sketchWidgetSetting.isDefingRoute) {
                         $timeout(function () {
-                            var paddingLeft = 0, paddingTop = 0, canvasOffset = $deviceHolder.offset();
-
-                            var m = ($canvasContainer.css("padding-left") || "").match(/([-\d\.]+)px$/);
-                            if (m && m.length == 2) paddingLeft = Math.floor(parseFloat(m[1]) * angularConstants.precision) / angularConstants.precision;
-                            m = ($canvasContainer.css("padding-top") || "").match(/([-\d\.]+)px$/);
-                            if (m && m.length == 2) paddingTop = Math.floor(parseFloat(m[1]) * angularConstants.precision) / angularConstants.precision;
-
-                            canvasOffset.left -= paddingLeft;
-                            canvasOffset.top -= paddingTop;
-
-                            $canvasContainer.offset(canvasOffset);
-
-                            if (!canvas) {
-                                canvas = new fabric.Canvas('sketchCanvas', {
-                                    width: $scope.sketchDevice.width,
-                                    height: $scope.sketchDevice.height
-                                });
-
-                                //Mouse event from canvas should not be propagated outside.
-                                $canvasContainer.children("div").attr("ng-click", "$event.stopPropagation()");
-                                $compile($canvasContainer)($scope);
-
-                                uiCanvasService.setCanvas(canvas);
-                            }
+                            uiCanvasService.initCanvas();
 
                             $rootScope.$broadcast(angularEventTypes.defineWidgetRouteEvent, $rootScope.sketchWidgetSetting.isDefingRoute);
                             $rootScope.sketchObject.pickedWidget && $rootScope.sketchObject.pickedWidget.displayRoute();
@@ -879,6 +854,9 @@ define(
                 $scope.uiService = uiService;
                 $scope.Math = Math;
                 $scope.classie = classie;
+                $scope.dockAlign = "align-left";
+                $scope.iconLibraryList = $rootScope.iconLibraryList;
+                $scope.effectLibraryList = $rootScope.effectLibraryList;
                 $scope.sketchDevice = {
                     type: "desktop",
                     width: 1024,
@@ -886,9 +864,6 @@ define(
                     img: "device_ipad_horizontal.svg",
                     rulerMarkerCount: 12
                 };
-                $scope.dockAlign = "align-left";
-                $scope.iconLibraryList = $rootScope.iconLibraryList;
-                $scope.effectLibraryList = $rootScope.effectLibraryList;
             }
 
             function ProjectController($scope, $rootScope, $timeout, $q, angularConstants, appService, uiService, urlService, uiUtilService) {

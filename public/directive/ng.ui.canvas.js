@@ -1,20 +1,79 @@
 define(
     ["angular", "jquery", "fabric"],
     function () {
-        var SketchCanvas = function ($log, $parse, $timeout, $q, $exceptionHandler, angularConstants) {
+        var SketchCanvas = function ($log, $compile, $parse, $timeout, $q, $exceptionHandler, uiUtilService, angularConstants, angularEventTypes) {
                 this.$log = $log;
+                this.$compile = $compile;
                 this.$parse = $parse;
                 this.$timeout = $timeout;
                 this.$q = $q;
                 this.$exceptionHandler = $exceptionHandler;
+                this.uiUtilService = uiUtilService;
                 this.angularConstants = angularConstants;
+                this.angularEventTypes = angularEventTypes;
             },
             CanvasColor = "rgb(221,125,0)",
             CanvasObject_Origin = 1,
             CanvasObject_Point = 2,
             CanvasObject_LineEnd = 3;
 
-        SketchCanvas.$inject = ["$log", "$parse", "$timeout", "$q", "$exceptionHandler", "angularConstants"];
+        SketchCanvas.$inject = ["$log", "$compile", "$parse", "$timeout", "$q", "$exceptionHandler", "uiUtilService", "angularConstants", "angularEventTypes"];
+
+        SketchCanvas.prototype.initCanvas = function () {
+            var self = this;
+
+            if (!self.canvas) {
+                var $deviceHolder = $("." + self.angularConstants.widgetClasses.deviceHolderClass),
+                    $canvasContainer = $('#canvasContainer'),
+                    scope = angular.element($canvasContainer).scope();
+
+                var paddingLeft = 0, paddingTop = 0, canvasOffset = $deviceHolder.offset(), canvas;
+
+                var m = ($canvasContainer.css("padding-left") || "").match(/([-\d\.]+)px$/);
+                if (m && m.length == 2) paddingLeft = Math.floor(parseFloat(m[1]) * self.angularConstants.precision) / self.angularConstants.precision;
+                m = ($canvasContainer.css("padding-top") || "").match(/([-\d\.]+)px$/);
+                if (m && m.length == 2) paddingTop = Math.floor(parseFloat(m[1]) * self.angularConstants.precision) / self.angularConstants.precision;
+
+                canvasOffset.left -= paddingLeft;
+                canvasOffset.top -= paddingTop;
+
+                $canvasContainer.offset(canvasOffset);
+
+                canvas = new fabric.Canvas('sketchCanvas', {
+                    width: scope.sketchDevice.width,
+                    height: scope.sketchDevice.height
+                });
+
+                //Mouse event from canvas should not be propagated outside.
+                $canvasContainer.children("div").attr("ng-click", "$event.stopPropagation()");
+                self.$compile($canvasContainer)(scope);
+
+                self.setCanvas(canvas);
+
+                self.deregisterOnMarkRoute = scope.$on(
+                    self.angularEventTypes.markWidgetRouteEvent,
+                    function (event, value) {
+                        self.uiUtilService.latestOnce(
+                            function (markedIndex) {
+                                return self.$timeout(
+                                    function () {
+                                        self.setMarkedRouteIndex(markedIndex);
+                                    }
+                                );
+                            },
+                            null,
+                            self.angularConstants.unresponsiveInterval,
+                            "SketchCanvas.setWidget.deregisterOnMarkRoute"
+                        )(value);
+                    }
+                );
+
+                scope.$on('$destroy', function () {
+                    self.deregisterOnMarkRoute && self.deregisterOnMarkRoute();
+                    self.deregisterOnMarkRoute = null;
+                });
+            }
+        }
 
         SketchCanvas.prototype.setCanvas = function (canvas) {
             var self = this;
@@ -67,6 +126,10 @@ define(
                         }
                     }
                 });
+
+                self.deregisterOnMarkRoute && self.deregisterOnMarkRoute();
+                self.deregisterOnMarkRoute = null;
+                delete self.markedRouteIndex;
             }
         }
 
@@ -104,6 +167,8 @@ define(
 
                                 if (start.meeletCanvasObject !== CanvasObject_Origin) {
                                     start.lineOut = line;
+                                } else {
+                                    coord.point = p;
                                 }
                                 line.start = start, p.lineIn = line, line.end = p;
                                 start = p;
@@ -134,11 +199,15 @@ define(
 
                     if (p.meeletCanvasObject === CanvasObject_Origin) {
                         p.routes.push(nextStop);
+                        nextStop.point = end;
                     } else {
                         if (p.coordinate) {
                             p.coordinate.nextStop = nextStop;
                         }
                         p.lineOut = line;
+
+                        //Copy former line's style
+                        p.lineIn && line.set(_.pick(p.lineIn, "strokeDashArray"));
                     }
 
                     line.start = p, end.lineIn = line, line.end = end;
@@ -198,6 +267,7 @@ define(
                             }
                         } else {
                             if (end.coordinate && routeIndex != null) {
+                                end.coordinate.point = end;
                                 this.widgetObj.routes.splice(routeIndex, 0, end.coordinate);
                             }
                         }
@@ -232,6 +302,34 @@ define(
         SketchCanvas.prototype.hideMenu = function () {
             if (this.$menu) {
                 this.$menu.removeClass("show");
+            }
+        }
+
+        SketchCanvas.prototype.setMarkedRouteIndex = function (markedIndex) {
+            if (this.markedRouteIndex != null) {
+                if (this.markedRouteIndex < this.widgetObj.routes.length) {
+                    makeDashedLine(this.widgetObj.routes[this.markedRouteIndex], null);
+                }
+
+                this.markedRouteIndex = null;
+            }
+
+            if (this.widgetObj && markedIndex < this.widgetObj.routes.length) {
+                this.markedRouteIndex = markedIndex;
+                makeDashedLine(this.widgetObj.routes[this.markedRouteIndex], [5, 5]);
+            }
+
+            this.canvas.renderAll();
+        }
+
+        function makeDashedLine(coord, dashArray) {
+            var p = coord.point,
+                line = p && p.lineIn;
+
+            while (line) {
+                line.set({strokeDashArray: dashArray});
+                line = p.lineOut;
+                p = line && line.end;
             }
         }
 

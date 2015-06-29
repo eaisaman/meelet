@@ -330,14 +330,14 @@ $maxNumOfConfigurationItems: 10;
 
                                                             @include transition(transform 0.3s);
 
-                                                            > .animationOptions, .configurationBody {
+                                                            > .animationOptions, .configurationBody, .movementBody {
                                                                 opacity: 0;
                                                                 pointer-events: none;
                                                                 height: 0px;
                                                                 overflow: hidden;
                                                             }
 
-                                                            .configurationPane {
+                                                            .configurationPane, .movementPane {
                                                                 position: relative;
                                                                 float: left;
                                                                 width: 100%;
@@ -367,7 +367,7 @@ $maxNumOfConfigurationItems: 10;
 
                                                                 @include box-shadow(inset 0 0 6px #555);
 
-                                                                > .animationOptions, .configurationBody {
+                                                                > .animationOptions, .configurationBody, .movementBody {
                                                                     opacity: 1;
                                                                     pointer-events: auto;
                                                                     height: auto;

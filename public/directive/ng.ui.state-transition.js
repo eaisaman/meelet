@@ -2,9 +2,9 @@ define(
     ["angular", "jquery"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$rootScope", "$http", "$parse", "$timeout", "$q", "$exceptionHandler", "angularEventTypes", "angularConstants", "uiUtilService", "uiService", "appService"];
+            var inject = ["$rootScope", "$http", "$parse", "$timeout", "$q", "$exceptionHandler", "angularEventTypes", "angularConstants", "uiUtilService", "uiService", "uiCanvasService", "appService"];
 
-            appModule.directive("uiStateTransition", _.union(inject, [function ($rootScope, $http, $parse, $timeout, $q, $exceptionHandler, angularEventTypes, angularConstants, uiUtilService, uiService, appService) {
+            appModule.directive("uiStateTransition", _.union(inject, [function ($rootScope, $http, $parse, $timeout, $q, $exceptionHandler, angularEventTypes, angularConstants, uiUtilService, uiService, uiCanvasService, appService) {
                 'use strict';
 
                 var defaults = {
@@ -99,6 +99,18 @@ define(
                                         artifactList = effectLibrary.artifactList;
 
                                     return xref && artifactList && artifactList.length > xref.artifactList.length;
+                                }
+
+                                scope.onMovementActionRouteIndexChange = function (item) {
+                                    if (!$rootScope.sketchWidgetSetting.isDefingRoute) {
+                                        uiCanvasService.initCanvas();
+                                        item.widgetObj.displayRoute();
+
+                                        $rootScope.sketchWidgetSetting.isDefingRoute = true;
+                                        $rootScope.$broadcast(angularEventTypes.defineWidgetRouteEvent, $rootScope.sketchWidgetSetting.isDefingRoute);
+                                    }
+
+                                    $rootScope.$broadcast(angularEventTypes.markWidgetRouteEvent, item.routeIndex);
                                 }
 
                                 function createConfigurationItemAssign(name) {

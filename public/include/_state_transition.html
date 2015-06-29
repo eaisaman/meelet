@@ -162,6 +162,36 @@
             </div>
         </div>
     </div>
+    <div class="accordianGroup" ng-if="item.actionType == 'Movement'"
+         ng-click="toggleSelect($event.currentTarget)">
+        <div class="accordianTitle col-as-12 icon-state-transition-before icon-state-transition-set-state-before">
+            <div class="deleteButton fs-x-tiny icon-state-transition-before icon-state-transition-cross-before"
+                 ng-click="deleteAction(parentAction, item, $event)"></div>
+            <span class="col-as-offset-1 col-as-4 no-padding">Movement</span>
+        </div>
+        <div class="accordianSubTitle fs-x-smaller col-as-12">
+            <span ng-click="toggleActionWidgetTree(item, $event)">{{item.widgetObj.name}}</span>
+        </div>
+        <div class="accordianBody col-as-12 no-padding">
+            <div class="movementBody" ng-click="$event.stopPropagation()">
+                <div class="movementPane">
+                    <div class="input-group col-as-12 fs-x-smaller">
+                        <label class="col-as-5 no-padding control-label">Route</label>
+
+                        <div class="widgetObjRouteList no-padding col-as-7" ng-click="$event.stopPropagation()">
+                            <select class="form-control" ng-model="item.routeIndex"
+                                    ng-change="onMovementActionRouteIndexChange(item)">
+                                <option value="{{$index}}" ng-attr-selected="{{item.routeIndex === $index}}"
+                                        ng-repeat="r in item.widgetObj.routes">
+                                    {{$index+1}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </script>
 <div class="stateContent ui-control-wrapper" ng-class="dockAlign">
     <div class="stateBar ui-control-bar">
@@ -218,7 +248,8 @@
                                              selection-list="triggers['Gesture']"
                                              select-item="pickedTriggerEventId"
                                              on-option-select="pickTriggerEvent('Gesture', transition, pickedTriggerEventId)">
-                                            {{transition.trigger && transition.trigger.eventName || "Choose Trigger Event"}}
+                                            {{transition.trigger && transition.trigger.eventName || "Choose Trigger
+                                            Event"}}
                                         </div>
                                     </li>
                                     <li>
@@ -243,6 +274,7 @@
                                             <option value="Effect">Effect</option>
                                             <option value="State">Change State</option>
                                             <option value="Configuration">Change Configuration</option>
+                                            <option value="Movement">Movement</option>
                                         </select>
                                         <span class="input-group-addon fs-x-smaller-before icon-state-transition-before icon-state-transition-plus-before"
                                               ng-click="createAction(transition.actionObj, $event);toggleSelect('.emptyAction', $event)"></span>
