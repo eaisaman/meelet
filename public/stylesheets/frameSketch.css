@@ -19642,7 +19642,7 @@
   top: 3em;
   width: 100%;
   height: calc(100% - 3em);
-  overflow: hidden;
+  overflow: visible;
   pointer-events: none;
   background: transparent;
 }
@@ -19654,8 +19654,8 @@
   background: rgba(221, 125, 0, 0.1);
 }
 #sketchContainer #canvasContainer canvas {
-  width: 100% !important;
-  height: 100% !important;
+  width: 100%;
+  height: 100%;
 }
 #sketchContainer #canvasContainer.select {
   pointer-events: auto;

@@ -1204,14 +1204,18 @@ define(
                 toJSON: function () {
                     var jsonObj = MovementTransitionAction.prototype.__proto__.toJSON.apply(this);
 
-                    _.extend(jsonObj, _.pick(this, ["CLASS_NAME", "routeIndex", "settings"]));
+                    _.extend(jsonObj, _.pick(this, ["CLASS_NAME", "routeIndex"]), {
+                        settings: $inject.uiUtilService.arrayOmit(this.settings, "options", "name", "type")
+                    });
 
                     return jsonObj;
                 },
                 fromObject: function (obj) {
                     var ret = new MovementTransitionAction(null, obj.coordinates, obj.id);
                     ret.routeIndex = obj.routeIndex;
-                    ret.settings = ret.settings  || obj.settings;
+                    _.each(obj.settings, function (s) {
+                        _.extend(_.findWhere(ret.settings, {key: s.key}), s);
+                    });
 
                     MovementTransitionAction.prototype.__proto__.fromObject.apply(ret, [obj]);
 
@@ -1221,7 +1225,7 @@ define(
                     cloneObj = cloneObj || new MovementTransitionAction(this.widgetObj);
                     cloneObj.routeIndex = this.routeIndex;
                     _.each(this.settings, function (s) {
-                        _.extend(_.findWhere(cloneObj.settings , {key: s.key}), s);
+                        _.extend(_.findWhere(cloneObj.settings, {key: s.key}), s);
                     })
 
                     _.extend(MEMBERS = MEMBERS || {}, MovementTransitionAction.prototype.MEMBERS);

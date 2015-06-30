@@ -598,6 +598,7 @@ define(
                 $scope.locateOutsideCanvas = function (event) {
                     event && event.stopPropagation && event.stopPropagation();
 
+                    alert('click')
                 }
 
                 $scope.showDemo = function (event) {

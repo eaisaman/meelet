@@ -44,6 +44,24 @@ define(
                     height: scope.sketchDevice.height
                 });
 
+                //Make fabric upper canvas larger than lower canvas which holds routes, so that user can locate to negative coordinates.
+                if (paddingLeft) {
+                    canvas.upperCanvasEl.width = scope.sketchDevice.width + 2 * paddingLeft;
+
+                    fabric.util.setStyle(canvas.upperCanvasEl, {
+                        width: (scope.sketchDevice.width + 2 * paddingLeft) + 'px',
+                        left: -paddingLeft
+                    });
+                }
+                if (paddingTop) {
+                    canvas.upperCanvasEl.height = scope.sketchDevice.height + 2 * paddingTop;
+
+                    fabric.util.setStyle(canvas.upperCanvasEl, {
+                        height: (scope.sketchDevice.height + 2 * paddingTop) + 'px',
+                        top: -paddingTop
+                    });
+                }
+
                 //Mouse event from canvas should not be propagated outside.
                 $canvasContainer.children("div").attr("ng-click", "$event.stopPropagation()");
                 self.$compile($canvasContainer)(scope);
@@ -88,8 +106,10 @@ define(
                 self.canvas.on("object:selected", function (event) {
                     var p = event.target;
 
-                    if (p.meeletCanvasObject === CanvasObject_Origin || p.meeletCanvasObject === CanvasObject_Point) {
-                        self.showMenu(p);
+                    if (p.left >= 0 && p.top >= 0) {
+                        if (p.meeletCanvasObject === CanvasObject_Origin || p.meeletCanvasObject === CanvasObject_Point) {
+                            self.showMenu(p);
+                        }
                     }
                 });
 
@@ -131,6 +151,10 @@ define(
                             self.canvas.renderAll();
                         }
                     }
+                });
+
+                self.canvas.on("mouse:down", function (event) {
+                    var p = event.target;
                 });
 
                 self.deregisterOnMarkRoute && self.deregisterOnMarkRoute();
