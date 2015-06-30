@@ -755,7 +755,7 @@ define(
 
                     SequenceTransitionAction.prototype.__proto__.fromObject.apply(ret, [obj]);
 
-                    var classes = ["EffectTransitionAction", "StateTransitionAction", "ConfigurationTransitionAction"];
+                    var classes = ["EffectTransitionAction", "StateTransitionAction", "ConfigurationTransitionAction", "MovementTransitionAction"];
                     obj.childActions && obj.childActions.forEach(function (action) {
                         var className = action.CLASS_NAME,
                             actionObj;
@@ -1134,8 +1134,53 @@ define(
             }),
             MovementTransitionAction = Class(BaseTransitionAction, {
                 CLASS_NAME: "MovementTransitionAction",
+                DEFAULT_SETTINGS: [
+                    {
+                        name: "Duration",
+                        key: "duration",
+                        type: "number",
+                        defaultValue: 1000
+                    },
+                    {
+                        name: "Easing",
+                        key: "easing",
+                        type: "list",
+                        options: [
+                            "linear",
+                            "swing",
+                            "spring",
+                            "ease",
+                            "ease-in",
+                            "ease-out",
+                            "ease-in-out",
+                            "easeInSine",
+                            "easeOutSine",
+                            "easeInOutSine",
+                            "easeInQuad",
+                            "easeOutQuad",
+                            "easeInOutQuad",
+                            "easeInCubic",
+                            "easeOutCubic",
+                            "easeInOutCubic",
+                            "easeInQuart",
+                            "easeOutQuart",
+                            "easeInOutQuart",
+                            "easeInQuint",
+                            "easeOutQuint",
+                            "easeInOutQuint",
+                            "easeInExpo",
+                            "easeOutExpo",
+                            "easeInOutExpo",
+                            "easeInCirc",
+                            "easeOutCirc",
+                            "easeInOutCirc"
+                        ],
+                        defaultValue: "linear"
+                    }
+                ],
                 MEMBERS: {
-                    routeIndex: null
+                    routeIndex: null,
+                    settings: []
                 },
                 initialize: function (widgetObj, id) {
                     this.initialize.prototype.__proto__.initialize.apply(this, [widgetObj, "Movement", id]);
@@ -1144,17 +1189,29 @@ define(
                     for (var member in MEMBERS) {
                         this[member] = angular.copy(MEMBERS[member]);
                     }
+
+                    var self = this;
+                    _.each(MovementTransitionAction.prototype.DEFAULT_SETTINGS, function (defaults) {
+                        var setting = _.pick(defaults, "name", "key", "type");
+                        setting.pickedValue = defaults.defaultValue;
+                        if (defaults.type === "list") {
+                            setting.options = defaults.options;
+                        }
+
+                        self.settings.push(setting);
+                    });
                 },
                 toJSON: function () {
                     var jsonObj = MovementTransitionAction.prototype.__proto__.toJSON.apply(this);
 
-                    _.extend(jsonObj, _.pick(this, ["CLASS_NAME", "routeIndex"]));
+                    _.extend(jsonObj, _.pick(this, ["CLASS_NAME", "routeIndex", "settings"]));
 
                     return jsonObj;
                 },
                 fromObject: function (obj) {
                     var ret = new MovementTransitionAction(null, obj.coordinates, obj.id);
                     ret.routeIndex = obj.routeIndex;
+                    ret.settings = ret.settings  || obj.settings;
 
                     MovementTransitionAction.prototype.__proto__.fromObject.apply(ret, [obj]);
 
@@ -1163,6 +1220,9 @@ define(
                 clone: function (cloneObj, MEMBERS) {
                     cloneObj = cloneObj || new MovementTransitionAction(this.widgetObj);
                     cloneObj.routeIndex = this.routeIndex;
+                    _.each(this.settings, function (s) {
+                        _.extend(_.findWhere(cloneObj.settings , {key: s.key}), s);
+                    })
 
                     _.extend(MEMBERS = MEMBERS || {}, MovementTransitionAction.prototype.MEMBERS);
 
@@ -1171,7 +1231,7 @@ define(
                     return cloneObj;
                 },
                 doAction: function () {
-                    return $inject.uiAnimationService.moveWidget(this.widgetObj, this.routeIndex);
+                    return $inject.uiAnimationService.moveWidget(this.widgetObj, this.routeIndex, this.settings);
                 }
             }),
             BaseTrigger = Class({

@@ -189,6 +189,39 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="movementPane" ng-repeat="settingItem in item.settings">
+                    <div class="input-group col-as-12 fs-x-smaller">
+                        <label class="col-as-5 no-padding control-label fs-x-smaller">{{settingItem.name}}</label>
+
+                        <div ng-if="settingItem.type === 'list'" class="no-padding col-as-7" ng-click="$event.stopPropagation()">
+                            <select class="form-control" ng-model="settingItem.pickedValue">
+                                <option value="{{opt}}" ng-attr-selected="{{settingItem.pickedValue === opt}}"
+                                        ng-repeat="opt in settingItem.options">
+                                    {{opt}}
+                                </option>
+                            </select>
+                        </div>
+                        <div ng-if="settingItem.type === 'number'"
+                             class="col-as-7 no-padding">
+                            <input type="number"
+                                   class="form-control no-padding fs-x-smaller"
+                                   ng-model="settingItem.pickedValue"/>
+                        </div>
+                        <div ng-if="settingItem.type === 'size'"
+                             class="col-as-7 no-padding">
+                            <input type="text"
+                                   class="form-control no-padding fs-x-smaller"
+                                   ng-model="settingItem.pickedValue"/>
+                        </div>
+                        <div ng-if="settingItem.type === 'text'"
+                             class="col-as-7 no-padding">
+                            <input type="text"
+                                   class="form-control no-padding fs-x-smaller"
+                                   ng-model="settingItem.pickedValue"/>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

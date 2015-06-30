@@ -15,7 +15,7 @@ define(
 
         SketchAnimation.$inject = ["$log", "$compile", "$parse", "$timeout", "$q", "$exceptionHandler", "uiUtilService", "angularConstants", "angularEventTypes"];
 
-        SketchAnimation.prototype.moveWidget = function (widgetObj, routeIndex) {
+        SketchAnimation.prototype.moveWidget = function (widgetObj, routeIndex, settings) {
             var self = this;
 
             if (widgetObj.routes && routeIndex < widgetObj.routes.length) {
@@ -36,13 +36,18 @@ define(
                     if (nextStop) {
                         var defer = self.$q.defer();
 
-                        widgetObj.$element.velocity({left: nextStop.left + "px", top: nextStop.top + "px"}, {
-                            duration: 1000,
-                            easing: "ease-in-out",
-                            complete: function () {
+                        var v = {
+                            completion: function () {
                                 defer.resolve();
                             }
+                        };
+                        _.each(settings, function (s) {
+                            v[s.key] = s.pickedValue;
                         });
+                        widgetObj.$element.velocity({
+                            left: nextStop.left + "px",
+                            top: nextStop.top + "px"
+                        }, v);
 
                         return defer.promise;
                     }
