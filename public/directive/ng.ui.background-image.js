@@ -10,7 +10,6 @@ define(
                 var boundProperties = {backgroundImage: "="},
                     defaults = {
                         deviation: 10,
-                        backgroundImageUrl: "",
                         backgroundPosition: {
                             unit: "%",
                             left: "0",
@@ -23,7 +22,7 @@ define(
 
                 return {
                     restrict: "A",
-                    scope: angular.extend({dockAlign: "="}, boundProperties),
+                    scope: angular.extend({dockAlign: "=", pseudo: "="}, boundProperties),
                     replace: false,
                     transclude: true,
                     templateUrl: "include/_background-image.html",
@@ -42,10 +41,13 @@ define(
                                         attrs,
                                         {
                                             backgroundImage: function (value) {
-                                                if (value && scope.hasStyle(value)) {
-                                                    scope.pickedBackgroundImageUrl = scope.pickBackgroundImageValue(value);
-                                                    scope.pickedBackgroundPosition = scope.pickBackgroundPositionValue(value);
-                                                    scope.pickedBackgroundRepeat = scope.pickBackgroundRepeatValue(value);
+                                                scope.backgroundImage = value;
+                                                scope.pickedBackgroundImageUrl = scope.pickBackgroundImageValue(null);
+
+                                                if (scope.pickedBackgroundImageUrl) {
+                                                    scope.pickedBackgroundPosition = scope.pickBackgroundPositionValue();
+                                                    scope.pickedBackgroundRepeat = scope.pickBackgroundRepeatValue();
+
                                                     scope.enableControl();
                                                 } else {
                                                     scope.disableControl();
@@ -67,7 +69,7 @@ define(
                                                     callback();
                                                 },
                                                 function (err) {
-                                                    scope.setBackgroundImageUrl(options.backgroundImageUrl);
+                                                    scope.setBackgroundImageUrl("");
                                                     scope.setBackgroundPosition(options.backgroundPosition.x, options.backgroundPosition.y, options.backgroundPosition.unit);
                                                     scope.setBackgroundRepeatValue(options.backgroundRepeat);
 
@@ -85,19 +87,20 @@ define(
                                     });
                                 }
 
-                                scope.pickBackgroundImageValue = function (styles) {
-                                    return scope.pickStyle(styles, scope.pseudo)["background-image"] || options.backgroundImageUrl;
+                                scope.pickBackgroundImageValue = function (pseudo) {
+                                    return scope.backgroundImage && scope.pickStyle(scope.backgroundImage, pseudo != null ? pseudo : scope.pseudo)["background-image"] || null;
                                 }
 
-                                scope.pickBackgroundPositionValue = function (styles) {
-                                    return scope.pickStyle(styles, scope.pseudo)["background-position"] || options.backgroundPosition;
+                                scope.pickBackgroundPositionValue = function (pseudo, useDefault) {
+                                    useDefault = useDefault == null || useDefault;
+                                    return scope.backgroundImage && scope.pickStyle(scope.backgroundImage, pseudo != null ? pseudo : scope.pseudo)["background-position"] || (useDefault && options.backgroundPosition || null);
                                 }
 
-                                scope.pickBackgroundRepeatValue = function (styles) {
-                                    return scope.pickStyle(styles, scope.pseudo)["background-repeat"] || options.backgroundRepeat;
+                                scope.pickBackgroundRepeatValue = function (pseudo, useDefault) {
+                                    useDefault = useDefault == null || useDefault;
+                                    return scope.backgroundImage && scope.pickStyle(scope.backgroundImage, pseudo != null ? pseudo : scope.pseudo)["background-repeat"] || (useDefault && options.backgroundRepeat || null);
                                 }
 
-                                scope.pseudo = "";
                                 scope.project = $rootScope.loadedProject;
                                 scope.repeatList = [
                                     {name: "No Repeat", value: "no-repeat"},
@@ -498,8 +501,26 @@ define(
                                     "ui-background-image.compile.post.init"
                                 )();
 
+                                scope.pseudoChangeWatcher = scope.$on(angularEventTypes.widgetPseudoChangeEvent, function (event, pseudo) {
+                                    scope.pickedBackgroundImageUrl = scope.pickBackgroundImageValue(pseudo);
+
+                                    if (scope.pickedBackgroundImageUrl) {
+                                        scope.pickedBackgroundPosition = scope.pickBackgroundPositionValue(pseudo);
+                                        scope.pickedBackgroundRepeat = scope.pickBackgroundRepeatValue(pseudo);
+
+                                        scope.enableControl();
+                                    } else {
+                                        scope.disableControl();
+                                    }
+                                });
+
                                 scope.$on('$destroy', function () {
                                     unregisterHandlers();
+
+                                    if (scope.pseudoChangeWatcher) {
+                                        scope.pseudoChangeWatcher();
+                                        scope.pseudoChangeWatcher = null;
+                                    }
                                 });
                             }
                         }

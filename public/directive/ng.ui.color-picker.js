@@ -16,7 +16,7 @@ define(
 
                 return {
                     restrict: "A",
-                    scope: angular.extend({dockAlign: "="}, boundProperties),
+                    scope: angular.extend({dockAlign: "=", pseudo: "="}, boundProperties),
                     replace: false,
                     transclude: true,
                     templateUrl: "include/_color-picker.html",
@@ -35,9 +35,12 @@ define(
                                         attrs,
                                         {
                                             color: function (value) {
-                                                if (value && scope.hasStyle(value)) {
-                                                    scope.pickedColor = scope.pickColorValue(value);
+                                                scope.color = value;
+                                                scope.pickedColor = scope.pickColorValue(null, false);
+
+                                                if (scope.pickedColor) {
                                                     scope.colorIsSet = false;
+
                                                     if (scope.pickedColor.alpha < 1 && !scope.pickedColor.alphaColor) {
                                                         scope.pickedColor.alphaColor = uiUtilService.rgba(scope.pickedColor);
                                                     }
@@ -46,8 +49,6 @@ define(
                                                     scope.pickerBarBackgroundColor = scope.pickerPaneColor === "#ffffff" ? uiUtilService.lighterColor(scope.pickedColor.color, 0.5) : uiUtilService.lighterColor(scope.pickedColor.color, -0.5);
                                                     $timeout(function () {
                                                         scope.colorIsSet = true;
-                                                    });
-                                                    $timeout(function () {
                                                         scope.enableControl();
                                                     });
                                                 } else {
@@ -59,8 +60,9 @@ define(
                                     )
                                 );
 
-                                scope.pickColorValue = function (styles) {
-                                    return scope.pickStyle(styles, scope.pseudo)["color"] || angular.copy(options.color);
+                                scope.pickColorValue = function (pseudo, useDefault) {
+                                    useDefault = useDefault == null || useDefault;
+                                    return scope.color && scope.pickStyle(scope.color, pseudo != null ? pseudo : scope.pseudo)["color"] || (useDefault && angular.copy(options.color) || null);
                                 }
 
                                 scope.setColor = function (value) {
@@ -131,9 +133,6 @@ define(
                                         scope.deregisterWatch = null;
                                     }
                                 }
-
-
-                                scope.pseudo = "";
                             },
                             post: function (scope, element, attrs) {
                                 scope.togglePalette = function (event) {
@@ -162,6 +161,35 @@ define(
                                         });
                                     }
                                 }
+
+                                scope.pseudoChangeWatcher = scope.$on(angularEventTypes.widgetPseudoChangeEvent, function (event, pseudo) {
+                                    scope.colorIsSet = false;
+                                    $timeout(function () {
+                                        scope.colorIsSet = true;
+
+                                        scope.pickedColor = scope.pickColorValue(pseudo, false);
+                                        if (scope.pickedColor) {
+                                            scope.enableControl();
+
+                                            if (scope.pickedColor.alpha < 1 && !scope.pickedColor.alphaColor) {
+                                                scope.pickedColor.alphaColor = uiUtilService.rgba(scope.pickedColor);
+                                            }
+                                            scope.pickerPaneBackgroundColor = scope.pickedColor.alphaColor || scope.pickedColor.color;
+                                            scope.pickerPaneColor = uiUtilService.contrastColor(scope.pickedColor.color);
+                                            scope.pickerBarBackgroundColor = scope.pickerPaneColor === "#ffffff" ? uiUtilService.lighterColor(scope.pickedColor.color, 0.5) : uiUtilService.lighterColor(scope.pickedColor.color, -0.5);
+                                        } else {
+                                            scope.disableControl();
+                                        }
+                                    });
+                                });
+
+                                scope.$on('$destroy', function () {
+                                    if (scope.pseudoChangeWatcher) {
+                                        scope.pseudoChangeWatcher();
+                                        scope.pseudoChangeWatcher = null;
+                                    }
+                                });
+
                             }
                         }
                     }

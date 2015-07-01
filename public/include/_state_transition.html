@@ -180,7 +180,7 @@
 
                         <div class="widgetObjRouteList no-padding col-as-7" ng-click="$event.stopPropagation()">
                             <select class="form-control" ng-model="item.routeIndex"
-                                    ng-change="onMovementActionRouteIndexChange(item)">
+                                    ng-change="onMovementActionRouteIndexChange(item.routeIndex)">
                                 <option value="{{$index}}" ng-attr-selected="{{item.routeIndex === $index}}"
                                         ng-repeat="r in item.widgetObj.routes">
                                     {{$index+1}}

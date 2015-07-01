@@ -74,6 +74,7 @@ requirejs(["jquery-lib", "jquery-plugins-lib", "hammer-lib", "jquery-ui-lib", "j
             playProjectEvent: "playProjectEvent",
             defineWidgetRouteEvent: "defineWidgetRouteEvent",
             markWidgetRouteEvent: "markWidgetRouteEvent",
+            widgetPseudoChangeEvent: "widgetPseudoChangeEvent",
             widgetContentIncludedEvent: "widgetContentIncluded"
         });
         window.appModule.value("angularConstants", {

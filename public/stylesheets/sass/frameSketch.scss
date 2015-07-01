@@ -464,30 +464,4 @@ $zIndexWidgetText: 100;
             box-shadow: none;
         }
     }
-
-    .widgetStop {
-        position: absolute;
-        width: 2em;
-        height: 2em;
-        background: transparent;
-
-        &:before, &:after {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            line-height: 2;
-        }
-
-        &.select {
-            &:before {
-                display: none;
-            }
-
-            &:after {
-                @extend %bounceEffect;
-            }
-        }
-    }
 }

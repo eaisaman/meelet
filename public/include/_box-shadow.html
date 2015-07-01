@@ -36,7 +36,7 @@
                         {{effectLibrary.name}}
                     </div>
                     <div class="accordianGroup fs-x-small"
-                         ng-repeat="artifact in filterArtifactList(effectLibrary, project.xrefRecord)"
+                         ng-repeat="artifact in filterArtifactList(effectLibrary, $root.loadedProject.xrefRecord)"
                          ng-click="toggleSelect($event.currentTarget, $event)">
 
                         <style>

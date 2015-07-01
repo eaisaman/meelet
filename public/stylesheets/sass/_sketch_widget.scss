@@ -12,14 +12,6 @@ $deepShadow: #555;
         &.pickedWidget {
             @include box-shadow(0 0 20px $deepShadow);
 
-            &:before {
-                position: absolute;
-                top: calc(50% - 0.5em);
-                width: 100%;
-                text-align: center;
-                line-height: 1;
-            }
-
             [widget-anchor]:hover {
                 @include gradient-horizontal-three-colors(#6699CC, #99CCFF, 50%, #ECF0F1);
 

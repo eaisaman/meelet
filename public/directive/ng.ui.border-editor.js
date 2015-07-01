@@ -20,7 +20,7 @@ define(
 
                 return {
                     restrict: "A",
-                    scope: angular.extend({dockAlign: "="}, boundProperties),
+                    scope: angular.extend({dockAlign: "=", pseudo: "="}, boundProperties),
                     replace: false,
                     transclude: true,
                     templateUrl: "include/_border-editor.html",
@@ -39,11 +39,20 @@ define(
                                         attrs,
                                         {
                                             border: function (value) {
-                                                if (value && scope.hasStyle(value)) {
-                                                    scope.pickedBorderColor = scope.pickBorderColorValue(value);
-                                                    scope.pickedBorderWidth = scope.pickBorderWidthValue(value);
-                                                    scope.pickedBorderStyle = scope.pickBorderStyleValue(value);
-                                                    scope.pickedBorderRadius = scope.pickBorderRadiusValue(value);
+                                                scope.border = value;
+
+                                                scope.pickedBorderColor = scope.pickBorderColorValue(null, false);
+                                                scope.pickedBorderWidth = scope.pickBorderWidthValue(null, false);
+                                                scope.pickedBorderStyle = scope.pickBorderStyleValue(null, false);
+                                                scope.pickedBorderRadius = scope.pickBorderRadiusValue(null, false);
+
+                                                if (!scope.pickedBorderColor && !scope.pickedBorderWidth && !scope.pickedBorderStyle && !scope.pickedBorderRadius) {
+                                                    scope.disableControl();
+                                                } else {
+                                                    scope.pickedBorderColor = scope.pickedBorderColor || angular.copy(options.borderColor);
+                                                    scope.pickedBorderWidth = scope.pickedBorderWidth || options.borderWidth;
+                                                    scope.pickedBorderStyle = scope.pickedBorderStyle || options.borderStyle;
+                                                    scope.pickedBorderRadius = scope.pickedBorderRadius || options.borderRadius;
 
                                                     scope.borderIsSet = false;
                                                     scope.borderColorPaneBackgroundColor = "";
@@ -53,8 +62,6 @@ define(
                                                         scope.borderIsSet = true;
                                                     });
                                                     scope.enableControl();
-                                                } else {
-                                                    scope.disableControl();
                                                 }
                                             }
                                         },
@@ -74,23 +81,27 @@ define(
                                     });
                                 }
 
-                                scope.pickBorderColorValue = function (styles) {
-                                    return scope.pickStyle(styles, scope.pseudo)["border-color"] || angular.copy(options.borderColor);
+                                scope.pickBorderColorValue = function (pseudo, useDefault) {
+                                    useDefault = useDefault == null || useDefault;
+                                    return scope.border && scope.pickStyle(scope.border, pseudo != null ? pseudo : scope.pseudo)["border-color"] || (useDefault && angular.copy(options.borderColor) || null);
                                 }
 
-                                scope.pickBorderWidthValue = function (styles) {
-                                    var value = scope.pickStyle(styles, scope.pseudo)["border-width"] || options.borderWidth;
-                                    if (!value.match(/px$/)) value += "px";
+                                scope.pickBorderWidthValue = function (pseudo, useDefault) {
+                                    useDefault = useDefault == null || useDefault;
+                                    var value = scope.border && scope.pickStyle(scope.border, pseudo != null ? pseudo : scope.pseudo)["border-width"] || (useDefault && options.borderWidth || null);
+                                    if (value && !value.match(/px$/)) value += "px";
                                     return value;
                                 }
 
-                                scope.pickBorderStyleValue = function (styles) {
-                                    return scope.pickStyle(styles, scope.pseudo)["border-style"] || options.borderStyle;
+                                scope.pickBorderStyleValue = function (pseudo, useDefault) {
+                                    useDefault = useDefault == null || useDefault;
+                                    return scope.border && scope.pickStyle(scope.border, pseudo != null ? pseudo : scope.pseudo)["border-style"] || (useDefault && options.borderStyle || null);
                                 }
 
-                                scope.pickBorderRadiusValue = function (styles) {
-                                    var value = scope.pickStyle(styles, scope.pseudo)["border-radius"] || options.borderRadius;
-                                    if (!value.match(/px$/)) value += "px";
+                                scope.pickBorderRadiusValue = function (pseudo, useDefault) {
+                                    useDefault = useDefault == null || useDefault;
+                                    var value = scope.border && scope.pickStyle(scope.border, pseudo != null ? pseudo : scope.pseudo)["border-radius"] || (useDefault && options.borderRadius || null);
+                                    if (value && !value.match(/px$/)) value += "px";
                                     return value;
                                 }
 
@@ -98,7 +109,6 @@ define(
                                 scope.borderIsSet = true;
                                 scope.borderColorPaneColor = "";
                                 scope.borderColorPaneBackgroundColor = "";
-                                scope.pseudo = "";
 
                                 function createBorderValueInputAssign(name, boundName) {
                                     var fn = $parse(name),
@@ -321,6 +331,39 @@ define(
                                         }
                                     }
                                 }
+
+                                scope.pseudoChangeWatcher = scope.$on(angularEventTypes.widgetPseudoChangeEvent, function (event, pseudo) {
+                                    scope.pickedBorderColor = scope.pickBorderColorValue(pseudo, false);
+                                    scope.pickedBorderWidth = scope.pickBorderWidthValue(pseudo, false);
+                                    scope.pickedBorderStyle = scope.pickBorderStyleValue(pseudo, false);
+                                    scope.pickedBorderRadius = scope.pickBorderRadiusValue(pseudo, false);
+
+                                    if (!scope.pickedBorderColor && !scope.pickedBorderWidth && !scope.pickedBorderStyle && !scope.pickedBorderRadius) {
+                                        scope.disableControl();
+                                    } else {
+                                        scope.pickedBorderColor = scope.pickedBorderColor || angular.copy(options.borderColor);
+                                        scope.pickedBorderWidth = scope.pickedBorderWidth || options.borderWidth;
+                                        scope.pickedBorderStyle = scope.pickedBorderStyle || options.borderStyle;
+                                        scope.pickedBorderRadius = scope.pickedBorderRadius || options.borderRadius;
+
+                                        scope.borderIsSet = false;
+                                        scope.borderColorPaneBackgroundColor = "";
+                                        scope.borderColorPaneColor = uiUtilService.contrastColor(scope.pickedBorderColor.color);
+                                        $timeout(function () {
+                                            scope.borderColorPaneBackgroundColor = scope.pickedBorderColor && (scope.pickedBorderColor.alphaColor || scope.pickedBorderColor.color) || "";
+                                            scope.borderIsSet = true;
+                                        });
+                                        scope.enableControl();
+                                    }
+                                });
+
+                                scope.$on('$destroy', function () {
+                                    if (scope.pseudoChangeWatcher) {
+                                        scope.pseudoChangeWatcher();
+                                        scope.pseudoChangeWatcher = null;
+                                    }
+                                });
+
                             }
                         }
                     }

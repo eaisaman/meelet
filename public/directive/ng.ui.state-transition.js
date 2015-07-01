@@ -101,7 +101,7 @@ define(
                                     return xref && artifactList && artifactList.length > xref.artifactList.length;
                                 }
 
-                                scope.onMovementActionRouteIndexChange = function (item) {
+                                scope.onMovementActionRouteIndexChange = function (routeIndex) {
                                     if (!$rootScope.sketchWidgetSetting.isDefingRoute) {
                                         uiCanvasService.initCanvas();
                                         item.widgetObj.displayRoute();
@@ -110,7 +110,7 @@ define(
                                         $rootScope.$broadcast(angularEventTypes.defineWidgetRouteEvent, $rootScope.sketchWidgetSetting.isDefingRoute);
                                     }
 
-                                    $rootScope.$broadcast(angularEventTypes.markWidgetRouteEvent, item.routeIndex);
+                                    $rootScope.$broadcast(angularEventTypes.markWidgetRouteEvent, routeIndex);
                                 }
 
                                 function createConfigurationItemAssign(name) {

@@ -159,6 +159,43 @@ $expandedDockWidth: 12em;
                             width: 100%;
                             height: 100%;
 
+                            #pseudo-control {
+                                position: relative;
+                                float: left;
+                                width: 100%;
+                                height: auto;
+                                color: $activeColor;
+                                margin-bottom: 0.5em;
+                                border: 1px solid;
+                                border-radius: 5px;
+
+                                &:before {
+                                    position: relative;
+                                    float: left;
+                                    width: 100%;
+                                    height: 1.5em;
+                                    line-height: 1;
+                                    text-align: left;
+                                }
+
+                                #simple-style-editor {
+                                    position: relative;
+                                    float: left;
+                                    width: 100%;
+                                    height: auto;
+                                }
+
+                                .input-group {
+                                    position: relative;
+                                    float: left;
+                                    width: calc(100% - 5px);
+                                    padding-left: 5px;
+                                    margin-bottom: 0.5em;
+                                }
+
+                                @include box-shadow(0 8px 6px -6px black);
+                            }
+
                             .ui-control {
                                 position: relative;
                                 width: 100%;

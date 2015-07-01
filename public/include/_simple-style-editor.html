@@ -1,0 +1,25 @@
+<div class="input-group col-as-12 fs-x-smaller">
+    <label class="col-as-5 no-padding control-label fs-x-smaller">Font
+        Size</label>
+
+    <div class="col-as-7 no-padding">
+        <input type="text"
+               class="form-control no-padding fs-x-smaller" ng-model="pickedFontSize" ng-change="setFontSize(pickedFontSize)" ng-if="styleIsSet"/>
+    </div>
+</div>
+<div class="input-group col-as-12 fs-x-smaller" ng-if="pseudo">
+    <label class="col-as-5 no-padding control-label fs-x-smaller">Left</label>
+
+    <div class="col-as-7 no-padding">
+        <input type="text"
+               class="form-control no-padding fs-x-smaller" ng-model="pickedLeft" ng-change="setLeft(pickedLeft)" ng-if="styleIsSet"/>
+    </div>
+</div>
+<div class="input-group col-as-12 fs-x-smaller" ng-if="pseudo">
+    <label class="col-as-5 no-padding control-label fs-x-smaller">Top</label>
+
+    <div class="col-as-7 no-padding">
+        <input type="text"
+               class="form-control no-padding fs-x-smaller" ng-model="pickedTop" ng-change="setTop(pickedTop)" ng-if="styleIsSet"/>
+    </div>
+</div>

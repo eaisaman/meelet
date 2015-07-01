@@ -16,7 +16,7 @@ define(
 
                 return {
                     restrict: "A",
-                    scope: angular.extend({dockAlign: "="}, boundProperties),
+                    scope: angular.extend({dockAlign: "=", pseudo: "="}, boundProperties),
                     replace: false,
                     transclude: true,
                     templateUrl: "include/_text-shadow.html",
@@ -35,8 +35,10 @@ define(
                                         attrs,
                                         {
                                             textShadow: function (value) {
-                                                if (value && scope.hasStyle(value)) {
-                                                    scope.pickedTextShadow = scope.pickTextShadowValue(value);
+                                                scope.textShadow = value;
+                                                scope.pickedTextShadow = scope.pickTextShadowValue(null, false);
+
+                                                if (scope.pickedTextShadow) {
                                                     scope.enableControl();
                                                 } else {
                                                     scope.disableControl();
@@ -46,8 +48,9 @@ define(
                                         {textShadow: "uiTextShadowEditor"})
                                 );
 
-                                scope.pickTextShadowValue = function (styles) {
-                                    return scope.pickStyle(styles, scope.pseudo)["text-shadow"] || angular.copy(options.textShadow);
+                                scope.pickTextShadowValue = function (pseudo, useDefault) {
+                                    useDefault = useDefault == null || useDefault;
+                                    return scope.textShadow && scope.pickStyle(scope.textShadow, pseudo != null ? pseudo : scope.pseudo)["text-shadow"] || (useDefault && angular.copy(options.textShadow) || null);
                                 }
 
                                 function createTextShadowStopValueInputAssign(name) {
@@ -130,8 +133,6 @@ define(
 
                                     return xref && artifactList && artifactList.length > xref.artifactList.length;
                                 }
-
-                                scope.pseudo = "";
                             },
                             post: function (scope, element, attrs) {
                                 scope.toggleTextShadowControl = function () {
@@ -490,13 +491,34 @@ define(
                                     )();
                                 }
 
-                                scope.$on(angularEventTypes.switchProjectEvent, function (event, project) {
+                                scope.switchProjectWatcher = scope.$on(angularEventTypes.switchProjectEvent, function (event, project) {
                                     refreshArtifactList(project);
+                                });
+
+                                scope.pseudoChangeWatcher = scope.$on(angularEventTypes.widgetPseudoChangeEvent, function (event, pseudo) {
+                                    scope.pickedTextShadow = scope.pickTextShadowValue(pseudo, false);
+
+                                    if (scope.pickedTextShadow) {
+                                        scope.enableControl();
+                                    } else {
+                                        scope.disableControl();
+                                    }
                                 });
 
                                 if ($rootScope.loadedProject.projectRecord && $rootScope.loadedProject.projectRecord._id) {
                                     refreshArtifactList($rootScope.loadedProject);
                                 }
+
+                                scope.$on('$destroy', function () {
+                                    if (scope.switchProjectWatcher) {
+                                        scope.switchProjectWatcher();
+                                        scope.switchProjectWatcher = null;
+                                    }
+                                    if (scope.pseudoChangeWatcher) {
+                                        scope.pseudoChangeWatcher();
+                                        scope.pseudoChangeWatcher = null;
+                                    }
+                                });
                             }
                         }
                     }

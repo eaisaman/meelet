@@ -4905,7 +4905,10 @@ define(
                     widgetObj.attr["ng-class"] = "{'isPlaying': $root.sketchWidgetSetting.isPlaying}";
                     widgetObj.addOmniClass(self.angularConstants.widgetClasses.widgetClass);
 
-                    widgetObj.appendTo($parent);
+                    widgetObj.appendTo($parent).then(function () {
+                        var parentScope = angular.element($parent).scope();
+                        self.$compile(widgetObj.$element)(parentScope);
+                    });
 
                     return widgetObj;
                 }

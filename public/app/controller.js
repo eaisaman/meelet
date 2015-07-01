@@ -118,6 +118,15 @@ define(
             }
 
             function FrameSketchController($scope, $rootScope, $timeout, $q, $log, $compile, $parse, angularEventTypes, angularConstants, appService, uiService, uiUtilService, uiCanvasService) {
+                extension && extension.attach && extension.attach($scope, {
+                    "$timeout": $timeout,
+                    "$q": $q,
+                    "angularConstants": angularConstants,
+                    "uiUtilService": uiUtilService,
+                    "element": $("#frameSketchContainer"),
+                    "scope": $scope
+                });
+
                 $scope.zoomWidget = function (event) {
                     event && event.stopPropagation && event.stopPropagation();
 
@@ -675,6 +684,10 @@ define(
                     )();
                 }
 
+                $scope.onPseudoChange = function (pseudo) {
+                    $rootScope.$broadcast(angularEventTypes.widgetPseudoChangeEvent, pseudo);
+                }
+
                 function setterFactory(obj, name, source) {
                     return function (to) {
                         var setterName = source && "setTrackablePseudoStyle" || ("set" + name.charAt(0).toUpperCase() + name.substr(1)),
@@ -856,6 +869,8 @@ define(
                 $scope.Math = Math;
                 $scope.classie = classie;
                 $scope.dockAlign = "align-left";
+                $scope.pseudoOptions = ["", "before", "after"];
+                $scope.pseudo = "";
                 $scope.iconLibraryList = $rootScope.iconLibraryList;
                 $scope.effectLibraryList = $rootScope.effectLibraryList;
                 $scope.sketchDevice = {

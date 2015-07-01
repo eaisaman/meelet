@@ -188,7 +188,7 @@
 
             <div id="canvasContainer" ng-show="$root.sketchWidgetSetting.isDefingRoute"
                  ng-style="{'padding':45, 'width': '{{sketchDevice.width + 90}}', 'height': '{{sketchDevice.height + 90}}'}"
-                 >
+                    >
                 <canvas id="sketchCanvas"></canvas>
             </div>
 
@@ -240,6 +240,29 @@
                                 <div class="content">
                                     <div class="contentSlidee">
                                         <div class="content-1">
+                                            <div id="pseudo-control"
+                                                 class=" fs-x-large-before icon-frame-sketch-before icon-frame-sketch-pseudo-element-before">
+                                                <div class="input-group col-as-12 fs-x-smaller">
+                                                    <label class="col-as-5 no-padding control-label fs-x-smaller">Pseudo</label>
+
+                                                    <div class="col-as-7 no-padding">
+                                                        <select class="form-control vt-align-center" ng-model="pseudo" ng-change="onPseudoChange(pseudo)">
+                                                            <option value="{{opt}}"
+                                                                    ng-attr-selected="{{pseudo === opt}}"
+                                                                    ng-repeat="opt in pseudoOptions">
+                                                                {{opt}}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div id="simple-style-editor-control"
+                                                     ui-simple-style-editor
+                                                     pseudo="pseudo"
+                                                     simple-style="$root.sketchWidgetSetting.simpleStyle"
+                                                     dock-align="dockAlign">
+                                                </div>
+                                            </div>
+
                                             <div id="widget-configurator-control"
                                                  class="ui-control ui-control-inline ui-control-bordered enable"
                                                  ng-if="uiService.isConfigurable(sketchObject.pickedWidget)"
@@ -252,6 +275,7 @@
                                             <div id="background-image-control"
                                                  class="ui-control ui-control-inline ui-control-bordered"
                                                  ui-background-image
+                                                 pseudo="pseudo"
                                                  background-image="$root.sketchWidgetSetting.backgroundImage"
                                                  dock-align="dockAlign">
                                                 Background Image
@@ -260,6 +284,7 @@
                                             <div id="color-control"
                                                  class="ui-control ui-control-inline ui-control-bordered"
                                                  ui-color-picker
+                                                 pseudo="pseudo"
                                                  color="$root.sketchWidgetSetting.color"
                                                  dock-align="dockAlign">
                                                 Color
@@ -268,6 +293,7 @@
                                             <div id="border-control"
                                                  class="ui-control ui-control-inline ui-control-bordered"
                                                  ui-border-editor
+                                                 pseudo="pseudo"
                                                  border="$root.sketchWidgetSetting.border"
                                                  dock-align="dockAlign">
                                                 Border
@@ -276,6 +302,7 @@
                                             <div id="fill-control"
                                                  class="ui-control ui-control-inline ui-control-bordered"
                                                  ui-gradient-editor
+                                                 pseudo="pseudo"
                                                  linear-gradient-color="$root.sketchWidgetSetting.linearGradientColor"
                                                  dock-align="dockAlign">
                                                 Linear Gradient
@@ -284,6 +311,7 @@
                                             <div id="text-shadow-control"
                                                  class="ui-control ui-control-inline ui-control-bordered"
                                                  ui-text-shadow-editor
+                                                 pseudo="pseudo"
                                                  text-shadow="$root.sketchWidgetSetting.textShadow"
                                                  dock-align="dockAlign">
                                                 Text Shadow

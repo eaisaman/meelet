@@ -27,7 +27,7 @@ define(
 
                 return {
                     restrict: "A",
-                    scope: angular.extend({dockAlign: "="}, boundProperties),
+                    scope: angular.extend({dockAlign: "=", pseudo: "="}, boundProperties),
                     replace: false,
                     transclude: true,
                     templateUrl: "include/_gradient-editor.html",
@@ -45,8 +45,10 @@ define(
                                     uiUtilService.createDirectiveBoundMap(boundProperties, attrs,
                                         {
                                             linearGradientColor: function (value) {
-                                                if (value && scope.hasStyle(value)) {
-                                                    scope.pickedGradientColor = scope.pickGradientColorValue(value);
+                                                scope.linearGradientColor = value;
+                                                scope.pickedGradientColor = scope.pickGradientColorValue(null, false);
+
+                                                if (scope.pickedGradientColor) {
                                                     scope.enableControl();
                                                 } else {
                                                     scope.disableControl();
@@ -59,14 +61,14 @@ define(
                                     )
                                 );
 
-                                scope.pickGradientColorValue = function (styles) {
-                                    var styleValue = scope.pickStyle(styles, scope.pseudo)["linearGradientColor"];
+                                scope.pickGradientColorValue = function (pseudo, useDefault) {
+                                    useDefault = useDefault == null || useDefault;
+                                    var styleValue = scope.linearGradientColor && scope.pickStyle(scope.linearGradientColor, pseudo != null ? pseudo : scope.pseudo)["linearGradientColor"];
 
-                                    return !_.isEmpty(styleValue) && styleValue || angular.copy(options.linearGradientColor);
+                                    return !_.isEmpty(styleValue) && styleValue || (useDefault && angular.copy(options.linearGradientColor) || null);
                                 }
 
                                 scope.Math = Math;
-                                scope.pseudo = "";
                             },
                             post: function (scope, element, attrs) {
                                 function canInsertColorStop(index) {
@@ -354,7 +356,7 @@ define(
 
                                             $timeout(function () {
                                                 colorStop.color = value;
-                                                colorStop.backgroundColor = uiUtilService.contrastColor(value.color) === "#ffffff" ? uiUtilService.lighterColor(value.color, 0.5) : uiUtilService.lighterColor(value.color, - 0.5);
+                                                colorStop.backgroundColor = uiUtilService.contrastColor(value.color) === "#ffffff" ? uiUtilService.lighterColor(value.color, 0.5) : uiUtilService.lighterColor(value.color, -0.5);
 
                                                 //Trigger watcher on sketchWidgetSetting.linearGradientColor to apply style to widget
                                                 scope.setGradientColor(scope.pickedGradientColor);
@@ -396,6 +398,23 @@ define(
                                     //Trigger watcher on sketchWidgetSetting.linearGradientColor to apply style to widget
                                     scope.linearGradientColor = angular.copy(scope.linearGradientColor);
                                 };
+
+                                scope.pseudoChangeWatcher = scope.$on(angularEventTypes.widgetPseudoChangeEvent, function (event, pseudo) {
+                                    scope.pickedGradientColor = scope.pickGradientColorValue(pseudo, false);
+
+                                    if (scope.pickedGradientColor) {
+                                        scope.enableControl();
+                                    } else {
+                                        scope.disableControl();
+                                    }
+                                });
+
+                                scope.$on('$destroy', function () {
+                                    if (scope.pseudoChangeWatcher) {
+                                        scope.pseudoChangeWatcher();
+                                        scope.pseudoChangeWatcher = null;
+                                    }
+                                });
                             }
                         }
                     }
