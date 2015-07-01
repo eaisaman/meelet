@@ -680,6 +680,7 @@ define(
                 },
                 unregisterTrigger: function () {
                     this.trigger && this.trigger.off();
+                    this.actionObj && this.actionObj.restoreWidget();
                 }
             }),
             BaseTransitionAction = Class({
@@ -725,7 +726,7 @@ define(
                 },
                 doAction: function () {
                 },
-                restoreWidget: function (widgetObj) {
+                restoreWidget: function () {
                 },
                 setWidget: function (widgetObj) {
                     this.widgetObj = widgetObj;
@@ -818,6 +819,11 @@ define(
                     }
 
                     action && this.childActions.push(action);
+                },
+                restoreWidget: function () {
+                    this.childActions.forEach(function (actionObj) {
+                        actionObj.restoreWidget();
+                    });
                 }
             }),
             EffectTransitionAction = Class(BaseTransitionAction, {
@@ -1236,6 +1242,14 @@ define(
                 },
                 doAction: function () {
                     return $inject.uiAnimationService.moveWidget(this.widgetObj.$element, this.widgetObj.routes, this.routeIndex, this.settings);
+                },
+                restoreWidget: function () {
+                    var self = this;
+
+                    if (self.widgetObj.$element && self.widgetObj.$element[0].nodeType == 1 && self.widgetObj.$element.parent().length) {
+                        var left = self.widgetObj.css("left"), top = self.widgetObj.css("top");
+                        self.widgetObj.css("left", left), self.widgetObj.css("top", top);
+                    }
                 }
             }),
             BaseTrigger = Class({

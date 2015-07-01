@@ -24,32 +24,35 @@ define(
                         currentStop = coord.currentStop,
                         nextStop;
 
-                    if (!currentStop) {
-                        nextStop = coord;
-                    } else {
-                        left = currentStop.left, top = currentStop.top;
-                        nextStop = currentStop.nextStop;
-                    }
+                    if (!coord.complete) {
+                        if (!currentStop) {
+                            nextStop = coord;
+                        } else {
+                            nextStop = currentStop.nextStop;
+                        }
 
-                    coord.currentStop = nextStop;
+                        coord.currentStop = nextStop;
 
-                    if (nextStop) {
-                        var defer = self.$q.defer();
+                        if (nextStop) {
+                            var defer = self.$q.defer();
 
-                        var v = {
-                            completion: function () {
-                                defer.resolve();
-                            }
-                        };
-                        _.each(settings, function (s) {
-                            v[s.key] = s.pickedValue;
-                        });
-                        $element.velocity({
-                            left: nextStop.left + "px",
-                            top: nextStop.top + "px"
-                        }, v);
+                            var v = {
+                                complete: function () {
+                                    defer.resolve();
+                                }
+                            };
+                            _.each(settings, function (s) {
+                                v[s.key] = s.pickedValue;
+                            });
+                            $element.velocity({
+                                left: nextStop.left + "px",
+                                top: nextStop.top + "px"
+                            }, v);
 
-                        return defer.promise;
+                            return defer.promise;
+                        } else {
+                            coord.complete = true;
+                        }
                     }
                 }
             }

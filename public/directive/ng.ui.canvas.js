@@ -220,8 +220,8 @@ define(
             var p = this.canvas.getActiveObject();
 
             if (p) {
-                left = Math.floor(left * self.angularConstants.precision) / self.angularConstants.precision;
-                top = Math.floor(top * self.angularConstants.precision) / self.angularConstants.precision;
+                left = Math.floor(left * this.angularConstants.precision) / this.angularConstants.precision;
+                top = Math.floor(top * this.angularConstants.precision) / this.angularConstants.precision;
 
                 if (p.meeletCanvasObject === CanvasObject_Origin || (p.meeletCanvasObject === CanvasObject_Point && !p.lineOut)) {
                     var nextStop = {left: left, top: top, nextStop: null},
