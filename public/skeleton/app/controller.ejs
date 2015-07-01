@@ -74,7 +74,7 @@ define(
                 $rootScope.initFns.push(function() {
                     $rootScope['<%= widgetId %>'] = {};
 <%for(var key in page.initMap[widgetId]) {%>
-                    $rootScope['<%= widgetId %>']['<%= key %>'] = <%= page.initMap[widgetId][key] %>;
+                    $rootScope['<%= widgetId %>']['<%= key %>'] = <% printJSON(page.initMap[widgetId][key]); %>;
 <%}%>
                 });
 <%

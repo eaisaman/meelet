@@ -2,7 +2,7 @@ define(
     ["angular", "hammer"],
     function () {
         return function (appModule, meta) {
-            var utilService = function ($rootScope, $timeout, $q, $compile, $exceptionHandler, angularConstants, uiUtilService) {
+            var utilService = function ($rootScope, $timeout, $q, $compile, $exceptionHandler, angularConstants, uiUtilService, uiAnimationService) {
                 this.$rootScope = $rootScope;
                 this.$timeout = $timeout;
                 this.$q = $q;
@@ -10,10 +10,11 @@ define(
                 this.$exceptionHandler = $exceptionHandler;
                 this.angularConstants = angularConstants;
                 this.uiUtilService = uiUtilService;
+                this.uiAnimationService = uiAnimationService;
                 this.meta = angular.copy(meta);
             };
 
-            utilService.$inject = ["$rootScope", "$timeout", "$q", "$compile", "$exceptionHandler", "angularConstants", "uiUtilService"];
+            utilService.$inject = ["$rootScope", "$timeout", "$q", "$compile", "$exceptionHandler", "angularConstants", "uiUtilService", "uiAnimationService"];
 
             utilService.prototype.registerTrigger = function (id, eventMap) {
                 var self = this,
@@ -191,6 +192,8 @@ define(
                             )
 
                             return defer.promise;
+                        } else if (action.actionType === "Movement") {
+                            return self.uiAnimationService.moveWidget($widgetElement, self.$rootScope[$widgetElement.attr("id")].routes, action.routeIndex, action.settings);
                         }
                     }
                 }

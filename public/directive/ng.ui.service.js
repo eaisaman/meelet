@@ -1205,13 +1205,13 @@ define(
                     var jsonObj = MovementTransitionAction.prototype.__proto__.toJSON.apply(this);
 
                     _.extend(jsonObj, _.pick(this, ["CLASS_NAME", "routeIndex"]), {
-                        settings: $inject.uiUtilService.arrayOmit(this.settings, "options", "name", "type")
+                        settings: $inject.uiUtilService.arrayOmit(this.settings, "$$hashKey", "options", "name", "type")
                     });
 
                     return jsonObj;
                 },
                 fromObject: function (obj) {
-                    var ret = new MovementTransitionAction(null, obj.coordinates, obj.id);
+                    var ret = new MovementTransitionAction(null, obj.id);
                     ret.routeIndex = obj.routeIndex;
                     _.each(obj.settings, function (s) {
                         _.extend(_.findWhere(ret.settings, {key: s.key}), s);
@@ -1235,7 +1235,7 @@ define(
                     return cloneObj;
                 },
                 doAction: function () {
-                    return $inject.uiAnimationService.moveWidget(this.widgetObj, this.routeIndex, this.settings);
+                    return $inject.uiAnimationService.moveWidget(this.widgetObj.$element, this.widgetObj.routes, this.routeIndex, this.settings);
                 }
             }),
             BaseTrigger = Class({

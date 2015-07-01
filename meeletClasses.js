@@ -219,7 +219,7 @@ var State = Class({
 
         SequenceTransitionAction.prototype.__proto__.fromObject.apply(ret, [obj, context]);
 
-        var classes = ["EffectTransitionAction", "StateTransitionAction", "ConfigurationTransitionAction"];
+        var classes = ["EffectTransitionAction", "StateTransitionAction", "ConfigurationTransitionAction", "MovementTransitionAction"];
         obj.childActions && obj.childActions.forEach(function (action) {
             var className = action.CLASS_NAME,
                 actionObj;
@@ -357,6 +357,38 @@ var State = Class({
         });
 
         return result;
+    }
+}), MovementTransitionAction = Class(BaseTransitionAction, {
+    CLASS_NAME: "MovementTransitionAction",
+    MEMBERS: {
+        routeIndex: null,
+        settings: []
+    },
+    initialize: function (widgetObj, id) {
+        this.initialize.prototype.__proto__.initialize.apply(this, [widgetObj, "Movement", id]);
+        var MEMBERS = arguments.callee.prototype.MEMBERS;
+
+        for (var member in MEMBERS) {
+            this[member] = _.clone(MEMBERS[member]);
+        }
+    },
+    toJSON: function () {
+        var jsonObj = MovementTransitionAction.prototype.__proto__.toJSON.apply(this);
+
+        _.extend(jsonObj, _.pick(this, ["CLASS_NAME", "routeIndex", "settings"]));
+
+        return jsonObj;
+    },
+    fromObject: function (obj, context) {
+        var ret = new MovementTransitionAction(null, obj.id);
+        ret.routeIndex = obj.routeIndex;
+        _.each(obj.settings, function (s) {
+            ret.settings.push(_.clone(s));
+        });
+
+        MovementTransitionAction.prototype.__proto__.fromObject.apply(ret, [obj, context]);
+
+        return ret;
     }
 }), BaseTrigger = Class({
     CLASS_NAME: "BaseTrigger",
@@ -771,7 +803,8 @@ var State = Class({
     MEMBERS: {
         isElement: true,
         html: "",
-        markdown: ""
+        markdown: "",
+        routes: []
     },
     initialize: function (id, widgetsArr) {
         this.initialize.prototype.__proto__.initialize.apply(this, [id]);
@@ -786,8 +819,11 @@ var State = Class({
         var ret = new ElementSketchWidgetClass(obj.id);
 
         ElementSketchWidgetClass.prototype.__proto__.fromObject.apply(ret, [obj, context]);
+        ret.context = context;
+
         ret.html = obj.html;
         ret.markdown = obj.markdown;
+        ret.routes = obj.routes || [];
 
         return ret;
     },
@@ -795,7 +831,13 @@ var State = Class({
         ElementSketchWidgetClass.prototype.__proto__.appendTo.apply(this, [$, $document, $container, $template, $ngTemplate]);
 
         var self = this,
-            offspring = self.eventMap.offspring;
+            offspring = self.eventMap.offspring,
+            initMap = self.context.initMap,
+            attributeMap = initMap[self.id] || {};
+
+        initMap[self.id] = attributeMap;
+
+        attributeMap.routes = self.routes;
 
         if (self.html) {
             var $textNode = $("<div />").addClass("widgetText markdown-body editormd-preview-container").prependTo(self.$element);
@@ -1026,6 +1068,10 @@ var State = Class({
 
         if (_.isEmpty(transition)) {
             self.eventMap = self.eventMap.offspring;
+        } else {
+            var eventMap = {};
+            eventMap[self.id] = self.eventMap;
+            self.eventMap = eventMap;
         }
     }
 });

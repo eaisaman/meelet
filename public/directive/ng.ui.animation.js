@@ -15,12 +15,12 @@ define(
 
         SketchAnimation.$inject = ["$log", "$compile", "$parse", "$timeout", "$q", "$exceptionHandler", "uiUtilService", "angularConstants", "angularEventTypes"];
 
-        SketchAnimation.prototype.moveWidget = function (widgetObj, routeIndex, settings) {
+        SketchAnimation.prototype.moveWidget = function ($element, routes, routeIndex, settings) {
             var self = this;
 
-            if (widgetObj.routes && routeIndex < widgetObj.routes.length) {
-                if (widgetObj.$element && widgetObj.$element[0].nodeType == 1 && widgetObj.$element.parent().length) {
-                    var coord = widgetObj.routes[routeIndex],
+            if (routes && routeIndex < routes.length) {
+                if ($element && $element[0].nodeType == 1 && $element.parent().length) {
+                    var coord = routes[routeIndex],
                         currentStop = coord.currentStop,
                         nextStop;
 
@@ -44,7 +44,7 @@ define(
                         _.each(settings, function (s) {
                             v[s.key] = s.pickedValue;
                         });
-                        widgetObj.$element.velocity({
+                        $element.velocity({
                             left: nextStop.left + "px",
                             top: nextStop.top + "px"
                         }, v);
