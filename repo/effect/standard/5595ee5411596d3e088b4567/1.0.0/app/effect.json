@@ -1,0 +1,264 @@
+[
+  {
+    "name": "Animation",
+    "list": [
+      {
+        "name": "bounce",
+        "value": "callout.bounce+Script"
+      },
+      {
+        "name": "shake",
+        "value": "callout.shake+Script"
+      },
+      {
+        "name": "flash",
+        "value": "callout.flash+Script"
+      },
+      {
+        "name": "pulse",
+        "value": "callout.pulse+Script"
+      },
+      {
+        "name": "swing",
+        "value": "callout.swing+Script"
+      },
+      {
+        "name": "tada",
+        "value": "callout.tada+Script"
+      },
+      {
+        "name": "swoopIn",
+        "value": "transition.swoopIn+Script"
+      },
+      {
+        "name": "swoopOut",
+        "value": "transition.swoopOut+Script"
+      },
+      {
+        "name": "whirlIn",
+        "value": "transition.whirlIn+Script"
+      },
+      {
+        "name": "whirlOut",
+        "value": "transition.whirlOut+Script"
+      },
+      {
+        "name": "shrinkIn",
+        "value": "transition.shrinkIn+Script"
+      },
+      {
+        "name": "shrinkOut",
+        "value": "transition.shrinkOut+Script"
+      },
+      {
+        "name": "expandIn",
+        "value": "transition.expandIn+Script"
+      },
+      {
+        "name": "expandOut",
+        "value": "transition.expandOut+Script"
+      },
+      {
+        "name": "fade",
+        "list": [
+          {
+            "name": "fadeIn",
+            "value": "transition.fadeIn+Script"
+          },
+          {
+            "name": "fadeOut",
+            "value": "transition.fadeOut+Script"
+          }
+        ]
+      },
+      {
+        "name": "flip",
+        "list": [
+          {
+            "name": "flipXIn",
+            "value": "transition.flipXIn+Script"
+          },
+          {
+            "name": "flipXOut",
+            "value": "transition.flipXOut+Script"
+          },
+          {
+            "name": "flipYIn",
+            "value": "transition.flipYIn+Script"
+          },
+          {
+            "name": "flipYOut",
+            "value": "transition.flipYOut+Script"
+          },
+          {
+            "name": "flipBounceXIn",
+            "value": "transition.flipBounceXIn+Script"
+          },
+          {
+            "name": "flipBounceXOut",
+            "value": "transition.flipBounceXOut+Script"
+          },
+          {
+            "name": "flipBounceYIn",
+            "value": "transition.flipBounceYIn+Script"
+          },
+          {
+            "name": "flipBounceYOut",
+            "value": "transition.flipBounceYOut+Script"
+          }
+        ]
+      },
+      {
+        "name": "bounce",
+        "list": [
+          {
+            "name": "bounceIn",
+            "value": "transition.bounceIn+Script"
+          },
+          {
+            "name": "bounceOut",
+            "value": "transition.bounceOut+Script"
+          },
+          {
+            "name": "bounceUpIn",
+            "value": "transition.bounceUpIn+Script"
+          },
+          {
+            "name": "bounceUpOut",
+            "value": "transition.bounceUpOut+Script"
+          },
+          {
+            "name": "bounceDownIn",
+            "value": "transition.bounceDownIn+Script"
+          },
+          {
+            "name": "bounceDownOut",
+            "value": "transition.bounceDownOut+Script"
+          },
+          {
+            "name": "bounceLeftIn",
+            "value": "transition.bounceLeftIn+Script"
+          },
+          {
+            "name": "bounceLeftOut",
+            "value": "transition.bounceLeftOut+Script"
+          },
+          {
+            "name": "bounceRightIn",
+            "value": "transition.bounceRightIn+Script"
+          },
+          {
+            "name": "bounceRightOut",
+            "value": "transition.bounceRightOut+Script"
+          }
+        ]
+      },
+      {
+        "name": "slide",
+        "list": [
+          {
+            "name": "slideUpIn",
+            "value": "transition.slideUpIn+Script"
+          },
+          {
+            "name": "slideUpOut",
+            "value": "transition.slideUpOut+Script"
+          },
+          {
+            "name": "slideDownIn",
+            "value": "transition.slideDownIn+Script"
+          },
+          {
+            "name": "slideDownOut",
+            "value": "transition.slideDownOut+Script"
+          },
+          {
+            "name": "slideLeftIn",
+            "value": "transition.slideLeftIn+Script"
+          },
+          {
+            "name": "slideLeftOut",
+            "value": "transition.slideLeftOut+Script"
+          },
+          {
+            "name": "slideRightIn",
+            "value": "transition.slideRightIn+Script"
+          },
+          {
+            "name": "slideRightOut",
+            "value": "transition.slideRightOut+Script"
+          },
+          {
+            "name": "slideUpBigIn",
+            "value": "transition.slideUpBigIn+Script"
+          },
+          {
+            "name": "slideUpBigOut",
+            "value": "transition.slideUpBigOut+Script"
+          },
+          {
+            "name": "slideDownBigIn",
+            "value": "transition.slideDownBigIn+Script"
+          },
+          {
+            "name": "slideDownBigOut",
+            "value": "transition.slideDownBigOut+Script"
+          },
+          {
+            "name": "slideLeftBigIn",
+            "value": "transition.slideLeftBigIn+Script"
+          },
+          {
+            "name": "slideLeftBigOut",
+            "value": "transition.slideLeftBigOut+Script"
+          },
+          {
+            "name": "slideRightBigIn",
+            "value": "transition.slideRightBigIn+Script"
+          },
+          {
+            "name": "slideRightBigOut",
+            "value": "transition.slideRightBigOut+Script"
+          }
+        ]
+      },
+      {
+        "name": "perspective",
+        "list": [
+          {
+            "name": "perspectiveUpIn",
+            "value": "transition.perspectiveUpIn+Script"
+          },
+          {
+            "name": "perspectiveUpOut",
+            "value": "transition.perspectiveUpOut+Script"
+          },
+          {
+            "name": "perspectiveDownIn",
+            "value": "transition.perspectiveDownIn+Script"
+          },
+          {
+            "name": "perspectiveDownOut",
+            "value": "transition.perspectiveDownOut+Script"
+          },
+          {
+            "name": "perspectiveLeftIn",
+            "value": "transition.perspectiveLeftIn+Script"
+          },
+          {
+            "name": "perspectiveLeftOut",
+            "value": "transition.perspectiveLeftOut+Script"
+          },
+          {
+            "name": "perspectiveRightIn",
+            "value": "transition.perspectiveRightIn+Script"
+          },
+          {
+            "name": "perspectiveRightOut",
+            "value": "transition.perspectiveRightOut+Script"
+          }
+        ]
+      }
+    ]
+  }
+]

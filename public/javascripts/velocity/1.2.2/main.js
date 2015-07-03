@@ -1,7 +1,8 @@
 requirejs.config(
     {
         paths: {
-            "velocity": VELOCITY_LIB_PATH + "velocity.min"
+            "velocity": VELOCITY_LIB_PATH + "velocity.min",
+            "velocity.ui": VELOCITY_LIB_PATH + "velocity.ui.min"
         },
         waitSeconds: 0
     }
@@ -9,7 +10,7 @@ requirejs.config(
 
 define(
     [
-            "velocity"
+            "velocity", "velocity.ui"
     ],
     function () {
         return function () {

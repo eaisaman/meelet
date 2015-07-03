@@ -40,6 +40,11 @@
                 padding-left: 0.25em;
                 height: 2em;
                 line-height: 2;
+                -webkit-line-clamp: 1;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
             }
 
             &:after {
@@ -88,6 +93,11 @@
                         text-decoration: none;
                         color: #999;
                         outline: none;
+                        -webkit-line-clamp: 1;
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                        display: -webkit-box;
+                        -webkit-box-orient: vertical;
 
                         &:after {
                             position: absolute;

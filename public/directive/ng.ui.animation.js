@@ -60,6 +60,24 @@ define(
             return self.uiUtilService.getResolveDefer();
         }
 
+        SketchAnimation.prototype.doAnimation = function ($element, effect) {
+            var self = this;
+
+            if ($element && $element[0].nodeType == 1 && $element.parent().length) {
+                var defer = self.$q.defer();
+
+                $element.velocity(effect, {
+                    complete: function () {
+                        defer.resolve();
+                    }
+                });
+
+                return defer.promise;
+            }
+
+            return self.uiUtilService.getResolveDefer();
+        }
+
         return function (appModule) {
             appModule.
                 config(["$provide", function ($provide) {

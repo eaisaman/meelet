@@ -869,14 +869,14 @@ define(
                         defer = $inject.$q.defer();
 
                     if (self.widgetObj.$element && self.widgetObj.$element[0].nodeType == 1 && self.widgetObj.$element.parent().length) {
-                        var fullName = self.artifactSpec.directiveName;
-                        if (self.artifactSpec.version) {
-                            fullName = fullName + "-" + self.artifactSpec.version.replace(/\./g, "-")
-                        }
-                        self.widgetObj.$element.attr(fullName, "");
-                        self.widgetObj.$element.attr("effect", self.effect.name);
-
                         if (self.effect.type === "Animation") {
+                            var fullName = self.artifactSpec.directiveName;
+                            if (self.artifactSpec.version) {
+                                fullName = fullName + "-" + self.artifactSpec.version.replace(/\./g, "-")
+                            }
+                            self.widgetObj.$element.attr(fullName, "");
+                            self.widgetObj.$element.attr("effect", self.effect.name);
+
                             self.cssAnimation = {};
 
                             if (self.effect.options.duration) {
@@ -898,6 +898,11 @@ define(
                             });
 
                             return defer.promise;
+                        } else if (self.effect.type === "Script") {
+                            $inject.uiAnimationService.doAnimation(self.widgetObj.$element, self.effect.name).then(function () {
+                                self.restoreWidget();
+                                defer.resolve(self);
+                            });
                         }
                     }
 
@@ -911,11 +916,11 @@ define(
                     var self = this;
 
                     if (self.widgetObj.$element && self.widgetObj.$element[0].nodeType == 1 && self.widgetObj.$element.parent().length) {
-                        var fullName = self.artifactSpec.directiveName + "-" + self.artifactSpec.version.replace(/\./g, "-");
-                        self.widgetObj.$element.removeAttr(fullName);
-                        self.widgetObj.$element.removeAttr("effect");
-
                         if (self.effect.type === "Animation") {
+                            var fullName = self.artifactSpec.directiveName + "-" + self.artifactSpec.version.replace(/\./g, "-");
+                            self.widgetObj.$element.removeAttr(fullName);
+                            self.widgetObj.$element.removeAttr("effect");
+
                             for (var key in self.cssAnimation) {
                                 self.widgetObj.$element.css(key, "");
                             }
