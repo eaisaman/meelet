@@ -344,23 +344,27 @@ $default-creative-link-value-map: (
         &[link-effect=scaleDown] {
             .linkContent {
                 &:nth-of-type(1) {
-                    color: $color;
+                    color: $inactiveColor;
                 }
 
                 &:nth-of-type(2) {
                     color: $inactiveColor;
 
-                    -webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
-                    -moz-transition: -moz-transform 0.3s, opacity 0.3s;
-                    transition: transform 0.3s, opacity 0.3s;
+                    @include transition(transform 0.3s, opacity 0.7s);
                 }
             }
 
             &.toggled {
-                .linkContent:nth-of-type(2) {
-                    opacity: 0;
+                .linkContent {
+                    &:nth-of-type(1) {
+                        color: $color;
+                    }
 
-                    @include transform(scale(0.9));
+                    &:nth-of-type(2) {
+                        opacity: 0;
+
+                        @include transform(scale(0.7));
+                    }
                 }
             }
         }

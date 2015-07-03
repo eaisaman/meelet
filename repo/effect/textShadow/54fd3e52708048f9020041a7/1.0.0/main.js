@@ -7,7 +7,7 @@ define(
             js: [],
             stylesheets: ["stylesheets/widget.css"],
             demo: {
-                js: ["demo/demo.js"],
+                js: [],
                 stylesheets: ["stylesheets/demo.css"],
                 url: "demo/textShadowDemo.html"
             },

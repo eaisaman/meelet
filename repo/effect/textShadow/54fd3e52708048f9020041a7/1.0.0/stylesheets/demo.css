@@ -29,3 +29,10 @@
   width: 100%;
   height: 100%;
 }
+.widgetDemoContainer > div {
+  position: relative;
+  float: left;
+  height: 3em;
+  line-height: 3;
+  margin: 0.5em;
+}

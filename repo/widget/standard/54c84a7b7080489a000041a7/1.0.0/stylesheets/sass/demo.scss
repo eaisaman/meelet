@@ -9,6 +9,7 @@
     float: left;
     width: 100%;
     height: 100%;
+    overflow: auto;
 
     .clearfix {
         &:before, &:after {
@@ -56,9 +57,15 @@
 
         @include creative-link($default-creative-link-value-map...);
 
+
         &#reveal {
             $reveal-value-map: map-merge($default-creative-link-value-map, (color: #3fa46a));
             @include creative-link($reveal-value-map...);
+        }
+
+        &#fadeOut {
+            $fadeOut-value-map: map-merge($default-creative-link-value-map, (backgroundColor: #435a6b));
+            @include creative-link($fadeOut-value-map...);
         }
 
         &#flipUp {
