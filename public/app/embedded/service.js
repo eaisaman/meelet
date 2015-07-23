@@ -84,6 +84,10 @@ define(
 
         appService.prototype.getRepoArtifact = appService.prototype.NOOP;
 
+        appService.prototype.getProjectResource = appService.prototype.NOOP;
+
+        appService.prototype.deleteProjectResource = appService.prototype.NOOP;
+
         appService.prototype.getProjectDependency = appService.prototype.NOOP;
 
         appService.prototype.updateProjectDependency = appService.prototype.NOOP;

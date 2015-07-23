@@ -1,5 +1,5 @@
 define(
-    ["angular", "jquery"],
+    ["angular-lib", "jquery-lib"],
     function () {
         var Util = function ($log, $parse, $timeout, $q, $exceptionHandler, angularConstants) {
             this.$log = $log;
@@ -957,6 +957,32 @@ define(
             });
 
             return errorDefer.promise;
+        }
+
+        Util.prototype.uniqueIdGen = function (prefix, uid) {
+            uid = uid || ['0', '0', '0'];
+
+            return function () {
+                var index = uid.length;
+                var digit;
+
+                while (index) {
+                    index--;
+                    digit = uid[index].charCodeAt(0);
+                    if (digit == 57 /*'9'*/) {
+                        uid[index] = 'A';
+                        return uid.join('');
+                    }
+                    if (digit == 90  /*'Z'*/) {
+                        uid[index] = '0';
+                    } else {
+                        uid[index] = String.fromCharCode(digit + 1);
+                        return [prefix || "", "-", uid.join('')].join("");
+                    }
+                }
+                uid.unshift('0');
+                return [prefix || "", "-", uid.join('')].join("");
+            }
         }
 
         return function (appModule) {

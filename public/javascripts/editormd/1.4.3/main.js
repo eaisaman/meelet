@@ -87,7 +87,7 @@ define(
         };
 
         [
-            EDITORMD_LIB_PATH + "css/editormd.min.css"
+            EDITORMD_LIB_PATH + "css/editormd.css"
         ].forEach(function (href) {
                 var link = window.document.createElement("link");
                 link.type = "text/css";

@@ -731,6 +731,24 @@ define(
 
         }
 
+        appService.prototype.getProjectResource = function (projectId) {
+            return this.$http({
+                method: 'GET',
+                url: '/api/public/projectResource',
+                params: {projectId: projectId}
+            });
+
+        }
+
+        appService.prototype.deleteProjectResource = function (projectId, resourceType, fileName) {
+            return this.$http({
+                method: 'DELETE',
+                url: '/api/public/projectResource',
+                params: {projectId: projectId, resourceType: resourceType, fileName: fileName}
+            });
+
+        }
+
         appService.prototype.getProjectDependency = function (xrefFilter) {
             return this.$http({
                 method: 'GET',

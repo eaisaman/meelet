@@ -1,0 +1,246 @@
+@import "compass/css3";
+@import "global";
+
+@mixin resource-editor($resourceSoundEditorId) {
+    ##{$resourceSoundEditorId} {
+
+        .resourceContent {
+            position: relative;
+            float: left;
+            width: 100%;
+            height: 100%;
+            color: $color;
+            background: #fff;
+
+            .accordianGroup {
+                position: relative;
+                float: left;
+                width: 100%;
+                overflow: hidden;
+
+                > .accordianTitle {
+                    z-index: 1;
+                    position: relative;
+                    float: left;
+                    width: 100%;
+                    line-height: 3;
+
+                    @include gradient-horizontal(#339933, #ecf0f1);
+
+                    &:before {
+                        position: absolute;
+                        left: 0;
+                        top: calc(50% - 0.5em);
+                        line-height: 1;
+                        text-align: center;
+                        width: 1em;
+                        height: 1em;
+                        color: #fff;
+
+                        @include transform(rotateZ(0deg));
+                        @include transition(transform 0.3s);
+                    }
+
+                    span {
+                        line-height: 3;
+                        height: 3em;
+                        color: $activeColor;
+                        display: -webkit-box;
+                        -webkit-box-orient: vertical;
+                        -webkit-line-clamp: 1;
+                        text-overflow: ellipsis;
+                        text-align: left;
+                        text-indent: 2em;
+                        overflow: hidden;
+
+                        @include emboss-title("", false);
+
+                        &:after {
+                            position: absolute;
+                            right: 2em;
+                            top: 0;
+                            width: 2em;
+                            line-height: 2;
+                            text-align: center;
+                        }
+                    }
+                }
+
+                > .accordianSubTitle {
+                    position: relative;
+                    float: left;
+                    width: 100%;
+                    margin-top: 0.5em;
+
+                    @include transition(transform 0.3s);
+
+                    > * {
+                        opacity: 0;
+                        pointer-events: none;
+                        height: 0px;
+                        overflow: hidden;
+                    }
+                }
+
+                > .accordianBody {
+                    position: relative;
+                    float: left;
+                    width: 100%;
+                    margin-top: 0.5em;
+                    margin-bottom: 0.5em;
+
+                    @include transition(transform 0.3s);
+
+                    > .resourcePane {
+                        opacity: 0;
+                        pointer-events: none;
+                        height: 0px;
+                        overflow: hidden;
+                    }
+                }
+
+                &.select {
+                    &:after {
+                        position: absolute;
+                        right: 0;
+                        bottom: 0;
+                        content: '';
+                        width: 100%;
+                        height: 2px;
+                        @include gradient-horizontal(#339933, #ecf0f1);
+                    }
+
+                    > .accordianTitle:before {
+                        @extend %rotateUpSideDown;
+                        @include animation-duration(0.3s);
+                    }
+
+                    > .accordianSubTitle {
+                        > * {
+                            opacity: 1;
+                            pointer-events: auto;
+                            position: relative;
+                            float: left;
+                            width: 100%;
+                            height: 2em;
+                            line-height: 2;
+                            margin: 0.5em 0;
+                        }
+
+                        > .uploadContent {
+                            position: relative;
+                            float: left;
+                            width: 100%;
+                            margin-bottom: 0.2em;
+
+                            > .input-group {
+                                float: left;
+                            }
+
+                            .soundUploadButton {
+                                position: relative;
+                                float: left;
+                                width: 2em;
+                                height: 2em;
+                                background-color: #ddd;
+                                box-shadow: inset 0 -2px 0 rgba(0, 0, 0, .135);
+                                border-radius: 0.2em;
+                                display: inline-block;
+                                margin-left: 0.5em;
+                                color: $fontColor;
+
+                                &:active {
+                                    background-color: #aaa;
+                                    color: $activeColor;
+                                    box-shadow: none;
+                                }
+
+                                &:before {
+                                    position: absolute;
+                                    left: 0;
+                                    top: 0;
+                                    width: 100%;
+                                    height: 100%;
+                                    text-align: center;
+                                    line-height: 2;
+                                    font-weight: 600;
+                                }
+                            }
+
+                            .soundUploadDock {
+                                position: relative;
+                                float: left;
+                                width: calc(100% - 3em);
+                                height: 2em;
+                                border: 2px #f1f1f1 dashed;
+                                left: 5px;
+                                text-align: center;
+                                line-height: 2;
+                                font-weight: 600;
+
+                                &.drag-over {
+                                    background: #5CB85C;
+                                    color: #fff
+                                }
+                            }
+                        }
+                    }
+
+                    > .accordianBody {
+                        > .resourcePane {
+                            opacity: 1;
+                            pointer-events: auto;
+                            height: 2em;
+                            line-height: 2;
+                            margin-top: 1em;
+                            margin-right: 1em;
+                            overflow: visible;
+
+                            span {
+                                position: relative;
+                                float: left;
+                                width: calc(100% - 3em);
+                                line-height: 2;
+                                height: 100%;
+
+                                @include emboss-title('');
+                            }
+
+                            .resourceDeleteButton {
+                                position: relative;
+                                float: left;
+                                width: 2em;
+                                height: 2em;
+
+                                &:before {
+                                    position: absolute;
+                                    left: 0;
+                                    top: calc(50% - 0.5em);
+                                    width: 100%;
+                                    line-height: 1;
+                                    text-align: center;
+
+                                    @include transition(transform 0.3s);
+                                }
+
+                                &:hover:before {
+                                    @include transform(scale(1.1));
+                                    color: $activeColor;
+                                }
+
+                                &:active:before {
+                                    @include transform(scale(1));
+                                    color: $activeColor;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .resourceEditor {
+            visibility: hidden;
+        }
+    }
+}

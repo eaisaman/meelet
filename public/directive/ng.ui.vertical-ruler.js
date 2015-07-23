@@ -1,5 +1,5 @@
 define(
-    ["angular", "jquery", "hammer"],
+    ["angular-lib", "jquery-lib", "hammer-lib"],
     function () {
         return function (appModule, extension, opts) {
             var inject = ["$timeout", "$q", "$exceptionHandler", "$log", "angularEventTypes", "angularConstants", "uiService", "uiUtilService", "appService"];

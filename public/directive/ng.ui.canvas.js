@@ -1,5 +1,5 @@
 define(
-    ["angular", "jquery", "fabric"],
+    ["angular-lib", "jquery-lib", "fabric-lib"],
     function () {
         var SketchCanvas = function ($log, $compile, $parse, $timeout, $q, $exceptionHandler, uiUtilService, angularConstants, angularEventTypes) {
                 this.$log = $log;
@@ -151,10 +151,6 @@ define(
                             self.canvas.renderAll();
                         }
                     }
-                });
-
-                self.canvas.on("mouse:down", function (event) {
-                    var p = event.target;
                 });
 
                 self.deregisterOnMarkRoute && self.deregisterOnMarkRoute();

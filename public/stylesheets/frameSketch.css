@@ -1,4 +1,4 @@
-#sketchControls.align-left.show, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group[tab-sel^='tab-content'].select, #borderColorPalette .colorValuePanes > .hsbValuePane.select, #colorPickerPalette .colorValuePanes > .hsbValuePane.select, #colorStopEditorPalette .colorValuePanes > .hsbValuePane.select, #shadowStopColorPalette .colorValuePanes > .hsbValuePane.select, #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette .colorValuePanes > .hsbValuePane.select, #shape-control .shapeContent > .shapePalette > .iconLibraryList, #widget-control .widgetContent > .widgetPalette > .widgetLibraryList, #page-control .pageContent > .pageDetails .effectLibraryList, #sketchControls.align-right.show, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group[tab-sel^='tab-content'].select, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details #actionWidgetTreeTab, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > .effectLibraryList, #borderColorPalette .colorValuePanes > .hsbValuePane:not(.select), #colorPickerPalette .colorValuePanes > .hsbValuePane:not(.select), #colorStopEditorPalette .colorValuePanes > .hsbValuePane:not(.select), #shadowStopColorPalette .colorValuePanes > .hsbValuePane:not(.select), #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette .colorValuePanes > .hsbValuePane:not(.select), #shape-control .shapeContent > .shapePalette > .iconLibraryList.select, #widget-control .widgetContent > .widgetPalette > .widgetLibraryList.select, #page-control .pageContent > .pageDetails .effectLibraryList.select, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details #actionWidgetTreeTab.select, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > .effectLibraryList.select, #color-control > .pickerContent.expanded > .pickerBar > .pickerPane, #border-color-control > .pickerContent.expanded > .pickerBar > .pickerPane, #fill-control .editorContent.expanded .editorColorStopList .colorStop.animate, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group .ui-control .ui-control-wrapper .ui-control-panel.hiding, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group .ui-control .ui-control-wrapper .ui-control-panel.hiding, #borderColorPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #colorPickerPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #colorStopEditorPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #shadowStopColorPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemWritableList .configurationPanel.show, #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #text-shadow-control > .textShadowContent > .textShadowPalette.show, #text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > div[tab-sel^='tab-content'].select, #box-shadow-control > .boxShadowContent > .boxShadowPalette.show, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > div[tab-sel^='tab-content'].select, #page-control .pageContent > .pageDetails > .tabContents > div[tab-sel^='tab-content'].select, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group .ui-control .ui-control-wrapper .ui-control-panel.show, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group .ui-control .ui-control-wrapper .ui-control-panel.show, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group .ui-control:not(.ui-control-inline) .ui-control-wrapper.collapsing, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group .ui-control:not(.ui-control-inline) .ui-control-wrapper.expanded, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group .ui-control:not(.ui-control-inline) .ui-control-wrapper.expanded, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group .ui-control:not(.ui-control-inline) .ui-control-wrapper.collapsing, #text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .presetTextShadow .effectLibrary .accordianGroup.select > .accordianTitle:before, #text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .textShadowArtifactPanes > .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .presetBoxShadow .effectLibrary .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowValuePanes > .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowStylePanes > .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowArtifactPanes > .accordianGroup.select > .accordianTitle:before, #shape-control .shapeContent > .shapePalette .accordianGroup.select > .accordianTitle:before, #widget-control .widgetContent > .widgetPalette .accordianGroup.select > .accordianTitle:before, #page-control .pageContent > .pageDetails .effectLibraryList .accordianGroup.select > .accordianTitle:before, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > .effectLibraryList .accordianGroup.select > .accordianTitle:before, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianTitle:before, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionBar > div.toggleTransitionButton:before, .pickerPaneShape, .pickerPaneWidget, #sketchControls.align-left.hiding, #sketchControls.align-right.hiding, #border-control > .borderContent > .borderPalette > .borderPane.borderColorPane .borderColorPalette.show, #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette.show, #fill-control .editorContent.expanded.align-left .editorColorStopList .editorPalette.show, #text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .textShadowValuePanes .shadowStopColorPalette.show, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowValuePanes .shadowStopColorPalette.show {
+#sketchControls.align-left.show, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group[tab-sel^='tab-content'].select, #borderColorPalette .colorValuePanes > .hsbValuePane.select, #colorPickerPalette .colorValuePanes > .hsbValuePane.select, #colorStopEditorPalette .colorValuePanes > .hsbValuePane.select, #shadowStopColorPalette .colorValuePanes > .hsbValuePane.select, #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette .colorValuePanes > .hsbValuePane.select, #shape-control .shapeContent > .shapePalette > .iconLibraryList, #widget-control .widgetContent > .widgetPalette > .widgetLibraryList, #page-control .pageContent > .pageDetails .effectLibraryList, #sketchControls.align-right.show, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group[tab-sel^='tab-content'].select, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details #actionWidgetTreeTab, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > .effectLibraryList, #borderColorPalette .colorValuePanes > .hsbValuePane:not(.select), #colorPickerPalette .colorValuePanes > .hsbValuePane:not(.select), #colorStopEditorPalette .colorValuePanes > .hsbValuePane:not(.select), #shadowStopColorPalette .colorValuePanes > .hsbValuePane:not(.select), #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette .colorValuePanes > .hsbValuePane:not(.select), #shape-control .shapeContent > .shapePalette > .iconLibraryList.select, #widget-control .widgetContent > .widgetPalette > .widgetLibraryList.select, #page-control .pageContent > .pageDetails .effectLibraryList.select, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details #actionWidgetTreeTab.select, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > .effectLibraryList.select, #color-control > .pickerContent.expanded > .pickerBar > .pickerPane, #border-color-control > .pickerContent.expanded > .pickerBar > .pickerPane, #fill-control .editorContent.expanded .editorColorStopList .colorStop.animate, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group .ui-control .ui-control-wrapper .ui-control-panel.hiding, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group .ui-control .ui-control-wrapper .ui-control-panel.hiding, #borderColorPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #colorPickerPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #colorStopEditorPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #shadowStopColorPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemWritableList .configurationPanel.show, #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #text-shadow-control > .textShadowContent > .textShadowPalette.show, #text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > div[tab-sel^='tab-content'].select, #box-shadow-control > .boxShadowContent > .boxShadowPalette.show, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > div[tab-sel^='tab-content'].select, #page-control .pageContent > .pageDetails > .tabContents > div[tab-sel^='tab-content'].select, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group .ui-control .ui-control-wrapper .ui-control-panel.show, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group .ui-control .ui-control-wrapper .ui-control-panel.show, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group .ui-control:not(.ui-control-inline) .ui-control-wrapper.collapsing, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group .ui-control:not(.ui-control-inline) .ui-control-wrapper.expanded, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group .ui-control:not(.ui-control-inline) .ui-control-wrapper.expanded, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group .ui-control:not(.ui-control-inline) .ui-control-wrapper.collapsing, #text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .presetTextShadow .effectLibrary .accordianGroup.select > .accordianTitle:before, #text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .textShadowArtifactPanes > .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .presetBoxShadow .effectLibrary .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowValuePanes > .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowStylePanes > .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowArtifactPanes > .accordianGroup.select > .accordianTitle:before, #shape-control .shapeContent > .shapePalette .accordianGroup.select > .accordianTitle:before, #widget-control .widgetContent > .widgetPalette .accordianGroup.select > .accordianTitle:before, #page-control .pageContent > .pageDetails .effectLibraryList .accordianGroup.select > .accordianTitle:before, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > .effectLibraryList .accordianGroup.select > .accordianTitle:before, #resource-editor-control .resourceContent .accordianGroup.select > .accordianTitle:before, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianTitle:before, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionBar > div.toggleTransitionButton:before, .pickerPaneShape, .pickerPaneWidget, #sketchControls.align-left.hiding, #sketchControls.align-right.hiding, #border-control > .borderContent > .borderPalette > .borderPane.borderColorPane .borderColorPalette.show, #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette.show, #fill-control .editorContent.expanded.align-left .editorColorStopList .editorPalette.show, #text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .textShadowValuePanes .shadowStopColorPalette.show, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowValuePanes .shadowStopColorPalette.show {
   -moz-animation-duration: 1s;
   -webkit-animation-duration: 1s;
   animation-duration: 1s;
@@ -4263,7 +4263,7 @@
     transform: translateY(0);
   }
 }
-#sketchControls.align-left.show, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group[tab-sel^='tab-content'].select, #borderColorPalette .colorValuePanes > .hsbValuePane.select, #colorPickerPalette .colorValuePanes > .hsbValuePane.select, #colorStopEditorPalette .colorValuePanes > .hsbValuePane.select, #shadowStopColorPalette .colorValuePanes > .hsbValuePane.select, #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette .colorValuePanes > .hsbValuePane.select, #shape-control .shapeContent > .shapePalette > .iconLibraryList, #widget-control .widgetContent > .widgetPalette > .widgetLibraryList, #page-control .pageContent > .pageDetails .effectLibraryList, #sketchControls.align-right.show, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group[tab-sel^='tab-content'].select, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details #actionWidgetTreeTab, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > .effectLibraryList, #borderColorPalette .colorValuePanes > .hsbValuePane:not(.select), #colorPickerPalette .colorValuePanes > .hsbValuePane:not(.select), #colorStopEditorPalette .colorValuePanes > .hsbValuePane:not(.select), #shadowStopColorPalette .colorValuePanes > .hsbValuePane:not(.select), #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette .colorValuePanes > .hsbValuePane:not(.select), #shape-control .shapeContent > .shapePalette > .iconLibraryList.select, #widget-control .widgetContent > .widgetPalette > .widgetLibraryList.select, #page-control .pageContent > .pageDetails .effectLibraryList.select, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details #actionWidgetTreeTab.select, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > .effectLibraryList.select, #color-control > .pickerContent.expanded > .pickerBar > .pickerPane, #border-color-control > .pickerContent.expanded > .pickerBar > .pickerPane, #fill-control .editorContent.expanded .editorColorStopList .colorStop.animate, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group .ui-control .ui-control-wrapper .ui-control-panel.hiding, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group .ui-control .ui-control-wrapper .ui-control-panel.hiding, #borderColorPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #colorPickerPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #colorStopEditorPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #shadowStopColorPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemWritableList .configurationPanel.show, #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #text-shadow-control > .textShadowContent > .textShadowPalette.show, #text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > div[tab-sel^='tab-content'].select, #box-shadow-control > .boxShadowContent > .boxShadowPalette.show, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > div[tab-sel^='tab-content'].select, #page-control .pageContent > .pageDetails > .tabContents > div[tab-sel^='tab-content'].select, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group .ui-control .ui-control-wrapper .ui-control-panel.show, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group .ui-control .ui-control-wrapper .ui-control-panel.show, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group .ui-control:not(.ui-control-inline) .ui-control-wrapper.collapsing, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group .ui-control:not(.ui-control-inline) .ui-control-wrapper.expanded, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group .ui-control:not(.ui-control-inline) .ui-control-wrapper.expanded, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group .ui-control:not(.ui-control-inline) .ui-control-wrapper.collapsing, #text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .presetTextShadow .effectLibrary .accordianGroup.select > .accordianTitle:before, #text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .textShadowArtifactPanes > .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .presetBoxShadow .effectLibrary .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowValuePanes > .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowStylePanes > .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowArtifactPanes > .accordianGroup.select > .accordianTitle:before, #shape-control .shapeContent > .shapePalette .accordianGroup.select > .accordianTitle:before, #widget-control .widgetContent > .widgetPalette .accordianGroup.select > .accordianTitle:before, #page-control .pageContent > .pageDetails .effectLibraryList .accordianGroup.select > .accordianTitle:before, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > .effectLibraryList .accordianGroup.select > .accordianTitle:before, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianTitle:before, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionBar > div.toggleTransitionButton:before, .pickerPaneShape, .pickerPaneWidget, #sketchControls.align-left.hiding, #sketchControls.align-right.hiding, #border-control > .borderContent > .borderPalette > .borderPane.borderColorPane .borderColorPalette.show, #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette.show, #fill-control .editorContent.expanded.align-left .editorColorStopList .editorPalette.show, #text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .textShadowValuePanes .shadowStopColorPalette.show, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowValuePanes .shadowStopColorPalette.show {
+#sketchControls.align-left.show, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group[tab-sel^='tab-content'].select, #borderColorPalette .colorValuePanes > .hsbValuePane.select, #colorPickerPalette .colorValuePanes > .hsbValuePane.select, #colorStopEditorPalette .colorValuePanes > .hsbValuePane.select, #shadowStopColorPalette .colorValuePanes > .hsbValuePane.select, #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette .colorValuePanes > .hsbValuePane.select, #shape-control .shapeContent > .shapePalette > .iconLibraryList, #widget-control .widgetContent > .widgetPalette > .widgetLibraryList, #page-control .pageContent > .pageDetails .effectLibraryList, #sketchControls.align-right.show, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group[tab-sel^='tab-content'].select, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details #actionWidgetTreeTab, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > .effectLibraryList, #borderColorPalette .colorValuePanes > .hsbValuePane:not(.select), #colorPickerPalette .colorValuePanes > .hsbValuePane:not(.select), #colorStopEditorPalette .colorValuePanes > .hsbValuePane:not(.select), #shadowStopColorPalette .colorValuePanes > .hsbValuePane:not(.select), #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette .colorValuePanes > .hsbValuePane:not(.select), #shape-control .shapeContent > .shapePalette > .iconLibraryList.select, #widget-control .widgetContent > .widgetPalette > .widgetLibraryList.select, #page-control .pageContent > .pageDetails .effectLibraryList.select, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details #actionWidgetTreeTab.select, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > .effectLibraryList.select, #color-control > .pickerContent.expanded > .pickerBar > .pickerPane, #border-color-control > .pickerContent.expanded > .pickerBar > .pickerPane, #fill-control .editorContent.expanded .editorColorStopList .colorStop.animate, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group .ui-control .ui-control-wrapper .ui-control-panel.hiding, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group .ui-control .ui-control-wrapper .ui-control-panel.hiding, #borderColorPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #colorPickerPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #colorStopEditorPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #shadowStopColorPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemWritableList .configurationPanel.show, #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #text-shadow-control > .textShadowContent > .textShadowPalette.show, #text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > div[tab-sel^='tab-content'].select, #box-shadow-control > .boxShadowContent > .boxShadowPalette.show, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > div[tab-sel^='tab-content'].select, #page-control .pageContent > .pageDetails > .tabContents > div[tab-sel^='tab-content'].select, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group .ui-control .ui-control-wrapper .ui-control-panel.show, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group .ui-control .ui-control-wrapper .ui-control-panel.show, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group .ui-control:not(.ui-control-inline) .ui-control-wrapper.collapsing, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group .ui-control:not(.ui-control-inline) .ui-control-wrapper.expanded, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group .ui-control:not(.ui-control-inline) .ui-control-wrapper.expanded, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group .ui-control:not(.ui-control-inline) .ui-control-wrapper.collapsing, #text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .presetTextShadow .effectLibrary .accordianGroup.select > .accordianTitle:before, #text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .textShadowArtifactPanes > .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .presetBoxShadow .effectLibrary .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowValuePanes > .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowStylePanes > .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowArtifactPanes > .accordianGroup.select > .accordianTitle:before, #shape-control .shapeContent > .shapePalette .accordianGroup.select > .accordianTitle:before, #widget-control .widgetContent > .widgetPalette .accordianGroup.select > .accordianTitle:before, #page-control .pageContent > .pageDetails .effectLibraryList .accordianGroup.select > .accordianTitle:before, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > .effectLibraryList .accordianGroup.select > .accordianTitle:before, #resource-editor-control .resourceContent .accordianGroup.select > .accordianTitle:before, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianTitle:before, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionBar > div.toggleTransitionButton:before, .pickerPaneShape, .pickerPaneWidget, #sketchControls.align-left.hiding, #sketchControls.align-right.hiding, #border-control > .borderContent > .borderPalette > .borderPane.borderColorPane .borderColorPalette.show, #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette.show, #fill-control .editorContent.expanded.align-left .editorColorStopList .editorPalette.show, #text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .textShadowValuePanes .shadowStopColorPalette.show, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowValuePanes .shadowStopColorPalette.show {
   -moz-animation-duration: 1s;
   -webkit-animation-duration: 1s;
   animation-duration: 1s;
@@ -4276,7 +4276,7 @@
   backface-visibility: none;
 }
 
-#sketchControls.align-left.show, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group[tab-sel^='tab-content'].select, #borderColorPalette .colorValuePanes > .hsbValuePane.select, #colorPickerPalette .colorValuePanes > .hsbValuePane.select, #colorStopEditorPalette .colorValuePanes > .hsbValuePane.select, #shadowStopColorPalette .colorValuePanes > .hsbValuePane.select, #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette .colorValuePanes > .hsbValuePane.select, #shape-control .shapeContent > .shapePalette > .iconLibraryList, #widget-control .widgetContent > .widgetPalette > .widgetLibraryList, #page-control .pageContent > .pageDetails .effectLibraryList, #sketchControls.align-right.show, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group[tab-sel^='tab-content'].select, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details #actionWidgetTreeTab, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > .effectLibraryList, #borderColorPalette .colorValuePanes > .hsbValuePane:not(.select), #colorPickerPalette .colorValuePanes > .hsbValuePane:not(.select), #colorStopEditorPalette .colorValuePanes > .hsbValuePane:not(.select), #shadowStopColorPalette .colorValuePanes > .hsbValuePane:not(.select), #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette .colorValuePanes > .hsbValuePane:not(.select), #shape-control .shapeContent > .shapePalette > .iconLibraryList.select, #widget-control .widgetContent > .widgetPalette > .widgetLibraryList.select, #page-control .pageContent > .pageDetails .effectLibraryList.select, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details #actionWidgetTreeTab.select, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > .effectLibraryList.select, #color-control > .pickerContent.expanded > .pickerBar > .pickerPane, #border-color-control > .pickerContent.expanded > .pickerBar > .pickerPane, #fill-control .editorContent.expanded .editorColorStopList .colorStop.animate, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group .ui-control .ui-control-wrapper .ui-control-panel.hiding, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group .ui-control .ui-control-wrapper .ui-control-panel.hiding, #borderColorPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #colorPickerPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #colorStopEditorPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #shadowStopColorPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemWritableList .configurationPanel.show, #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #text-shadow-control > .textShadowContent > .textShadowPalette.show, #text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > div[tab-sel^='tab-content'].select, #box-shadow-control > .boxShadowContent > .boxShadowPalette.show, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > div[tab-sel^='tab-content'].select, #page-control .pageContent > .pageDetails > .tabContents > div[tab-sel^='tab-content'].select, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group .ui-control .ui-control-wrapper .ui-control-panel.show, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group .ui-control .ui-control-wrapper .ui-control-panel.show, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group .ui-control:not(.ui-control-inline) .ui-control-wrapper.collapsing, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group .ui-control:not(.ui-control-inline) .ui-control-wrapper.expanded, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group .ui-control:not(.ui-control-inline) .ui-control-wrapper.expanded, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group .ui-control:not(.ui-control-inline) .ui-control-wrapper.collapsing, #text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .presetTextShadow .effectLibrary .accordianGroup.select > .accordianTitle:before, #text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .textShadowArtifactPanes > .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .presetBoxShadow .effectLibrary .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowValuePanes > .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowStylePanes > .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowArtifactPanes > .accordianGroup.select > .accordianTitle:before, #shape-control .shapeContent > .shapePalette .accordianGroup.select > .accordianTitle:before, #widget-control .widgetContent > .widgetPalette .accordianGroup.select > .accordianTitle:before, #page-control .pageContent > .pageDetails .effectLibraryList .accordianGroup.select > .accordianTitle:before, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > .effectLibraryList .accordianGroup.select > .accordianTitle:before, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianTitle:before, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionBar > div.toggleTransitionButton:before, .pickerPaneShape, .pickerPaneWidget, #sketchControls.align-left.hiding, #sketchControls.align-right.hiding, #border-control > .borderContent > .borderPalette > .borderPane.borderColorPane .borderColorPalette.show, #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette.show, #fill-control .editorContent.expanded.align-left .editorColorStopList .editorPalette.show, #text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .textShadowValuePanes .shadowStopColorPalette.show, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowValuePanes .shadowStopColorPalette.show {
+#sketchControls.align-left.show, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group[tab-sel^='tab-content'].select, #borderColorPalette .colorValuePanes > .hsbValuePane.select, #colorPickerPalette .colorValuePanes > .hsbValuePane.select, #colorStopEditorPalette .colorValuePanes > .hsbValuePane.select, #shadowStopColorPalette .colorValuePanes > .hsbValuePane.select, #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette .colorValuePanes > .hsbValuePane.select, #shape-control .shapeContent > .shapePalette > .iconLibraryList, #widget-control .widgetContent > .widgetPalette > .widgetLibraryList, #page-control .pageContent > .pageDetails .effectLibraryList, #sketchControls.align-right.show, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group[tab-sel^='tab-content'].select, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details #actionWidgetTreeTab, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > .effectLibraryList, #borderColorPalette .colorValuePanes > .hsbValuePane:not(.select), #colorPickerPalette .colorValuePanes > .hsbValuePane:not(.select), #colorStopEditorPalette .colorValuePanes > .hsbValuePane:not(.select), #shadowStopColorPalette .colorValuePanes > .hsbValuePane:not(.select), #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette .colorValuePanes > .hsbValuePane:not(.select), #shape-control .shapeContent > .shapePalette > .iconLibraryList.select, #widget-control .widgetContent > .widgetPalette > .widgetLibraryList.select, #page-control .pageContent > .pageDetails .effectLibraryList.select, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details #actionWidgetTreeTab.select, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > .effectLibraryList.select, #color-control > .pickerContent.expanded > .pickerBar > .pickerPane, #border-color-control > .pickerContent.expanded > .pickerBar > .pickerPane, #fill-control .editorContent.expanded .editorColorStopList .colorStop.animate, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group .ui-control .ui-control-wrapper .ui-control-panel.hiding, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group .ui-control .ui-control-wrapper .ui-control-panel.hiding, #borderColorPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #colorPickerPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #colorStopEditorPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #shadowStopColorPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemWritableList .configurationPanel.show, #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette.show > .tabContents > div[tab-sel^='tab-content'].select, #text-shadow-control > .textShadowContent > .textShadowPalette.show, #text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > div[tab-sel^='tab-content'].select, #box-shadow-control > .boxShadowContent > .boxShadowPalette.show, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > div[tab-sel^='tab-content'].select, #page-control .pageContent > .pageDetails > .tabContents > div[tab-sel^='tab-content'].select, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group .ui-control .ui-control-wrapper .ui-control-panel.show, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group .ui-control .ui-control-wrapper .ui-control-panel.show, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group .ui-control:not(.ui-control-inline) .ui-control-wrapper.collapsing, #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group .ui-control:not(.ui-control-inline) .ui-control-wrapper.expanded, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group .ui-control:not(.ui-control-inline) .ui-control-wrapper.expanded, #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group .ui-control:not(.ui-control-inline) .ui-control-wrapper.collapsing, #text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .presetTextShadow .effectLibrary .accordianGroup.select > .accordianTitle:before, #text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .textShadowArtifactPanes > .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .presetBoxShadow .effectLibrary .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowValuePanes > .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowStylePanes > .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowArtifactPanes > .accordianGroup.select > .accordianTitle:before, #shape-control .shapeContent > .shapePalette .accordianGroup.select > .accordianTitle:before, #widget-control .widgetContent > .widgetPalette .accordianGroup.select > .accordianTitle:before, #page-control .pageContent > .pageDetails .effectLibraryList .accordianGroup.select > .accordianTitle:before, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > .effectLibraryList .accordianGroup.select > .accordianTitle:before, #resource-editor-control .resourceContent .accordianGroup.select > .accordianTitle:before, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianTitle:before, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionBar > div.toggleTransitionButton:before, .pickerPaneShape, .pickerPaneWidget, #sketchControls.align-left.hiding, #sketchControls.align-right.hiding, #border-control > .borderContent > .borderPalette > .borderPane.borderColorPane .borderColorPalette.show, #widget-configurator-control .configurationContent > .configurationPalette .configurationPane .configurationItemColor .configurationColorPalette.show, #fill-control .editorContent.expanded.align-left .editorColorStopList .editorPalette.show, #text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .textShadowValuePanes .shadowStopColorPalette.show, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowValuePanes .shadowStopColorPalette.show {
   -moz-animation-duration: 1s;
   -webkit-animation-duration: 1s;
   animation-duration: 1s;
@@ -7569,7 +7569,7 @@
  * Used by directive ng.ui.shape, ng.ui.state-transition, ng.ui-box-shadow-editor, ng.ui-text-shadow-editor
  * Found in _shape.html, _state_transition.html, _border-editor.html, _text-shadow.html
  */
-#text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .presetTextShadow .effectLibrary .accordianGroup.select > .accordianTitle:before, #text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .textShadowArtifactPanes > .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .presetBoxShadow .effectLibrary .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowValuePanes > .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowStylePanes > .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowArtifactPanes > .accordianGroup.select > .accordianTitle:before, #shape-control .shapeContent > .shapePalette .accordianGroup.select > .accordianTitle:before, #widget-control .widgetContent > .widgetPalette .accordianGroup.select > .accordianTitle:before, #page-control .pageContent > .pageDetails .effectLibraryList .accordianGroup.select > .accordianTitle:before, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > .effectLibraryList .accordianGroup.select > .accordianTitle:before {
+#text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .presetTextShadow .effectLibrary .accordianGroup.select > .accordianTitle:before, #text-shadow-control > .textShadowContent > .textShadowPalette > .tabContents > .textShadowArtifactPanes > .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .presetBoxShadow .effectLibrary .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowValuePanes > .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowStylePanes > .accordianGroup.select > .accordianTitle:before, #box-shadow-control > .boxShadowContent > .boxShadowPalette > .tabContents > .boxShadowArtifactPanes > .accordianGroup.select > .accordianTitle:before, #shape-control .shapeContent > .shapePalette .accordianGroup.select > .accordianTitle:before, #widget-control .widgetContent > .widgetPalette .accordianGroup.select > .accordianTitle:before, #page-control .pageContent > .pageDetails .effectLibraryList .accordianGroup.select > .accordianTitle:before, #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > .effectLibraryList .accordianGroup.select > .accordianTitle:before, #resource-editor-control .resourceContent .accordianGroup.select > .accordianTitle:before {
   -moz-animation-name: rotateUpSideDown;
   -webkit-animation-name: rotateUpSideDown;
   animation-name: rotateUpSideDown;
@@ -18132,8 +18132,8 @@
 }
 #sketchControls.align-right > .dockContent > .dockDetail .ui-control-group-titles {
   position: absolute;
-  left: calc(-12em - 1em - 5px);
-  top: 14em;
+  left: calc(-16em - 1em - 5px);
+  top: 18em;
   -webkit-flex-direction: row-reverse;
   flex-direction: row-reverse;
   -moz-transform: rotateZ(-90deg);
@@ -18226,8 +18226,8 @@
 }
 #sketchControls.align-left > .dockContent > .dockDetail .ui-control-group-titles {
   position: absolute;
-  right: calc(-12em - 1em - 5px);
-  top: 14em;
+  right: calc(-16em - 1em - 5px);
+  top: 18em;
   -webkit-flex-direction: row;
   flex-direction: row;
   -moz-transform: rotateZ(90deg);
@@ -19253,6 +19253,246 @@
   color: #888;
 }
 
+#resource-editor-control .resourceContent {
+  position: relative;
+  float: left;
+  width: 100%;
+  height: 100%;
+  color: rgba(0, 0, 0, 0.4);
+  background: #fff;
+}
+#resource-editor-control .resourceContent .accordianGroup {
+  position: relative;
+  float: left;
+  width: 100%;
+  overflow: hidden;
+}
+#resource-editor-control .resourceContent .accordianGroup > .accordianTitle {
+  z-index: 1;
+  position: relative;
+  float: left;
+  width: 100%;
+  line-height: 3;
+  background-image: -webkit-linear-gradient(left, #339933 0%, #ecf0f1 100%);
+  background-image: -o-linear-gradient(left, #339933 0%, #ecf0f1 100%);
+  background-image: linear-gradient(to right, #339933 0%, #ecf0f1 100%);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF339933', endColorstr='#FFECF0F1', GradientType=1);
+}
+#resource-editor-control .resourceContent .accordianGroup > .accordianTitle:before {
+  position: absolute;
+  left: 0;
+  top: calc(50% - 0.5em);
+  line-height: 1;
+  text-align: center;
+  width: 1em;
+  height: 1em;
+  color: #fff;
+  -moz-transform: rotateZ(0deg);
+  -ms-transform: rotateZ(0deg);
+  -webkit-transform: rotateZ(0deg);
+  transform: rotateZ(0deg);
+  -moz-transition: -moz-transform 0.3s;
+  -o-transition: -o-transform 0.3s;
+  -webkit-transition: -webkit-transform 0.3s;
+  transition: transform 0.3s;
+}
+#resource-editor-control .resourceContent .accordianGroup > .accordianTitle span {
+  line-height: 3;
+  height: 3em;
+  color: #669933;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  text-overflow: ellipsis;
+  text-align: left;
+  text-indent: 2em;
+  overflow: hidden;
+}
+#resource-editor-control .resourceContent .accordianGroup > .accordianTitle span {
+  margin: 0;
+  text-shadow: 1px 0px 0px ghostwhite, -1px 0px 0px ghostwhite, 0px 1px 0px ghostwhite, 0px -1px 0px ghostwhite, 1px 1px 0px ghostwhite, -1px -1px 0px ghostwhite, -1px 1px 0px ghostwhite, 1px -1px 0px ghostwhite, 0px 6px 1px silver, 2px 6px 1px gray, -2px 6px 1px gray, 0px 6px 7px black;
+}
+#resource-editor-control .resourceContent .accordianGroup > .accordianTitle span:after {
+  position: absolute;
+  right: 2em;
+  top: 0;
+  width: 2em;
+  line-height: 2;
+  text-align: center;
+}
+#resource-editor-control .resourceContent .accordianGroup > .accordianSubTitle {
+  position: relative;
+  float: left;
+  width: 100%;
+  margin-top: 0.5em;
+  -moz-transition: -moz-transform 0.3s;
+  -o-transition: -o-transform 0.3s;
+  -webkit-transition: -webkit-transform 0.3s;
+  transition: transform 0.3s;
+}
+#resource-editor-control .resourceContent .accordianGroup > .accordianSubTitle > * {
+  opacity: 0;
+  pointer-events: none;
+  height: 0px;
+  overflow: hidden;
+}
+#resource-editor-control .resourceContent .accordianGroup > .accordianBody {
+  position: relative;
+  float: left;
+  width: 100%;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  -moz-transition: -moz-transform 0.3s;
+  -o-transition: -o-transform 0.3s;
+  -webkit-transition: -webkit-transform 0.3s;
+  transition: transform 0.3s;
+}
+#resource-editor-control .resourceContent .accordianGroup > .accordianBody > .resourcePane {
+  opacity: 0;
+  pointer-events: none;
+  height: 0px;
+  overflow: hidden;
+}
+#resource-editor-control .resourceContent .accordianGroup.select:after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  content: '';
+  width: 100%;
+  height: 2px;
+  background-image: -webkit-linear-gradient(left, #339933 0%, #ecf0f1 100%);
+  background-image: -o-linear-gradient(left, #339933 0%, #ecf0f1 100%);
+  background-image: linear-gradient(to right, #339933 0%, #ecf0f1 100%);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF339933', endColorstr='#FFECF0F1', GradientType=1);
+}
+#resource-editor-control .resourceContent .accordianGroup.select > .accordianTitle:before {
+  -moz-animation-duration: 0.3s;
+  -webkit-animation-duration: 0.3s;
+  animation-duration: 0.3s;
+}
+#resource-editor-control .resourceContent .accordianGroup.select > .accordianSubTitle > * {
+  opacity: 1;
+  pointer-events: auto;
+  position: relative;
+  float: left;
+  width: 100%;
+  height: 2em;
+  line-height: 2;
+  margin: 0.5em 0;
+}
+#resource-editor-control .resourceContent .accordianGroup.select > .accordianSubTitle > .uploadContent {
+  position: relative;
+  float: left;
+  width: 100%;
+  margin-bottom: 0.2em;
+}
+#resource-editor-control .resourceContent .accordianGroup.select > .accordianSubTitle > .uploadContent > .input-group {
+  float: left;
+}
+#resource-editor-control .resourceContent .accordianGroup.select > .accordianSubTitle > .uploadContent .soundUploadButton {
+  position: relative;
+  float: left;
+  width: 2em;
+  height: 2em;
+  background-color: #ddd;
+  box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.135);
+  border-radius: 0.2em;
+  display: inline-block;
+  margin-left: 0.5em;
+  color: rgba(0, 0, 0, 0.4);
+}
+#resource-editor-control .resourceContent .accordianGroup.select > .accordianSubTitle > .uploadContent .soundUploadButton:active {
+  background-color: #aaa;
+  color: #669933;
+  box-shadow: none;
+}
+#resource-editor-control .resourceContent .accordianGroup.select > .accordianSubTitle > .uploadContent .soundUploadButton:before {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  line-height: 2;
+  font-weight: 600;
+}
+#resource-editor-control .resourceContent .accordianGroup.select > .accordianSubTitle > .uploadContent .soundUploadDock {
+  position: relative;
+  float: left;
+  width: calc(100% - 3em);
+  height: 2em;
+  border: 2px #f1f1f1 dashed;
+  left: 5px;
+  text-align: center;
+  line-height: 2;
+  font-weight: 600;
+}
+#resource-editor-control .resourceContent .accordianGroup.select > .accordianSubTitle > .uploadContent .soundUploadDock.drag-over {
+  background: #5CB85C;
+  color: #fff;
+}
+#resource-editor-control .resourceContent .accordianGroup.select > .accordianBody > .resourcePane {
+  opacity: 1;
+  pointer-events: auto;
+  height: 2em;
+  line-height: 2;
+  margin-top: 1em;
+  margin-right: 1em;
+  overflow: visible;
+}
+#resource-editor-control .resourceContent .accordianGroup.select > .accordianBody > .resourcePane span {
+  position: relative;
+  float: left;
+  width: calc(100% - 3em);
+  line-height: 2;
+  height: 100%;
+}
+#resource-editor-control .resourceContent .accordianGroup.select > .accordianBody > .resourcePane span {
+  margin: 0;
+  text-shadow: 1px 0px 0px ghostwhite, -1px 0px 0px ghostwhite, 0px 1px 0px ghostwhite, 0px -1px 0px ghostwhite, 1px 1px 0px ghostwhite, -1px -1px 0px ghostwhite, -1px 1px 0px ghostwhite, 1px -1px 0px ghostwhite, 0px 6px 1px silver, 2px 6px 1px gray, -2px 6px 1px gray, 0px 6px 7px black;
+}
+#resource-editor-control .resourceContent .accordianGroup.select > .accordianBody > .resourcePane span:active {
+  margin-top: 2px;
+  text-shadow: 1px 0px 0px ghostwhite, -1px 0px 0px ghostwhite, 0px 1px 0px ghostwhite, 0px -1px 0px ghostwhite, 1px 1px 0px ghostwhite, -1px -1px 0px ghostwhite, -1px 1px 0px ghostwhite, 1px -1px 0px ghostwhite, 0px 6px 1px silver;
+}
+#resource-editor-control .resourceContent .accordianGroup.select > .accordianBody > .resourcePane .resourceDeleteButton {
+  position: relative;
+  float: left;
+  width: 2em;
+  height: 2em;
+}
+#resource-editor-control .resourceContent .accordianGroup.select > .accordianBody > .resourcePane .resourceDeleteButton:before {
+  position: absolute;
+  left: 0;
+  top: calc(50% - 0.5em);
+  width: 100%;
+  line-height: 1;
+  text-align: center;
+  -moz-transition: -moz-transform 0.3s;
+  -o-transition: -o-transform 0.3s;
+  -webkit-transition: -webkit-transform 0.3s;
+  transition: transform 0.3s;
+}
+#resource-editor-control .resourceContent .accordianGroup.select > .accordianBody > .resourcePane .resourceDeleteButton:hover:before {
+  -moz-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+  color: #669933;
+}
+#resource-editor-control .resourceContent .accordianGroup.select > .accordianBody > .resourcePane .resourceDeleteButton:active:before {
+  -moz-transform: scale(1);
+  -ms-transform: scale(1);
+  -webkit-transform: scale(1);
+  transform: scale(1);
+  color: #669933;
+}
+#resource-editor-control .resourceEditor {
+  visibility: hidden;
+}
+
 #frameSketchWidgetDemoArea * {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;
@@ -19462,12 +19702,13 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  background: #fff;
+  background: rgba(0, 0, 0, 0.4);
 }
 #frameSketchContainer > .modalWindowContainer .frameSketchModalContent #frameSketchDemoModal {
   position: absolute;
   width: 100%;
   height: 100%;
+  background-color: #fff;
 }
 #frameSketchContainer > .modalWindowContainer .frameSketchModalContent #frameSketchDemoModal .hideButton {
   position: absolute;
@@ -19576,6 +19817,1127 @@
   background-color: #555;
   color: #669933;
   box-shadow: none;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .hideButton {
+  position: absolute;
+  top: 0.5em;
+  width: 2em;
+  height: 2em;
+  background-color: #ddd;
+  box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.135);
+  border-radius: 0.2em;
+  display: inline-block;
+  margin: 0 0.5em;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .hideButton:active {
+  background-color: #555;
+  color: #669933;
+  box-shadow: none;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .hideButton:before {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  line-height: 2;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer {
+  position: absolute;
+  top: 2em;
+  width: calc(100% - 2em);
+  height: calc(100% - 4em);
+  margin: 1em;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea {
+  position: relative;
+  float: left;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Effect 1: Slide in on top */
+  /* Effect 2: Reveal */
+  /* Effect 4: Slide along */
+  /* Effect 5: Reverse slide out */
+  /* Effect 6: Rotate pusher */
+  /* Effect 7: 3D rotate in */
+  /* Effect 8: 3D rotate out */
+  /* Effect 9: Scale down pusher */
+  /* Effect 10: Scale up */
+  /* Effect 11: Scale and rotate pusher */
+  /* Effect 12: Open door */
+  /* Effect 13: Fall down */
+  /* Effect 14: Delayed 3D rotate */
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.overlay > .mainContent:after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  background: rgba(212, 212, 212, 0.5);
+  content: '';
+  opacity: 1;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.overlay.select > .mainContent:after {
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+  -moz-transition: opacity 0.5s;
+  -o-transition: opacity 0.5s;
+  -webkit-transition: opacity 0.5s;
+  transition: opacity 0.5s;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide > .mainContent {
+  position: relative;
+  right: 0;
+  z-index: 99;
+  height: 100%;
+  background-color: transparent;
+  -moz-transition: -moz-transform 0.5s;
+  -o-transition: -o-transform 0.5s;
+  -webkit-transition: -webkit-transform 0.5s;
+  transition: transform 0.5s;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide > .mainContent > [name=mainContent] {
+  position: relative;
+  float: left;
+  width: 100%;
+  height: 100%;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide > .barContent, #frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide > .mainContent > .barContent {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 100;
+  visibility: hidden;
+  width: 30%;
+  height: 100%;
+  display: none;
+  background-color: #28c190;
+  -moz-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide > .barContent > [name=barContent], #frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide > .mainContent > .barContent > [name=barContent] {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.select > .barContent {
+  display: block;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.slideInOnTop > .barContent {
+  -moz-transform: translate3d(100%, 0, 0);
+  -webkit-transform: translate3d(100%, 0, 0);
+  transform: translate3d(100%, 0, 0);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.slideInOnTop.select > .barContent {
+  visibility: visible;
+  -moz-transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.reveal > .barContent {
+  z-index: 1;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.reveal.select > .mainContent {
+  -moz-transform: translate3d(-30%, 0, 0);
+  -ms-transform: translate3d(-30%, 0, 0);
+  -webkit-transform: translate3d(-30%, 0, 0);
+  transform: translate3d(-30%, 0, 0);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.reveal.select > .barContent {
+  visibility: visible;
+  -moz-transition: -moz-transform 0.5s;
+  -o-transition: -o-transform 0.5s;
+  -webkit-transition: -webkit-transform 0.5s;
+  transition: transform 0.5s;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.slideAlong > .barContent {
+  z-index: 1;
+  -moz-transform: translate3d(50%, 0, 0);
+  -webkit-transform: translate3d(50%, 0, 0);
+  transform: translate3d(50%, 0, 0);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.slideAlong.select > .mainContent {
+  -moz-transform: translate3d(-30%, 0, 0);
+  -ms-transform: translate3d(-30%, 0, 0);
+  -webkit-transform: translate3d(-30%, 0, 0);
+  transform: translate3d(-30%, 0, 0);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.slideAlong.select > .barContent {
+  visibility: visible;
+  -moz-transition: -moz-transform 0.5s;
+  -o-transition: -o-transform 0.5s;
+  -webkit-transition: -webkit-transform 0.5s;
+  transition: transform 0.5s;
+  -moz-transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.reverseSlideOut > .barContent {
+  z-index: 1;
+  -moz-transform: translate3d(-50%, 0, 0);
+  -webkit-transform: translate3d(-50%, 0, 0);
+  transform: translate3d(-50%, 0, 0);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.reverseSlideOut.select > .mainContent {
+  -moz-transform: translate3d(-30%, 0, 0);
+  -ms-transform: translate3d(-30%, 0, 0);
+  -webkit-transform: translate3d(-30%, 0, 0);
+  transform: translate3d(-30%, 0, 0);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.reverseSlideOut.select > .barContent {
+  visibility: visible;
+  -moz-transition: -moz-transform 0.5s;
+  -o-transition: -o-transform 0.5s;
+  -webkit-transition: -webkit-transform 0.5s;
+  transition: transform 0.5s;
+  -moz-transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.rotatePusher {
+  -moz-perspective: 1500px;
+  -webkit-perspective: 1500px;
+  perspective: 1500px;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.rotatePusher > .mainContent {
+  -moz-transform-origin: 100% 50%;
+  -ms-transform-origin: 100% 50%;
+  -webkit-transform-origin: 100% 50%;
+  transform-origin: 100% 50%;
+  -moz-transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.rotatePusher > .mainContent > .barContent {
+  -moz-transform: translate3d(100%, 0, 0);
+  -webkit-transform: translate3d(100%, 0, 0);
+  transform: translate3d(100%, 0, 0);
+  -moz-transform-origin: 0% 50%;
+  -ms-transform-origin: 0% 50%;
+  -webkit-transform-origin: 0% 50%;
+  transform-origin: 0% 50%;
+  -moz-transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.rotatePusher.select > .mainContent {
+  -moz-transform: translate3d(-30%, 0, 0) rotateY(15deg);
+  -ms-transform: translate3d(-30%, 0, 0) rotateY(15deg);
+  -webkit-transform: translate3d(-30%, 0, 0) rotateY(15deg);
+  transform: translate3d(-30%, 0, 0) rotateY(15deg);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.rotatePusher.select > .mainContent > .barContent {
+  visibility: visible;
+  -moz-transition: -moz-transform 0.5s;
+  -o-transition: -o-transform 0.5s;
+  -webkit-transition: -webkit-transform 0.5s;
+  transition: transform 0.5s;
+  -moz-transform: translate3d(0, 0, 0) rotateY(-15deg);
+  -ms-transform: translate3d(0, 0, 0) rotateY(-15deg);
+  -webkit-transform: translate3d(0, 0, 0) rotateY(-15deg);
+  transform: translate3d(0, 0, 0) rotateY(-15deg);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.rotateIn3D {
+  -moz-perspective: 1500px;
+  -webkit-perspective: 1500px;
+  perspective: 1500px;
+  -moz-perspective-origin: 0% 50%;
+  -webkit-perspective-origin: 0% 50%;
+  perspective-origin: 0% 50%;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.rotateIn3D > .mainContent {
+  -moz-transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.rotateIn3D > .mainContent > .barContent {
+  -moz-transform: translate3d(100%, 0, 0) rotateY(90deg);
+  -ms-transform: translate3d(100%, 0, 0) rotateY(90deg);
+  -webkit-transform: translate3d(100%, 0, 0) rotateY(90deg);
+  transform: translate3d(100%, 0, 0) rotateY(90deg);
+  -moz-transform-origin: 100% 50%;
+  -ms-transform-origin: 100% 50%;
+  -webkit-transform-origin: 100% 50%;
+  transform-origin: 100% 50%;
+  -moz-transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.rotateIn3D.select > .mainContent {
+  -moz-transform: translate3d(-30%, 0, 0);
+  -ms-transform: translate3d(-30%, 0, 0);
+  -webkit-transform: translate3d(-30%, 0, 0);
+  transform: translate3d(-30%, 0, 0);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.rotateIn3D.select > .mainContent > .barContent {
+  visibility: visible;
+  -moz-transition: -moz-transform 0.5s;
+  -o-transition: -o-transform 0.5s;
+  -webkit-transition: -webkit-transform 0.5s;
+  transition: transform 0.5s;
+  -moz-transform: translate3d(100%, 0, 0) rotateY(0deg);
+  -ms-transform: translate3d(100%, 0, 0) rotateY(0deg);
+  -webkit-transform: translate3d(100%, 0, 0) rotateY(0deg);
+  transform: translate3d(100%, 0, 0) rotateY(0deg);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.rotateOut3D {
+  -moz-perspective: 1500px;
+  -webkit-perspective: 1500px;
+  perspective: 1500px;
+  -moz-perspective-origin: 0% 50%;
+  -webkit-perspective-origin: 0% 50%;
+  perspective-origin: 0% 50%;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.rotateOut3D > .mainContent {
+  -moz-transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.rotateOut3D > .mainContent > .barContent {
+  -moz-transform-origin: 0% 50%;
+  -ms-transform-origin: 0% 50%;
+  -webkit-transform-origin: 0% 50%;
+  transform-origin: 0% 50%;
+  -moz-transform: translate3d(100%, 0, 0) rotateY(-90deg);
+  -ms-transform: translate3d(100%, 0, 0) rotateY(-90deg);
+  -webkit-transform: translate3d(100%, 0, 0) rotateY(-90deg);
+  transform: translate3d(100%, 0, 0) rotateY(-90deg);
+  -moz-transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.rotateOut3D.select > .mainContent {
+  -moz-transform: translate3d(-30%, 0, 0);
+  -ms-transform: translate3d(-30%, 0, 0);
+  -webkit-transform: translate3d(-30%, 0, 0);
+  transform: translate3d(-30%, 0, 0);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.rotateOut3D.select > .mainContent > .barContent {
+  visibility: visible;
+  -moz-transition: -moz-transform 0.5s;
+  -o-transition: -o-transform 0.5s;
+  -webkit-transition: -webkit-transform 0.5s;
+  transition: transform 0.5s;
+  -moz-transform: translate3d(100%, 0, 0) rotateY(0deg);
+  -ms-transform: translate3d(100%, 0, 0) rotateY(0deg);
+  -webkit-transform: translate3d(100%, 0, 0) rotateY(0deg);
+  transform: translate3d(100%, 0, 0) rotateY(0deg);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.scaleDownPusher {
+  -moz-perspective: 1500px;
+  -webkit-perspective: 1500px;
+  perspective: 1500px;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.scaleDownPusher > .mainContent {
+  -moz-transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.scaleDownPusher > .barContent {
+  opacity: 1;
+  -moz-transform: translate3d(100%, 0, 0);
+  -webkit-transform: translate3d(100%, 0, 0);
+  transform: translate3d(100%, 0, 0);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.scaleDownPusher.select > .mainContent {
+  -moz-transform: translate3d(0, 0, -300px);
+  -ms-transform: translate3d(0, 0, -300px);
+  -webkit-transform: translate3d(0, 0, -300px);
+  transform: translate3d(0, 0, -300px);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.scaleDownPusher.select > .barContent {
+  visibility: visible;
+  -moz-transition: -moz-transform 0.5s;
+  -o-transition: -o-transform 0.5s;
+  -webkit-transition: -webkit-transform 0.5s;
+  transition: transform 0.5s;
+  -moz-transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.scaleUp {
+  -moz-perspective: 1500px;
+  -webkit-perspective: 1500px;
+  perspective: 1500px;
+  -moz-perspective-origin: 0% 50%;
+  -webkit-perspective-origin: 0% 50%;
+  perspective-origin: 0% 50%;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.scaleUp > .barContent {
+  z-index: 1;
+  opacity: 1;
+  -moz-transform: translate3d(0, 0, -30%);
+  -ms-transform: translate3d(0, 0, -30%);
+  -webkit-transform: translate3d(0, 0, -30%);
+  transform: translate3d(0, 0, -30%);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.scaleUp.select > .mainContent {
+  -moz-transform: translate3d(-30%, 0, 0);
+  -ms-transform: translate3d(-30%, 0, 0);
+  -webkit-transform: translate3d(-30%, 0, 0);
+  transform: translate3d(-30%, 0, 0);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.scaleUp.select > .barContent {
+  visibility: visible;
+  -moz-transition: -moz-transform 0.5s;
+  -o-transition: -o-transform 0.5s;
+  -webkit-transition: -webkit-transform 0.5s;
+  transition: transform 0.5s;
+  -moz-transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.scaleRotatePusher {
+  -moz-perspective: 1500px;
+  -webkit-perspective: 1500px;
+  perspective: 1500px;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.scaleRotatePusher > .mainContent {
+  -moz-transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.scaleRotatePusher > .barContent {
+  opacity: 1;
+  -moz-transform: translate3d(100%, 0, 0);
+  -webkit-transform: translate3d(100%, 0, 0);
+  transform: translate3d(100%, 0, 0);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.scaleRotatePusher.select > .mainContent {
+  -moz-transform: translate3d(-100px, 0, -600px) rotateY(20deg);
+  -ms-transform: translate3d(-100px, 0, -600px) rotateY(20deg);
+  -webkit-transform: translate3d(-100px, 0, -600px) rotateY(20deg);
+  transform: translate3d(-100px, 0, -600px) rotateY(20deg);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.scaleRotatePusher.select > .barContent {
+  visibility: visible;
+  -moz-transition: -moz-transform 0.5s;
+  -o-transition: -o-transform 0.5s;
+  -webkit-transition: -webkit-transform 0.5s;
+  transition: transform 0.5s;
+  -moz-transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.openDoor {
+  -moz-perspective: 1500px;
+  -webkit-perspective: 1500px;
+  perspective: 1500px;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.openDoor > .mainContent {
+  -moz-transform-origin: 0% 50%;
+  -ms-transform-origin: 0% 50%;
+  -webkit-transform-origin: 0% 50%;
+  transform-origin: 0% 50%;
+  -moz-transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.openDoor > .barContent {
+  opacity: 1;
+  -moz-transform: translate3d(100%, 0, 0);
+  -webkit-transform: translate3d(100%, 0, 0);
+  transform: translate3d(100%, 0, 0);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.openDoor.select > .mainContent {
+  -moz-transform: rotateY(10deg);
+  -webkit-transform: rotateY(10deg);
+  transform: rotateY(10deg);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.openDoor.select > .barContent {
+  visibility: visible;
+  -moz-transition: -moz-transform 0.5s;
+  -o-transition: -o-transform 0.5s;
+  -webkit-transition: -webkit-transform 0.5s;
+  transition: transform 0.5s;
+  -moz-transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.fallDown {
+  -moz-perspective: 1500px;
+  -webkit-perspective: 1500px;
+  perspective: 1500px;
+  -moz-perspective-origin: 0% 50%;
+  -webkit-perspective-origin: 0% 50%;
+  perspective-origin: 0% 50%;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.fallDown > .barContent {
+  z-index: 1;
+  opacity: 1;
+  -moz-transform: translate3d(0, -100%, 0);
+  -webkit-transform: translate3d(0, -100%, 0);
+  transform: translate3d(0, -100%, 0);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.fallDown.select > .mainContent {
+  -moz-transform: translate3d(-30%, 0, 0);
+  -ms-transform: translate3d(-30%, 0, 0);
+  -webkit-transform: translate3d(-30%, 0, 0);
+  transform: translate3d(-30%, 0, 0);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.fallDown.select > .barContent {
+  visibility: visible;
+  -moz-transition: -moz-transform 0.2s ease-in-out;
+  -o-transition: -o-transform 0.2s ease-in-out;
+  -webkit-transition: -webkit-transform 0.2s ease-in-out;
+  transition: transform 0.2s ease-in-out;
+  -moz-transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.delayed3DRotate {
+  -moz-perspective: 1500px;
+  -webkit-perspective: 1500px;
+  perspective: 1500px;
+  -moz-perspective-origin: 0% 50%;
+  -webkit-perspective-origin: 0% 50%;
+  perspective-origin: 0% 50%;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.delayed3DRotate > .mainContent {
+  -moz-transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.delayed3DRotate > .mainContent > .barContent {
+  -moz-transform-origin: 100% 50%;
+  -ms-transform-origin: 100% 50%;
+  -webkit-transform-origin: 100% 50%;
+  transform-origin: 100% 50%;
+  -moz-transform: rotateY(90deg);
+  -ms-transform: rotateY(90deg);
+  -webkit-transform: rotateY(90deg);
+  transform: rotateY(90deg);
+  -moz-transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.delayed3DRotate.select > .mainContent {
+  -moz-transform: translate3d(-30%, 0, 0);
+  -ms-transform: translate3d(-30%, 0, 0);
+  -webkit-transform: translate3d(-30%, 0, 0);
+  transform: translate3d(-30%, 0, 0);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.rightSide.delayed3DRotate.select > .mainContent > .barContent {
+  visibility: visible;
+  -moz-transform: translate3d(100%, 0, 0) rotateY(0deg);
+  -ms-transform: translate3d(100%, 0, 0) rotateY(0deg);
+  -webkit-transform: translate3d(100%, 0, 0) rotateY(0deg);
+  transform: translate3d(100%, 0, 0) rotateY(0deg);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Effect 1: Slide in on top */
+  /* Effect 2: Reveal */
+  /* Effect 4: Slide along */
+  /* Effect 5: Reverse slide out */
+  /* Effect 6: Rotate pusher */
+  /* Effect 7: 3D rotate in */
+  /* Effect 8: 3D rotate out */
+  /* Effect 9: Scale down pusher */
+  /* Effect 10: Scale up */
+  /* Effect 11: Scale and rotate pusher */
+  /* Effect 12: Open door */
+  /* Effect 13: Fall down */
+  /* Effect 14: Delayed 3D rotate */
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.overlay > .mainContent:after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  background: rgba(212, 212, 212, 0.5);
+  content: '';
+  opacity: 1;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.overlay.select > .mainContent:after {
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+  -moz-transition: opacity 0.5s;
+  -o-transition: opacity 0.5s;
+  -webkit-transition: opacity 0.5s;
+  transition: opacity 0.5s;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide > .mainContent {
+  position: relative;
+  left: 0;
+  z-index: 99;
+  height: 100%;
+  background-color: transparent;
+  -moz-transition: -moz-transform 0.5s;
+  -o-transition: -o-transform 0.5s;
+  -webkit-transition: -webkit-transform 0.5s;
+  transition: transform 0.5s;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide > .mainContent > [name=mainContent] {
+  position: relative;
+  float: left;
+  width: 100%;
+  height: 100%;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide > .barContent, #frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide > .mainContent > .barContent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  visibility: hidden;
+  width: 30%;
+  height: 100%;
+  background-color: #28c190;
+  -moz-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide > .barContent > [name=barContent], #frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide > .mainContent > .barContent > [name=barContent] {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.slideInOnTop > .barContent, #frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.slideInOnTop > .mainContent > .barContent {
+  -moz-transform: translate3d(-100%, 0, 0);
+  -webkit-transform: translate3d(-100%, 0, 0);
+  transform: translate3d(-100%, 0, 0);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.slideInOnTop.select > .barContent, #frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.slideInOnTop.select > .mainContent > .barContent {
+  visibility: visible;
+  -moz-transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.reveal > .barContent {
+  z-index: 1;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.reveal.select > .mainContent {
+  -moz-transform: translate3d(30%, 0, 0);
+  -ms-transform: translate3d(30%, 0, 0);
+  -webkit-transform: translate3d(30%, 0, 0);
+  transform: translate3d(30%, 0, 0);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.reveal.select > .barContent {
+  visibility: visible;
+  -moz-transition: -moz-transform 0.5s;
+  -o-transition: -o-transform 0.5s;
+  -webkit-transition: -webkit-transform 0.5s;
+  transition: transform 0.5s;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.slideAlong > .barContent {
+  z-index: 1;
+  -moz-transform: translate3d(-50%, 0, 0);
+  -webkit-transform: translate3d(-50%, 0, 0);
+  transform: translate3d(-50%, 0, 0);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.slideAlong.select > .mainContent {
+  -moz-transform: translate3d(30%, 0, 0);
+  -ms-transform: translate3d(30%, 0, 0);
+  -webkit-transform: translate3d(30%, 0, 0);
+  transform: translate3d(30%, 0, 0);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.slideAlong.select > .barContent {
+  visibility: visible;
+  -moz-transition: -moz-transform 0.5s;
+  -o-transition: -o-transform 0.5s;
+  -webkit-transition: -webkit-transform 0.5s;
+  transition: transform 0.5s;
+  -moz-transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.reverseSlideOut > .barContent {
+  z-index: 1;
+  -moz-transform: translate3d(0, -50%, 0);
+  -webkit-transform: translate3d(0, -50%, 0);
+  transform: translate3d(0, -50%, 0);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.reverseSlideOut.select > .mainContent {
+  -moz-transform: translate3d(30%, 0, 0);
+  -ms-transform: translate3d(30%, 0, 0);
+  -webkit-transform: translate3d(30%, 0, 0);
+  transform: translate3d(30%, 0, 0);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.reverseSlideOut.select > .barContent {
+  visibility: visible;
+  -moz-transition: -moz-transform 0.5s;
+  -o-transition: -o-transform 0.5s;
+  -webkit-transition: -webkit-transform 0.5s;
+  transition: transform 0.5s;
+  -moz-transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.rotatePusher {
+  -moz-perspective: 1500px;
+  -webkit-perspective: 1500px;
+  perspective: 1500px;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.rotatePusher > .mainContent {
+  -moz-transform-origin: 0% 50%;
+  -ms-transform-origin: 0% 50%;
+  -webkit-transform-origin: 0% 50%;
+  transform-origin: 0% 50%;
+  -moz-transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.rotatePusher > .mainContent > .barContent {
+  -moz-transform: translate3d(-100%, 0, 0);
+  -webkit-transform: translate3d(-100%, 0, 0);
+  transform: translate3d(-100%, 0, 0);
+  -moz-transform-origin: 100% 50%;
+  -ms-transform-origin: 100% 50%;
+  -webkit-transform-origin: 100% 50%;
+  transform-origin: 100% 50%;
+  -moz-transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.rotatePusher.select > .mainContent {
+  -moz-transform: translate3d(30%, 0, 0) rotateY(-15deg);
+  -ms-transform: translate3d(30%, 0, 0) rotateY(-15deg);
+  -webkit-transform: translate3d(30%, 0, 0) rotateY(-15deg);
+  transform: translate3d(30%, 0, 0) rotateY(-15deg);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.rotatePusher.select > .mainContent > .barContent {
+  visibility: visible;
+  -moz-transition: -moz-transform 0.5s;
+  -o-transition: -o-transform 0.5s;
+  -webkit-transition: -webkit-transform 0.5s;
+  transition: transform 0.5s;
+  -moz-transform: translate3d(-100%, 0, 0) rotateY(15deg);
+  -ms-transform: translate3d(-100%, 0, 0) rotateY(15deg);
+  -webkit-transform: translate3d(-100%, 0, 0) rotateY(15deg);
+  transform: translate3d(-100%, 0, 0) rotateY(15deg);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.rotateIn3D {
+  -moz-perspective: 1500px;
+  -webkit-perspective: 1500px;
+  perspective: 1500px;
+  -moz-perspective-origin: 0% 50%;
+  -webkit-perspective-origin: 0% 50%;
+  perspective-origin: 0% 50%;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.rotateIn3D > .mainContent {
+  -moz-transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.rotateIn3D > .mainContent > .barContent {
+  -moz-transform: translate3d(-100%, 0, 0) rotateY(-90deg);
+  -ms-transform: translate3d(-100%, 0, 0) rotateY(-90deg);
+  -webkit-transform: translate3d(-100%, 0, 0) rotateY(-90deg);
+  transform: translate3d(-100%, 0, 0) rotateY(-90deg);
+  -moz-transform-origin: 100% 50%;
+  -ms-transform-origin: 100% 50%;
+  -webkit-transform-origin: 100% 50%;
+  transform-origin: 100% 50%;
+  -moz-transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.rotateIn3D.select > .mainContent {
+  -moz-transform: translate3d(30%, 0, 0);
+  -ms-transform: translate3d(30%, 0, 0);
+  -webkit-transform: translate3d(30%, 0, 0);
+  transform: translate3d(30%, 0, 0);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.rotateIn3D.select > .mainContent > .barContent {
+  visibility: visible;
+  -moz-transition: -moz-transform 0.5s;
+  -o-transition: -o-transform 0.5s;
+  -webkit-transition: -webkit-transform 0.5s;
+  transition: transform 0.5s;
+  -moz-transform: translate3d(-100%, 0, 0) rotateY(0deg);
+  -ms-transform: translate3d(-100%, 0, 0) rotateY(0deg);
+  -webkit-transform: translate3d(-100%, 0, 0) rotateY(0deg);
+  transform: translate3d(-100%, 0, 0) rotateY(0deg);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.rotateOut3D {
+  -moz-perspective: 1500px;
+  -webkit-perspective: 1500px;
+  perspective: 1500px;
+  -moz-perspective-origin: 0% 50%;
+  -webkit-perspective-origin: 0% 50%;
+  perspective-origin: 0% 50%;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.rotateOut3D > .mainContent {
+  -moz-transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.rotateOut3D > .mainContent > .barContent {
+  -moz-transform: translate3d(-100%, 0, 0) rotateY(90deg);
+  -ms-transform: translate3d(-100%, 0, 0) rotateY(90deg);
+  -webkit-transform: translate3d(-100%, 0, 0) rotateY(90deg);
+  transform: translate3d(-100%, 0, 0) rotateY(90deg);
+  -moz-transform-origin: 100% 50%;
+  -ms-transform-origin: 100% 50%;
+  -webkit-transform-origin: 100% 50%;
+  transform-origin: 100% 50%;
+  -moz-transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.rotateOut3D.select > .mainContent {
+  -moz-transform: translate3d(30%, 0, 0);
+  -ms-transform: translate3d(30%, 0, 0);
+  -webkit-transform: translate3d(30%, 0, 0);
+  transform: translate3d(30%, 0, 0);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.rotateOut3D.select > .mainContent > .barContent {
+  visibility: visible;
+  -moz-transition: -moz-transform 0.5s;
+  -o-transition: -o-transform 0.5s;
+  -webkit-transition: -webkit-transform 0.5s;
+  transition: transform 0.5s;
+  -moz-transform: translate3d(-100%, 0, 0) rotateY(0deg);
+  -ms-transform: translate3d(-100%, 0, 0) rotateY(0deg);
+  -webkit-transform: translate3d(-100%, 0, 0) rotateY(0deg);
+  transform: translate3d(-100%, 0, 0) rotateY(0deg);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.scaleDownPusher {
+  -moz-perspective: 1500px;
+  -webkit-perspective: 1500px;
+  perspective: 1500px;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.scaleDownPusher > .mainContent {
+  -moz-transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.scaleDownPusher > .barContent {
+  opacity: 1;
+  -moz-transform: translate3d(-100%, 0, 0);
+  -webkit-transform: translate3d(-100%, 0, 0);
+  transform: translate3d(-100%, 0, 0);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.scaleDownPusher.select > .mainContent {
+  -moz-transform: translate3d(0, 0, -300px);
+  -ms-transform: translate3d(0, 0, -300px);
+  -webkit-transform: translate3d(0, 0, -300px);
+  transform: translate3d(0, 0, -300px);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.scaleDownPusher.select > .barContent {
+  visibility: visible;
+  -moz-transition: -moz-transform 0.5s;
+  -o-transition: -o-transform 0.5s;
+  -webkit-transition: -webkit-transform 0.5s;
+  transition: transform 0.5s;
+  -moz-transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.scaleUp {
+  -moz-perspective: 1500px;
+  -webkit-perspective: 1500px;
+  perspective: 1500px;
+  -moz-perspective-origin: 0% 50%;
+  -webkit-perspective-origin: 0% 50%;
+  perspective-origin: 0% 50%;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.scaleUp > .barContent {
+  z-index: 1;
+  opacity: 1;
+  -moz-transform: translate3d(0, 0, -30%);
+  -ms-transform: translate3d(0, 0, -30%);
+  -webkit-transform: translate3d(0, 0, -30%);
+  transform: translate3d(0, 0, -30%);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.scaleUp.select > .mainContent {
+  -moz-transform: translate3d(30%, 0, 0);
+  -ms-transform: translate3d(30%, 0, 0);
+  -webkit-transform: translate3d(30%, 0, 0);
+  transform: translate3d(30%, 0, 0);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.scaleUp.select > .barContent {
+  visibility: visible;
+  -moz-transition: -moz-transform 0.5s;
+  -o-transition: -o-transform 0.5s;
+  -webkit-transition: -webkit-transform 0.5s;
+  transition: transform 0.5s;
+  -moz-transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.scaleRotatePusher {
+  -moz-perspective: 1500px;
+  -webkit-perspective: 1500px;
+  perspective: 1500px;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.scaleRotatePusher > .mainContent {
+  -moz-transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.scaleRotatePusher > .barContent {
+  opacity: 1;
+  -moz-transform: translate3d(-100%, 0, 0);
+  -webkit-transform: translate3d(-100%, 0, 0);
+  transform: translate3d(-100%, 0, 0);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.scaleRotatePusher.select > .mainContent {
+  -moz-transform: translate3d(100px, 0, -600px) rotateY(-20deg);
+  -ms-transform: translate3d(100px, 0, -600px) rotateY(-20deg);
+  -webkit-transform: translate3d(100px, 0, -600px) rotateY(-20deg);
+  transform: translate3d(100px, 0, -600px) rotateY(-20deg);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.scaleRotatePusher.select > .barContent {
+  visibility: visible;
+  -moz-transition: -moz-transform 0.5s;
+  -o-transition: -o-transform 0.5s;
+  -webkit-transition: -webkit-transform 0.5s;
+  transition: transform 0.5s;
+  -moz-transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.openDoor {
+  -moz-perspective: 1500px;
+  -webkit-perspective: 1500px;
+  perspective: 1500px;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.openDoor > .mainContent {
+  -moz-transform-origin: 100% 50%;
+  -ms-transform-origin: 100% 50%;
+  -webkit-transform-origin: 100% 50%;
+  transform-origin: 100% 50%;
+  -moz-transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.openDoor > .barContent {
+  opacity: 1;
+  -moz-transform: translate3d(-100%, 0, 0);
+  -webkit-transform: translate3d(-100%, 0, 0);
+  transform: translate3d(-100%, 0, 0);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.openDoor.select > .mainContent {
+  -moz-transform: rotateY(-10deg);
+  -webkit-transform: rotateY(-10deg);
+  transform: rotateY(-10deg);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.openDoor.select > .barContent {
+  visibility: visible;
+  -moz-transition: -moz-transform 0.5s;
+  -o-transition: -o-transform 0.5s;
+  -webkit-transition: -webkit-transform 0.5s;
+  transition: transform 0.5s;
+  -moz-transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.fallDown {
+  -moz-perspective: 1500px;
+  -webkit-perspective: 1500px;
+  perspective: 1500px;
+  -moz-perspective-origin: 0% 50%;
+  -webkit-perspective-origin: 0% 50%;
+  perspective-origin: 0% 50%;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.fallDown > .barContent {
+  z-index: 1;
+  opacity: 1;
+  -moz-transform: translate3d(0, -100%, 0);
+  -webkit-transform: translate3d(0, -100%, 0);
+  transform: translate3d(0, -100%, 0);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.fallDown.select > .mainContent {
+  -moz-transform: translate3d(30%, 0, 0);
+  -ms-transform: translate3d(30%, 0, 0);
+  -webkit-transform: translate3d(30%, 0, 0);
+  transform: translate3d(30%, 0, 0);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.fallDown.select > .barContent {
+  visibility: visible;
+  -moz-transition: -moz-transform 0.2s ease-in-out;
+  -o-transition: -o-transform 0.2s ease-in-out;
+  -webkit-transition: -webkit-transform 0.2s ease-in-out;
+  transition: transform 0.2s ease-in-out;
+  -moz-transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.delayed3DRotate {
+  -moz-perspective: 1500px;
+  -webkit-perspective: 1500px;
+  perspective: 1500px;
+  -moz-perspective-origin: 0% 50%;
+  -webkit-perspective-origin: 0% 50%;
+  perspective-origin: 0% 50%;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.delayed3DRotate > .mainContent {
+  -moz-transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.delayed3DRotate > .mainContent > .barContent {
+  -moz-transform: translate3d(-100%, 0, 0) rotateY(90deg);
+  -ms-transform: translate3d(-100%, 0, 0) rotateY(90deg);
+  -webkit-transform: translate3d(-100%, 0, 0) rotateY(90deg);
+  transform: translate3d(-100%, 0, 0) rotateY(90deg);
+  -moz-transform-origin: 0% 50%;
+  -ms-transform-origin: 0% 50%;
+  -webkit-transform-origin: 0% 50%;
+  transform-origin: 0% 50%;
+  -moz-transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.delayed3DRotate.select > .mainContent {
+  -moz-transform: translate3d(30%, 0, 0);
+  -ms-transform: translate3d(30%, 0, 0);
+  -webkit-transform: translate3d(30%, 0, 0);
+  transform: translate3d(30%, 0, 0);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .sideBarContainer.leftSide.delayed3DRotate.select > .mainContent > .barContent {
+  visibility: visible;
+  -moz-transform: translate3d(-100%, 0, 0) rotateY(0deg);
+  -ms-transform: translate3d(-100%, 0, 0) rotateY(0deg);
+  -webkit-transform: translate3d(-100%, 0, 0) rotateY(0deg);
+  transform: translate3d(-100%, 0, 0) rotateY(0deg);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .toolPalette {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 5em;
+  height: 100%;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .toolPalette > div {
+  position: relative;
+  float: left;
+  width: 2em;
+  height: 2em;
+  background-color: #ddd;
+  box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.135);
+  border-radius: 0.2em;
+  display: inline-block;
+  margin: 5px;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .toolPalette > div:active {
+  background-color: #555;
+  color: #669933;
+  box-shadow: none;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .toolPalette > div.select {
+  background-color: #aaa;
+  color: #669933;
+  box-shadow: none;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor .toolPalette > div:before {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  line-height: 2;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor #audioSidebar {
+  position: absolute;
+  left: 5em;
+  top: 0;
+  width: calc(100% - 5em);
+  height: 100%;
+  overflow: hidden;
+  background: transparent;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor #audioSidebar #waveCanvasContainer {
+  overflow: hidden;
+  background: transparent;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor #audioSidebar #waveCanvasContainer > .canvas-container {
+  position: relative;
+  float: left;
+  width: 100% !important;
+  height: 100% !important;
+  -moz-user-select: -moz-none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor #audioSidebar #waveCanvasContainer > .waveCanvasPanel {
+  position: absolute;
+  left: 0;
+  top: 256px;
+  height: calc(100% - 256px);
+  width: 100%;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor #audioSidebar #waveCanvasContainer > .waveCanvasPanel > .waveMarkers {
+  position: relative;
+  float: left;
+  width: 100%;
+  height: 0px;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor #audioSidebar #waveCanvasContainer > .waveCanvasPanel > .waveMarkers .waveMarker {
+  position: absolute;
+  width: 2em;
+  height: 2em;
+  border-radius: 0.2em;
+  display: inline-block;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor #audioSidebar #waveCanvasContainer > .waveCanvasPanel > .waveMarkers .waveMarker:before {
+  font-family: 'icon-resource-editor';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  position: absolute;
+  content: "\e009";
+  left: -50%;
+  width: 100%;
+  height: 100%;
+  line-height: 2;
+  text-align: center;
+  color: #f2f3f3;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor #audioSidebar #waveCanvasContainer > .waveCanvasPanel > .waveMarkers .waveMarker.select:before {
+  content: "\e608";
+  color: #dd7d00;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor #audioSidebar #waveCanvasContainer canvas {
+  width: 100%;
+  height: 100%;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor #audioSidebar #waveCanvasContainer.select {
+  pointer-events: auto;
 }
 
 #sketchContainer {

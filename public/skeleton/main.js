@@ -21,6 +21,8 @@ var ANGULAR_LIB_PATH = "javascripts/angular/1.3.0-beta.8/",
     PRETTIFY_LIB_PATH = "javascripts/prettify/r298/",//Depended by editormd
     EDITORMD_LIB_PATH = "javascripts/editormd/1.4.3/",
     VELOCITY_LIB_PATH = "javascripts/velocity/1.2.2/",
+    WAVESURFER_LIB_PATH = "javascripts/wavesurfer/1.0.29/",
+    FABRIC_LIB_PATH = "javascripts/fabric/1.5.0/",
     APP_LIB_PATH = "app/",
     DIRECTIVE_LIB_PATH = "directive/",
     isBrowser = !!(typeof window !== 'undefined' && typeof navigator !== 'undefined' && !/jsDom$/i.test(navigator.appName) && window.document);
@@ -53,12 +55,14 @@ requirejs.config({
         "prettify-lib": PRETTIFY_LIB_PATH + "main",
         "editormd-lib": EDITORMD_LIB_PATH + "main",
         "velocity-lib": VELOCITY_LIB_PATH + "main",
+        "wavesurfer-lib": WAVESURFER_LIB_PATH + "main",
+        "fabric-lib": FABRIC_LIB_PATH + "main",
         "app-lib": APP_LIB_PATH + "main",
         "directive-lib": DIRECTIVE_LIB_PATH + "main"
     }
 });
 
-requirejs(["jquery-lib", "jquery-plugins-lib", "hammer-lib", "jquery-ui-lib", "jquery-ui-plugins-lib", "angular-lib", "angular-modules-lib", "underscore-lib", "classie-lib", "modernizr-lib", "string-lib", "editormd-lib", "velocity-lib"], function () {
+requirejs(["jquery-lib", "jquery-plugins-lib", "hammer-lib", "jquery-ui-lib", "jquery-ui-plugins-lib", "angular-lib", "angular-modules-lib", "underscore-lib", "classie-lib", "modernizr-lib", "string-lib", "editormd-lib", "velocity-lib", "wavesurfer-lib", "fabric-lib"], function () {
     if (isBrowser) {
         window.appModule = angular.module(APP_MODULE_NAME, APP_MODULE_DEPS);
         window.appModule.value("angularEventTypes", {

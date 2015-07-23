@@ -19,7 +19,9 @@
 @import "dock";
 @import "page";
 @import "state_transition";
+@import "resource-editor";
 @import "normalize_include";
+@import "sidebar";
 
 @include border-editor(border-control);
 @include widget-configurator(widget-configurator-control);
@@ -37,10 +39,16 @@
 @include vertical-ruler(verticalRuler);
 @include dock(sketchControls);
 @include state-transition(state-transition-control);
+@include resource-editor(resource-editor-control);
 @include normalize-include(frameSketchWidgetDemoArea);
+
+$configuration-audioSideBar: map_merge($default-sidebar-value-map, (barColor:#28c190, mainColor:transparent));
 
 $activeBackgroundColor: rgba(0, 0, 0, 0.3);
 $zIndexWidgetText: 100;
+$visualizerWaveHeight: 256px;
+$waveMarkerColor: #f2f3f3;
+$waveMarkerActiveColor: rgb(221, 125, 0);
 
 #frameSketchContainer {
     position: relative;
@@ -73,12 +81,13 @@ $zIndexWidgetText: 100;
             position: absolute;
             width: 100%;
             height: 100%;
-            background: #fff;
+            background: $color;
 
             #frameSketchDemoModal {
                 position: absolute;
                 width: 100%;
                 height: 100%;
+                background-color: #fff;
 
                 .hideButton {
                     position: absolute;
@@ -194,6 +203,194 @@ $zIndexWidgetText: 100;
                                 background-color: #555;
                                 color: $activeColor;
                                 box-shadow: none;
+                            }
+                        }
+                    }
+                }
+            }
+
+            #resourceEditorModal {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+
+                .hideButton {
+                    position: absolute;
+                    top: 0.5em;
+                    width: 2em;
+                    height: 2em;
+                    background-color: #ddd;
+                    box-shadow: inset 0 -2px 0 rgba(0, 0, 0, .135);
+                    border-radius: 0.2em;
+                    display: inline-block;
+                    margin: 0 0.5em;
+
+                    &:active {
+                        background-color: #555;
+                        color: $activeColor;
+                        box-shadow: none;
+                    }
+
+                    &:before {
+                        position: absolute;
+                        width: 100%;
+                        height: 100%;
+                        text-align: center;
+                        line-height: 2;
+                    }
+                }
+
+                .frameSketchResourceContainer {
+                    position: absolute;
+                    top: 2em;
+                    width: calc(100% - 2em);
+                    height: calc(100% - 4em);
+                    margin: 1em;
+
+                    #frameSketchResourceArea {
+                        position: relative;
+                        float: left;
+                        width: 100%;
+                        height: 100%;
+                        overflow: auto;
+
+                        > * {
+                            position: absolute;
+                            width: 100%;
+                            height: 100%;
+
+                            > div {
+                                position: absolute;
+                                width: 100%;
+                                height: 100%;
+
+                                &#audioEditor {
+                                    @include sidebar($configuration-audioSideBar...);
+
+                                    .toolPalette {
+                                        position: absolute;
+                                        left: 0;
+                                        top: 0;
+                                        width: 5em;
+                                        height: 100%;
+
+                                        > div {
+                                            position: relative;
+                                            float: left;
+                                            width: 2em;
+                                            height: 2em;
+                                            background-color: #ddd;
+                                            box-shadow: inset 0 -2px 0 rgba(0, 0, 0, .135);
+                                            border-radius: 0.2em;
+                                            display: inline-block;
+                                            margin: 5px;
+
+                                            &:active {
+                                                background-color: #555;
+                                                color: $activeColor;
+                                                box-shadow: none;
+                                            }
+
+                                            &.select {
+                                                background-color: #aaa;
+                                                color: $activeColor;
+                                                box-shadow: none;
+                                            }
+
+                                            &:before {
+                                                position: absolute;
+                                                width: 100%;
+                                                height: 100%;
+                                                text-align: center;
+                                                line-height: 2;
+                                            }
+                                        }
+                                    }
+
+                                    #audioSidebar {
+                                        position: absolute;
+                                        left: 5em;
+                                        top: 0;
+                                        width: calc(100% - 5em);
+                                        height: 100%;
+                                        overflow: hidden;
+                                        background: transparent;
+
+                                        #waveCanvasContainer {
+                                            overflow: hidden;
+                                            background: transparent;
+
+                                            > .canvas-container {
+                                                position: relative;
+                                                float: left;
+                                                width: 100% !important;
+                                                height: 100% !important;
+
+                                                @include user-select(none);
+                                            }
+
+                                            > .waveCanvasPanel {
+                                                position: absolute;
+                                                left: 0;
+                                                top: #{$visualizerWaveHeight};
+                                                height: calc(100% - #{$visualizerWaveHeight});
+                                                width: 100%;
+
+                                                > .waveMarkers {
+                                                    position: relative;
+                                                    float: left;
+                                                    width: 100%;
+                                                    height: 0px;
+
+                                                    .waveMarker {
+                                                        position: absolute;
+                                                        width: 2em;
+                                                        height: 2em;
+                                                        border-radius: 0.2em;
+                                                        display: inline-block;
+
+                                                        &:before {
+                                                            font-family: 'icon-resource-editor';
+                                                            speak: none;
+                                                            font-style: normal;
+                                                            font-weight: normal;
+                                                            font-variant: normal;
+                                                            text-transform: none;
+                                                            line-height: 1;
+
+                                                            /* Better Font Rendering =========== */
+                                                            -webkit-font-smoothing: antialiased;
+                                                            -moz-osx-font-smoothing: grayscale;
+
+                                                            position: absolute;
+                                                            content: "\e009";
+                                                            left: -50%;
+                                                            width: 100%;
+                                                            height: 100%;
+                                                            line-height: 2;
+                                                            text-align: center;
+                                                            color: $waveMarkerColor;
+                                                        }
+
+                                                        &.select:before {
+                                                            content: "\e608";
+                                                            color: $waveMarkerActiveColor;
+                                                        }
+                                                    }
+                                                }
+                                            }
+
+                                            canvas {
+                                                width: 100%;
+                                                height: 100%;
+                                            }
+
+                                            &.select {
+                                                pointer-events: auto;
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                     }

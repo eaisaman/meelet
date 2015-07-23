@@ -1,5 +1,5 @@
 define(
-    ["angular", "jquery", "underscore", "ng.ui.util"],
+    ["angular-lib", "jquery-lib", "underscore-lib", "ng.ui.util"],
     function () {
         var Service = function ($parse, $timeout, $q, $exceptionHandler, $compile, $rootScope, angularEventTypes, angularConstants, appService, uiUtilService, uiCanvasService, uiAnimationService) {
             this.$parse = $parse;
@@ -63,6 +63,9 @@ define(
                         pageTransition: {},
                         pages: []
                     },
+                    resources: {
+                        audio: []
+                    },
                     stagingContent: {
                         widgetList: [],
                         removeWidgetList: []
@@ -79,12 +82,18 @@ define(
                     _.extend(this.projectRecord, projectRecord);
                 },
                 populate: function (projectRecord) {
-                    this.xrefRecord.splice(0);
-                    this.artifactSpecs.splice(0);
-                    this.sketchWorks.pages.splice(0);
-                    this.sketchWorks.pageTransition = {};
+                    var self = this;
 
-                    this.projectRecord = projectRecord;
+                    self.xrefRecord.splice(0);
+                    self.artifactSpecs.splice(0);
+                    self.sketchWorks.pages.splice(0);
+                    self.sketchWorks.pageTransition = {};
+
+                    _.each(_.keys(self.resources), function (resourceType) {
+                        self.resources[resourceType].splice(0);
+                    });
+
+                    self.projectRecord = projectRecord;
                 },
                 loadDependencies: function () {
                     var self = this;
@@ -134,6 +143,49 @@ define(
                         );
                     } else {
                         return $inject.uiUtilService.getRejectDefer();
+                    }
+                },
+                loadResources: function () {
+                    var self = this;
+
+                    if (self.projectRecord._id) {
+                        _.each(_.keys(self.resources), function (resourceType) {
+                            self.resources[resourceType].splice(0);
+                        });
+
+                        return $inject.appService.getProjectResource(self.projectRecord._id).then(
+                            function (result) {
+                                if (result.data.result == "OK") {
+                                    _.each(_.keys(self.resources), function (resourceType) {
+                                        var arr = result.data.resultValue[resourceType];
+                                        if (arr && arr.length) {
+                                            self.resources[resourceType] = arr;
+                                        }
+                                    });
+
+                                    return $inject.uiUtilService.getResolveDefer();
+                                } else {
+                                    return $inject.uiUtilService.getRejectDefer(result.data.reason);
+                                }
+                            },
+                            function (err) {
+                                return $inject.uiUtilService.getRejectDefer(err);
+                            }
+                        );
+                    } else {
+                        return $inject.uiUtilService.getRejectDefer();
+                    }
+                },
+                addResource: function (resourceType, fileName) {
+                    var self = this;
+
+                    if (resourceType && fileName) {
+                        var resourceList = self.resources[resourceType];
+                        if (resourceList && resourceList.every(function (resourceItem) {
+                                return resourceItem !== fileName;
+                            })) {
+                            resourceList.push(fileName);
+                        }
                     }
                 },
                 addLibrary: function (libraryId, libraryName, type, artifactList) {
@@ -360,6 +412,34 @@ define(
 
                     return result;
                 },
+                deleteResource: function (resourceType, fileName) {
+                    var self = this;
+
+                    if (self.projectRecord._id) {
+                        return $inject.appService.deleteProjectResource(self.projectRecord._id, resourceType, fileName).then(
+                            function (result) {
+                                if (result.data.result == "OK") {
+                                    var index;
+                                    if (!self.resources[resourceType].every(function (resourceItem, i) {
+                                            if (resourceItem === fileName) {
+                                                index = i;
+                                                return false;
+                                            }
+
+                                            return true;
+                                        })) {
+                                        self.resources[resourceType].splice(index, 1);
+                                    }
+                                } else {
+                                    return $inject.uiUtilService.getRejectDefer(result.data.reason);
+                                }
+                            }, function (err) {
+                                return $inject.uiUtilService.getRejectDefer(err);
+                            });
+                    } else {
+                        return $inject.uiUtilService.getRejectDefer();
+                    }
+                },
                 tryLock: function (userId) {
                     var self = this;
 
@@ -403,6 +483,7 @@ define(
                         return $inject.$q.all([
                             $inject.appService.getProject({_id: self.projectRecord._id}),
                             self.loadDependencies(),
+                            self.loadResources(),
                             self.loadSketch()
                         ]).then(function (result) {
                             if (result[0].data.result === "OK") {
@@ -430,6 +511,10 @@ define(
                         self.sketchWorks.pageTransition = {};
                         self.sketchWorks.pages.forEach(function (pageObj) {
                             pageObj.remove();
+                        });
+
+                        _.each(_.keys(self.resources), function (resourceType) {
+                            self.resources[resourceType].splice(0);
                         });
                     }
                 },
@@ -5217,6 +5302,9 @@ define(
                 [
                     function () {
                         return self.$rootScope.loadedProject.loadDependencies();
+                    },
+                    function () {
+                        return self.$rootScope.loadedProject.loadResources();
                     },
                     function () {
                         return self.$rootScope.loadedProject.loadSketch();

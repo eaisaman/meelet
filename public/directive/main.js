@@ -3,6 +3,7 @@ requirejs.config(
         paths: {
             "ng.ui.util": DIRECTIVE_LIB_PATH + "ng.ui.util",
             "ng.ui.canvas": DIRECTIVE_LIB_PATH + "ng.ui.canvas",
+            "ng.ui.wave.visualizer": DIRECTIVE_LIB_PATH + "ng.ui.wave.visualizer",
             "ng.ui.animation": DIRECTIVE_LIB_PATH + "ng.ui.animation",
             "ng.ui.service": DIRECTIVE_LIB_PATH + "ng.ui.service",
             "ng.ui.extension": DIRECTIVE_LIB_PATH + "ng.ui.extension",
@@ -11,6 +12,7 @@ requirejs.config(
             "ng.ui.multi-transclude": DIRECTIVE_LIB_PATH + "ng.ui.multi-transclude",
             "ng.ui.multilevel-menu": DIRECTIVE_LIB_PATH + "ng.ui.multilevel-menu",
             "ng.ui.sketch-widget": DIRECTIVE_LIB_PATH + "ng.ui.sketch-widget",
+            "ng.ui.simple-dropdown": DIRECTIVE_LIB_PATH + "ng.ui.simple-dropdown",
             "ng.ui.horizontal-ruler": DIRECTIVE_LIB_PATH + "ng.ui.horizontal-ruler",
             "ng.ui.vertical-ruler": DIRECTIVE_LIB_PATH + "ng.ui.vertical-ruler",
             "ng.ui.border-editor": DIRECTIVE_LIB_PATH + "ng.ui.border-editor",
@@ -27,9 +29,10 @@ requirejs.config(
             "ng.ui.page": DIRECTIVE_LIB_PATH + "ng.ui.page",
             "ng.ui.dock": DIRECTIVE_LIB_PATH + "ng.ui.dock",
             "ng.ui.topbar": DIRECTIVE_LIB_PATH + "ng.ui.topbar",
-            "ng.ui.simple-dropdown": DIRECTIVE_LIB_PATH + "ng.ui.simple-dropdown",
-            "ng.ui.state-transition": DIRECTIVE_LIB_PATH + "ng.ui.state-transition",
-            "ng.ui.modal-window": DIRECTIVE_LIB_PATH + "ng.ui.modal-window"
+            "ng.ui.modal-window": DIRECTIVE_LIB_PATH + "ng.ui.modal-window",
+            "ng.ui.sidebar": DIRECTIVE_LIB_PATH + "ng.ui.sidebar",
+            "ng.ui.resource.editor": DIRECTIVE_LIB_PATH + "ng.ui.resource-editor",
+            "ng.ui.state-transition": DIRECTIVE_LIB_PATH + "ng.ui.state-transition"
         },
         waitSeconds: 0
     }
@@ -39,6 +42,7 @@ requirejs.config(
 define([
         "ng.ui.util",
         "ng.ui.canvas",
+        "ng.ui.wave.visualizer",
         "ng.ui.animation",
         "ng.ui.service",
         "ng.ui.extension",
@@ -64,21 +68,26 @@ define([
         "ng.ui.page",
         "ng.ui.dock",
         "ng.ui.topbar",
-        "ng.ui.state-transition",
-        "ng.ui.modal-window"
+        "ng.ui.modal-window",
+        "ng.ui.sidebar",
+        "ng.ui.resource.editor",
+        "ng.ui.state-transition"
     ],
     function () {
         var utilConfig = arguments[0],
             canvasConfig = arguments[1],
-            animationConfig = arguments[2],
-            serviceConfig = arguments[3],
-            extension = arguments[4],
-            directiveConfigs = Array.prototype.slice.call(arguments, 5);
+            waveVisualizerConfig = arguments[2],
+            animationConfig = arguments[3],
+            serviceConfig = arguments[4],
+            extension = arguments[5],
+            directiveConfigs = Array.prototype.slice.call(arguments, 6);
 
         return function (appModule) {
             utilConfig(appModule);
 
             canvasConfig(appModule);
+
+            waveVisualizerConfig(appModule);
 
             animationConfig(appModule);
 
@@ -156,14 +165,20 @@ define([
             //Topbar
             directiveConfigs[21](appModule, extension);
 
+            //Modal window
+            directiveConfigs[22](appModule, extension);
+
+            //Sidebar
+            directiveConfigs[23](appModule, extension);
+
+            //Resource Editor
+            directiveConfigs[24](appModule, extension);
+
             //State transition
-            directiveConfigs[22](appModule, extension, {
+            directiveConfigs[25](appModule, extension, {
                 triggerJson: "directive/trigger.json",
                 animationJson: "directive/animation.json"
             });
-
-            //Modal window
-            directiveConfigs[23](appModule, extension);
         }
     }
 );

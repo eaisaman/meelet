@@ -535,6 +535,258 @@ UserFileController.prototype.deleteProjectImage = function (projectId, fileName,
     }
 }
 
+UserFileController.prototype.getProjectResource = function (projectId, success, fail) {
+    var self = this;
+
+    if (projectId) {
+        var projectPath = path.join(self.config.userFile.sketchFolder, projectId),
+            resourceAllPath = path.join(projectPath, "resource");
+
+        async.waterfall(
+            [
+                function (next) {
+                    fs.readdir(resourceAllPath, function (err, fileNames) {
+                        if (err) {
+                            next(err);
+                        } else {
+                            var folderList = [];
+
+                            _.each(fileNames, function (fileName) {
+                                var pathItem = path.join(resourceAllPath, fileName);
+                                if (fs.lstatSync(pathItem).isDirectory()) {
+                                    folderList.push(pathItem);
+                                }
+                            });
+
+                            next(null, folderList);
+                        }
+                    });
+                },
+                function (folderList, next) {
+                    var resources = {};
+
+                    async.each(folderList, function (folder, callback) {
+                        var resourceType = path.basename(folder);
+
+                        resources[resourceType] = [];
+                        fs.readdir(folder, function (err, fileNames) {
+                            if (err) {
+                                callback(err);
+                            } else {
+                                _.each(fileNames, function (fileName) {
+                                    var pathItem = path.join(folder, fileName);
+                                    if (fs.lstatSync(pathItem).isFile()) {
+                                        resources[resourceType].push(fileName);
+                                    }
+                                });
+                                callback(null);
+                            }
+                        });
+                    }, function (err) {
+                        next(err, resources);
+                    });
+                }
+            ],
+            function (err, result) {
+                if (err) {
+                    fail(err);
+                } else {
+                    success(result);
+                }
+            }
+        );
+    } else {
+        fail("Empty project id", {statusCode: 500});
+    }
+}
+
+UserFileController.prototype.postProjectResourceChunk = function (request, projectId, resourceType, flowFilename, flowChunkNumber, flowTotalChunks, flowCurrentChunkSize, flowTotalSize, success, fail) {
+    var self = this;
+
+    if (toString.call(projectId) === '[object Array]' && projectId.length) projectId = projectId[0];
+    if (toString.call(resourceType) === '[object Array]' && resourceType.length) resourceType = resourceType[0];
+    if (toString.call(flowFilename) === '[object Array]' && flowFilename.length) flowFilename = flowFilename[0];
+    if (toString.call(flowChunkNumber) === '[object Array]' && flowChunkNumber.length) flowChunkNumber = flowChunkNumber[0];
+    if (toString.call(flowTotalChunks) === '[object Array]' && flowTotalChunks.length) flowTotalChunks = flowTotalChunks[0];
+    if (toString.call(flowCurrentChunkSize) === '[object Array]' && flowCurrentChunkSize.length) flowCurrentChunkSize = flowCurrentChunkSize[0];
+    if (toString.call(flowTotalSize) === '[object Array]' && flowTotalSize.length) flowTotalSize = flowTotalSize[0];
+
+    if (projectId && resourceType) {
+        var projectPath = path.join(self.config.userFile.sketchFolder, projectId),
+            resourceAllPath = path.join(projectPath, "resource"),
+            resourcePath = path.join(resourceAllPath, resourceType);
+
+        async.waterfall(
+            [
+                function (next) {
+                    fs.mkdir(projectPath, 0777, function (fsError) {
+                        if (!fsError || fsError.code === "EEXIST") {
+                            next(null);
+                        } else {
+                            next(fsError);
+                        }
+                    });
+                },
+                function (next) {
+                    fs.mkdir(resourceAllPath, 0777, function (fsError) {
+                        if (!fsError || fsError.code === "EEXIST") {
+                            next(null);
+                        } else {
+                            next(fsError);
+                        }
+                    });
+                },
+                function (next) {
+                    fs.mkdir(resourcePath, 0777, function (fsError) {
+                        if (!fsError || fsError.code === "EEXIST") {
+                            next(null);
+                        } else {
+                            next(fsError);
+                        }
+                    });
+                },
+                function (next) {
+                    self.fileController.postFile(request, resourcePath, function (result) {
+                        if (result && result.length) {
+                            var partName = flowFilename + ".part" + flowChunkNumber;
+
+                            fs.rename(result[0], path.join(resourcePath, partName), function (err) {
+                                next(err, partName);
+                            })
+                        } else {
+                            next("No files uploaded.");
+                        }
+                    }, next);
+                }
+            ], function (err, result) {
+                if (!err) {
+                    if (flowChunkNumber == flowTotalChunks) {
+                        var finalPath = path.join(resourcePath, flowFilename);
+
+                        async.waterfall(
+                            [
+                                function (next) {
+                                    fs.unlink(finalPath, function (err) {
+                                        if (err) {
+                                            if (err.code !== "ENOENT") //Not Found
+                                            {
+                                                self.config.logger.error(err);
+                                                next(err);
+                                            }
+                                            else {
+                                                next(null);
+                                            }
+                                        } else {
+                                            next(null);
+                                        }
+                                    });
+                                },
+                                function (next) {
+                                    var startNumber = 0;
+
+                                    async.whilst(
+                                        function () {
+                                            return startNumber < flowTotalChunks;
+                                        },
+                                        function (wCallback) {
+                                            var partName = flowFilename + ".part" + (++startNumber),
+                                                filePath = path.join(resourcePath, partName);
+
+                                            var raw = fs.createReadStream(filePath),
+                                                dest = fs.createWriteStream(finalPath, {flags: "a"});
+
+                                            dest.on('finish', function () {
+                                                wCallback(null);
+                                            });
+
+                                            raw.on('error', function (err) {
+                                                wCallback(err);
+                                            });
+
+                                            dest.on('error', function (err) {
+                                                wCallback(err);
+                                            });
+
+                                            raw.pipe(dest);
+                                        },
+                                        function (err) {
+                                            next(err);
+                                        }
+                                    );
+                                },
+                                function (next) {
+                                    var startNumber = 0;
+
+                                    async.whilst(
+                                        function () {
+                                            return startNumber < flowTotalChunks;
+                                        },
+                                        function (wCallback) {
+                                            var partName = flowFilename + ".part" + (++startNumber),
+                                                filePath = path.join(resourcePath, partName);
+
+                                            fs.unlink(filePath, function (err) {
+                                                if (err) {
+                                                    if (err.code !== "ENOENT") //Not Found
+                                                    {
+                                                        self.config.logger.error(err);
+                                                        wCallback(err);
+                                                    }
+                                                    else {
+                                                        wCallback(null);
+                                                    }
+                                                } else {
+                                                    wCallback(null);
+                                                }
+                                            });
+                                        },
+                                        function (err) {
+                                            next(err, flowFilename);
+                                        }
+                                    );
+                                }
+                            ],
+                            function (err, result) {
+                                if (!err) {
+                                    success(result);
+                                } else {
+                                    fail(err, {statusCode: 500});
+                                }
+                            }
+                        );
+                    } else {
+                        success(result);
+                    }
+                } else {
+                    fail(err, {statusCode: 500});
+                }
+            }
+        );
+    } else {
+        fail("Empty project id or resource type", {statusCode: 500});
+    }
+}
+
+UserFileController.prototype.deleteProjectResource = function (projectId, resourceType, fileName, success, fail) {
+    var self = this;
+
+    if (projectId && resourceType && fileName) {
+        var projectPath = path.join(self.config.userFile.sketchFolder, projectId),
+            resourceAllPath = path.join(projectPath, "resource"),
+            resourcePath = path.join(resourceAllPath, resourceType),
+            filePath = path.join(resourcePath, fileName);
+
+        fs.unlink(filePath, function (err) {
+            if (err && err.code !== "ENOENT") //Not Found
+                fail(err);
+            else
+                success();
+        })
+    } else {
+        fail("Empty project id or resource type or file name", {statusCode: 500});
+    }
+}
+
 UserFileController.prototype.getRepoLibrary = function (libraryFilter, success, fail) {
     var self = this;
 

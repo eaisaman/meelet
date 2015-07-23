@@ -1,5 +1,5 @@
 define(
-    ["angular", "jquery", "velocity"],
+    ["angular-lib", "jquery-lib", "velocity-lib"],
     function () {
         var SketchAnimation = function ($log, $compile, $parse, $timeout, $q, $exceptionHandler, uiUtilService, angularConstants, angularEventTypes) {
             this.$log = $log;

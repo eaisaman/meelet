@@ -1,5 +1,5 @@
 define(
-    ["angular", "hammer"],
+    ["angular-lib", "hammer-lib"],
     function () {
         return function (appModule) {
             var HGESTURES = {

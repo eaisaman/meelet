@@ -1,5 +1,5 @@
 define(
-    ["angular", "jquery", "hammer"],
+    ["angular-lib", "jquery-lib", "hammer-lib"],
     function () {
         var inject = ["$rootScope", "$http", "$timeout", "$q", "$exceptionHandler", "$parse", "$compile", "angularConstants", "angularEventTypes", "appService", "uiUtilService", "uiService"];
 

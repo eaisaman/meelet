@@ -27,8 +27,7 @@ define(
                              * */
                             transition: "=?",
                             side: "=?",//Support 'leftSide', 'rightSide'
-                            overlay: "=?",//Support 'overlay', ''. Whether add overlay shadow when the side bar is open.
-                            barContentWidth: "=?"//Support px, %, em
+                            overlay: "=?"//Support 'overlay', ''. Whether add overlay shadow when the side bar is open.
                         },
                         replace: true,
                         transclude: true,
@@ -117,7 +116,6 @@ define(
                                     scope.transition = scope.transition || "slideInOnTop";
                                     scope.side = scope.side || "leftSide";
                                     scope.overlay = scope.overlay || "overlay";
-                                    scope.barContentWidth = scope.barContentWidth || "300px";
                                     scope.deregisterWatchState = createStateWatch();
 
                                     scope.$on('$destroy', function () {

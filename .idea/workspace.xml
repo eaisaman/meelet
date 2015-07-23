@@ -2,16 +2,96 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e0c8aa76-af86-40a2-a1e4-f776d4689a71" name="Default" comment="Add CORS headers">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/fonts/icon-resource-editor/icon-resource-editor.eot" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/fonts/icon-resource-editor/icon-resource-editor.ttf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/fonts/icon-resource-editor/icon-resource-editor.woff" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/include/_resource-editor.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/stylesheets/sass/_resource-editor.scss" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/include/_sidebar.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/stylesheets/sass/_sidebar.scss" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/fonts/icon-resource-editor/demo-files/demo.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/fonts/icon-resource-editor/demo.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/fonts/icon-resource-editor/demo-files/demo.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/wavesurfer/1.0.29/drawer.canvas.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/wavesurfer/1.0.29/drawer.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/fonts/icon-resource-editor/icon-resource-editor.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/wavesurfer/1.0.29/main.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/wavesurfer/1.0.29/mediaelement.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/directive/ng.ui.resource-editor.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/directive/ng.ui.sidebar.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/directive/ng.ui.wave.visualizer.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/fonts/icon-resource-editor/selection.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/fonts/icon-resource-editor/style.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/wavesurfer/1.0.29/util.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/wavesurfer/1.0.29/plugin/wavesurfer.elan.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/wavesurfer/1.0.29/plugin/wavesurfer.elan.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/wavesurfer/1.0.29/wavesurfer.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/wavesurfer/1.0.29/plugin/wavesurfer.microphone.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/wavesurfer/1.0.29/plugin/wavesurfer.microphone.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/wavesurfer/1.0.29/wavesurfer.min.js.map" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/wavesurfer/1.0.29/wavesurfer.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/wavesurfer/1.0.29/plugin/wavesurfer.minimap.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/wavesurfer/1.0.29/plugin/wavesurfer.minimap.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/wavesurfer/1.0.29/plugin/wavesurfer.regions.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/wavesurfer/1.0.29/plugin/wavesurfer.regions.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/wavesurfer/1.0.29/plugin/wavesurfer.spectrogram.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/wavesurfer/1.0.29/plugin/wavesurfer.spectrogram.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/wavesurfer/1.0.29/plugin/wavesurfer.timeline.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/wavesurfer/1.0.29/plugin/wavesurfer.timeline.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/wavesurfer/1.0.29/webaudio.js" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/project/54aa095281dea526028dd7fd/meelet.json" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/project/54aa095281dea526028dd7fd/stylesheets/configurable-widget-Widget_1425018388663.css" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/project/54aa095281dea526028dd7fd/stylesheets/sass/548e48d1708048063a0041a8/_configuration-Widget_1425018388663.scss" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/project/54aa095281dea526028dd7fd/stylesheets/sass/548e48d1708048063a0041a8/configurable-widget-Widget_1425018388663.scss" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/project/54aa095281dea526028dd7fd/stylesheets/sass/548e48d1708048063a0041a8/sass" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/stylesheets/sass/_dock.scss" afterPath="$PROJECT_DIR$/public/stylesheets/sass/_dock.scss" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config-development.json" afterPath="$PROJECT_DIR$/config-development.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/project/54aa095281dea526028dd7fd/meelet.json" afterPath="$PROJECT_DIR$/project/54aa095281dea526028dd7fd/meelet.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/controller.js" afterPath="$PROJECT_DIR$/public/app/controller.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/repo/icon/standard/549ccc05708048ae020041a7/1.0.0/stylesheets/sass/.sass-cache/589a9b5c817dfc7af48f575f1f414501fff336bb/demo.scssc" afterPath="$PROJECT_DIR$/repo/icon/standard/549ccc05708048ae020041a7/1.0.0/stylesheets/sass/.sass-cache/589a9b5c817dfc7af48f575f1f414501fff336bb/demo.scssc" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/repo/icon/standard/54a0c062708048ab020041a7/1.0.0/stylesheets/sass/.sass-cache/b7c655952c770ada26a35431f2ccad0ef0a57894/demo.scssc" afterPath="$PROJECT_DIR$/repo/icon/standard/54a0c062708048ab020041a7/1.0.0/stylesheets/sass/.sass-cache/b7c655952c770ada26a35431f2ccad0ef0a57894/demo.scssc" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/editormd/1.4.3/css/editormd.css" afterPath="$PROJECT_DIR$/public/javascripts/editormd/1.4.3/css/editormd.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/stylesheets/frameSketch.css" afterPath="$PROJECT_DIR$/public/stylesheets/frameSketch.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/frameSketch.html" afterPath="$PROJECT_DIR$/public/frameSketch.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/stylesheets/sass/frameSketch.scss" afterPath="$PROJECT_DIR$/public/stylesheets/sass/frameSketch.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/main.js" afterPath="$PROJECT_DIR$/public/main.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/main.js" afterPath="$PROJECT_DIR$/public/directive/main.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/editormd/1.4.3/main.js" afterPath="$PROJECT_DIR$/public/javascripts/editormd/1.4.3/main.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/skeleton/main.js" afterPath="$PROJECT_DIR$/public/skeleton/main.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.animation.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.animation.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.background-image.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.background-image.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.border-editor.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.border-editor.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.box-shadow-editor.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.box-shadow-editor.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.canvas.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.canvas.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.color-editor-palette.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.color-editor-palette.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.color-picker.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.color-picker.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.dock.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.dock.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.draggable.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.draggable.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.extension.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.extension.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.gradient-editor.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.gradient-editor.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.hammer-gestures.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.hammer-gestures.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.horizontal-ruler.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.horizontal-ruler.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.modal-window.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.modal-window.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.multi-transclude.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.multi-transclude.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.multilevel-menu.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.multilevel-menu.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.page.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.page.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.service.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.service.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.shape.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.shape.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.simple-dropdown.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.simple-dropdown.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.simple-style-editor.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.simple-style-editor.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.sketch-widget.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.sketch-widget.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.state-transition.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.state-transition.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.text-shadow-editor.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.text-shadow-editor.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.topbar.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.topbar.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.util.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.util.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.vertical-ruler.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.vertical-ruler.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.widget-configurator.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.widget-configurator.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.widget.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.widget.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/repo/widget/standard/548e48d1708048063a0041a8/1.0.0/directive/ng.ui.widget.sidebar.js" afterPath="$PROJECT_DIR$/repo/widget/standard/548e48d1708048063a0041a8/1.0.0/directive/ng.ui.widget.sidebar.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/browser/service.js" afterPath="$PROJECT_DIR$/public/app/browser/service.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/embedded/service.js" afterPath="$PROJECT_DIR$/public/app/embedded/service.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/repo/widget/standard/548e48d1708048063a0041a8/1.0.0/demo/sidebarDemo.html" afterPath="$PROJECT_DIR$/repo/widget/standard/548e48d1708048063a0041a8/1.0.0/demo/sidebarDemo.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/api/public/userfile.js" afterPath="$PROJECT_DIR$/routes/api/public/userfile.js" />
     </list>
     <ignored path="meelet.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -32,24 +112,56 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ng.ui.animation.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.animation.js">
+      <file leaf-file-name="ng.ui.wave.visualizer.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.wave.visualizer.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.10687023">
+              <caret line="422" column="42" selection-start-line="422" selection-start-column="42" selection-end-line="422" selection-end-column="42" />
+              <folding>
+                <element signature="e#1734#3096#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="webaudio.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/skeleton/javascripts/wavesurfer/1.0.29/webaudio.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="27" column="43" selection-start-line="27" selection-start-column="43" selection-end-line="27" selection-end-column="43" />
+              <caret line="262" column="27" selection-start-line="262" selection-start-column="27" selection-end-line="262" selection-end-column="27" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ng.ui.service.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.service.js">
+      <file leaf-file-name="wavesurfer.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/skeleton/javascripts/wavesurfer/1.0.29/wavesurfer.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.69984686">
-              <caret line="1602" column="47" selection-start-line="1602" selection-start-column="47" selection-end-line="1602" selection-end-column="47" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="287" column="4" selection-start-line="287" selection-start-column="4" selection-end-line="287" selection-end-column="4" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="_resource-editor.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/include/_resource-editor.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-13.166667">
+              <caret line="52" column="31" selection-start-line="52" selection-start-column="31" selection-end-line="52" selection-end-column="31" />
               <folding>
-                <element signature="e#130848#131503#0" expanded="false" />
+                <element signature="n#style#0;n#input#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ng.ui.resource-editor.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.resource-editor.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="100" column="33" selection-start-line="100" selection-start-column="33" selection-end-line="100" selection-end-column="33" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -69,57 +181,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/public/skeleton/main.js" />
-        <option value="$PROJECT_DIR$/public/stylesheets/sass/animation/_directive_animation_keyframes.scss" />
-        <option value="$PROJECT_DIR$/public/stylesheets/sass/animation/_directive_animation.scss" />
-        <option value="$PROJECT_DIR$/public/directive/ng.ui.sketch-widget.js" />
-        <option value="$PROJECT_DIR$/public/javascripts/fabric/1.5.0/main.js" />
-        <option value="$PROJECT_DIR$/public/stylesheets/sass/index.scss" />
-        <option value="$PROJECT_DIR$/public/index.html" />
-        <option value="$PROJECT_DIR$/public/stylesheets/sass/device/bootstrap_wide_desktop.scss" />
-        <option value="$PROJECT_DIR$/public/stylesheets/sass/device/bootstrap_tablet.scss" />
-        <option value="$PROJECT_DIR$/public/stylesheets/sass/device/bootstrap_phone.scss" />
-        <option value="$PROJECT_DIR$/public/stylesheets/sass/device/bootstrap_desktop.scss" />
-        <option value="$PROJECT_DIR$/public/stylesheets/sass/project.scss" />
-        <option value="$PROJECT_DIR$/public/stylesheets/sass/_topbar.scss" />
-        <option value="$PROJECT_DIR$/public/javascripts/fabric/1.5.0/fabric.require.js" />
-        <option value="$PROJECT_DIR$/public/stylesheets/sass/_state_transition.scss" />
-        <option value="$PROJECT_DIR$/public/skeleton/javascripts/velocity/1.2.2/velocity.js" />
-        <option value="$PROJECT_DIR$/public/stylesheets/sass/frameSketch.scss" />
-        <option value="$PROJECT_DIR$/public/stylesheets/sass/_sketch_widget.scss" />
-        <option value="$PROJECT_DIR$/public/stylesheets/sass/_shape.scss" />
-        <option value="$PROJECT_DIR$/public/skeleton/directive/ng.ui.service.js" />
-        <option value="$PROJECT_DIR$/public/include/_box-shadow.html" />
-        <option value="$PROJECT_DIR$/public/fonts/icon-frame-sketch/style.css" />
-        <option value="$PROJECT_DIR$/public/main.js" />
-        <option value="$PROJECT_DIR$/public/include/_state_transition.html" />
-        <option value="$PROJECT_DIR$/public/directive/ng.ui.state-transition.js" />
-        <option value="$PROJECT_DIR$/public/directive/main.js" />
-        <option value="$PROJECT_DIR$/public/include/_simple-style-editorhtml" />
-        <option value="$PROJECT_DIR$/public/frameSketch.html" />
-        <option value="$PROJECT_DIR$/public/stylesheets/sass/_dock.scss" />
-        <option value="$PROJECT_DIR$/public/app/controller.js" />
-        <option value="$PROJECT_DIR$/public/directive/ng.ui.util.js" />
-        <option value="$PROJECT_DIR$/public/include/_simple-style-editor.html" />
+        <option value="$PROJECT_DIR$/public/directive/ng.ui.draggable.js" />
+        <option value="$PROJECT_DIR$/public/directive/ng.ui.extension.js" />
         <option value="$PROJECT_DIR$/public/directive/ng.ui.gradient-editor.js" />
-        <option value="$PROJECT_DIR$/public/directive/ng.ui.color-picker.js" />
+        <option value="$PROJECT_DIR$/public/directive/ng.ui.horizontal-ruler.js" />
+        <option value="$PROJECT_DIR$/public/directive/ng.ui.hammer-gestures.js" />
+        <option value="$PROJECT_DIR$/public/directive/ng.ui.modal-window.js" />
+        <option value="$PROJECT_DIR$/public/directive/ng.ui.multi-transclude.js" />
+        <option value="$PROJECT_DIR$/public/directive/ng.ui.multilevel-menu.js" />
+        <option value="$PROJECT_DIR$/public/directive/ng.ui.page.js" />
+        <option value="$PROJECT_DIR$/public/directive/ng.ui.shape.js" />
+        <option value="$PROJECT_DIR$/public/directive/ng.ui.simple-dropdown.js" />
         <option value="$PROJECT_DIR$/public/directive/ng.ui.simple-style-editor.js" />
+        <option value="$PROJECT_DIR$/public/directive/ng.ui.sketch-widget.js" />
+        <option value="$PROJECT_DIR$/public/directive/ng.ui.state-transition.js" />
         <option value="$PROJECT_DIR$/public/directive/ng.ui.text-shadow-editor.js" />
-        <option value="$PROJECT_DIR$/public/directive/ng.ui.border-editor.js" />
-        <option value="$PROJECT_DIR$/public/directive/ng.ui.background-image.js" />
-        <option value="$PROJECT_DIR$/project/5588f99be3ea090706cc9d09/meelet.json" />
-        <option value="$PROJECT_DIR$/project/557fc0c2426f8c3909330a46/app/controller.js" />
-        <option value="$PROJECT_DIR$/project/557fc0c2426f8c3909330a46/page-Widget_1434435970966.html" />
-        <option value="$PROJECT_DIR$/meeletClasses.js" />
-        <option value="$PROJECT_DIR$/public/skeleton/app/controller.ejs" />
-        <option value="$PROJECT_DIR$/project/5588f99be3ea090706cc9d09/app/controller.js" />
-        <option value="$PROJECT_DIR$/project/5588f99be3ea090706cc9d09/app/meta.json" />
-        <option value="$PROJECT_DIR$/public/skeleton/directive/main.js" />
-        <option value="$PROJECT_DIR$/public/skeleton/app/util.js" />
-        <option value="$PROJECT_DIR$/project/5588f99be3ea090706cc9d09/directive/ng.ui.animation.js" />
-        <option value="$PROJECT_DIR$/public/directive/ng.ui.canvas.js" />
-        <option value="$PROJECT_DIR$/public/directive/ng.ui.animation.js" />
+        <option value="$PROJECT_DIR$/public/directive/ng.ui.topbar.js" />
+        <option value="$PROJECT_DIR$/public/directive/ng.ui.vertical-ruler.js" />
+        <option value="$PROJECT_DIR$/public/directive/ng.ui.widget.js" />
+        <option value="$PROJECT_DIR$/public/directive/ng.ui.widget-configurator.js" />
+        <option value="$PROJECT_DIR$/public/include/_wave_visualizer.html" />
+        <option value="$PROJECT_DIR$/public/stylesheets/sass/_dock.scss" />
+        <option value="$PROJECT_DIR$/public/stylesheets/sass/_resource-sound.scss" />
+        <option value="$PROJECT_DIR$/public/app/browser/service.js" />
+        <option value="$PROJECT_DIR$/public/app/embedded/service.js" />
+        <option value="$PROJECT_DIR$/routes/api/public/userfile.js" />
         <option value="$PROJECT_DIR$/public/directive/ng.ui.service.js" />
+        <option value="$PROJECT_DIR$/public/directive/ng.ui.resource.sound.js" />
+        <option value="$PROJECT_DIR$/public/include/_resource-sound.html" />
+        <option value="$PROJECT_DIR$/public/stylesheets/sass/_resource-editor.scss" />
+        <option value="$PROJECT_DIR$/public/javascripts/fabric/1.5.0/fabric.require.js" />
+        <option value="$PROJECT_DIR$/public/skeleton/javascripts/wavesurfer/1.0.29/main.js" />
+        <option value="$PROJECT_DIR$/public/app/controller.js" />
+        <option value="$PROJECT_DIR$/public/javascripts/wavesurfer/1.0.29/main.js" />
+        <option value="$PROJECT_DIR$/config-development.json" />
+        <option value="$PROJECT_DIR$/public/fonts/icon-resource-sound/style.css" />
+        <option value="$PROJECT_DIR$/public/frameSketch.html" />
+        <option value="$PROJECT_DIR$/public/directive/ng.ui.canvas.js" />
+        <option value="$PROJECT_DIR$/public/directive/ng.ui.util.js" />
+        <option value="$PROJECT_DIR$/repo/widget/standard/548e48d1708048063a0041a8/1.0.0/directive/ng.ui.widget.sidebar.js" />
+        <option value="$PROJECT_DIR$/public/directive/main.js" />
+        <option value="$PROJECT_DIR$/public/stylesheets/sass/_sidebar.scss" />
+        <option value="$PROJECT_DIR$/public/stylesheets/sass/index.scss" />
+        <option value="$PROJECT_DIR$/repo/widget/standard/548e48d1708048063a0041a8/1.0.0/demo/sidebarDemo.html" />
+        <option value="$PROJECT_DIR$/public/include/_sidebar.html" />
+        <option value="$PROJECT_DIR$/public/directive/ng.ui.sidebar.js" />
+        <option value="$PROJECT_DIR$/public/stylesheets/sass/frameSketch.scss" />
+        <option value="$PROJECT_DIR$/public/main.js" />
+        <option value="$PROJECT_DIR$/public/directive/ng.ui.resource-editor.js" />
+        <option value="$PROJECT_DIR$/public/fonts/icon-resource-editor/style.css" />
+        <option value="$PROJECT_DIR$/public/include/_resource-editor.html" />
+        <option value="$PROJECT_DIR$/public/directive/ng.ui.wave.visualizer.js" />
       </list>
     </option>
   </component>
@@ -197,7 +309,6 @@
     </navigator>
     <panes>
       <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -244,7 +355,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="skeleton" />
+              <option name="myItemId" value="fonts" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -262,12 +373,17 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="directive" />
+              <option name="myItemId" value="fonts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="icon-resource-editor" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -303,11 +419,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/project/5588f99be3ea090706cc9d09/directive" />
-      <recent name="$PROJECT_DIR$/project/5588f99be3ea090706cc9d09/app" />
-      <recent name="$PROJECT_DIR$/project/5588f99be3ea090706cc9d09" />
-      <recent name="$PROJECT_DIR$/public/include" />
-      <recent name="$PROJECT_DIR$/public/directive" />
+      <recent name="$PROJECT_DIR$/public/fonts/icon-resource-editor" />
+      <recent name="$PROJECT_DIR$/public/stylesheets/sass" />
+      <recent name="$PROJECT_DIR$/public/fonts" />
+      <recent name="$PROJECT_DIR$/public/fonts/icon-resource-sound" />
+      <recent name="$PROJECT_DIR$/public/fonts/icon-resource-sound/demo-files" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/routes/api/private" />
@@ -386,24 +502,6 @@
       <created>1422867219159</created>
       <option name="number" value="Default" />
       <updated>1422867219159</updated>
-    </task>
-    <task id="LOCAL-00024" summary="Bug Fix.">
-      <created>1428388105242</created>
-      <option name="number" value="00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1428388105242</updated>
-    </task>
-    <task id="LOCAL-00025" summary="Bug Fix.">
-      <created>1428398376828</created>
-      <option name="number" value="00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1428398376828</updated>
-    </task>
-    <task id="LOCAL-00026" summary="Bug Fix.">
-      <created>1428483976811</created>
-      <option name="number" value="00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1428483976811</updated>
     </task>
     <task id="LOCAL-00027" summary="Generate HTML files.">
       <created>1429597287049</created>
@@ -681,7 +779,25 @@
       <option name="project" value="LOCAL" />
       <updated>1435742004103</updated>
     </task>
-    <option name="localTasksCounter" value="73" />
+    <task id="LOCAL-00073" summary="Bug Fix.">
+      <created>1435761323391</created>
+      <option name="number" value="00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1435761323407</updated>
+    </task>
+    <task id="LOCAL-00074" summary="Add Effect Widget.">
+      <created>1435894171338</created>
+      <option name="number" value="00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1435894171339</updated>
+    </task>
+    <task id="LOCAL-00075" summary="Bug Fix.">
+      <created>1435903793213</created>
+      <option name="number" value="00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1435903793213</updated>
+    </task>
+    <option name="localTasksCounter" value="76" />
     <servers />
   </component>
   <component name="TodoView">
@@ -699,20 +815,20 @@
     <layout>
       <window_info id="Grunt " active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.34801763" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32892805" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32796487" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2494043" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24702145" sideWeight="0.49339208" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2319301" sideWeight="0.4875549" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33333334" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32452276" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.37410644" sideWeight="0.50660795" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32210836" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2319301" sideWeight="0.5124451" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32452276" sideWeight="0.50039715" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32452276" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.329429" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.28781205" sideWeight="0.49960285" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2863436" sideWeight="0.49960285" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Grunt" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32796487" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -756,7 +872,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="Alignment &amp; Layout Enhancement." />
     <MESSAGE value="Add Position Tool Button." />
     <MESSAGE value="Replace ckeditor with editormd to edit the text in widget." />
     <MESSAGE value="Add markdown support" />
@@ -771,7 +886,6 @@
     <MESSAGE value="Bug Fix &amp; page transition configuration ui." />
     <MESSAGE value="Page Transition first commit." />
     <MESSAGE value="Page Transitions." />
-    <MESSAGE value="Bug Fix." />
     <MESSAGE value="Add Page Transition." />
     <MESSAGE value="config.json" />
     <MESSAGE value="Add Widget Movement Route Define Feature." />
@@ -781,397 +895,441 @@
     <MESSAGE value="Bug Fix for enable canvas negative coordinates." />
     <MESSAGE value="Add Pseudo Style Modification Feature." />
     <MESSAGE value="Generate code for movement action." />
-    <option name="LAST_COMMIT_MESSAGE" value="Generate code for movement action." />
+    <MESSAGE value="Add Effect Widget." />
+    <MESSAGE value="Bug Fix." />
+    <option name="LAST_COMMIT_MESSAGE" value="Bug Fix." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="339" />
+      <option name="time" value="351" />
     </breakpoint-manager>
-    <watches-manager />
+    <watches-manager>
+      <configuration name="NodeJSConfigurationType">
+        <watch expression="resourceAllPath" language="JavaScript" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.shape.js">
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/lib/JavaScriptLanguage.jar!/com/intellij/lang/javascript/index/predefined/EcmaScript.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="314" column="0" selection-start-line="314" selection-start-column="0" selection-end-line="314" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/stylesheets/sass/device/bootstrap_desktop.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.4054054">
-          <caret line="187" column="41" selection-start-line="187" selection-start-column="31" selection-end-line="187" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/include/_text-shadow.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.36133122">
-          <caret line="27" column="26" selection-start-line="27" selection-start-column="21" selection-end-line="27" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.state-transition.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5389313">
-          <caret line="112" column="98" selection-start-line="112" selection-start-column="98" selection-end-line="112" selection-end-column="98" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/include/_state_transition.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4326466">
-          <caret line="185" column="48" selection-start-line="185" selection-start-column="48" selection-end-line="185" selection-end-column="48" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/app/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5496183">
-          <caret line="24" column="28" selection-start-line="24" selection-start-column="28" selection-end-line="24" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.extension.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.32061067">
-          <caret line="121" column="32" selection-start-line="121" selection-start-column="32" selection-end-line="121" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/include/_border-editor.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/stylesheets/sass/_dock.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.38510302">
-          <caret line="171" column="0" selection-start-line="171" selection-start-column="0" selection-end-line="171" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/include/_background-image.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.36133122">
-          <caret line="33" column="33" selection-start-line="33" selection-start-column="28" selection-end-line="33" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.util.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.54351145">
-          <caret line="704" column="83" selection-start-line="704" selection-start-column="83" selection-end-line="704" selection-end-column="83" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/app/controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.27480915">
-          <caret line="687" column="55" selection-start-line="687" selection-start-column="55" selection-end-line="687" selection-end-column="55" />
-          <folding>
-            <element signature="e#419#3459#0" expanded="false" />
-            <element signature="e#4145#5617#0" expanded="false" />
-            <element signature="e#42758#49363#0" expanded="false" />
-            <element signature="e#49480#55398#0" expanded="false" />
-            <element signature="e#55512#57906#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/frameSketch.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.3280507">
-          <caret line="247" column="85" selection-start-line="247" selection-start-column="85" selection-end-line="247" selection-end-column="85" />
-          <folding>
-            <element signature="n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="false" />
-            <element signature="n#div#0;n#div#0;n#div#1;n#div#5;n#div#0;n#div#0;n#div#0;n#!!top" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/include/_gradient-editor.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.28526148">
-          <caret line="12" column="47" selection-start-line="12" selection-start-column="47" selection-end-line="12" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/include/_simple-style-editor.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.118858956">
-          <caret line="5" column="26" selection-start-line="5" selection-start-column="26" selection-end-line="5" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.gradient-editor.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="62" column="0" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.simple-style-editor.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.20610687">
-          <caret line="25" column="32" selection-start-line="25" selection-start-column="32" selection-end-line="25" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.color-picker.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="63" column="65" selection-start-line="63" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.text-shadow-editor.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.35877863">
-          <caret line="502" column="44" selection-start-line="502" selection-start-column="44" selection-end-line="502" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.border-editor.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="85" column="0" selection-start-line="85" selection-start-column="0" selection-end-line="85" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.background-image.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.31450382">
-          <caret line="69" column="50" selection-start-line="69" selection-start-column="50" selection-end-line="69" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider editor-type-id="MarkdownPreviewEditor">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.09615385">
-          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/skeleton/meelet.skeleton.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3100159">
-          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/skeleton/directive/ng.ui.service.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5972435">
-          <caret line="4925" column="37" selection-start-line="4925" selection-start-column="37" selection-end-line="4925" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/directive/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.712098">
-          <caret line="66" column="33" selection-start-line="66" selection-start-column="33" selection-end-line="66" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/project/5575058be82f8f62038409a8/app/controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5053599">
-          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/project/5588f99be3ea090706cc9d09/app/controller.ejs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.28934819">
-          <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/project/557fc0c2426f8c3909330a46/app/util.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.091883615">
-          <caret line="4" column="50" selection-start-line="4" selection-start-column="40" selection-end-line="4" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/project/557fc0c2426f8c3909330a46/app/filter.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8621746">
-          <caret line="132" column="7" selection-start-line="132" selection-start-column="7" selection-end-line="132" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/project/557fc0c2426f8c3909330a46/app/controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.062787">
-          <caret line="19" column="75" selection-start-line="19" selection-start-column="68" selection-end-line="19" selection-end-column="75" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/project/557fc0c2426f8c3909330a46/page-Widget_1434435970966.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/meeletClasses.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="839" column="42" selection-start-line="839" selection-start-column="42" selection-end-line="839" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/project/5588f99be3ea090706cc9d09/app/controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/commons.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.22205207">
-          <caret line="289" column="9" selection-start-line="289" selection-start-column="9" selection-end-line="289" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/project/5588f99be3ea090706cc9d09/meelet.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.42766297">
-          <caret line="0" column="8054" selection-start-line="0" selection-start-column="8054" selection-end-line="0" selection-end-column="8054" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/project/5588f99be3ea090706cc9d09/app/meta.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.28616852">
-          <caret line="12" column="24" selection-start-line="12" selection-start-column="24" selection-end-line="12" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/project/5588f99be3ea090706cc9d09/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.48238897">
-          <caret line="21" column="38" selection-start-line="21" selection-start-column="38" selection-end-line="21" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/skeleton/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4486983">
-          <caret line="39" column="34" selection-start-line="39" selection-start-column="34" selection-end-line="39" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/skeleton/directive/ng.ui.animation.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3338438">
-          <caret line="17" column="8" selection-start-line="17" selection-start-column="8" selection-end-line="17" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/skeleton/app/controller.ejs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-13.208333">
-          <caret line="76" column="112" selection-start-line="76" selection-start-column="112" selection-end-line="76" selection-end-column="112" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/skeleton/directive/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="25" column="6" selection-start-line="25" selection-start-column="6" selection-end-line="25" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/project/5588f99be3ea090706cc9d09/javascripts/velocity/1.2.2/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.39050537">
-          <caret line="17" column="2" selection-start-line="17" selection-start-column="2" selection-end-line="17" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/project/5588f99be3ea090706cc9d09/javascripts/velocity/1.2.2/velocity.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8621746">
-          <caret line="3867" column="124" selection-start-line="3867" selection-start-column="124" selection-end-line="3867" selection-end-column="124" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/project/5588f99be3ea090706cc9d09/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5484897">
-          <caret line="23" column="7" selection-start-line="23" selection-start-column="7" selection-end-line="23" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/skeleton/directive/ng.ui.util.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.022970904">
-          <caret line="556" column="46" selection-start-line="556" selection-start-column="46" selection-end-line="556" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="80" column="21" selection-start-line="80" selection-start-column="12" selection-end-line="80" selection-end-column="21" />
+        <state vertical-scroll-proportion="0.33282444">
+          <caret line="60" column="0" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.canvas.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.6049005">
-          <caret line="256" column="16" selection-start-line="256" selection-start-column="16" selection-end-line="256" selection-end-column="16" />
+        <state vertical-scroll-proportion="0.81832063">
+          <caret line="244" column="36" selection-start-line="244" selection-start-column="36" selection-end-line="244" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/app/util.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/javascripts/angular/1.3.0-beta.8/angular.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33282444">
+          <caret line="245" column="39" selection-start-line="245" selection-start-column="4" selection-end-line="245" selection-end-column="39" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/skeleton/javascripts/wavesurfer/1.0.29/drawer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="70" column="13" selection-start-line="70" selection-start-column="4" selection-end-line="70" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/stylesheets/sass/.sass-cache/adfb57031c7f1ea3129d08223158e1378f95e8bb/global.scssc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/stylesheets/sass/_global.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/skeleton/directive/ng.ui.util.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3598775">
+          <caret line="60" column="37" selection-start-line="60" selection-start-column="36" selection-end-line="60" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/skeleton/directive/ng.ui.service.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3323124">
+          <caret line="1465" column="70" selection-start-line="1465" selection-start-column="55" selection-end-line="1465" selection-end-column="70" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/repo/widget/standard/54c84a7b7080489a000041a7/1.0.0/directive/ng.ui.widget.creative-link.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5283308">
+          <caret line="23" column="37" selection-start-line="23" selection-start-column="37" selection-end-line="23" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/repo/widget/standard/54c1f7ff708048a2060041a7/1.0.0/directive/ng.ui.widget.tab.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.81776416">
+          <caret line="216" column="9" selection-start-line="216" selection-start-column="9" selection-end-line="216" selection-end-column="9" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/skeleton/app/util.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.9188361">
-          <caret line="40" column="51" selection-start-line="40" selection-start-column="36" selection-end-line="40" selection-end-column="51" />
+        <state vertical-scroll-proportion="0.49310872">
+          <caret line="209" column="51" selection-start-line="209" selection-start-column="51" selection-end-line="209" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.shape.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.3338438">
+          <caret line="123" column="0" selection-start-line="123" selection-start-column="0" selection-end-line="123" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/stylesheets/sass/_toolbar.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/stylesheets/sass/_topbar.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.47694755">
+          <caret line="155" column="35" selection-start-line="155" selection-start-column="35" selection-end-line="155" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/app/controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4517611">
+          <caret line="972" column="0" selection-start-line="972" selection-start-column="0" selection-end-line="972" selection-end-column="0" />
           <folding>
-            <element signature="e#10368#11561#0" expanded="false" />
+            <element signature="e#268#5789#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.animation.js">
+    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.extension.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3598775">
+          <caret line="274" column="38" selection-start-line="274" selection-start-column="28" selection-end-line="274" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.util.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.41347626">
+          <caret line="18" column="55" selection-start-line="18" selection-start-column="55" selection-end-line="18" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/repo/widget/standard/548e48d1708048063a0041a8/1.0.0/app/widget.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="27" column="43" selection-start-line="27" selection-start-column="43" selection-end-line="27" selection-end-column="43" />
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/directive/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8621746">
+          <caret line="183" column="2" selection-start-line="183" selection-start-column="2" selection-end-line="183" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/repo/widget/standard/548e48d1708048063a0041a8/1.0.0/include/_widget_sidebar.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.28526148">
+          <caret line="12" column="6" selection-start-line="0" selection-start-column="0" selection-end-line="12" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/repo/widget/standard/548e48d1708048063a0041a8/1.0.0/stylesheets/sass/_sidebar.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.09508716">
+          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/repo/widget/standard/548e48d1708048063a0041a8/1.0.0/stylesheets/sass/demo.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.64342314">
+          <caret line="151" column="78" selection-start-line="151" selection-start-column="78" selection-end-line="151" selection-end-column="78" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/stylesheets/sass/index.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.32846716">
+          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/project/557fc0c2426f8c3909330a46/stylesheets/sass/page-Widget_1434435970966.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="41" selection-start-line="0" selection-start-column="41" selection-end-line="0" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/project/557fc0c2426f8c3909330a46/stylesheets/repo/54c84a7b7080489a000041a7/configurable-widget-Widget_1434443780057.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.19017433">
+          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/project/557fc0c2426f8c3909330a46/stylesheets/repo/54c84a7b7080489a000041a7/_configuration-Widget_1434443780057.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="51" selection-start-line="0" selection-start-column="45" selection-end-line="0" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/stylesheets/sass/_resource-editor.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.5467511">
+          <caret line="219" column="51" selection-start-line="219" selection-start-column="51" selection-end-line="219" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.04754358">
+          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.multi-transclude.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.07633588">
+          <caret line="15" column="34" selection-start-line="15" selection-start-column="34" selection-end-line="15" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/repo/widget/standard/548e48d1708048063a0041a8/1.0.0/demo/demo.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.65648854">
+          <caret line="37" column="37" selection-start-line="37" selection-start-column="37" selection-end-line="37" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/stylesheets/sass/_modal-window.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.16640253">
+          <caret line="7" column="26" selection-start-line="7" selection-start-column="26" selection-end-line="7" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.modal-window.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.41221374">
+          <caret line="18" column="27" selection-start-line="18" selection-start-column="27" selection-end-line="18" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/include/_modal_window.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.14263074">
+          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/repo/widget/standard/548e48d1708048063a0041a8/1.0.0/directive/ng.ui.widget.sidebar.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.31450382">
+          <caret line="86" column="77" selection-start-line="86" selection-start-column="77" selection-end-line="86" selection-end-column="77" />
+          <folding>
+            <element signature="e#2425#3801#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/repo/widget/standard/548e48d1708048063a0041a8/1.0.0/demo/sidebarDemo.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.14421552">
+          <caret line="16" column="17" selection-start-line="16" selection-start-column="17" selection-end-line="16" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/javascripts/fabric/1.5.0/fabric.require.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2870229">
+          <caret line="1939" column="31" selection-start-line="1939" selection-start-column="31" selection-end-line="1939" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.sidebar.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.24427481">
+          <caret line="16" column="144" selection-start-line="16" selection-start-column="129" selection-end-line="16" selection-end-column="144" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.service.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.69984686">
-          <caret line="1602" column="47" selection-start-line="1602" selection-start-column="47" selection-end-line="1602" selection-end-column="47" />
+        <state vertical-scroll-proportion="0.3832061">
+          <caret line="4249" column="0" selection-start-line="4249" selection-start-column="0" selection-end-line="4249" selection-end-column="0" />
           <folding>
-            <element signature="e#130848#131503#0" expanded="false" />
+            <element signature="e#10295#11035#0" expanded="false" />
+            <element signature="e#12974#14209#0" expanded="false" />
+            <element signature="e#15530#16491#0" expanded="false" />
+            <element signature="e#20288#21055#0" expanded="false" />
+            <element signature="e#21099#21871#0" expanded="false" />
+            <element signature="e#23811#24877#0" expanded="false" />
+            <element signature="e#24919#26525#0" expanded="false" />
+            <element signature="e#26567#26955#0" expanded="false" />
+            <element signature="e#27006#27360#0" expanded="false" />
+            <element signature="e#34736#36636#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/stylesheets/sass/frameSketch.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33280507">
+          <caret line="44" column="86" selection-start-line="44" selection-start-column="86" selection-end-line="44" selection-end-column="86" />
+          <folding>
+            <element signature="e#2678#3514#0" expanded="false" />
+            <element signature="e#4084#6643#0" expanded="false" />
+            <element signature="e#6804#7640#0" expanded="false" />
+            <element signature="e#8655#10675#0" expanded="false" />
+            <element signature="e#20091#20654#0" expanded="false" />
+            <element signature="e#20677#22029#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/frameSketch.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.04912837">
+          <caret line="369" column="62" selection-start-line="369" selection-start-column="62" selection-end-line="369" selection-end-column="62" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/stylesheets/sass/_sidebar.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.36133122">
+          <caret line="27" column="27" selection-start-line="27" selection-start-column="27" selection-end-line="27" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/include/_sidebar.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.14263074">
+          <caret line="6" column="70" selection-start-line="6" selection-start-column="63" selection-end-line="6" selection-end-column="70" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/javascripts/wavesurfer/1.0.29/webaudio.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33282444">
+          <caret line="229" column="8" selection-start-line="229" selection-start-column="8" selection-end-line="229" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/skeleton/javascripts/wavesurfer/1.0.29/wavesurfer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="287" column="4" selection-start-line="287" selection-start-column="4" selection-end-line="287" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5618321">
+          <caret line="107" column="33" selection-start-line="107" selection-start-column="12" selection-end-line="107" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/skeleton/javascripts/wavesurfer/1.0.29/webaudio.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="262" column="27" selection-start-line="262" selection-start-column="27" selection-end-line="262" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/fonts/icon-resource-editor/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.9522293">
+          <caret line="272" column="0" selection-start-line="272" selection-start-column="0" selection-end-line="272" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/include/_resource-editor.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-13.166667">
+          <caret line="52" column="31" selection-start-line="52" selection-start-column="31" selection-end-line="52" selection-end-column="31" />
+          <folding>
+            <element signature="n#style#0;n#input#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.resource-editor.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="100" column="33" selection-start-line="100" selection-start-column="33" selection-end-line="100" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.wave.visualizer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.10687023">
+          <caret line="422" column="42" selection-start-line="422" selection-start-column="42" selection-end-line="422" selection-end-column="42" />
+          <folding>
+            <element signature="e#1734#3096#0" expanded="false" />
           </folding>
         </state>
       </provider>

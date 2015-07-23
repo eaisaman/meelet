@@ -1,5 +1,5 @@
 define(
-    ["angular", "jquery"],
+    ["angular-lib", "jquery-lib"],
     function () {
         return function (appModule) {
 

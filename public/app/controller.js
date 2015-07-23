@@ -117,7 +117,7 @@ define(
                 );
             }
 
-            function FrameSketchController($scope, $rootScope, $timeout, $q, $log, $compile, $parse, angularEventTypes, angularConstants, appService, uiService, uiUtilService, uiCanvasService) {
+            function FrameSketchController($scope, $rootScope, $timeout, $q, $log, $exceptionHandler, $compile, $parse, angularEventTypes, angularConstants, appService, uiService, uiUtilService, uiCanvasService) {
                 extension && extension.attach && extension.attach($scope, {
                     "$timeout": $timeout,
                     "$q": $q,
@@ -635,6 +635,21 @@ define(
                     return scope.toggleModalWindow();
                 }
 
+                $scope.showResourceEditor = function (el, event) {
+                    event && event.stopPropagation && event.stopPropagation();
+
+                    $scope.modalUsage = "ResourceEditor";
+                    var scope = angular.element($("#frameSketchContainer > .modalWindowContainer > .md-modal")).scope();
+                    if (angular.isElement(el)) {
+                        var $el = $(el),
+                            $containerEl = $("#frameSketchContainer > .modalWindowContainer > .md-modal #frameSketchResourceArea");
+
+                        $containerEl.append($el);
+                    }
+
+                    return scope.toggleModalWindow();
+                }
+
                 $scope.hideModal = function (event) {
                     event && event.stopPropagation && event.stopPropagation();
 
@@ -823,6 +838,20 @@ define(
                         }, null, angularConstants.unresponsiveInterval, "FrameSketchController.initMaster.beforeWidgetCreation")(fn);
                     });
 
+                    $scope.resourceEditWatcher = $scope.$on(angularEventTypes.resourceEditEvent, function (event, obj) {
+                        uiUtilService.once(function (obj) {
+                            return $scope.showResourceEditor(obj.editor).then(function () {
+                                try {
+                                    obj.callback && obj.callback();
+                                } catch (e) {
+                                    $exceptionHandler(e);
+                                }
+
+                                return uiUtilService.getResolveDefer();
+                            })
+                        }, null, angularConstants.unresponsiveInterval, "FrameSketchController.initMaster.resourceEditWatcher")(obj);
+                    });
+
                     $scope.switchProjectWatcher = $scope.$on(angularEventTypes.switchProjectEvent, function () {
                         $scope.renderProject();
                     });
@@ -851,6 +880,10 @@ define(
                         if ($scope.beforeWidgetCreationWatcher) {
                             $scope.beforeWidgetCreationWatcher();
                             $scope.beforeWidgetCreationWatcher = null;
+                        }
+                        if ($scope.resourceEditWatcher) {
+                            $scope.resourceEditWatcher();
+                            $scope.resourceEditWatcher = null;
                         }
                         if ($scope.switchProjectWatcher) {
                             $scope.switchProjectWatcher();
@@ -1222,7 +1255,7 @@ define(
 
             appModule.
                 controller('RootController', ["$scope", "$rootScope", "$q", "appService", "urlService", "uiUtilService", RootController]).
-                controller('FrameSketchController', ["$scope", "$rootScope", "$timeout", "$q", "$log", "$compile", "$parse", "angularEventTypes", "angularConstants", "appService", "uiService", "uiUtilService", "uiCanvasService", FrameSketchController]).
+                controller('FrameSketchController', ["$scope", "$rootScope", "$timeout", "$q", "$log", "$exceptionHandler", "$compile", "$parse", "angularEventTypes", "angularConstants", "appService", "uiService", "uiUtilService", "uiCanvasService", FrameSketchController]).
                 controller('ProjectController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "uiService", "urlService", "uiUtilService", ProjectController]).
                 controller('RepoController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "urlService", RepoController]).
                 controller('RepoLibController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "urlService", RepoLibController]);

@@ -1,5 +1,5 @@
 define(
-    ["angular", "jquery"],
+    ["angular-lib", "jquery-lib"],
     function () {
         return function (appModule, extension, opts) {
             var inject = ["$parse", "$rootScope", "$http", "$timeout", "$q", "$exceptionHandler", "angularConstants", "angularEventTypes", "uiUtilService", "appService"];

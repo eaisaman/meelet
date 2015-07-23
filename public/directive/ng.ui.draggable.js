@@ -1,5 +1,5 @@
 define(
-    ["angular", "jquery", "hammer"],
+    ["angular-lib", "jquery-lib", "hammer-lib"],
     function () {
         return function (appModule, extension, opts) {
             var DIRECTIVE = "uiDraggable";

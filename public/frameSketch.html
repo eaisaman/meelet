@@ -11,6 +11,7 @@
 <link rel="stylesheet" type="text/css" href="fonts/icon-page/style.css"/>
 <link rel="stylesheet" type="text/css" href="fonts/icon-state-transition/style.css"/>
 <link rel="stylesheet" type="text/css" href="fonts/icon-widget-configurator/style.css"/>
+<link rel="stylesheet" type="text/css" href="fonts/icon-resource-editor/style.css"/>
 <link rel="stylesheet" type="text/css" href="fonts/icon-horizontal-ruler/style.css"/>
 <link rel="stylesheet" type="text/css" href="fonts/icon-vertical-ruler/style.css"/>
 
@@ -219,6 +220,9 @@
                     <div tab-sel="tab-head-control-group-3" class="ui-control-group-title" tab-content="control-group">
                         Widgets
                     </div>
+                    <div tab-sel="tab-head-control-group-4" class="ui-control-group-title" tab-content="control-group">
+                        Resource
+                    </div>
                     <div class="showButton fs-x-large icon-dock-before icon-dock-eye-before"></div>
                     <div class="hideButton fs-x-large icon-dock-before icon-dock-eye-slash-before"></div>
                 </div>
@@ -349,19 +353,24 @@
                              dock-align="dockAlign" show-demo="showDemo()">
                         </div>
                     </div>
+                    <div id="resource-control-group" tab-sel="tab-content-control-group-4" class="ui-control-group">
+                        <div id="resource-editor-control" class="ui-control ui-control-inline enable" ui-resource-editor
+                             dock-align="dockAlign">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="frameSketchModalContent fs-x-large" name="modalContent">
-            <div id="frameSketchDemoModal" ng-if="modalUsage === 'Demo'">
+            <div id="frameSketchDemoModal" ng-show="modalUsage === 'Demo'">
                 <div class="hideButton icon-frame-sketch-before icon-frame-sketch-exit-before"
                      ng-click="hideModal($event)"></div>
                 <div class="frameSketchDemoContainer">
                     <div id="frameSketchWidgetDemoArea"></div>
                 </div>
             </div>
-            <div id="widgetNameModal" ng-if="modalUsage === 'WidgetName'">
+            <div id="widgetNameModal" ng-show="modalUsage === 'WidgetName'">
                 <div class="widgetNameContent">
                     <div class="input-group col-as-12 fs-x-medium">
                         <label class="col-as-4 no-padding control-label">Widget Name</label>
@@ -381,6 +390,13 @@
                          ng-click="hideModal($event)">
                         <span class="icon-frame-sketch-before icon-frame-sketch-cancel-before">Cancel</span>
                     </div>
+                </div>
+            </div>
+            <div id="resourceEditorModal" ng-show="modalUsage === 'ResourceEditor'">
+                <div class="hideButton icon-frame-sketch-before icon-frame-sketch-exit-before"
+                     ng-click="hideModal($event)"></div>
+                <div class="frameSketchResourceContainer">
+                    <div id="frameSketchResourceArea"></div>
                 </div>
             </div>
         </div>
