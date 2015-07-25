@@ -48,6 +48,16 @@ define(
                                 scope.pickedMarkers = [];
                             },
                             post: function (scope, element, attrs) {
+                                function startInsertAudioPart(audioClip) {
+                                    scope.pickedAudioClip = audioClip;
+                                    scope.$editorEl.find("#audioSideBar .sideBarContainer:not(.ng-hide) #waveCanvasContainer .waveMarkers").addClass("insertPart");
+                                }
+
+                                function cancelInsertAudioPart() {
+                                    scope.pickedAudioClip = null;
+                                    scope.$editorEl && scope.$editorEl.find("#audioSideBar .sideBarContainer:not(.ng-hide) #waveCanvasContainer .waveMarkers").removeClass("insertPart");
+                                }
+
                                 scope.playPauseAudio = function (event) {
                                     function playStateHandler(isPlaying) {
                                         scope.isPlaying = isPlaying;
@@ -92,8 +102,62 @@ define(
                                     }
                                 }
 
-                                scope.removeAudioClip = function (event) {
+                                scope.toggleSelectAudioClip = function (audioClip, event) {
                                     event && event.stopPropagation && event.stopPropagation();
+
+                                    var $clipItem = $(event.target);
+                                    $clipItem.toggleClass("select");
+                                    if ($clipItem.hasClass("select")) {
+                                        $clipItem.siblings().removeClass("select");
+
+                                        startInsertAudioPart(audioClip);
+                                    } else {
+                                        cancelInsertAudioPart();
+                                    }
+                                }
+
+                                scope.removeAudioClip = function (audioClip, event) {
+                                    event && event.stopPropagation && event.stopPropagation();
+
+                                    if (!audioClip.isPlaying) {
+                                        var $el = $(event.target),
+                                            $clipItem = $el.parent(".waveClipItem"),
+                                            index;
+
+                                        if ($clipItem.length && !scope.audioClips.every(function (item, i) {
+                                                if (item === audioClip) {
+                                                    index = i;
+                                                    return false;
+                                                }
+                                                return true;
+                                            })) {
+                                            if ($clipItem.hasClass("select")) {
+                                                cancelInsertAudioPart();
+                                            }
+
+                                            $clipItem.addClass("moveOut");
+                                            uiUtilService.onAnimationEnd($clipItem).then(function () {
+                                                scope.audioClips.splice(index, 1);
+                                            });
+                                        }
+                                    }
+                                }
+
+                                scope.toggleAudioClipLoop = function (audioClip, event) {
+                                    event && event.stopPropagation && event.stopPropagation();
+
+                                    audioClip.isLooped = !audioClip.isLooped;
+                                }
+
+                                scope.playPauseAudioClip = function (audioClip, event) {
+                                    function playStateHandler(clip, isPlaying) {
+                                        clip.isPlaying = isPlaying;
+                                        scope.$apply();
+                                    }
+
+                                    event && event.stopPropagation && event.stopPropagation();
+
+                                    audioClip.isPlaying = uiWaveVisualizerService.playPauseAudioClip(audioClip, playStateHandler);
                                 }
 
                                 scope.insertAudioPart = function (event) {
@@ -141,52 +205,56 @@ define(
                                         index;
 
                                     if (touchX == null && data) {
-                                        scope.pickedMarkers.every(function (marker, i) {
-                                            if (marker.progress === data.progress) {
-                                                index = i;
-                                                return false;
-                                            }
+                                        if (scope.pickedAudioClip) {
 
-                                            return true;
-                                        });
-
-                                        if (scope.markerEditMode === "RemoveMarker") {
-                                            uiWaveVisualizerService.removeMarker(data);
-                                            index != null && scope.pickedMarkers.splice(index, 1);
                                         } else {
-                                            if (scope.activeMarker && scope.activeMarker !== data) {
-                                                if (index == null && scope.pickedMarkers.length === 2) {
-                                                    var prevIndex;
-                                                    if (!scope.pickedMarkers.every(function (marker, i) {
-                                                            if (marker === scope.activeMarker) {
-                                                                prevIndex = i;
-                                                                return false;
-                                                            }
-
-                                                            return true;
-                                                        })) {
-                                                        scope.pickedMarkers.splice(prevIndex, 1)
-                                                    }
-                                                    scope.toggleSelect(scope.$activeMarkerElement);
+                                            scope.pickedMarkers.every(function (marker, i) {
+                                                if (marker.progress === data.progress) {
+                                                    index = i;
+                                                    return false;
                                                 }
 
-                                                scope.activeMarker = data;
-                                                scope.$activeMarkerElement = $marker;
-                                                scope.toggleSelect($marker, null, true);
-                                                index != null || scope.pickedMarkers.push(data);
+                                                return true;
+                                            });
+
+                                            if (scope.markerEditMode === "RemoveMarker") {
+                                                uiWaveVisualizerService.removeMarker(data);
+                                                index != null && scope.pickedMarkers.splice(index, 1);
                                             } else {
-                                                scope.toggleSelect($marker);
+                                                if (scope.activeMarker && scope.activeMarker !== data) {
+                                                    if (index == null && scope.pickedMarkers.length === 2) {
+                                                        var prevIndex;
+                                                        if (!scope.pickedMarkers.every(function (marker, i) {
+                                                                if (marker === scope.activeMarker) {
+                                                                    prevIndex = i;
+                                                                    return false;
+                                                                }
 
-                                                scope.activeMarker = null;
-                                                scope.$activeMarkerElement = null;
-                                                if ($marker.hasClass("select")) {
-                                                    scope.activeMarker = data || null;
+                                                                return true;
+                                                            })) {
+                                                            scope.pickedMarkers.splice(prevIndex, 1)
+                                                        }
+                                                        scope.toggleSelect(scope.$activeMarkerElement);
+                                                    }
+
+                                                    scope.activeMarker = data;
                                                     scope.$activeMarkerElement = $marker;
-                                                }
-                                                index != null && scope.pickedMarkers.splice(index, 1) || scope.pickedMarkers.push(data);
-                                            }
+                                                    scope.toggleSelect($marker, null, true);
+                                                    index != null || scope.pickedMarkers.push(data);
+                                                } else {
+                                                    scope.toggleSelect($marker);
 
-                                            uiWaveVisualizerService.selectMarker(scope.activeMarker);
+                                                    scope.activeMarker = null;
+                                                    scope.$activeMarkerElement = null;
+                                                    if ($marker.hasClass("select")) {
+                                                        scope.activeMarker = data || null;
+                                                        scope.$activeMarkerElement = $marker;
+                                                    }
+                                                    index != null && scope.pickedMarkers.splice(index, 1) || scope.pickedMarkers.push(data);
+                                                }
+
+                                                uiWaveVisualizerService.selectMarker(scope.activeMarker);
+                                            }
                                         }
                                     }
                                 }
@@ -201,10 +269,12 @@ define(
                                         angularEventTypes.resourceEditEvent,
                                         {
                                             editor: editorEl.length && editorEl || null,
-                                            callback: function () {
+                                            callback: function ($editorEl) {
                                                 scope.editorAttached = true;
+                                                scope.$editorEl = $editorEl;
                                                 if (resourceType === "audio") {
-                                                    uiWaveVisualizerService.initCanvas(editorEl.find("#audioSideBar .sideBarContainer:not(.ng-hide) #waveCanvasContainer"));
+                                                    uiWaveVisualizerService.initCanvas(scope.$editorEl.find("#audioSideBar .sideBarContainer:not(.ng-hide) #waveCanvasContainer"));
+                                                    scope.audioClips = uiWaveVisualizerService.audioClips;
                                                 }
                                             }
                                         }
@@ -234,6 +304,21 @@ define(
                                         angularConstants.renderTimeout
                                     );
                                 }
+
+                                scope.resourceEditEndWatcher = scope.$on(angularEventTypes.resourceEditEndEvent, function (event) {
+                                    uiUtilService.once(function () {
+                                        return $timeout(function () {
+                                            uiWaveVisualizerService.release();
+
+                                            cancelInsertAudioPart();
+                                        });
+                                    }, null, angularConstants.unresponsiveInterval, "ui.resource.editor.resourceEditEndWatcher")();
+                                });
+
+                                scope.$on('$destroy', function () {
+                                    scope.resourceEditEndWatcher && scope.resourceEditEndWatcher();
+                                    scope.resourceEditEndWatcher = null;
+                                });
                             }
                         }
                     }

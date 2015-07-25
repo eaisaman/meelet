@@ -26,7 +26,7 @@ define(
                                     scope: scope
                                 }));
 
-                                scope.$watch("pickedWidget", function (value) {
+                                scope.pickedWidgetWatcher = scope.$watch("pickedWidget", function (value) {
                                     if (value) {
                                         var widgetObj = uiService.configurableWidget(value);
                                         scope.activeWidget = widgetObj || value;
@@ -491,7 +491,7 @@ define(
                                     )();
                                 }
 
-                                scope.$on(angularEventTypes.switchProjectEvent, function (event, project) {
+                                scope.switchProjectWatcher = scope.$on(angularEventTypes.switchProjectEvent, function (event, project) {
                                     refreshArtifactList(project);
                                 });
 
@@ -513,6 +513,14 @@ define(
                                 if ($rootScope.loadedProject.projectRecord && $rootScope.loadedProject.projectRecord._id) {
                                     refreshArtifactList($rootScope.loadedProject);
                                 }
+
+                                scope.$on('$destroy', function () {
+                                    scope.switchProjectWatcher && scope.switchProjectWatcher();
+                                    scope.switchProjectWatcher = null;
+
+                                    scope.pickedWidgetWatcher && scope.pickedWidgetWatcher();
+                                    scope.pickedWidgetWatcher = null;
+                                });
                             }
                         }
                     }

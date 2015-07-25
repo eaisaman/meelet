@@ -303,7 +303,7 @@ define(
                                     )();
                                 }
 
-                                scope.$on(angularEventTypes.switchProjectEvent, function (event, project) {
+                                scope.switchProjectWatcher = scope.$on(angularEventTypes.switchProjectEvent, function (event, project) {
                                     refreshArtifactList(project);
                                 });
 
@@ -339,6 +339,11 @@ define(
                                 if ($rootScope.loadedProject.projectRecord && $rootScope.loadedProject.projectRecord._id) {
                                     refreshArtifactList($rootScope.loadedProject);
                                 }
+
+                                scope.$on('$destroy', function () {
+                                    scope.switchProjectWatcher && scope.switchProjectWatcher();
+                                    scope.switchProjectWatcher = null;
+                                });
                             }
                         }
                     }

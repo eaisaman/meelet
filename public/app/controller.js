@@ -639,15 +639,25 @@ define(
                     event && event.stopPropagation && event.stopPropagation();
 
                     $scope.modalUsage = "ResourceEditor";
-                    var scope = angular.element($("#frameSketchContainer > .modalWindowContainer > .md-modal")).scope();
-                    if (angular.isElement(el)) {
-                        var $el = $(el),
-                            $containerEl = $("#frameSketchContainer > .modalWindowContainer > .md-modal #frameSketchResourceArea");
+                    $scope.onModalClose = function () {
+                        uiUtilService.broadcast(scope,
+                            angularEventTypes.resourceEditEndEvent
+                        );
+                    };
 
+                    var scope = angular.element($("#frameSketchContainer > .modalWindowContainer > .md-modal")).scope(),
+                        $containerEl = $("#frameSketchContainer > .modalWindowContainer > .md-modal #frameSketchResourceArea"),
+                        $el;
+                    if (angular.isElement(el)) {
+                        $el = $(el);
                         $containerEl.append($el);
+                    } else {
+                        $el = $containerEl.find(".resourceEditor");
                     }
 
-                    return scope.toggleModalWindow();
+                    return scope.toggleModalWindow().then(function () {
+                        return uiUtilService.getResolveDefer($el);
+                    });
                 }
 
                 $scope.hideModal = function (event) {
@@ -655,6 +665,7 @@ define(
 
                     var scope = angular.element($("#frameSketchContainer > .modalWindowContainer > .md-modal")).scope();
                     scope.toggleModalWindow().then(function () {
+                        $scope.onModalClose && $scope.onModalClose();
                         $scope.onModalClose = null;
                     });
                 }
@@ -840,9 +851,9 @@ define(
 
                     $scope.resourceEditWatcher = $scope.$on(angularEventTypes.resourceEditEvent, function (event, obj) {
                         uiUtilService.once(function (obj) {
-                            return $scope.showResourceEditor(obj.editor).then(function () {
+                            return $scope.showResourceEditor(obj.editor).then(function ($editorEl) {
                                 try {
-                                    obj.callback && obj.callback();
+                                    obj.callback && obj.callback($editorEl);
                                 } catch (e) {
                                     $exceptionHandler(e);
                                 }

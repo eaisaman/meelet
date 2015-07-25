@@ -115,13 +115,18 @@ define(
                                     }
                                 }
 
-                                scope.$on(angularEventTypes.switchProjectEvent, function (event, project) {
+                                scope.switchProjectWatcher = scope.$on(angularEventTypes.switchProjectEvent, function (event, project) {
                                     scope.pickedProjectId = project.projectRecord._id;
                                 });
 
                                 if ($rootScope.loadedProject.projectRecord && $rootScope.loadedProject.projectRecord._id) {
                                     scope.pickedProjectId = $rootScope.loadedProject.projectRecord._id;
                                 }
+
+                                scope.$on('$destroy', function () {
+                                    scope.switchProjectWatcher && scope.switchProjectWatcher();
+                                    scope.switchProjectWatcher = null;
+                                });
                             }
                         }
                     }

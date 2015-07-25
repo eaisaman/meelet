@@ -11,15 +11,22 @@ define(
                 this.uiUtilService = uiUtilService;
                 this.angularConstants = angularConstants;
                 this.angularEventTypes = angularEventTypes;
+
                 this.playFinishListener = angular.noop;
+                this.markers = [];
+                this.audioClips = [];
 
                 _.extend($inject, _.pick(this, WaveVisualizer.$inject));
             },
+            PLAYING_STATE = 0,
+            PAUSED_STATE = 1,
+            FINISHED_STATE = 2,
             $canvasContainer,
             wavesurfer,
-            markers = [],
-            audioClips = [],
+            clipAudioSource,
+            clipScriptNode,
             currentSeekProgress = 0,
+            clipPlayState = FINISHED_STATE,
             visualizerWaveSeekPrecision = 100000,
             visualizerWaveHeight = 256,
             VisualizerWaveColor = "#f2f3f3",
@@ -76,8 +83,6 @@ define(
             if (wavesurfer) {
                 var $waveMarkers = $canvasContainer.find('.waveCanvasPanel .waveMarkers'),
                     waveWidth = wavesurfer.drawer.width;
-
-                arr = arr || markers;
 
                 arr.forEach(function (marker) {
                     var $marker = $("<div class='waveMarker' />").data("marker", marker).css("left", (waveWidth * marker.progress) + "px");
@@ -247,7 +252,7 @@ define(
                         visualizer.canvas.bringToFront(visualizerYAxis);
                         visualizer.canvas.bringToFront(visualizerXAxis);
 
-                        drawMarkers();
+                        drawMarkers(visualizer.markers);
                     }
                 },
                 updateProgress: function (progress) {
@@ -257,8 +262,38 @@ define(
 
                     visualizerSeekMarker.set({'x1': pos, 'y1': 0, 'x2': pos, 'y2': visualizerWaveHeight});
                     visualizer.canvas.bringToFront(visualizerSeekMarker);
+                },
+                destroy: function () {
+                    this.unAll();
+                    this.wrapper = null;
                 }
             });
+        }
+
+        WaveVisualizer.prototype.release = function () {
+            this.markers.splice(0);
+            this.audioClips.splice(0);
+
+            clearMarkers();
+
+            wavesurfer && wavesurfer.destroy();
+            if (clipAudioSource) {
+                if (clipPlayState === PLAYING_STATE) clipAudioSource.stop(0);
+                clipAudioSource.disconnect();
+            }
+
+            if (clipScriptNode) {
+                clipScriptNode.disconnect();
+                clipScriptNode.onaudioprocess = null;
+            }
+
+            wavesurfer = null;
+            clipAudioSource = null;
+            clipScriptNode = null;
+            clipPlayState = FINISHED_STATE;
+
+            this.canvas && this.canvas.clear();
+            this.canvas = null;
         }
 
         WaveVisualizer.prototype.initCanvas = function ($container) {
@@ -279,16 +314,7 @@ define(
                     height: height
                 });
 
-                self.playFinishListener = angular.noop;
-                wavesurfer && wavesurfer.destroy();
                 extendWaveSurferDrawer(self);
-                wavesurfer = Object.create(WaveSurfer);
-                wavesurfer.init({
-                    container: $container.get(0),
-                    height: visualizerWaveHeight
-                });
-            } else {
-                self.canvas.clear();
             }
 
             visualizerSeekMarker.set({'x1': 0, 'y1': 0, 'x2': 0, 'y2': 0});
@@ -297,6 +323,12 @@ define(
             self.canvas.add(visualizerSeekMarker);
             self.canvas.add(visualizerYAxis);
             self.canvas.add(visualizerXAxis);
+
+            wavesurfer = Object.create(WaveSurfer);
+            wavesurfer.init({
+                container: $container.get(0),
+                height: visualizerWaveHeight
+            });
         }
 
         WaveVisualizer.prototype.loadAudio = function (projectId, fileName) {
@@ -305,9 +337,9 @@ define(
                 defer = self.$q.defer();
 
             clearMarkers();
-            markers.splice(0);
-            audioClips.splice(0);
-            markers.push({progress: 0}, {progress: 1});
+            self.markers.splice(0);
+            self.audioClips.splice(0);
+            self.markers.push({progress: 0}, {progress: 1});
             wavesurfer.load(url);
             wavesurfer.on("ready", function () {
                 defer.resolve();
@@ -316,7 +348,7 @@ define(
                 defer.reject(err);
             })
             wavesurfer.on("finish", function () {
-                self.playFinishListener.call(!wavesurfer.backend.isPaused());
+                self.playFinishListener && self.playFinishListener.call(!wavesurfer.backend.isPaused());
             })
 
             return defer.promise;
@@ -342,9 +374,10 @@ define(
         }
 
         WaveVisualizer.prototype.addMarker = function () {
-            var index, obj;
+            var self = this,
+                index, obj;
 
-            markers.every(function (p, i) {
+            self.markers.every(function (p, i) {
                 index = i;
 
                 if (p.progress > currentSeekProgress) {
@@ -358,19 +391,35 @@ define(
             })
 
             if (!obj) {
-                markers.splice(index == null && markers.length || index, 0, obj = {
+                self.markers.splice(index == null && self.markers.length || index, 0, obj = {
                     progress: currentSeekProgress
                 })
                 return Array.prototype.concat.apply(Array.prototype, [obj, drawMarkers([obj])]);
             } else {
-                return null;
+                var $waveMarkers = $canvasContainer.find('.waveCanvasPanel .waveMarkers'),
+                    $marker;
+
+                $waveMarkers.children().toArray().every(function (element) {
+                    var $element = $(element),
+                        marker = $element.data("marker");
+
+                    if (marker && marker.progress === currentSeekProgress) {
+                        $marker = $element;
+                        return false;
+                    }
+
+                    return true;
+                });
+
+                return [obj, $marker];
             }
         }
 
         WaveVisualizer.prototype.removeMarker = function (marker) {
-            var index;
+            var self = this,
+                index;
 
-            markers.every(function (p, i) {
+            self.markers.every(function (p, i) {
                 if (p.progress === marker.progress) {
                     index = i;
                     return false;
@@ -379,8 +428,8 @@ define(
                 return true;
             });
 
-            if (index > 0 && index < markers.length - 1) {
-                markers.splice(index, 1);
+            if (index > 0 && index < self.markers.length - 1) {
+                self.markers.splice(index, 1);
                 clearMarkers([marker]);
 
                 return true;
@@ -390,9 +439,10 @@ define(
         }
 
         WaveVisualizer.prototype.selectMarker = function (marker) {
-            var index;
+            var self = this,
+                index;
 
-            if (marker && !markers.every(function (p, i) {
+            if (marker && !self.markers.every(function (p, i) {
                     if (p.progress === marker.progress) {
                         index = i;
                         return false;
@@ -400,7 +450,7 @@ define(
 
                     return true;
                 })) {
-                var pos = wavesurfer.drawer.width * markers[index].progress;
+                var pos = wavesurfer.drawer.width * self.markers[index].progress;
 
                 visualizerSeekMarker.set({'x1': pos, 'x2': pos});
                 visualizerSeekMarker.canvas.bringToFront(visualizerSeekMarker);
@@ -415,18 +465,109 @@ define(
 
         WaveVisualizer.prototype.collectAudioClip = function (startProgress, endProgress) {
             var self = this,
-                defer = self.$q.defer();
+                buffer = wavesurfer.backend.buffer,
+                context = wavesurfer.backend.ac;
 
-            return defer.promise;
+            if (buffer) {
+                var defer = self.$q.defer();
+
+                self.$timeout(function () {
+                    var channels = buffer.numberOfChannels;
+                    var startOffset = Math.round(buffer.length * startProgress),
+                        endOffset = Math.round(buffer.length * endProgress);
+                    var clipBuffer = context.createBuffer(channels, endOffset - startOffset + 1, buffer.sampleRate);
+
+                    for (var i = 0; i < channels; i++) {
+                        var channelArray = buffer.getChannelData(i);
+                        clipBuffer.getChannelData(i).set(channelArray.subarray(startOffset, endOffset));
+                    }
+
+                    var duration = wavesurfer.backend.getDuration();
+                    self.audioClips.push({
+                        startTime: duration * startProgress,
+                        endTime: duration * endProgress,
+                        duration: duration * (endProgress - startProgress),
+                        buffer: clipBuffer,
+                        progress: 0,
+                        isLooped: false
+                    });
+
+                    defer.resolve(clipBuffer);
+                });
+
+                return defer.promise;
+            } else {
+                return self.uiUtilService.getRejectDefer();
+            }
         }
 
-        WaveVisualizer.prototype.removeAudioClip = function (clipItem) {
-        }
+        WaveVisualizer.prototype.playPauseAudioClip = function (clipItem, callback) {
+            var self = this;
 
-        WaveVisualizer.prototype.playPauseAudioClip = function (clipItem) {
-        }
+            function createAudioProcessHandler(handler) {
+                return function (event) {
+                    var time = wavesurfer.backend.ac.currentTime - clipAudioSource.lastPlay,
+                        duration = clipAudioSource.buffer.duration;
 
-        WaveVisualizer.prototype.stopPlayAudioClip = function (clipItem) {
+                    if (time >= duration) {
+                        clipPlayState = FINISHED_STATE;
+                        clipAudioSource.clipItem.progress = 0;
+                        clipScriptNode.onaudioprocess = null;
+
+                        if (clipAudioSource.clipItem.isLooped) {
+                            self.$timeout(function () {
+                                self.playPauseAudioClip(clipAudioSource.clipItem, handler);
+                            });
+                        }
+                    } else {
+                        var progress = time / duration;
+                        clipAudioSource.clipItem.progress = Math.floor(progress * visualizerWaveSeekPrecision) / visualizerWaveSeekPrecision;
+                    }
+
+                    handler(clipAudioSource.clipItem, clipPlayState === PLAYING_STATE);
+                }
+            }
+            function startClipAudioSource(item, handler) {
+                clipAudioSource = wavesurfer.backend.ac.createBufferSource();
+                clipAudioSource.playbackRate.value = 1;
+
+                clipAudioSource.buffer = item.buffer;
+                clipAudioSource.clipItem = item;
+
+                clipScriptNode = wavesurfer.backend.ac.createScriptProcessor(256);
+                clipScriptNode.onaudioprocess = createAudioProcessHandler(handler);
+
+                clipAudioSource.connect(wavesurfer.backend.ac.destination);
+                clipScriptNode.connect(wavesurfer.backend.ac.destination);
+
+                clipAudioSource.start(0, item.buffer.duration * item.progress);
+                clipAudioSource.lastPlay = wavesurfer.backend.ac.currentTime;
+                clipAudioSource.clipItem.isPlaying = true;
+                clipPlayState = PLAYING_STATE;
+            }
+
+            if (clipItem && clipItem.buffer) {
+                if (clipPlayState === FINISHED_STATE || clipPlayState === PAUSED_STATE) {
+                    startClipAudioSource(clipItem, callback);
+                } else {
+                    var oldItem = clipAudioSource.clipItem;
+
+                    clipAudioSource.stop(0);
+                    clipPlayState = PAUSED_STATE;
+                    clipAudioSource.clipItem.isPlaying = false;
+
+                    clipAudioSource.disconnect();
+                    clipScriptNode.disconnect();
+                    clipScriptNode.onaudioprocess = null;
+
+                    clipAudioSource = null;
+                    clipScriptNode = null;
+
+                    if (oldItem !== clipItem) {
+                        startClipAudioSource(clipItem, callback);
+                    }
+                }
+            }
         }
 
         WaveVisualizer.prototype.removeAudioPart = function (startProgress, endProgress) {

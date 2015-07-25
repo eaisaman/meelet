@@ -57,7 +57,25 @@
         </div>
 
         <div id="audioSidebar" ui-sidebar transition="delayed3DRotate" overlay="" side="leftSide">
-            <div id="waveClipContainer" name="barContent"></div>
+            <div id="waveClipContainer" name="barContent">
+                <div class="waveClipItem fs-x-small" ng-repeat="clip in audioClips"
+                     ng-click="toggleSelectAudioClip(clip, $event)">
+                    <div class="waveClipMeter">
+                        <div class="waveClipKnob" ng-style="{'width':'{{clip.progress|percentFilter}}'}"></div>
+                    </div>
+                    <div class="startTime">{{clip.startTime|shortTimeFilter}}</div>
+                    <div class="endTime">{{clip.endTime|shortTimeFilter}}</div>
+                    <div class="duration">{{clip.duration|shortTimeFilter}}</div>
+                    <div class="removeClipButton fs-x-medium icon-resource-editor-before icon-resource-editor-delete-before"
+                         ng-click="removeAudioClip(clip, $event)"></div>
+                    <div class="playClipButton fs-x-medium icon-resource-editor-before"
+                         ng-class="{'icon-resource-editor-pause-before':clip.isPlaying, 'icon-resource-editor-play-before':!clip.isPlaying}"
+                         ng-click="playPauseAudioClip(clip, $event)"></div>
+                    <div class="loopClipButton fs-x-medium icon-resource-editor-before icon-resource-editor-rotate-before"
+                         ng-class="{'select':clip.isLooped}"
+                         ng-click="toggleAudioClipLoop(clip, $event)"></div>
+                </div>
+            </div>
             <div id="waveCanvasContainer" name="mainContent">
                 <canvas id="waveCanvas"></canvas>
                 <div class="waveCanvasPanel">

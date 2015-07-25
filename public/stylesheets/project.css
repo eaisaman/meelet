@@ -4263,6 +4263,82 @@
     transform: translateY(0);
   }
 }
+/*
+ * Found in frameSketch.html
+ */
+@-moz-keyframes tinLeftOut {
+  0%, 20%, 40%, 50% {
+    opacity: 1;
+    -moz-transform: scale(1, 1) translateX(0);
+  }
+  10%, 30% {
+    opacity: 1;
+    -moz-transform: scale(1.1, 1.1) translateX(0);
+  }
+  100% {
+    opacity: 0;
+    -moz-transform: scale(1, 1) translateX(-900%);
+  }
+}
+@-webkit-keyframes tinLeftOut {
+  0%, 20%, 40%, 50% {
+    opacity: 1;
+    -webkit-transform: scale(1, 1) translateX(0);
+  }
+  10%, 30% {
+    opacity: 1;
+    -webkit-transform: scale(1.1, 1.1) translateX(0);
+  }
+  100% {
+    opacity: 0;
+    -webkit-transform: scale(1, 1) translateX(-900%);
+  }
+}
+@-o-keyframes tinLeftOut {
+  0%, 20%, 40%, 50% {
+    opacity: 1;
+    -o-transform: scale(1, 1) translateX(0);
+  }
+  10%, 30% {
+    opacity: 1;
+    -o-transform: scale(1.1, 1.1) translateX(0);
+  }
+  100% {
+    opacity: 0;
+    -o-transform: scale(1, 1) translateX(-900%);
+  }
+}
+@-ms-keyframes tinLeftOut {
+  0%, 20%, 40%, 50% {
+    opacity: 1;
+    filter: alpha(opacity=100);
+    -ms-transform: scale(1, 1) translateX(0);
+  }
+  10%, 30% {
+    opacity: 1;
+    filter: alpha(opacity=100);
+    -ms-transform: scale(1.1, 1.1) translateX(0);
+  }
+  100% {
+    opacity: 0;
+    filter: alpha(opacity=0);
+    -ms-transform: scale(1, 1) translateX(-900%);
+  }
+}
+@keyframes tinLeftOut {
+  0%, 20%, 40%, 50% {
+    opacity: 1;
+    transform: scale(1, 1) translateX(0);
+  }
+  10%, 30% {
+    opacity: 1;
+    transform: scale(1.1, 1.1) translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1, 1) translateX(-900%);
+  }
+}
 .projectContainer .modalWindowContainer .projectMainContent .projectContent .projectItem .projectItemQrCode.show, .projectContainer .modalWindowContainer .projectMainContent .projectContent .projectItem .projectItemQrCode.hiding {
   -moz-animation-duration: 1s;
   -webkit-animation-duration: 1s;
@@ -7543,6 +7619,9 @@
   animation-name: puffOut;
 }
 
+/*
+ * Found in frameSketch.html
+ */
 /*
  * Found in frameSketch.html
  */
