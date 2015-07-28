@@ -5,6 +5,7 @@ var async = require('async');
 var _ = require('underscore');
 var bson = require('bson');
 var qr = require('qr-image');
+var FFmpeg = require('fluent-ffmpeg')
 _.string = require('underscore.string');
 _.mixin(_.string.exports());
 var commons = require('../../../commons');
@@ -575,7 +576,7 @@ UserFileController.prototype.getProjectResource = function (projectId, success, 
                             } else {
                                 _.each(fileNames, function (fileName) {
                                     var pathItem = path.join(folder, fileName);
-                                    if (fs.lstatSync(pathItem).isFile()) {
+                                    if (!/^\./.test(filename) && fs.lstatSync(pathItem).isFile()) {
                                         resources[resourceType].push(fileName);
                                     }
                                 });
@@ -741,9 +742,53 @@ UserFileController.prototype.postProjectResourceChunk = function (request, proje
                                             });
                                         },
                                         function (err) {
-                                            next(err, flowFilename);
+                                            next(err);
                                         }
                                     );
+                                },
+                                function (next) {
+                                    var ext = path.extname(finalPath),
+                                        basename = path.basename(finalPath);
+
+                                    if (ext.toLowerCase() === ".mp3") {
+                                        next(null, null);
+                                    } else {
+                                        var fileName = basename.replace(new RegExp(ext + "$", "i"), "");
+                                        if (path.extname(fileName).toLowerCase() !== ".mp3") {
+                                            fileName = fileName + ".mp3";
+                                        }
+                                        var mp3FilePath = path.join(path.dirname(finalPath), fileName);
+
+                                        new FFmpeg({source: finalPath})
+                                            .on('error', function (err) {
+                                                next(err);
+                                            })
+                                            .on('end', function () {
+                                                next(null, finalPath);
+                                            })
+                                            .withAudioCodec('libmp3lame')
+                                            .saveToFile(mp3FilePath);
+                                    }
+                                },
+                                function (wavFilePath, next) {
+                                    if (wavFilePath) {
+                                        fs.unlink(wavFilePath, function (err) {
+                                            if (err) {
+                                                if (err.code !== "ENOENT") //Not Found
+                                                {
+                                                    self.config.logger.error(err);
+                                                    next(err);
+                                                }
+                                                else {
+                                                    next(null);
+                                                }
+                                            } else {
+                                                next(null);
+                                            }
+                                        });
+                                    } else {
+                                        next(null);
+                                    }
                                 }
                             ],
                             function (err, result) {

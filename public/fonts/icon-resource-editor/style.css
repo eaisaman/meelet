@@ -136,6 +136,12 @@
 .icon-resource-editor-insert:before {
 	content: "\e618";
 }
+.icon-resource-editor-insert-before:before {
+	content: "\e619";
+}
+.icon-resource-editor-insert-after:before {
+	content: "\e61a";
+}
 
 .icon-resource-editor-rotate-before:before {
 	content: "\e600";
@@ -212,6 +218,12 @@
 .icon-resource-editor-insert-before:before {
 	content: "\e618";
 }
+.icon-resource-editor-insert-before-before:before {
+	content: "\e619";
+}
+.icon-resource-editor-insert-after-before:before {
+	content: "\e61a";
+}
 
 .icon-resource-editor-rotate-after:after {
 	content: "\e600";
@@ -287,4 +299,10 @@
 }
 .icon-resource-editor-insert-after:after {
 	content: "\e618";
+}
+.icon-resource-editor-insert-before-after:after {
+	content: "\e619";
+}
+.icon-resource-editor-insert-after-after:after {
+	content: "\e61a";
 }

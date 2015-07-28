@@ -504,6 +504,63 @@ $waveMarkerActiveColor: rgb(221, 125, 0);
                                                 }
                                             }
 
+                                            > .insertPartPopup {
+                                                position: absolute;
+                                                width: 10em;
+                                                height: 0;
+                                                overflow: visible;
+                                                visibility: hidden;
+
+                                                .btn-group {
+                                                    pointer-events: none;
+                                                    visibility: hidden;
+                                                    left: 0;
+                                                    top: 0;
+
+                                                    .dropdown-menu {
+                                                        width: 10em;
+                                                        overflow: hidden;
+                                                        padding-bottom: 0.5em;
+
+                                                        li:not(.divider) {
+                                                            height: 2.5em;
+                                                            color: $color;
+
+                                                            &:before {
+                                                                position: absolute;
+                                                                width: 2em;
+                                                                text-align: center;
+                                                                line-height: 2.5;
+                                                            }
+
+                                                            &:active {
+                                                                color: $activeColor;
+                                                            }
+
+                                                            a {
+                                                                position: relative;
+                                                                left: 2em;
+                                                                line-height: 2.5;
+                                                                color: $color;
+
+                                                                &:active {
+                                                                    color: $activeColor;
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+
+                                                &.show {
+                                                    visibility: visible;
+
+                                                    .btn-group {
+                                                        pointer-events: auto;
+                                                        visibility: visible;
+                                                    }
+                                                }
+                                            }
+
                                             canvas {
                                                 width: 100%;
                                                 height: 100%;

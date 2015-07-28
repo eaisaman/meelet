@@ -106,6 +106,7 @@ requirejs(["jquery-lib", "jquery-plugins-lib", "hammer-lib", "jquery-ui-lib", "j
             repoWidgetClass: "ui-widget",
             stateGroupEventPattern: "State Change Event of State Group {0}",
             widgetEventPattern: "Event {0} of widget {1}",
+            waveVisualizerWorkerPath: DIRECTIVE_LIB_PATH + "wave-visualizer-worker.js",
             maxAudioClipsInMemory: 4,
             maxPageCountInDom: 10,
             draggingShapeZIndex: 101,

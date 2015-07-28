@@ -1,13 +1,14 @@
 define(
     ["angular-lib", "jquery-lib", "fabric-lib", "wavesurfer-lib"],
     function () {
-        var WaveVisualizer = function ($log, $compile, $parse, $timeout, $q, $exceptionHandler, uiUtilService, uiCanvasService, angularConstants, angularEventTypes) {
+        var WaveVisualizer = function ($log, $compile, $parse, $timeout, $q, $exceptionHandler, flowFactory, uiUtilService, uiCanvasService, angularConstants, angularEventTypes) {
                 this.$log = $log;
                 this.$compile = $compile;
                 this.$parse = $parse;
                 this.$timeout = $timeout;
                 this.$q = $q;
                 this.$exceptionHandler = $exceptionHandler;
+                this.flowFactory = flowFactory;
                 this.uiUtilService = uiUtilService;
                 this.angularConstants = angularConstants;
                 this.angularEventTypes = angularEventTypes;
@@ -15,6 +16,37 @@ define(
                 this.playFinishListener = angular.noop;
                 this.markers = [];
                 this.audioClips = [];
+
+                this.resourceFlow = flowFactory.create({
+                    target: "api/public/projectResourceChunk",
+                    simultaneousUploads: 1,
+                    query: {
+                        resourceType: 'audio'
+                    },
+                    generateUniqueIdentifier: function (file) {
+                        return "{0}/{1}".format(file.attachedObj.projectId, file.attachedObj.fileName);
+                    }
+                });
+
+                this.resourceFlow.on("fileError", function (flowFileObj, message) {
+                    if (flowFileObj.file.attachedObj.defer) {
+                        flowFileObj.file.attachedObj.defer.reject(message);
+                    }
+                    flowFileObj.file.attachedObj && flowFileObj.file.attachedObj.defer && flowFileObj.file.attachedObj.defer.reject(event);
+                });
+                this.resourceFlow.on("fileSuccess", function (flowFileObj, data) {
+                    if (flowFileObj.file.attachedObj.defer) {
+                        if (data.result === "OK") {
+                            flowFileObj.file.attachedObj.defer.resolve();
+                        } else {
+                            flowFileObj.file.attachedObj.defer.reject(data.reason);
+                        }
+                    }
+
+                    flowFileObj.cancel();
+                });
+
+                this.worker = new Worker(angularConstants.waveVisualizerWorkerPath);
 
                 _.extend($inject, _.pick(this, WaveVisualizer.$inject));
             },
@@ -85,19 +117,25 @@ define(
                     waveWidth = wavesurfer.drawer.width;
 
                 arr.forEach(function (marker) {
-                    var $marker = $("<div class='waveMarker' />").data("marker", marker).css("left", (waveWidth * marker.progress) + "px");
+                    var $marker = marker.$element;
 
-                    if (marker.progress > 0 && marker.progress < 1) {
-                        var mc = new Hammer.Manager($marker.get(0));
+                    if (!$marker) {
+                        $marker = $("<div class='waveMarker' />").data("marker", marker).css("left", (waveWidth * marker.progress) + "px");
+                        marker.$element = $marker;
 
-                        mc.add(new Hammer.Pan());
-                        mc.on("panstart panmove panend", dragMarkerHandler);
-                        $marker.data("destroyHammer", function () {
-                            mc.off("panstart panmove panend", dragMarkerHandler);
-                        });
+                        if (marker.progress > 0 && marker.progress < 1) {
+                            var mc = new Hammer.Manager($marker.get(0));
+
+                            mc.add(new Hammer.Pan());
+                            mc.on("panstart panmove panend", dragMarkerHandler);
+                            $marker.data("destroyHammer", function () {
+                                mc.off("panstart panmove panend", dragMarkerHandler);
+                            });
+                        }
+
+                        $waveMarkers.append($marker);
                     }
 
-                    $waveMarkers.append($marker);
                     $markers.push($marker);
                 });
             }
@@ -157,7 +195,7 @@ define(
                 setupWrapperEvents: function () {
                     var self = this;
 
-                    self.wrapper.addEventListener('click', function (e) {
+                    self.wrapperClickHandler = function (e) {
                         var scrollbarHeight = self.wrapper.offsetHeight - self.wrapper.clientHeight;
                         if (scrollbarHeight != 0) {
                             // scrollbar is visible.  Check if click was on it
@@ -177,11 +215,14 @@ define(
 
                             self.fireEvent('click', e, currentSeekProgress);
                         }
-                    });
+                    }
 
-                    self.wrapper.addEventListener('scroll', function (e) {
+                    self.wrapperScollHanlder = function (e) {
                         self.fireEvent('scroll', e);
-                    });
+                    }
+
+                    self.wrapper.addEventListener('click', self.wrapperClickHandler);
+                    self.wrapper.addEventListener('scroll', self.wrapperScollHanlder);
                 },
                 updateSize: function () {
                     var width = Math.round(this.width / window.devicePixelRatio),
@@ -251,6 +292,7 @@ define(
 
                         visualizer.canvas.bringToFront(visualizerYAxis);
                         visualizer.canvas.bringToFront(visualizerXAxis);
+                        visualizerSeekMarker && visualizer.canvas.bringToFront(visualizerSeekMarker);
 
                         drawMarkers(visualizer.markers);
                     }
@@ -265,7 +307,16 @@ define(
                 },
                 destroy: function () {
                     this.unAll();
-                    this.wrapper = null;
+
+                    if (this.wrapperClickHandler) {
+                        this.wrapper.removeEventListener('click', this.wrapperClickHandler);
+                        this.wrapperClickHandler = null;
+                    }
+
+                    if (this.wrapperScollHanlder) {
+                        this.wrapper.removeEventListener('scroll', this.wrapperScollHanlder);
+                        this.wrapperScollHanlder = null;
+                    }
                 }
             });
         }
@@ -292,7 +343,7 @@ define(
             clipScriptNode = null;
             clipPlayState = FINISHED_STATE;
 
-            this.canvas && this.canvas.clear();
+            this.canvas && this.canvas.dispose();
             this.canvas = null;
         }
 
@@ -336,6 +387,9 @@ define(
                 url = "project/{0}/resource/audio/{1}".format(projectId, fileName),
                 defer = self.$q.defer();
 
+            self.projectId = projectId;
+            self.resourceFileName = fileName;
+
             clearMarkers();
             self.markers.splice(0);
             self.audioClips.splice(0);
@@ -365,6 +419,51 @@ define(
             }
 
             return false;
+        }
+
+        WaveVisualizer.prototype.saveAudio = function () {
+            var self = this;
+
+            var attachedObj = {projectId: self.projectId, fileName: self.resourceFileName + '.wav'};
+            var flowFile = self.resourceFlow.getFromUniqueIdentifier(self.resourceFlow.generateUniqueIdentifier({attachedObj: attachedObj}));
+            if (flowFile) {
+                return flowFile.file.attachedObj.defer.promise;
+            } else {
+                self.resourceFlow.opts.query.projectId = self.projectId;
+
+                if (wavesurfer && !self.worker.onmessage) {
+                    attachedObj.defer = self.$q.defer();
+
+                    self.worker.onmessage = function (e) {
+                        e.data.attachedObj = attachedObj;
+                        e.data.fileName = self.resourceFileName + '.wav';
+
+                        self.resourceFlow.addFile(e.data);
+                        self.resourceFlow.resume();
+
+                        self.worker.onmessage = null;
+                    }
+
+                    var channelArrays = [];
+                    var channels = wavesurfer.backend.buffer.numberOfChannels;
+                    for (var i = 0; i < channels; i++) {
+                        var channelArray = wavesurfer.backend.buffer.getChannelData(i);
+                        channelArrays.push(channelArray);
+                    }
+
+                    self.worker.postMessage({
+                        command: "encodeWAV",
+                        channelArrays: channelArrays,
+                        type: "audio/x-wav",
+                        numberOfChannels: channels,
+                        sampleRate: wavesurfer.backend.buffer.sampleRate
+                    });
+
+                    return attachedObj.defer.promise;
+                } else {
+                    return self.uiUtilService.getRejectDefer();
+                }
+            }
         }
 
         WaveVisualizer.prototype.stopPlay = function () {
@@ -417,10 +516,16 @@ define(
 
         WaveVisualizer.prototype.removeMarker = function (marker) {
             var self = this,
-                index;
+                index,
+                progress;
+
+            if (typeof marker === "number") {
+                progress = marker;
+            }
 
             self.markers.every(function (p, i) {
-                if (p.progress === marker.progress) {
+                if (p.progress === progress) {
+                    marker = p;
                     index = i;
                     return false;
                 }
@@ -527,6 +632,7 @@ define(
                     handler(clipAudioSource.clipItem, clipPlayState === PLAYING_STATE);
                 }
             }
+
             function startClipAudioSource(item, handler) {
                 clipAudioSource = wavesurfer.backend.ac.createBufferSource();
                 clipAudioSource.playbackRate.value = 1;
@@ -572,19 +678,89 @@ define(
 
         WaveVisualizer.prototype.removeAudioPart = function (startProgress, endProgress) {
             var self = this,
-                defer = self.$q.defer();
+                defer = self.$q.defer(),
+                buffer = wavesurfer.backend.buffer,
+                context = wavesurfer.backend.ac;
+
+            self.$timeout(function () {
+                if (currentSeekProgress === startProgress || currentSeekProgress === endProgress) currentSeekProgress = 0;
+
+                self.removeMarker(startProgress);
+                self.removeMarker(endProgress);
+
+                var channels = buffer.numberOfChannels;
+                var startOffset = Math.round(buffer.length * startProgress),
+                    endOffset = Math.round(buffer.length * endProgress);
+                var newBuffer = context.createBuffer(channels, buffer.length - (endOffset - startOffset + 1), buffer.sampleRate);
+
+                for (var i = 0; i < channels; i++) {
+                    var channelArray = buffer.getChannelData(i);
+
+                    if (startProgress > 0) {
+                        var beforeArray = channelArray.subarray(0, startOffset);
+                        newBuffer.getChannelData(i).set(beforeArray);
+                    }
+
+                    if (endProgress < 1) {
+                        var endArray = channelArray.subarray(endOffset + 1);
+                        newBuffer.getChannelData(i).set(endArray, startOffset);
+                    }
+                }
+
+                wavesurfer.loadDecodedBuffer(newBuffer);
+
+                defer.resolve();
+            });
 
             return defer.promise;
         }
 
-        WaveVisualizer.prototype.insertAudioPart = function (clipItem, location) {
+        WaveVisualizer.prototype.insertAudioPart = function (progress, clipItem) {
             var self = this,
-                defer = self.$q.defer();
+                defer = self.$q.defer(),
+                buffer = wavesurfer.backend.buffer,
+                context = wavesurfer.backend.ac;
+
+            self.$timeout(function () {
+                var channels = buffer.numberOfChannels;
+                var oldLength = buffer.length,
+                    newLength = buffer.length + clipItem.buffer.length,
+                    offset = Math.round(buffer.length * progress);
+                var newBuffer = context.createBuffer(channels, newLength, buffer.sampleRate);
+
+                for (var i = 0; i < channels; i++) {
+                    var channelArray = buffer.getChannelData(i),
+                        fillChannelArray = clipItem.buffer.getChannelData(i);
+
+                    if (progress > 0) {
+                        newBuffer.getChannelData(i).set(channelArray.subarray(0, offset + 1));
+                    }
+
+                    newBuffer.getChannelData(i).set(fillChannelArray, offset + 1);
+
+                    if (progress < 1) {
+                        newBuffer.getChannelData(i).set(channelArray.subarray(offset + 1), offset + clipItem.buffer.length - 1);
+                    }
+                }
+
+                var waveWidth = wavesurfer.drawer.width;
+                self.markers.forEach(function (marker) {
+                    if (marker.progress > 0 && marker.progress < 1) {
+                        var newProgress = Math.floor((oldLength * marker.progress / newLength) * visualizerWaveSeekPrecision) / visualizerWaveSeekPrecision;
+                        marker.$element.css("left", (waveWidth * newProgress) + "px");
+                        marker.progress = newProgress;
+                    }
+                });
+
+                wavesurfer.loadDecodedBuffer(newBuffer);
+
+                defer.resolve();
+            });
 
             return defer.promise;
         }
 
-        WaveVisualizer.$inject = ["$log", "$compile", "$parse", "$timeout", "$q", "$exceptionHandler", "uiUtilService", "uiCanvasService", "angularConstants", "angularEventTypes"];
+        WaveVisualizer.$inject = ["$log", "$compile", "$parse", "$timeout", "$q", "$exceptionHandler", "flowFactory", "uiUtilService", "uiCanvasService", "angularConstants", "angularEventTypes"];
         var $inject = {};
 
         return function (appModule) {

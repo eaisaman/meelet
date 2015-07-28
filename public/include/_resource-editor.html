@@ -34,7 +34,8 @@
     <div id="audioEditor" ng-show="resourceEditorType === 'audio'">
         <div class="toolPalette">
             <div class="icon-resource-editor-before icon-resource-editor-refresh-before"></div>
-            <div class="icon-resource-editor-before icon-resource-editor-save-before"></div>
+            <div class="icon-resource-editor-before icon-resource-editor-save-before"
+                 ng-click="saveAudio($event)"></div>
             <div class="icon-resource-editor-before icon-resource-editor-undo-before"></div>
             <div class="icon-resource-editor-before"
                  ng-class="{'icon-resource-editor-pause-before':isPlaying, 'icon-resource-editor-play-before':!isPlaying}"
@@ -52,7 +53,7 @@
             <div class="icon-resource-editor-before icon-resource-editor-music-copy-before"
                  ng-click="copyAudioClip($event)"></div>
             <div class="icon-resource-editor-before icon-resource-editor-bin-before"
-                 ng-click="removeAudioClip($event)"></div>
+                 ng-click="removeAudioPart($event)"></div>
             <div class="icon-resource-editor-before icon-resource-editor-edit-before"></div>
         </div>
 
@@ -78,8 +79,17 @@
             </div>
             <div id="waveCanvasContainer" name="mainContent">
                 <canvas id="waveCanvas"></canvas>
-                <div class="waveCanvasPanel">
-                    <div class="waveMarkers" ng-click="toggleSelectMarker($event)"></div>
+                <div class="waveCanvasPanel" ng-click="hideInsertPartPopup($event)">
+                    <div class="waveMarkers" ng-click="toggleSelectMarker($event)">
+                    </div>
+                </div>
+                <div class="insertPartPopup">
+                    <div class="btn-group open">
+                        <ul class="dropdown-menu fs-x-medium" role="menu">
+                            <li class="icon-resource-editor-before icon-resource-editor-insert-after-before"
+                                ng-click="insertPartAfter($event)"><a href="">Insert Clip</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>

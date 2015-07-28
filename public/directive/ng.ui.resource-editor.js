@@ -58,6 +58,71 @@ define(
                                     scope.$editorEl && scope.$editorEl.find("#audioSideBar .sideBarContainer:not(.ng-hide) #waveCanvasContainer .waveMarkers").removeClass("insertPart");
                                 }
 
+                                function displayInsertPartPopup($marker) {
+                                    if (scope.pickedAudioClip) {
+                                        var $insertPartPopup = scope.$editorEl.find("#audioSideBar .sideBarContainer:not(.ng-hide) #waveCanvasContainer .insertPartPopup"),
+                                            markerWidth,
+                                            markerHeight,
+                                            popupLeft,
+                                            popupTop;
+
+                                        var m = ($marker.css("width") || "").match(/([-\d\.]+)px$/);
+                                        if (m && m.length == 2) markerWidth = parseInt(m[1]);
+                                        m = ($marker.css("height") || "").match(/([-\d\.]+)px$/);
+                                        if (m && m.length == 2) markerHeight = parseInt(m[1]);
+
+                                        if ($marker.data("marker").progress < 1) {
+                                            popupLeft = $marker.offset().left + 1;
+                                        } else {
+                                            var popupWidth;
+                                            m = ($insertPartPopup.css("width") || "").match(/([-\d\.]+)px$/);
+                                            if (m && m.length == 2) popupWidth = parseInt(m[1]);
+
+                                            popupLeft = $marker.offset().left + markerWidth - popupWidth + 1;
+                                        }
+                                        popupTop = $marker.offset().top + markerHeight + 1;
+                                        popupLeft = popupLeft - $insertPartPopup.parent().offset().left;
+                                        popupTop = popupTop - $insertPartPopup.parent().offset().top;
+                                        popupLeft = Math.floor(popupLeft * angularConstants.precision) / angularConstants.precision;
+                                        popupTop = Math.floor(popupTop * angularConstants.precision) / angularConstants.precision;
+                                        $insertPartPopup.css("left", popupLeft + "px");
+                                        $insertPartPopup.css("top", popupTop + "px");
+
+                                        $insertPartPopup.data("marker", $marker.data("marker"));
+
+                                        scope.toggleDisplay($insertPartPopup, null, true);
+                                    }
+                                }
+
+                                scope.hideInsertPartPopup = function () {
+                                    if (scope.pickedAudioClip) {
+                                        var $insertPartPopup = scope.$editorEl.find("#audioSideBar .sideBarContainer:not(.ng-hide) #waveCanvasContainer .insertPartPopup");
+
+                                        $insertPartPopup.removeData("marker");
+
+                                        scope.toggleDisplay($insertPartPopup, null, false);
+                                    }
+                                }
+
+                                scope.insertPartAfter = function (event) {
+                                    event && event.stopPropagation && event.stopPropagation();
+
+                                    if (scope.pickedAudioClip) {
+                                        var $insertPartPopup = scope.$editorEl.find("#audioSideBar .sideBarContainer:not(.ng-hide) #waveCanvasContainer .insertPartPopup"),
+                                            marker = $insertPartPopup.data("marker");
+
+                                        return uiWaveVisualizerService.insertAudioPart(marker.progress, scope.pickedAudioClip).then(function () {
+                                            return scope.hideInsertPartPopup();
+                                        });
+                                    }
+                                }
+
+                                scope.saveAudio = function (event) {
+                                    event && event.stopPropagation && event.stopPropagation();
+
+                                    return uiWaveVisualizerService.saveAudio();
+                                }
+
                                 scope.playPauseAudio = function (event) {
                                     function playStateHandler(isPlaying) {
                                         scope.isPlaying = isPlaying;
@@ -85,6 +150,12 @@ define(
 
                                         uiWaveVisualizerService.collectAudioClip(startProgress, endProgress).then(
                                             function () {
+                                                if (_.findWhere(scope.pickedMarkers, {progress: scope.activeMarker.progress})) {
+                                                    scope.activeMarker = null;
+                                                    scope.$activeMarkerElement = null;
+                                                }
+                                                scope.pickedMarkers.splice(0);
+
                                                 uiWaveVisualizerService.removeAudioPart(startProgress, endProgress);
                                             }
                                         );
@@ -99,6 +170,23 @@ define(
                                             endProgress = Math.max(scope.pickedMarkers[0].progress, scope.pickedMarkers[1].progress);
 
                                         uiWaveVisualizerService.collectAudioClip(startProgress, endProgress);
+                                    }
+                                }
+
+                                scope.removeAudioPart = function (event) {
+                                    event && event.stopPropagation && event.stopPropagation();
+
+                                    if (scope.pickedMarkers.length === 2) {
+                                        var startProgress = Math.min(scope.pickedMarkers[0].progress, scope.pickedMarkers[1].progress),
+                                            endProgress = Math.max(scope.pickedMarkers[0].progress, scope.pickedMarkers[1].progress);
+
+                                        if (_.findWhere(scope.pickedMarkers, {progress: scope.activeMarker.progress})) {
+                                            scope.activeMarker = null;
+                                            scope.$activeMarkerElement = null;
+                                        }
+                                        scope.pickedMarkers.splice(0);
+
+                                        uiWaveVisualizerService.removeAudioPart(startProgress, endProgress);
                                     }
                                 }
 
@@ -160,8 +248,8 @@ define(
                                     audioClip.isPlaying = uiWaveVisualizerService.playPauseAudioClip(audioClip, playStateHandler);
                                 }
 
-                                scope.insertAudioPart = function (event) {
-                                    event && event.stopPropagation && event.stopPropagation();
+                                scope.insertAudioPart = function (marker, audioClip) {
+                                    return uiWaveVisualizerService.insertAudioPart(marker, audioClip);
                                 }
 
                                 scope.addMarker = function (event) {
@@ -206,7 +294,7 @@ define(
 
                                     if (touchX == null && data) {
                                         if (scope.pickedAudioClip) {
-
+                                            displayInsertPartPopup($marker);
                                         } else {
                                             scope.pickedMarkers.every(function (marker, i) {
                                                 if (marker.progress === data.progress) {

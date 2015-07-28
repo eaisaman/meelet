@@ -21127,6 +21127,53 @@
   content: "\e604";
   color: #dd7d00;
 }
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor #audioSidebar #waveCanvasContainer > .insertPartPopup {
+  position: absolute;
+  width: 10em;
+  height: 0;
+  overflow: visible;
+  visibility: hidden;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor #audioSidebar #waveCanvasContainer > .insertPartPopup .btn-group {
+  pointer-events: none;
+  visibility: hidden;
+  left: 0;
+  top: 0;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor #audioSidebar #waveCanvasContainer > .insertPartPopup .btn-group .dropdown-menu {
+  width: 10em;
+  overflow: hidden;
+  padding-bottom: 0.5em;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor #audioSidebar #waveCanvasContainer > .insertPartPopup .btn-group .dropdown-menu li:not(.divider) {
+  height: 2.5em;
+  color: rgba(0, 0, 0, 0.4);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor #audioSidebar #waveCanvasContainer > .insertPartPopup .btn-group .dropdown-menu li:not(.divider):before {
+  position: absolute;
+  width: 2em;
+  text-align: center;
+  line-height: 2.5;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor #audioSidebar #waveCanvasContainer > .insertPartPopup .btn-group .dropdown-menu li:not(.divider):active {
+  color: #669933;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor #audioSidebar #waveCanvasContainer > .insertPartPopup .btn-group .dropdown-menu li:not(.divider) a {
+  position: relative;
+  left: 2em;
+  line-height: 2.5;
+  color: rgba(0, 0, 0, 0.4);
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor #audioSidebar #waveCanvasContainer > .insertPartPopup .btn-group .dropdown-menu li:not(.divider) a:active {
+  color: #669933;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor #audioSidebar #waveCanvasContainer > .insertPartPopup.show {
+  visibility: visible;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor #audioSidebar #waveCanvasContainer > .insertPartPopup.show .btn-group {
+  pointer-events: auto;
+  visibility: visible;
+}
 #frameSketchContainer > .modalWindowContainer .frameSketchModalContent #resourceEditorModal .frameSketchResourceContainer #frameSketchResourceArea > * > div#audioEditor #audioSidebar #waveCanvasContainer canvas {
   width: 100%;
   height: 100%;
