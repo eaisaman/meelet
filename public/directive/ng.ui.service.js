@@ -592,6 +592,17 @@ define(
                     } else {
                         return $inject.uiUtilService.getResolveDefer();
                     }
+                },
+                playSound: function (resourceName) {
+                    var self = this;
+
+                    if (self.projectRecord._id) {
+                        if (_.indexOf(self.resources.audio, resourceName) !== -1) {
+                            return $inject.appService.playSound("project/{0}/resource/audio/{1}".format(self.projectRecord._id, resourceName));
+                        }
+                    }
+
+                    return $inject.uiUtilService.getResolveDefer();
                 }
             }),
             State = Class({
@@ -841,7 +852,7 @@ define(
 
                     SequenceTransitionAction.prototype.__proto__.fromObject.apply(ret, [obj]);
 
-                    var classes = ["EffectTransitionAction", "StateTransitionAction", "ConfigurationTransitionAction", "MovementTransitionAction"];
+                    var classes = ["EffectTransitionAction", "StateTransitionAction", "ConfigurationTransitionAction", "MovementTransitionAction", "SoundTransitionAction"];
                     obj.childActions && obj.childActions.forEach(function (action) {
                         var className = action.CLASS_NAME,
                             actionObj;
@@ -901,6 +912,8 @@ define(
                         action = new ConfigurationTransitionAction(this.widgetObj);
                     } else if (actionType === "Movement") {
                         action = new MovementTransitionAction(this.widgetObj);
+                    } else if (actionType === "Sound") {
+                        action = new SoundTransitionAction(this.widgetObj);
                     }
 
                     action && this.childActions.push(action);
@@ -1340,6 +1353,47 @@ define(
                         var left = self.widgetObj.css("left"), top = self.widgetObj.css("top");
                         self.widgetObj.css("left", left), self.widgetObj.css("top", top);
                     }
+                }
+            }),
+            SoundTransitionAction = Class(BaseTransitionAction, {
+                CLASS_NAME: "SoundTransitionAction",
+                MEMBERS: {
+                    resourceName: ""
+                },
+                initialize: function (widgetObj, id) {
+                    this.initialize.prototype.__proto__.initialize.apply(this, [widgetObj, "Sound", id]);
+                    var MEMBERS = arguments.callee.prototype.MEMBERS;
+
+                    for (var member in MEMBERS) {
+                        this[member] = angular.copy(MEMBERS[member]);
+                    }
+                },
+                toJSON: function () {
+                    var jsonObj = SoundTransitionAction.prototype.__proto__.toJSON.apply(this);
+                    _.extend(jsonObj, _.pick(this, ["resourceName", "CLASS_NAME"]));
+
+                    return jsonObj;
+                },
+                fromObject: function (obj) {
+                    var ret = new SoundTransitionAction(null, obj.id);
+
+                    SoundTransitionAction.prototype.__proto__.fromObject.apply(ret, [obj]);
+                    ret.resourceName = obj.resourceName;
+
+                    return ret;
+                },
+                clone: function (cloneObj, MEMBERS) {
+                    cloneObj = cloneObj || new SoundTransitionAction(this.widgetObj);
+                    cloneObj.resourceName = this.resourceName;
+
+                    _.extend(MEMBERS = MEMBERS || {}, SoundTransitionAction.prototype.MEMBERS);
+
+                    SoundTransitionAction.prototype.__proto__.clone.apply(this, [cloneObj, MEMBERS]);
+
+                    return cloneObj;
+                },
+                doAction: function () {
+                    return this.resourceName && $inject.$rootScope.loadedProject.playSound(this.resourceName) || $inject.uiUtilService.getResolveDefer();
                 }
             }),
             BaseTrigger = Class({

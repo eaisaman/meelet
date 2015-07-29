@@ -576,7 +576,7 @@ UserFileController.prototype.getProjectResource = function (projectId, success, 
                             } else {
                                 _.each(fileNames, function (fileName) {
                                     var pathItem = path.join(folder, fileName);
-                                    if (!/^\./.test(filename) && fs.lstatSync(pathItem).isFile()) {
+                                    if (!/^\./.test(fileName) && fs.lstatSync(pathItem).isFile()) {
                                         resources[resourceType].push(fileName);
                                     }
                                 });
@@ -652,20 +652,18 @@ UserFileController.prototype.postProjectResourceChunk = function (request, proje
                             var partName = flowFilename + ".part" + flowChunkNumber;
 
                             fs.rename(result[0], path.join(resourcePath, partName), function (err) {
-                                next(err, partName);
+                                next(err);
                             })
                         } else {
                             next("No files uploaded.");
                         }
                     }, next);
                 }
-            ], function (err, result) {
+            ], function (err) {
                 if (!err) {
                     if (flowChunkNumber == flowTotalChunks) {
-                        var finalPath = path.join(resourcePath, flowFilename);
-
-                        async.waterfall(
-                            [
+                        var finalPath = path.join(resourcePath, flowFilename),
+                            arr = [
                                 function (next) {
                                     fs.unlink(finalPath, function (err) {
                                         if (err) {
@@ -745,62 +743,68 @@ UserFileController.prototype.postProjectResourceChunk = function (request, proje
                                             next(err);
                                         }
                                     );
-                                },
-                                function (next) {
-                                    var ext = path.extname(finalPath),
-                                        basename = path.basename(finalPath);
+                                }
+                            ];
 
-                                    if (ext.toLowerCase() === ".mp3") {
-                                        next(null, null);
-                                    } else {
-                                        var fileName = basename.replace(new RegExp(ext + "$", "i"), "");
-                                        if (path.extname(fileName).toLowerCase() !== ".mp3") {
-                                            fileName = fileName + ".mp3";
-                                        }
-                                        var mp3FilePath = path.join(path.dirname(finalPath), fileName);
+                        if (resourceType === "audio") {
+                            arr.push(function (next) {
+                                var ext = path.extname(finalPath),
+                                    basename = path.basename(finalPath);
 
-                                        new FFmpeg({source: finalPath})
-                                            .on('error', function (err) {
-                                                next(err);
-                                            })
-                                            .on('end', function () {
-                                                next(null, finalPath);
-                                            })
-                                            .withAudioCodec('libmp3lame')
-                                            .saveToFile(mp3FilePath);
+                                if (ext.toLowerCase() === ".mp3") {
+                                    next(null, null);
+                                } else {
+                                    var fileName = basename.replace(new RegExp(ext + "$", "i"), "");
+                                    if (path.extname(fileName).toLowerCase() !== ".mp3") {
+                                        fileName = fileName + ".mp3";
                                     }
-                                },
-                                function (wavFilePath, next) {
-                                    if (wavFilePath) {
-                                        fs.unlink(wavFilePath, function (err) {
-                                            if (err) {
-                                                if (err.code !== "ENOENT") //Not Found
-                                                {
-                                                    self.config.logger.error(err);
-                                                    next(err);
-                                                }
-                                                else {
-                                                    next(null);
-                                                }
-                                            } else {
+                                    var mp3FilePath = path.join(path.dirname(finalPath), fileName);
+
+                                    new FFmpeg({source: finalPath})
+                                        .on('error', function (err) {
+                                            next(err);
+                                        })
+                                        .on('end', function () {
+                                            next(null, finalPath);
+                                        })
+                                        .withAudioCodec('libmp3lame')
+                                        .saveToFile(mp3FilePath);
+                                }
+                            });
+                            arr.push(function (wavFilePath, next) {
+                                if (wavFilePath) {
+                                    fs.unlink(wavFilePath, function (err) {
+                                        if (err) {
+                                            if (err.code !== "ENOENT") //Not Found
+                                            {
+                                                self.config.logger.error(err);
+                                                next(err);
+                                            }
+                                            else {
                                                 next(null);
                                             }
-                                        });
-                                    } else {
-                                        next(null);
-                                    }
+                                        } else {
+                                            next(null);
+                                        }
+                                    });
+                                } else {
+                                    next(null);
                                 }
-                            ],
-                            function (err, result) {
+                            });
+                        }
+
+                        async.waterfall(
+                            arr,
+                            function (err) {
                                 if (!err) {
-                                    success(result);
+                                    success();
                                 } else {
                                     fail(err, {statusCode: 500});
                                 }
                             }
                         );
                     } else {
-                        success(result);
+                        success();
                     }
                 } else {
                     fail(err, {statusCode: 500});

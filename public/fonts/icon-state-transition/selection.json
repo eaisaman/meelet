@@ -26,7 +26,7 @@
 				"name": "library"
 			},
 			"setIdx": 0,
-			"setId": 32,
+			"setId": 97,
 			"iconIdx": 0
 		},
 		{
@@ -54,7 +54,7 @@
 				"name": "exit"
 			},
 			"setIdx": 0,
-			"setId": 32,
+			"setId": 97,
 			"iconIdx": 1
 		},
 		{
@@ -86,7 +86,7 @@
 				"name": "option"
 			},
 			"setIdx": 0,
-			"setId": 32,
+			"setId": 97,
 			"iconIdx": 2
 		},
 		{
@@ -111,7 +111,7 @@
 				"ligatures": ""
 			},
 			"setIdx": 0,
-			"setId": 32,
+			"setId": 97,
 			"iconIdx": 3
 		},
 		{
@@ -174,7 +174,7 @@
 				"ligatures": ""
 			},
 			"setIdx": 0,
-			"setId": 32,
+			"setId": 97,
 			"iconIdx": 4
 		},
 		{
@@ -202,7 +202,7 @@
 				"ligatures": ""
 			},
 			"setIdx": 0,
-			"setId": 32,
+			"setId": 97,
 			"iconIdx": 5
 		},
 		{
@@ -227,7 +227,7 @@
 				"name": "square-check"
 			},
 			"setIdx": 0,
-			"setId": 32,
+			"setId": 97,
 			"iconIdx": 6
 		},
 		{
@@ -252,7 +252,7 @@
 				"name": "square"
 			},
 			"setIdx": 0,
-			"setId": 32,
+			"setId": 97,
 			"iconIdx": 7
 		},
 		{
@@ -284,7 +284,7 @@
 				"name": "current-state"
 			},
 			"setIdx": 0,
-			"setId": 32,
+			"setId": 97,
 			"iconIdx": 8
 		},
 		{
@@ -319,7 +319,7 @@
 				"ligatures": ""
 			},
 			"setIdx": 0,
-			"setId": 32,
+			"setId": 97,
 			"iconIdx": 9
 		},
 		{
@@ -345,7 +345,7 @@
 				"ligatures": ""
 			},
 			"setIdx": 0,
-			"setId": 32,
+			"setId": 97,
 			"iconIdx": 10
 		},
 		{
@@ -371,7 +371,7 @@
 				"ligatures": ""
 			},
 			"setIdx": 0,
-			"setId": 32,
+			"setId": 97,
 			"iconIdx": 11
 		},
 		{
@@ -406,7 +406,7 @@
 				"ligatures": ""
 			},
 			"setIdx": 0,
-			"setId": 32,
+			"setId": 97,
 			"iconIdx": 12
 		},
 		{
@@ -436,7 +436,7 @@
 				"ligatures": ""
 			},
 			"setIdx": 0,
-			"setId": 32,
+			"setId": 97,
 			"iconIdx": 13
 		},
 		{
@@ -462,7 +462,7 @@
 				"ligatures": ""
 			},
 			"setIdx": 0,
-			"setId": 32,
+			"setId": 97,
 			"iconIdx": 14
 		},
 		{
@@ -488,7 +488,7 @@
 				"ligatures": ""
 			},
 			"setIdx": 0,
-			"setId": 32,
+			"setId": 97,
 			"iconIdx": 15
 		},
 		{
@@ -514,7 +514,7 @@
 				"ligatures": ""
 			},
 			"setIdx": 0,
-			"setId": 32,
+			"setId": 97,
 			"iconIdx": 16
 		},
 		{
@@ -539,8 +539,38 @@
 				"name": "configuration"
 			},
 			"setIdx": 0,
-			"setId": 32,
+			"setId": 97,
 			"iconIdx": 17
+		},
+		{
+			"icon": {
+				"paths": [
+					"M960 0h64v736c0 88.366-100.29 160-224 160s-224-71.634-224-160c0-88.368 100.29-160 224-160 62.684 0 119.342 18.4 160 48.040v-368.040l-512 113.778v494.222c0 88.366-100.288 160-224 160s-224-71.634-224-160c0-88.368 100.288-160 224-160 62.684 0 119.342 18.4 160 48.040v-624.040l576-128z"
+				],
+				"attrs": [],
+				"isMulticolor": false,
+				"tags": [
+					"music",
+					"song",
+					"audio",
+					"sound",
+					"note"
+				],
+				"defaultCode": 57404,
+				"grid": 24
+			},
+			"attrs": [],
+			"properties": {
+				"id": 114,
+				"order": 42,
+				"prevSize": 24,
+				"code": 58898,
+				"ligatures": "music, song",
+				"name": "sound"
+			},
+			"setIdx": 0,
+			"setId": 97,
+			"iconIdx": 32
 		},
 		{
 			"icon": {
@@ -561,12 +591,12 @@
 				"id": 35,
 				"order": 50,
 				"prevSize": 20,
-				"code": 58898,
+				"code": 58899,
 				"name": "perspective",
 				"ligatures": ""
 			},
 			"setIdx": 0,
-			"setId": 32,
+			"setId": 97,
 			"iconIdx": 18
 		},
 		{
@@ -588,11 +618,11 @@
 				"id": 97,
 				"order": 24,
 				"prevSize": 32,
-				"code": 58899,
+				"code": 58900,
 				"name": "sequence"
 			},
 			"setIdx": 0,
-			"setId": 32,
+			"setId": 97,
 			"iconIdx": 19
 		},
 		{
@@ -614,11 +644,11 @@
 				"id": 70,
 				"order": 25,
 				"prevSize": 32,
-				"code": 58900,
+				"code": 58901,
 				"name": "set-state"
 			},
 			"setIdx": 0,
-			"setId": 32,
+			"setId": 97,
 			"iconIdx": 20
 		},
 		{
@@ -640,12 +670,12 @@
 				"id": 230,
 				"order": 54,
 				"prevSize": 28,
-				"code": 58901,
+				"code": 58902,
 				"name": "angle-double-up",
 				"ligatures": ""
 			},
 			"setIdx": 0,
-			"setId": 32,
+			"setId": 97,
 			"iconIdx": 21
 		},
 		{
@@ -675,12 +705,12 @@
 				"order": 36,
 				"id": 0,
 				"prevSize": 28,
-				"code": 58902,
+				"code": 58903,
 				"name": "flag",
 				"ligatures": ""
 			},
 			"setIdx": 0,
-			"setId": 32,
+			"setId": 97,
 			"iconIdx": 22
 		},
 		{
@@ -710,12 +740,12 @@
 				"order": 37,
 				"id": 4,
 				"prevSize": 28,
-				"code": 58903,
+				"code": 58904,
 				"name": "one-finger-swipe-left",
 				"ligatures": ""
 			},
 			"setIdx": 0,
-			"setId": 32,
+			"setId": 97,
 			"iconIdx": 23
 		},
 		{
@@ -745,12 +775,12 @@
 				"order": 38,
 				"id": 3,
 				"prevSize": 28,
-				"code": 58904,
+				"code": 58905,
 				"name": "one-finger-swipe-right",
 				"ligatures": ""
 			},
 			"setIdx": 0,
-			"setId": 32,
+			"setId": 97,
 			"iconIdx": 24
 		},
 		{
@@ -780,12 +810,12 @@
 				"order": 39,
 				"id": 2,
 				"prevSize": 28,
-				"code": 58905,
+				"code": 58906,
 				"name": "one-finger-swipe-down",
 				"ligatures": ""
 			},
 			"setIdx": 0,
-			"setId": 32,
+			"setId": 97,
 			"iconIdx": 25
 		},
 		{
@@ -815,12 +845,12 @@
 				"order": 40,
 				"id": 1,
 				"prevSize": 28,
-				"code": 58906,
+				"code": 58907,
 				"name": "one-finger-swipe-up",
 				"ligatures": ""
 			},
 			"setIdx": 0,
-			"setId": 32,
+			"setId": 97,
 			"iconIdx": 26
 		},
 		{
@@ -850,12 +880,12 @@
 				"order": 41,
 				"id": 0,
 				"prevSize": 28,
-				"code": 58907,
+				"code": 58908,
 				"name": "one-finger-tap",
 				"ligatures": ""
 			},
 			"setIdx": 0,
-			"setId": 32,
+			"setId": 97,
 			"iconIdx": 27
 		},
 		{
@@ -877,12 +907,12 @@
 				"id": 259,
 				"order": 42,
 				"prevSize": 28,
-				"code": 58908,
+				"code": 58909,
 				"name": "static-effects-out",
 				"ligatures": ""
 			},
 			"setIdx": 0,
-			"setId": 32,
+			"setId": 97,
 			"iconIdx": 28
 		},
 		{
@@ -912,12 +942,12 @@
 				"order": 43,
 				"id": 0,
 				"prevSize": 28,
-				"code": 58909,
+				"code": 58910,
 				"name": "tin",
 				"ligatures": ""
 			},
 			"setIdx": 0,
-			"setId": 32,
+			"setId": 97,
 			"iconIdx": 29
 		},
 		{
@@ -947,12 +977,12 @@
 				"order": 44,
 				"id": 0,
 				"prevSize": 28,
-				"code": 58910,
+				"code": 58911,
 				"name": "bomb",
 				"ligatures": ""
 			},
 			"setIdx": 0,
-			"setId": 32,
+			"setId": 97,
 			"iconIdx": 30
 		},
 		{
@@ -974,12 +1004,12 @@
 				"id": 6,
 				"order": 46,
 				"prevSize": 28,
-				"code": 58911,
+				"code": 58912,
 				"name": "static-effects",
 				"ligatures": ""
 			},
 			"setIdx": 0,
-			"setId": 32,
+			"setId": 97,
 			"iconIdx": 31
 		}
 	],
@@ -1008,7 +1038,8 @@
 			"showSelector": true,
 			"selector": "class",
 			"classSelector": ".icon-state-transition",
-			"showMetrics": false
+			"showMetrics": false,
+			"embed": false
 		},
 		"imagePref": {
 			"prefix": "icon-",

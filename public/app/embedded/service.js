@@ -104,6 +104,8 @@ define(
 
         appService.prototype.convertToHtml = appService.prototype.NOOP;
 
+        appService.prototype.playSound = appService.prototype.NOOP;
+
         return function (appModule) {
             appModule.
                 config(['$httpProvider',

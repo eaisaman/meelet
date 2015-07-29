@@ -194,7 +194,8 @@
                     <div class="input-group col-as-12 fs-x-smaller">
                         <label class="col-as-5 no-padding control-label fs-x-smaller">{{settingItem.name}}</label>
 
-                        <div ng-if="settingItem.type === 'list'" class="no-padding col-as-7" ng-click="$event.stopPropagation()">
+                        <div ng-if="settingItem.type === 'list'" class="no-padding col-as-7"
+                             ng-click="$event.stopPropagation()">
                             <select class="form-control" ng-model="settingItem.pickedValue">
                                 <option value="{{opt}}" ng-attr-selected="{{settingItem.pickedValue === opt}}"
                                         ng-repeat="opt in settingItem.options">
@@ -219,6 +220,32 @@
                             <input type="text"
                                    class="form-control no-padding fs-x-smaller"
                                    ng-model="settingItem.pickedValue"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="accordianGroup" ng-if="item.actionType == 'Sound'" ng-click="toggleSelect($event.currentTarget)">
+        <div class="accordianTitle col-as-12 icon-state-transition-before icon-state-transition-sound-before">
+            <div class="deleteButton fs-x-tiny icon-state-transition-before icon-state-transition-cross-before"
+                 ng-click="deleteAction(parentAction, item, $event)"></div>
+            <span class="col-as-offset-1 col-as-4 no-padding">Sound</span>
+        </div>
+        <div class="accordianBody col-as-12 no-padding">
+            <div class="soundBody" ng-click="$event.stopPropagation()">
+                <div class="soundPane">
+                    <div class="input-group col-as-12 fs-x-smaller">
+                        <label class="col-as-5 no-padding control-label">Resources</label>
+
+                        <div class="soundResourceList no-padding col-as-7" ng-click="$event.stopPropagation()">
+                            <select class="form-control" ng-model="item.resourceName">
+                                <option value="{{resourceName}}"
+                                        ng-attr-selected="{{item.resourceName === resourceName}}"
+                                        ng-repeat="resourceName in $root.loadedProject.resources.audio">
+                                    {{resourceName}}
+                                </option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -308,6 +335,7 @@
                                             <option value="State">Change State</option>
                                             <option value="Configuration">Change Configuration</option>
                                             <option value="Movement">Movement</option>
+                                            <option value="Sound">Sound</option>
                                         </select>
                                         <span class="input-group-addon fs-x-smaller-before icon-state-transition-before icon-state-transition-plus-before"
                                               ng-click="createAction(transition.actionObj, $event);toggleSelect('.emptyAction', $event)"></span>

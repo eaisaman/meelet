@@ -101,47 +101,50 @@
 .icon-state-transition-configuration:before {
     content: "\e611";
 }
-.icon-state-transition-perspective:before {
+.icon-state-transition-sound:before {
     content: "\e612";
 }
-.icon-state-transition-sequence:before {
+.icon-state-transition-perspective:before {
     content: "\e613";
 }
-.icon-state-transition-set-state:before {
+.icon-state-transition-sequence:before {
     content: "\e614";
 }
-.icon-state-transition-angle-double-up:before {
+.icon-state-transition-set-state:before {
     content: "\e615";
 }
-.icon-state-transition-flag:before {
+.icon-state-transition-angle-double-up:before {
     content: "\e616";
 }
-.icon-state-transition-one-finger-swipe-left:before {
+.icon-state-transition-flag:before {
     content: "\e617";
 }
-.icon-state-transition-one-finger-swipe-right:before {
+.icon-state-transition-one-finger-swipe-left:before {
     content: "\e618";
 }
-.icon-state-transition-one-finger-swipe-down:before {
+.icon-state-transition-one-finger-swipe-right:before {
     content: "\e619";
 }
-.icon-state-transition-one-finger-swipe-up:before {
+.icon-state-transition-one-finger-swipe-down:before {
     content: "\e61a";
 }
-.icon-state-transition-one-finger-tap:before {
+.icon-state-transition-one-finger-swipe-up:before {
     content: "\e61b";
 }
-.icon-state-transition-static-effects-out:before {
+.icon-state-transition-one-finger-tap:before {
     content: "\e61c";
 }
-.icon-state-transition-tin:before {
+.icon-state-transition-static-effects-out:before {
     content: "\e61d";
 }
-.icon-state-transition-bomb:before {
+.icon-state-transition-tin:before {
     content: "\e61e";
 }
-.icon-state-transition-static-effects:before {
+.icon-state-transition-bomb:before {
     content: "\e61f";
+}
+.icon-state-transition-static-effects:before {
+    content: "\e620";
 }
 
 .icon-state-transition-library-before:before {
@@ -198,47 +201,50 @@
 .icon-state-transition-configuration-before:before {
     content: "\e611";
 }
-.icon-state-transition-perspective-before:before {
+.icon-state-transition-sound-before:before {
     content: "\e612";
 }
-.icon-state-transition-sequence-before:before {
+.icon-state-transition-perspective-before:before {
     content: "\e613";
 }
-.icon-state-transition-set-state-before:before {
+.icon-state-transition-sequence-before:before {
     content: "\e614";
 }
-.icon-state-transition-angle-double-up-before:before {
+.icon-state-transition-set-state-before:before {
     content: "\e615";
 }
-.icon-state-transition-flag-before:before {
+.icon-state-transition-angle-double-up-before:before {
     content: "\e616";
 }
-.icon-state-transition-one-finger-swipe-left-before:before {
+.icon-state-transition-flag-before:before {
     content: "\e617";
 }
-.icon-state-transition-one-finger-swipe-right-before:before {
+.icon-state-transition-one-finger-swipe-left-before:before {
     content: "\e618";
 }
-.icon-state-transition-one-finger-swipe-down-before:before {
+.icon-state-transition-one-finger-swipe-right-before:before {
     content: "\e619";
 }
-.icon-state-transition-one-finger-swipe-up-before:before {
+.icon-state-transition-one-finger-swipe-down-before:before {
     content: "\e61a";
 }
-.icon-state-transition-one-finger-tap-before:before {
+.icon-state-transition-one-finger-swipe-up-before:before {
     content: "\e61b";
 }
-.icon-state-transition-static-effects-out-before:before {
+.icon-state-transition-one-finger-tap-before:before {
     content: "\e61c";
 }
-.icon-state-transition-tin-before:before {
+.icon-state-transition-static-effects-out-before:before {
     content: "\e61d";
 }
-.icon-state-transition-bomb-before:before {
+.icon-state-transition-tin-before:before {
     content: "\e61e";
 }
-.icon-state-transition-static-effects-before:before {
+.icon-state-transition-bomb-before:before {
     content: "\e61f";
+}
+.icon-state-transition-static-effects-before:before {
+    content: "\e620";
 }
 
 .icon-state-transition-library-after:after {
@@ -295,45 +301,48 @@
 .icon-state-transition-configuration-after:after {
     content: "\e611";
 }
-.icon-state-transition-perspective-after:after {
+.icon-state-transition-sound-after:after {
     content: "\e612";
 }
-.icon-state-transition-sequence-after:after {
+.icon-state-transition-perspective-after:after {
     content: "\e613";
 }
-.icon-state-transition-set-state-after:after {
+.icon-state-transition-sequence-after:after {
     content: "\e614";
 }
-.icon-state-transition-angle-double-up-after:after {
+.icon-state-transition-set-state-after:after {
     content: "\e615";
 }
-.icon-state-transition-flag-after:after {
+.icon-state-transition-angle-double-up-after:after {
     content: "\e616";
 }
-.icon-state-transition-one-finger-swipe-left-after:after {
+.icon-state-transition-flag-after:after {
     content: "\e617";
 }
-.icon-state-transition-one-finger-swipe-right-after:after {
+.icon-state-transition-one-finger-swipe-left-after:after {
     content: "\e618";
 }
-.icon-state-transition-one-finger-swipe-down-after:after {
+.icon-state-transition-one-finger-swipe-right-after:after {
     content: "\e619";
 }
-.icon-state-transition-one-finger-swipe-up-after:after {
+.icon-state-transition-one-finger-swipe-down-after:after {
     content: "\e61a";
 }
-.icon-state-transition-one-finger-tap-after:after {
+.icon-state-transition-one-finger-swipe-up-after:after {
     content: "\e61b";
 }
-.icon-state-transition-static-effects-out-after:after {
+.icon-state-transition-one-finger-tap-after:after {
     content: "\e61c";
 }
-.icon-state-transition-tin-after:after {
+.icon-state-transition-static-effects-out-after:after {
     content: "\e61d";
 }
-.icon-state-transition-bomb-after:after {
+.icon-state-transition-tin-after:after {
     content: "\e61e";
 }
-.icon-state-transition-static-effects-after:after {
+.icon-state-transition-bomb-after:after {
     content: "\e61f";
+}
+.icon-state-transition-static-effects-after:after {
+    content: "\e620";
 }
