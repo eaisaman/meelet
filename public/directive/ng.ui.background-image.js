@@ -42,9 +42,9 @@ define(
                                         {
                                             backgroundImage: function (value) {
                                                 scope.backgroundImage = value;
-                                                scope.pickedBackgroundImageUrl = scope.pickBackgroundImageValue(null);
+                                                scope.pickedBackgroundImageName = scope.pickBackgroundImageValue(null);
 
-                                                if (scope.pickedBackgroundImageUrl) {
+                                                if (scope.pickedBackgroundImageName) {
                                                     scope.pickedBackgroundPosition = scope.pickBackgroundPositionValue();
                                                     scope.pickedBackgroundRepeat = scope.pickBackgroundRepeatValue();
 
@@ -88,7 +88,14 @@ define(
                                 }
 
                                 scope.pickBackgroundImageValue = function (pseudo) {
-                                    return scope.backgroundImage && scope.pickStyle(scope.backgroundImage, pseudo != null ? pseudo : scope.pseudo)["background-image"] || null;
+                                    var imageUrl = scope.backgroundImage && scope.pickStyle(scope.backgroundImage, pseudo != null ? pseudo : scope.pseudo)["background-image"] || null;
+                                    if (imageUrl) {
+                                        var index = imageUrl.lastIndexOf("/");
+                                        if (index != null)
+                                            imageUrl = imageUrl.slice(index + 1);
+                                    }
+
+                                    return imageUrl;
                                 }
 
                                 scope.pickBackgroundPositionValue = function (pseudo, useDefault) {
@@ -299,7 +306,7 @@ define(
                                                 var defer = $q.defer();
 
                                                 $timeout(function () {
-                                                    scope.watchBackgroundImageValue(false);
+                                                    //scope.watchBackgroundImageValue(false);
                                                     scope.watchBackgroundPositionValue(false);
 
                                                     defer.resolve();
@@ -314,7 +321,7 @@ define(
                                                 var defer = $q.defer();
 
                                                 $timeout(function () {
-                                                    scope.watchBackgroundImageValue(true);
+                                                    //scope.watchBackgroundImageValue(true);
                                                     scope.watchBackgroundPositionValue(true);
 
                                                     defer.resolve();
@@ -326,28 +333,17 @@ define(
                                     }
                                 }
 
-                                scope.onUploadSuccess = function ($file, $message) {
-                                    if ($message) {
-                                        var ret = JSON.parse($message);
-                                        if (ret.result && ret.result === "OK") {
-                                            var finalName = ret.resultValue;
-                                            scope.setBackgroundImageUrl("project/{0}/images/{1}".format($rootScope.loadedProject.projectRecord._id, finalName));
-                                        }
-                                    }
-
-                                    $file.cancel();
-                                }
-
                                 scope.clearBackgroundImageUrl = function (event) {
                                     event && event.stopPropagation && event.stopPropagation();
 
-                                    if (scope.pickedBackgroundImageUrl) {
-                                        appService.removeProjectImage($rootScope.loadedProject.projectRecord._id, scope.pickedBackgroundImageUrl).then(function (ret) {
-                                            if (ret && ret.data.result === "OK") {
-                                                scope.setBackgroundImageUrl("");
-                                            }
-                                        });
+                                    if (scope.pickedBackgroundImageName) {
+                                        scope.setBackgroundImageUrl("");
+                                        scope.pickedBackgroundImageName = "";
                                     }
+                                }
+
+                                scope.onChangeBackgroundImageName = function () {
+                                    scope.setBackgroundImageUrl('project/{0}/resource/image/{1}'.format($rootScope.loadedProject.projectRecord._id, scope.pickedBackgroundImageName));
                                 }
 
                                 scope.setBackgroundImageUrl = function (value) {
@@ -362,8 +358,6 @@ define(
 
                                         //Trigger watcher on sketchWidgetSetting.backgroundImage to apply style to widget
                                         scope.backgroundImage = angular.copy(scope.backgroundImage);
-
-                                        scope.pickedBackgroundImageUrl = value;
                                     }
                                 }
 
@@ -502,9 +496,9 @@ define(
                                 )();
 
                                 scope.pseudoChangeWatcher = scope.$on(angularEventTypes.widgetPseudoChangeEvent, function (event, pseudo) {
-                                    scope.pickedBackgroundImageUrl = scope.pickBackgroundImageValue(pseudo);
+                                    scope.pickedBackgroundImageName = scope.pickBackgroundImageValue(pseudo);
 
-                                    if (scope.pickedBackgroundImageUrl) {
+                                    if (scope.pickedBackgroundImageName) {
                                         scope.pickedBackgroundPosition = scope.pickBackgroundPositionValue(pseudo);
                                         scope.pickedBackgroundRepeat = scope.pickBackgroundRepeatValue(pseudo);
 

@@ -740,71 +740,73 @@ UserFileController.prototype.postProjectResourceChunk = function (request, proje
                                             });
                                         },
                                         function (err) {
-                                            next(err);
+                                            next(err, flowFilename);
                                         }
                                     );
                                 }
                             ];
 
                         if (resourceType === "audio") {
-                            arr.push(function (next) {
-                                var ext = path.extname(finalPath),
-                                    basename = path.basename(finalPath);
+                            arr.push(
+                                function (name, next) {
+                                    var ext = path.extname(finalPath),
+                                        basename = path.basename(finalPath);
 
-                                if (ext.toLowerCase() === ".mp3") {
-                                    next(null, null);
-                                } else {
-                                    var fileName = basename.replace(new RegExp(ext + "$", "i"), "");
-                                    if (path.extname(fileName).toLowerCase() !== ".mp3") {
-                                        fileName = fileName + ".mp3";
-                                    }
-                                    var mp3FilePath = path.join(path.dirname(finalPath), fileName);
-
-                                    new FFmpeg({source: finalPath})
-                                        .on('error', function (err) {
-                                            next(err);
-                                        })
-                                        .on('end', function () {
-                                            next(null, finalPath);
-                                        })
-                                        .withAudioCodec('libmp3lame')
-                                        .saveToFile(mp3FilePath);
-                                }
-                            });
-                            arr.push(function (wavFilePath, next) {
-                                if (wavFilePath) {
-                                    fs.unlink(wavFilePath, function (err) {
-                                        if (err) {
-                                            if (err.code !== "ENOENT") //Not Found
-                                            {
-                                                self.config.logger.error(err);
-                                                next(err);
-                                            }
-                                            else {
-                                                next(null);
-                                            }
-                                        } else {
-                                            next(null);
+                                    if (ext.toLowerCase() === ".mp3") {
+                                        next(null, null, name);
+                                    } else {
+                                        var fileName = basename.replace(new RegExp(ext + "$", "i"), "");
+                                        if (path.extname(fileName).toLowerCase() !== ".mp3") {
+                                            fileName = fileName + ".mp3";
                                         }
-                                    });
-                                } else {
-                                    next(null);
-                                }
-                            });
+                                        var mp3FilePath = path.join(path.dirname(finalPath), fileName);
+
+                                        new FFmpeg({source: finalPath})
+                                            .on('error', function (err) {
+                                                next(err);
+                                            })
+                                            .on('end', function () {
+                                                next(null, finalPath, fileName);
+                                            })
+                                            .withAudioCodec('libmp3lame')
+                                            .saveToFile(mp3FilePath);
+                                    }
+                                });
+                            arr.push(
+                                function (wavFilePath, savedFileName, next) {
+                                    if (wavFilePath) {
+                                        fs.unlink(wavFilePath, function (err) {
+                                            if (err) {
+                                                if (err.code !== "ENOENT") //Not Found
+                                                {
+                                                    self.config.logger.error(err);
+                                                    next(err);
+                                                }
+                                                else {
+                                                    next(null, savedFileName);
+                                                }
+                                            } else {
+                                                next(null, savedFileName);
+                                            }
+                                        });
+                                    } else {
+                                        next(null, savedFileName);
+                                    }
+                                });
                         }
 
                         async.waterfall(
                             arr,
-                            function (err) {
+                            function (err, savedFileName) {
                                 if (!err) {
-                                    success();
+                                    success(savedFileName);
                                 } else {
                                     fail(err, {statusCode: 500});
                                 }
                             }
                         );
                     } else {
-                        success();
+                        success(flowFilename);
                     }
                 } else {
                     fail(err, {statusCode: 500});

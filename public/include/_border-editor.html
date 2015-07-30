@@ -20,7 +20,7 @@
                 <div class="col-as-7 input-group no-padding">
                     <input id="borderWidthInput" type="text" class="form-control borderValueInput"
                            ng-click="$event.stopPropagation()"
-                           ng-model="pickedBorderWidth"/>
+                           ng-model="pickedBorderWidth" ng-change="setBorderWidth(pickedBorderWidth)"/>
 
                     <div id="borderWidthDropdown" class="borderDropdown stackAndRotateSelect" ui-simple-dropdown
                          ui-simple-dropdown-opts="{dataField:'value', labelField:'name', zIndex:1000, gutter: 5, showTitle: true, displayUnsetOption: false, zIndex: 200}"
@@ -66,7 +66,8 @@
                 <label class="col-as-5 no-padding-right control-label">Radius</label>
 
                 <div class="col-as-7 no-padding-left">
-                    <input type="text" class="form-control borderValueInput" ng-model="pickedBorderRadius"/>
+                    <input type="text" class="form-control borderValueInput" ng-model="pickedBorderRadius"
+                           ng-change="setBorderRadius(pickedBorderRadius)"/>
                 </div>
             </div>
         </div>

@@ -64,7 +64,8 @@ define(
                         pages: []
                     },
                     resources: {
-                        audio: []
+                        audio: [],
+                        image: []
                     },
                     stagingContent: {
                         widgetList: [],
@@ -2058,13 +2059,7 @@ define(
                             for (var styleName in style) {
                                 var styleValue = style[styleName];
 
-                                if (toString.call(styleValue) === '[object Array]') {
-                                    styleValue.forEach(function (value) {
-                                        self.applyStyle(styleName, value);
-                                    });
-                                } else {
-                                    self.applyStyle(styleName, styleValue);
-                                }
+                                self.applyStyle(styleName, styleValue);
                             }
 
                             self.updatePseudoStyle(state, stateContext);

@@ -109,46 +109,6 @@ define(
                                 scope.borderIsSet = true;
                                 scope.borderColorPaneColor = "";
                                 scope.borderColorPaneBackgroundColor = "";
-
-                                function createBorderValueInputAssign(name, boundName) {
-                                    var fn = $parse(name),
-                                        assign = fn.assign;
-
-                                    if (!fn.assign.customized) {
-                                        fn.assign = function ($scope, value) {
-                                            function borderInputHandler(value) {
-                                                var defer = $q.defer();
-
-                                                $timeout(function () {
-                                                    var setterName = "set" + boundName.charAt(0).toUpperCase() + boundName.substr(1);
-                                                    var setter = scope[setterName];
-                                                    setter && setter.apply(scope, [value]);
-
-                                                    defer.resolve();
-                                                });
-
-                                                return defer.promise;
-                                            }
-
-                                            borderInputHandler.onceId = "uiBorderEditor.createBorderValueInputAssign.borderInputHandler";
-
-                                            if (value) {
-                                                var args = Array.prototype.slice.call(arguments),
-                                                    result = assign.apply(fn, args);
-
-                                                uiUtilService.once(borderInputHandler, null, angularConstants.unresponsiveInterval)(value);
-
-                                                return result;
-                                            }
-                                        }
-
-                                        fn.assign.customized = true;
-                                    }
-                                    return fn;
-                                }
-
-                                createBorderValueInputAssign("pickedBorderWidth", "borderWidth");
-                                createBorderValueInputAssign("pickedBorderRadius", "borderRadius");
                             },
                             post: function (scope, element, attrs) {
                                 scope.toggleBorderControl = function () {

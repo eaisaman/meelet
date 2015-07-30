@@ -19476,7 +19476,7 @@
 #resource-editor-control .resourceContent .accordianGroup.select > .accordianSubTitle > .uploadContent > .input-group {
   float: left;
 }
-#resource-editor-control .resourceContent .accordianGroup.select > .accordianSubTitle > .uploadContent .soundUploadButton {
+#resource-editor-control .resourceContent .accordianGroup.select > .accordianSubTitle > .uploadContent .uploadButton {
   position: relative;
   float: left;
   width: 2em;
@@ -19488,12 +19488,12 @@
   margin-left: 0.5em;
   color: rgba(0, 0, 0, 0.4);
 }
-#resource-editor-control .resourceContent .accordianGroup.select > .accordianSubTitle > .uploadContent .soundUploadButton:active {
+#resource-editor-control .resourceContent .accordianGroup.select > .accordianSubTitle > .uploadContent .uploadButton:active {
   background-color: #aaa;
   color: #669933;
   box-shadow: none;
 }
-#resource-editor-control .resourceContent .accordianGroup.select > .accordianSubTitle > .uploadContent .soundUploadButton:before {
+#resource-editor-control .resourceContent .accordianGroup.select > .accordianSubTitle > .uploadContent .uploadButton:before {
   position: absolute;
   left: 0;
   top: 0;
@@ -19503,7 +19503,7 @@
   line-height: 2;
   font-weight: 600;
 }
-#resource-editor-control .resourceContent .accordianGroup.select > .accordianSubTitle > .uploadContent .soundUploadDock {
+#resource-editor-control .resourceContent .accordianGroup.select > .accordianSubTitle > .uploadContent .uploadDock {
   position: relative;
   float: left;
   width: calc(100% - 3em);
@@ -19514,7 +19514,7 @@
   line-height: 2;
   font-weight: 600;
 }
-#resource-editor-control .resourceContent .accordianGroup.select > .accordianSubTitle > .uploadContent .soundUploadDock.drag-over {
+#resource-editor-control .resourceContent .accordianGroup.select > .accordianSubTitle > .uploadContent .uploadDock.drag-over {
   background: #5CB85C;
   color: #fff;
 }

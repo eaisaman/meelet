@@ -7,24 +7,28 @@
 <div class="backgroundImageContent ui-control-wrapper">
     <div class="backgroundImageBar ui-control-bar fs-x-large"
          ng-click="togglePalette($event)">
-        <img ng-if="pickedBackgroundImageUrl" ng-src="{{pickedBackgroundImageUrl}}"/>
+        <img ng-if="pickedBackgroundImageName"
+             ng-src="project/{{$root.loadedProject.projectRecord._id}}/resource/image/{{pickedBackgroundImageName}}"/>
 
-        <div ng-if="pickedBackgroundImageUrl" ng-click="clearBackgroundImageUrl($event)"
+        <div ng-if="pickedBackgroundImageName" ng-click="clearBackgroundImageUrl($event)"
              class="deleteButton fs-x-huge icon-background-image-before icon-background-image-delete-before"></div>
     </div>
     <div class="backgroundImagePalette ui-control-panel">
         <div class="backgroundImagePane">
-            <div class="paneTitle fs-x-small">Image Source</div>
-            <div class="paneContent fs-x-smaller"
-                 flow-init="{'target':'api/public/projectImageChunk', 'simultaneousUploads':1, 'query':{'projectId':project.projectRecord._id}}"
-                 flow-file-success="onUploadSuccess($file, $message)" flow-files-submitted="$flow.upload()">
-                <div class="backgroundImageButton form-control fs-x-smaller-before icon-background-image-before icon-background-image-upload-before"
-                     flow-btn>
-                    <input type="file" style="visibility: hidden; position: absolute;">
-                </div>
-                <div class="backgroundImageDock" flow-drop ng-class="dropClass" flow-drag-enter="dropClass='drag-over'"
-                     flow-drag-leave="dropClass=''">
-                    OR Drag And Drop file here
+            <div class="paneContent">
+                <div class="input-group col-as-12 fs-x-smaller">
+                    <label class="col-as-5 no-padding control-label">Images</label>
+
+                    <div class="imageResourceList no-padding col-as-7" ng-click="$event.stopPropagation()">
+                        <select class="form-control" ng-model="pickedBackgroundImageName"
+                                ng-change="onChangeBackgroundImageName()">
+                            <option value="{{resourceName}}"
+                                    ng-attr-selected="{{item.resourceName === resourceName}}"
+                                    ng-repeat="resourceName in $root.loadedProject.resources.image">
+                                {{resourceName}}
+                            </option>
+                        </select>
+                    </div>
                 </div>
             </div>
         </div>

@@ -573,7 +573,7 @@ var State = Class({
                     //External hyperlink
                     out.write(_.string.sprintf("background-image: url(%s);", styleValue));
                 } else {
-                    var m = styleValue.match(/images\/.+$/);
+                    var m = styleValue.match(/resource\/image\/.+$/);
 
                     if (m) {
                         out.write(_.string.sprintf("background-image: url(../%s);", m[0]));
