@@ -1911,7 +1911,8 @@ define(
 
                     _.each(styleProps, function (props, stylePseudoPrefix) {
                         var pseudoStyle = {},
-                            pseudo = stylePseudoPrefix.replace(/style/i, "");
+                            pseudo = stylePseudoPrefix.replace(/style/i, ""),
+                            affectedProps = [];
                         if (props && props.length) {
                             props.forEach(function (prop) {
                                 var propValues = [];
@@ -1921,7 +1922,19 @@ define(
                                     }
                                 });
 
-                                pseudoStyle[prop] = propValues.length ? propValues[propValues.length - 1] : null;
+                                if (propValues.length) {
+                                    pseudoStyle[prop] = propValues[propValues.length - 1];
+                                } else {
+                                    pseudoStyle[prop] = null;
+
+                                    //Unsetting some styles may block other effective styles, we need to reapply these affected ones.
+                                    //For example, background:"" set by linearGradientColor editor will invalidate background-image style.
+                                    if (prop === "linearGradientColor") {
+                                        affectedProps.push("background-image");
+                                        affectedProps.push("background-position");
+                                        affectedProps.push("background-repeat");
+                                    }
+                                }
                             });
                         } else {
                             _.pluck(stateValue.styleSource, stylePseudoPrefix).forEach(function (sourceStyle) {
@@ -1929,6 +1942,25 @@ define(
                             });
                         }
                         self.pseudoCss(state, stateContext, pseudo, pseudoStyle);
+
+                        if (affectedProps.length) {
+                            var affectedPseudoStyle = {};
+
+                            affectedProps.forEach(function (prop) {
+                                var propValues = [];
+                                _.pluck(stateValue.styleSource, stylePseudoPrefix).forEach(function (value) {
+                                    if (value[prop] !== undefined) {
+                                        propValues.push(value[prop]);
+                                    }
+                                });
+
+                                if (propValues.length) {
+                                    affectedPseudoStyle[prop] = propValues[propValues.length - 1];
+                                }
+                            });
+
+                            self.pseudoCss(state, stateContext, pseudo, affectedPseudoStyle);
+                        }
                     });
                 },
                 updatePseudoStyle: function (state, stateContext) {
@@ -5156,7 +5188,6 @@ define(
 
             if ($parent) {
                 cloneObj.anchor = anchor;
-                cloneObj.$element.removeClass(self.angularConstants.widgetClasses.activeClass);
 
                 return cloneObj.appendTo($parent).then(function () {
                     var parentScope = angular.element($parent).scope();
@@ -5164,11 +5195,11 @@ define(
 
                     return self.uiUtilService.whilst(
                         function () {
-                            return !cloneObj.$element.data("hammer");
+                            return !cloneObj.$element.data("sketch-widget-hammer");
                         }, function (callback) {
                             callback();
                         }, function () {
-                            var manager = cloneObj.$element.data("hammer"),
+                            var manager = cloneObj.$element.data("sketch-widget-hammer"),
                                 element = cloneObj.$element.get(0);
 
                             manager.emit("tap", {target: element, srcEvent: {target: element}});

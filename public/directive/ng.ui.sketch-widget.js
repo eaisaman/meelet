@@ -106,7 +106,7 @@ define(
                                             }
 
                                             if (prevWidget) {
-                                                prevWidget.$element.removeClass(angularConstants.widgetClasses.activeClass);
+                                                prevWidget.$element && prevWidget.$element.removeClass(angularConstants.widgetClasses.activeClass);
                                                 if ($rootScope.sketchObject.pickedWidget == prevWidget)
                                                     $rootScope.sketchObject.pickedWidget = null;
                                                 !prevWidget.isTemporary && prevWidget.isElement && prevWidget.$element && toggleTextMode(prevWidget.$element, false);
@@ -389,9 +389,9 @@ define(
                                     scope.options.direction = directionOpt[options.direction] || DIRECTION_ALL;
 
                                     /* FIXME
-                                    * Some widgets' elements append to dom without angular compilation, so the directive logic won't be processed,
-                                    * which will cause the gesture in design mode not to work on such widgets.
-                                    * */
+                                     * Some widgets' elements append to dom without angular compilation, so the directive logic won't be processed,
+                                     * which will cause the gesture in design mode not to work on such widgets.
+                                     * */
 
                                     //Since widget setting gesture may collide with actual playing gesture, we disable it for play.
                                     scope.playProjectWatcher = scope.$on(angularEventTypes.playProjectEvent, function (event, value) {
@@ -452,7 +452,7 @@ define(
                                             var id = element.attr("id");
 
                                             if (!id && element.hasClass(angularConstants.widgetClasses.widgetContainerClass)) {
-                                                id =  element.parent().attr("id") + ".containerWidget";
+                                                id = element.parent().attr("id") + ".containerWidget";
                                             }
 
                                             id && uiUtilService.latestOnce(attachHandler, null, angularConstants.unresponsiveInterval, "sketch-widget.attachHandler.{0}".format(id))(element);

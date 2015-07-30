@@ -604,12 +604,6 @@ define(
                     uiCanvasService.removePoint(), uiCanvasService.hideMenu();
                 }
 
-                $scope.locateOutsideCanvas = function (event) {
-                    event && event.stopPropagation && event.stopPropagation();
-
-                    alert('click')
-                }
-
                 $scope.showDemo = function (event) {
                     event && event.stopPropagation && event.stopPropagation();
 
@@ -719,10 +713,14 @@ define(
                         var setterName = source && "setTrackablePseudoStyle" || ("set" + name.charAt(0).toUpperCase() + name.substr(1)),
                             setter = obj[setterName];
                         if (setter) {
-                            if (source)
-                                setter.apply(obj, [source, to]);
-                            else
-                                setter.apply(obj, [to]);
+                            uiUtilService.once(function (widgetObj, styleSource, setterFn, value) {
+                                return $timeout(function () {
+                                    if (styleSource)
+                                        setterFn.apply(widgetObj, [styleSource, value]);
+                                    else
+                                        setterFn.apply(widgetObj, [value]);
+                                });
+                            }, null, angularConstants.unresponsiveInterval, "FrameSketchController.setterFactory.{0}.{1}".format(obj.id, name))(obj, source, setter, to);
                         }
                     }
                 }
