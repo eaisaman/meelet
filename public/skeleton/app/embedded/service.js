@@ -46,6 +46,8 @@ define(
             return errorDefer.promise;
         }
 
+        appService.prototype.playSound = appService.prototype.NOOP;
+
         return function (appModule) {
             if (isBrowser) {
                 appModule.

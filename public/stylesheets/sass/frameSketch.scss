@@ -19,6 +19,7 @@
 @import "dock";
 @import "page";
 @import "state_transition";
+@import "state_action";
 @import "resource-editor";
 @import "normalize_include";
 @import "sidebar";
@@ -39,6 +40,7 @@
 @include vertical-ruler(verticalRuler);
 @include dock(sketchControls);
 @include state-transition(state-transition-control);
+@include state-action(state-action-control);
 @include resource-editor(resource-editor-control);
 @include normalize-include(frameSketchWidgetDemoArea);
 

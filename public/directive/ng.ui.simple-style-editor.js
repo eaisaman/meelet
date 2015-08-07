@@ -10,6 +10,7 @@ define(
                 var boundProperties = {simpleStyle: "="},
                     defaults = {
                         fontSize: "10px",
+                        opacity: 1,
                         left: "0px",
                         top: "0px"
                     },
@@ -32,6 +33,16 @@ define(
 
                                 scope.pickFontSizeValue = function (pseudo) {
                                     return scope.simpleStyle && scope.pickStyle(scope.simpleStyle, pseudo != null ? pseudo : scope.pseudo)["font-size"] || options.fontSize;
+                                }
+
+                                scope.pickOpacityValue = function (pseudo) {
+                                    if (scope.simpleStyle) {
+                                        var value = scope.pickStyle(scope.simpleStyle, pseudo != null ? pseudo : scope.pseudo)["opacity"];
+                                        if (value != null)
+                                            return value;
+                                    }
+
+                                    return options.opacity;
                                 }
 
                                 scope.pickPseudoLeftValue = function (pseudo) {
@@ -58,6 +69,29 @@ define(
                                             scope.simpleStyle = angular.copy(scope.simpleStyle);
 
                                             if (scope.pickedFontSize !== value) scope.pickedFontSize = value;
+                                        }
+                                    }
+                                }
+
+                                scope.setOpacity = function (value) {
+                                    if (value != null) {
+                                        value = Number.parseFloat(value);
+
+                                        if (!Number.isNaN(value)) {
+                                            var pseudoStylePrefix = (scope.pseudo || "") + "Style";
+                                            pseudoStylePrefix = pseudoStylePrefix.charAt(0).toLowerCase() + pseudoStylePrefix.substr(1);
+
+                                            scope.simpleStyle[pseudoStylePrefix] = scope.simpleStyle[pseudoStylePrefix] || {};
+                                            var pseudoStyle = scope.simpleStyle[pseudoStylePrefix];
+
+                                            if (pseudoStyle['opacity'] == null || pseudoStyle['opacity'] != value) {
+                                                pseudoStyle['opacity'] = value;
+
+                                                //Trigger watcher on sketchWidgetSetting.simpleStyle to apply style to widget
+                                                scope.simpleStyle = angular.copy(scope.simpleStyle);
+
+                                                if (scope.pickedOpacity !== value) scope.pickedOpacity = value;
+                                            }
                                         }
                                     }
                                 }
@@ -116,6 +150,7 @@ define(
                                         {
                                             simpleStyle: function (value) {
                                                 scope.pickedFontSize = scope.pickFontSizeValue();
+                                                scope.pickedOpacity = scope.pickOpacityValue();
                                                 scope.pickedLeft = scope.pickPseudoLeftValue();
                                                 scope.pickedTop = scope.pickPseudoTopValue();
                                             }
@@ -132,6 +167,7 @@ define(
                                     $timeout(function () {
                                         scope.styleIsSet = true;
                                         scope.pickedFontSize = scope.pickFontSizeValue(pseudo);
+                                        scope.pickedOpacity = scope.pickOpacityValue(pseudo);
                                         scope.pickedLeft = scope.pickPseudoLeftValue(pseudo);
                                         scope.pickedTop = scope.pickPseudoTopValue(pseudo);
                                     });

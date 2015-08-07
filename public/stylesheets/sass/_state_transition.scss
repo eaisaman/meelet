@@ -6,15 +6,8 @@
 @import "multilevel-menu";
 @import "angular-ui-tree";
 
-$tabHeaderWidth: 6em;
 $maxNumOfConfigurationItems: 10;
 
-@include multilevel-menu(null, effectMultilevelMenu, $activeColor);
-@include multilevel-menu(null, effectArtifactMultilevelMenu, $activeColor);
-@include simple-dropdown(null, widgetObjStateDropdown, $activeColor);
-@include simple-dropdown(null, configurationItemList, $activeColor);
-@include simple-dropdown(null, triggerEventDropdown, $activeColor);
-@include multilevel-menu(null, configurationItemMultilevelList, $activeColor);
 @include angular-ui-tree(actionWidgetTree);
 
 @mixin state-transition($stateEditorId) {
@@ -263,7 +256,7 @@ $maxNumOfConfigurationItems: 10;
                                                             &:before {
                                                                 position: absolute;
                                                                 left: 0;
-                                                                top: calc(50%  - 0.5em);
+                                                                top: calc(50% - 0.5em);
                                                                 line-height: 1;
                                                                 text-align: center;
                                                                 width: 1em;
@@ -281,7 +274,6 @@ $maxNumOfConfigurationItems: 10;
                                                                 text-overflow: ellipsis;
                                                                 overflow: hidden;
                                                             }
-
 
                                                         }
 
@@ -386,6 +378,87 @@ $maxNumOfConfigurationItems: 10;
                                                         }
                                                     }
 
+                                                }
+
+                                                .sequenceOptions {
+                                                    position: relative;
+                                                    float: left;
+                                                    width: 100%;
+                                                    height: auto;
+                                                    margin-bottom: 0.5em;
+                                                    border: 1px solid;
+                                                    border-radius: 5px;
+
+                                                    @include box-shadow(0 8px 6px -6px black);
+
+                                                    > label {
+                                                        position: relative;
+                                                        float: left;
+                                                        width: 100%;
+                                                        height: 2em;
+                                                        line-height: 2;
+                                                        color: $activeColor;
+
+                                                        &:before {
+                                                            position: relative;
+                                                            float: left;
+                                                            width: 2em;
+                                                            height: 1em;
+                                                            line-height: 1;
+                                                            text-align: left;
+                                                            top: calc(50% - 0.5em);
+                                                        }
+                                                    }
+
+                                                    .stopOnEachFlag {
+                                                        position: relative;
+                                                        float: left;
+                                                        width: 100%;
+                                                        height: 2em;
+                                                        line-height: 2;
+
+                                                        > label {
+                                                            line-height: 2;
+                                                            text-align: center;
+                                                        }
+
+                                                        .checkBoxItem {
+                                                            label {
+                                                                cursor: pointer;
+                                                                position: absolute;
+                                                                width: 1em;
+                                                                height: 1em;
+                                                                top: calc(50% - 0.5em);
+                                                                left: calc(50% - 0.5em);
+                                                                background: #eee;
+                                                                border: 1px solid #ddd;
+
+                                                                &:after {
+                                                                    opacity: 0.2;
+                                                                    content: '';
+                                                                    position: absolute;
+                                                                    width: 9px;
+                                                                    height: 5px;
+                                                                    background: transparent;
+                                                                    top: 6px;
+                                                                    left: 7px;
+                                                                    border: 3px solid #333;
+                                                                    border-top: none;
+                                                                    border-right: none;
+
+                                                                    @include transform(rotate(-45deg));
+                                                                }
+
+                                                                &:hover:after {
+                                                                    opacity: 0.5;
+                                                                }
+                                                            }
+
+                                                            input:checked + label:after {
+                                                                opacity: 1;
+                                                            }
+                                                        }
+                                                    }
                                                 }
 
                                                 .emptyAction {
@@ -584,7 +657,7 @@ $maxNumOfConfigurationItems: 10;
                                                         }
                                                     }
 
-                                                    .hideLibraryListButton+.accordianGroup {
+                                                    .hideLibraryListButton + .accordianGroup {
                                                         margin-top: 2.5em;
                                                     }
 
@@ -698,6 +771,13 @@ $maxNumOfConfigurationItems: 10;
                                                         }
                                                     }
                                                 }
+
+                                                @include multilevel-menu(null, effectMultilevelMenu, $activeColor);
+                                                @include multilevel-menu(null, effectArtifactMultilevelMenu, $activeColor);
+                                                @include simple-dropdown(null, widgetObjStateDropdown, $activeColor);
+                                                @include simple-dropdown(null, configurationItemList, $activeColor);
+                                                @include simple-dropdown(null, triggerEventDropdown, $activeColor);
+                                                @include multilevel-menu(null, configurationItemMultilevelList, $activeColor);
                                             }
                                         }
                                     }

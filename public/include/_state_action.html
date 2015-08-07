@@ -1,0 +1,282 @@
+<script type="text/ng-template" id="_childStateActions.html">
+    <div class="accordianGroup" ng-if="item.actionType == 'Effect'"
+         ng-click="toggleSelect($event.currentTarget, $event)">
+        <div class="accordianTitle fs-x-medium-before col-as-12 icon-state-action-before icon-state-action-animation-before">
+            <div class="deleteButton fs-x-tiny icon-state-action-before icon-state-action-cross-before"
+                 ng-click="deleteAction(parentAction, item, $event)"></div>
+            <span class="col-as-offset-1 col-as-10 no-padding">Effect</span>
+        </div>
+        <div class="accordianSubTitle fs-x-smaller col-as-12">
+            <div class="effectArtifactContainer">
+                <div class="effectArtifactMultilevelMenu col-as-9 no-padding" ui-multilevel-menu
+                     menu-list="filterEffectLibraryList"
+                     ui-multilevel-menu-opts="{dataField:'_id', labelField:'name', listField:'artifactList', listFilter:{_selected:true}, zIndex:100}"
+                     picked-menu-item="pickedEffectArtifactId"
+                     on-menu-select="pickEffectArtifact(item, pickedEffectArtifactId)">
+                    {{pickedEffectArtifact && pickedEffectArtifact.name || "Choose an Artifact"}}
+                </div>
+                <div class="toggleLibraryButton col-as-3 no-padding-right">
+                    <span class="fs-x-medium-before icon-state-action-before icon-state-action-library-before"
+                          ng-click="toggleSelectLibraryList($event)">
+                    </span>
+                </div>
+            </div>
+
+            <div class="effectMultilevelMenu" ui-multilevel-menu menu-list="effectList"
+                 ui-multilevel-menu-opts="{dataField:'value', labelField:'name', zIndex:101}"
+                 picked-menu-item="pickedEffect"
+                 on-menu-select="item.effect = createEffectObj(pickedEffect)">
+                {{item.effect && item.effect.name || 'Choose an Effect'}}
+            </div>
+        </div>
+        <div class="accordianBody col-as-12 no-padding">
+            <div class="animationOptions" ng-if="item.effect.type == 'Animation'"
+                 ng-click="$event.stopPropagation()">
+                <div class="input-group col-as-12">
+                    <label class="col-as-5 no-padding-right control-label fs-x-smaller">Duration</label>
+
+                    <div class="col-as-7 no-padding-left">
+                        <input type="number"
+                               class="form-control no-padding fs-x-smaller animationDurationInput"
+                               ng-model="item.effect.options.duration"/>
+                    </div>
+                </div>
+                <div class="input-group col-as-12">
+                    <label class="col-as-5 no-padding-right control-label fs-x-smaller">Timing</label>
+
+                    <div class="col-as-7 no-padding-left">
+                        <select class="form-control no-padding fs-x-smaller"
+                                ng-model="item.effect.options.timing">
+                            <option value="linear">linear</option>
+                            <option value="ease">ease</option>
+                            <option value="ease-in">ease-in</option>
+                            <option value="ease-out">ease-out</option>
+                            <option value="ease-in-out">ease-in-out</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="accordianGroup" ng-if="item.actionType == 'State'">
+        <div class="accordianTitle col-as-12 icon-state-action-before icon-state-action-set-state-before">
+            <div class="deleteButton fs-x-tiny icon-state-action-before icon-state-action-cross-before"
+                 ng-click="deleteAction(parentAction, item, $event)"></div>
+            <span class="col-as-offset-1 col-as-4 no-padding">State</span>
+        </div>
+        <div class="accordianSubTitle fs-x-smaller col-as-12">
+            <div class="widgetObjStateDropdown stackAndRotateSelect"
+                 ui-simple-dropdown
+                 ui-simple-dropdown-opts="{dataField:'name', labelField:'name', zIndex:100, gutter: 5, showTitle: true, displayUnsetOption: true}"
+                 selection-list="item.widgetObj.stateOptions"
+                 unset-option-value="item.widgetObj.initialStateOption.name" select-item="pickedStateOption"
+                 on-option-select="item.newState = pickedStateOption">
+                {{item.newState}}
+            </div>
+        </div>
+    </div>
+    <div class="accordianGroup" ng-if="item.actionType == 'Configuration'"
+         ng-click="toggleConfigurationBody($event)" ng-init="item.readWidgetSpec()">
+        <div class="accordianTitle col-as-12 icon-state-action-before icon-state-action-configuration-before">
+            <div class="deleteButton fs-x-tiny icon-state-action-before icon-state-action-cross-before"
+                 ng-click="deleteAction(parentAction, item, $event)"></div>
+            <span class="col-as-offset-1 col-as-10 no-padding">Configuration</span>
+        </div>
+        <div class="accordianBody col-as-12 no-padding">
+            <div class="configurationBody" ng-click="$event.stopPropagation()">
+                <div class="configurationPane" ng-class="configurationItem.type"
+                     ng-repeat="configurationItem in item.configuration">
+                    <div class="input-group col-as-12 fs-x-smaller">
+                        <label class="col-as-5 no-padding control-label fs-x-smaller">{{configurationItem.name}}</label>
+
+                        <div ng-if="configurationItem.type === 'list'"
+                             class="configurationItemList col-as-7 no-padding stackAndRotateSelect"
+                             ui-simple-dropdown
+                             ui-simple-dropdown-opts="{dataField:'value', labelField:'name', zIndex:100, gutter: 5, showTitle: true, displayUnsetOption: false}"
+                             selection-list="configurationItem.options" select-item="configurationItem.configuredValue"
+                             on-option-select="item.setConfigurationItem(configurationItem)">
+                        </div>
+                        <div ng-if="configurationItem.type === 'multilevel-list'"
+                             class="configurationItemMultilevelList col-as-7 no-padding" ui-multilevel-menu
+                             menu-list="configurationItem.options"
+                             ui-multilevel-menu-opts="{dataField:'value', labelField:'name', zIndex:101}"
+                             picked-menu-item="configurationItem.configuredValue"
+                             on-menu-select="item.setConfigurationItem(configurationItem)">
+                            {{configurationItem.configuredValue || 'Choose...'}}
+                        </div>
+                        <div ng-if="configurationItem.type === 'boundReadList'"
+                             class="configurationItemList col-as-7 no-padding stackAndRotateSelect"
+                             ui-simple-dropdown
+                             ui-simple-dropdown-opts="{dataField:'name', labelField:'name', zIndex:102, gutter: 5, showTitle: true, displayUnsetOption: false}"
+                             selection-list="configurationItem.options" select-item="configurationItem.configuredValue"
+                             on-option-select="item.setConfigurationItem(configurationItem)">
+                        </div>
+                        <div ng-if="configurationItem.type === 'number'"
+                             class="col-as-7 no-padding">
+                            <input type="number"
+                                   class="form-control no-padding fs-x-smaller"
+                                   ng-model="configurationItem.configuredValue"/>
+                        </div>
+                        <div ng-if="configurationItem.type === 'size'"
+                             class="col-as-7 no-padding">
+                            <input type="text"
+                                   class="form-control no-padding fs-x-smaller"
+                                   ng-model="configurationItem.configuredValue"/>
+                        </div>
+                        <div ng-if="configurationItem.type === 'text'"
+                             class="col-as-7 no-padding">
+                            <input type="text"
+                                   class="form-control no-padding fs-x-smaller"
+                                   ng-model="configurationItem.configuredValue"/>
+                        </div>
+                        <div ng-if="configurationItem.type === 'boolean'"
+                             class="col-as-7 no-padding">
+                            <input class="configurationCheckBox" type="checkbox"
+                                   ng-checked="configurationItem.configuredValue"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="accordianGroup" ng-if="item.actionType == 'Movement'"
+         ng-click="toggleSelect($event.currentTarget)">
+        <div class="accordianTitle col-as-12 icon-state-action-before icon-state-action-set-state-before">
+            <div class="deleteButton fs-x-tiny icon-state-action-before icon-state-action-cross-before"
+                 ng-click="deleteAction(parentAction, item, $event)"></div>
+            <span class="col-as-offset-1 col-as-4 no-padding">Movement</span>
+        </div>
+        <div class="accordianBody col-as-12 no-padding">
+            <div class="movementBody" ng-click="$event.stopPropagation()">
+                <div class="movementPane">
+                    <div class="input-group col-as-12 fs-x-smaller">
+                        <label class="col-as-5 no-padding control-label">Route</label>
+
+                        <div class="widgetObjRouteList no-padding col-as-7" ng-click="$event.stopPropagation()">
+                            <select class="form-control" ng-model="item.routeIndex"
+                                    ng-change="onMovementActionRouteIndexChange(item.routeIndex)">
+                                <option value="{{$index}}" ng-attr-selected="{{item.routeIndex === $index}}"
+                                        ng-repeat="r in item.widgetObj.routes">
+                                    {{$index+1}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="movementPane" ng-repeat="settingItem in item.settings">
+                    <div class="input-group col-as-12 fs-x-smaller">
+                        <label class="col-as-5 no-padding control-label fs-x-smaller">{{settingItem.name}}</label>
+
+                        <div ng-if="settingItem.type === 'list'" class="no-padding col-as-7"
+                             ng-click="$event.stopPropagation()">
+                            <select class="form-control" ng-model="settingItem.pickedValue">
+                                <option value="{{opt}}" ng-attr-selected="{{settingItem.pickedValue === opt}}"
+                                        ng-repeat="opt in settingItem.options">
+                                    {{opt}}
+                                </option>
+                            </select>
+                        </div>
+                        <div ng-if="settingItem.type === 'number'"
+                             class="col-as-7 no-padding">
+                            <input type="number"
+                                   class="form-control no-padding fs-x-smaller"
+                                   ng-model="settingItem.pickedValue"/>
+                        </div>
+                        <div ng-if="settingItem.type === 'size'"
+                             class="col-as-7 no-padding">
+                            <input type="text"
+                                   class="form-control no-padding fs-x-smaller"
+                                   ng-model="settingItem.pickedValue"/>
+                        </div>
+                        <div ng-if="settingItem.type === 'text'"
+                             class="col-as-7 no-padding">
+                            <input type="text"
+                                   class="form-control no-padding fs-x-smaller"
+                                   ng-model="settingItem.pickedValue"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="accordianGroup" ng-if="item.actionType == 'Sound'" ng-click="toggleSelect($event.currentTarget)">
+        <div class="accordianTitle col-as-12 icon-state-action-before icon-state-action-sound-before">
+            <div class="deleteButton fs-x-tiny icon-state-action-before icon-state-action-cross-before"
+                 ng-click="deleteAction(parentAction, item, $event)"></div>
+            <span class="col-as-offset-1 col-as-4 no-padding">Sound</span>
+        </div>
+        <div class="accordianBody col-as-12 no-padding">
+            <div class="soundBody" ng-click="$event.stopPropagation()">
+                <div class="soundPane">
+                    <div class="input-group col-as-12 fs-x-smaller">
+                        <label class="col-as-5 no-padding control-label">Resources</label>
+
+                        <div class="soundResourceList no-padding col-as-7" ng-click="$event.stopPropagation()">
+                            <select class="form-control" ng-model="item.resourceName">
+                                <option value="{{resourceName}}"
+                                        ng-attr-selected="{{item.resourceName === resourceName}}"
+                                        ng-repeat="resourceName in $root.loadedProject.resources.audio">
+                                    {{resourceName}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+<div class="stateActionContent ui-control-wrapper" ng-class="dockAlign">
+    <div class="stateActionDetails ui-control-panel fs-x-medium">
+
+        <div class="state-action-wrapper" ng-init="parentAction = activeWidget.state.actionObj"
+             ng-repeat="item in activeWidget.state.actionObj.childActions"
+             ng-include="'_childStateActions.html'"></div>
+
+        <div class="emptyAction fs-x-smaller" ng-click="toggleSelect('.emptyAction', $event)">
+            <span>New Action</span>
+
+            <div class="actionInput input-group" ng-click="$event.stopPropagation()">
+                <select id="stateActionTypeSelect" class="form-control fs-x-smaller">
+                    <option value="Effect">Effect</option>
+                    <option value="State">Change State</option>
+                    <option value="Configuration">Change Configuration</option>
+                    <option value="Movement">Movement</option>
+                    <option value="Sound">Sound</option>
+                </select>
+                <span class="input-group-addon fs-x-smaller-before icon-state-action-before icon-state-action-plus-before"
+                      ng-click="createAction(activeWidget.state.actionObj, $event);toggleSelect('.emptyAction', $event)"></span>
+            </div>
+        </div>
+
+        <div class="effectLibraryList">
+            <div class="hideLibraryListButton icon-state-action-before icon-state-action-exit-before"
+                 ng-click="toggleSelectLibraryList($event)"></div>
+
+            <div class="accordianGroup fs-x-small"
+                 ng-repeat="effectLibrary in markLibrarySelection(effectLibraryList, $root.loadedProject.xrefRecord)"
+                 ng-click="toggleSelect($event.currentTarget, $event)">
+                <div class="accordianTitle col-as-12 icon-widget-before icon-widget-angle-double-up-before">
+                    <span class="col-as-10 no-padding"
+                          ng-attr-title="{{effectLibrary.desc}}">{{effectLibrary.desc}}</span>
+
+                    <div class="toggleSelectionButton col-as-2 no-padding-right icon-widget-before"
+                         ng-class="{'icon-widget-square-before':!effectLibrary._selected, 'icon-widget-square-check-before':effectLibrary._selected, 'partialSelect':isPartialSelection(effectLibrary, $root.loadedProject.xrefRecord)}"
+                         ng-click="toggleLibrarySelection(effectLibrary, $event)"></div>
+                </div>
+                <div class="accordianBody fs-x-small col-as-12 no-padding">
+                    <div class="effectPane col-as-12 no-padding"
+                         ng-repeat="artifact in markArtifactSelection(effectLibrary, $root.loadedProject.xrefRecord)"
+                         ng-click="$event.stopPropagation()">
+                        <span class="col-as-10 no-padding" ng-attr-title="{{artifact.name}}">{{artifact.name}}</span>
+
+                        <div class="col-as-2 no-padding-right toggleSelectionButton icon-widget-before"
+                             ng-class="{'icon-widget-square-before':!artifact._selected, 'icon-widget-square-check-before':artifact._selected}"
+                             ng-click="toggleArtifactSelection(artifact, effectLibrary, $event)"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

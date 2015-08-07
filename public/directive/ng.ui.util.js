@@ -494,57 +494,101 @@ define(
             return self.whilstMap[whilstId].defer.promise;
         }
 
-        Util.prototype.chain = function (arr, chainId, timeout) {
+        Util.prototype.chain = function (arr, chainId, timeout, stopOnEach) {
             var self = this;
 
-            chainId = chainId || "chain_" + _.now();
-            self.chainMap = self.chainMap || {};
-            self.chainMap[chainId] = self.chainMap[chainId] || {}
-            self.chainMap[chainId].defer = self.chainMap[chainId].defer || self.$q.defer();
-            var t = timeout > 0 && self.$timeout(function () {
-                    if (self.chainMap[chainId]) {
-                        self.chainMap[chainId].defer.resolve("TIMEOUT");
-                        delete self.chainMap[chainId];
+            function chainHandler() {
+                var eachDefer = stopOnEach && self.$q.defer();
 
-                        self.angularConstants.VERBOSE && self.$log.debug("TIMEOUT occurred on chainId " + chainId);
-                    }
-                }, timeout) || null;
-
-
-            function chainHandler(currentIndex) {
                 if (self.chainMap[chainId]) {
-                    if (currentIndex < arr.length) {
-                        var fn = arr[currentIndex];
+                    if (self.chainMap[chainId].currentIndex < self.chainMap[chainId].arr.length) {
+                        var fn = self.chainMap[chainId].arr[self.chainMap[chainId].currentIndex];
 
                         fn().then(
                             function () {
+                                eachDefer && eachDefer.resolve();
+
                                 if (self.chainMap[chainId]) {
-                                    self.$timeout(function () {
-                                        chainHandler(currentIndex + 1);
+                                    self.chainMap[chainId].currentIndex++;
+                                    !stopOnEach && self.$timeout(function () {
+                                        chainHandler();
                                     });
                                 }
                             },
                             function (err) {
                                 if (self.chainMap[chainId]) {
-                                    t && self.$timeout.cancel(t);
+                                    self.chainMap[chainId].t && self.$timeout.cancel(self.chainMap[chainId].t);
 
                                     self.chainMap[chainId].defer.resolve(err);
                                     delete self.chainMap[chainId];
                                 }
+
+                                eachDefer && eachDefer.resolve(err);
                             }
                         );
                     } else {
-                        t && self.$timeout.cancel(t);
+                        self.chainMap[chainId].t && self.$timeout.cancel(self.chainMap[chainId].t);
 
                         self.chainMap[chainId].defer.resolve();
                         delete self.chainMap[chainId];
+
+                        eachDefer && eachDefer.resolve("ENOENT");
                     }
+                } else {
+                    eachDefer && eachDefer.resolve("ENOENT");
                 }
+
+                return eachDefer && eachDefer.promise;
             }
 
-            chainHandler(0);
+            chainId = chainId || "chain_" + _.now();
+            self.chainMap = self.chainMap || {};
+            if (!self.chainMap[chainId]) {
+                self.chainMap[chainId] = {}
+                self.chainMap[chainId].defer = self.chainMap[chainId].defer || self.$q.defer();
+                self.chainMap[chainId].currentIndex = 0;
+                self.chainMap[chainId].arr = arr;
+                self.chainMap[chainId].t = timeout > 0 && !stopOnEach && self.$timeout(function () {
+                        if (self.chainMap[chainId]) {
+                            self.chainMap[chainId].defer.resolve("TIMEOUT");
+                            delete self.chainMap[chainId];
 
-            return self.chainMap[chainId].defer.promise;
+                            self.angularConstants.VERBOSE && self.$log.debug("TIMEOUT occurred on chainId " + chainId);
+                        }
+                    }, timeout) || null;
+
+                !stopOnEach && chainHandler();
+            }
+
+            return stopOnEach && {
+                    next: function () {
+                        return chainHandler();
+                    },
+                    cancel: function () {
+                        if (self.chainMap[chainId]) {
+                            self.chainMap[chainId].t && self.$timeout.cancel(self.chainMap[chainId].t);
+
+                            self.chainMap[chainId].defer.resolve("CANCEL");
+                            delete self.chainMap[chainId];
+                        }
+                    },
+                    isComplete: function () {
+                        return !self.chainMap[chainId];
+                    },
+                    promise: self.chainMap[chainId].defer.promise
+                } || _.extend(self.chainMap[chainId].defer.promise, {
+                    cancel: function () {
+                        if (self.chainMap[chainId]) {
+                            self.chainMap[chainId].t && self.$timeout.cancel(self.chainMap[chainId].t);
+
+                            self.chainMap[chainId].defer.resolve("CANCEL");
+                            delete self.chainMap[chainId];
+                        }
+                    },
+                    isComplete: function () {
+                        return !self.chainMap[chainId];
+                    }
+                });
         }
 
         Util.prototype.once = function (fn, callback, interval, onceId) {
@@ -806,7 +850,9 @@ define(
                     styleObj[styleName] = self.rgba(styleValue);
                 }
             } else {
-                styleObj[styleName] = styleValue || "";
+                if (styleValue == null)
+                    styleValue = "";
+                styleObj[styleName] = styleValue;
             }
 
             return styleObj;

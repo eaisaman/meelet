@@ -9,11 +9,10 @@ $displayMoveButtonsDelay: 0.5s;
 $hideMoveButtonsDelay: 0.1s;
 $disableBackgroundColor: rgba(0, 0, 0, 0.2);
 
-$tabHeaderWidth: 6em;
 $numOfControlGroups: 4;
 $controlGroupTitleWidth: 8em;
 $numOfStructureControls: 11;
-$dockWidth: 10em;
+$dockWidth: 11em;
 $expandedDockWidth: 12em;
 
 @mixin dock($dockId) {
@@ -283,13 +282,16 @@ $expandedDockWidth: 12em;
                                     > input {
                                         position: absolute;
                                         z-index: 10;
-                                        width: 50%;
+                                        width: 30%;
                                         height: 2em;
                                         opacity: 0;
                                         cursor: pointer;
                                     }
                                     > input#tab-2 {
-                                        left: 50%;
+                                        left: 30%;
+                                    }
+                                    > input#tab-3 {
+                                        left: 60%;
                                     }
                                     > label {
                                         z-index: 6;
@@ -300,7 +302,7 @@ $expandedDockWidth: 12em;
                                         font-weight: 600;
                                         line-height: 2;
                                         height: 2em;
-                                        width: 50%;
+                                        width: 30%;
                                         cursor: pointer;
                                         background: #fff;
                                         text-shadow: 1px 0px 0px ghostwhite, -1px 0px 0px ghostwhite, 0px 1px 0px ghostwhite, 0px -1px 0px ghostwhite, 1px 1px 0px ghostwhite, -1px -1px 0px ghostwhite, -1px 1px 0px ghostwhite, 1px -1px 0px ghostwhite;
@@ -348,7 +350,8 @@ $expandedDockWidth: 12em;
                                         }
                                     }
                                     > input.tab-selector-1:checked ~ .content .content-1,
-                                    > input.tab-selector-2:checked ~ .content .content-2 {
+                                    > input.tab-selector-2:checked ~ .content .content-2,
+                                    > input.tab-selector-3:checked ~ .content .content-3 {
                                         z-index: 10;
                                         opacity: 1;
 

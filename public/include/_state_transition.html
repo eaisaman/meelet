@@ -271,7 +271,7 @@
                 <div ng-attr-id="{{transition.id}}"
                      class="transition fs-x-small"
                      ng-repeat="transition in state.transitions"
-                     ng-init="pickedTriggerEventId = transition.trigger && transition.trigger.id || ''"
+                     ng-init="pickedTriggerEventId = transition.trigger && transition.trigger.id || '';sequenceStopOnEach = transition.actionObj.stopOnEach"
                      ng-click="$event.stopPropagation()">
                     <div class="transitionBar">
                         <div class="toggleTransitionButton fs-x-small icon-state-transition-before icon-state-transition-arrow-right-before"
@@ -322,6 +322,24 @@
                                 </ul>
                             </div>
                             <div class="tab-content-transition-details" tab-sel="tab-content-transition-details-2">
+                                <div class="sequenceOptions fs-x-smaller">
+                                    <label class="col-as-12 fs-x-large-before icon-state-transition-before icon-state-transition-sequence-before">Sequence Options</label>
+                                    <div class="stopOnEachFlag input-group col-as-12">
+                                        <div class="checkBoxItem col-as-3">
+                                            <input type="checkbox"
+                                                    ng-attr-id="stopOnEach_{{transition.actionObj.id}}"
+                                                    name=""
+                                                   class="form-control no-padding"
+                                                   ng-model="sequenceStopOnEach"
+                                                   ng-change="onUpdateStopOnEach(transition.actionObj, sequenceStopOnEach)"/>
+                                            <label ng-attr-for="stopOnEach_{{transition.actionObj.id}}"></label>
+                                        </div>
+
+                                        <label class="col-as-7 no-padding-right control-label">Stop On
+                                            Each</label>
+                                    </div>
+                                </div>
+
                                 <div class="transition-action-wrapper" ng-init="parentAction = transition.actionObj"
                                      ng-repeat="item in transition.actionObj.childActions"
                                      ng-include="'_childActions.html'"></div>

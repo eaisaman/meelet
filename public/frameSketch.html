@@ -9,6 +9,7 @@
 <link rel="stylesheet" type="text/css" href="fonts/icon-shape/style.css"/>
 <link rel="stylesheet" type="text/css" href="fonts/icon-widget/style.css"/>
 <link rel="stylesheet" type="text/css" href="fonts/icon-page/style.css"/>
+<link rel="stylesheet" type="text/css" href="fonts/icon-state-action/style.css"/>
 <link rel="stylesheet" type="text/css" href="fonts/icon-state-transition/style.css"/>
 <link rel="stylesheet" type="text/css" href="fonts/icon-widget-configurator/style.css"/>
 <link rel="stylesheet" type="text/css" href="fonts/icon-resource-editor/style.css"/>
@@ -240,12 +241,14 @@
                                 <label class="tab-label-1 fs-x-small">Properties</label>
                                 <input id="tab-2" type="radio" name="tabRadio" class="tab-selector-2 fs-x-smaller"/>
                                 <label class="tab-label-2 fs-x-small" for="tab-2">States</label>
+                                <input id="tab-3" type="radio" name="tabRadio" class="tab-selector-3 fs-x-smaller"/>
+                                <label class="tab-label-3 fs-x-small" for="tab-3">Actions</label>
 
                                 <div class="content">
                                     <div class="contentSlidee">
                                         <div class="content-1">
                                             <div id="pseudo-control"
-                                                 class=" fs-x-large-before icon-frame-sketch-before icon-frame-sketch-pseudo-element-before">
+                                                 class="fs-x-large-before icon-frame-sketch-before icon-frame-sketch-pseudo-element-before">
                                                 <div class="input-group col-as-12 fs-x-smaller">
                                                     <label class="col-as-5 no-padding control-label fs-x-smaller">Pseudo</label>
 
@@ -333,6 +336,12 @@
                                             <div id="state-transition-control"
                                                  class="ui-control ui-control-inline enable"
                                                  ui-state-transition picked-widget="sketchObject.pickedWidget"
+                                                 picked-page="sketchObject.pickedPage" dock-align="dockAlign"></div>
+                                        </div>
+                                        <div class="content-3">
+                                            <div id="state-action-control"
+                                                 class="ui-control ui-control-inline enable"
+                                                 ui-state-action picked-widget="sketchObject.pickedWidget"
                                                  picked-page="sketchObject.pickedPage" dock-align="dockAlign"></div>
                                         </div>
                                     </div>

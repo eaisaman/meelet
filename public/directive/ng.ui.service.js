@@ -613,32 +613,54 @@ define(
                     context: null,
                     node: null,
                     name: null,
-                    transitions: []
+                    transitions: [],
+                    actionObj: null
                 },
-                initialize: function (node, name, context, id) {
+                initialize: function (node, name, context, id, actionObj) {
                     var MEMBERS = arguments.callee.prototype.MEMBERS;
 
                     for (var member in MEMBERS) {
                         this[member] = angular.copy(MEMBERS[member]);
                     }
+
+                    this.actionObj = actionObj || new SequenceTransitionAction();
+
                     if (typeof node === "string") {
                         this.node = node;
                     } else {
                         this.widgetObj = node;
                         this.node = node.id;
+                        this.actionObj.setWidget(node);
                     }
                     this.context = context;
                     this.name = name;
                     this.id = id || "State_" + _.now();
                 },
                 toJSON: function () {
-                    return _.extend(_.pick(this, ["id", "node", "name"], "CLASS_NAME"), {
+                    return _.extend(_.pick(this, ["id", "node", "name", "actionObj"], "CLASS_NAME"), {
                         transitions: $inject.uiUtilService.arrayOmit(this.transitions, "$$hashKey"),
                         context: this.context && this.context.node !== "?" && this.context.id || ""
                     });
                 },
                 fromObject: function (obj) {
                     var ret = new State(obj.node, obj.name, obj.context, obj.id);
+
+                    if (obj.actionObj) {
+                        var classes = ["SequenceTransitionAction"],
+                            className = obj.actionObj.CLASS_NAME,
+                            actionObj;
+
+                        classes.every(function (clazz) {
+                            if (eval("className === {0}.prototype.CLASS_NAME".format(clazz))) {
+                                actionObj = eval("{0}.prototype.fromObject(obj.actionObj)".format(clazz));
+                                return false;
+                            }
+
+                            return true;
+                        });
+                        ret.actionObj = actionObj;
+                    }
+
                     obj.transitions && obj.transitions.forEach(function (t) {
                         var transition = Transition.prototype.fromObject(t);
                         transition.state = ret;
@@ -649,6 +671,10 @@ define(
                 },
                 setContext: function (value) {
                     this.context = value;
+                },
+                setWidget: function (widgetObj) {
+                    this.widgetObj = widgetObj;
+                    this.actionObj.widgetObj = widgetObj;
                 },
                 toString: function () {
                     return this.node !== "?" && this.id || "?";
@@ -671,7 +697,8 @@ define(
                     });
                 },
                 clone: function (widgetObj) {
-                    var cloneObj = new State(widgetObj, this.name, this.context);
+                    var cloneObj = new State(widgetObj, this.name, this.context, this.actionObj.clone());
+                    this.actionObj.widgetObj = widgetObj;
 
                     return cloneObj;
                 }
@@ -832,7 +859,8 @@ define(
             SequenceTransitionAction = Class(BaseTransitionAction, {
                 CLASS_NAME: "SequenceTransitionAction",
                 MEMBERS: {
-                    childActions: []
+                    childActions: [],
+                    stopOnEach: false
                 },
                 initialize: function (widgetObj, id) {
                     this.initialize.prototype.__proto__.initialize.apply(this, [widgetObj, "Sequence", id]);
@@ -844,12 +872,13 @@ define(
                 },
                 toJSON: function () {
                     var jsonObj = SequenceTransitionAction.prototype.__proto__.toJSON.apply(this);
-                    _.extend(jsonObj, _.pick(this, ["CLASS_NAME"]), {childActions: $inject.uiUtilService.arrayOmit(this.childActions, "$$hashKey")});
+                    _.extend(jsonObj, _.pick(this, ["stopOnEach", "CLASS_NAME"]), {childActions: $inject.uiUtilService.arrayOmit(this.childActions, "$$hashKey")});
 
                     return jsonObj;
                 },
                 fromObject: function (obj) {
                     var ret = new SequenceTransitionAction(null, obj.id);
+                    ret.stopOnEach = obj.stopOnEach || false;
 
                     SequenceTransitionAction.prototype.__proto__.fromObject.apply(ret, [obj]);
 
@@ -875,6 +904,7 @@ define(
                     var self = this;
 
                     cloneObj = cloneObj || new SequenceTransitionAction(this.widgetObj);
+                    cloneObj.stopOnEach = this.stopOnEach;
 
                     _.extend(MEMBERS = MEMBERS || {}, SequenceTransitionAction.prototype.MEMBERS);
                     MEMBERS = _.omit(MEMBERS, ["childActions"]);
@@ -887,6 +917,16 @@ define(
 
                     return cloneObj;
                 },
+                setStopOnEach: function (value) {
+                    if (this.stopOnEach != value) {
+                        if (this.chainObject) {
+                            this.chainObject.cancel();
+                            this.chainObject = null;
+                        }
+
+                        this.stopOnEach = value;
+                    }
+                },
                 doAction: function () {
                     var self = this,
                         arr = [],
@@ -898,9 +938,24 @@ define(
                         });
                     });
 
-                    return $inject.uiUtilService.chain(arr,
-                        chainId,
-                        $inject.angularConstants.renderTimeout);
+                    if (self.stopOnEach) {
+                        if (self.chainObject && self.chainObject.isComplete()) self.chainObject = null;
+
+                        if (!self.chainObject) {
+                            self.chainObject = $inject.uiUtilService.chain(arr,
+                                chainId,
+                                $inject.angularConstants.renderTimeout,
+                                self.stopOnEach
+                            );
+                        }
+
+                        return self.chainObject.next();
+                    } else {
+                        return $inject.uiUtilService.chain(arr,
+                            chainId,
+                            $inject.angularConstants.renderTimeout
+                        );
+                    }
                 },
                 addAction: function (actionType) {
                     var action;
@@ -920,9 +975,17 @@ define(
                     action && this.childActions.push(action);
                 },
                 restoreWidget: function () {
+                    if (this.chainObject) {
+                        this.chainObject.cancel();
+                        this.chainObject = null;
+                    }
+
                     this.childActions.forEach(function (actionObj) {
                         actionObj.restoreWidget();
                     });
+                },
+                isEmpty: function () {
+                    return !this.childActions.length;
                 }
             }),
             EffectTransitionAction = Class(BaseTransitionAction, {
@@ -1065,24 +1128,20 @@ define(
                     return cloneObj;
                 },
                 doAction: function () {
-                    var self = this,
-                        defer = $inject.$q.defer();
+                    var self = this;
 
-                    $inject.$timeout(function () {
-                        self.widgetObj.setState(self.newState);
+                    return $inject.$timeout(function () {
+                        var ret = self.widgetObj.setState(self.newState);
 
-                        if (self.widgetObj.$element && self.widgetObj.$element[0].nodeType == 1 && self.widgetObj.$element.parent().length) {
-                            var animationName = self.widgetObj.$element.css("animation-name");
-                            if (animationName && animationName !== "none") {
-                                $inject.uiUtilService.onAnimationEnd(self.widgetObj.$element).then(function () {
-                                    defer.resolve(self);
-                                });
-                            }
+                        if (ret && ret.then) {
+                            return ret;
+                        } else {
+                            return $inject.uiUtilService.getResolveDefer();
                         }
-                        defer.resolve(self);
                     });
-
-                    return defer.promise;
+                },
+                restoreWidget: function () {
+                    this.widgetObj && this.widgetObj.setState(this.widgetObj.initialStateOption);
                 }
             }),
             ConfigurationTransitionAction = Class(BaseTransitionAction, {
@@ -2283,7 +2342,7 @@ define(
                         obj.states.forEach(function (s) {
                             var state = State.prototype.fromObject(s);
                             if (state) {
-                                state.widgetObj = self;
+                                state.setWidget(self);
                                 self.states.push(state);
                                 stateMap[state.id] = state;
                                 if (!state.context) {
@@ -2910,7 +2969,22 @@ define(
                                     });
                                     self.styleManager.draw();
 
-                                    $inject.$rootScope.sketchWidgetSetting.isPlaying && self.registerTrigger();
+                                    if ($inject.$rootScope.sketchWidgetSetting.isPlaying) {
+                                        if (!self.state.actionObj.isEmpty()) {
+                                            return self.state.actionObj.doAction().then(
+                                                function () {
+                                                    //Enable trigger after action is performed.
+                                                    self.registerTrigger();
+
+                                                    return $inject.uiUtilService.getResolveDefer();
+                                                }
+                                            );
+                                        } else {
+                                            return $inject.$timeout(function () {
+                                                self.registerTrigger();
+                                            });
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -3210,7 +3284,8 @@ define(
                                             pseudo = pseudoStylePrefix.replace(/style/i, "");
 
                                         self.trackablePseudoCss(source, pseudo, null);
-                                        value && self.trackablePseudoCss(source, pseudo, value);
+                                        if (value != null)
+                                            self.trackablePseudoCss(source, pseudo, value);
                                     });
                                 }
                             }
@@ -4321,7 +4396,8 @@ define(
 
                     //call method setHandDownConfiguration for later applying configuration to backend
                     _.each(cloneObj.widgetSpec.configuration.handDownConfiguration, function (config, key) {
-                        config.pickedValue && cloneObj.setHandDownConfiguration(key, config.pickedValue);
+                        if (config.pickedValue != null)
+                            config.pickedValue && cloneObj.setHandDownConfiguration(key, config.pickedValue);
                     });
 
                     return cloneObj;
@@ -4632,11 +4708,17 @@ define(
                 removeStateOption: function () {
                 },
                 setState: function (value) {
-                    RepoSketchWidgetClass.prototype.__proto__.setState.apply(this, [value]);
+                    var self = this,
+                        ret = RepoSketchWidgetClass.prototype.__proto__.setState.apply(this, [value]),
+                        stateName = typeof value === "string" && value || value.name;
 
-                    var stateName = typeof value === "string" && value || value.name;
-
-                    this.setScopedValue("state", stateName);
+                    if (ret && ret.then) {
+                        ret.then(function () {
+                            return self.setScopedValue("state", stateName);
+                        });
+                    } else {
+                        return this.setScopedValue("state", stateName);
+                    }
                 },
                 setStateContext: function (value) {
                     var self = this;
@@ -5378,6 +5460,7 @@ define(
                 self.$rootScope.loadedProject.populate(dbObject);
             }
 
+            //FIXME Need display error alert here.
             return this.uiUtilService.chain(
                 [
                     function () {

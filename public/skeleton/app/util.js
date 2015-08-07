@@ -2,31 +2,227 @@ define(
     ["angular", "hammer"],
     function () {
         return function (appModule, meta) {
-            var utilService = function ($rootScope, $timeout, $q, $compile, $exceptionHandler, angularConstants, uiUtilService, uiAnimationService) {
+            var utilService = function ($rootScope, $timeout, $q, $compile, $exceptionHandler, angularConstants, appService, uiUtilService, uiAnimationService) {
                 this.$rootScope = $rootScope;
                 this.$timeout = $timeout;
                 this.$q = $q;
                 this.$compile = $compile;
                 this.$exceptionHandler = $exceptionHandler;
                 this.angularConstants = angularConstants;
+                this.appService = appService;
                 this.uiUtilService = uiUtilService;
                 this.uiAnimationService = uiAnimationService;
                 this.meta = angular.copy(meta);
             };
 
-            utilService.$inject = ["$rootScope", "$timeout", "$q", "$compile", "$exceptionHandler", "angularConstants", "uiUtilService", "uiAnimationService"];
+            utilService.$inject = ["$rootScope", "$timeout", "$q", "$compile", "$exceptionHandler", "angularConstants", "appService", "uiUtilService", "uiAnimationService"];
+
+            function scopeSetterHandler(scope, key, value) {
+                var setterName = ("set" + key.charAt(0).toUpperCase() + key.substr(1)),
+                    setter = scope[setterName];
+                if (setter) {
+                    setter.apply(scope, [value]);
+                } else {
+                    if (scope.configuration) {
+                        scope.configuration[key] = value;
+                    }
+                    scope[key] = value;
+                }
+            }
+
+            utilService.prototype.handleEventOnce = function (widgetId, fn) {
+                var self = this;
+
+                return self.uiUtilService.once(function () {
+                    var result = fn() || {};
+
+                    return result.then && result || self.uiUtilService.getResolveDefer();
+                }, null, self.angularConstants.eventThrottleInterval, "handleEventOnce.{0}".format(widgetId));
+            }
+
+            utilService.prototype.doAction = function (action) {
+                return this.actionHandler(action);
+            }
+
+            utilService.prototype.actionHandler = function (action) {
+                var self = this,
+                    $widgetElement = $("#" + action.widgetObj),
+                    widgetScope = angular.element($widgetElement).scope();
+
+                if ($widgetElement.length) {
+                    if (action.actionType === "Sequence") {
+                        var arr = [],
+                            chainId = "utilService.doAction." + action.id;
+
+                        action.childActions && action.childActions.forEach(function (childAction) {
+                            arr.push(function () {
+                                return self.doAction(childAction);
+                            });
+                        });
+
+                        if (action.stopOnEach) {
+                            if (action.chainObject && action.chainObject.isComplete()) action.chainObject = null;
+
+                            if (!action.chainObject) {
+                                //FIXME Need code review on releasing resource after scope destroyed.
+                                action.scopeDestroyWatcher && action.scopeDestroyWatcher();
+
+                                var chainObject = self.uiUtilService.chain(arr,
+                                    chainId,
+                                    null,
+                                    action.stopOnEach
+                                );
+                                action.chainObject = chainObject;
+
+                                if (widgetScope) {
+                                    action.scopeDestroyWatcher = widgetScope.$on('$destroy', function () {
+                                        chainObject.cancel();
+                                    });
+                                }
+                            }
+
+                            return action.chainObject.next();
+                        } else {
+                            action.scopeDestroyWatcher && action.scopeDestroyWatcher();
+
+                            var promise = self.uiUtilService.chain(arr,
+                                chainId);
+
+                            if (widgetScope && promise.cancel) {
+                                action.scopeDestroyWatcher = widgetScope.$on('$destroy', function () {
+                                    promise.cancel();
+                                });
+                            }
+
+                            return promise;
+                        }
+                    } else if (action.actionType === "Effect") {
+                        var defer = self.$q.defer(),
+                            fullName = action.artifactSpec.directiveName;
+                        if (action.artifactSpec.version) {
+                            fullName = fullName + "-" + action.artifactSpec.version.replace(/\./g, "-")
+                        }
+                        $widgetElement.attr(fullName, "");
+                        $widgetElement.attr("effect", action.effect.name);
+
+                        if (action.effect.type === "Animation") {
+                            var cssAnimation = {};
+
+                            if (action.effect.options.duration) {
+                                _.extend(
+                                    cssAnimation, self.uiUtilService.prefixedStyle("animation-duration", "{0}s", action.effect.options.duration)
+                                );
+                            }
+                            if (action.effect.options.timing) {
+                                _.extend(
+                                    cssAnimation, self.uiUtilService.prefixedStyle("timing-function", "{0}", action.effect.options.timing)
+                                );
+                            }
+
+                            $widgetElement.css(cssAnimation);
+
+                            self.uiUtilService.onAnimationEnd($widgetElement).then(function () {
+                                $widgetElement.removeAttr(fullName);
+                                $widgetElement.removeAttr("effect");
+
+                                for (var key in cssAnimation) {
+                                    $widgetElement.css(key, "");
+                                }
+
+                                defer.resolve();
+                            });
+                        } else {
+                            self.$timeout(function () {
+                                defer.resolve();
+                            });
+                        }
+
+                        return defer.promise;
+                    } else if (action.actionType === "State") {
+                        return self.setState(action.widgetObj, action.newState);
+                    } else if (action.actionType === "Configuration") {
+                        var defer = self.$q.defer();
+
+                        self.uiUtilService.whilst(function () {
+                                var scope = angular.element($widgetElement.find("[widget-container]:nth-of-type(1)").first().children()[0]).scope();
+                                return !scope;
+                            }, function (callback) {
+                                callback();
+                            }, function (err) {
+                                if (!err) {
+                                    var scope = angular.element($widgetElement.find("[widget-container]:nth-of-type(1)").first().children()[0]).scope();
+
+                                    action.configuration && action.configuration.forEach(function (item) {
+                                        if (item.type === "size") {
+                                            var m = (item.pickedValue || "").match(/([-\d\.]+)(px|em|%)+$/)
+                                            if (m && m.length == 3) {
+                                                scope[item.key] = item.pickedValue;
+                                            }
+                                        } else {
+                                            scopeSetterHandler(scope, item.key, item.pickedValue);
+                                        }
+                                    });
+
+                                    defer.resolve();
+                                } else {
+                                    defer.reject(err);
+                                }
+                            },
+                            self.angularConstants.checkInterval,
+                            "utilService.doAction.setScopedValue." + $widgetElement.attr("id"),
+                            self.angularConstants.renderTimeout
+                        )
+
+                        return defer.promise;
+                    } else if (action.actionType === "Movement") {
+                        return self.uiAnimationService.moveWidget($widgetElement, self.$rootScope[$widgetElement.attr("id")].routes, action.routeIndex, action.settings);
+                    } else if (action.actionType === "Sound") {
+                        return action.resourceName && self.appService.playSound("resource/audio/{0}".format(action.resourceName)) || self.uiUtilService.getResolveDefer();
+                    }
+                }
+            }
+
+            utilService.prototype.handleStateAction = function (stateAction) {
+                return this.actionHandler(stateAction);
+            }
+
+            utilService.prototype.setState = function (id, name) {
+                var fn = this.$rootScope[id] && this.$rootScope[id].setState;
+                if (fn) {
+                    return fn(name);
+                } else {
+                    return this.setStateOnWidget(id, name);
+                }
+            }
+
+            utilService.prototype.setStateOnWidget = function (id, name) {
+                var self = this,
+                    $widgetElement = $("#" + id);
+
+                var animateElement;
+                if ($widgetElement.hasClass(self.angularConstants.widgetClasses.widgetIncludeAnchorClass)) {
+                    animateElement = $widgetElement.find("[widget-container]:nth-of-type(1)").first().children()[0];
+                    var scope = angular.element(animateElement).scope();
+                    scope.state = name;
+
+                    $widgetElement.attr("state", name);
+                } else {
+                    animateElement = $widgetElement;
+                    $widgetElement.attr("state", name);
+                }
+
+                var $animateElement = $(animateElement),
+                    animationName = $animateElement.css("animation-name");
+                if (animationName && animationName !== "none") {
+                    return self.uiUtilService.onAnimationEnd($animateElement);
+                } else {
+                    return self.uiUtilService.getResolveDefer();
+                }
+            }
 
             utilService.prototype.registerTrigger = function (id, eventMap) {
                 var self = this,
                     defer = self.$q.defer();
-
-                function handleEventOnce(widgetId, fn) {
-                    return self.uiUtilService.once(function () {
-                        var result = fn() || {};
-
-                        return result.then && result || self.uiUtilService.getResolveDefer();
-                    }, null, self.angularConstants.eventThrottleInterval, "handleEventOnce.{0}".format(widgetId));
-                }
 
                 function createWidgetObject(action) {
                     self.uiUtilService.whilst(function () {
@@ -39,7 +235,7 @@ define(
                             if (!err) {
                                 $("#" + action.widgetObj).data("widgetObject", {
                                     handleEventOnce: function (fn) {
-                                        return handleEventOnce(action.widgetObj, fn);
+                                        return self.handleEventOnce(action.widgetObj, fn);
                                     }
                                 });
 
@@ -51,151 +247,6 @@ define(
                         self.angularConstants.checkInterval,
                         "utilService.registerTrigger.createWidgetObject." + action.widgetObj,
                         self.angularConstants.renderTimeout);
-                }
-
-                function scopeSetterHandler(scope, key, value) {
-                    var setterName = ("set" + key.charAt(0).toUpperCase() + key.substr(1)),
-                        setter = scope[setterName];
-                    if (setter) {
-                        setter.apply(scope, [value]);
-                    } else {
-                        if (scope.configuration) {
-                            scope.configuration[key] = value;
-                        }
-                        scope[key] = value;
-                    }
-                }
-
-                function doAction(action) {
-                    var defer = self.$q.defer();
-
-                    handleEventOnce(action.widgetObj, function () {
-                        return actionHandler(action).then(function () {
-                            defer.resolve();
-
-                            return self.uiUtilService.getResolveDefer();
-                        });
-                    })();
-
-                    return defer.promise;
-                }
-
-                function actionHandler(action) {
-                    var $widgetElement = $("#" + action.widgetObj);
-
-                    if ($widgetElement.length) {
-                        if (action.actionType === "Sequence") {
-                            var arr = [],
-                                chainId = "utilService.registerTrigger.doAction." + action.id;
-
-                            action.childActions && action.childActions.forEach(function (childAction) {
-                                arr.push(function () {
-                                    return doAction(childAction);
-                                });
-                            });
-
-                            return self.uiUtilService.chain(arr,
-                                chainId);
-                        } else if (action.actionType === "Effect") {
-                            var defer = self.$q.defer(),
-                                fullName = action.artifactSpec.directiveName;
-                            if (action.artifactSpec.version) {
-                                fullName = fullName + "-" + action.artifactSpec.version.replace(/\./g, "-")
-                            }
-                            $widgetElement.attr(fullName, "");
-                            $widgetElement.attr("effect", action.effect.name);
-
-                            if (action.effect.type === "Animation") {
-                                var cssAnimation = {};
-
-                                if (action.effect.options.duration) {
-                                    _.extend(
-                                        cssAnimation, self.uiUtilService.prefixedStyle("animation-duration", "{0}s", action.effect.options.duration)
-                                    );
-                                }
-                                if (action.effect.options.timing) {
-                                    _.extend(
-                                        cssAnimation, self.uiUtilService.prefixedStyle("timing-function", "{0}", action.effect.options.timing)
-                                    );
-                                }
-
-                                $widgetElement.css(self.cssAnimation);
-
-                                self.uiUtilService.onAnimationEnd($widgetElement).then(function () {
-                                    $widgetElement.removeAttr(fullName);
-                                    $widgetElement.removeAttr("effect");
-
-                                    for (var key in cssAnimation) {
-                                        $widgetElement.css(key, "");
-                                    }
-
-                                    defer.resolve();
-                                });
-                            } else {
-                                self.$timeout(function () {
-                                    defer.resolve();
-                                });
-                            }
-
-                            return defer.promise;
-                        } else if (action.actionType === "State") {
-                            var animateElement;
-                            if ($widgetElement.hasClass(self.angularConstants.widgetClasses.widgetIncludeAnchorClass)) {
-                                animateElement = $widgetElement.find("[widget-container]:nth-of-type(1)").first().children()[0];
-                                var scope = angular.element(animateElement).scope();
-                                scope.state = action.newState;
-
-                                $widgetElement.attr("state", action.newState);
-                            } else {
-                                animateElement = $widgetElement;
-                                $widgetElement.attr("state", action.newState);
-                            }
-
-                            var $animateElement = $(animateElement),
-                                animationName = $animateElement.css("animation-name");
-                            if (animationName && animationName !== "none") {
-                                return self.uiUtilService.onAnimationEnd($animateElement);
-                            } else {
-                                return self.uiUtilService.getResolveDefer();
-                            }
-                        } else if (action.actionType === "Configuration") {
-                            var defer = self.$q.defer();
-
-                            self.uiUtilService.whilst(function () {
-                                    var scope = angular.element($widgetElement.find("[widget-container]:nth-of-type(1)").first().children()[0]).scope();
-                                    return !scope;
-                                }, function (callback) {
-                                    callback();
-                                }, function (err) {
-                                    if (!err) {
-                                        var scope = angular.element($widgetElement.find("[widget-container]:nth-of-type(1)").first().children()[0]).scope();
-
-                                        action.configuration && action.configuration.forEach(function (item) {
-                                            if (item.type === "size") {
-                                                var m = (item.pickedValue || "").match(/([-\d\.]+)(px|em|%)+$/)
-                                                if (m && m.length == 3) {
-                                                    scope[item.key] = item.pickedValue;
-                                                }
-                                            } else {
-                                                scopeSetterHandler(scope, item.key, item.pickedValue);
-                                            }
-                                        });
-
-                                        defer.resolve();
-                                    } else {
-                                        defer.reject(err);
-                                    }
-                                },
-                                self.angularConstants.checkInterval,
-                                "utilService.registerTrigger.doAction.setScopedValue." + $widgetElement.attr("id"),
-                                self.angularConstants.renderTimeout
-                            )
-
-                            return defer.promise;
-                        } else if (action.actionType === "Movement") {
-                            return self.uiAnimationService.moveWidget($widgetElement, self.$rootScope[$widgetElement.attr("id")].routes, action.routeIndex, action.settings);
-                        }
-                    }
                 }
 
                 function createActionCallback(actions) {
@@ -223,7 +274,33 @@ define(
                             return false;
                         });
 
-                        actionObj && doAction(actionObj);
+                        if (actionObj) {
+                            if (actionObj.stopOnEach && actionObj.chainObject) {
+                                self.doAction(actionObj);
+                            } else {
+                                self.handleEventOnce(actionObj.widgetObj, function () {
+                                    return self.doAction(actionObj);
+                                })();
+                            }
+                        }
+                    }
+                }
+
+                function destroyHammer(element, recognizers, events) {
+                    return function () {
+                        var $el = $(element),
+                            mc = $el.data("hammer");
+                        if (mc) {
+                            events.forEach(function (evt) {
+                                mc.off(evt);
+                            });
+                            recognizers.forEach(function (recognizer) {
+                                mc.remove(recognizer);
+                            });
+                            mc.destroy();
+                            $el.removeData("hammer");
+                            $el.removeData("destroyHammer");
+                        }
                     }
                 }
 
@@ -235,11 +312,14 @@ define(
                     },
                     function (err) {
                         if (!err) {
+                            var element = document.getElementById(id),
+                                fn = $(element).data("destroyHammer");
+                            fn && fn();
+
                             _.each(eventMap, function (triggerConfig, triggerType) {
                                 if (!_.isEmpty(triggerConfig)) {
                                     if (triggerType === "Gesture") {
-                                        var element = document.getElementById(id),
-                                            mc = new Hammer.Manager(element),
+                                        var mc = new Hammer.Manager(element),
                                             handlerMap = {};
 
                                         _.each(triggerConfig, function (eventConfig, eventType) {
@@ -293,20 +373,12 @@ define(
 
                                         if (recognizers.length && events.length) {
                                             $(element).data("hammer", mc);
+                                            $(element).data("destroyHammer", destroyHammer(element, recognizers, events));
 
                                             var scope = angular.element(element).scope();
                                             scope && scope.$on('$destroy', function () {
-                                                var mc = $(element).data("hammer");
-                                                if (mc) {
-                                                    events.forEach(function (evt) {
-                                                        mc.off(evt);
-                                                    });
-                                                    recognizers.forEach(function (recognizer) {
-                                                        mc.remove(recognizer);
-                                                    });
-                                                    mc.destroy();
-                                                    $(element).removeData("hammer");
-                                                }
+                                                var fn = $(element).data("destroyHammer");
+                                                fn && fn();
                                             });
                                         }
                                     }
@@ -393,7 +465,9 @@ define(
                                     setCurrentPage($next);
                                     self.$rootScope.pickedPage = self.meta.locations[locationIndex + 1];
 
-                                    return self.getResolveDefer(location);
+                                    return self.setState(self.$rootScope.pickedPage.replace("page-", ""), "*").then(function () {
+                                        return self.getResolveDefer(location);
+                                    });
                                 });
                             } else {
                                 return self.$timeout(function () {
@@ -403,7 +477,9 @@ define(
                                     setCurrentPage($next);
                                     self.$rootScope.pickedPage = self.meta.locations[locationIndex + 1];
 
-                                    return self.getResolveDefer(location);
+                                    return self.setState(self.$rootScope.pickedPage.replace("page-", ""), "*").then(function () {
+                                        return self.getResolveDefer(location);
+                                    });
                                 });
                             }
                         },
@@ -465,7 +541,9 @@ define(
                                     setCurrentPage($prev);
                                     self.$rootScope.pickedPage = self.meta.locations[locationIndex - 1];
 
-                                    return self.getResolveDefer(location);
+                                    return self.setState(self.$rootScope.pickedPage.replace("page-", ""), "*").then(function () {
+                                        return self.getResolveDefer(location);
+                                    });
                                 });
                             } else {
                                 return self.$timeout(function () {
@@ -475,7 +553,9 @@ define(
                                     setCurrentPage($prev);
                                     self.$rootScope.pickedPage = self.meta.locations[locationIndex - 1];
 
-                                    return self.getResolveDefer(location);
+                                    return self.setState(self.$rootScope.pickedPage.replace("page-", ""), "*").then(function () {
+                                        return self.getResolveDefer(location);
+                                    });
                                 });
                             }
                         },
@@ -512,7 +592,9 @@ define(
                             }
 
                             if ($unloaded) {
+                                var scope = angular.element($unloaded).scope();
                                 $unloaded.remove();
+                                scope && scope.destroy();
                                 pageCount--;
                             }
                         }

@@ -1,0 +1,123 @@
+@font-face {
+	font-family: 'icon-state-action';
+	src: url('icon-state-action.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+.icon-state-action:before {
+	font-family: 'icon-state-action';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon-state-action-before:before {
+	font-family: 'icon-state-action';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon-state-action-after:after {
+	font-family: 'icon-state-action';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon-state-action-library:before {
+	content: "\e600";
+}
+.icon-state-action-exit:before {
+	content: "\e601";
+}
+.icon-state-action-set-state:before {
+	content: "\e602";
+}
+.icon-state-action-animation:before {
+	content: "\e603";
+}
+.icon-state-action-cross:before {
+	content: "\e604";
+}
+.icon-state-action-plus:before {
+	content: "\e605";
+}
+.icon-state-action-configuration:before {
+	content: "\e606";
+}
+.icon-state-action-sound:before {
+	content: "\e607";
+}
+
+.icon-state-action-library-before:before {
+	content: "\e600";
+}
+.icon-state-action-exit-before:before {
+	content: "\e601";
+}
+.icon-state-action-set-state-before:before {
+	content: "\e602";
+}
+.icon-state-action-animation-before:before {
+	content: "\e603";
+}
+.icon-state-action-cross-before:before {
+	content: "\e604";
+}
+.icon-state-action-plus-before:before {
+	content: "\e605";
+}
+.icon-state-action-configuration-before:before {
+	content: "\e606";
+}
+.icon-state-action-sound-before:before {
+	content: "\e607";
+}
+
+.icon-state-action-library-after:after {
+	content: "\e600";
+}
+.icon-state-action-exit-after:after {
+	content: "\e601";
+}
+.icon-state-action-set-state-after:after {
+	content: "\e602";
+}
+.icon-state-action-animation-after:after {
+	content: "\e603";
+}
+.icon-state-action-cross-after:after {
+	content: "\e604";
+}
+.icon-state-action-plus-after:after {
+	content: "\e605";
+}
+.icon-state-action-configuration-after:after {
+	content: "\e606";
+}
+.icon-state-action-sound-after:after {
+	content: "\e607";
+}
