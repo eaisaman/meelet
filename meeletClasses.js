@@ -913,7 +913,8 @@ var State = Class({
 
             initMap[self.id] = attributeMap;
 
-            attributeMap.routes = self.routes;
+            //FIXME Check route feature on generated html
+            attributeMap.routes = JSON.stringify(self.routes);
 
             if (self.html) {
                 var $textNode = $("<div />").addClass("widgetText markdown-body editormd-preview-container").prependTo(self.$element);

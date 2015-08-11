@@ -199,24 +199,31 @@ define(
                 var self = this,
                     $widgetElement = $("#" + id);
 
-                var animateElement;
+                $widgetElement.attr("state", name);
+
                 if ($widgetElement.hasClass(self.angularConstants.widgetClasses.widgetIncludeAnchorClass)) {
-                    animateElement = $widgetElement.find("[widget-container]:nth-of-type(1)").first().children()[0];
-                    var scope = angular.element(animateElement).scope();
-                    scope.state = name;
-
-                    $widgetElement.attr("state", name);
+                    return self.uiUtilService.whilst(function () {
+                            var scope = angular.element($widgetElement.find("[widget-container]:nth-of-type(1)").first().children()[0]).scope();
+                            return !scope;
+                        }, function (callback) {
+                            callback();
+                        }, function (err) {
+                            if (!err) {
+                                var scope = angular.element($widgetElement.find("[widget-container]:nth-of-type(1)").first().children()[0]).scope();
+                                scope.state = name;
+                            }
+                        },
+                        self.angularConstants.checkInterval,
+                        "utilService.setStateOnWidget." + id,
+                        self.angularConstants.renderTimeout
+                    )
                 } else {
-                    animateElement = $widgetElement;
-                    $widgetElement.attr("state", name);
-                }
-
-                var $animateElement = $(animateElement),
-                    animationName = $animateElement.css("animation-name");
-                if (animationName && animationName !== "none") {
-                    return self.uiUtilService.onAnimationEnd($animateElement);
-                } else {
-                    return self.uiUtilService.getResolveDefer();
+                    var animationName = $widgetElement.css("animation-name");
+                    if (animationName && animationName !== "none") {
+                        return self.uiUtilService.onAnimationEnd($widgetElement);
+                    } else {
+                        return self.uiUtilService.getResolveDefer();
+                    }
                 }
             }
 
@@ -250,31 +257,19 @@ define(
                 }
 
                 function createActionCallback(actions) {
-                    //Some widget may be triggered by hammer gesture and ng mouse event at the same time, which is
-                    //to be prevented. A widget object with handleEventOnce function can stop widget event handling if
-                    //hammer handling is processed first.
-                    actions.forEach(function (action) {
-                        createWidgetObject(action.actionObj);
-                    });
+                    if (actions && actions.length) {
+                        var actionObj = actions[0].actionObj;
 
-                    return function (event) {
-                        var $element = $("#" + id),
-                            actionObj;
+                        //Some widget may be triggered by hammer gesture and ng mouse event at the same time, which is
+                        //to be prevented. A widget object with handleEventOnce function can stop widget event handling if
+                        //hammer handling is processed first.
+                        createWidgetObject(actionObj);
 
-                        if (event && event.srcEvent) {
-                            event.srcEvent.stopPropagation && event.srcEvent.stopPropagation();
-                        }
-
-                        actions.every(function (action) {
-                            if ($element.attr("state") === action.state) {
-                                actionObj = action.actionObj;
-                                return false;
+                        return function (event) {
+                            if (event && event.srcEvent) {
+                                event.srcEvent.stopPropagation && event.srcEvent.stopPropagation();
                             }
 
-                            return false;
-                        });
-
-                        if (actionObj) {
                             if (actionObj.stopOnEach && actionObj.chainObject) {
                                 self.doAction(actionObj);
                             } else {

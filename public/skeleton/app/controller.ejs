@@ -52,6 +52,7 @@ function handleStateTree(id, stateTree) {
 %>
 $rootScope.stateFns.push(function() {
 var self = this;
+self["<%=id%>"] = self["<%=id%>"] || {};
 self["<%=id%>"].set<%=context||"State"%> = function(name) {
 <%if (context) {%>
     self["<%=id%>"].setState = self["<%=id%>"].set<%=context%>;
@@ -77,11 +78,11 @@ self["<%=id%>"].set<%=context||"State"%> = function(name) {
                     var childStateTree = offspring[childId];
                     childHandlers.push(function() {handleStateTree(childId, childStateTree)});
                     %>
-            self["<%=childId%>"].set<%=childStateTree._context%>("*");
+            arr.push(function() { return self["<%=childId%>"].set<%=childStateTree._context%>("*"); })
 <%
                 });%>}); });<%
             }%>
-            return arr.length && uiUtilService.chain(arr) || uiUtilService.getResolveDefer();
+            return arr.length && uiUtilService.chain(arr, "chain-stateFn-<%=id%>") || uiUtilService.getResolveDefer();
         break;
         default:
             return uiUtilService.getResolveDefer();<%
@@ -132,7 +133,7 @@ define(
                 $rootScope.initFns.push(function() {
                     this['<%= widgetId %>'] = {};
 <%for(var key in page.initMap[widgetId]) {%>
-                    this['<%= widgetId %>']['<%= key %>'] = <% printJSON(page.initMap[widgetId][key]); %>;
+                    this['<%= widgetId %>']['<%= key %>'] = <%=page.initMap[widgetId][key]%>;
 <%}%>
                 });
 <%
