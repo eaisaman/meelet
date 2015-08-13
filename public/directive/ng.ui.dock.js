@@ -67,8 +67,8 @@ define(
                                     function () {
                                         return $timeout(function () {
                                             scope.selectContentTab(
-                                                element.find(".dockContent"),
-                                                element.find("div[tab-sel^=tab-head-control-group]").get(0),
+                                                $(element).find(".dockContent"),
+                                                $(element).find("div[tab-sel^=tab-head-control-group]").get(0),
                                                 null,
                                                 "control-group"
                                             );

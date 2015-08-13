@@ -1,28 +1,29 @@
 //Javascript libs
-var ANGULAR_LIB_PATH = "javascripts/angular/1.3.0-beta.8/",
-    ANGULAR_MODULES_LIB_PATH = "javascripts/angular-modules/",
-    ANGULAR_PLUGINS_LIB_PATH = "javascripts/angular-plugins/",
-    HAMMER_LIB_PATH = "javascripts/hammer/2.0.4/",
-    JQUERY_LIB_PATH = "javascripts/jquery/2.1.1/",
-    JQUERY_PLUGINS_LIB_PATH = "javascripts/jquery-plugins/",
-    JQUERY_UI_LIB_PATH = "javascripts/jquery-ui/1.11.0/",
-    JQUERY_UI_PLUGINS_LIB_PATH = "javascripts/jquery-ui-plugins/",
-    UNDERSCORE_LIB_PATH = "javascripts/underscore/1.6.0/",
-    CLASSIE_LIB_PATH = "javascripts/classie/",
-    MODERNIZR_LIB_PATH = "javascripts/modernizr/",
-    STRING_LIB_PATH = "javascripts/String/",
-    RAPHAEL_LIB_PATH = "javascripts/raphael/2.1.2/",//Depended by flowchart, sequence-diagram
-    FLOWCHART_LIB_PATH = "javascripts/flowchart/1.4.0/", //Depended by editormd
-    JQUERY_FLOWCHART_LIB_PATH = "javascripts/jquery.flowchart/1.0.0/", //Depended by editormd
-    SEQUENCE_DIAGRAM_LIB_PATH = "javascripts/sequence-diagram/1.0.4/", //Depended by editormd
-    KATEX_LIB_PATH = "javascripts/katex/0.3.0/",//Depended by editormd
-    CODEMIRROR_LIB_PATH = "javascripts/codemirror/5.2.0/",//Depended by editormd
-    MARKED_LIB_PATH = "javascripts/marked/0.3.3/",//Depended by editormd
-    PRETTIFY_LIB_PATH = "javascripts/prettify/r298/",//Depended by editormd
-    EDITORMD_LIB_PATH = "javascripts/editormd/1.4.3/",
-    VELOCITY_LIB_PATH = "javascripts/velocity/1.2.2/",
-    WAVESURFER_LIB_PATH = "javascripts/wavesurfer/1.0.29/",
-    FABRIC_LIB_PATH = "javascripts/fabric/1.5.0/",
+var MODULES_PATH = window.codeGenModulePath || "../.modules";
+var ANGULAR_LIB_PATH = MODULES_PATH + "/angular/1.3.0-beta.8/",
+    ANGULAR_MODULES_LIB_PATH = MODULES_PATH + "/angular-modules/",
+    ANGULAR_PLUGINS_LIB_PATH = MODULES_PATH + "/angular-plugins/",
+    HAMMER_LIB_PATH = MODULES_PATH + "/hammer/2.0.4/",
+    JQUERY_LIB_PATH = MODULES_PATH + "/jquery/2.1.1/",
+    JQUERY_PLUGINS_LIB_PATH = MODULES_PATH + "/jquery-plugins/",
+    JQUERY_UI_LIB_PATH = MODULES_PATH + "/jquery-ui/1.11.0/",
+    JQUERY_UI_PLUGINS_LIB_PATH = MODULES_PATH + "/jquery-ui-plugins/",
+    UNDERSCORE_LIB_PATH = MODULES_PATH + "/underscore/1.6.0/",
+    CLASSIE_LIB_PATH = MODULES_PATH + "/classie/",
+    MODERNIZR_LIB_PATH = MODULES_PATH + "/modernizr/",
+    STRING_LIB_PATH = MODULES_PATH + "/String/",
+    RAPHAEL_LIB_PATH = MODULES_PATH + "/raphael/2.1.2/",//Depended by flowchart, sequence-diagram
+    FLOWCHART_LIB_PATH = MODULES_PATH + "/flowchart/1.4.0/", //Depended by editormd
+    JQUERY_FLOWCHART_LIB_PATH = MODULES_PATH + "/jquery.flowchart/1.0.0/", //Depended by editormd
+    SEQUENCE_DIAGRAM_LIB_PATH = MODULES_PATH + "/sequence-diagram/1.0.4/", //Depended by editormd
+    KATEX_LIB_PATH = MODULES_PATH + "/katex/0.3.0/",//Depended by editormd
+    CODEMIRROR_LIB_PATH = MODULES_PATH + "/codemirror/5.2.0/",//Depended by editormd
+    MARKED_LIB_PATH = MODULES_PATH + "/marked/0.3.3/",//Depended by editormd
+    PRETTIFY_LIB_PATH = MODULES_PATH + "/prettify/r298/",//Depended by editormd
+    EDITORMD_LIB_PATH = MODULES_PATH + "/editormd/1.4.3/",
+    VELOCITY_LIB_PATH = MODULES_PATH + "/velocity/1.2.2/",
+    WAVESURFER_LIB_PATH = MODULES_PATH + "/wavesurfer/1.0.29/",
+    FABRIC_LIB_PATH = MODULES_PATH + "/fabric/1.5.0/",
     APP_LIB_PATH = "app/",
     DIRECTIVE_LIB_PATH = "directive/",
     isBrowser = !!(typeof window !== 'undefined' && typeof navigator !== 'undefined' && !/jsDom$/i.test(navigator.appName) && window.document);
@@ -59,6 +60,9 @@ requirejs.config({
         "fabric-lib": FABRIC_LIB_PATH + "main",
         "app-lib": APP_LIB_PATH + "main",
         "directive-lib": DIRECTIVE_LIB_PATH + "main"
+    },
+    shim: {
+        "app-lib": {deps: ["directive-lib"]}
     }
 });
 
@@ -68,6 +72,8 @@ requirejs(["jquery-lib", "jquery-plugins-lib", "hammer-lib", "jquery-ui-lib", "j
         window.appModule.value("angularEventTypes", {
             boundPropertiesEvent: "boundPropertiesEvent",
             beforeWidgetCreationEvent: "beforeWidgetCreationEvent",
+            resourceEditEvent: "resourceEditEvent",
+            resourceEditEndEvent: "resourceEditEndEvent",
             switchProjectEvent: "switchProjectEvent",
             playProjectEvent: "playProjectEvent",
             defineWidgetRouteEvent: "defineWidgetRouteEvent",
@@ -100,6 +106,8 @@ requirejs(["jquery-lib", "jquery-plugins-lib", "hammer-lib", "jquery-ui-lib", "j
             repoWidgetClass: "ui-widget",
             stateGroupEventPattern: "State Change Event of State Group {0}",
             widgetEventPattern: "Event {0} of widget {1}",
+            waveVisualizerWorkerPath: DIRECTIVE_LIB_PATH + "wave-visualizer-worker.js",
+            maxAudioClipsInMemory: 4,
             maxPageCountInDom: 10,
             draggingShapeZIndex: 101,
             actionDelay: 100,

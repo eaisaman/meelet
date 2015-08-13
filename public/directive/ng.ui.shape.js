@@ -310,17 +310,18 @@ define(
                                 uiUtilService.latestOnce(
                                     function () {
                                         return $timeout(function () {
-                                            var $wrapper = element.find(".ui-control-wrapper"),
-                                                $panel = element.find(".ui-control-panel");
+                                            var $element = $(element),
+                                                $wrapper = $element.find(".ui-control-wrapper"),
+                                                $panel = $element.find(".ui-control-panel");
 
                                             $wrapper.addClass("expanded");
                                             $panel.addClass("show");
 
-                                            var $el = element.find(".pickerPane");
+                                            var $el = $element.find(".pickerPane");
 
                                             mc = $el.data("hammer");
                                             if (!mc) {
-                                                mc = new Hammer.Manager(element.find(".pickerPane").get(0));
+                                                mc = new Hammer.Manager($element.find(".pickerPane").get(0));
                                                 mc.add(new Hammer.Pan());
                                                 mc.on("panstart panmove panend", addWidgetHandler);
                                                 $el.data("hammer", mc);

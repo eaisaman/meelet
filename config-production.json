@@ -151,6 +151,8 @@
       "stagingFolder": "staging",
       "repoFolder": "repo",
       "skeletonFolder": "public/skeleton",
+      "skeletonModuleFolder": "public/skeleton/javascripts",
+      "projectModuleFolder": "project/.modules",
       "skeletonHtml": "public/skeleton/meelet.skeleton.html"
     },
     "skeletonLibLoadTimeout": 30,

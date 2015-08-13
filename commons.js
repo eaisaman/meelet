@@ -96,6 +96,83 @@ Commons.prototype.arrayPick = function (objects) {
     return arr;
 }
 
+Commons.prototype.walkdir = function (dirpath, base, callback, options) {
+    var self = this,
+        results = [];
+
+    if (typeof base === 'function') {
+        options = callback;
+        callback = base;
+        base = dirpath;
+    }
+    options = options || {};
+
+    fs.readdir(dirpath, function (err, list) {
+        var i = 0;
+        var file;
+        var filepath;
+
+        if (err) {
+            return callback(err);
+        }
+
+        (function next() {
+            file = list[i++];
+
+            if (!file) {
+                return callback(null, results);
+            }
+
+            filepath = path.join(dirpath, file);
+            var relative = path.relative(base, filepath);
+
+            if (options.ignoreHidden && /^\./.test(file)) {
+                process.nextTick(function () {
+                    next();
+                });
+                return;
+            }
+
+            if (options.ignorePaths && options.ignorePaths.length) {
+                var matchedIndex;
+                if (!options.ignorePaths.every(function (item, i) {
+                        matchedIndex = i;
+                        if (typeof item === "string") {
+                            return item !== relative;
+                        } else if (item instanceof RegExp) {
+                            return !item.test(relative);
+                        }
+
+                        return true;
+                    })) {
+                    options.ignorePaths.splice(matchedIndex, 1);
+                    process.nextTick(function () {
+                        next();
+                    });
+                    return;
+                }
+            }
+
+            fs.stat(filepath, function (err, stats) {
+                results.push({
+                    path: filepath,
+                    relative: relative.replace(/\\/g, '/'),
+                    stats: stats
+                });
+
+                if (stats && stats.isDirectory()) {
+                    self.walkdir(filepath, base, function (err, res) {
+                        results = results.concat(res);
+                        next();
+                    }, options);
+                } else {
+                    next();
+                }
+            });
+        })();
+    });
+};
+
 Commons.prototype.batchLimit = function (arr, batchSize, concurrentLimit, iterator, final) {
     async.eachLimit(
         _.toArray(_.groupBy(arr, function (value, index) {
@@ -724,6 +801,8 @@ Commons.prototype.updateConfigurableArtifact = function (projectId, widgetId, ar
 
 Commons.prototype.convertToHtml = function (projectPath, artifactList, callback) {
     var self = this,
+        skeletonModulePath = self.config.userFile.skeletonModuleFolder,
+        projectModulePath = self.config.userFile.projectModuleFolder,
         skeletonPath = self.config.userFile.skeletonFolder,
         skeletonLibLoadTimeout = self.config.settings.skeletonLibLoadTimeout,
         skeletonHtml = self.config.userFile.skeletonHtml,
@@ -775,6 +854,7 @@ Commons.prototype.convertToHtml = function (projectPath, artifactList, callback)
                                     if (!errors || !errors.length) {
                                         window.amdModules = amdModules;
                                         window.modouleLogger = self.config.logger;
+                                        window.codeGenModulePath = path.relative(skeletonPath, skeletonModulePath);
                                         window.onModulesLoaded = function () {
                                             cacheCb(null, window);
                                         };
@@ -812,17 +892,16 @@ Commons.prototype.convertToHtml = function (projectPath, artifactList, callback)
                         }
                     });
 
-                    //Copy modules to project path if not exist
+                    //Copy modules to project .module path if not exist
                     window.amdModules && window.amdModules.forEach(function (pathname) {
                         var relative = _.string.trim(path.relative(skeletonPath, path.dirname(pathname)));
                         if (relative) {
-                            fnArr.push(function (cb) {
-                                var target = path.join(projectPath, relative),
-                                    err = self.mkdirsSync(target);
+                            var moduleRelative = _.string.trim(path.relative(skeletonModulePath, path.dirname(pathname)));
+                            //if folder is not in module path, for example app/main.js, directive/main.js
+                            if (/^\.\.\//g.test(moduleRelative)) {
+                                fnArr.push(function (cb) {
+                                    var target = path.join(projectPath, relative);
 
-                                if (err) {
-                                    cb(err);
-                                } else {
                                     ncp(path.dirname(pathname), target, {
                                         clobber: false,
                                         stopOnErr: true,
@@ -830,8 +909,30 @@ Commons.prototype.convertToHtml = function (projectPath, artifactList, callback)
                                     }, function (err) {
                                         cb(err);
                                     });
-                                }
-                            });
+                                });
+                            } else {
+                                fnArr.push(function (cb) {
+                                    var target = path.join(projectModulePath, moduleRelative);
+
+                                    if (!fs.existsSync(target)) {
+                                        var err = self.mkdirsSync(target);
+
+                                        if (!err) {
+                                            ncp(path.dirname(pathname), target, {
+                                                clobber: false,
+                                                stopOnErr: true,
+                                                dereference: true
+                                            }, function (err) {
+                                                cb(err);
+                                            });
+                                        } else {
+                                            cb(err);
+                                        }
+                                    } else {
+                                        cb(null);
+                                    }
+                                });
+                            }
                         } else {
                             fnArr.push(function (cb) {
                                 var target = path.join(projectPath, path.basename(pathname));
@@ -870,7 +971,11 @@ Commons.prototype.convertToHtml = function (projectPath, artifactList, callback)
                                             pages.push(classes.fromObject(pageObj));
                                         });
 
-                                        cb(null, pages, {artifacts: [], locations: [], pageTransition: obj.pageTransition || {}});
+                                        cb(null, pages, {
+                                            artifacts: [],
+                                            locations: [],
+                                            pageTransition: obj.pageTransition || {}
+                                        });
                                     } catch (err2) {
                                         cb(err2);
                                     }

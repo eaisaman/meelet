@@ -8,6 +8,54 @@ var qr = require('qr-image');
 var FFmpeg = require('fluent-ffmpeg')
 _.string = require('underscore.string');
 _.mixin(_.string.exports());
+var zip = require('archiver')('zip');
+var zipCtor = function () {
+};
+zipCtor.prototype = zip;
+zipCtor.prototype.directory = function (dirpath, destpath, data) {
+    if (this._state.finalize || this._state.aborted) {
+        this.emit('error', new Error('directory: queue closed'));
+        return this;
+    }
+
+    if (typeof dirpath !== 'string' || dirpath.length === 0) {
+        this.emit('error', new Error('directory: dirpath must be a non-empty string value'));
+        return this;
+    }
+
+    this._pending++;
+
+    if (destpath === false) {
+        destpath = '';
+    } else if (typeof destpath !== 'string') {
+        destpath = dirpath;
+    }
+
+    if (typeof data !== 'object') {
+        data = {};
+    }
+
+    var self = this;
+
+    commons.walkdir(dirpath, function (err, results) {
+        if (err) {
+            self.emit('error', err);
+        } else {
+            results.forEach(function (file) {
+                var entryData = _.extend({}, data);
+                entryData.name = path.join(destpath, file.relative).replace(/\\/g, '/').replace(/:/g, '').replace(/^(\.\.\/|\.\/|\/)+/, '');
+                entryData.stats = file.stats;
+
+                self._append(file.path, entryData);
+            });
+        }
+
+        self._pending--;
+        self._maybeFinalize();
+    }, _.pick(self.options, ["ignoreHidden", "ignorePaths"]));
+
+    return this;
+};
 var commons = require('../../../commons');
 
 var UserFileController = function (fields) {
@@ -1414,14 +1462,19 @@ UserFileController.prototype.getProjectFile = function (projectId, request, succ
                     function (projectObj, next) {
                         if (projectObj) {
                             var tmpPath = path.join(self.config.userFile.tmpFolder, _.string.sprintf("%s-%d.zip", projectId, _.now())),
-                                zip = require('archiver')('zip'),
-                                out = fs.createWriteStream(tmpPath);
+                                out = fs.createWriteStream(tmpPath),
+                                cZip = new zipCtor();
+
+                            _.extend(cZip.options, {
+                                ignoreHidden: true,
+                                ignorePaths: ["stylesheets/sass", "stylesheets/repo", /app\/repo\/.+\/stylesheets\/sass$/g]
+                            });
 
                             out.on('finish', function () {
                                 next(null, tmpPath);
                             });
 
-                            zip.on('error', function (err) {
+                            cZip.on('error', function (err) {
                                 next(err);
                             });
 
@@ -1429,10 +1482,10 @@ UserFileController.prototype.getProjectFile = function (projectId, request, succ
                                 next(err);
                             });
 
-                            zip.pipe(out);
-                            zip.directory(projectPath, false);
+                            cZip.pipe(out);
+                            cZip.directory(projectPath, false);
 
-                            zip.finalize();
+                            cZip.finalize();
                         } else {
                             next(null, null);
                         }
@@ -1476,6 +1529,105 @@ UserFileController.prototype.getProjectFile = function (projectId, request, succ
     } else {
         fail("Empty project id");
     }
+}
+
+UserFileController.prototype.getModuleFile = function (request, success, fail) {
+    var self = this,
+        projectModulePath = self.config.userFile.projectModuleFolder,
+        zipPath = path.join(self.config.settings.download.folder, "modules.zip");
+
+    async.waterfall(
+        [
+            function (next) {
+                var mObj = {
+                    moduleTime: function (pCallback) {
+                        fs.stat(projectModulePath, function (err, stat) {
+                            if (err) {
+                                pCallback(err);
+                            } else {
+                                pCallback(null, stat.mtime.getTime());
+                            }
+                        });
+                    },
+                    zipFileTime: function (pCallback) {
+                        fs.stat(zipPath, function (err, stat) {
+                            if (err) {
+                                if (err.code !== "ENOENT") //Not Found
+                                    pCallback(err);
+                                else
+                                    pCallback(null, 0);
+                            } else {
+                                pCallback(null, stat.mtime.getTime());
+                            }
+                        });
+                    }
+                };
+
+                async.parallel(mObj, function (err, results) {
+                    if (err) next(err);
+
+                    next(null, results.moduleTime > results.zipFileTime);
+                });
+            },
+            function (isNew, next) {
+                if (isNew) {
+                    var tmpPath = path.join(self.config.userFile.tmpFolder, _.string.sprintf("modules-%d.zip", _.now())),
+                        out = fs.createWriteStream(tmpPath),
+                        cZip = new zipCtor();
+
+                    out.on('finish', function () {
+                        next(null, tmpPath);
+                    });
+
+                    cZip.on('error', function (err) {
+                        next(err);
+                    });
+
+                    out.on('error', function (err) {
+                        next(err);
+                    });
+
+                    cZip.pipe(out);
+                    cZip.directory(projectModulePath, false);
+
+                    cZip.finalize();
+                } else {
+                    next(null, null);
+                }
+            },
+            function (tmpPath, next) {
+                var fileName = path.basename(zipPath);
+
+                if (tmpPath) {
+                    var src = fs.createReadStream(tmpPath),
+                        dest = fs.createWriteStream(zipPath);
+
+                    dest.on('finish', function () {
+                        next(null, fileName);
+                    });
+
+                    src.on('error', function (err) {
+                        next(err);
+                    });
+
+                    dest.on('error', function (err) {
+                        next(err);
+                    });
+
+                    src.pipe(dest);
+                } else {
+                    next(null, fileName);
+                }
+            }
+        ],
+        function (err, fileName) {
+            if (err) {
+                fail(err);
+            } else {
+                self.fileController.getFile(fileName, request.headers, success, fail);
+            }
+        }
+    );
 }
 
 module.exports = UserFileController;

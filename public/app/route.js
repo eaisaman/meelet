@@ -93,6 +93,9 @@ define(
                     });
                 }
             }
+            urlService.prototype.firstPage = function () {
+                this.locations.length && this[this.locations[0]]();
+            }
 
             appModule.
                 config(["$provide", function ($provide) {
