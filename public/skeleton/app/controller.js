@@ -16,6 +16,10 @@ define(
                     event && event.stopPropagation();
                     utilService.prevPage($rootScope.pickedPage);
                 }
+                $scope.exitPage = function(event) {
+                    event && event.stopPropagation();
+                    appService.exitPage();
+                }
                 utilService.loadPage(null, $rootScope.pickedPage, true);
             }
 

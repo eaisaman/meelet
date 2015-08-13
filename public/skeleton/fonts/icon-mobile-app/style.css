@@ -50,23 +50,29 @@
 .icon-mobile-app-navigate_before:before {
     content: "\e600";
 }
-
 .icon-mobile-app-navigate_next:before {
+    content: "\e602";
+}
+.icon-mobile-app-exit:before {
     content: "\e601";
 }
 
 .icon-mobile-app-navigate_before-before:before {
     content: "\e600";
 }
-
 .icon-mobile-app-navigate_next-before:before {
+    content: "\e602";
+}
+.icon-mobile-app-exit-before:before {
     content: "\e601";
 }
 
 .icon-mobile-app-navigate_before-after:after {
     content: "\e600";
 }
-
 .icon-mobile-app-navigate_next-after:after {
+    content: "\e602";
+}
+.icon-mobile-app-exit-after:after {
     content: "\e601";
 }

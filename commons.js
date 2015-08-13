@@ -892,7 +892,7 @@ Commons.prototype.convertToHtml = function (projectPath, artifactList, callback)
                         }
                     });
 
-                    //Copy modules to project .module path if not exist
+                    //Copy modules to project module path if not exist
                     window.amdModules && window.amdModules.forEach(function (pathname) {
                         var relative = _.string.trim(path.relative(skeletonPath, path.dirname(pathname)));
                         if (relative) {

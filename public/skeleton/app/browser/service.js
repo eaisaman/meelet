@@ -183,6 +183,8 @@ define(
             return self.soundDelegate.play(url);
         }
 
+        appService.prototype.exitPage = appService.prototype.NOOP;
+
         return function (appModule) {
             if (isBrowser) {
                 appModule.

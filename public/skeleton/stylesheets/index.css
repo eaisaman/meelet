@@ -82,7 +82,7 @@
   position: absolute;
   right: 0px;
   bottom: 0.25em;
-  width: 4.5em;
+  width: 6.5em;
   height: 2em;
   line-height: 2;
   overflow: hidden;
@@ -92,7 +92,7 @@
   position: relative;
   float: left;
   height: 100%;
-  width: 50%;
+  width: 30%;
   color: #ecf0f1;
 }
 #rootBody #bg #pageNavigationControl > div:before {

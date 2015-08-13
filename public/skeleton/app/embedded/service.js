@@ -46,7 +46,188 @@ define(
             return errorDefer.promise;
         }
 
-        appService.prototype.playSound = appService.prototype.NOOP;
+        appService.prototype.cordovaPromise = function (functionName) {
+            var self = this;
+
+            function cordovaReady(fn) {
+
+                var queue = [];
+
+                var impl = function () {
+                    queue.push(Array.prototype.slice.call(arguments));
+                };
+
+                document.addEventListener('deviceready', function () {
+                    queue.forEach(function (args) {
+                        fn.apply(this, args);
+                    });
+                    impl = fn;
+                }, false);
+
+                return function () {
+                    return impl.apply(this, arguments);
+                };
+            };
+
+            return function () {
+                var defer = self.$q.defer();
+
+                cordovaReady(function () {
+                    cordova.exec(
+                        function (result) {
+                            defer.resolve(result);
+                        },
+                        function (err) {
+                            defer.reject(err);
+                        },
+                        "NativeBridge", functionName, Array.prototype.slice.call(arguments));
+
+                }).apply(self, Array.prototype.slice.call(arguments));
+
+                return defer.promise;
+            }
+        }
+
+        appService.prototype.playSound = function (url) {
+            var self = this;
+
+            if (!self.soundDelegate) {
+                var Constructor = function () {
+                    this.audioSourceNode = null;
+                    this.audioScriptNode = null;
+                    this.audioContext = null;
+                    this.offlineAudioContext = null;
+                };
+
+                Constructor.prototype.PLAYING_STATE = 0;
+                Constructor.prototype.PAUSED_STATE = 1;
+                Constructor.prototype.FINISHED_STATE = 2;
+                Constructor.prototype.soundSeekPrecision = 100000;
+
+                Constructor.prototype.createAudioProcessHandler = function (handler) {
+                    var instance = this;
+
+                    return function (event) {
+                        var time = instance.audioContext.currentTime - instance.audioSourceNode.lastPlay,
+                            duration = instance.audioSourceNode.buffer.duration;
+
+                        if (time >= duration) {
+                            instance.progress = 1;
+                            self.$timeout(function () {
+                                instance.stop();
+                            });
+                        } else {
+                            instance.progress = Math.floor((time / duration) * instance.soundSeekPrecision) / instance.soundSeekPrecision;
+                        }
+
+                        handler && handler(instance.progress);
+                    }
+                }
+
+                Constructor.prototype.init = function (buffer, callback) {
+                    this.audioSourceNode = this.audioContext.createBufferSource();
+                    this.audioSourceNode.playbackRate.value = 1;
+                    this.audioSourceNode.buffer = buffer;
+
+                    this.audioScriptNode = this.audioContext.createScriptProcessor(256);
+                    this.audioScriptNode.onaudioprocess = this.createAudioProcessHandler(callback);
+
+                    this.audioSourceNode.connect(this.audioContext.destination);
+                    this.audioScriptNode.connect(this.audioContext.destination);
+                }
+
+                Constructor.prototype.play = function (url, callback) {
+                    if (!this.offlineAudioContext) {
+                        this.offlineAudioContext = new (
+                            window.OfflineAudioContext || window.webkitOfflineAudioContext
+                        )(1, 2, 44100);
+                    }
+
+                    if (!this.audioContext) {
+                        this.audioContext = new (
+                            window.AudioContext || window.webkitAudioContext
+                        );
+                    }
+
+                    if (this.playState === this.PLAYING_STATE) {
+                        if (this.url === url) {
+                            return self.getResolveDefer();
+                        }
+                    }
+
+                    if (this.url !== url) {
+                        this.stop();
+
+                        this.url = url;
+                        var instance = this;
+                        instance.playDefer = self.$q.defer();
+                        self.$http({url: url, method: "GET", responseType: "arraybuffer"}).then(
+                            function (result) {
+                                instance.offlineAudioContext.decodeAudioData(result.data, function (buffer) {
+                                    instance.playState = instance.PLAYING_STATE;
+                                    instance.init(buffer, callback);
+                                    instance.audioSourceNode.start(0, 0);
+                                    instance.audioSourceNode.lastPlay = instance.audioContext.currentTime;
+                                });
+                            },
+                            function (err) {
+                                self.$exceptionHandler(err);
+                                instance.playDefer.reject(err);
+                                instance.playDefer = null;
+                            }
+                        );
+                    } else {
+                        this.playDefer = self.$q.defer();
+                        this.audioSourceNode.start(0, this.audioSourceNode.buffer.duration * this.progress);
+                        this.playState = this.PLAYING_STATE;
+                    }
+
+                    return this.playDefer.promise;
+                }
+
+                Constructor.prototype.pause = function () {
+                    if (this.playState === this.PLAYING_STATE) {
+                        if (this.audioSourceNode) {
+                            this.audioSourceNode.stop(0);
+                            this.playState = this.PAUSED_STATE;
+                        }
+
+                        if (this.playDefer) {
+                            this.playDefer.resolve(this.progress);
+                            this.playDefer = null;
+                        }
+                    }
+                }
+
+                Constructor.prototype.stop = function () {
+                    if (this.audioSourceNode) {
+                        this.audioSourceNode.stop(0);
+                        this.audioSourceNode.disconnect();
+                        this.audioSourceNode = null;
+                    }
+                    if (this.audioScriptNode) {
+                        this.audioScriptNode.disconnect();
+                        this.audioScriptNode.onaudioprocess = null;
+                        this.audioScriptNode = null;
+                    }
+                    if (this.playDefer) {
+                        this.playDefer.resolve(this.progress);
+                        this.playDefer = null;
+                    }
+                    this.playState = this.FINISHED_STATE;
+                    this.progress = 0;
+                    this.url = null;
+                }
+
+                self.soundDelegate = new Constructor();
+            }
+
+            return self.soundDelegate.play(url);
+        }
+
+        appService.prototype.exitPage = function () {
+            return this.cordovaPromise("exitPage").apply(this, Array.prototype.slice.call(arguments));
+        }
 
         return function (appModule) {
             if (isBrowser) {
