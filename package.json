@@ -26,7 +26,7 @@
     "glob": "~4.3.5",
     "rimraf": "~2.2.8",
     "fluent-ffmpeg": "~2.0.1",
-    "gm": "~1.14.2",
+    "gm": "~1.18.1",
     "archiver": "~0.14.4",
     "passport": "~0.2.0",
     "passport-http": "~0.2.2",

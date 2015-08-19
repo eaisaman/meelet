@@ -8,10 +8,11 @@ var qr = require('qr-image');
 var FFmpeg = require('fluent-ffmpeg')
 _.string = require('underscore.string');
 _.mixin(_.string.exports());
-var zip = require('archiver')('zip');
 var zipCtor = function () {
+    _.extend(this, require('archiver')('zip'));
+
+    delete this.directory;
 };
-zipCtor.prototype = zip;
 zipCtor.prototype.directory = function (dirpath, destpath, data) {
     if (this._state.finalize || this._state.aborted) {
         this.emit('error', new Error('directory: queue closed'));
