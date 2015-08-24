@@ -79,6 +79,17 @@
                         <input type="text" class="form-control" ng-model="pickedProject.desc"/>
                     </div>
                 </div>
+                <div class="input-group fs-x-small">
+                    <label class="col-as-4 no-padding-right control-label">Type</label>
+
+                    <div class="col-as-8 no-padding-left">
+                        <select class="form-control no-padding fs-x-smaller"
+                                ng-model="pickedProject.type">
+                            <option value="sketch">Sketch</option>
+                            <option value="flow">Flow</option>
+                        </select>
+                    </div>
+                </div>
             </div>
             <div class="projectModalBar">
                 <div class="projectModalButton col-as-6"

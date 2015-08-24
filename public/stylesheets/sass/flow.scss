@@ -1,0 +1,227 @@
+@import "compass/css3";
+@import "bootstrap/mixins/gradients";
+@import "global";
+@import "animation/directive_animation_keyframes";
+@import "animation/directive_animation";
+@import "simple-dropdown";
+
+$activeBorderShadow: rgba(192, 192, 192, 0.8);
+$flowTitleWidth: 6em;
+$numOfFlowEditors: 2;
+
+.flowContainer {
+    position: relative;
+    float: left;
+    width: 100%;
+    height: 100%;
+    color: $color;
+
+    .modalWindowContainer {
+        position: relative;
+        float: left;
+        width: 100%;
+        height: 100%;
+
+        > .md-modal {
+            height: 50%;
+        }
+
+        > .modalOverlay {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .flowMainContent {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+
+            .flowContent {
+                height: calc(100% - 4em);
+                margin: 0.5em 0;
+
+                &.expanded {
+                    .flowTitles {
+                        opacity: 0;
+                    }
+
+                    .flowEditorContent {
+                        left: 0;
+                        width: 100%;
+                        overflow: hidden;
+
+                        .flowKnob {
+                            background: #fff;
+                            left: -1em;
+                        }
+                    }
+                }
+
+                .flowTitles {
+                    position: absolute;
+                    left: -#{$flowTitleWidth * $numOfFlowEditors / 2};
+                    top: $flowTitleWidth * $numOfFlowEditors / 2;
+                    height: 2em;
+                    opacity: 1;
+
+                    @include display-flex;
+                    @include justify-content(center);
+                    @include align-items(flex-start);
+                    @include flex-direction(row-reverse);
+                    @include transform(rotateZ(-90deg));
+                    @include transition(opacity 0.3s);
+
+                    .flowTitle {
+                        @include flex(1);
+
+                        min-width: 7em;
+                        max-width: 7em;
+                        line-height: 2;
+                        text-align: left;
+                        background: #f2f3f3;
+                        color: $activeColor;
+                        overflow: hidden;
+
+                        @include toggle-emboss-title("select");
+
+                        &.select {
+                            background: rgba($activeColor, 0.3);
+                        }
+
+                        span {
+                            position: relative;
+                            float: left;
+                            width: calc(100% - 2em);
+                            height: 100%;
+                        }
+
+                        img {
+                            position: relative;
+                            float: left;
+                            width: 2em;
+                            height: 2em;
+                        }
+                    }
+                }
+
+                .flowEditorContent {
+                    position: absolute;
+                    left: 2em;
+                    height: 100%;
+                    width: calc(100% - 2em);
+                    background: #666;
+                    overflow: visible;
+
+                    @include box-shadow(inset 0 0 10px #000000);
+                    @include transition(all 0.3s);
+
+                    .flowKnob {
+                        position: absolute;
+                        width: 2em;
+                        height: 2em;
+                        left: -1em;
+                        bottom: 1em;
+                        background: #555;
+
+                        @include transform(rotateZ(-45deg));
+                    }
+
+                    .flowEditor {
+                        position: absolute;
+                        width: 100%;
+                        height: 100%;
+                        overflow: auto;
+
+                        &.show {
+                            visibility: visible !important;
+                        }
+
+                        &#flowProcessEditor {
+                            visibility: hidden;
+
+                            .processTree {
+                                position: relative;
+                                float: left;
+                                height: 100%;
+                                background: #555;
+
+                                .treeToolBar {
+                                    position: relative;
+                                    float: left;
+                                    width: 100%;
+                                    height: 2em;
+
+                                    @include gradient-vertical-three-colors(#7f8c8d, rgba(#7f8c8d, 0.9), 50%, #7f8c8d);
+                                    @include box-shadow(0px 2px 3px black);
+                                }
+
+                                .resizeSplitter {
+                                    position: absolute;
+                                    top: 0;
+                                    right: -2px;
+                                    height: 100%;
+                                    width: 4px;
+                                    content: "";
+                                    border-left: 1px solid #CACDC0;
+                                    border-right: 1px solid #FFF;
+                                }
+                            }
+
+                            .processDiagram {
+                                position: relative;
+                                float: left;
+                                height: 100%;
+                            }
+                        }
+
+                        &#flowServiceEditor {
+                            visibility: hidden;
+
+                            .flowTree {
+                                position: relative;
+                                float: left;
+                                height: 100%;
+                                background: #555;
+
+                                .treeToolBar {
+                                    position: relative;
+                                    float: left;
+                                    width: 100%;
+                                    height: 2em;
+
+                                    @include gradient-vertical-three-colors(#7f8c8d, rgba(#7f8c8d, 0.9), 50%, #7f8c8d);
+                                    @include box-shadow(0px 2px 3px black);
+                                }
+
+                                .resizeSplitter {
+                                    position: absolute;
+                                    top: 0;
+                                    right: -2px;
+                                    height: 100%;
+                                    width: 4px;
+                                    content: "";
+                                    border-left: 1px solid #CACDC0;
+                                    border-right: 1px solid #FFF;
+                                }
+                            }
+
+                            .flowDetails {
+                                position: relative;
+                                float: left;
+                                height: 100%;
+                                background: #E6E6E6;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .flowModalContent {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #999966;
+        }
+    }
+}

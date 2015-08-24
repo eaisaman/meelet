@@ -1,10 +1,70 @@
 'use strict';
 var path = require('path');
 
-module.exports = function(grunt) {
+module.exports = function (grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-        express : {
+        uglify: {
+            release: {
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'public/app',
+                        src: ['**/*.js', '!**/*.min.js', '!**/main.js', '!**/requirejs-plugins/*.js'],
+                        dest: 'release/app'
+                    },
+                    {
+                        expand: true,
+                        cwd: 'public/directive',
+                        src: ['**/*.js', '!**/*.min.js', '!**/main.js'],
+                        dest: 'release/directive',
+                        extDot: 'last'
+                    }
+                ]
+            },
+            options: {
+                sourceMap: true,
+                mangle: false
+            }
+        },
+        copy: {
+            release: {
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'public/app',
+                        src: ['**/main.js', '**/*.json', '**/requirejs-plugins/*.js'],
+                        dest: 'release/app'
+                    },
+                    {
+                        expand: true,
+                        cwd: 'public/directive',
+                        src: ['**/main.js', '**/*.json'],
+                        dest: 'release/directive'
+                    },
+                    {
+                        expand: true,
+                        cwd: 'public',
+                        src: ['fonts/**/*', 'images/**/*', 'include/**/*', 'javascripts/**/*'],
+                        dest: 'release'
+                    },
+                    {
+                        expand: true,
+                        cwd: 'public/stylesheets',
+                        src: ['**/*', '!sass/**'],
+                        dest: 'release/stylesheets'
+                    },
+                    {
+                        expand: true,
+                        cwd: 'public',
+                        src: ['*'],
+                        dest: 'release',
+                        filter: "isFile"
+                    }
+                ]
+            }
+        },
+        express: {
             options: {
                 // Override defaults here
                 // Override the command used to start the server.
@@ -14,14 +74,15 @@ module.exports = function(grunt) {
 
                 // Will turn into: `node OPT1 OPT2 ... OPTN path/to/server.js ARG1 ARG2 ... ARGN`
                 // (e.g. opts: ['node_modules/coffee-script/bin/coffee'] will correctly parse coffee-script)
-                opts: [ ],
-                args: [ ],
+                opts: [],
+                args: [],
 
                 // Setting to `false` will effectively just run `node path/to/server.js`
                 background: true,
 
                 // Called when the spawned server throws errors
-                fallback: function() {},
+                fallback: function () {
+                },
 
                 // Override node env's PORT
                 port: 3000,
@@ -59,13 +120,14 @@ module.exports = function(grunt) {
         },
         watch: {
             express: {
-                files:  [ '**/*.js' ],
-                tasks:  [ 'express:dev' ],
+                files: ['**/*.js'],
+                tasks: ['express:dev'],
                 options: {
                     spawn: false // for grunt-contrib-watch v0.5.0+, "nospawn: true" for lower versions. Without this option specified express won't be reloaded
                 }
             }
-        }//,
+        }
+//,
 //        concat : {
 //            css : {
 //                src: ['public/desktop/stylesheets/*.css', 'public/desktop/stylesheets/bootstrap/*.css'],
@@ -87,10 +149,13 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-qunit');
     grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-copy');
 //    grunt.loadNpmTasks('grunt-contrib-concat');
 //    grunt.loadNpmTasks('grunt-css');
 
     // 自定义任务
-    grunt.registerTask('default', [ 'express:dev', 'watch'])
+    grunt.registerTask('default', ['express:dev', 'watch'])
+    grunt.registerTask('prod', ['express:prod', 'watch'])
+    grunt.registerTask('release', ['copy:release', 'uglify:release'])
 //    grunt.registerTask('default', [ 'express:dev', 'watch', 'concat','cssmin' ])
 };

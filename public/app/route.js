@@ -1,16 +1,15 @@
 define(
     ["angular"],
     function () {
-        return function (appModule) {
-            var needGoBack = true,
-                locations = ["frameSketch", "project", "repo", "repoLib"];
+        return function (appModule, meta) {
+            var needGoBack = true;
 
             var urlService = function ($location, $rootScope) {
                 this.$location = $location;
                 this.$rootScope = $rootScope;
                 this.$rootScope.urlStack = [];
                 this.locations = [];
-                this.addLocation(locations);
+                this.addLocation(meta.locations);
             };
 
             urlService.$inject = ["$location", "$rootScope"];
@@ -102,7 +101,7 @@ define(
                     $provide.service('urlService', urlService);
                 }]).
                 config(["$routeProvider", function ($routeProvider) {
-                    locations.forEach(function (loc) {
+                    meta && meta.locations && meta.locations.forEach(function (loc) {
                         $routeProvider.when("/" + loc, {templateUrl: loc + ".html"});
                     });
                     return $routeProvider.otherwise({redirectTo: "/"});

@@ -105,7 +105,7 @@
   ],
   "staticResources": [
     {
-      "/": "public",
+      "/": "release",
       "/repo": "repo",
       "/project": "project"
     }
@@ -117,7 +117,7 @@
       "function": "instantiateMongooseDb",
       "parameters": [
         {
-          "url": "mongodb://meelet:meelet@localhost/meelet",
+          "url": "mongodb://meelet:meelet@192.168.0.106/meelet",
           "dbSchema": "./schema.json"
         }
       ]
@@ -128,7 +128,7 @@
       "function": "instantiateMongoDb",
       "parameters": [
         {
-          "url": "mongodb://meelet:meelet@localhost/meelet",
+          "url": "mongodb://meelet:meelet@192.168.0.106/meelet",
           "auto_reconnect": true
         }
       ]

@@ -28,6 +28,7 @@
     "createTime": "date",
     "name": "string",
     "desc": "string",
+    "type": "string",
     "userId": "ObjectId",
     "forbidden": "boolean",
     "lock": "boolean",

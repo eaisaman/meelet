@@ -595,6 +595,15 @@ UserFileController.prototype.getProjectResource = function (projectId, success, 
         async.waterfall(
             [
                 function (next) {
+                    fs.mkdir(resourceAllPath, 0777, function (fsError) {
+                        if (!fsError || fsError.code === "EEXIST") {
+                            next(null);
+                        } else {
+                            next(fsError);
+                        }
+                    });
+                },
+                function (next) {
                     fs.readdir(resourceAllPath, function (err, fileNames) {
                         if (err) {
                             next(err);

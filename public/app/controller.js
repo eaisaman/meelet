@@ -1060,8 +1060,16 @@ define(
                 $scope.selectProject = function (projectItem, event) {
                     event && event.stopPropagation && event.stopPropagation();
 
-                    uiService.loadProject(projectItem).then(function (projectObj) {
-                        urlService.frameSketch(false, {project: projectObj});
+                    uiService.loadProject(projectItem).then(function (err) {
+                        if (!err) {
+                            switch (projectItem.type) {
+                                case "sketch":
+                                    urlService.frameSketch(false, {project: projectItem});
+                                    break;
+                                case "flow":
+                                    urlService.flow(false, {project: projectItem});
+                            }
+                        }
                     });
                 }
 
@@ -1262,11 +1270,49 @@ define(
                 $scope._ = _;
             }
 
+            function FlowController($scope, $rootScope, $timeout, $q, angularConstants, appService, uiService, urlService, uiUtilService) {
+                extension && extension.attach && extension.attach($scope, {
+                    "$timeout": $timeout,
+                    "$q": $q,
+                    "angularConstants": angularConstants,
+                    "uiUtilService": uiUtilService,
+                    "element": $(".flowContainer"),
+                    "scope": $scope
+                });
+
+                $scope.selectEditor = function (editor, event) {
+                    event && event.stopPropagation && event.stopPropagation();
+
+                    if (editor && $scope.activeEditor !== editor) {
+                        $scope.activeEditor = editor;
+
+                        var $el = $(event.currentTarget),
+                            $content = $(".flowEditorContent");
+
+                        $el.siblings().removeClass("select");
+                        $el.addClass("select");
+
+                        $content.children(".show").removeClass("show");
+                        $content.children("[editor='{0}']".format(editor)).addClass("show");
+                    }
+                }
+
+                function initMaster() {
+                }
+
+                initMaster();
+
+                $scope.classie = classie;
+                $scope._ = _;
+                $scope.activeEditor = "process";
+            }
+
             appModule.
                 controller('RootController', ["$scope", "$rootScope", "$q", "appService", "urlService", "uiUtilService", RootController]).
                 controller('FrameSketchController', ["$scope", "$rootScope", "$timeout", "$q", "$log", "$exceptionHandler", "$compile", "$parse", "angularEventTypes", "angularConstants", "appService", "uiService", "uiUtilService", "uiCanvasService", FrameSketchController]).
                 controller('ProjectController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "uiService", "urlService", "uiUtilService", ProjectController]).
                 controller('RepoController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "urlService", RepoController]).
-                controller('RepoLibController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "urlService", RepoLibController]);
+                controller('RepoLibController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "urlService", RepoLibController]).
+                controller('FlowController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "uiService", "urlService", "uiUtilService", FlowController]);
         }
     });

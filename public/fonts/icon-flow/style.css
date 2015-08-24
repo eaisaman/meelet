@@ -1,0 +1,204 @@
+@font-face {
+    font-family: 'icon-flow';
+    src: url('icon-flow.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.icon-flow:before {
+    font-family: 'icon-flow';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-flow-before:before {
+    font-family: 'icon-flow';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-flow-after:after {
+    font-family: 'icon-flow';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-flow-sequence:before {
+    content: "\e600";
+}
+
+.icon-flow-map:before {
+    content: "\e601";
+}
+
+.icon-flow-exit:before {
+    content: "\e602";
+}
+
+.icon-flow-link:before {
+    content: "\e603";
+}
+
+.icon-flow-repeat:before {
+    content: "\e604";
+}
+
+.icon-flow-fork:before {
+    content: "\e605";
+}
+
+.icon-flow-run:before {
+    content: "\e606";
+}
+
+.icon-flow-invoke:before {
+    content: "\e607";
+}
+
+.icon-flow-join:before {
+    content: "\e608";
+}
+
+.icon-flow-terminate:before {
+    content: "\e609";
+}
+
+.icon-flow-exit-from:before {
+    content: "\e60a";
+}
+
+.icon-flow-arrow-left:before {
+    content: "\e60b";
+}
+
+.icon-flow-arrow-right:before {
+    content: "\e60c";
+}
+
+.icon-flow-sequence-before:before {
+    content: "\e600";
+}
+
+.icon-flow-map-before:before {
+    content: "\e601";
+}
+
+.icon-flow-exit-before:before {
+    content: "\e602";
+}
+
+.icon-flow-link-before:before {
+    content: "\e603";
+}
+
+.icon-flow-repeat-before:before {
+    content: "\e604";
+}
+
+.icon-flow-fork-before:before {
+    content: "\e605";
+}
+
+.icon-flow-run-before:before {
+    content: "\e606";
+}
+
+.icon-flow-invoke-before:before {
+    content: "\e607";
+}
+
+.icon-flow-join-before:before {
+    content: "\e608";
+}
+
+.icon-flow-terminate-before:before {
+    content: "\e609";
+}
+
+.icon-flow-exit-from-before:before {
+    content: "\e60a";
+}
+
+.icon-flow-arrow-left-before:before {
+    content: "\e60b";
+}
+
+.icon-flow-arrow-right-before:before {
+    content: "\e60c";
+}
+
+.icon-flow-sequence-after:after {
+    content: "\e600";
+}
+
+.icon-flow-map-after:after {
+    content: "\e601";
+}
+
+.icon-flow-exit-after:after {
+    content: "\e602";
+}
+
+.icon-flow-link-after:after {
+    content: "\e603";
+}
+
+.icon-flow-repeat-after:after {
+    content: "\e604";
+}
+
+.icon-flow-fork-after:after {
+    content: "\e605";
+}
+
+.icon-flow-run-after:after {
+    content: "\e606";
+}
+
+.icon-flow-invoke-after:after {
+    content: "\e607";
+}
+
+.icon-flow-join-after:after {
+    content: "\e608";
+}
+
+.icon-flow-terminate-after:after {
+    content: "\e609";
+}
+
+.icon-flow-exit-from-after:after {
+    content: "\e60a";
+}
+
+.icon-flow-arrow-left-after:after {
+    content: "\e60b";
+}
+
+.icon-flow-arrow-right-after:after {
+    content: "\e60c";
+}
