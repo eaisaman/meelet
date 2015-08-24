@@ -25,77 +25,77 @@
                     <div ng-hide="true" ng-click="zoomWidget($event)" class="topbarButton icon-toolbar-before"
                          ng-class="{'icon-frame-sketch-expand-before':!zoomId, 'icon-frame-sketch-collapse-before':zoomId}"></div>
                     <div ng-mouseenter="enableAddWidget($event)"
-                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-insert-before"></div>
+                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-insert-before" title="Add Widget"></div>
                     <div ng-click="removeWidget($event)"
-                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-remove-before"></div>
+                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-remove-before" title="Remove Widget"></div>
                     <div ng-click="locateWidget($event)"
-                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-locate-before"></div>
+                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-locate-before" title="Reveal in Widget Tree"></div>
                     <div ng-click="duplicateWidget($event)"
-                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-duplicate-before"></div>
+                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-duplicate-before" title="Duplicate Widget"></div>
                     <div class="topbarButtonGroup"
-                         ng-click="classie.toggleClass($event.target, 'select')">
+                         ng-click="classie.toggleClass($event.target, 'select')" title="Position Widget">
                         <div class="selectedButton" ng-click="$event.stopPropagation()">
                             <div ng-click="alignLeft($event)"
                                  class="topbarButton icon-frame-sketch-before icon-frame-sketch-align-left-before"></div>
                         </div>
                         <div class="btn-group open" ng-click="setSelectedButton($event)">
                             <div ng-click="alignLeft($event)"
-                                 class="topbarButton icon-frame-sketch-before icon-frame-sketch-align-left-before"></div>
+                                 class="topbarButton icon-frame-sketch-before icon-frame-sketch-align-left-before" title="Align Left"></div>
                             <div ng-click="alignHorizontalCenter($event)"
-                                 class="topbarButton icon-frame-sketch-before icon-frame-sketch-align-center-horizontal-before"></div>
+                                 class="topbarButton icon-frame-sketch-before icon-frame-sketch-align-center-horizontal-before" title="Align Center Horizontally"></div>
                             <div ng-click="alignRight($event)"
-                                 class="topbarButton icon-frame-sketch-before icon-frame-sketch-align-right-before"></div>
+                                 class="topbarButton icon-frame-sketch-before icon-frame-sketch-align-right-before" title="Align Right"></div>
                         </div>
                         <div class="btn-group open" ng-click="setSelectedButton($event)">
                             <div ng-click="alignTop($event)"
-                                 class="topbarButton icon-frame-sketch-before icon-frame-sketch-align-top-before"></div>
+                                 class="topbarButton icon-frame-sketch-before icon-frame-sketch-align-top-before" title="Align Top"></div>
                             <div ng-click="alignVerticalCenter($event)"
-                                 class="topbarButton icon-frame-sketch-before icon-frame-sketch-align-center-vertical-before"></div>
+                                 class="topbarButton icon-frame-sketch-before icon-frame-sketch-align-center-vertical-before" title="Align Center Vertically"></div>
                             <div ng-click="alignBottom($event)"
-                                 class="topbarButton icon-frame-sketch-before icon-frame-sketch-align-bottom-before"></div>
+                                 class="topbarButton icon-frame-sketch-before icon-frame-sketch-align-bottom-before" title="Align Bottom"></div>
                         </div>
                     </div>
                     <div class="topbarButtonGroup"
-                         ng-click="classie.toggleClass($event.target, 'select')">
+                         ng-click="classie.toggleClass($event.target, 'select')" title="Resize Widget">
                         <div class="selectedButton" ng-click="$event.stopPropagation()">
                             <div ng-click="fillParent($event)"
                                  class="topbarButton icon-frame-sketch-before icon-frame-sketch-fill-before"></div>
                         </div>
                         <div class="btn-group open" ng-click="setSelectedButton($event)">
                             <div ng-click="fillParent($event)"
-                                 class="topbarButton icon-frame-sketch-before icon-frame-sketch-fill-before"></div>
+                                 class="topbarButton icon-frame-sketch-before icon-frame-sketch-fill-before" title="Fill All"></div>
                             <div ng-click="fillVertical($event)"
-                                 class="topbarButton icon-frame-sketch-before icon-frame-sketch-fill-vertical-before"></div>
+                                 class="topbarButton icon-frame-sketch-before icon-frame-sketch-fill-vertical-before" title="Fill Vertically"></div>
                             <div ng-click="fillHorizontal($event)"
-                                 class="topbarButton icon-frame-sketch-before icon-frame-sketch-fill-horizontal-before"></div>
+                                 class="topbarButton icon-frame-sketch-before icon-frame-sketch-fill-horizontal-before" title="Fill Horizontally"></div>
                         </div>
                         <div class="btn-group open" ng-click="setSelectedButton($event)">
                             <div ng-click="spanHorizontal($event)"
-                                 class="topbarButton icon-frame-sketch-before icon-frame-sketch-span-horizontal-before"></div>
+                                 class="topbarButton icon-frame-sketch-before icon-frame-sketch-span-horizontal-before" title="Span Widgets Horizontally"></div>
                             <div ng-click="spanVertical($event)"
-                                 class="topbarButton icon-frame-sketch-before icon-frame-sketch-span-vertical-before"></div>
+                                 class="topbarButton icon-frame-sketch-before icon-frame-sketch-span-vertical-before" title="Span Widgets Vertically"></div>
                         </div>
                         <div class="btn-group open" ng-click="setSelectedButton($event)">
                             <div ng-click="spaceHorizontal($event)"
-                                 class="topbarButton icon-frame-sketch-before icon-frame-sketch-space-horizontal-before"></div>
+                                 class="topbarButton icon-frame-sketch-before icon-frame-sketch-space-horizontal-before" title="Space Widgets Horizontally"></div>
                             <div ng-click="spaceVertical($event)"
-                                 class="topbarButton icon-frame-sketch-before icon-frame-sketch-space-vertical-before"></div>
+                                 class="topbarButton icon-frame-sketch-before icon-frame-sketch-space-vertical-before" title="Space Widgets Vertically"></div>
                         </div>
                     </div>
                     <div ng-click="groupWidget($event)"
-                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-group-before"></div>
+                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-group-before" title="Group Widgets"></div>
                     <div ng-click="ungroupWidget($event)"
-                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-ungroup-before"></div>
+                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-ungroup-before" title="Ungroup Widgets"></div>
                     <div ng-click="pickParentWidget($event)"
-                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-ladder-before"></div>
+                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-ladder-before" title="Find Parent"></div>
                     <div ng-click="moveUpWidget($event)"
-                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-move-up-before"></div>
+                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-move-up-before" title="Move Up"></div>
                     <div ng-click="moveDownWidget($event)"
-                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-move-down-before"></div>
+                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-move-down-before" title="Move Down"></div>
                     <div ng-click="toggleRuler($event)"
-                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-ruler-before"></div>
+                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-ruler-before" title="Ruler"></div>
                     <div ng-click="canPositionWidget(sketchObject.pickedWidget) && classie.toggleClass($event.target, 'select')"
-                         class="topbarDropdown icon-frame-sketch-before icon-frame-sketch-compass-before">
+                         class="topbarDropdown icon-frame-sketch-before icon-frame-sketch-compass-before" title="Custom Resize">
                         <div class="btn-group open fs-x-small" ng-click="$event.stopPropagation()">
                             <label class="col-as-4 no-padding control-label">Left</label>
 
@@ -127,18 +127,18 @@
                     </div>
                     <div ng-click="toggleDisplayRoute($event)"
                          ng-class="{'select':$root.sketchWidgetSetting.isDefingRoute}"
-                         class="topbarButton topbarToggleButton icon-frame-sketch-before icon-frame-sketch-move-route-before"></div>
+                         class="topbarButton topbarToggleButton icon-frame-sketch-before icon-frame-sketch-move-route-before" title="Route"></div>
                     <div ng-click="togglePlayWidget($event)" class="topbarButton icon-frame-sketch-before"
-                         ng-class="{'icon-frame-sketch-play-before':!$root.sketchWidgetSetting.isPlaying, 'icon-frame-sketch-pause-before':$root.sketchWidgetSetting.isPlaying}"></div>
+                         ng-class="{'icon-frame-sketch-play-before':!$root.sketchWidgetSetting.isPlaying, 'icon-frame-sketch-pause-before':$root.sketchWidgetSetting.isPlaying}" title="Play"></div>
                     <div ng-click="saveProject($event)" ng-if="$root.loadedProject.projectRecord.lock"
-                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-save-before"></div>
+                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-save-before" title="Save"></div>
                     <div ng-click="loadProject($event)"
-                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-load-before"></div>
+                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-load-before" title="Load"></div>
                     <div ng-click="toggleLockProject($event)"
                          class="topbarButton icon-frame-sketch-before"
-                         ng-class="{'icon-frame-sketch-unlock-before':$root.loadedProject.projectRecord.lock, 'icon-frame-sketch-lock-before':!$root.loadedProject.projectRecord.lock}"></div>
+                         ng-class="{'icon-frame-sketch-unlock-before':$root.loadedProject.projectRecord.lock, 'icon-frame-sketch-lock-before':!$root.loadedProject.projectRecord.lock}" title="Lock/Unlock"></div>
                     <div ng-click="convertToHtml($event)" ng-if="$root.loadedProject.projectRecord.lock"
-                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-html-before"></div>
+                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-html-before" title="Code Generation"></div>
                 </div>
             </div>
 

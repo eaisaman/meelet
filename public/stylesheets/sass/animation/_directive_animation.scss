@@ -39,6 +39,16 @@
  */
 @include baseAnimation(slideLeftRetourn);
 
+/*
+ * Found in index.html
+ */
+@include baseAnimation(vanishIn);
+
+/*
+ * Found in index.html
+ */
+@include baseAnimation(vanishOut);
+
 /* Scale from to 100% size
  * Used by directive ng.ui.color-picker, ng.ui.gradient-editor
  * Found in _color_picker.html, _gradient_editor.html

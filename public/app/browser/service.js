@@ -787,6 +787,8 @@ define(
         }
 
         appService.prototype.createProject = function (project, sketchWorks) {
+            var self = this;
+
             return this.$http({
                 method: 'POST',
                 url: '/api/public/project',
@@ -794,7 +796,18 @@ define(
                     project: JSON.stringify(_.omit(project, "$$hashKey", "artifactList")),
                     sketchWorks: JSON.stringify(sketchWorks)
                 }
-            });
+            }).then(
+                function (result) {
+                    if (result.data.result === "OK") {
+                        return self.getResolveDefer(result.data.resultValue);
+                    } else {
+                        return self.getRejectDefer(result.data.reason);
+                    }
+                },
+                function (err) {
+                    return self.getRejectDefer(err);
+                }
+            )
 
         }
 
@@ -811,11 +824,7 @@ define(
             }).then(
                 function (result) {
                     if (result.data.result === "OK") {
-                        if (result.data.resultValue > 0) {
-                            return self.getResolveDefer();
-                        } else {
-                            return self.getRejectDefer();
-                        }
+                        return self.getResolveDefer();
                     } else {
                         return self.getRejectDefer(result.data.reason);
                     }
@@ -833,15 +842,11 @@ define(
             return self.$http({
                 method: 'DELETE',
                 url: '/api/public/project',
-                params: {projectFilter: JSON.stringify({userId: userId, _id: project._id, lock: false})}
+                params: {projectFilter: JSON.stringify({userId: userId, _id: project._id})}
             }).then(
                 function (result) {
                     if (result.data.result === "OK") {
-                        if (result.data.resultValue > 0) {
-                            return self.getResolveDefer();
-                        } else {
-                            return self.getRejectDefer();
-                        }
+                        return self.getResolveDefer();
                     } else {
                         return self.getRejectDefer(result.data.reason);
                     }

@@ -2,9 +2,9 @@
 
 <div id="appTopBar" ng-click="unselectButtonGroup($event)">
     <div class="topbarButton icon-topbar-before icon-topbar-back-before"
-         ng-click="urlService.back()"></div>
+         ng-click="urlService.back()" title="Go Back"></div>
     <div class="topbarButton icon-topbar-before icon-topbar-home-before"
-         ng-click="urlService.home()"></div>
+         ng-click="urlService.home()" title="Go Home"></div>
 
     <div ui-multi-transclude="extraButtons" class="extraButtons"></div>
 

@@ -7,13 +7,13 @@
             <div ui-topbar display-project-creation="displayProjectCreation()">
                 <div name="extraButtons">
                     <div class="topbarButton icon-project-before icon-project-add-before"
-                         ng-click="displayProjectCreation($event)"></div>
+                         ng-click="displayProjectCreation($event)" title="Create Project"></div>
                     <div class="topbarButton topbarToggleButton icon-project-before icon-project-edit-before"
-                         ng-click="toggleProjectEditButton($event)"></div>
-                    <div class="topbarButton topbarToggleButton icon-project-before icon-project-download-before"
+                         ng-click="toggleProjectEditButton($event)" title="Modify Project"></div>
+                    <div ng-hide="true" class="topbarButton topbarToggleButton icon-project-before icon-project-download-before"
                          action="download"
                          ng-click="toggleProjectButton($event)"></div>
-                    <div class="topbarButton topbarToggleButton icon-project-before icon-project-gif-before"
+                    <div ng-hide="true" class="topbarButton topbarToggleButton icon-project-before icon-project-gif-before"
                          action="gif"
                          ng-click="toggleProjectButton($event)"></div>
                 </div>

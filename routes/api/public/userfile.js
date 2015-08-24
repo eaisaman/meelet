@@ -1113,6 +1113,8 @@ UserFileController.prototype.deleteProject = function (projectFilter, success, f
     var self = this;
 
     projectFilter = (projectFilter && JSON.parse(projectFilter)) || {};
+    delete projectFilter.lock;//Only unlocked project can be deleted. The field should appears in filter param since it is always true.
+
     if (projectFilter._id) {
         projectFilter._id = new self.db.Types.ObjectId(projectFilter._id);
     }
@@ -1135,6 +1137,34 @@ UserFileController.prototype.deleteProject = function (projectFilter, success, f
                 self.schema.UserProject.find(projectFilter, function (err, data) {
                     next(err, data);
                 });
+            },
+            function (data, next) {
+                if (data && data.length) {
+                    if (!data.every(function (item) {
+                            return !item.lock;
+                        })) {
+                        fail("Only unlocked project can be deleted.");
+                    } else {
+                        self.schema.UserProject.remove(projectFilter, function (err) {
+                            next(err, data);
+                        });
+                    }
+                } else {
+                    next(null, null);
+                }
+            },
+            function (data, next) {
+                if (data && data.length) {
+                    async.each(data, function (item, callback) {
+                        self.schema.ProjectArtifactXref.remove({projectId: item._id}, function (err) {
+                            callback(err);
+                        });
+                    }, function (err) {
+                        next(err, data);
+                    });
+                } else {
+                    next(null, data);
+                }
             },
             function (data, next) {
                 if (data && data.length) {
@@ -1188,34 +1218,16 @@ UserFileController.prototype.deleteProject = function (projectFilter, success, f
                         next(err, data);
                     });
                 } else {
-                    next(null, 0);
-                }
-            },
-            function (data, next) {
-                if (data && data.length) {
-                    async.each(data, function (item, callback) {
-                        self.schema.ProjectArtifactXref.remove({projectId: item._id}, function (err) {
-                            callback(err);
-                        });
-                    }, function (err) {
-                        next(err, data);
-                    });
-                } else {
                     next(null, data);
-                }
-            },
-            function (data, next) {
-                if (data && data.length) {
-                    self.schema.UserProject.remove(projectFilter, function (err, count) {
-                        next(err, count);
-                    });
-                } else {
-                    next(null, 0);
                 }
             }
         ], function (err, data) {
             if (!err) {
-                success(data);
+                if (data && data.length) {
+                    success(data);
+                } else {
+                    fail("Cannot find project to be deleted.");
+                }
             } else {
                 fail(err);
             }

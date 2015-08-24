@@ -2,9 +2,42 @@ define(
     ["angular", "jquery", "jquery-ui", "app-util", "app-route", "app-filter", "app-service"],
     function () {
         return function (appModule, extension) {
-            function RootController($scope, $rootScope, $q, appService, urlService, uiUtilService) {
+            function RootController($scope, $rootScope, $q, $timeout, angularEventTypes, angularConstants, appService, urlService, uiUtilService) {
                 //For development convenience, we do fake login or restore user info if already authenticated.
+
+                extension && extension.attach && extension.attach($scope, {
+                    "$timeout": $timeout,
+                    "$q": $q,
+                    "angularConstants": angularConstants,
+                    "uiUtilService": uiUtilService,
+                    "element": $("#rootBody"),
+                    "scope": $scope
+                });
+
                 function initMaster() {
+                    $rootScope.showAlert = function (alertObj) {
+                        alertObj.id = $scope.alertUidGen();
+                        $rootScope.alertList.splice(0, 0, alertObj);
+
+                        return $scope.toggleDisplay("#alertBar", null, true);
+                    }
+
+                    $rootScope.hideAlert = function (id, event) {
+                        $scope.toggleDisplay("#alertBar", null, false).then(function () {
+                            var index;
+                            if (!$rootScope.alertList.every(function (a, i) {
+                                    if (a.id === id) {
+                                        index = i;
+                                        return false;
+                                    }
+
+                                    return true;
+                                })) {
+                                $rootScope.alertList.splice(index, 1);
+                            }
+                        });
+                    }
+
                     return $q.all([
                         appService.getRepoLibrary().then(
                             function (result) {
@@ -62,6 +95,8 @@ define(
                     ]);
                 }
 
+                $scope.alertUidGen = uiUtilService.uniqueIdGen("alert-");
+                $rootScope.alertList = [];
                 $rootScope.repoLibraryList = [];
                 $rootScope.effectLibraryList = [];
                 $rootScope.iconLibraryList = [];
@@ -956,16 +991,14 @@ define(
                     $scope.pickedProject = _.clone($scope.selectedProject);
 
                     var scope = angular.element($(".projectContainer .md-modal")).scope();
-                    scope.toggleModalWindow();
-
-                    return true;
+                    return scope.toggleModalWindow();
                 }
 
                 $scope.hideProjectModal = function (event) {
                     event && event.stopPropagation && event.stopPropagation();
 
                     var scope = angular.element($(".projectContainer .md-modal")).scope();
-                    scope.toggleModalWindow();
+                    return scope.toggleModalWindow();
                 }
 
                 $scope.toggleProjectButton = function (event) {
@@ -1011,15 +1044,27 @@ define(
                             pages: []
                         }
                     ).then(
-                        function (result) {
-                            if (result.data.result == "OK") {
-                                _.extend(project, result.data.resultValue);
+                        function (projectRecord) {
+                            return $scope.hideProjectModal().then(function () {
+                                _.extend(project, projectRecord);
                                 $rootScope.userDetail.projectList.push(project);
-                            }
+                                return $scope.showAlert(
+                                    {
+                                        title: "Project {0} is created.".format(project.name),
+                                        category: 1
+                                    }
+                                );
+                            });
+                        }, function (err) {
+                            return $scope.hideProjectModal().then(function () {
+                                return $scope.showAlert(
+                                    {
+                                        title: err,
+                                        category: 3
+                                    }
+                                );
 
-                            $scope.hideProjectModal();
-                        }, function () {
-                            $scope.hideProjectModal();
+                            });
                         }
                     );
 
@@ -1029,11 +1074,30 @@ define(
                 $scope.modifyProject = function (project, event) {
                     event && event.stopPropagation && event.stopPropagation();
 
-                    appService.modifyProject(project).then(function (result) {
-                        _.extend($scope.selectedProject, project);
+                    appService.modifyProject(project).then(
+                        function () {
+                            return $scope.hideProjectModal().then(function () {
+                                _.extend($scope.selectedProject, project);
 
-                        $scope.hideProjectModal();
-                    });
+                                return $scope.showAlert(
+                                    {
+                                        title: "Project {0} has been modified.".format(project.name),
+                                        category: 1
+                                    }
+                                );
+                            });
+                        }, function (err) {
+                            return $scope.hideProjectModal().then(function () {
+                                return $scope.showAlert(
+                                    {
+                                        title: err,
+                                        category: 3
+                                    }
+                                );
+
+                            });
+                        }
+                    );
 
                     return true;
                 }
@@ -1043,18 +1107,34 @@ define(
 
                     $(".topbarToggleButton.select").removeClass("select");
 
-                    appService.deleteProject($rootScope.loginUser._id, projectItem).then(function (result) {
-                        var index;
-                        if (!$rootScope.userDetail.projectList.every(function (p, i) {
-                                if (p._id === projectItem._id) {
-                                    index = i;
-                                    return false;
+                    appService.deleteProject($rootScope.loginUser._id, projectItem).then(
+                        function () {
+                            var index;
+                            if (!$rootScope.userDetail.projectList.every(function (p, i) {
+                                    if (p._id === projectItem._id) {
+                                        index = i;
+                                        return false;
+                                    }
+                                    return true;
+                                })) {
+                                $rootScope.userDetail.projectList.splice(index, 1);
+                            }
+
+                            return $scope.showAlert(
+                                {
+                                    title: "Project {0} has been removed.".format(projectItem.name),
+                                    category: 1
                                 }
-                                return true;
-                            })) {
-                            $rootScope.userDetail.projectList.splice(index, 1);
+                            );
+                        }, function (err) {
+                            return $scope.showAlert(
+                                {
+                                    title: err,
+                                    category: 3
+                                }
+                            );
                         }
-                    });
+                    );
                 }
 
                 $scope.selectProject = function (projectItem, event) {
@@ -1308,7 +1388,7 @@ define(
             }
 
             appModule.
-                controller('RootController', ["$scope", "$rootScope", "$q", "appService", "urlService", "uiUtilService", RootController]).
+                controller('RootController', ["$scope", "$rootScope", "$q", "$timeout", "angularEventTypes", "angularConstants", "appService", "urlService", "uiUtilService", RootController]).
                 controller('FrameSketchController', ["$scope", "$rootScope", "$timeout", "$q", "$log", "$exceptionHandler", "$compile", "$parse", "angularEventTypes", "angularConstants", "appService", "uiService", "uiUtilService", "uiCanvasService", FrameSketchController]).
                 controller('ProjectController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "uiService", "urlService", "uiUtilService", ProjectController]).
                 controller('RepoController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "urlService", RepoController]).
