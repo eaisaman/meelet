@@ -26,12 +26,12 @@ define(
             return defer.promise;
         }
 
-        appService.prototype.getResolveDefer = function () {
+        appService.prototype.getResolveDefer = function (result) {
             var self = this,
                 defer = self.$q.defer();
 
             self.$timeout(function () {
-                defer.resolve();
+                defer.resolve(result);
             });
 
             return defer.promise;
@@ -535,20 +535,45 @@ define(
                 url: '/api/public/sketch',
                 params: {projectId: projectId}
             }).then(function (result) {
-                    var defer = self.$q.defer();
-
                     if (result.data.result === "OK") {
                         var resultValue = JSON.parse(result.data.resultValue);
-                        self.$timeout(function () {
-                            defer.resolve(resultValue);
-                        });
+                        return self.getResolveDefer(resultValue);
                     } else {
-                        self.$timeout(function () {
-                            defer.reject();
-                        });
+                        return self.getRejectDefer(result.data.reason);
                     }
+                },
+                function (err) {
+                    return self.getRejectDefer(err);
+                }
+            );
+        }
 
-                    return defer.promise;
+        appService.prototype.saveFlow = function (projectId, flowWorks) {
+            return this.$http({
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                method: 'POST',
+                url: '/api/public/flow',
+                data: $.param({
+                    projectId: projectId,
+                    flowWorks: JSON.stringify(flowWorks)
+                })
+            });
+        }
+
+        appService.prototype.loadFlow = function (projectId) {
+            var self = this;
+
+            return self.$http({
+                method: 'GET',
+                url: '/api/public/flow',
+                params: {projectId: projectId}
+            }).then(function (result) {
+                    if (result.data.result === "OK") {
+                        var resultValue = JSON.parse(result.data.resultValue);
+                        return self.getResolveDefer(resultValue);
+                    } else {
+                        return self.getRejectDefer(result.data.reason);
+                    }
                 },
                 function (err) {
                     return self.getRejectDefer(err);

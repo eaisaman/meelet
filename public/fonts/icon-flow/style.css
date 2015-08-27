@@ -47,158 +47,314 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-flow-sequence:before {
+.icon-flow-invoke-step:before {
     content: "\e600";
 }
 
-.icon-flow-map:before {
+.icon-flow-flow:before {
     content: "\e601";
+}
+
+.icon-flow-exit-step:before {
+    content: "\e602";
+}
+
+.icon-flow-switch-step:before {
+    content: "\e603";
+}
+
+.icon-flow-repeat-step:before {
+    content: "\e604";
+}
+
+.icon-flow-move-right:before {
+    content: "\e605";
+}
+
+.icon-flow-move-up:before {
+    content: "\e606";
+}
+
+.icon-flow-move-down:before {
+    content: "\e607";
+}
+
+.icon-flow-move-left:before {
+    content: "\e608";
+}
+
+.icon-flow-trash:before {
+    content: "\e619";
+}
+
+.icon-flow-load:before {
+    content: "\e609";
+}
+
+.icon-flow-save:before {
+    content: "\e60a";
+}
+
+.icon-flow-lock:before {
+    content: "\e60b";
+}
+
+.icon-flow-unlock:before {
+    content: "\e60c";
 }
 
 .icon-flow-exit:before {
-    content: "\e602";
+    content: "\e60d";
 }
 
 .icon-flow-link:before {
-    content: "\e603";
-}
-
-.icon-flow-repeat:before {
-    content: "\e604";
-}
-
-.icon-flow-fork:before {
-    content: "\e605";
+    content: "\e60e";
 }
 
 .icon-flow-run:before {
-    content: "\e606";
+    content: "\e60f";
 }
 
-.icon-flow-invoke:before {
-    content: "\e607";
+.icon-flow-call:before {
+    content: "\e610";
 }
 
 .icon-flow-join:before {
-    content: "\e608";
+    content: "\e611";
 }
 
 .icon-flow-terminate:before {
-    content: "\e609";
-}
-
-.icon-flow-exit-from:before {
-    content: "\e60a";
+    content: "\e612";
 }
 
 .icon-flow-arrow-left:before {
-    content: "\e60b";
+    content: "\e613";
 }
 
 .icon-flow-arrow-right:before {
-    content: "\e60c";
+    content: "\e614";
 }
 
-.icon-flow-sequence-before:before {
+.icon-flow-expand:before {
+    content: "\e615";
+}
+
+.icon-flow-collapse:before {
+    content: "\e616";
+}
+
+.icon-flow-sequence-step:before {
+    content: "\e617";
+}
+
+.icon-flow-map-step:before {
+    content: "\e618";
+}
+
+.icon-flow-invoke-step-before:before {
     content: "\e600";
 }
 
-.icon-flow-map-before:before {
+.icon-flow-flow-before:before {
     content: "\e601";
+}
+
+.icon-flow-exit-step-before:before {
+    content: "\e602";
+}
+
+.icon-flow-switch-step-before:before {
+    content: "\e603";
+}
+
+.icon-flow-repeat-step-before:before {
+    content: "\e604";
+}
+
+.icon-flow-move-right-before:before {
+    content: "\e605";
+}
+
+.icon-flow-move-up-before:before {
+    content: "\e606";
+}
+
+.icon-flow-move-down-before:before {
+    content: "\e607";
+}
+
+.icon-flow-move-left-before:before {
+    content: "\e608";
+}
+
+.icon-flow-trash-before:before {
+    content: "\e619";
+}
+
+.icon-flow-load-before:before {
+    content: "\e609";
+}
+
+.icon-flow-save-before:before {
+    content: "\e60a";
+}
+
+.icon-flow-lock-before:before {
+    content: "\e60b";
+}
+
+.icon-flow-unlock-before:before {
+    content: "\e60c";
 }
 
 .icon-flow-exit-before:before {
-    content: "\e602";
+    content: "\e60d";
 }
 
 .icon-flow-link-before:before {
-    content: "\e603";
-}
-
-.icon-flow-repeat-before:before {
-    content: "\e604";
-}
-
-.icon-flow-fork-before:before {
-    content: "\e605";
+    content: "\e60e";
 }
 
 .icon-flow-run-before:before {
-    content: "\e606";
+    content: "\e60f";
 }
 
-.icon-flow-invoke-before:before {
-    content: "\e607";
+.icon-flow-call-before:before {
+    content: "\e610";
 }
 
 .icon-flow-join-before:before {
-    content: "\e608";
+    content: "\e611";
 }
 
 .icon-flow-terminate-before:before {
-    content: "\e609";
-}
-
-.icon-flow-exit-from-before:before {
-    content: "\e60a";
+    content: "\e612";
 }
 
 .icon-flow-arrow-left-before:before {
-    content: "\e60b";
+    content: "\e613";
 }
 
 .icon-flow-arrow-right-before:before {
-    content: "\e60c";
+    content: "\e614";
 }
 
-.icon-flow-sequence-after:after {
+.icon-flow-expand-before:before {
+    content: "\e615";
+}
+
+.icon-flow-collapse-before:before {
+    content: "\e616";
+}
+
+.icon-flow-sequence-step-before:before {
+    content: "\e617";
+}
+
+.icon-flow-map-step-before:before {
+    content: "\e618";
+}
+
+.icon-flow-invoke-step-after:after {
     content: "\e600";
 }
 
-.icon-flow-map-after:after {
+.icon-flow-flow-after:after {
     content: "\e601";
 }
 
-.icon-flow-exit-after:after {
+.icon-flow-exit-step-after:after {
     content: "\e602";
 }
 
-.icon-flow-link-after:after {
+.icon-flow-switch-step-after:after {
     content: "\e603";
 }
 
-.icon-flow-repeat-after:after {
+.icon-flow-repeat-step-after:after {
     content: "\e604";
 }
 
-.icon-flow-fork-after:after {
+.icon-flow-move-right-after:after {
     content: "\e605";
 }
 
-.icon-flow-run-after:after {
+.icon-flow-move-up-after:after {
     content: "\e606";
 }
 
-.icon-flow-invoke-after:after {
+.icon-flow-move-down-after:after {
     content: "\e607";
 }
 
-.icon-flow-join-after:after {
+.icon-flow-move-left-after:after {
     content: "\e608";
 }
 
-.icon-flow-terminate-after:after {
+.icon-flow-trash-after:after {
+    content: "\e619";
+}
+
+.icon-flow-load-after:after {
     content: "\e609";
 }
 
-.icon-flow-exit-from-after:after {
+.icon-flow-save-after:after {
     content: "\e60a";
 }
 
-.icon-flow-arrow-left-after:after {
+.icon-flow-lock-after:after {
     content: "\e60b";
 }
 
-.icon-flow-arrow-right-after:after {
+.icon-flow-unlock-after:after {
     content: "\e60c";
+}
+
+.icon-flow-exit-after:after {
+    content: "\e60d";
+}
+
+.icon-flow-link-after:after {
+    content: "\e60e";
+}
+
+.icon-flow-run-after:after {
+    content: "\e60f";
+}
+
+.icon-flow-call-after:after {
+    content: "\e610";
+}
+
+.icon-flow-join-after:after {
+    content: "\e611";
+}
+
+.icon-flow-terminate-after:after {
+    content: "\e612";
+}
+
+.icon-flow-arrow-left-after:after {
+    content: "\e613";
+}
+
+.icon-flow-arrow-right-after:after {
+    content: "\e614";
+}
+
+.icon-flow-expand-after:after {
+    content: "\e615";
+}
+
+.icon-flow-collapse-after:after {
+    content: "\e616";
+}
+
+.icon-flow-sequence-step-after:after {
+    content: "\e617";
+}
+
+.icon-flow-map-step-after:after {
+    content: "\e618";
 }

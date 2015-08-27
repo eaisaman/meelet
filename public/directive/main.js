@@ -6,6 +6,7 @@ requirejs.config(
             "ng.ui.wave.visualizer": DIRECTIVE_LIB_PATH + "ng.ui.wave.visualizer",
             "ng.ui.animation": DIRECTIVE_LIB_PATH + "ng.ui.animation",
             "ng.ui.service": DIRECTIVE_LIB_PATH + "ng.ui.service",
+            "ng.ui.service.flow": DIRECTIVE_LIB_PATH + "ng.ui.service.flow",
             "ng.ui.extension": DIRECTIVE_LIB_PATH + "ng.ui.extension",
             "ng.ui.hammer-gestures": DIRECTIVE_LIB_PATH + "ng.ui.hammer-gestures",
             "ng.ui.draggable": DIRECTIVE_LIB_PATH + "ng.ui.draggable",
@@ -46,6 +47,7 @@ define([
         "ng.ui.wave.visualizer",
         "ng.ui.animation",
         "ng.ui.service",
+        "ng.ui.service.flow",
         "ng.ui.extension",
         "ng.ui.hammer-gestures",
         "ng.ui.draggable",
@@ -81,8 +83,9 @@ define([
             waveVisualizerConfig = arguments[2],
             animationConfig = arguments[3],
             serviceConfig = arguments[4],
-            extension = arguments[5],
-            directiveConfigs = Array.prototype.slice.call(arguments, 6);
+            flowServiceConfig = arguments[5],
+            extension = arguments[6],
+            directiveConfigs = Array.prototype.slice.call(arguments, 7);
 
         return function (appModule) {
             utilConfig(appModule);
@@ -94,6 +97,8 @@ define([
             animationConfig(appModule);
 
             serviceConfig(appModule);
+
+            flowServiceConfig(appModule);
 
             //Hammer gestures
             directiveConfigs[0](appModule);

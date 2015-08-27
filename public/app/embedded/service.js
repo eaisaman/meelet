@@ -24,12 +24,12 @@ define(
             return defer.promise;
         }
 
-        appService.prototype.getResolveDefer = function () {
+        appService.prototype.getResolveDefer = function (result) {
             var self = this,
                 defer = self.$q.defer();
 
             self.$timeout(function () {
-                defer.resolve();
+                defer.resolve(result);
             });
 
             return defer.promise;
@@ -63,6 +63,10 @@ define(
         appService.prototype.saveSketch = appService.prototype.NOOP;
 
         appService.prototype.loadSketch = appService.prototype.NOOP;
+
+        appService.prototype.saveFlow = appService.prototype.NOOP;
+
+        appService.prototype.loadFlow = appService.prototype.NOOP;
 
         appService.prototype.unlockProject = appService.prototype.NOOP;
 

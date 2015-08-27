@@ -109,6 +109,24 @@ UserFileController.prototype.postConfiguration = function (projectId, artifactId
     }
 }
 
+/**
+ * @description
+ * When user adds a configurable widget to his page, a record will be added to staging widget list. When he removes a
+ * configurable widget, record will be removed from staging widget list and added to removing widget list. The final
+ * staging widget list stores widgets used in page, removing list stores those not used. The server side folder stores
+ * file links to those files generated for each newly created configurable widget. If the widget is still in staging
+ * list, it is kept in page, only its file links need to be removed. If the widget is in removing list, it is no longer
+ * used, in addition to removing links, those targeted generated files need to be removed as well. All remaining links
+ * point to files of orphanage widgets, i.e. widgets have been removed from page but its links still exist due to some
+ * uncertain reason. These links and their targeted files need to removed.
+ *
+ * @param projectId {string}
+ * @param sketchWorks {object}
+ * @param stagingContent {object}
+ * @param request {object}
+ * @param success {function}
+ * @param fail {function}
+ */
 UserFileController.prototype.postSketch = function (projectId, sketchWorks, stagingContent, request, success, fail) {
     var self = this;
 
@@ -144,12 +162,13 @@ UserFileController.prototype.postSketch = function (projectId, sketchWorks, stag
                     });
                 },
                 function (next) {
-                    var pendingWidgetList = stagingContent.widgetList || [];
+                    var pendingWidgetList = stagingContent.widgetList || [],
+                        removeWidgetList = stagingContent.removeWidgetList || [];
 
                     async.waterfall(
                         [
                             function (wCallback) {
-                                async.each(pendingWidgetList, function (widgetItem, callback) {
+                                async.each(Array.prototype.concat.apply(Array.prototype, [pendingWidgetList, removeWidgetList]), function (widgetItem, callback) {
                                     var widgetId = widgetItem.widgetId,
                                         widgetConfigurationPath = path.join(stagingProjectPath, _.string.sprintf("_configuration-%s.scss", widgetId)),
                                         widgetScssPath = path.join(stagingProjectPath, _.string.sprintf("configurable-widget-%s.scss", widgetId)),
@@ -176,6 +195,43 @@ UserFileController.prototype.postSketch = function (projectId, sketchWorks, stag
                                             callback(err);
                                         }
                                     );
+                                }, function (err) {
+                                    wCallback(err);
+                                });
+                            },
+                            function (wCallback) {
+                                //Remove files of deleted widgets
+                                var removeFileList = [];
+
+                                _.each(stagingContent.removeWidgetList, function (widgetItem) {
+                                    var artifactId = widgetItem.artifactId,
+                                        widgetId = widgetItem.widgetId,
+                                        configPath = path.join(sassPath, artifactId),
+                                        widgetConfigPath = path.join(configPath, _.string.sprintf("_configuration-%s.scss", widgetId)),
+                                        widgetScssPath = path.join(configPath, _.string.sprintf("configurable-widget-%s.scss", widgetId)),
+                                        widgetCssPath = path.join(cssPath, _.string.sprintf("configurable-widget-%s.css", widgetId));
+
+                                    removeFileList.push(widgetConfigPath);
+                                    removeFileList.push(widgetScssPath);
+                                    removeFileList.push(widgetCssPath);
+                                });
+
+                                async.each(removeFileList, function (pathItem, callback) {
+                                    fs.unlink(pathItem, function (err) {
+                                        if (err) {
+                                            if (err.code !== "ENOENT") //Not Found
+                                            {
+                                                self.config.logger.error(err);
+                                                callback(err);
+                                            }
+                                            else {
+                                                self.config.logger.warn(err);
+                                                callback(null);
+                                            }
+                                        } else {
+                                            callback(null);
+                                        }
+                                    });
                                 }, function (err) {
                                     wCallback(err);
                                 });
@@ -229,25 +285,8 @@ UserFileController.prototype.postSketch = function (projectId, sketchWorks, stag
                                 });
                             },
                             function (orphanFileList, wCallback) {
-                                //Remove targeted files
-                                var removeFileList = [];
-
-                                _.each(stagingContent.removeWidgetList, function (widgetItem) {
-                                    var artifactId = widgetItem.artifactId,
-                                        widgetId = widgetItem.widgetId,
-                                        configPath = path.join(sassPath, artifactId),
-                                        widgetConfigPath = path.join(configPath, _.string.sprintf("_configuration-%s.scss", widgetId)),
-                                        widgetScssPath = path.join(configPath, _.string.sprintf("configurable-widget-%s.scss", widgetId)),
-                                        widgetCssPath = path.join(cssPath, _.string.sprintf("configurable-widget-%s.css", widgetId));
-
-                                    removeFileList.push(widgetConfigPath);
-                                    removeFileList.push(widgetScssPath);
-                                    removeFileList.push(widgetCssPath);
-                                });
-
-                                removeFileList = Array.prototype.concat.apply(Array.prototype, [removeFileList, orphanFileList]);
-
-                                async.each(removeFileList, function (pathItem, callback) {
+                                //Remove orphan files
+                                async.each(orphanFileList, function (pathItem, callback) {
                                     fs.unlink(pathItem, function (err) {
                                         if (err) {
                                             if (err.code !== "ENOENT") //Not Found
@@ -271,6 +310,48 @@ UserFileController.prototype.postSketch = function (projectId, sketchWorks, stag
                             next(err);
                         }
                     );
+                }
+            ], function (err) {
+                if (!err) {
+                    success();
+                } else {
+                    fail(err);
+                }
+            }
+        );
+    } else {
+        fail("Empty project id");
+    }
+}
+
+UserFileController.prototype.postFlow = function (projectId, flowWorks, request, success, fail) {
+    var self = this;
+
+    if (projectId) {
+        var projectPath = path.join(self.config.userFile.sketchFolder, projectId);
+
+        async.waterfall(
+            [
+                function (next) {
+                    fs.mkdir(projectPath, 0777, function (fsError) {
+                        if (!fsError || fsError.code === "EEXIST") {
+                            var filePath = path.join(projectPath, "flow.json"),
+                                out = fs.createWriteStream(filePath);
+
+                            out.on('finish', function () {
+                                next(null);
+                            });
+
+                            out.on('error', function (err) {
+                                next(err);
+                            });
+
+                            out.write(flowWorks);
+                            out.end();
+                        } else {
+                            next(fsError);
+                        }
+                    });
                 }
             ], function (err) {
                 if (!err) {
@@ -337,6 +418,39 @@ UserFileController.prototype.getSketch = function (projectId, success, fail) {
         fs.mkdir(projectPath, 0777, function (fsError) {
             if (!fsError || fsError.code === "EEXIST") {
                 var filePath = path.join(projectPath, "meelet.json"),
+                    rs = fs.createReadStream(filePath),
+                    ms = require('memorystream').createWriteStream();
+
+                rs.on('end', function () {
+                    var ret = ms.toString();
+                    ms.destroy();
+                    success(ret);
+                });
+
+                rs.on('error', function (err) {
+                    ms.destroy();
+                    fail(err);
+                });
+
+                rs.pipe(ms);
+            } else {
+                fail(fsError);
+            }
+        });
+    } else {
+        fail("Empty project id");
+    }
+}
+
+UserFileController.prototype.getFlow = function (projectId, success, fail) {
+    var self = this;
+
+    if (projectId) {
+        var projectPath = path.join(self.config.userFile.sketchFolder, projectId);
+
+        fs.mkdir(projectPath, 0777, function (fsError) {
+            if (!fsError || fsError.code === "EEXIST") {
+                var filePath = path.join(projectPath, "flow.json"),
                     rs = fs.createReadStream(filePath),
                     ms = require('memorystream').createWriteStream();
 

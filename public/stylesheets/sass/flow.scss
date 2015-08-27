@@ -4,10 +4,14 @@
 @import "animation/directive_animation_keyframes";
 @import "animation/directive_animation";
 @import "simple-dropdown";
+@import "angular-ui-tree";
 
 $activeBorderShadow: rgba(192, 192, 192, 0.8);
-$flowTitleWidth: 6em;
-$numOfFlowEditors: 2;
+$flowTitleWidth: 8em;
+$numOfFlowEditors: 3;
+$flowItemColor: rgb(199, 199, 199);
+
+@include angular-ui-tree(flowStepTree);
 
 .flowContainer {
     position: relative;
@@ -60,7 +64,7 @@ $numOfFlowEditors: 2;
                 .flowTitles {
                     position: absolute;
                     left: -#{$flowTitleWidth * $numOfFlowEditors / 2};
-                    top: $flowTitleWidth * $numOfFlowEditors / 2;
+                    top: $flowTitleWidth * $numOfFlowEditors / 2 + 2em;
                     height: 2em;
                     opacity: 1;
 
@@ -74,8 +78,8 @@ $numOfFlowEditors: 2;
                     .flowTitle {
                         @include flex(1);
 
-                        min-width: 7em;
-                        max-width: 7em;
+                        min-width: 9em;
+                        max-width: 9em;
                         line-height: 2;
                         text-align: left;
                         background: #f2f3f3;
@@ -106,7 +110,7 @@ $numOfFlowEditors: 2;
 
                 .flowEditorContent {
                     position: absolute;
-                    left: 2em;
+                    left: 2.5em;
                     height: 100%;
                     width: calc(100% - 2em);
                     background: #666;
@@ -145,16 +149,6 @@ $numOfFlowEditors: 2;
                                 height: 100%;
                                 background: #555;
 
-                                .treeToolBar {
-                                    position: relative;
-                                    float: left;
-                                    width: 100%;
-                                    height: 2em;
-
-                                    @include gradient-vertical-three-colors(#7f8c8d, rgba(#7f8c8d, 0.9), 50%, #7f8c8d);
-                                    @include box-shadow(0px 2px 3px black);
-                                }
-
                                 .resizeSplitter {
                                     position: absolute;
                                     top: 0;
@@ -183,15 +177,117 @@ $numOfFlowEditors: 2;
                                 height: 100%;
                                 background: #555;
 
-                                .treeToolBar {
+                                .resizeSplitter {
+                                    position: absolute;
+                                    top: 0;
+                                    right: -2px;
+                                    height: 100%;
+                                    width: 4px;
+                                    content: "";
+                                    border-left: 1px solid #CACDC0;
+                                    border-right: 1px solid #FFF;
+                                }
+
+                                #flowStepTree {
                                     position: relative;
                                     float: left;
                                     width: 100%;
-                                    height: 2em;
+                                    height: calc(100% - 2em);
 
-                                    @include gradient-vertical-three-colors(#7f8c8d, rgba(#7f8c8d, 0.9), 50%, #7f8c8d);
-                                    @include box-shadow(0px 2px 3px black);
+                                    > ol > li > .angular-ui-tree-handle > a:before {
+                                        display: none;
+                                    }
+
+                                    li.hasChildren > .angular-ui-tree-handle > a {
+                                        &:after {
+                                            width: 1.5em;
+                                        }
+                                        &:before {
+                                            height: 50%;
+                                        }
+                                    }
+
+                                    ol > li:not(:last-child)[collapsed = 'false'] {
+                                        > [ui-tree-nodes]:before {
+                                            position: absolute;
+                                            content: "";
+                                            border: 1px dotted;
+                                            height: calc(100% - 0.5em);
+                                            width: 2px;
+                                            top: 0;
+                                            left: calc(2px - 0.5em);
+                                            color: $flowItemColor;
+                                        }
+                                    }
+
+                                    .angular-ui-tree-node.selected > .angular-ui-tree-handle > span {
+                                        background: $activeColor;
+                                        color: #fff !important;
+                                    }
+
+                                    .angular-ui-tree-node.selected > .angular-ui-tree-handle > a span {
+                                        color: inherit;
+                                    }
+
+                                    .angular-ui-tree-handle > a {
+                                        color: rgb(199, 199, 199) !important;
+
+                                        &:after {
+                                            position: absolute;
+                                            content: "";
+                                            border: 1px dotted;
+                                            height: 2px;
+                                            width: 2em;
+                                            top: calc(50% - 1px);
+                                            right: -1.5em;
+                                        }
+
+                                        &:before {
+                                            position: absolute;
+                                            content: "";
+                                            border: 1px dotted;
+                                            height: 1.5em;
+                                            width: 2px;
+                                            top: -50%;
+                                            left: calc(50% - 1px);
+                                        }
+                                    }
+
+                                    .treeNodeName {
+                                        left: 1.5em;
+                                        font-weight: normal !important;
+                                        color: $flowItemColor;
+
+                                        &:before {
+                                            position: relative;
+                                            float: left;
+                                            height: 100%;
+                                            width: 1.5em;
+                                            top: calc(50% - 0.5em);
+                                            line-height: 1;
+                                            text-align: center;
+                                            color: #fff;
+                                        }
+                                    }
                                 }
+                            }
+
+                            .flowDetails {
+                                position: relative;
+                                float: left;
+                                height: 100%;
+                                background: #E6E6E6;
+                            }
+                        }
+
+                        &#flowConfigEditor {
+                            visibility: hidden;
+
+                            .flowConfigTree {
+                                position: relative;
+                                float: left;
+                                height: 100%;
+                                background: #555;
 
                                 .resizeSplitter {
                                     position: absolute;
@@ -205,11 +301,148 @@ $numOfFlowEditors: 2;
                                 }
                             }
 
-                            .flowDetails {
+                            .flowConfigDetails {
                                 position: relative;
                                 float: left;
                                 height: 100%;
                                 background: #E6E6E6;
+                            }
+                        }
+
+                        .treeToolBar {
+                            position: relative;
+                            float: left;
+                            width: 100%;
+                            height: 2em;
+
+                            @include gradient-vertical-three-colors(#7f8c8d, rgba(#7f8c8d, 0.9), 50%, #7f8c8d);
+                            @include box-shadow(0px 2px 3px black);
+
+                            .flowButton {
+                                position: relative;
+                                float: left;
+                                top: calc(50% - 0.75em);
+                                width: 1.5em;
+                                height: 1.5em;
+                                background-color: #ddd;
+                                box-shadow: inset 0 -2px 0 rgba(0, 0, 0, .135);
+                                border-radius: 0.2em;
+                                display: inline-block;
+                                margin: 0 0.25em;
+                                color: $color;
+                                overflow: hidden;
+
+                                &:active {
+                                    background-color: #555;
+                                    color: $activeColor;
+                                    box-shadow: none;
+                                }
+
+                                &:before {
+                                    position: absolute;
+                                    width: 100%;
+                                    height: 100%;
+                                    text-align: center;
+                                    line-height: 1.5;
+                                }
+                            }
+
+                            .flowDropdown {
+                                position: relative;
+                                float: left;
+                                top: calc(50% - 0.75em);
+                                width: 2.5em;
+                                height: 1.5em;
+                                background-color: #ddd;
+                                box-shadow: inset 0 -2px 0 rgba(0, 0, 0, .135);
+                                border-radius: 0.2em;
+                                display: inline-block;
+                                margin: 0 0.25em;
+                                color: $color;
+                                overflow: hidden;
+
+                                &:before {
+                                    position: absolute;
+                                    width: 1.5em;
+                                    height: 100%;
+                                    text-align: center;
+                                    line-height: 1.5;
+                                }
+
+                                &:after {
+                                    content: '\25BC';
+                                    position: absolute;
+                                    right: 0;
+                                    top: 0;
+                                    width: 1em;
+                                    height: 100%;
+                                    text-align: center;
+                                    line-height: 1.5;
+                                    border-left: 1px solid #CACDC0;
+                                }
+
+                                &:active {
+                                    background-color: #555;
+                                    color: $activeColor;
+                                    box-shadow: none;
+                                }
+
+                                .btn-group {
+                                    pointer-events: none;
+                                    visibility: hidden;
+                                    left: 0px;
+                                    top: 100%;
+
+                                    .dropdown-menu {
+                                        width: 14em;
+                                        overflow: hidden;
+                                        padding-bottom: 0.5em;
+
+                                        li:not(.divider) {
+                                            height: 2.5em;
+                                            color: $color;
+
+                                            &:active {
+                                                color: $activeColor;
+                                            }
+
+                                            a {
+                                                position: relative;
+                                                line-height: 2.5;
+                                                color: $color;
+
+                                                &:active {
+                                                    color: $activeColor;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+                                &.select {
+                                    overflow: visible;
+
+                                    .btn-group {
+                                        pointer-events: auto;
+                                        visibility: visible;
+                                    }
+                                }
+                            }
+
+                            .divider {
+                                position: relative;
+                                float: left;
+                                width: 2px;
+                                height: 100%;
+
+                                &:before {
+                                    position: absolute;
+                                    height: 100%;
+                                    width: 100%;
+                                    content: '';
+                                    border-left: 1px solid #CACDC0;
+                                    border-right: 1px solid #FFF;
+                                }
                             }
                         }
                     }

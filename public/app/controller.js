@@ -959,7 +959,7 @@ define(
                 };
             }
 
-            function ProjectController($scope, $rootScope, $timeout, $q, angularConstants, appService, uiService, urlService, uiUtilService) {
+            function ProjectController($scope, $rootScope, $timeout, $q, angularConstants, appService, uiService, uiFlowService, urlService, uiUtilService) {
                 extension && extension.attach && extension.attach($scope, {
                     "$timeout": $timeout,
                     "$q": $q,
@@ -1140,17 +1140,22 @@ define(
                 $scope.selectProject = function (projectItem, event) {
                     event && event.stopPropagation && event.stopPropagation();
 
-                    uiService.loadProject(projectItem).then(function (err) {
-                        if (!err) {
-                            switch (projectItem.type) {
-                                case "sketch":
+                    switch (projectItem.type) {
+                        case "sketch":
+                            uiService.loadProject(projectItem).then(function (err) {
+                                if (!err) {
                                     urlService.frameSketch(false, {project: projectItem});
-                                    break;
-                                case "flow":
+                                }
+                            });
+                            break;
+                        case "flow":
+                            uiFlowService.loadProject(projectItem).then(function (err) {
+                                if (!err) {
                                     urlService.flow(false, {project: projectItem});
-                            }
-                        }
-                    });
+                                }
+                            });
+                            break;
+                    }
                 }
 
                 function initMaster() {
@@ -1350,7 +1355,7 @@ define(
                 $scope._ = _;
             }
 
-            function FlowController($scope, $rootScope, $timeout, $q, angularConstants, appService, uiService, urlService, uiUtilService) {
+            function FlowController($scope, $rootScope, $timeout, $q, angularConstants, appService, uiService, uiFlowService, urlService, uiUtilService) {
                 extension && extension.attach && extension.attach($scope, {
                     "$timeout": $timeout,
                     "$q": $q,
@@ -1377,6 +1382,194 @@ define(
                     }
                 }
 
+                $scope.saveProject = function (event) {
+                    event && event.stopPropagation && event.stopPropagation();
+
+                    return $rootScope.loadedProject.save();
+                }
+
+                $scope.loadProject = function (event) {
+                    event && event.stopPropagation && event.stopPropagation();
+
+                    $rootScope.loadedProject.unload();
+
+                    return uiUtilService.chain(
+                        [
+                            function () {
+                                return $rootScope.loadedProject.load();
+                            }
+                        ]
+                    );
+                }
+
+                $scope.toggleLockProject = function (event) {
+                    event && event.stopPropagation && event.stopPropagation();
+
+                    if ($rootScope.loadedProject.projectRecord.lock) {
+                        return $rootScope.loadedProject.unlock($rootScope.loginUser._id);
+                    } else {
+                        return $rootScope.loadedProject.tryLock($rootScope.loginUser._id);
+                    }
+                }
+
+                $scope.getSelectedFlowItem = function () {
+                    var scope = angular.element(document.querySelector("#flowStepTree [ui-tree-node].selected")).scope();
+
+                    return scope && scope.item;
+                }
+
+                $scope.getParentFlowItem = function () {
+                    var el = document.querySelector("#flowStepTree [ui-tree-node].selected");
+                    if (el) {
+                        var parentElement = el.parentElement.parentElement;
+                        if (parentElement.hasAttribute("ui-tree-node")) {
+                            var scope = angular.element(parentElement).scope();
+                            return scope && scope.item;
+                        }
+                    }
+                }
+
+                $scope.insertAfterInvokeFlowStep = function (event) {
+                    var item = $scope.getSelectedFlowItem();
+
+                    if (item) {
+                        if (item.isKindOf("Flow")) {
+                        } else if (item.isKindOf("BaseFlowStep")) {
+                        }
+                    }
+
+                }
+
+                $scope.insertAfterMapFlowStep = function (event) {
+                    event && event.stopPropagation && event.stopPropagation();
+
+                    var item = $scope.getSelectedFlowItem();
+
+                    if (item) {
+                        if (item.isKindOf("Flow")) {
+                        } else if (item.isKindOf("BaseFlowStep")) {
+                        }
+                    }
+
+                }
+
+                $scope.insertAfterSwitchFlowStep = function (event) {
+                    event && event.stopPropagation && event.stopPropagation();
+
+                    var item = $scope.getSelectedFlowItem();
+
+                    if (item) {
+                        if (item.isKindOf("Flow")) {
+                        } else if (item.isKindOf("BaseFlowStep")) {
+                        }
+                    }
+
+                }
+
+                $scope.insertAfterRepeatFlowStep = function (event) {
+                    event && event.stopPropagation && event.stopPropagation();
+
+                    var item = $scope.getSelectedFlowItem();
+
+                    if (item) {
+                        if (item.isKindOf("Flow")) {
+                        } else if (item.isKindOf("BaseFlowStep")) {
+                        }
+                    }
+
+                }
+
+                $scope.insertAfterSequenceFlowStep = function (event) {
+                    event && event.stopPropagation && event.stopPropagation();
+
+                    var item = $scope.getSelectedFlowItem();
+
+                    if (item) {
+                        if (item.isKindOf("Flow")) {
+                        } else if (item.isKindOf("BaseFlowStep")) {
+                        }
+                    }
+
+                }
+
+                $scope.insertAfterExitFlowStep = function (event) {
+                    event && event.stopPropagation && event.stopPropagation();
+
+                    var item = $scope.getSelectedFlowItem();
+
+                    if (item) {
+                        if (item.isKindOf("Flow")) {
+                        } else if (item.isKindOf("BaseFlowStep")) {
+                        }
+                    }
+
+                }
+
+                $scope.removeFlowStep = function (event) {
+                    event && event.stopPropagation && event.stopPropagation();
+
+                    var el = document.querySelector("#flowStepTree [ui-tree-node].selected"),
+                        scope = angular.element(el).scope(),
+                        item = scope && scope.item;
+
+                    if (item) {
+                        scope.unselect();
+
+                        if (item.isKindOf("Flow")) {
+                            $rootScope.loadedProject.removeFlow(item);
+                        } else if (item.isKindOf("BaseFlowStep")) {
+                            var parentElement = el.parentElement.parentElement;
+                            if (parentElement.hasAttribute("ui-tree-node")) {
+                                var parentScope = angular.element(parentElement).scope(),
+                                    parentItem =  parentScope && parentScope.item;
+
+                                parentItem && parentItem.removeStep(item);
+                            }
+                        }
+                    }
+
+                }
+
+                $scope.moveFlowStepUp = function (event) {
+                    event && event.stopPropagation && event.stopPropagation();
+
+                    var item = $scope.getSelectedFlowItem();
+
+                    if (item && item.isKindOf("BaseFlowStep")) {
+
+                    }
+                }
+
+                $scope.moveFlowStepDown = function (event) {
+                    event && event.stopPropagation && event.stopPropagation();
+
+                    var item = $scope.getSelectedFlowItem();
+
+                    if (item && item.isKindOf("BaseFlowStep")) {
+
+                    }
+                }
+
+                $scope.moveFlowStepLeft = function (event) {
+                    event && event.stopPropagation && event.stopPropagation();
+
+                    var item = $scope.getSelectedFlowItem();
+
+                    if (item && item.isKindOf("BaseFlowStep")) {
+
+                    }
+                }
+
+                $scope.moveFlowStepRight = function (event) {
+                    event && event.stopPropagation && event.stopPropagation();
+
+                    var item = $scope.getSelectedFlowItem();
+
+                    if (item && item.isKindOf("BaseFlowStep")) {
+
+                    }
+                }
+
                 function initMaster() {
                 }
 
@@ -1390,9 +1583,9 @@ define(
             appModule.
                 controller('RootController', ["$scope", "$rootScope", "$q", "$timeout", "angularEventTypes", "angularConstants", "appService", "urlService", "uiUtilService", RootController]).
                 controller('FrameSketchController', ["$scope", "$rootScope", "$timeout", "$q", "$log", "$exceptionHandler", "$compile", "$parse", "angularEventTypes", "angularConstants", "appService", "uiService", "uiUtilService", "uiCanvasService", FrameSketchController]).
-                controller('ProjectController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "uiService", "urlService", "uiUtilService", ProjectController]).
+                controller('ProjectController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "uiService", "uiFlowService", "urlService", "uiUtilService", ProjectController]).
                 controller('RepoController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "urlService", RepoController]).
                 controller('RepoLibController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "urlService", RepoLibController]).
-                controller('FlowController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "uiService", "urlService", "uiUtilService", FlowController]);
+                controller('FlowController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "uiService", "uiFlowService", "urlService", "uiUtilService", FlowController]);
         }
     });
