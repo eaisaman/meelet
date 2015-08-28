@@ -194,8 +194,20 @@ $flowItemColor: rgb(199, 199, 199);
                                     width: 100%;
                                     height: calc(100% - 2em);
 
-                                    > ol > li > .angular-ui-tree-handle > a:before {
-                                        display: none;
+                                    > ol > li {
+                                        &:first-child > .angular-ui-tree-handle > a:before {
+                                            display: none;
+                                        }
+
+                                        > .angular-ui-tree-handle > a:before {
+                                            position: absolute;
+                                            content: "";
+                                            border: 1px dotted;
+                                            height: 1.5em;
+                                            width: 2px;
+                                            top: -50%;
+                                            left: 50%;
+                                        }
                                     }
 
                                     li.hasChildren > .angular-ui-tree-handle > a {
@@ -229,44 +241,59 @@ $flowItemColor: rgb(199, 199, 199);
                                         color: inherit;
                                     }
 
-                                    .angular-ui-tree-handle > a {
-                                        color: rgb(199, 199, 199) !important;
+                                    .angular-ui-tree-handle {
+                                        & > a {
+                                            color: rgb(199, 199, 199) !important;
 
-                                        &:after {
-                                            position: absolute;
-                                            content: "";
-                                            border: 1px dotted;
-                                            height: 2px;
-                                            width: 2em;
-                                            top: calc(50% - 1px);
-                                            right: -1.5em;
+                                            &:after {
+                                                position: absolute;
+                                                content: "";
+                                                border: 1px dotted;
+                                                height: 2px;
+                                                width: 2em;
+                                                top: calc(50% - 1px);
+                                                right: -1.5em;
+                                            }
+
+                                            &:before {
+                                                position: absolute;
+                                                content: "";
+                                                border: 1px dotted;
+                                                height: 1.5em;
+                                                width: 2px;
+                                                top: -50%;
+                                                left: calc(50% - 1px);
+                                            }
                                         }
 
-                                        &:before {
+                                        &.edit > .treeNodeName .input-group {
+                                            display: block;
                                             position: absolute;
-                                            content: "";
-                                            border: 1px dotted;
-                                            height: 1.5em;
-                                            width: 2px;
-                                            top: -50%;
-                                            left: calc(50% - 1px);
-                                        }
-                                    }
-
-                                    .treeNodeName {
-                                        left: 1.5em;
-                                        font-weight: normal !important;
-                                        color: $flowItemColor;
-
-                                        &:before {
-                                            position: relative;
-                                            float: left;
+                                            width: 10em;
                                             height: 100%;
-                                            width: 1.5em;
-                                            top: calc(50% - 0.5em);
-                                            line-height: 1;
-                                            text-align: center;
-                                            color: #fff;
+                                            left: 0;
+                                            top: 0;
+                                        }
+
+                                        > .treeNodeName {
+                                            left: 1.5em;
+                                            font-weight: normal !important;
+                                            color: $flowItemColor;
+
+                                            &:before {
+                                                position: relative;
+                                                float: left;
+                                                height: 100%;
+                                                width: 1.5em;
+                                                top: calc(50% - 0.5em);
+                                                line-height: 1;
+                                                text-align: center;
+                                                color: #fff;
+                                            }
+
+                                            .input-group {
+                                                display: none;
+                                            }
                                         }
                                     }
                                 }

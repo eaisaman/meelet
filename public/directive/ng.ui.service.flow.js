@@ -96,18 +96,142 @@ define(
                             return $inject.uiUtilService.getResolveDefer();
                         }
                     },
-                    addFlow: function (flow) {
-                        if (this.flowWorks.flows.every(function (f) {
-                                return f.id !== flow.id;
-                            })) {
-                            this.flowWorks.flows.push(flow);
+                    addFlow: function (flow, beforeFlow) {
+                        if (flow) {
+                            var index, beforeIndex;
+                            beforeFlow && this.flowWorks.flows.every(function (child, i) {
+                                if (child.id === beforeFlow.id) {
+                                    beforeIndex = i;
+                                    return false;
+                                }
+                                return true;
+                            });
+
+                            if (this.flowWorks.flows.every(function (child, i) {
+                                    if (child.id === flow.id) {
+                                        index = i;
+                                        return false;
+                                    }
+                                    return true;
+                                })) {
+                                if (beforeIndex == null) beforeIndex = this.flowWorks.flows.length;
+                                this.flowWorks.flows.splice(beforeIndex, 0, flow);
+                            } else {
+                                //Change existing flow position
+                                if (beforeIndex != null) {
+                                    if (index < beforeIndex - 1) {
+                                        this.flowWorks.flows.splice(beforeIndex, 0, flow);
+                                        this.flowWorks.flows.splice(index, 1);
+                                    }
+                                    if (index > beforeIndex) {
+                                        this.flowWorks.flows.splice(beforeIndex, 0, flow);
+                                        this.flowWorks.flows.splice(index + 1, 1);
+                                    }
+                                }
+                            }
                         }
                     },
-                    addProcess: function (process) {
-                        if (this.flowWorks.processes.every(function (p) {
-                                return p.id !== process.id;
-                            })) {
-                            this.flowWorks.processes.push(process);
+                    moveDownFlow: function (flow) {
+                        if (flow) {
+                            var index;
+                            if (!this.flowWorks.flows.every(function (child, i) {
+                                    if (child.id === flow.id) {
+                                        index = i;
+                                        return false;
+                                    }
+                                    return true;
+                                })) {
+                                if (index < this.flowWorks.flows.length - 1) {
+                                    this.flowWorks.flows.splice(index, 1);
+                                    this.flowWorks.flows.splice(index + 1, 0, flow);
+                                }
+                            }
+                        }
+                    },
+                    moveUpFlow: function (flow) {
+                        if (flow) {
+                            var index;
+                            if (!this.flowWorks.flows.every(function (child, i) {
+                                    if (child.id === flow.id) {
+                                        index = i;
+                                        return false;
+                                    }
+                                    return true;
+                                })) {
+                                if (index > 0) {
+                                    this.flowWorks.flows.splice(index, 1);
+                                    this.flowWorks.flows.splice(index - 1, 0, flow);
+                                }
+                            }
+                        }
+                    },
+                    addProcess: function (process, beforeProcess) {
+                        if (process) {
+                            var index, beforeIndex;
+                            beforeProcess && this.flowWorks.processes.every(function (child, i) {
+                                if (child.id === beforeProcess.id) {
+                                    beforeIndex = i;
+                                    return false;
+                                }
+                                return true;
+                            });
+
+                            if (this.flowWorks.processes.every(function (child, i) {
+                                    if (child.id === process.id) {
+                                        index = i;
+                                        return false;
+                                    }
+                                    return true;
+                                })) {
+                                if (beforeIndex == null) beforeIndex = this.flowWorks.processes.length;
+                                this.flowWorks.processes.splice(beforeIndex, 0, process);
+                            } else {
+                                //Change existing process position
+                                if (beforeIndex != null) {
+                                    if (index < beforeIndex - 1) {
+                                        this.flowWorks.processes.splice(beforeIndex, 0, process);
+                                        this.flowWorks.processes.splice(index, 1);
+                                    }
+                                    if (index > beforeIndex) {
+                                        this.flowWorks.processes.splice(beforeIndex, 0, process);
+                                        this.flowWorks.processes.splice(index + 1, 1);
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    moveDownProcess: function (process) {
+                        if (process) {
+                            var index;
+                            if (!this.flowWorks.processes.every(function (child, i) {
+                                    if (child.id === process.id) {
+                                        index = i;
+                                        return false;
+                                    }
+                                    return true;
+                                })) {
+                                if (index < this.flowWorks.processes.length - 1) {
+                                    this.flowWorks.processes.splice(index, 1);
+                                    this.flowWorks.processes.splice(index + 1, 0, process);
+                                }
+                            }
+                        }
+                    },
+                    moveUpProcess: function (process) {
+                        if (process) {
+                            var index;
+                            if (!this.flowWorks.processes.every(function (child, i) {
+                                    if (child.id === process.id) {
+                                        index = i;
+                                        return false;
+                                    }
+                                    return true;
+                                })) {
+                                if (index > 0) {
+                                    this.flowWorks.processes.splice(index, 1);
+                                    this.flowWorks.processes.splice(index - 1, 0, process);
+                                }
+                            }
                         }
                     },
                     removeFlow: function (flow) {
@@ -135,6 +259,40 @@ define(
                             })) {
                             this.flowWorks.processes.splice(index, 1);
                         }
+                    },
+                    flowIndexOf: function (flow) {
+                        if (flow) {
+                            var index;
+                            if (!this.flowWorks.flows.every(function (child, i) {
+                                    if (child.id === flow.id) {
+                                        index = i;
+                                        return false;
+                                    }
+                                    return true;
+                                })) {
+                                return index;
+                            }
+                        }
+                    },
+                    getFlow: function (index) {
+                        return index >= 0 && index < this.flowWorks.flows.length && this.flowWorks.flows[index];
+                    },
+                    processIndexOf: function (process) {
+                        if (process) {
+                            var index;
+                            if (!this.flowWorks.processes.every(function (child, i) {
+                                    if (child.id === process.id) {
+                                        index = i;
+                                        return false;
+                                    }
+                                    return true;
+                                })) {
+                                return index;
+                            }
+                        }
+                    },
+                    getProcess: function (index) {
+                        return index >= 0 && index < this.flowWorks.processes.length && this.flowWorks.processes[index];
                     }
                 }),
                 Flow = Class({
@@ -250,6 +408,57 @@ define(
                                 this.childSteps.splice(index, 1);
                             }
                         }
+                    },
+                    moveDownStep: function (step) {
+                        if (step) {
+                            var index;
+                            if (!this.childSteps.every(function (child, i) {
+                                    if (child.id === step.id) {
+                                        index = i;
+                                        return false;
+                                    }
+                                    return true;
+                                })) {
+                                if (index < this.childSteps.length - 1) {
+                                    this.childSteps.splice(index, 1);
+                                    this.childSteps.splice(index + 1, 0, step);
+                                }
+                            }
+                        }
+                    },
+                    moveUpStep: function (step) {
+                        if (step) {
+                            var index;
+                            if (!this.childSteps.every(function (child, i) {
+                                    if (child.id === step.id) {
+                                        index = i;
+                                        return false;
+                                    }
+                                    return true;
+                                })) {
+                                if (index > 0) {
+                                    this.childSteps.splice(index, 1);
+                                    this.childSteps.splice(index - 1, 0, step);
+                                }
+                            }
+                        }
+                    },
+                    indexOf: function (step) {
+                        if (step) {
+                            var index;
+                            if (!this.childSteps.every(function (child, i) {
+                                    if (child.id === step.id) {
+                                        index = i;
+                                        return false;
+                                    }
+                                    return true;
+                                })) {
+                                return index;
+                            }
+                        }
+                    },
+                    getItem: function (index) {
+                        return index >= 0 && index < this.childSteps.length && this.childSteps[index];
                     }
                 }),
                 BaseFlowStep = Class({
@@ -421,6 +630,57 @@ define(
                                 this.childSteps.splice(index, 1);
                             }
                         }
+                    },
+                    moveDownStep: function (step) {
+                        if (step) {
+                            var index;
+                            if (!this.childSteps.every(function (child, i) {
+                                    if (child.id === step.id) {
+                                        index = i;
+                                        return false;
+                                    }
+                                    return true;
+                                })) {
+                                if (index < this.childSteps.length - 1) {
+                                    this.childSteps.splice(index, 1);
+                                    this.childSteps.splice(index + 1, 0, step);
+                                }
+                            }
+                        }
+                    },
+                    moveUpStep: function (step) {
+                        if (step) {
+                            var index;
+                            if (!this.childSteps.every(function (child, i) {
+                                    if (child.id === step.id) {
+                                        index = i;
+                                        return false;
+                                    }
+                                    return true;
+                                })) {
+                                if (index > 0) {
+                                    this.childSteps.splice(index, 1);
+                                    this.childSteps.splice(index - 1, 0, step);
+                                }
+                            }
+                        }
+                    },
+                    indexOf: function (step) {
+                        if (step) {
+                            var index;
+                            if (!this.childSteps.every(function (child, i) {
+                                    if (child.id === step.id) {
+                                        index = i;
+                                        return false;
+                                    }
+                                    return true;
+                                })) {
+                                return index;
+                            }
+                        }
+                    },
+                    getItem: function (index) {
+                        return index >= 0 && index < this.childSteps.length && this.childSteps[index];
                     }
                 }),
                 InvokeFlowStep = Class(BaseFlowStep, {
@@ -641,6 +901,57 @@ define(
                                 this.childSteps.splice(index, 1);
                             }
                         }
+                    },
+                    moveDownStep: function (step) {
+                        if (step) {
+                            var index;
+                            if (!this.childSteps.every(function (child, i) {
+                                    if (child.id === step.id) {
+                                        index = i;
+                                        return false;
+                                    }
+                                    return true;
+                                })) {
+                                if (index < this.childSteps.length - 1) {
+                                    this.childSteps.splice(index, 1);
+                                    this.childSteps.splice(index + 1, 0, step);
+                                }
+                            }
+                        }
+                    },
+                    moveUpStep: function (step) {
+                        if (step) {
+                            var index;
+                            if (!this.childSteps.every(function (child, i) {
+                                    if (child.id === step.id) {
+                                        index = i;
+                                        return false;
+                                    }
+                                    return true;
+                                })) {
+                                if (index > 0) {
+                                    this.childSteps.splice(index, 1);
+                                    this.childSteps.splice(index - 1, 0, step);
+                                }
+                            }
+                        }
+                    },
+                    indexOf: function (step) {
+                        if (step) {
+                            var index;
+                            if (!this.childSteps.every(function (child, i) {
+                                    if (child.id === step.id) {
+                                        index = i;
+                                        return false;
+                                    }
+                                    return true;
+                                })) {
+                                return index;
+                            }
+                        }
+                    },
+                    getItem: function (index) {
+                        return index >= 0 && index < this.childSteps.length && this.childSteps[index];
                     }
                 }),
                 RepeatFlowStep = Class(BaseFlowStep, {
@@ -766,6 +1077,57 @@ define(
                                 this.childSteps.splice(index, 1);
                             }
                         }
+                    },
+                    moveDownStep: function (step) {
+                        if (step) {
+                            var index;
+                            if (!this.childSteps.every(function (child, i) {
+                                    if (child.id === step.id) {
+                                        index = i;
+                                        return false;
+                                    }
+                                    return true;
+                                })) {
+                                if (index < this.childSteps.length - 1) {
+                                    this.childSteps.splice(index, 1);
+                                    this.childSteps.splice(index + 1, 0, step);
+                                }
+                            }
+                        }
+                    },
+                    moveUpStep: function (step) {
+                        if (step) {
+                            var index;
+                            if (!this.childSteps.every(function (child, i) {
+                                    if (child.id === step.id) {
+                                        index = i;
+                                        return false;
+                                    }
+                                    return true;
+                                })) {
+                                if (index > 0) {
+                                    this.childSteps.splice(index, 1);
+                                    this.childSteps.splice(index - 1, 0, step);
+                                }
+                            }
+                        }
+                    },
+                    indexOf: function (step) {
+                        if (step) {
+                            var index;
+                            if (!this.childSteps.every(function (child, i) {
+                                    if (child.id === step.id) {
+                                        index = i;
+                                        return false;
+                                    }
+                                    return true;
+                                })) {
+                                return index;
+                            }
+                        }
+                    },
+                    getItem: function (index) {
+                        return index >= 0 && index < this.childSteps.length && this.childSteps[index];
                     }
                 }),
                 ExitFlowStep = Class(BaseFlowStep, {
@@ -1248,6 +1610,45 @@ define(
                     }
                 });
 
+            FlowService.prototype.createFlow = function () {
+                return new Flow();
+            }
+
+            FlowService.prototype.createFlowStep = function (className) {
+                var classes = ["SequenceFlowStep", "InvokeFlowStep", "MapFlowStep", "SwitchFlowStep", "RepeatFlowStep", "ExitFlowStep"];
+
+                var stepObj;
+                classes.every(function (clazz) {
+                    if (eval("className === {0}.prototype.CLASS_NAME".format(clazz))) {
+                        stepObj = eval("new {0}()".format(clazz));
+                        return false;
+                    }
+
+                    return true;
+                });
+
+                return stepObj;
+            }
+
+            FlowService.prototype.createProcess = function () {
+                return new Process();
+            }
+
+            FlowService.prototype.createProcessStep = function (className) {
+                var classes = ["ReceiveProcessStep", "TerminateProcessStep", "ForkProcessStep", "JoinProcessStep"];
+
+                var stepObj;
+                classes.every(function (clazz) {
+                    if (eval("className === {0}.prototype.CLASS_NAME".format(clazz))) {
+                        stepObj = eval("new {0}()".format(clazz));
+                        return false;
+                    }
+
+                    return true;
+                });
+
+                return stepObj;
+            }
 
             FlowService.prototype.prepareFakeFlow = function () {
                 var self = this,

@@ -1412,6 +1412,26 @@ define(
                     }
                 }
 
+                $scope.clearSelection = function (event) {
+                    event && event.stopPropagation && event.stopPropagation();
+
+                    var scope = angular.element(document.querySelector("#flowStepTree [ui-tree-node].selected")).scope();
+                    scope && scope.unselect();
+
+                    $("#flowStepTree [ui-tree-handle].edit").removeClass("edit");
+                }
+
+                $scope.deactivateNameEdit = function () {
+                    $("#flowStepTree [ui-tree-handle].edit").removeClass("edit");
+                }
+
+                $scope.activateNameEdit = function (event) {
+                    event && event.stopPropagation && event.stopPropagation();
+
+                    var $el = $(event.currentTarget);
+                    $el.addClass("edit");
+                }
+
                 $scope.getSelectedFlowItem = function () {
                     var scope = angular.element(document.querySelector("#flowStepTree [ui-tree-node].selected")).scope();
 
@@ -1429,80 +1449,69 @@ define(
                     }
                 }
 
-                $scope.insertAfterInvokeFlowStep = function (event) {
+                $scope.insertAfterFlow = function () {
                     var item = $scope.getSelectedFlowItem();
 
                     if (item) {
                         if (item.isKindOf("Flow")) {
+                            var index = $rootScope.loadedProject.flowIndexOf(item);
+
+                            $rootScope.loadedProject.addFlow(uiFlowService.createFlow(), $rootScope.loadedProject.getFlow(index + 1));
+                        }
+                    } else {
+                        $rootScope.loadedProject.addFlow(uiFlowService.createFlow());
+                    }
+                }
+
+                $scope.insertAfterFlowStep = function (step) {
+                    var item = $scope.getSelectedFlowItem();
+
+                    if (item) {
+                        if (item.isKindOf("Flow")) {
+                            item.addStep(uiFlowService.createFlowStep(step));
                         } else if (item.isKindOf("BaseFlowStep")) {
+                            var parentItem = $scope.getParentFlowItem();
+
+                            if (parentItem) {
+                                var index = parentItem.indexOf(item);
+                                parentItem.addStep(uiFlowService.createFlowStep(step), parentItem.getItem(index + 1));
+                            }
                         }
                     }
+                }
 
+                $scope.insertAfterInvokeFlowStep = function (event) {
+                    $scope.insertAfterFlowStep("InvokeFlowStep");
                 }
 
                 $scope.insertAfterMapFlowStep = function (event) {
                     event && event.stopPropagation && event.stopPropagation();
 
-                    var item = $scope.getSelectedFlowItem();
-
-                    if (item) {
-                        if (item.isKindOf("Flow")) {
-                        } else if (item.isKindOf("BaseFlowStep")) {
-                        }
-                    }
-
+                    $scope.insertAfterFlowStep("MapFlowStep");
                 }
 
                 $scope.insertAfterSwitchFlowStep = function (event) {
                     event && event.stopPropagation && event.stopPropagation();
 
-                    var item = $scope.getSelectedFlowItem();
-
-                    if (item) {
-                        if (item.isKindOf("Flow")) {
-                        } else if (item.isKindOf("BaseFlowStep")) {
-                        }
-                    }
-
+                    $scope.insertAfterFlowStep("SwitchFlowStep");
                 }
 
                 $scope.insertAfterRepeatFlowStep = function (event) {
                     event && event.stopPropagation && event.stopPropagation();
 
-                    var item = $scope.getSelectedFlowItem();
-
-                    if (item) {
-                        if (item.isKindOf("Flow")) {
-                        } else if (item.isKindOf("BaseFlowStep")) {
-                        }
-                    }
-
+                    $scope.insertAfterFlowStep("RepeatFlowStep");
                 }
 
                 $scope.insertAfterSequenceFlowStep = function (event) {
                     event && event.stopPropagation && event.stopPropagation();
 
-                    var item = $scope.getSelectedFlowItem();
-
-                    if (item) {
-                        if (item.isKindOf("Flow")) {
-                        } else if (item.isKindOf("BaseFlowStep")) {
-                        }
-                    }
-
+                    $scope.insertAfterFlowStep("SequenceFlowStep");
                 }
 
                 $scope.insertAfterExitFlowStep = function (event) {
                     event && event.stopPropagation && event.stopPropagation();
 
-                    var item = $scope.getSelectedFlowItem();
-
-                    if (item) {
-                        if (item.isKindOf("Flow")) {
-                        } else if (item.isKindOf("BaseFlowStep")) {
-                        }
-                    }
-
+                    $scope.insertAfterFlowStep("ExitFlowStep");
                 }
 
                 $scope.removeFlowStep = function (event) {
@@ -1521,7 +1530,7 @@ define(
                             var parentElement = el.parentElement.parentElement;
                             if (parentElement.hasAttribute("ui-tree-node")) {
                                 var parentScope = angular.element(parentElement).scope(),
-                                    parentItem =  parentScope && parentScope.item;
+                                    parentItem = parentScope && parentScope.item;
 
                                 parentItem && parentItem.removeStep(item);
                             }
@@ -1535,8 +1544,13 @@ define(
 
                     var item = $scope.getSelectedFlowItem();
 
-                    if (item && item.isKindOf("BaseFlowStep")) {
-
+                    if (item) {
+                        if (item.isKindOf("Flow")) {
+                            $rootScope.loadedProject.moveUpFlow(item);
+                        } else if (item.isKindOf("BaseFlowStep")) {
+                            var parentItem = $scope.getParentFlowItem();
+                            parentItem && parentItem.moveUpStep(item);
+                        }
                     }
                 }
 
@@ -1545,28 +1559,75 @@ define(
 
                     var item = $scope.getSelectedFlowItem();
 
-                    if (item && item.isKindOf("BaseFlowStep")) {
-
+                    if (item) {
+                        if (item.isKindOf("Flow")) {
+                            $rootScope.loadedProject.moveDownFlow(item);
+                        } else if (item.isKindOf("BaseFlowStep")) {
+                            var parentItem = $scope.getParentFlowItem();
+                            parentItem && parentItem.moveDownStep(item);
+                        }
                     }
                 }
 
                 $scope.moveFlowStepLeft = function (event) {
                     event && event.stopPropagation && event.stopPropagation();
 
-                    var item = $scope.getSelectedFlowItem();
+                    var el = document.querySelector("#flowStepTree [ui-tree-node].selected"),
+                        scope = angular.element(el).scope(),
+                        item = scope && scope.item;
 
                     if (item && item.isKindOf("BaseFlowStep")) {
+                        var parentElement = el.parentElement.parentElement;
+                        if (parentElement.hasAttribute("ui-tree-node")) {
+                            var grandElement = parentElement.parentElement.parentElement;
+                            if (grandElement.hasAttribute("ui-tree-node")) {
+                                var parentScope = angular.element(parentElement).scope(),
+                                    parentItem = parentScope && parentScope.item,
+                                    grandScope = angular.element(grandElement).scope(),
+                                    grandItem = grandScope && grandScope.item;
 
+                                if (parentItem && grandItem) {
+                                    scope.unselect();
+
+                                    $timeout(function () {
+                                        parentItem.removeStep(item);
+                                        grandItem.addStep(item, parentItem);
+                                        grandItem.moveDownStep(item);
+                                    });
+                                }
+                            }
+                        }
                     }
                 }
 
                 $scope.moveFlowStepRight = function (event) {
                     event && event.stopPropagation && event.stopPropagation();
 
-                    var item = $scope.getSelectedFlowItem();
+                    var el = document.querySelector("#flowStepTree [ui-tree-node].selected"),
+                        scope = angular.element(el).scope(),
+                        item = scope && scope.item;
 
                     if (item && item.isKindOf("BaseFlowStep")) {
+                        var parentElement = el.parentElement.parentElement;
+                        if (parentElement.hasAttribute("ui-tree-node")) {
+                            var parentScope = angular.element(parentElement).scope(),
+                                parentItem = parentScope && parentScope.item;
 
+                            if (parentItem) {
+                                var index = parentItem.indexOf(item);
+                                if (index != null && index > 0) {
+                                    var prevItem = parentItem.getItem(index - 1);
+                                    if (prevItem.isKindOf("SequenceFlowStep") || prevItem.isKindOf("SwitchFlowStep") || prevItem.isKindOf("RepeatFlowStep")) {
+                                        scope.unselect();
+
+                                        $timeout(function () {
+                                            parentItem.removeStep(item);
+                                            prevItem.addStep(item);
+                                        });
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
 

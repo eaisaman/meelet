@@ -2,7 +2,8 @@
 <link rel="stylesheet" type="text/css" href="fonts/icon-flow/style.css"/>
 
 <script type="text/ng-template" id="_flowSteps.html">
-    <div ui-tree-handle ng-click="exclusiveSelect($event)">
+    <div ui-tree-handle ng-click="$event.stopPropagation();deactivateNameEdit();exclusiveSelect($event)"
+         ng-dblclick="activateNameEdit($event)">
         <a class="fs-x-small btn btn-xs" nodrag
            ng-click="toggle();$event.stopPropagation()">
             <span ng-if="item.childSteps.length" class="icon-flow-before"
@@ -12,6 +13,11 @@
         <span class="treeNodeName icon-flow-before fs-x-medium-before"
               ng-class="{'icon-flow-flow-before': item.CLASS_NAME === 'Flow', 'icon-flow-invoke-step-before': item.flowStepType === 'Invoke', 'icon-flow-map-step-before': item.flowStepType === 'Map', 'icon-flow-switch-step-before': item.flowStepType === 'Switch', 'icon-flow-repeat-step-before': item.flowStepType === 'Repeat', 'icon-flow-exit-step-before': item.flowStepType === 'Exit', 'icon-flow-sequence-step-before': item.flowStepType === 'Sequence'}">
             {{item.name}}
+            <div class="input-group" ng-click="$event.stopPropagation()">
+                <input type="text"
+                       class="form-control no-padding"
+                       ng-model="item.name"/>
+            </div>
         </span>
     </div>
     <ol ng-if="item.childSteps.length" ui-tree-nodes ng-model="item.childSteps" ng-class="{ 'hidden': collapsed }">
@@ -61,6 +67,8 @@
                     <div id="flowServiceEditor" class="flowEditor" editor="service">
                         <div class="flowTree fs-x-small col-as-8 no-padding">
                             <div class="treeToolBar">
+                                <div class="flowButton icon-flow-before icon-flow-flow-before"
+                                     ng-click="insertAfterFlow($event)"></div>
                                 <div class="flowDropdown icon-flow-before icon-flow-invoke-step-before"
                                      ng-click="toggleSelect($event.currentTarget, null)">
                                     <div class="btn-group open">
@@ -97,7 +105,7 @@
                             </div>
                             <ui-tree id="flowStepTree" drag-enabled="false" spacing="20"
                                      coverage="50"
-                                     collapseAll="true">
+                                     collapseAll="true" ng-click="clearSelection($event)">
                                 <ol ui-tree-nodes class="fs-x-small" ng-model="$root.loadedProject.flowWorks.flows">
                                     <li ng-repeat="item in $root.loadedProject.flowWorks.flows" ui-tree-node
                                         ng-attr-id="{{item.id}}" ng-include="'_flowSteps.html'"

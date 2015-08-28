@@ -7884,8 +7884,17 @@
   width: 100%;
   height: calc(100% - 2em);
 }
-.flowContainer .modalWindowContainer .flowMainContent .flowContent .flowEditorContent .flowEditor#flowServiceEditor .flowTree #flowStepTree > ol > li > .angular-ui-tree-handle > a:before {
+.flowContainer .modalWindowContainer .flowMainContent .flowContent .flowEditorContent .flowEditor#flowServiceEditor .flowTree #flowStepTree > ol > li:first-child > .angular-ui-tree-handle > a:before {
   display: none;
+}
+.flowContainer .modalWindowContainer .flowMainContent .flowContent .flowEditorContent .flowEditor#flowServiceEditor .flowTree #flowStepTree > ol > li > .angular-ui-tree-handle > a:before {
+  position: absolute;
+  content: "";
+  border: 1px dotted;
+  height: 1.5em;
+  width: 2px;
+  top: -50%;
+  left: 50%;
 }
 .flowContainer .modalWindowContainer .flowMainContent .flowContent .flowEditorContent .flowEditor#flowServiceEditor .flowTree #flowStepTree li.hasChildren > .angular-ui-tree-handle > a:after {
   width: 1.5em;
@@ -7931,12 +7940,20 @@
   top: -50%;
   left: calc(50% - 1px);
 }
-.flowContainer .modalWindowContainer .flowMainContent .flowContent .flowEditorContent .flowEditor#flowServiceEditor .flowTree #flowStepTree .treeNodeName {
+.flowContainer .modalWindowContainer .flowMainContent .flowContent .flowEditorContent .flowEditor#flowServiceEditor .flowTree #flowStepTree .angular-ui-tree-handle.edit > .treeNodeName .input-group {
+  display: block;
+  position: absolute;
+  width: 10em;
+  height: 100%;
+  left: 0;
+  top: 0;
+}
+.flowContainer .modalWindowContainer .flowMainContent .flowContent .flowEditorContent .flowEditor#flowServiceEditor .flowTree #flowStepTree .angular-ui-tree-handle > .treeNodeName {
   left: 1.5em;
   font-weight: normal !important;
   color: #c7c7c7;
 }
-.flowContainer .modalWindowContainer .flowMainContent .flowContent .flowEditorContent .flowEditor#flowServiceEditor .flowTree #flowStepTree .treeNodeName:before {
+.flowContainer .modalWindowContainer .flowMainContent .flowContent .flowEditorContent .flowEditor#flowServiceEditor .flowTree #flowStepTree .angular-ui-tree-handle > .treeNodeName:before {
   position: relative;
   float: left;
   height: 100%;
@@ -7945,6 +7962,9 @@
   line-height: 1;
   text-align: center;
   color: #fff;
+}
+.flowContainer .modalWindowContainer .flowMainContent .flowContent .flowEditorContent .flowEditor#flowServiceEditor .flowTree #flowStepTree .angular-ui-tree-handle > .treeNodeName .input-group {
+  display: none;
 }
 .flowContainer .modalWindowContainer .flowMainContent .flowContent .flowEditorContent .flowEditor#flowServiceEditor .flowDetails {
   position: relative;
