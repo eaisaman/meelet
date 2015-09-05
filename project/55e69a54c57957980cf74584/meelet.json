@@ -89,7 +89,8 @@
                           },
                           "minPercent": 0,
                           "maxPercent": 0,
-                          "backgroundColor": "#91e6b5"
+                          "backgroundColor": "#91e6b5",
+                          "$$hashKey": "2CV"
                         },
                         {
                           "percent": 50,
@@ -100,7 +101,8 @@
                           },
                           "minPercent": 1,
                           "maxPercent": 99,
-                          "backgroundColor": "#91e6b5"
+                          "backgroundColor": "#91e6b5",
+                          "$$hashKey": "2CW"
                         },
                         {
                           "percent": 100,
@@ -111,7 +113,8 @@
                           },
                           "minPercent": 2,
                           "maxPercent": 100,
-                          "backgroundColor": "#91e6b5"
+                          "backgroundColor": "#91e6b5",
+                          "$$hashKey": "2CX"
                         }
                       ]
                     }
@@ -174,7 +177,7 @@
               }
             }
           },
-          "state": "State_1441177272848",
+          "state": "State_1441177272943",
           "stateContext": "State_1441176722817",
           "childWidgets": [
             {
@@ -226,8 +229,8 @@
                   }
                 }
               },
-              "state": "State_1441177278067",
-              "stateContext": "State_1441177272848",
+              "state": "State_1441177415074",
+              "stateContext": "State_1441177272943",
               "childWidgets": [
                 {
                   "id": "Widget_1441179877213",
@@ -257,24 +260,24 @@
                                 {
                                   "percent": 0,
                                   "color": {
-                                    "color": "#2980b9",
+                                    "color": "#2ecc71",
                                     "alpha": 1,
-                                    "alphaColor": "#2980b9"
+                                    "alphaColor": "#2ecc71"
                                   },
                                   "minPercent": 0,
                                   "maxPercent": 99,
-                                  "backgroundColor": "#73b5e0"
+                                  "backgroundColor": "#91e6b5"
                                 },
                                 {
                                   "percent": 100,
                                   "color": {
-                                    "color": "#6699cc",
+                                    "color": "#ffcc66",
                                     "alpha": 1,
-                                    "alphaColor": "#6699cc"
+                                    "alphaColor": "#ffcc66"
                                   },
                                   "minPercent": 1,
                                   "maxPercent": 100,
-                                  "backgroundColor": "#d9e6f2"
+                                  "backgroundColor": "#b37700"
                                 }
                               ]
                             }
@@ -291,24 +294,24 @@
                                     {
                                       "percent": 0,
                                       "color": {
-                                        "color": "#2980b9",
+                                        "color": "#2ecc71",
                                         "alpha": 1,
-                                        "alphaColor": "#2980b9"
+                                        "alphaColor": "#2ecc71"
                                       },
                                       "minPercent": 0,
                                       "maxPercent": 99,
-                                      "backgroundColor": "#73b5e0"
+                                      "backgroundColor": "#91e6b5"
                                     },
                                     {
                                       "percent": 100,
                                       "color": {
-                                        "color": "#6699cc",
+                                        "color": "#ffcc66",
                                         "alpha": 1,
-                                        "alphaColor": "#6699cc"
+                                        "alphaColor": "#ffcc66"
                                       },
                                       "minPercent": 1,
                                       "maxPercent": 100,
-                                      "backgroundColor": "#d9e6f2"
+                                      "backgroundColor": "#b37700"
                                     }
                                   ]
                                 }
@@ -330,8 +333,8 @@
                       }
                     }
                   },
-                  "state": "State_1441181010491",
-                  "stateContext": "State_1441177278067",
+                  "state": "State_1441179877214",
+                  "stateContext": "State_1441177415074",
                   "childWidgets": [
                     {
                       "id": "Widget_1441180700147",
@@ -354,11 +357,12 @@
                                 "height": "40px",
                                 "left": "10px",
                                 "top": "10px",
-                                "background-image": "project/55e69a54c57957980cf74584/resource/image/avatar.png",
+                                "background-image": "project/55e69a54c57957980cf74584/resource/image/speaker_up_.svg",
                                 "background-position": {
                                   "x": "50%",
                                   "y": "50%"
                                 },
+                                "background-size": "contain",
                                 "background-repeat": "no-repeat"
                               },
                               "beforeStyle": {},
@@ -367,12 +371,43 @@
                                 {
                                   "source": "uiBackgroundImage",
                                   "style": {
-                                    "background-image": "project/55e69a54c57957980cf74584/resource/image/avatar.png",
+                                    "background-image": "project/55e69a54c57957980cf74584/resource/image/speaker_up_.svg",
                                     "background-position": {
                                       "x": "50",
                                       "y": "50",
                                       "unit": "%"
                                     },
+                                    "background-size": "contain",
+                                    "background-repeat": "no-repeat"
+                                  },
+                                  "beforeStyle": {},
+                                  "afterStyle": {},
+                                  "classList": []
+                                }
+                              ]
+                            },
+                            "mute": {
+                              "style": {
+                                "background-image": "project/55e69a54c57957980cf74584/resource/image/speaker_mute_.svg",
+                                "background-position": {
+                                  "x": "50%",
+                                  "y": "50%"
+                                },
+                                "background-size": "contain",
+                                "background-repeat": "no-repeat"
+                              },
+                              "beforeStyle": {},
+                              "afterStyle": {},
+                              "styleSource": [
+                                {
+                                  "source": "uiBackgroundImage",
+                                  "style": {
+                                    "background-image": "project/55e69a54c57957980cf74584/resource/image/speaker_mute_.svg",
+                                    "background-position": {
+                                      "x": "50%",
+                                      "y": "50%"
+                                    },
+                                    "background-size": "contain",
                                     "background-repeat": "no-repeat"
                                   },
                                   "beforeStyle": {},
@@ -392,8 +427,8 @@
                           }
                         }
                       },
-                      "state": "State_1441181010492",
-                      "stateContext": "State_1441181010491",
+                      "state": "State_1441437216235",
+                      "stateContext": "State_1441179877214",
                       "childWidgets": [],
                       "states": [
                         {
@@ -427,9 +462,29 @@
                           "CLASS_NAME": "State",
                           "transitions": [],
                           "context": "State_1441181010491"
+                        },
+                        {
+                          "id": "State_1441437216235",
+                          "node": "Widget_1441180700147",
+                          "name": "mute",
+                          "actionObj": {
+                            "id": "TransitionAction_1441437216235",
+                            "actionType": "Sequence",
+                            "CLASS_NAME": "SequenceTransitionAction",
+                            "widgetObj": "Widget_1441180700147",
+                            "stopOnEach": false,
+                            "childActions": []
+                          },
+                          "CLASS_NAME": "State",
+                          "transitions": [],
+                          "context": "State_1441179877214"
                         }
                       ],
-                      "stateOptions": [],
+                      "stateOptions": [
+                        {
+                          "name": "mute"
+                        }
+                      ],
                       "CLASS_NAME": "ElementSketchWidget",
                       "html": "",
                       "markdown": "",
@@ -495,8 +550,8 @@
                           }
                         }
                       },
-                      "state": "State_1441181410956",
-                      "stateContext": "State_1441181010491",
+                      "state": "State_1441181327406",
+                      "stateContext": "State_1441179877214",
                       "childWidgets": [],
                       "states": [
                         {
@@ -598,8 +653,8 @@
                           }
                         }
                       },
-                      "state": "State_1441181628131",
-                      "stateContext": "State_1441181010491",
+                      "state": "State_1441181507596",
+                      "stateContext": "State_1441179877214",
                       "childWidgets": [],
                       "states": [
                         {
@@ -701,8 +756,8 @@
                           }
                         }
                       },
-                      "state": "State_1441182352443",
-                      "stateContext": "State_1441181010491",
+                      "state": "State_1441182225804",
+                      "stateContext": "State_1441179877214",
                       "childWidgets": [],
                       "states": [
                         {
@@ -823,11 +878,19 @@
                           "afterStyle": {},
                           "styleSource": []
                         }
+                      },
+                      "State_1441177415074": {
+                        "*": {
+                          "style": {},
+                          "beforeStyle": {},
+                          "afterStyle": {},
+                          "styleSource": []
+                        }
                       }
                     }
                   },
-                  "state": "State_1441258496324",
-                  "stateContext": "State_1441177278067",
+                  "state": "State_1441437197060",
+                  "stateContext": "State_1441177415074",
                   "childWidgets": [],
                   "states": [
                     {
@@ -845,6 +908,22 @@
                       "CLASS_NAME": "State",
                       "transitions": [],
                       "context": "State_1441177278067"
+                    },
+                    {
+                      "id": "State_1441437197060",
+                      "node": "Widget_1441258496323",
+                      "name": "*",
+                      "actionObj": {
+                        "id": "TransitionAction_1441437197060",
+                        "actionType": "Sequence",
+                        "CLASS_NAME": "SequenceTransitionAction",
+                        "widgetObj": "Widget_1441258496323",
+                        "stopOnEach": false,
+                        "childActions": []
+                      },
+                      "CLASS_NAME": "State",
+                      "transitions": [],
+                      "context": "State_1441177415074"
                     }
                   ],
                   "stateOptions": [],

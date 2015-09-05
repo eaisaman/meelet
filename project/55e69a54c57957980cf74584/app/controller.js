@@ -63,15 +63,55 @@ define(
             function SettingsController($scope, $rootScope, $timeout, $q, angularConstants, angularEventTypes, appService, urlService, uiUtilService) {
             }
 
-            function RootController($scope, $rootScope, $q, $timeout, appService, urlService, utilService, uiUtilService) {
+            function RootController($scope, $rootScope, $q, $timeout, angularConstants, angularEventTypes, appService, urlService, utilService, uiUtilService) {
+                window.onToggleSound = function (widgetId, url, loop) {
+                    appService.isPlayingSound().then(function (isPlaying) {
+                        if (isPlaying) {
+                            onStopPlayWidgetSound(widgetId);
+                        } else {
+                            onPlayWidgetSound(widgetId, url, loop);
+                        }
+                    })
+                }
+
                 window.onPlaySound = function (url, loop) {
-                    appService.playSound(url, loop);
-                    $rootScope.$apply();
+                    appService.playSound("55e69a54c57957980cf74584", url, loop);
                 }
 
                 window.onStopPlaySound = function () {
                     appService.stopPlaySound();
-                    $rootScope.$apply();
+                }
+
+                window.onPlayWidgetSound = function (widgetId, url, loop) {
+                    appService.playSound("55e69a54c57957980cf74584", url, loop);
+
+                    //If sound file is local, it may take a while to load the file and change state to 'playing', or unload
+                    //and change to 'stopped'.
+                    widgetId && $timeout(function () {
+                        appService.isPlayingSound().then(function (isPlaying) {
+                            if (isPlaying) {
+                                onChangeWidgetState(widgetId, "*");
+                            } else {
+                                onChangeWidgetState(widgetId, "mute");
+                            }
+                        })
+                    }, angularConstants.actionDelay);
+                }
+
+                window.onStopPlayWidgetSound = function (widgetId) {
+                    appService.stopPlaySound();
+
+                    //If sound file is local, it may take a while to load the file and change state to 'playing', or unload
+                    //and change to 'stopped'.
+                    widgetId && $timeout(function () {
+                        appService.isPlayingSound().then(function (isPlaying) {
+                            if (isPlaying) {
+                                onChangeWidgetState(widgetId, "*");
+                            } else {
+                                onChangeWidgetState(widgetId, "mute");
+                            }
+                        })
+                    }, angularConstants.actionDelay);
                 }
 
                 window.onGotoPage = function (pageNum) {
@@ -201,6 +241,8 @@ define(
 
             function Widget_1441176722817_Controller($scope, $rootScope, $q, $timeout, appService, urlService, utilService, uiUtilService) {
                 utilService.setState("Widget_1441176722817", "*").then(function () {
+                    onPlaySound('resource/audio/background.mp3', true);
+
                     utilService.loadAnimation('EDGE-16665010');
                 })
 
@@ -249,7 +291,7 @@ define(
                     controller('SettingsController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "angularEventTypes", "appService", "urlService", "uiUtilService", SettingsController]);
 
                 appModule.
-                    controller('RootController', ["$scope", "$rootScope", "$q", "$timeout", "appService", "urlService", "utilService", "uiUtilService", RootController]);
+                    controller('RootController', ["$scope", "$rootScope", "$q", "$timeout", "angularConstants", "angularEventTypes", "appService", "urlService", "utilService", "uiUtilService", RootController]);
 
                 appModule.
                     controller('Widget_1441176722817_Controller', ["$scope", "$rootScope", "$q", "$timeout", "appService", "urlService", "utilService", "uiUtilService", Widget_1441176722817_Controller]);

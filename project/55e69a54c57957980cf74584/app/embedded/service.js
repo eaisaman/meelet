@@ -1,7 +1,7 @@
 define(
     ["angular"],
     function () {
-        var appService = function ($rootScope, $http, $timeout, $q, $compile, $cookies, $cookieStore, urlService) {
+        var appService = function ($rootScope, $http, $timeout, $q, $compile, $cookies, $cookieStore, $exceptionHandler, urlService) {
             this.$rootScope = $rootScope;
             this.$http = $http;
             this.$timeout = $timeout;
@@ -9,10 +9,11 @@ define(
             this.$compile = $compile;
             this.$cookies = $cookies;
             this.$cookieStore = $cookieStore;
+            this.$exceptionHandler = $exceptionHandler;
             this.urlService = urlService;
         };
 
-        appService.$inject = ["$rootScope", "$http", "$timeout", "$q", "$compile", "$cookies", "$cookieStore", "urlService"];
+        appService.$inject = ["$rootScope", "$http", "$timeout", "$q", "$compile", "$cookies", "$cookieStore", "$exceptionHandler", "urlService"];
 
         appService.prototype.NOOP = function () {
             var self = this,
@@ -25,12 +26,12 @@ define(
             return defer.promise;
         }
 
-        appService.prototype.getResolveDefer = function () {
+        appService.prototype.getResolveDefer = function (result) {
             var self = this,
                 defer = self.$q.defer();
 
             self.$timeout(function () {
-                defer.resolve();
+                defer.resolve(result);
             });
 
             return defer.promise;
@@ -89,12 +90,33 @@ define(
             }
         }
 
-        appService.prototype.playSound = function (url, loop) {
+        appService.prototype.playSound = function (projectId, url, playLoop) {
             return this.cordovaPromise("playSound").apply(this, Array.prototype.slice.call(arguments));
         }
 
         appService.prototype.stopPlaySound = function () {
             return this.cordovaPromise("stopPlaySound").apply(this, Array.prototype.slice.call(arguments));
+        }
+
+        appService.prototype.isPlayingSound = function () {
+            var self = this;
+
+            return self.cordovaPromise("isPlayingSound").apply(self, []).then(
+                function (result) {
+                    var isPlaying = result && result.data.result == "OK" && result.data.resultValue;
+                    if (typeof isPlaying === "string") {
+                        isPlaying = isPlaying === "true";
+                    }
+
+                    return self.getResolveDefer(isPlaying);
+                },
+                function (err) {
+                    self.$exceptionHandler(err);
+                    return self.getResolveDefer(false);
+                }
+            );
+
+
         }
 
         appService.prototype.exitPage = function () {

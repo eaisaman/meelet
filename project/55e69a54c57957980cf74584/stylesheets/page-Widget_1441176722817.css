@@ -45,6 +45,12 @@
   background-size: contain;
   background-repeat: no-repeat;
 }
+#Widget_1441176722817 #Widget_1441177272848[state='select'] #Widget_1441177278067 #Widget_1441179877213 #Widget_1441180700147[state='mute'] {
+  background-image: url(../resource/image/speaker_mute_.svg);
+  background-position: 50% 50%;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
 #Widget_1441176722817 #Widget_1441177272848[state='select'] #Widget_1441177278067 #Widget_1441179877213 #Widget_1441181327406 {
   width: 40px;
   height: 40px;
