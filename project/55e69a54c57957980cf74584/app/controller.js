@@ -64,6 +64,16 @@ define(
             }
 
             function RootController($scope, $rootScope, $q, $timeout, appService, urlService, utilService, uiUtilService) {
+                window.onPlaySound = function (url, loop) {
+                    appService.playSound(url, loop);
+                    $rootScope.$apply();
+                }
+
+                window.onStopPlaySound = function () {
+                    appService.stopPlaySound();
+                    $rootScope.$apply();
+                }
+
                 window.onGotoPage = function (pageNum) {
                     utilService.gotoPage($rootScope.pickedPage, pageNum);
                     $rootScope.$apply();
@@ -71,6 +81,7 @@ define(
 
                 window.onChangeWidgetState = function (id, name) {
                     utilService.setStateOnWidget(id, name);
+                    $rootScope.$apply();
                 }
 
                 $rootScope.initFns = [];

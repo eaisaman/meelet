@@ -582,10 +582,12 @@ define(
                 if (pageNum < self.meta.locations.length && locationIndex !== pageNum) {
                     var gotoLocation = self.meta.locations[pageNum];
 
-                    var m = gotoLocation.match(/Widget_\d+/);
-                    if (m && m.length) {
+                    var m = gotoLocation.match(/Widget_\d+/),
+                        c = currentLocation.match(/Widget_\d+/);
+                    if (m && m.length && c && c.length) {
                         var widgetId = m[0],
-                            $unloaded = $container.children("." + self.angularConstants.widgetClasses.holderClass + ":not(#" + widgetId + ")");
+                            currentWidgetId = c[0],
+                            $unloaded = $container.children("." + self.angularConstants.widgetClasses.holderClass + ":not(#" + currentWidgetId + ")" + ":not(#" + widgetId + ")");
 
                         $unloaded.each(function (i, element) {
                             var scope = angular.element(element).scope();
@@ -594,12 +596,133 @@ define(
 
                         $unloaded.remove();
 
-                        return self.loadPage(null, gotoLocation, true).then(function () {
-                            self.$rootScope.pickedPage = gotoLocation;
+                        return self.loadPage(currentLocation, gotoLocation).then(function () {
+                            var $current = $container.children("#" + currentWidgetId),
+                                $goto = findPageElement(gotoLocation),
+                                hasAnimation = false,
+                                fullName;
 
-                            return self.setState(gotoLocation.replace("page-", ""), "*").then(function () {
-                                return self.getResolveDefer(gotoLocation);
-                            });
+                            if (pageNum < locationIndex) {
+                                $goto.addClass("backward previousPage");
+
+                                if (self.meta.pageTransition) {
+                                    hasAnimation = self.meta.pageTransition.effect.type === "Animation";
+
+                                    fullName = self.meta.pageTransition.artifactSpec.directiveName;
+                                    if (self.meta.pageTransition.artifactSpec.version) {
+                                        fullName = fullName + "-" + self.meta.pageTransition.artifactSpec.version.replace(/\./g, "-")
+                                    }
+
+                                    $goto.attr(fullName, "");
+                                    $goto.attr("effect", self.meta.pageTransition.effect.name);
+                                }
+
+                                if (hasAnimation) {
+                                    $goto.css("visibility", "visible");
+
+                                    return self.$q.all([
+                                        self.onAnimationEnd($current),
+                                        self.onAnimationEnd($goto)
+                                    ]).then(function () {
+                                        $goto.removeClass("backward previousPage");
+                                        $goto.removeAttr("effect");
+                                        fullName && $goto.removeAttr(fullName);
+                                        $goto.css("visibility", "");
+                                        setCurrentPage($goto);
+                                        self.$rootScope.pickedPage = gotoLocation;
+
+                                        return self.setState(gotoLocation.replace("page-", ""), "*").then(function () {
+                                            $current.each(function (i, element) {
+                                                var scope = angular.element(element).scope();
+                                                scope && scope.$destroy();
+                                            });
+
+                                            $current.remove();
+
+                                            return self.getResolveDefer(gotoLocation);
+                                        });
+                                    });
+                                } else {
+                                    return self.$timeout(function () {
+                                        $goto.removeClass("backward previousPage");
+                                        $goto.removeAttr("effect");
+                                        fullName && $goto.removeAttr(fullName);
+                                        setCurrentPage($goto);
+                                        self.$rootScope.pickedPage = gotoLocation;
+
+                                        return self.setState(gotoLocation.replace("page-", ""), "*").then(function () {
+                                            $current.each(function (i, element) {
+                                                var scope = angular.element(element).scope();
+                                                scope && scope.$destroy();
+                                            });
+
+                                            $current.remove();
+
+                                            return self.getResolveDefer(gotoLocation);
+                                        });
+                                    });
+                                }
+                            } else {
+                                $current.addClass("forward");
+
+                                if (self.meta.pageTransition) {
+                                    hasAnimation = self.meta.pageTransition.effect.type === "Animation";
+
+                                    fullName = self.meta.pageTransition.artifactSpec.directiveName;
+                                    if (self.meta.pageTransition.artifactSpec.version) {
+                                        fullName = fullName + "-" + self.meta.pageTransition.artifactSpec.version.replace(/\./g, "-")
+                                    }
+
+                                    $current.attr(fullName, "");
+                                    $current.attr("effect", self.meta.pageTransition.effect.name);
+                                }
+
+                                if (hasAnimation) {
+                                    $goto.css("visibility", "visible");
+
+                                    return self.$q.all([
+                                        self.onAnimationEnd($current),
+                                        self.onAnimationEnd($goto)
+                                    ]).then(function () {
+                                        $current.removeClass("forward");
+                                        $current.removeAttr("effect");
+                                        fullName && $current.removeAttr(fullName);
+                                        $goto.css("visibility", "");
+                                        setCurrentPage($goto);
+                                        self.$rootScope.pickedPage = gotoLocation;
+
+                                        return self.setState(gotoLocation.replace("page-", ""), "*").then(function () {
+                                            $current.each(function (i, element) {
+                                                var scope = angular.element(element).scope();
+                                                scope && scope.$destroy();
+                                            });
+
+                                            $current.remove();
+
+                                            return self.getResolveDefer(gotoLocation);
+                                        });
+                                    });
+                                } else {
+                                    return self.$timeout(function () {
+                                        $current.removeClass("forward");
+                                        $current.removeAttr("effect");
+                                        fullName && $current.removeAttr(fullName);
+                                        setCurrentPage($goto);
+                                        self.$rootScope.pickedPage = gotoLocation;
+
+                                        return self.setState(gotoLocation.replace("page-", ""), "*").then(function () {
+                                            $current.each(function (i, element) {
+                                                var scope = angular.element(element).scope();
+                                                scope && scope.$destroy();
+                                            });
+
+                                            $current.remove();
+
+                                            return self.getResolveDefer(gotoLocation);
+                                        });
+                                    });
+                                }
+                            }
                         });
                     }
                 }
@@ -607,46 +730,8 @@ define(
                 return self.uiUtilService.getResolveDefer(location);
             }
 
-            utilService.prototype.firstPage = function (location) {
-                var self = this,
-                    locationIndex,
-                    $container = $("#main");
-
-                self.meta.locations.every(function (loc, i) {
-                    if (loc === location) {
-                        locationIndex = i;
-                        return false;
-                    }
-
-                    return true;
-                });
-
-                if (locationIndex > 0) {
-                    var firstLocation = self.meta.locations[0];
-
-                    var m = firstLocation.match(/Widget_\d+/);
-                    if (m && m.length) {
-                        var widgetId = m[0],
-                            $unloaded = $container.children("." + self.angularConstants.widgetClasses.holderClass + ":not(#" + widgetId + ")");
-
-                        $unloaded.each(function (i, element) {
-                            var scope = angular.element(element).scope();
-                            scope && scope.$destroy();
-                        });
-
-                        $unloaded.remove();
-
-                        return self.loadPage(null, firstLocation, true).then(function () {
-                            self.$rootScope.pickedPage = firstLocation;
-
-                            return self.setState(firstLocation.replace("page-", ""), "*").then(function () {
-                                return self.getResolveDefer(firstLocation);
-                            });
-                        });
-                    }
-                }
-
-                return self.uiUtilService.getResolveDefer(location);
+            utilService.prototype.firstPage = function (currentLocation) {
+                return this.gotoPage(currentLocation, 0);
             }
 
             utilService.prototype.loadPage = function (currentLocation, location, markCurrent) {

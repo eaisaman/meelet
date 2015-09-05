@@ -418,8 +418,10 @@ define(
                             self.$exceptionHandler(e);
                         }
 
-                        self.timeoutMap[timeoutId].defer.resolve("TIMEOUT");
-                        delete self.timeoutMap[timeoutId];
+                        if (self.timeoutMap[timeoutId]) {
+                            self.timeoutMap[timeoutId].defer.resolve("TIMEOUT");
+                            delete self.timeoutMap[timeoutId];
+                        }
 
                         self.angularConstants.VERBOSE && self.$log.debug("TIMEOUT occurred on timeoutId " + timeoutId);
                     }
@@ -427,12 +429,16 @@ define(
 
             callback().then(function (result) {
                 t && self.$timeout.cancel(t);
-                self.timeoutMap[timeoutId].defer.resolve();
-                delete self.timeoutMap[timeoutId];
+                if (self.timeoutMap[timeoutId]) {
+                    self.timeoutMap[timeoutId].defer.resolve();
+                    delete self.timeoutMap[timeoutId];
+                }
             }, function (err) {
                 t && self.$timeout.cancel(t);
-                self.timeoutMap[timeoutId].defer.resolve(err);
-                delete self.timeoutMap[timeoutId];
+                if (self.timeoutMap[timeoutId]) {
+                    self.timeoutMap[timeoutId].defer.resolve(err);
+                    delete self.timeoutMap[timeoutId];
+                }
             });
 
             return self.timeoutMap[timeoutId].defer.promise;
@@ -453,8 +459,10 @@ define(
                             self.$exceptionHandler(e);
                         }
 
-                        self.whilstMap[whilstId].defer.resolve("TIMEOUT");
-                        delete self.whilstMap[whilstId];
+                        if (self.whilstMap[whilstId]) {
+                            self.whilstMap[whilstId].defer.resolve("TIMEOUT");
+                            delete self.whilstMap[whilstId];
+                        }
 
                         self.angularConstants.VERBOSE && self.$log.debug("TIMEOUT occurred on whilstId " + whilstId);
                     }
@@ -474,8 +482,10 @@ define(
                                         self.$exceptionHandler(e);
                                     }
 
-                                    self.whilstMap[whilstId].defer.resolve(err);
-                                    delete self.whilstMap[whilstId];
+                                    if (self.whilstMap[whilstId]) {
+                                        self.whilstMap[whilstId].defer.resolve(err);
+                                        delete self.whilstMap[whilstId];
+                                    }
                                 } else
                                     self.whilst(test, iterator, callback, interval, whilstId);
                             }
@@ -485,8 +495,10 @@ define(
                         t && self.$timeout.cancel(t);
 
                         callback && callback();
-                        self.whilstMap[whilstId].defer.resolve();
-                        delete self.whilstMap[whilstId];
+                        if (self.whilstMap[whilstId]) {
+                            self.whilstMap[whilstId].defer.resolve();
+                            delete self.whilstMap[whilstId];
+                        }
                     }
                 }
             }, interval);
@@ -519,8 +531,10 @@ define(
                                 if (self.chainMap[chainId]) {
                                     self.chainMap[chainId].t && self.$timeout.cancel(self.chainMap[chainId].t);
 
-                                    self.chainMap[chainId].defer.resolve(err);
-                                    delete self.chainMap[chainId];
+                                    if (self.chainMap[chainId]) {
+                                        self.chainMap[chainId].defer.resolve(err);
+                                        delete self.chainMap[chainId];
+                                    }
                                 }
 
                                 eachDefer && eachDefer.resolve(err);
@@ -529,8 +543,10 @@ define(
                     } else {
                         self.chainMap[chainId].t && self.$timeout.cancel(self.chainMap[chainId].t);
 
-                        self.chainMap[chainId].defer.resolve();
-                        delete self.chainMap[chainId];
+                        if (self.chainMap[chainId]) {
+                            self.chainMap[chainId].defer.resolve();
+                            delete self.chainMap[chainId];
+                        }
 
                         eachDefer && eachDefer.resolve("ENOENT");
                     }

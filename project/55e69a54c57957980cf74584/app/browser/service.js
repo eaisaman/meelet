@@ -47,7 +47,7 @@ define(
             return errorDefer.promise;
         }
 
-        appService.prototype.playSound = function (url) {
+        appService.prototype.playSound = function (url, loop) {
             var self = this;
 
             if (!self.soundDelegate) {
@@ -182,6 +182,10 @@ define(
             }
 
             return self.soundDelegate.play(url);
+        }
+
+        appService.prototype.stopPlaySound = function () {
+            this.soundDelegate && this.soundDelegate.stop();
         }
 
         appService.prototype.exitPage = function () {
