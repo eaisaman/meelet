@@ -487,7 +487,7 @@ define(
                                         return $timeout(
                                             function () {
                                                 registerHandlers();
-                                            }
+                                            }, angularConstants.actionDelay
                                         );
                                     },
                                     null,

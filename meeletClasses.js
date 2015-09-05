@@ -642,10 +642,10 @@ var State = Class({
                     if (styleValue.colorStopList.length > 1) {
                         var stops = [];
                         styleValue.colorStopList.forEach(function (colorStop) {
-                            stops.push(_.string.sprintf("%s %d%", self.rgba(colorStop.color), colorStop.percent));
+                            stops.push(_.string.sprintf("%s %d%%", self.rgba(colorStop.color), colorStop.percent));
                         });
 
-                        out.write(_.string.sprintf("@include background(linear-gradient(%sdeg, (%s));", styleValue.angle, stops.join(",")));
+                        out.write(_.string.sprintf("@include background(linear-gradient(%sdeg, %s));", styleValue.angle, stops.join(",")));
                     } else {
                         out.write(_.string.sprintf("background: %s;", self.rgba(styleValue.colorStopList[0].color) || ""));
                     }

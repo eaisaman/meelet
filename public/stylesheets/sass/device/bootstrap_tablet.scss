@@ -139,7 +139,7 @@ $verticalScrollHeight: 300px;
     @include box-shadow(0 0 0 $grid-gutter-width/3 #cccccc, 0 0 0 $grid-gutter-width/2 #e6e6e6);
 }
 
-@mixin all-grid-columns($i: 1, $colPatterns: (".col-lg-")) {
+@mixin all-grid-columns($i: 1, $colPatterns: (".col-sm-")) {
     @for $i from 1 through $grid-columns {
         @each $pattern in $colPatterns {
             .col-as-#{$i} {
