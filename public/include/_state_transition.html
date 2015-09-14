@@ -16,14 +16,14 @@
 </script>
 <script type="text/ng-template" id="_childActions.html">
     <div class="accordianGroup" ng-if="item.actionType == 'Effect'"
-         ng-click="toggleSelect($event.currentTarget, $event)">
+         ng-click="once(this, $event, 'toggleSelect', $event)">
         <div class="accordianTitle fs-x-medium-before col-as-12 icon-state-transition-before icon-state-transition-animation-before">
             <div class="deleteButton fs-x-tiny icon-state-transition-before icon-state-transition-cross-before"
-                 ng-click="deleteAction(parentAction, item, $event)"></div>
+                 ng-click="once(this, $event, 'deleteAction', parentAction, item, $event)"></div>
             <span class="col-as-offset-1 col-as-10 no-padding">Effect</span>
         </div>
         <div class="accordianSubTitle fs-x-smaller col-as-12">
-            <span ng-click="toggleActionWidgetTree(item, $event)">{{item.widgetObj.name}}</span>
+            <span ng-click="once(this, $event, 'toggleActionWidgetTree', item, $event)">{{item.widgetObj.name}}</span>
 
             <div class="effectArtifactContainer">
                 <div class="effectArtifactMultilevelMenu col-as-9 no-padding" ui-multilevel-menu
@@ -35,7 +35,7 @@
                 </div>
                 <div class="toggleLibraryButton col-as-3 no-padding-right">
                     <span class="fs-x-medium-before icon-state-transition-before icon-state-transition-library-before"
-                          ng-click="toggleSelectLibraryList($event)">
+                          ng-click="once(this, $event, 'toggleSelectLibraryList', $event)">
                     </span>
                 </div>
             </div>
@@ -79,11 +79,11 @@
     <div class="accordianGroup" ng-if="item.actionType == 'State'">
         <div class="accordianTitle col-as-12 icon-state-transition-before icon-state-transition-set-state-before">
             <div class="deleteButton fs-x-tiny icon-state-transition-before icon-state-transition-cross-before"
-                 ng-click="deleteAction(parentAction, item, $event)"></div>
+                 ng-click="once(this, $event, 'deleteAction', parentAction, item, $event)"></div>
             <span class="col-as-offset-1 col-as-4 no-padding">State</span>
         </div>
         <div class="accordianSubTitle fs-x-smaller col-as-12">
-            <span ng-click="toggleActionWidgetTree(item, $event)">{{item.widgetObj.name}}</span>
+            <span ng-click="once(this, $event, 'toggleActionWidgetTree', item, $event)">{{item.widgetObj.name}}</span>
 
             <div class="widgetObjStateDropdown stackAndRotateSelect"
                  ui-simple-dropdown
@@ -96,14 +96,14 @@
         </div>
     </div>
     <div class="accordianGroup" ng-if="item.actionType == 'Configuration'"
-         ng-click="toggleConfigurationBody($event)" ng-init="item.readWidgetSpec()">
+         ng-click="once(this, $event, 'toggleConfigurationBody', $event)" ng-init="item.readWidgetSpec()">
         <div class="accordianTitle col-as-12 icon-state-transition-before icon-state-transition-configuration-before">
             <div class="deleteButton fs-x-tiny icon-state-transition-before icon-state-transition-cross-before"
-                 ng-click="deleteAction(parentAction, item, $event)"></div>
+                 ng-click="once(this, $event, 'deleteAction', parentAction, item, $event)"></div>
             <span class="col-as-offset-1 col-as-10 no-padding">Configuration</span>
         </div>
         <div class="accordianSubTitle fs-x-smaller col-as-12">
-            <span ng-click="toggleActionWidgetTree(item, $event)">{{item.widgetObj.name}}</span>
+            <span ng-click="once(this, $event, 'toggleActionWidgetTree', item, $event)">{{item.widgetObj.name}}</span>
         </div>
         <div class="accordianBody col-as-12 no-padding">
             <div class="configurationBody" ng-click="$event.stopPropagation()">
@@ -163,14 +163,14 @@
         </div>
     </div>
     <div class="accordianGroup" ng-if="item.actionType == 'Movement'"
-         ng-click="toggleSelect($event.currentTarget)">
+         ng-click="once(this, $event, 'toggleSelect', $event)">
         <div class="accordianTitle col-as-12 icon-state-transition-before icon-state-transition-set-state-before">
             <div class="deleteButton fs-x-tiny icon-state-transition-before icon-state-transition-cross-before"
-                 ng-click="deleteAction(parentAction, item, $event)"></div>
+                 ng-click="once(this, $event, 'deleteAction', parentAction, item, $event)"></div>
             <span class="col-as-offset-1 col-as-4 no-padding">Movement</span>
         </div>
         <div class="accordianSubTitle fs-x-smaller col-as-12">
-            <span ng-click="toggleActionWidgetTree(item, $event)">{{item.widgetObj.name}}</span>
+            <span ng-click="once(this, $event, 'toggleActionWidgetTree', item, $event)">{{item.widgetObj.name}}</span>
         </div>
         <div class="accordianBody col-as-12 no-padding">
             <div class="movementBody" ng-click="$event.stopPropagation()">
@@ -226,10 +226,10 @@
             </div>
         </div>
     </div>
-    <div class="accordianGroup" ng-if="item.actionType == 'Sound'" ng-click="toggleSelect($event.currentTarget)">
+    <div class="accordianGroup" ng-if="item.actionType == 'Sound'" ng-click="once(this, $event, 'toggleSelect', $event)">
         <div class="accordianTitle col-as-12 icon-state-transition-before icon-state-transition-sound-before">
             <div class="deleteButton fs-x-tiny icon-state-transition-before icon-state-transition-cross-before"
-                 ng-click="deleteAction(parentAction, item, $event)"></div>
+                 ng-click="once(this, $event, 'deleteAction', parentAction, item, $event)"></div>
             <span class="col-as-offset-1 col-as-4 no-padding">Sound</span>
         </div>
         <div class="accordianBody col-as-12 no-padding">
@@ -261,10 +261,10 @@
     <div class="stateDetails ui-control-panel fs-x-medium">
         <div class="accordianGroup stateDefinition" ng-attr-id="{{state.id}}"
              ng-repeat="state in activeWidget.states|where:{context:activeWidget.state.context}"
-             ng-click="toggleSelect($event.currentTarget, $event)">
+             ng-click="once(this, $event, 'toggleSelect', $event)">
             <div class="accordianTitle col-as-12 icon-state-transition-before icon-state-transition-current-state-before">
                 <div class="deleteButton fs-x-tiny icon-state-transition-before icon-state-transition-cross-before"
-                     ng-click="deleteState(state, $event)"></div>
+                     ng-click="once(this, $event, 'deleteState', state, $event)"></div>
                 {{state.name}}
             </div>
             <div class="accordianBody col-as-12 no-padding">
@@ -275,13 +275,13 @@
                      ng-click="$event.stopPropagation()">
                     <div class="transitionBar">
                         <div class="toggleTransitionButton fs-x-small icon-state-transition-before icon-state-transition-arrow-right-before"
-                             ng-click="toggleTransitionDetails('#' + transition.id, $event)"></div>
+                             ng-click="once(this, $event, 'toggleTransitionDetails', '#' + transition.id, $event)"></div>
                         <div class="deleteButton fs-x-tiny icon-state-transition-before icon-state-transition-cross-before"
-                             ng-click="deleteTransition(state, transition, $event)"></div>
+                             ng-click="once(this, $event, 'deleteTransition', state, transition, $event)"></div>
                         <span>{{transition.name}}</span>
                     </div>
                     <div class="transitionDetails"
-                         ng-click="selectTransitionDetailsTab($event.currentTarget, $event.target, $event)">
+                         ng-click="once(this, $event, 'selectTransitionDetailsTab', $event)">
                         <div class="transition-details-titles fs-x-smaller">
                             <div class="transition-details-title fs-x-small-before icon-state-transition-before icon-state-transition-fire-before"
                                  tab-sel="tab-head-transition-details-1"
@@ -323,12 +323,14 @@
                             </div>
                             <div class="tab-content-transition-details" tab-sel="tab-content-transition-details-2">
                                 <div class="sequenceOptions fs-x-smaller">
-                                    <label class="col-as-12 fs-x-large-before icon-state-transition-before icon-state-transition-sequence-before">Sequence Options</label>
+                                    <label class="col-as-12 fs-x-large-before icon-state-transition-before icon-state-transition-sequence-before">Sequence
+                                        Options</label>
+
                                     <div class="stopOnEachFlag input-group col-as-12">
                                         <div class="checkBoxItem col-as-3">
                                             <input type="checkbox"
-                                                    ng-attr-id="stopOnEach_{{transition.actionObj.id}}"
-                                                    name=""
+                                                   ng-attr-id="stopOnEach_{{transition.actionObj.id}}"
+                                                   name=""
                                                    class="form-control no-padding"
                                                    ng-model="sequenceStopOnEach"
                                                    ng-change="onUpdateStopOnEach(transition.actionObj, sequenceStopOnEach)"/>
@@ -344,7 +346,8 @@
                                      ng-repeat="item in transition.actionObj.childActions"
                                      ng-include="'_childActions.html'"></div>
 
-                                <div class="emptyAction fs-x-smaller" ng-click="toggleSelect('.emptyAction', $event)">
+                                <div class="emptyAction fs-x-smaller"
+                                     ng-click="once(this, $event, 'toggleSelect', '.emptyAction', $event)">
                                     <span>New Action</span>
 
                                     <div class="actionInput input-group" ng-click="$event.stopPropagation()">
@@ -356,13 +359,14 @@
                                             <option value="Sound">Sound</option>
                                         </select>
                                         <span class="input-group-addon fs-x-smaller-before icon-state-transition-before icon-state-transition-plus-before"
-                                              ng-click="createAction(transition.actionObj, $event);toggleSelect('.emptyAction', $event)"></span>
+                                              ng-click="once(this, $event, 'createAction', transition.actionObj, $event);once(this, $event, 'toggleSelect', '.emptyAction', $event)"></span>
                                     </div>
                                 </div>
 
-                                <div id="actionWidgetTreeTab" ng-click="toggleActionWidgetTree(pickedAction, $event)">
+                                <div id="actionWidgetTreeTab"
+                                     ng-click="once(this, $event, 'toggleActionWidgetTree', pickedAction, $event)">
                                     <div class="hideWidgetTreeButton icon-state-transition-before icon-state-transition-exit-before"
-                                         ng-click="toggleActionWidgetTree(null, $event)"></div>
+                                         ng-click="once(this, $event, 'toggleActionWidgetTree', null, $event)"></div>
                                     <ui-tree id="actionWidgetTree" class="fs-x-small" drag-enabled="false" spacing="20"
                                              coverage="50"
                                              collapseAll="true">
@@ -377,17 +381,17 @@
 
                                 <div class="effectLibraryList">
                                     <div class="hideLibraryListButton icon-state-transition-before icon-state-transition-exit-before"
-                                         ng-click="toggleSelectLibraryList($event)"></div>
+                                         ng-click="once(this, $event, 'toggleSelectLibraryList', $event)"></div>
 
                                     <div class="accordianGroup fs-x-small"
                                          ng-repeat="effectLibrary in markLibrarySelection(effectLibraryList, $root.loadedProject.xrefRecord)"
-                                         ng-click="toggleSelect($event.currentTarget, $event)">
+                                         ng-click="once(this, $event, 'toggleSelect', $event)">
                                         <div class="accordianTitle col-as-12 icon-widget-before icon-widget-angle-double-up-before">
                                             <span class="col-as-10 no-padding" ng-attr-title="{{effectLibrary.desc}}">{{effectLibrary.desc}}</span>
 
                                             <div class="toggleSelectionButton col-as-2 no-padding-right icon-widget-before"
                                                  ng-class="{'icon-widget-square-before':!effectLibrary._selected, 'icon-widget-square-check-before':effectLibrary._selected, 'partialSelect':isPartialSelection(effectLibrary, $root.loadedProject.xrefRecord)}"
-                                                 ng-click="toggleLibrarySelection(effectLibrary, $event)"></div>
+                                                 ng-click="once(this, $event, 'toggleLibrarySelection', effectLibrary, $event)"></div>
                                         </div>
                                         <div class="accordianBody fs-x-small col-as-12 no-padding">
                                             <div class="effectPane col-as-12 no-padding"
@@ -397,7 +401,7 @@
 
                                                 <div class="col-as-2 no-padding-right toggleSelectionButton icon-widget-before"
                                                      ng-class="{'icon-widget-square-before':!artifact._selected, 'icon-widget-square-check-before':artifact._selected}"
-                                                     ng-click="toggleArtifactSelection(artifact, effectLibrary, $event)"></div>
+                                                     ng-click="once(this, $event, 'toggleArtifactSelection', artifact, effectLibrary, $event)"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -408,13 +412,13 @@
                     </div>
                 </div>
                 <div class="emptyTransition fs-x-small"
-                     ng-click="toggleSelect('.emptyTransition', $event)">
+                     ng-click="once(this, $event, 'toggleSelect', '.emptyTransition', $event)">
                     <span>New Transition</span>
 
                     <div class="transitionNameInput input-group" ng-click="$event.stopPropagation()">
                         <input class="form-control fs-x-medium" id="transitionNameInput"/>
                         <span class="input-group-addon fs-x-medium-before icon-state-transition-before icon-state-transition-plus-before"
-                              ng-click="createTransition(state, $event);toggleSelect('.emptyTransition', $event)"></span>
+                              ng-click="once(this, $event, 'createTransition', state, $event);once(this, $event, 'toggleSelect', '.emptyTransition', $event)"></span>
                     </div>
                 </div>
             </div>
@@ -422,23 +426,24 @@
         <div class="stateOptions fs-x-small" ng-if="activeWidget.stateOptions.length">
             <div class="stateOption" ng-repeat="opt in activeWidget.stateOptions"
                  ng-attr-name="{{opt.name}}"
-                 ng-click="toggleExclusiveSelect($event.currentTarget, $event)">
+                 ng-click="once(this, $event, 'toggleExclusiveSelect', $event)">
                 <span class="icon-state-transition-before icon-state-transition-option-before">{{opt.name}}</span>
 
                 <div class="deleteButton fs-x-tiny icon-state-transition-before icon-state-transition-cross-before"
-                     ng-click="deleteStateOption(opt, $event)"/>
+                     ng-click="once(this, $event, 'deleteStateOption', opt, $event)"/>
             </div>
-            <div class="createStateButton" ng-click="createState($event)">
+            <div class="createStateButton" ng-click="once(this, $event, 'createState', $event)">
                 <div class="fs-x-small btn">New State</div>
             </div>
         </div>
-        <div class="emptyStateOption fs-x-small" ng-click="toggleSelect('.emptyStateOption', $event)">
+        <div class="emptyStateOption fs-x-small"
+             ng-click="once(this, $event, 'toggleSelect', '.emptyStateOption', $event)">
             <span>New State Option</span>
 
             <div class="stateOptionInput input-group" ng-click="$event.stopPropagation()">
                 <input class="form-control fs-x-medium" id="stateOptionInput"/>
                 <span class="input-group-addon fs-x-medium-before icon-state-transition-before icon-state-transition-plus-before"
-                      ng-click="createStateOption($event);toggleSelect('.emptyStateOption', $event)"></span>
+                      ng-click="once(this, $event, 'createStateOption', $event);once(this, $event, 'toggleSelect', '.emptyStateOption', $event)"></span>
             </div>
         </div>
     </div>

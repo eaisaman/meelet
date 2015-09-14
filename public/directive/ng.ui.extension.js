@@ -26,6 +26,23 @@ define(
             }
         }
 
+        Extension.prototype.onceService = function (element, $q, $timeout, uiUtilService, angularConstants) {
+            return function (scope, event, functionName) {
+                event && event.stopPropagation && event.stopPropagation();
+
+                var args = Array.prototype.slice.call(arguments, 3);
+
+                uiUtilService.once(
+                    function () {
+                        return scope[functionName].apply(scope, args);
+                    },
+                    null,
+                    angularConstants.checkInterval,
+                    "scope{0}.{1}".format(scope.$id, functionName)
+                )();
+            }
+        }
+
         Extension.prototype.toggleExpandService = function (element, $q, $timeout, uiUtilService) {
             return function (selector, event, state) {
                 event && event.stopPropagation && event.stopPropagation();
@@ -35,8 +52,14 @@ define(
 
                 if (typeof selector == "string")
                     $el = element.find(selector);
-                else if (selector && typeof selector === "object")
-                    $el = selector.jquery && selector || $(selector);
+                else if (selector && typeof selector === "object") {
+                    if (angular.isElement(selector)) {
+                        $el = selector.jquery && selector || $(selector);
+                    } else {
+                        selector.stopPropagation();
+                        $el = $(selector.currentTarget);
+                    }
+                }
                 else
                     $el = element;
 
@@ -91,8 +114,14 @@ define(
 
                 if (typeof selector == "string")
                     $el = element.find(selector);
-                else if (selector && typeof selector === "object")
-                    $el = selector.jquery && selector || $(selector);
+                else if (selector && typeof selector === "object") {
+                    if (angular.isElement(selector)) {
+                        $el = selector.jquery && selector || $(selector);
+                    } else {
+                        selector.stopPropagation();
+                        $el = $(selector.currentTarget);
+                    }
+                }
                 else
                     $el = element;
 
@@ -184,8 +213,14 @@ define(
 
                 if (typeof selector == "string")
                     $el = element.find(selector);
-                else if (selector && typeof selector === "object")
-                    $el = selector.jquery && selector || $(selector);
+                else if (selector && typeof selector === "object") {
+                    if (angular.isElement(selector)) {
+                        $el = selector.jquery && selector || $(selector);
+                    } else {
+                        selector.stopPropagation();
+                        $el = $(selector.currentTarget);
+                    }
+                }
                 else
                     $el = element;
 
@@ -220,8 +255,14 @@ define(
 
                 if (typeof selector == "string")
                     $el = element.find(selector);
-                else if (selector && typeof selector === "object")
-                    $el = selector.jquery && selector || $(selector);
+                else if (selector && typeof selector === "object") {
+                    if (angular.isElement(selector)) {
+                        $el = selector.jquery && selector || $(selector);
+                    } else {
+                        selector.stopPropagation();
+                        $el = $(selector.currentTarget);
+                    }
+                }
                 else
                     $el = element;
 
@@ -250,8 +291,14 @@ define(
 
                 if (typeof selector == "string")
                     $el = element.find(selector);
-                else if (selector && typeof selector === "object")
-                    $el = selector.jquery && selector || $(selector);
+                else if (selector && typeof selector === "object") {
+                    if (angular.isElement(selector)) {
+                        $el = selector.jquery && selector || $(selector);
+                    } else {
+                        selector.stopPropagation();
+                        $el = $(selector.currentTarget);
+                    }
+                }
                 else
                     $el = element;
 
@@ -281,9 +328,14 @@ define(
 
                 if (typeof selector == "string")
                     $el = element.find(selector);
-                else if (selector && typeof selector === "object")
-                    $el = selector.jquery && selector || $(selector);
-                else
+                else if (selector && typeof selector === "object") {
+                    if (angular.isElement(selector)) {
+                        $el = selector.jquery && selector || $(selector);
+                    } else {
+                        selector.stopPropagation();
+                        $el = $(selector.currentTarget);
+                    }
+                } else
                     $el = element;
 
                 if (state == null || $el.hasClass("select") ^ state) {
@@ -317,9 +369,14 @@ define(
 
                 if (typeof selector === "string")
                     $el = element.find(selector);
-                else if (selector && typeof selector === "object")
-                    $el = selector.jquery && selector || $(selector);
-                else
+                else if (selector && typeof selector === "object") {
+                    if (angular.isElement(selector)) {
+                        $el = selector.jquery && selector || $(selector);
+                    } else {
+                        selector.stopPropagation();
+                        $el = $(selector.currentTarget);
+                    }
+                } else
                     $el = element;
 
                 if (state == null || $el.hasClass("select") ^ state) {
@@ -393,8 +450,13 @@ define(
             return function (selector, clazz) {
                 if (typeof selector == "string")
                     return clazz && element.find(selector).hasClass(clazz);
-                else if (typeof selector === "object")
-                    return clazz && (selector.jquery && selector || $(selector)).hasClass(clazz);
+                else if (selector && typeof selector === "object") {
+                    if (angular.isElement(selector)) {
+                        return clazz && (selector.jquery && selector || $(selector)).hasClass(clazz);
+                    } else {
+                        return clazz && $(selector.currentTarget).hasClass(clazz);
+                    }
+                }
             };
         }
 
@@ -402,8 +464,14 @@ define(
             return function (selector, clazz) {
                 if (typeof selector == "string")
                     return clazz && element.find(selector).toggleClass(clazz);
-                else if (typeof selector === "object")
-                    return clazz && (selector.jquery && selector || $(selector)).toggleClass(clazz);
+                else if (selector && typeof selector === "object") {
+                    if (angular.isElement(selector)) {
+                        return clazz && (selector.jquery && selector || $(selector)).toggleClass(clazz);
+                    } else {
+                        selector.stopPropagation();
+                        return clazz && $(selector.currentTarget).toggleClass(clazz);
+                    }
+                }
             };
         }
 
@@ -411,8 +479,13 @@ define(
             return function (selector, attr) {
                 if (typeof selector == "string")
                     return attr && element.find(selector).attr(attr);
-                else if (typeof selector === "object")
-                    return attr && (selector.jquery && selector || $(selector)).attr(attr);
+                else if (selector && typeof selector === "object") {
+                    if (angular.isElement(selector)) {
+                        return attr && (selector.jquery && selector || $(selector)).attr(attr);
+                    } else {
+                        return attr && $(selector.currentTarget).attr(attr);
+                    }
+                }
             };
         }
 
@@ -658,6 +731,14 @@ define(
                         className.replace(/ +$/g, "").replace(/ /g, "-"),
                         iconClassName.replace(/ +$/g, "").replace(/ /g, "-")
                     ];
+                }
+            }
+        }
+
+        Extension.prototype.stopEventService = function (element) {
+            return function (event, filterSelector) {
+                if (event && event.stopPropagation) {
+                    filterSelector && element.find(filterSelector).is(event.target) || event.stopPropagation();
                 }
             }
         }

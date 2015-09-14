@@ -1,0 +1,16 @@
+@import "compass/css3";
+@import "global";
+
+.bookContainer {
+    position: relative;
+    float: left;
+    width: 100%;
+    height: 100%;
+    color: $color;
+
+    > div {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+}

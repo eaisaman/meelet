@@ -21,6 +21,10 @@ define(
                         return {
                             pre: function (scope, element, attrs) {
                                 extension && extension.attach && extension.attach(scope, _.extend(injectObj, {
+                                    "$timeout": $timeout,
+                                    "$q": $q,
+                                    "angularConstants": angularConstants,
+                                    "uiUtilService": uiUtilService,
                                     element: element,
                                     scope: scope
                                 }));
@@ -152,7 +156,7 @@ define(
                                 scope.toggleConfigurationBody = function (event) {
                                     event && event.stopPropagation && event.stopPropagation();
 
-                                    scope.toggleSelect(event.currentTarget).then(function (target) {
+                                    return scope.toggleSelect(event.currentTarget).then(function (target) {
                                         var $el = $(target);
 
                                         if ($el.hasClass("select")) {
@@ -166,6 +170,8 @@ define(
                                                 increaseArea: '20%'
                                             });
                                         }
+
+                                        return uiUtilService.getResolveDefer();
                                     });
                                 }
 
@@ -176,6 +182,8 @@ define(
                                         var actionType = $("#stateActionTypeSelect").val();
                                         actionType && parentAction.addAction(actionType);
                                     }
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.deleteAction = function (parentAction, action, event) {
@@ -193,6 +201,8 @@ define(
 
                                         index != undefined && parentAction.childActions.splice(index, 1);
                                     }
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.createEffectObj = function (effectValue) {
@@ -206,12 +216,14 @@ define(
                                 scope.toggleSelectLibraryList = function (event) {
                                     event && event.stopPropagation && event.stopPropagation();
 
-                                    scope.toggleSelect(".effectLibraryList").then(function () {
+                                    return scope.toggleSelect(".effectLibraryList").then(function () {
                                         if (element.find(".effectLibraryList").hasClass("select")) {
                                             element.find(".effectLibraryList").siblings("div").css("opacity", 0);
                                         } else {
                                             element.find(".effectLibraryList").siblings("div").css("opacity", 1);
                                         }
+
+                                        return uiUtilService.getResolveDefer();
                                     });
                                 }
 
@@ -275,6 +287,8 @@ define(
                                         }
 
                                     }
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.toggleLibrarySelection = function (effectLibrary, event) {
@@ -319,6 +333,8 @@ define(
                                             }
                                         }
                                     }
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.effectList = [];

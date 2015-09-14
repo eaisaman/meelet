@@ -799,19 +799,22 @@ Commons.prototype.updateConfigurableArtifact = function (projectId, widgetId, ar
     }
 }
 
-Commons.prototype.convertToHtml = function (projectPath, artifactList, callback) {
+Commons.prototype.convertToHtml = function (projectType, projectPath, artifactList, callback) {
     var self = this,
-        skeletonModulePath = self.config.userFile.skeletonModuleFolder,
+        skeletonModuleFolder = "javascripts",
+        skeletonHtml = "meelet.skeleton.html",
+        skeletonPath = path.join(self.config.userFile.skeletonFolder, projectType),
+        skeletonModulePath = path.join(skeletonPath, skeletonModuleFolder),
         projectModulePath = self.config.userFile.projectModuleFolder,
-        skeletonPath = self.config.userFile.skeletonFolder,
+        skeletonHtmlPath = path.join(skeletonPath, skeletonHtml),
         skeletonLibLoadTimeout = self.config.settings.skeletonLibLoadTimeout,
-        skeletonHtml = self.config.userFile.skeletonHtml,
         meeletPath = path.join(projectPath, self.config.settings.meeletFile);
 
     var nonExistentPath = (!fs.existsSync(projectPath) && projectPath)
         || (!fs.existsSync(skeletonPath) && skeletonPath)
-        || (!fs.existsSync(skeletonHtml) && skeletonHtml)
-        || (!fs.existsSync(meeletPath) && meeletPath);
+        || (!fs.existsSync(skeletonHtmlPath) && skeletonHtmlPath)
+        || (!fs.existsSync(meeletPath) && meeletPath)
+        || (!fs.existsSync(skeletonModulePath) && skeletonModulePath);
 
     if (nonExistentPath) {
         callback(_.string.sprintf("Path %s not found", nonExistentPath));
@@ -820,17 +823,17 @@ Commons.prototype.convertToHtml = function (projectPath, artifactList, callback)
             [
                 function (next) {
                     //Building jdom for skeleton html
-                    var skeletonDomCacheKey = skeletonHtml,
+                    var skeletonDomCacheKey = skeletonHtmlPath,
                         amdModules = [];
 
                     self.config.cache.wrap(skeletonDomCacheKey, function (cacheCb) {
                         jsdom.env(
                             {
-                                file: skeletonHtml,
+                                file: skeletonHtmlPath,
                                 resourceLoader: function (resource, callback) {
                                     var pathname = resource.url.pathname;
 
-                                    if (/\/main\.js$/.test(pathname)) {
+                                    if (/\/main|cordova\.js$/.test(pathname)) {
                                         amdModules.push(pathname);
                                     }
                                     self.config.logger.debug(pathname);
@@ -854,7 +857,7 @@ Commons.prototype.convertToHtml = function (projectPath, artifactList, callback)
                                     if (!errors || !errors.length) {
                                         window.amdModules = amdModules;
                                         window.modouleLogger = self.config.logger;
-                                        window.codeGenModulePath = path.relative(skeletonPath, skeletonModulePath);
+                                        window.codeGenModulePath = skeletonModuleFolder;
                                         window.onModulesLoaded = function () {
                                             cacheCb(null, window);
                                         };
@@ -1049,7 +1052,7 @@ Commons.prototype.convertToHtml = function (projectPath, artifactList, callback)
 
                         //Copy skeleton html file to project path if not exists;
                         fnArr.push(function (cb) {
-                            ncp(skeletonHtml, path.join(projectPath, "index.html"), {
+                            ncp(skeletonHtmlPath, path.join(projectPath, "index.html"), {
                                 clobber: true,
                                 stopOnErr: true
                             }, function (err) {

@@ -34,6 +34,10 @@ define(
                                 scope.options = _.extend(_.clone(options), $parse(attrs['uiColorEditorPaletteOpts'])(scope, {}));
 
                                 extension && extension.attach && extension.attach(scope, _.extend(injectObj, {
+                                    "$timeout": $timeout,
+                                    "$q": $q,
+                                    "angularConstants": angularConstants,
+                                    "uiUtilService": uiUtilService,
                                     element: element,
                                     scope: scope
                                 }));
@@ -194,6 +198,10 @@ define(
                                     }
                                 });
 
+                                scope.selectColorPaletteTab = function (event) {
+                                    return scope.selectTab(event.currentTarget.parentNode, event.target, event);
+                                }
+
                                 scope.updateSelectedColor = function (to) {
                                     function changeSelectedColor(value) {
                                         var defer = $q.defer();
@@ -271,7 +279,9 @@ define(
                                             delete color.rValue, delete color.gValue, delete color.bValue;
                                         }
 
-                                        scope.pickColor(color);
+                                        return scope.pickColor(color);
+                                    } else {
+                                        return uiUtilService.getResolveDefer();
                                     }
                                 }
 
@@ -299,8 +309,10 @@ define(
                                             delete color.rValue, delete color.gValue, delete color.bValue;
                                         }
 
-                                        scope.pickColor(color);
+                                        return scope.pickColor(color);
                                     }
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.pickColor = function (colorObj, event) {
@@ -349,19 +361,20 @@ define(
                                     else
                                         colorObj.alphaColor = uiUtilService.rgba(colorObj, colorObj.alpha);
 
-                                    adjustScrollMeterPosition(colorObj);
+                                    //adjustScrollMeterPosition(colorObj);
                                     scope.selectedColorObj = colorObj;
                                     scope.updateSelectedColor(colorObj);
 
                                     element.find(".colorSticker").css("background-color", colorObj.color).attr("picked-color", colorObj.color);
 
-                                    return true;
+                                    return uiUtilService.getResolveDefer();
                                 }
 
-                                scope.copyPickedColor = function (fromElement, event) {
+                                scope.copyPickedColor = function (event) {
                                     event && event.stopPropagation && event.stopPropagation();
 
-                                    var $from = fromElement.jquery && fromElement || $(fromElement),
+                                    var fromElement = event.target,
+                                        $from = fromElement.jquery && fromElement || $(fromElement),
                                         $to = $(event.srcEvent.toElement),
                                         pickedColor = $from.attr("picked-color");
 
@@ -375,7 +388,7 @@ define(
                                         }
                                     }
 
-                                    return true;
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 function colorObjHandler() {
@@ -419,7 +432,7 @@ define(
                                     if (scope.selectedColorObj.alpha > 1)
                                         scope.selectedColorObj.alpha = 1;
 
-                                    uiUtilService.latestOnce(colorObjHandler, null, angularConstants.unresponsiveInterval, "color-editor-palette.colorObjHandler")();
+                                    return colorObjHandler();
                                 }
 
                                 scope.decrementAlpha = function (event) {
@@ -430,22 +443,26 @@ define(
                                     if (scope.selectedColorObj.alpha < 0)
                                         scope.selectedColorObj.alpha = 0;
 
-                                    uiUtilService.latestOnce(colorObjHandler, null, angularConstants.unresponsiveInterval, "color-editor-palette.colorObjHandler")();
+                                    return colorObjHandler();
                                 }
 
                                 scope.observeColorValueScrollMeter = function (event) {
                                     event && event.stopPropagation && event.stopPropagation();
 
-
-                                    var $u = $(event.currentTarget),
-                                        top = uiUtilService.calculateTop($u),
+                                    var $u = $(event.target),
+                                        $container = $u.parent().parent(),
                                         height = uiUtilService.calculateHeight($u),
+                                        top = Math.floor((($u.offset().top + height / 2) - $container.offset().top) * angularConstants.precision) / angularConstants.precision,
                                         range = parseInt($u.attr("color-range")),
                                         valueName = $u.attr("color-value-name"),
-                                        distance = $u.parent().height();
+                                        distance = $container.height();
 
+                                    if (top < 0)
+                                        top = 0;
+                                    else if (top > distance)
+                                        top = distance;
                                     if (range && valueName) {
-                                        var value = range * (top + height / 2) / distance,
+                                        var value = range * top / distance,
                                             color = {};
 
                                         if (valueName === "rValue" || valueName === "gValue" || valueName === "bValue") {
@@ -465,8 +482,9 @@ define(
                                             color.color = uiUtilService.hslToHex(color.hueValue, color.saturationValue, color.lightValue);
                                         }
 
-                                        scope.pickColor(color);
-                                        scope.$apply();
+                                        return scope.pickColor(color);
+                                    } else {
+                                        return uiUtilService.getResolveDefer();
                                     }
                                 }
 
@@ -482,13 +500,7 @@ define(
                                             }
                                         );
                                     } else {
-                                        var defer = $q.defer();
-
-                                        $timeout(function () {
-                                            defer.resolve();
-                                        });
-
-                                        return defer.promise;
+                                        return uiUtilService.getResolveDefer();
                                     }
                                 }
 
@@ -498,17 +510,27 @@ define(
                                             function () {
                                                 scope.watchSelectedColor(true);
 
+                                                //Init color value meter's draggable feature
+                                                $(element.find(".hueScrollMeter, .saturationScrollMeter, .lightScrollMeter, .rScrollMeter, .gScrollMeter, .bScrollMeter")).draggable({
+                                                    axis: "y",
+                                                    containment: "parent",
+                                                    scroll: false,
+                                                    start: function (event) {
+                                                        scope.observeColorValueScrollMeter(event);
+                                                    },
+                                                    drag: function (event) {
+                                                        scope.observeColorValueScrollMeter(event);
+                                                    },
+                                                    stop: function (event) {
+                                                        scope.observeColorValueScrollMeter(event);
+                                                    }
+                                                });
+
                                                 return scope.showInitialTab();
                                             }
                                         );
                                     } else {
-                                        var defer = $q.defer();
-
-                                        $timeout(function () {
-                                            defer.resolve();
-                                        });
-
-                                        return defer.promise;
+                                        return uiUtilService.getResolveDefer();
                                     }
                                 }
 

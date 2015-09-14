@@ -2,9 +2,9 @@ define(
     ["angular-lib", "jquery-lib"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$timeout", "$q", "$exceptionHandler", "$parse", "angularConstants", "uiUtilService"];
+            var inject = ["$rootScope", "$http", "$timeout", "$q", "$exceptionHandler", "$parse", "$compile", "angularConstants", "angularEventTypes", "appService", "uiUtilService", "uiService"];
 
-            appModule.directive("uiSimpleDropdown", _.union(inject, [function ($timeout, $q, $exceptionHandler, $parse, angularConstants, uiUtilService) {
+            appModule.directive("uiSimpleDropdown", _.union(inject, [function ($rootScope, $http, $timeout, $q, $exceptionHandler, $parse, $compile, angularConstants, angularEventTypes, appService, uiUtilService, uiService) {
                 'use strict';
 
                 var boundProperties = {
@@ -51,6 +51,10 @@ define(
                         return {
                             pre: function (scope, element, attrs) {
                                 extension && extension.attach && extension.attach(scope, _.extend(injectObj, {
+                                    "$timeout": $timeout,
+                                    "$q": $q,
+                                    "angularConstants": angularConstants,
+                                    "uiUtilService": uiUtilService,
                                     element: element,
                                     scope: scope
                                 }));
@@ -207,6 +211,8 @@ define(
 
                                 scope.toggleOpen = function (event) {
                                     element.find(".cd-dropdown.cd-active").length && scope.close(event) || scope.open(event);
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.open = function (event) {
@@ -247,11 +253,9 @@ define(
 
                                     scope.close();
 
-                                    $timeout(function () {
+                                    return $timeout(function () {
                                         scope.onOptionSelect && scope.onOptionSelect();
                                     });
-
-                                    return true;
                                 }
 
                                 scope.$watch("selectItem", function (to) {

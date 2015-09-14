@@ -8,9 +8,9 @@ requirejs.config(
             "ng.ui.animation": DIRECTIVE_LIB_PATH + "ng.ui.animation",
             "ng.ui.service": DIRECTIVE_LIB_PATH + "ng.ui.service",
             "ng.ui.service.flow": DIRECTIVE_LIB_PATH + "ng.ui.service.flow",
+            "ng.ui.service.book": DIRECTIVE_LIB_PATH + "ng.ui.service.book",
             "ng.ui.extension": DIRECTIVE_LIB_PATH + "ng.ui.extension",
             "ng.ui.hammer-gestures": DIRECTIVE_LIB_PATH + "ng.ui.hammer-gestures",
-            "ng.ui.draggable": DIRECTIVE_LIB_PATH + "ng.ui.draggable",
             "ng.ui.multi-transclude": DIRECTIVE_LIB_PATH + "ng.ui.multi-transclude",
             "ng.ui.multilevel-menu": DIRECTIVE_LIB_PATH + "ng.ui.multilevel-menu",
             "ng.ui.sketch-widget": DIRECTIVE_LIB_PATH + "ng.ui.sketch-widget",
@@ -50,9 +50,9 @@ define([
         "ng.ui.animation",
         "ng.ui.service",
         "ng.ui.service.flow",
+        "ng.ui.service.book",
         "ng.ui.extension",
         "ng.ui.hammer-gestures",
-        "ng.ui.draggable",
         "ng.ui.multi-transclude",
         "ng.ui.multilevel-menu",
         "ng.ui.sketch-widget",
@@ -87,8 +87,9 @@ define([
             animationConfig = arguments[4],
             serviceConfig = arguments[5],
             flowServiceConfig = arguments[6],
-            extension = arguments[7],
-            directiveConfigs = Array.prototype.slice.call(arguments, 8);
+            bookServiceConfig = arguments[7],
+            extension = arguments[8],
+            directiveConfigs = Array.prototype.slice.call(arguments, 9);
 
         return function (appModule) {
             utilConfig(appModule);
@@ -105,95 +106,94 @@ define([
 
             flowServiceConfig(appModule);
 
+            bookServiceConfig(appModule);
+
             //Hammer gestures
             directiveConfigs[0](appModule);
 
-            //Draggable directive
-            directiveConfigs[1](appModule);
-
             //Multi transclude
-            directiveConfigs[2](appModule, extension);
+            directiveConfigs[1](appModule, extension);
 
             //Multilevel Menu
-            directiveConfigs[3](appModule, extension);
+            directiveConfigs[2](appModule, extension);
 
             //Sketch widget directive
-            directiveConfigs[4](appModule, extension);
+            directiveConfigs[3](appModule, extension);
 
             //Simple Dropdown
-            directiveConfigs[5](appModule, extension);
+            directiveConfigs[4](appModule, extension);
 
             //Horizontal ruler directive
-            directiveConfigs[6](appModule, extension);
+            directiveConfigs[5](appModule, extension);
 
             //Vertical ruler directive
-            directiveConfigs[7](appModule, extension);
+            directiveConfigs[6](appModule, extension);
 
             //Border Editor
-            directiveConfigs[8](appModule, extension, {
+            directiveConfigs[7](appModule, extension, {
                 borderJson: "directive/border.json"
             });
 
             //Simple Style Editor
-            directiveConfigs[9](appModule, extension);
+            directiveConfigs[8](appModule, extension);
 
             //Color Editor Palette
-            directiveConfigs[10](appModule, extension, {
+            directiveConfigs[9](appModule, extension, {
                 colorJson: "directive/color-editor-palette.json"
             });
 
             //Color Picker
-            directiveConfigs[11](appModule, extension);
+            directiveConfigs[10](appModule, extension);
 
             //Background Image
-            directiveConfigs[12](appModule, extension);
+            directiveConfigs[11](appModule, extension);
 
             //Gradient Editor
-            directiveConfigs[13](appModule, extension, {
+            directiveConfigs[12](appModule, extension, {
                 colorJson: "directive/gradient-editor-color.json"
             });
 
             //Text Shadow Editor
-            directiveConfigs[14](appModule, extension);
+            directiveConfigs[13](appModule, extension);
 
             //Box Shadow Editor
-            directiveConfigs[15](appModule, extension);
+            directiveConfigs[14](appModule, extension);
 
             //Shape
-            directiveConfigs[16](appModule, extension);
+            directiveConfigs[15](appModule, extension);
 
             //Widget
-            directiveConfigs[17](appModule, extension);
+            directiveConfigs[16](appModule, extension);
 
             //Widget Configurator
-            directiveConfigs[18](appModule, extension);
+            directiveConfigs[17](appModule, extension);
 
             //Page
-            directiveConfigs[19](appModule, extension);
+            directiveConfigs[18](appModule, extension);
 
             //Dock
-            directiveConfigs[20](appModule, extension);
+            directiveConfigs[19](appModule, extension);
 
             //Topbar
-            directiveConfigs[21](appModule, extension);
+            directiveConfigs[20](appModule, extension);
 
             //Modal window
-            directiveConfigs[22](appModule, extension);
+            directiveConfigs[21](appModule, extension);
 
             //Sidebar
-            directiveConfigs[23](appModule, extension);
+            directiveConfigs[22](appModule, extension);
 
             //Resource Editor
-            directiveConfigs[24](appModule, extension);
+            directiveConfigs[23](appModule, extension);
 
             //State transition
-            directiveConfigs[25](appModule, extension, {
+            directiveConfigs[24](appModule, extension, {
                 triggerJson: "directive/trigger.json",
                 animationJson: "directive/animation.json"
             });
 
             //State action
-            directiveConfigs[26](appModule, extension);
+            directiveConfigs[25](appModule, extension);
         }
     }
 );

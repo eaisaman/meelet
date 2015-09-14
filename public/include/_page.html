@@ -2,7 +2,7 @@
     <div ui-tree-handle ng-click="exclusiveSelect($event)">
         <div class="stateButton icon-page-before icon-page-flag-before"
              ng-class="{'activeState':item.state.name != item.initialStateOption.name}"
-             ng-click="toggleSelectState(item, $event)"
+             ng-click="once(this, $event, 'toggleSelectState', item, $event)"
              ng-if="item.getStates().length > 1"
                 >
         </div>
@@ -25,13 +25,22 @@
             ng-include="'_pageWidgets.html'" ng-class="{ 'selected': selected }"></li>
     </ol>
 </script>
-<div class="pageContent ui-control-wrapper" ng-class="dockAlign">
-    <div class="pageBar ui-control-bar">
+<div class="pageContent" ng-class="dockAlign">
+    <div class="pageBar fs-x-medium">
+        <div class="pageMenu">
+            <div class="icon-page-before icon-page-insert-before"
+                 ng-click="once(this, $event, 'insertPage', $event)"></div>
+            <div class="icon-page-before icon-page-remove-before"
+                 ng-click="once(this, $event, 'removePage', $event)"></div>
+            <div class="icon-page-before icon-page-copy-before"
+                 ng-click="once(this, $event, 'copyPage', $event)"></div>
+        </div>
+
         <div class="currentPage col-as-5 no-padding">
             <div class="pageState fs-x-smaller" ng-if="$root.sketchObject.pickedPage.states.length">
                 <div class="stateButton icon-page-before icon-page-flag-before"
                      ng-class="{'activeState':$root.sketchObject.pickedPage.state.name != $root.sketchObject.pickedPage.initialStateOption.name}"
-                     ng-click="toggleSelectState($root.sketchObject.pickedPage, $event)"
+                     ng-click="once(this, $event, 'toggleSelectState', $root.sketchObject.pickedPage, $event)"
                      ng-if="$root.sketchObject.pickedPage.states.length > 1"
                         >
                 </div>
@@ -42,7 +51,7 @@
                 </div>
             </div>
 
-            <div class="pageLabel fs-x-medium vt-align-center">Page</div>
+            <div class="pageLabel vt-align-center">Page</div>
         </div>
 
         <div class="pageList col-as-7" ng-click="$event.stopPropagation()">
@@ -53,29 +62,18 @@
                 </option>
             </select>
         </div>
-
-        <div class="pageMenu fs-x-medium">
-            <div class="togglePageButton icon-page-before icon-page-angle-double-right-before"
-                 ng-click="togglePage($event)"></div>
-            <div class="icon-page-before icon-page-copy-before"
-                 ng-click="copyPage($event)"></div>
-            <div class="icon-page-before icon-page-insert-before"
-                 ng-click="insertPage($event)"></div>
-            <div class="icon-page-before icon-page-remove-before"
-                 ng-click="removePage($event)"></div>
-        </div>
     </div>
-    <div class="pageDetails ui-control-panel">
-        <div class="topBar" ng-click="selectTab($event.currentTarget.parentNode, $event.target, $event)">
+    <div class="pageDetails fs-x-medium show">
+        <div class="topBar" ng-click="once(this, $event, 'selectPageTab', $event)">
             <div class="pageDetailsToolBar fs-x-toolButton-normal">
                 <div tab-sel="tab-head-page-details-1" tab-content="page-details"
-                     class="toolButton icon-page-before icon-page-after icon-page-page-settings-before icon-page-page-settings-after"></div>
+                     class="select toolButton icon-page-before icon-page-after icon-page-page-settings-before icon-page-page-settings-after"></div>
                 <div tab-sel="tab-head-page-details-2" tab-content="page-details"
                      class="toolButton icon-page-before icon-page-after icon-page-list-before  icon-page-list-after"></div>
             </div>
         </div>
         <div class="tabContents">
-            <div tab-sel="tab-content-page-details-1">
+            <div tab-sel="tab-content-page-details-1" class="select">
                 <div class="effectArtifactTitle fs-x-small">
                     <span class="fs-x-medium-before icon-page-before icon-page-transition-before">Page Transition Effect</span>
                 </div>
@@ -90,7 +88,7 @@
                     </div>
                     <div class="toggleLibraryButton col-as-3 no-padding-right">
                     <span class="fs-x-medium-before icon-page-before icon-page-library-before"
-                          ng-click="toggleSelectLibraryList($event)">
+                          ng-click="once(this, $event, 'toggleSelectLibraryList', $event)">
                     </span>
                     </div>
                 </div>
@@ -105,17 +103,17 @@
 
                 <div class="effectLibraryList">
                     <div class="hideLibraryListButton fs-x-small icon-page-before icon-page-exit-before"
-                         ng-click="toggleSelectLibraryList($event)"></div>
+                         ng-click="once(this, $event, 'toggleSelectLibraryList', $event)"></div>
 
                     <div class="accordianGroup fs-x-small"
                          ng-repeat="effectLibrary in markLibrarySelection(effectLibraryList, $root.loadedProject.xrefRecord)"
-                         ng-click="toggleSelect($event.currentTarget, $event)">
+                         ng-click="once(this, $event, 'toggleSelect', $event)">
                         <div class="accordianTitle col-as-12 icon-widget-before icon-widget-angle-double-up-before">
                             <span class="col-as-10 no-padding" ng-attr-title="{{effectLibrary.desc}}">{{effectLibrary.desc}}</span>
 
                             <div class="toggleSelectionButton col-as-2 no-padding-right icon-widget-before"
                                  ng-class="{'icon-widget-square-before':!effectLibrary._selected, 'icon-widget-square-check-before':effectLibrary._selected, 'partialSelect':isPartialSelection(effectLibrary, $root.loadedProject.xrefRecord)}"
-                                 ng-click="toggleLibrarySelection(effectLibrary, $event)"></div>
+                                 ng-click="once(this, $event, 'toggleLibrarySelection', effectLibrary, $event)"></div>
                         </div>
                         <div class="accordianBody fs-x-small col-as-12 no-padding">
                             <div class="effectPane col-as-12 no-padding"
@@ -126,7 +124,7 @@
 
                                 <div class="col-as-2 no-padding-right toggleSelectionButton icon-widget-before"
                                      ng-class="{'icon-widget-square-before':!artifact._selected, 'icon-widget-square-check-before':artifact._selected}"
-                                     ng-click="toggleArtifactSelection(artifact, effectLibrary, $event)"></div>
+                                     ng-click="once(this, $event, 'toggleArtifactSelection', artifact, effectLibrary, $event)"></div>
                             </div>
                         </div>
                     </div>

@@ -1,98 +1,34 @@
-<div class="ui-control-title fs-x-small">
-    <p ng-transclude></p>
-</div>
-<div class="configurationContent ui-control-wrapper" ng-class="dockAlign">
-    <div class="configurationBar ui-control-bar fs-x-medium" ng-click="togglePalette($event)">
+<div class="configurationContent modal-control-wrapper" ng-class="dockAlign">
+    <div class="configurationBar modal-control-bar fs-x-medium">
         <span>{{widgetSpec.name}}</span>
     </div>
-    <div class="configurationPalette ui-control-panel">
-        <div class="configurationPane widgetConfiguration" ng-if="configurableWidget && widgetSpec.configuration.length" ng-repeat="configurationItem in widgetSpec.configuration">
-            <div class="input-group col-as-12 fs-x-smaller">
-                <label class="col-as-5 no-padding-right control-label">{{configurationItem.name}}</label>
-
-                <div ng-if="configurationItem.type === 'list'"
-                     class="configurationItemList col-as-7 no-padding stackAndRotateSelect"
-                     ui-simple-dropdown
-                     ui-simple-dropdown-opts="{dataField:'value', labelField:'name', zIndex:100, gutter: 5, showTitle: true, displayUnsetOption: false}"
-                     selection-list="configurationItem.options" select-item="configurationItem.pickedValue"
-                     on-option-select="setItem(configurationItem)">
-                </div>
-                <div ng-if="configurationItem.type === 'multilevel-list'"
-                     class="configurationItemMultilevelList col-as-7 no-padding" ui-multilevel-menu
-                     menu-list="configurationItem.options"
-                     ui-multilevel-menu-opts="{dataField:'value', labelField:'name', zIndex:101}"
-                     picked-menu-item="configurationItem.pickedValue"
-                     on-menu-select="setItem(configurationItem)">
-                    {{configurationItem.pickedValue || 'Choose...'}}
-                </div>
-                <div ng-if="configurationItem.type === 'boundReadList'"
-                     class="configurationItemList col-as-7 no-padding stackAndRotateSelect"
-                     ui-simple-dropdown
-                     ui-simple-dropdown-opts="{dataField:'name', labelField:'name', zIndex:102, gutter: 5, showTitle: true, displayUnsetOption: false}"
-                     selection-list="configurationItem.options" select-item="configurationItem.pickedValue"
-                     on-option-select="setItem(configurationItem)">
-                </div>
-                <div ng-if="configurationItem.type === 'size'" class="configurationItemNumber col-as-7 no-padding-left">
-                    <input type="text" class="form-control" ng-model="configurationItem.pickedValue"/>
-                </div>
-                <div ng-if="configurationItem.type === 'number'" class="configurationItemNumber col-as-7 no-padding-left">
-                    <input type="text" class="form-control" ng-model="configurationItem.pickedValue"/>
-                </div>
-                <div ng-if="configurationItem.type === 'text'" class="configurationItemText col-as-7 no-padding-left">
-                    <input type="text" class="form-control" ng-model="configurationItem.pickedValue"/>
-                </div>
-                <div ng-if="configurationItem.type === 'boolean'"
-                     class="configurationItemCheckBox col-as-7 no-padding-left">
-                    <input type="checkbox" ng-checked="configurationItem.pickedValue" ng-attr-item-order="{{$index}}"/>
-                </div>
-                <div ng-if="configurationItem.type === 'boundWriteList'"
-                     class="configurationItemWritableList col-as-7 no-padding"
-                     ng-click="toggleConfigurationPanel($event.currentTarget, $event)">
-                    <div class="configurationBar fs-x-smaller fs-x-large-before col-as-12 no-padding icon-widget-configurator-before icon-widget-configurator-list-before">
-                        <span class="col-push-3 col-as-7 no-padding">{{configurationItem.options.length && configurationItem.options.length + " Tabs" || "None"}}</span>
-                    </div>
-                    <div class="configurationPanel col-as-12 no-padding">
-                        <div class="emptyConfigurationItemOption col-as-12"
-                             ng-click="toggleSelect('.emptyConfigurationItemOption', $event)">
-                            <span>New Item Option</span>
-
-                            <div class="configurationItemOptionInput input-group"
-                                 ng-click="$event.stopPropagation()">
-                                <input autocorrect="off" class="form-control fs-x-smaller" autocapitalize="off"
-                                       placeholder=""
-                                       required="required"/>
-                                    <span class="input-group-addon fs-x-smaller-before icon-widget-configurator-before icon-widget-configurator-plus-before"
-                                          ng-click="createConfigurationItemOption(configurationItem, $event);toggleSelect('.configurationItemOptionInput', $event)"></span>
-                            </div>
-                        </div>
-                        <div class="configurationItemOption fs-x-small"
-                             ng-repeat="opt in configurationItem.options" ng-click="$event.stopPropagation()">
-
-                            <span class="icon-widget-configurator-before icon-widget-configurator-option-before">{{opt.name}}</span>
-
-                            <div class="deleteButton fs-x-tiny icon-widget-configurator-before icon-widget-configurator-cross-before"
-                                 ng-click="deleteConfigurationItemOption(configurationItem, opt, $event)"/>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="handDownConfigurationGroup widgetConfiguration" ng-if="configurableWidget && widgetSpec.handDownConfiguration.length">
-            <div class="handDownConfigurationBar fs-x-smaller">
-                <span class="handDownButton fs-x-large-before col-as-3 no-padding icon-widget-configurator-before icon-widget-configurator-loading-bubbles-before"
-                      ng-class="{'dirty':configurableWidget.handDownConfigurationList && configurableWidget.handDownConfigurationList.length, 'handingDown':widgetSpec.isApplyingHandDown}"
-                      ng-click="applyHandDownConfiguration($event)"></span>
-                <span class="handDownTitle col-as-9 no-padding">Hand Down Configuration</span>
-            </div>
-            <div ng-attr-id="handDownConfiguration-{{$index}}" class="configurationPane handDownConfiguration"
-                 ng-repeat="configurationItem in widgetSpec.handDownConfiguration">
+    <div class="modal-control-panel">
+        <div class="configurationPalette">
+            <div class="configurationPane widgetConfiguration"
+                 ng-if="configurableWidget && widgetSpec.configuration.length"
+                 ng-repeat="configurationItem in widgetSpec.configuration">
                 <div class="input-group col-as-12 fs-x-smaller">
                     <label class="col-as-5 no-padding-right control-label">{{configurationItem.name}}</label>
 
                     <div ng-if="configurationItem.type === 'list'"
                          class="configurationItemList col-as-7 no-padding stackAndRotateSelect"
                          ui-simple-dropdown
-                         ui-simple-dropdown-opts="{dataField:'value', labelField:'name', zIndex:200, gutter: 5, showTitle: true, displayUnsetOption: false}"
+                         ui-simple-dropdown-opts="{dataField:'value', labelField:'name', zIndex:100, gutter: 5, showTitle: true, displayUnsetOption: false}"
+                         selection-list="configurationItem.options" select-item="configurationItem.pickedValue"
+                         on-option-select="setItem(configurationItem)">
+                    </div>
+                    <div ng-if="configurationItem.type === 'multilevel-list'"
+                         class="configurationItemMultilevelList col-as-7 no-padding" ui-multilevel-menu
+                         menu-list="configurationItem.options"
+                         ui-multilevel-menu-opts="{dataField:'value', labelField:'name', zIndex:101}"
+                         picked-menu-item="configurationItem.pickedValue"
+                         on-menu-select="setItem(configurationItem)">
+                        {{configurationItem.pickedValue || 'Choose...'}}
+                    </div>
+                    <div ng-if="configurationItem.type === 'boundReadList'"
+                         class="configurationItemList col-as-7 no-padding stackAndRotateSelect"
+                         ui-simple-dropdown
+                         ui-simple-dropdown-opts="{dataField:'name', labelField:'name', zIndex:102, gutter: 5, showTitle: true, displayUnsetOption: false}"
                          selection-list="configurationItem.options" select-item="configurationItem.pickedValue"
                          on-option-select="setItem(configurationItem)">
                     </div>
@@ -108,17 +44,88 @@
                          class="configurationItemText col-as-7 no-padding-left">
                         <input type="text" class="form-control" ng-model="configurationItem.pickedValue"/>
                     </div>
-                    <div ng-if="configurationItem.type === 'color'" ng-init="initHandDownColorStyle(configurationItem)"
-                         class="configurationItemColor col-as-7 no-padding-left">
-                        <div class="configurationColorBar fs-x-smaller"
-                             ng-click="toggleSelectConfigurationColor(configurationItem, $event)">
-                            <div class="configurationColorPickerPane">
-                                {{configurationItem.pickedValue.alphaColor || configurationItem.pickedValue.color}}
+                    <div ng-if="configurationItem.type === 'boolean'"
+                         class="configurationItemCheckBox col-as-7 no-padding-left">
+                        <input type="checkbox" ng-checked="configurationItem.pickedValue"
+                               ng-attr-item-order="{{$index}}"/>
+                    </div>
+                    <div ng-if="configurationItem.type === 'boundWriteList'"
+                         class="configurationItemWritableList col-as-7 no-padding"
+                         ng-click="once(this, $event, 'toggleConfigurationPanel', $event)">
+                        <div class="configurationBar fs-x-smaller fs-x-large-before col-as-12 no-padding icon-widget-configurator-before icon-widget-configurator-list-before">
+                            <span class="col-push-3 col-as-7 no-padding">{{configurationItem.options.length && configurationItem.options.length + " Tabs" || "None"}}</span>
+                        </div>
+                        <div class="configurationPanel col-as-12 no-padding">
+                            <div class="emptyConfigurationItemOption col-as-12"
+                                 ng-click="once(this, $event, 'toggleSelect', '.emptyConfigurationItemOption', $event)">
+                                <span>New Item Option</span>
+
+                                <div class="configurationItemOptionInput input-group"
+                                     ng-click="$event.stopPropagation()">
+                                    <input autocorrect="off" class="form-control fs-x-smaller" autocapitalize="off"
+                                           placeholder=""
+                                           required="required"/>
+                                    <span class="input-group-addon fs-x-smaller-before icon-widget-configurator-before icon-widget-configurator-plus-before"
+                                          ng-click="once(this, $event, 'createConfigurationItemOption', configurationItem, $event);once(this, $event, 'toggleSelect', '.configurationItemOptionInput', $event)"></span>
+                                </div>
+                            </div>
+                            <div class="configurationItemOption fs-x-small"
+                                 ng-repeat="opt in configurationItem.options" ng-click="$event.stopPropagation()">
+
+                                <span class="icon-widget-configurator-before icon-widget-configurator-option-before">{{opt.name}}</span>
+
+                                <div class="deleteButton fs-x-tiny icon-widget-configurator-before icon-widget-configurator-cross-before"
+                                     ng-click="once(this, $event, 'deleteConfigurationItemOption', configurationItem, opt, $event)"/>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+            <div class="handDownConfigurationGroup widgetConfiguration"
+                 ng-if="configurableWidget && widgetSpec.handDownConfiguration.length">
+                <div class="handDownConfigurationBar fs-x-smaller">
+                <span class="handDownButton fs-x-large-before col-as-3 no-padding icon-widget-configurator-before icon-widget-configurator-loading-bubbles-before"
+                      ng-class="{'dirty':configurableWidget.handDownConfigurationList && configurableWidget.handDownConfigurationList.length, 'handingDown':widgetSpec.isApplyingHandDown}"
+                      ng-click="once(this, $event, 'applyHandDownConfiguration', $event)"></span>
+                    <span class="handDownTitle col-as-9 no-padding">Hand Down Configuration</span>
+                </div>
+                <div ng-attr-id="handDownConfiguration-{{$index}}" class="configurationPane handDownConfiguration"
+                     ng-repeat="configurationItem in widgetSpec.handDownConfiguration">
+                    <div class="input-group col-as-12 fs-x-smaller">
+                        <label class="col-as-5 no-padding-right control-label">{{configurationItem.name}}</label>
 
-                        <div class="configurationColorPalette" ui-color-editor-palette
-                             selected-color="pickedItem.pickedValue" on-color-select="setItem(pickedItem)"></div>
+                        <div ng-if="configurationItem.type === 'list'"
+                             class="configurationItemList col-as-7 no-padding stackAndRotateSelect"
+                             ui-simple-dropdown
+                             ui-simple-dropdown-opts="{dataField:'value', labelField:'name', zIndex:200, gutter: 5, showTitle: true, displayUnsetOption: false}"
+                             selection-list="configurationItem.options" select-item="configurationItem.pickedValue"
+                             on-option-select="setItem(configurationItem)">
+                        </div>
+                        <div ng-if="configurationItem.type === 'size'"
+                             class="configurationItemNumber col-as-7 no-padding-left">
+                            <input type="text" class="form-control" ng-model="configurationItem.pickedValue"/>
+                        </div>
+                        <div ng-if="configurationItem.type === 'number'"
+                             class="configurationItemNumber col-as-7 no-padding-left">
+                            <input type="text" class="form-control" ng-model="configurationItem.pickedValue"/>
+                        </div>
+                        <div ng-if="configurationItem.type === 'text'"
+                             class="configurationItemText col-as-7 no-padding-left">
+                            <input type="text" class="form-control" ng-model="configurationItem.pickedValue"/>
+                        </div>
+                        <div ng-if="configurationItem.type === 'color'"
+                             ng-init="initHandDownColorStyle(configurationItem)"
+                             class="configurationItemColor col-as-7 no-padding-left">
+                            <div class="configurationColorBar fs-x-smaller"
+                                 ng-click="once(this, $event, 'toggleSelectConfigurationColor', configurationItem, $event)">
+                                <div class="configurationColorPickerPane">
+                                    {{configurationItem.pickedValue.alphaColor || configurationItem.pickedValue.color}}
+                                </div>
+                            </div>
+
+                            <div class="configurationColorPalette" ui-color-editor-palette
+                                 selected-color="pickedItem.pickedValue" on-color-select="setItem(pickedItem)"></div>
+                        </div>
                     </div>
                 </div>
             </div>

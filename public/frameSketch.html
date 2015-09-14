@@ -19,83 +19,96 @@
 <div id="frameSketchContainer"
      ng-controller="FrameSketchController">
     <div ui-modal-window transition="fadeInScaleUp">
-        <div id="sketchContainer" class="fs-x-medium" name="mainContent">
+        <div class="sketchContainer fs-x-medium" name="mainContent">
             <div ui-topbar render-project="renderProject()">
                 <div name="extraButtons">
-                    <div ng-hide="true" ng-click="zoomWidget($event)" class="topbarButton icon-toolbar-before"
-                         ng-class="{'icon-frame-sketch-expand-before':!zoomId, 'icon-frame-sketch-collapse-before':zoomId}"></div>
-                    <div ng-mouseenter="enableAddWidget($event)"
-                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-insert-before" title="Add Widget"></div>
-                    <div ng-click="removeWidget($event)"
-                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-remove-before" title="Remove Widget"></div>
-                    <div ng-click="locateWidget($event)"
-                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-locate-before" title="Reveal in Widget Tree"></div>
-                    <div ng-click="duplicateWidget($event)"
-                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-duplicate-before" title="Duplicate Widget"></div>
+                    <div ng-mouseenter="once(this, $event, 'enableAddWidget', $event)"
+                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-add-widget-before"
+                         extensionPoint="extraButtonExtensionPoint" title="Add Widget"></div>
                     <div class="topbarButtonGroup"
-                         ng-click="classie.toggleClass($event.target, 'select')" title="Position Widget">
+                         ng-click="once(this, $event, 'toggleSelect', $event)" title="Zoom">
                         <div class="selectedButton" ng-click="$event.stopPropagation()">
-                            <div ng-click="alignLeft($event)"
+                            <div ng-click="once(this, $event, 'zoomOut', $event)"
+                                 class="topbarButton icon-frame-sketch-before icon-frame-sketch-zoomout-before"></div>
+                        </div>
+                        <div class="btn-group open" ng-click="once(this, null, 'setSelectedButton', $event)">
+                            <div ng-click="once(this, null, 'zoomIn', $event)"
+                                 class="topbarButton icon-frame-sketch-before icon-frame-sketch-zoomin-before"
+                                 title="Zoom In"></div>
+                            <div ng-click="once(this, null, 'zoomOut', $event)"
+                                 class="topbarButton icon-frame-sketch-before icon-frame-sketch-zoomout-before"
+                                 title="Zoom Out"></div>
+                        </div>
+                    </div>
+                    <div class="topbarButtonGroup"
+                         ng-click="once(this, $event, 'toggleSelect', $event)" title="Position Widget">
+                        <div class="selectedButton" ng-click="$event.stopPropagation()">
+                            <div ng-click="once(this, $event, 'alignLeft', $event)"
                                  class="topbarButton icon-frame-sketch-before icon-frame-sketch-align-left-before"></div>
                         </div>
-                        <div class="btn-group open" ng-click="setSelectedButton($event)">
-                            <div ng-click="alignLeft($event)"
-                                 class="topbarButton icon-frame-sketch-before icon-frame-sketch-align-left-before" title="Align Left"></div>
-                            <div ng-click="alignHorizontalCenter($event)"
-                                 class="topbarButton icon-frame-sketch-before icon-frame-sketch-align-center-horizontal-before" title="Align Center Horizontally"></div>
-                            <div ng-click="alignRight($event)"
-                                 class="topbarButton icon-frame-sketch-before icon-frame-sketch-align-right-before" title="Align Right"></div>
+                        <div class="btn-group open" ng-click="once(this, null, 'setSelectedButton', $event)">
+                            <div ng-click="once(this, null, 'alignLeft', $event)"
+                                 class="topbarButton icon-frame-sketch-before icon-frame-sketch-align-left-before"
+                                 title="Align Left"></div>
+                            <div ng-click="once(this, null, 'alignHorizontalCenter', $event)"
+                                 class="topbarButton icon-frame-sketch-before icon-frame-sketch-align-center-horizontal-before"
+                                 title="Align Center Horizontally"></div>
+                            <div ng-click="once(this, null, 'alignRight', $event)"
+                                 class="topbarButton icon-frame-sketch-before icon-frame-sketch-align-right-before"
+                                 title="Align Right"></div>
                         </div>
-                        <div class="btn-group open" ng-click="setSelectedButton($event)">
-                            <div ng-click="alignTop($event)"
-                                 class="topbarButton icon-frame-sketch-before icon-frame-sketch-align-top-before" title="Align Top"></div>
-                            <div ng-click="alignVerticalCenter($event)"
-                                 class="topbarButton icon-frame-sketch-before icon-frame-sketch-align-center-vertical-before" title="Align Center Vertically"></div>
-                            <div ng-click="alignBottom($event)"
-                                 class="topbarButton icon-frame-sketch-before icon-frame-sketch-align-bottom-before" title="Align Bottom"></div>
+                        <div class="btn-group open" ng-click="once(this, null, 'setSelectedButton', $event)">
+                            <div ng-click="once(this, null, 'alignTop', $event)"
+                                 class="topbarButton icon-frame-sketch-before icon-frame-sketch-align-top-before"
+                                 title="Align Top"></div>
+                            <div ng-click="once(this, null, 'alignVerticalCenter', $event)"
+                                 class="topbarButton icon-frame-sketch-before icon-frame-sketch-align-center-vertical-before"
+                                 title="Align Center Vertically"></div>
+                            <div ng-click="once(this, null, 'alignBottom', $event)"
+                                 class="topbarButton icon-frame-sketch-before icon-frame-sketch-align-bottom-before"
+                                 title="Align Bottom"></div>
                         </div>
                     </div>
                     <div class="topbarButtonGroup"
-                         ng-click="classie.toggleClass($event.target, 'select')" title="Resize Widget">
+                         ng-click="once(this, $event, 'toggleSelect', $event)" title="Resize Widget">
                         <div class="selectedButton" ng-click="$event.stopPropagation()">
-                            <div ng-click="fillParent($event)"
+                            <div ng-click="once(this, $event, 'fillParent', $event)"
                                  class="topbarButton icon-frame-sketch-before icon-frame-sketch-fill-before"></div>
                         </div>
-                        <div class="btn-group open" ng-click="setSelectedButton($event)">
-                            <div ng-click="fillParent($event)"
-                                 class="topbarButton icon-frame-sketch-before icon-frame-sketch-fill-before" title="Fill All"></div>
-                            <div ng-click="fillVertical($event)"
-                                 class="topbarButton icon-frame-sketch-before icon-frame-sketch-fill-vertical-before" title="Fill Vertically"></div>
-                            <div ng-click="fillHorizontal($event)"
-                                 class="topbarButton icon-frame-sketch-before icon-frame-sketch-fill-horizontal-before" title="Fill Horizontally"></div>
+                        <div class="btn-group open" ng-click="once(this, null, 'setSelectedButton', $event)">
+                            <div ng-click="once(this, null, 'fillParent', $event)"
+                                 class="topbarButton icon-frame-sketch-before icon-frame-sketch-fill-before"
+                                 title="Fill All"></div>
+                            <div ng-click="once(this, null, 'fillVertical', $event)"
+                                 class="topbarButton icon-frame-sketch-before icon-frame-sketch-fill-vertical-before"
+                                 title="Fill Vertically"></div>
+                            <div ng-click="once(this, null, 'fillHorizontal', $event)"
+                                 class="topbarButton icon-frame-sketch-before icon-frame-sketch-fill-horizontal-before"
+                                 title="Fill Horizontally"></div>
                         </div>
-                        <div class="btn-group open" ng-click="setSelectedButton($event)">
-                            <div ng-click="spanHorizontal($event)"
-                                 class="topbarButton icon-frame-sketch-before icon-frame-sketch-span-horizontal-before" title="Span Widgets Horizontally"></div>
-                            <div ng-click="spanVertical($event)"
-                                 class="topbarButton icon-frame-sketch-before icon-frame-sketch-span-vertical-before" title="Span Widgets Vertically"></div>
+                        <div class="btn-group open" ng-click="once(this, null, 'setSelectedButton', $event)">
+                            <div ng-click="once(this, null, 'spanHorizontal', $event)"
+                                 class="topbarButton icon-frame-sketch-before icon-frame-sketch-span-horizontal-before"
+                                 title="Span Widgets Horizontally"></div>
+                            <div ng-click="once(this, null, 'spanVertical', $event)"
+                                 class="topbarButton icon-frame-sketch-before icon-frame-sketch-span-vertical-before"
+                                 title="Span Widgets Vertically"></div>
                         </div>
-                        <div class="btn-group open" ng-click="setSelectedButton($event)">
-                            <div ng-click="spaceHorizontal($event)"
-                                 class="topbarButton icon-frame-sketch-before icon-frame-sketch-space-horizontal-before" title="Space Widgets Horizontally"></div>
-                            <div ng-click="spaceVertical($event)"
-                                 class="topbarButton icon-frame-sketch-before icon-frame-sketch-space-vertical-before" title="Space Widgets Vertically"></div>
+                        <div class="btn-group open" ng-click="once(this, null, 'setSelectedButton', $event)">
+                            <div ng-click="once(this, null, 'spaceHorizontal', $event)"
+                                 class="topbarButton icon-frame-sketch-before icon-frame-sketch-space-horizontal-before"
+                                 title="Space Widgets Horizontally"></div>
+                            <div ng-click="once(this, null, 'spaceVertical', $event)"
+                                 class="topbarButton icon-frame-sketch-before icon-frame-sketch-space-vertical-before"
+                                 title="Space Widgets Vertically"></div>
                         </div>
                     </div>
-                    <div ng-click="groupWidget($event)"
-                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-group-before" title="Group Widgets"></div>
-                    <div ng-click="ungroupWidget($event)"
-                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-ungroup-before" title="Ungroup Widgets"></div>
-                    <div ng-click="pickParentWidget($event)"
-                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-ladder-before" title="Find Parent"></div>
-                    <div ng-click="moveUpWidget($event)"
-                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-move-up-before" title="Move Up"></div>
-                    <div ng-click="moveDownWidget($event)"
-                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-move-down-before" title="Move Down"></div>
-                    <div ng-click="toggleRuler($event)"
-                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-ruler-before" title="Ruler"></div>
-                    <div ng-click="canPositionWidget(sketchObject.pickedWidget) && classie.toggleClass($event.target, 'select')"
-                         class="topbarDropdown icon-frame-sketch-before icon-frame-sketch-compass-before" title="Custom Resize">
+                    <div ng-click="once(this, $event, 'toggleRuler', $event)"
+                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-ruler-before"
+                         title="Ruler"></div>
+                    <div ng-click="once(this, $event, 'toggleResize', $event)"
+                         class="topbarDropdown icon-frame-sketch-before icon-frame-sketch-compass-before"
+                         title="Custom Resize">
                         <div class="btn-group open fs-x-small" ng-click="$event.stopPropagation()">
                             <label class="col-as-4 no-padding control-label">Left</label>
 
@@ -125,24 +138,31 @@
                             </div>
                         </div>
                     </div>
-                    <div ng-click="toggleDisplayRoute($event)"
+                    <div ng-click="once(this, $event, 'toggleDisplayRoute', $event)"
                          ng-class="{'select':$root.sketchWidgetSetting.isDefingRoute}"
-                         class="topbarButton topbarToggleButton icon-frame-sketch-before icon-frame-sketch-move-route-before" title="Route"></div>
-                    <div ng-click="togglePlayWidget($event)" class="topbarButton icon-frame-sketch-before"
-                         ng-class="{'icon-frame-sketch-play-before':!$root.sketchWidgetSetting.isPlaying, 'icon-frame-sketch-pause-before':$root.sketchWidgetSetting.isPlaying}" title="Play"></div>
-                    <div ng-click="saveProject($event)" ng-if="$root.loadedProject.projectRecord.lock"
-                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-save-before" title="Save"></div>
-                    <div ng-click="loadProject($event)"
-                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-load-before" title="Load"></div>
-                    <div ng-click="toggleLockProject($event)"
+                         class="topbarButton topbarToggleButton icon-frame-sketch-before icon-frame-sketch-move-route-before"
+                         title="Route"></div>
+                    <div ng-click="once(this, $event, 'togglePlayWidget', $event)"
                          class="topbarButton icon-frame-sketch-before"
-                         ng-class="{'icon-frame-sketch-unlock-before':$root.loadedProject.projectRecord.lock, 'icon-frame-sketch-lock-before':!$root.loadedProject.projectRecord.lock}" title="Lock/Unlock"></div>
-                    <div ng-click="convertToHtml($event)" ng-if="$root.loadedProject.projectRecord.lock"
-                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-html-before" title="Code Generation"></div>
+                         ng-class="{'icon-frame-sketch-play-before':!$root.sketchWidgetSetting.isPlaying, 'icon-frame-sketch-pause-before':$root.sketchWidgetSetting.isPlaying}"
+                         title="Play"></div>
+                    <div ng-click="once(this, $event, 'saveProject', $event)"
+                         ng-show="$root.loadedProject.projectRecord.lock"
+                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-save-before" title="Save"></div>
+                    <div ng-click="once(this, $event, 'loadProject', $event)"
+                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-load-before" title="Load"></div>
+                    <div ng-click="once(this, $event, 'toggleLockProject', $event)"
+                         class="topbarButton icon-frame-sketch-before"
+                         ng-class="{'icon-frame-sketch-unlock-before':$root.loadedProject.projectRecord.lock, 'icon-frame-sketch-lock-before':!$root.loadedProject.projectRecord.lock}"
+                         title="Lock/Unlock"></div>
+                    <div ng-click="once(this, $event, 'convertToHtml', $event)"
+                         ng-show="$root.loadedProject.projectRecord.lock"
+                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-html-before"
+                         title="Code Generation"></div>
                 </div>
             </div>
 
-            <div id="sketchHolder" class="sketchHolder">
+            <div class="sketchHolder">
                 <div class="deviceBackground" ng-style="{'background-image':'url(images/{{sketchDevice.img}})', 'min-width': '{{sketchDevice.width * 1.5}}', 'max-width': '{{sketchDevice.width * 1.5}}',
              'min-height': '{{sketchDevice.height * 1.5}}', 'max-height': '{{sketchDevice.height * 1.5}}'}">
                     <div class="deviceScreenBackground"
@@ -155,9 +175,9 @@
                                 <div id="pageNavigationControl" class="fs-x-medium"
                                      ng-show="$root.sketchWidgetSetting.isPlaying">
                                     <div class="icon-frame-sketch-before icon-frame-sketch-navigate_before-before"
-                                         ng-click="prevPage($event)"></div>
+                                         ng-click="once(this, $event, 'prevPage', $event)"></div>
                                     <div class="icon-frame-sketch-before icon-frame-sketch-navigate_next-before"
-                                         ng-click="nextPage($event)"></div>
+                                         ng-click="once(this, $event, 'nextPage', $event)"></div>
                                 </div>
                             </div>
                             <div id="verticalRuler" class="ruler fs-x-smaller"
@@ -176,6 +196,45 @@
                                  min-width="Math.floor(sketchDevice.width/sketchDevice.rulerMarkerCount * 1000) / 1000"
                                  marker-width="Math.floor(sketchDevice.width/sketchDevice.rulerMarkerCount * 1000) / 1000"
                                  marker-count="sketchDevice.rulerMarkerCount" picked-widget="sketchObject.pickedWidget">
+                            </div>
+                            <div id="widgetPopupHolder" class="fs-x-tiny">
+                                <div id="widgetMenuButton"
+                                     class="fs-x-tiny icon-frame-sketch-before icon-frame-sketch-menu-before"
+                                     ng-click="once(this, $event, 'togglePopupMenu', $event)"></div>
+                                <div id="widgetPopupMenu">
+                                    <div class="btn-group open">
+                                        <ul class="dropdown-menu fs-x-tiny" role="menu">
+                                            <li class="icon-frame-sketch-before icon-frame-sketch-wrench-before"
+                                                ng-if="uiService.isConfigurable(sketchObject.pickedWidget)"
+                                                ng-click="once(this, $event, 'configureWidget', $event)"
+                                                    ><a href="">Configure</a></li>
+                                            <li class="icon-frame-sketch-before icon-frame-sketch-locate-before"
+                                                ng-click="once(this, $event, 'locateWidget', $event)"
+                                                    ><a href="">Reveal in Tree</a></li>
+                                            <li class="icon-frame-sketch-before icon-frame-sketch-remove-before"
+                                                ng-click="once(this, $event, 'removeWidget', $event)"
+                                                    ><a href="">Remove</a></li>
+                                            <li class="icon-frame-sketch-before icon-frame-sketch-duplicate-before"
+                                                ng-click="once(this, $event, 'duplicateWidget', $event)"
+                                                    ><a href="">Duplicate</a></li>
+                                            <li class="icon-frame-sketch-before icon-frame-sketch-group-before"
+                                                ng-click="once(this, $event, 'groupWidget', $event)"
+                                                    ><a href="">Group</a></li>
+                                            <li class="icon-frame-sketch-before icon-frame-sketch-ungroup-before"
+                                                ng-click="once(this, $event, 'ungroupWidget', $event)"
+                                                    ><a href="">Ungroup</a></li>
+                                            <li class="icon-frame-sketch-before icon-frame-sketch-ladder-before"
+                                                ng-click="once(this, $event, 'pickParentWidget', $event)"
+                                                    ><a href="">Find Parent</a></li>
+                                            <li class="icon-frame-sketch-before icon-frame-sketch-move-up-before"
+                                                ng-click="once(this, $event, 'moveUpWidget', $event)"
+                                                    ><a href="">Move Up</a></li>
+                                            <li class="icon-frame-sketch-before icon-frame-sketch-move-down-before"
+                                                ng-click="once(this, $event, 'moveDownWidget', $event)"
+                                                    ><a href="">Move Down</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
                             <div id="widgetTextHolder"
                                  ng-style="{'left': 45, 'top': 45, 'width': '{{sketchDevice.width}}', 'height': '{{sketchDevice.height}}'}">
@@ -198,16 +257,16 @@
                 <div class="btn-group open">
                     <ul class="dropdown-menu fs-x-medium" role="menu">
                         <li class="icon-frame-sketch-before icon-frame-sketch-pencil-before"
-                            ng-click="startLink($event)"><a href="">Link To</a></li>
+                            ng-click="once(this, $event, 'startLink', $event)"><a href="">Link To</a></li>
                         <li class="icon-frame-sketch-before icon-frame-sketch-delete-before"
-                            ng-click="removePoint($event)"><a href="">Delete</a></li>
+                            ng-click="once(this, $event, 'removePoint', $event)"><a href="">Delete</a></li>
                     </ul>
                 </div>
             </div>
 
             <div id="toggleCanvasEditButton" ng-show="$root.sketchWidgetSetting.isDefingRoute"
                  class="fs-x-medium icon-frame-sketch-before icon-frame-sketch-pen-checkbox-before"
-                 ng-click="toggleDefineRoute($event)"></div>
+                 ng-click="once(this, $event, 'toggleDefineRoute', $event)"></div>
 
             <div id="sketchControls" class="fs-x-large" ng-class="dockAlign" ui-dock
                  visible-pseudo-enabled-widgets="visiblePseudoEnabledWidgets">
@@ -216,12 +275,15 @@
                         Structure
                     </div>
                     <div tab-sel="tab-head-control-group-2" class="ui-control-group-title" tab-content="control-group">
-                        Icons
+                        Style
                     </div>
                     <div tab-sel="tab-head-control-group-3" class="ui-control-group-title" tab-content="control-group">
-                        Widgets
+                        Icons
                     </div>
                     <div tab-sel="tab-head-control-group-4" class="ui-control-group-title" tab-content="control-group">
+                        Widgets
+                    </div>
+                    <div tab-sel="tab-head-control-group-5" class="ui-control-group-title" tab-content="control-group">
                         Resource
                     </div>
                     <div class="showButton fs-x-large icon-dock-before icon-dock-eye-before"></div>
@@ -229,132 +291,127 @@
                 </div>
                 <div class="ui-control-groups">
                     <div id="page-control-group" tab-sel="tab-content-control-group-1" class="ui-control-group">
-                        <div id="page-control" class="ui-control ui-control-inline enable" ui-page
-                             ui-page-opts="{'pageHolderClass':'deviceHolder'}"
-                             tree-node-id-prefix="'tree-node-'"
-                             dock-align="dockAlign">
-                        </div>
                         <div class="structureContent" ng-click="$event.stopPropagation()">
                             <section class="tabs">
                                 <input id="tab-1" type="radio" name="tabRadio" class="tab-selector-1 fs-x-smaller"
                                        checked="checked"/>
-                                <label class="tab-label-1 fs-x-small">Properties</label>
+                                <label class="tab-label-1 fs-x-small">Items</label>
                                 <input id="tab-2" type="radio" name="tabRadio" class="tab-selector-2 fs-x-smaller"/>
                                 <label class="tab-label-2 fs-x-small" for="tab-2">States</label>
                                 <input id="tab-3" type="radio" name="tabRadio" class="tab-selector-3 fs-x-smaller"/>
                                 <label class="tab-label-3 fs-x-small" for="tab-3">Actions</label>
 
                                 <div class="content">
-                                    <div class="contentSlidee">
-                                        <div class="content-1">
-                                            <div id="pseudo-control"
-                                                 class="fs-x-large-before icon-frame-sketch-before icon-frame-sketch-pseudo-element-before">
-                                                <div class="input-group col-as-12 fs-x-smaller">
-                                                    <label class="col-as-5 no-padding control-label fs-x-smaller">Pseudo</label>
-
-                                                    <div class="col-as-7 no-padding">
-                                                        <select class="form-control vt-align-center" ng-model="pseudo" ng-change="onPseudoChange(pseudo)">
-                                                            <option value="{{opt}}"
-                                                                    ng-attr-selected="{{pseudo === opt}}"
-                                                                    ng-repeat="opt in pseudoOptions">
-                                                                {{opt}}
-                                                            </option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div id="simple-style-editor-control"
-                                                     ui-simple-style-editor
-                                                     pseudo="pseudo"
-                                                     simple-style="$root.sketchWidgetSetting.simpleStyle"
-                                                     dock-align="dockAlign">
-                                                </div>
-                                            </div>
-
-                                            <div id="widget-configurator-control"
-                                                 class="ui-control ui-control-inline ui-control-bordered enable"
-                                                 ng-if="uiService.isConfigurable(sketchObject.pickedWidget)"
-                                                 ui-widget-configurator
-                                                 picked-widget="sketchObject.pickedWidget"
-                                                 dock-align="dockAlign">
-                                                Widget Configuration
-                                            </div>
-
-                                            <div id="background-image-control"
-                                                 class="ui-control ui-control-inline ui-control-bordered"
-                                                 ui-background-image
-                                                 pseudo="pseudo"
-                                                 background-image="$root.sketchWidgetSetting.backgroundImage"
-                                                 dock-align="dockAlign">
-                                                Background Image
-                                            </div>
-
-                                            <div id="color-control"
-                                                 class="ui-control ui-control-inline ui-control-bordered"
-                                                 ui-color-picker
-                                                 pseudo="pseudo"
-                                                 color="$root.sketchWidgetSetting.color"
-                                                 dock-align="dockAlign">
-                                                Color
-                                            </div>
-
-                                            <div id="border-control"
-                                                 class="ui-control ui-control-inline ui-control-bordered"
-                                                 ui-border-editor
-                                                 pseudo="pseudo"
-                                                 border="$root.sketchWidgetSetting.border"
-                                                 dock-align="dockAlign">
-                                                Border
-                                            </div>
-
-                                            <div id="fill-control"
-                                                 class="ui-control ui-control-inline ui-control-bordered"
-                                                 ui-gradient-editor
-                                                 pseudo="pseudo"
-                                                 linear-gradient-color="$root.sketchWidgetSetting.linearGradientColor"
-                                                 dock-align="dockAlign">
-                                                Linear Gradient
-                                            </div>
-
-                                            <div id="text-shadow-control"
-                                                 class="ui-control ui-control-inline ui-control-bordered"
-                                                 ui-text-shadow-editor
-                                                 pseudo="pseudo"
-                                                 text-shadow="$root.sketchWidgetSetting.textShadow"
-                                                 dock-align="dockAlign">
-                                                Text Shadow
-                                            </div>
-
-                                            <div id="box-shadow-control"
-                                                 class="ui-control ui-control-inline ui-control-bordered"
-                                                 ui-box-shadow-editor
-                                                 box-shadow="$root.sketchWidgetSetting.boxShadow"
-                                                 dock-align="dockAlign">
-                                                Box Shadow
-                                            </div>
+                                    <div class="content-1">
+                                        <div id="page-control" ui-page
+                                             ui-page-opts="{'pageHolderClass':'deviceHolder'}"
+                                             tree-node-id-prefix="'tree-node-'"
+                                             dock-align="dockAlign">
                                         </div>
-                                        <div class="content-2">
-                                            <div id="state-transition-control"
-                                                 class="ui-control ui-control-inline enable"
-                                                 ui-state-transition picked-widget="sketchObject.pickedWidget"
-                                                 picked-page="sketchObject.pickedPage" dock-align="dockAlign"></div>
-                                        </div>
-                                        <div class="content-3">
-                                            <div id="state-action-control"
-                                                 class="ui-control ui-control-inline enable"
-                                                 ui-state-action picked-widget="sketchObject.pickedWidget"
-                                                 picked-page="sketchObject.pickedPage" dock-align="dockAlign"></div>
-                                        </div>
+                                    </div>
+                                    <div class="content-2">
+                                        <div id="state-transition-control"
+                                             class="ui-control ui-control-inline enable"
+                                             ui-state-transition picked-widget="sketchObject.pickedWidget"
+                                             picked-page="sketchObject.pickedPage" dock-align="dockAlign"></div>
+                                    </div>
+                                    <div class="content-3">
+                                        <div id="state-action-control"
+                                             class="ui-control ui-control-inline enable"
+                                             ui-state-action picked-widget="sketchObject.pickedWidget"
+                                             picked-page="sketchObject.pickedPage" dock-align="dockAlign"></div>
                                     </div>
                                 </div>
                             </section>
                         </div>
                     </div>
-                    <div id="shape-control-group" tab-sel="tab-content-control-group-2" class="ui-control-group">
+                    <div id="style-control-group" tab-sel="tab-content-control-group-2" class="ui-control-group">
+                        <div id="controlDropDown"
+                             class="fs-x-small  slide"
+                             ui-simple-dropdown
+                             ui-simple-dropdown-opts="{dataField:'id', labelField:'name', zIndex:100, gutter: 5, stack:false, delay:100, slidingIn:100, showTitle: true, displayUnsetOption: false, thumbnailField:'thumbnail'}"
+                             selection-list="controlList"
+                             select-item="pickedControl"
+                             on-option-select="setSelectedConrol(pickedControl)">
+                        </div>
+
+                        <div id="pseudo-control"
+                             class="fs-x-small-before">
+                            <div class="input-group col-as-12 fs-x-smaller">
+                                <label class="col-as-5 no-padding control-label fs-x-smaller">Pseudo</label>
+
+                                <div class="col-as-7 no-padding">
+                                    <select class="form-control vt-align-center" ng-model="pseudo"
+                                            ng-change="onPseudoChange(pseudo)">
+                                        <option value="{{opt}}"
+                                                ng-attr-selected="{{pseudo === opt}}"
+                                                ng-repeat="opt in pseudoOptions">
+                                            {{opt}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div id="simple-style-editor-control"
+                                 ui-simple-style-editor
+                                 pseudo="pseudo"
+                                 simple-style="$root.sketchWidgetSetting.simpleStyle"
+                                 dock-align="dockAlign">
+                            </div>
+                        </div>
+
+                        <div id="background-image-control"
+                             class="ui-control ui-control-inline ui-control-bordered show"
+                             ui-background-image
+                             pseudo="pseudo"
+                             background-image="$root.sketchWidgetSetting.backgroundImage"
+                             dock-align="dockAlign">
+                        </div>
+
+                        <div id="color-control"
+                             class="ui-control ui-control-inline ui-control-bordered"
+                             ui-color-picker
+                             pseudo="pseudo"
+                             color="$root.sketchWidgetSetting.color"
+                             dock-align="dockAlign">
+                        </div>
+
+                        <div id="border-control"
+                             class="ui-control ui-control-inline ui-control-bordered"
+                             ui-border-editor
+                             pseudo="pseudo"
+                             border="$root.sketchWidgetSetting.border"
+                             dock-align="dockAlign">
+                        </div>
+
+                        <div id="fill-control"
+                             class="ui-control ui-control-inline ui-control-bordered"
+                             ui-gradient-editor
+                             pseudo="pseudo"
+                             linear-gradient-color="$root.sketchWidgetSetting.linearGradientColor"
+                             dock-align="dockAlign">
+                        </div>
+
+                        <div id="text-shadow-control"
+                             class="ui-control ui-control-inline ui-control-bordered"
+                             ui-text-shadow-editor
+                             pseudo="pseudo"
+                             text-shadow="$root.sketchWidgetSetting.textShadow"
+                             dock-align="dockAlign">
+                        </div>
+
+                        <div id="box-shadow-control"
+                             class="ui-control ui-control-inline ui-control-bordered"
+                             ui-box-shadow-editor
+                             box-shadow="$root.sketchWidgetSetting.boxShadow"
+                             dock-align="dockAlign">
+                        </div>
+                    </div>
+                    <div id="shape-control-group" tab-sel="tab-content-control-group-3" class="ui-control-group">
                         <div id="shape-control" class="ui-control ui-control-inline enable" ui-shape
                              dock-align="dockAlign">
                         </div>
                     </div>
-                    <div id="widget-control-group" tab-sel="tab-content-control-group-3" class="ui-control-group">
+                    <div id="widget-control-group" tab-sel="tab-content-control-group-4" class="ui-control-group">
                         <div id="widget-control" class="ui-control ui-control-inline enable" ui-widget
                              ui-widget-opts="{elementZIndex: 99}"
                              picked-artifact="$root.sketchWidgetSetting.pickedArtifact"
@@ -362,7 +419,7 @@
                              dock-align="dockAlign" show-demo="showDemo()">
                         </div>
                     </div>
-                    <div id="resource-control-group" tab-sel="tab-content-control-group-4" class="ui-control-group">
+                    <div id="resource-control-group" tab-sel="tab-content-control-group-5" class="ui-control-group">
                         <div id="resource-editor-control" class="ui-control ui-control-inline enable" ui-resource-editor
                              dock-align="dockAlign">
                         </div>
@@ -372,14 +429,24 @@
         </div>
 
         <div class="frameSketchModalContent fs-x-large" name="modalContent">
-            <div id="frameSketchDemoModal" ng-show="modalUsage === 'Demo'">
+            <div id="frameSketchConfigureModal" ng-show="modalUsage === 'Configuration'"
+                 ng-click="stopEvent($event, '#widget-configurator-control')">
+                <div id="widget-configurator-control"
+                     class="modal-control"
+                     ng-if="uiService.isConfigurable(sketchObject.pickedWidget)"
+                     ui-widget-configurator
+                     picked-widget="sketchObject.pickedWidget"
+                     dock-align="dockAlign">
+                </div>
+            </div>
+            <div id="frameSketchDemoModal" ng-show="modalUsage === 'Demo'" ng-click="$event.stopPropagation()">
                 <div class="hideButton icon-frame-sketch-before icon-frame-sketch-exit-before"
-                     ng-click="hideModal($event)"></div>
+                     ng-click="once(this, $event, 'hideModal', $event)"></div>
                 <div class="frameSketchDemoContainer">
                     <div id="frameSketchWidgetDemoArea"></div>
                 </div>
             </div>
-            <div id="widgetNameModal" ng-show="modalUsage === 'WidgetName'">
+            <div id="widgetNameModal" ng-show="modalUsage === 'WidgetName'" ng-click="$event.stopPropagation()">
                 <div class="widgetNameContent">
                     <div class="input-group col-as-12 fs-x-medium">
                         <label class="col-as-4 no-padding control-label">Widget Name</label>
@@ -392,18 +459,18 @@
                 </div>
                 <div class="widgetNameConfirmBar">
                     <div class="widgetNameButton col-as-6 no-padding"
-                         ng-click="confirmWidgetName($event)">
+                         ng-click="once(this, $event, 'confirmWidgetName', $event)">
                         <span class="icon-frame-sketch-before icon-frame-sketch-confirm-before">Confirm</span>
                     </div>
                     <div class="widgetNameButton col-as-6 no-padding"
-                         ng-click="hideModal($event)">
+                         ng-click="once(this, $event, 'hideModal', $event)">
                         <span class="icon-frame-sketch-before icon-frame-sketch-cancel-before">Cancel</span>
                     </div>
                 </div>
             </div>
-            <div id="resourceEditorModal" ng-show="modalUsage === 'ResourceEditor'">
+            <div id="resourceEditorModal" ng-show="modalUsage === 'ResourceEditor'" ng-click="$event.stopPropagation()">
                 <div class="hideButton icon-frame-sketch-before icon-frame-sketch-exit-before"
-                     ng-click="hideModal($event)"></div>
+                     ng-click="once(this, $event, 'hideModal', $event)"></div>
                 <div class="frameSketchResourceContainer">
                     <div id="frameSketchResourceArea"></div>
                 </div>

@@ -24,6 +24,10 @@ define(
                         return {
                             pre: function (scope, element, attrs) {
                                 extension && extension.attach && extension.attach(scope, _.extend(injectObj, {
+                                    "$timeout": $timeout,
+                                    "$q": $q,
+                                    "angularConstants": angularConstants,
+                                    "uiUtilService": uiUtilService,
                                     element: element,
                                     scope: scope
                                 }));
@@ -136,9 +140,9 @@ define(
                             },
                             post: function (scope, element, attrs) {
                                 scope.toggleTextShadowControl = function () {
-                                    scope.toggleEnableControl().then(function (enable) {
+                                    return scope.toggleEnableControl().then(function (enable) {
                                         if (enable) {
-                                            uiUtilService.whilst(
+                                            return uiUtilService.whilst(
                                                 function () {
                                                     return !scope.textShadow;
                                                 },
@@ -147,8 +151,7 @@ define(
                                                 },
                                                 function (err) {
                                                     scope.setTextShadow(angular.copy(options.textShadow));
-
-                                                    return uiUtilService.getResolveDefer();
+                                                    scope.togglePalette();
                                                 },
                                                 angularConstants.checkInterval,
                                                 "ui-text-shadow-editor.toggleTextShadowControl",
@@ -158,8 +161,14 @@ define(
                                             if (scope.textShadow) {
                                                 scope.textShadow = angular.copy(scope.unsetStyle(scope.textShadow, scope.pseudo));
                                             }
+
+                                            return scope.togglePalette();
                                         }
                                     });
+                                }
+
+                                scope.selectTextShadowTab = function (event) {
+                                    return scope.selectTab(event.currentTarget, event.target, event);
                                 }
 
                                 scope.togglePalette = function (event) {
@@ -170,7 +179,7 @@ define(
                                         $panel = element.find(".ui-control-panel");
 
                                     if ($wrapper.hasClass("expanded")) {
-                                        scope.selectTab($panel, $panel.find("div[tab-sel^='tab-head-text-shadow-value']:nth-child(1)")).then(
+                                        return scope.selectTab($panel, $panel.find("div[tab-sel^='tab-head-text-shadow-value']:nth-child(1)")).then(
                                             function () {
                                                 return scope.toggleDisplay($panel);
                                             }
@@ -178,11 +187,11 @@ define(
                                                 return scope.toggleExpand($wrapper);
                                             });
                                     } else {
-                                        scope.toggleExpand($wrapper).then(function () {
+                                        return scope.toggleExpand($wrapper).then(function () {
                                             return scope.toggleDisplay($panel);
                                         }).then(
                                             function () {
-                                                scope.selectTab($panel, $panel.find("div[tab-sel^='tab-head-text-shadow-value']:nth-child(1)"));
+                                                return scope.selectTab($panel, $panel.find("div[tab-sel^='tab-head-text-shadow-value']:nth-child(1)"));
                                             }
                                         );
                                     }
@@ -195,8 +204,10 @@ define(
                                         paletteScope = angular.element($palette.find("> :first-child")).scope();
 
                                     if (scope.hasClass(".shadowStopColorPalette", "show")) {
-                                        paletteScope.closePalette().then(function () {
+                                        return paletteScope.closePalette().then(function () {
                                             scope.watchSelectedShadowStopColor(false);
+
+                                            return uiUtilService.getResolveDefer();
                                         });
                                     } else {
                                         var top = element.find(".shadowStop[shadow-order=" + scope.selectedShadowStopIndex + "]").offset().top,
@@ -204,8 +215,10 @@ define(
                                         paletteOffset.top = top;
                                         $palette.offset(paletteOffset);
 
-                                        paletteScope.openPalette().then(function () {
+                                        return paletteScope.openPalette().then(function () {
                                             scope.watchSelectedShadowStopColor(true);
+
+                                            return uiUtilService.getResolveDefer();
                                         });
                                     }
                                 }
@@ -229,16 +242,18 @@ define(
                                     if (value) {
                                         scope.pickedTextShadowName = value.name;
                                         scope.pickedTextShadow = [];
-                                        $timeout(function () {
+                                        return $timeout(function () {
                                             scope.setTextShadow(angular.copy(value.style["text-shadow"]));
                                         });
                                     }
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.toggleShadowStopMenu = function (index, event) {
                                     event && event.stopPropagation && event.stopPropagation();
 
-                                    scope.toggleDisplay(".shadowStop[shadow-order=" + index + "] .circular-menu .circle", event);
+                                    return scope.toggleDisplay(".shadowStop[shadow-order=" + index + "] .circular-menu .circle", event);
                                 }
 
                                 scope.insertShadowStop = function (index, event) {
@@ -251,6 +266,8 @@ define(
 
                                     //Trigger watcher on sketchWidgetSetting.textShadow to apply style to widget
                                     scope.setTextShadow(scope.pickedTextShadow);
+
+                                    return uiUtilService.getResolveDefer();
                                 }
                                 scope.removeShadowStop = function (index, event) {
                                     event && event.stopPropagation && event.stopPropagation();
@@ -263,6 +280,8 @@ define(
                                         //Trigger watcher on sketchWidgetSetting.textShadow to apply style to widget
                                         scope.setTextShadow(scope.pickedTextShadow);
                                     }
+                                    return uiUtilService.getResolveDefer();
+
                                 }
                                 scope.setShadowStopColor = function (index, event) {
                                     event && event.stopPropagation && event.stopPropagation();
@@ -275,6 +294,8 @@ define(
 
                                         scope.toggleShadowStopColorPalette();
                                     }
+                                    return uiUtilService.getResolveDefer();
+
                                 }
                                 scope.copyShadowStop = function (index, event) {
                                     event && event.stopPropagation && event.stopPropagation();
@@ -284,6 +305,8 @@ define(
                                     if (index < scope.pickedTextShadow.length) {
                                         scope.copiedShadowStopColor = scope.pickedTextShadow[index].color;
                                     }
+
+                                    return uiUtilService.getResolveDefer();
                                 }
                                 scope.pasteShadowStop = function (index, event) {
                                     event && event.stopPropagation && event.stopPropagation();
@@ -297,6 +320,8 @@ define(
                                             scope.setStopColor(index, scope.copiedShadowStopColor);
                                         }
                                     }
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.setStopColor = function (index, value, event) {
@@ -423,6 +448,8 @@ define(
                                         }
 
                                     }
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.toggleLibrarySelection = function (effectLibrary, event) {
@@ -467,6 +494,8 @@ define(
                                             }
                                         }
                                     }
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.effectList = [];

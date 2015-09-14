@@ -1,0 +1,1 @@
+../../../directive/ng.ui.hammer-gestures.js

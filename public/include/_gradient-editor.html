@@ -2,10 +2,10 @@
     <p ng-transclude></p>
 
     <div class="ui-control-enable-button icon-dock-after icon-dock-cross-after"
-         ng-click="toggleGradientControl()"></div>
+         ng-click="once(this, $event, 'toggleGradientControl')"></div>
 </div>
 <div class="editorContent fs-x-large ui-control-wrapper" ng-class="dockAlign">
-    <div class="editorBar ui-control-bar" ng-click="toggleEditor($event)">
+    <div class="editorBar ui-control-bar">
         <div class="angleDisplay" ng-include="'images/image-gradient-editor/compass_east.svg'"
              ng-style="prefixedStyle('transform', 'rotate({0}deg)', pickedGradientColor.angle)">
         </div>
@@ -22,9 +22,9 @@
         </div>
         <div class="angleStep">
             <div class="fs-x-smaller icon-gradient-editor icon-gradient-editor-increment-before"
-                 ng-click="incrementAngle($event)"></div>
+                 ng-click="once(this, $event, 'incrementAngle', $event)"></div>
             <div class="fs-x-smaller icon-gradient-editor icon-gradient-editor-decrement-before"
-                 ng-click="decrementAngle($event)"></div>
+                 ng-click="once(this, $event, 'decrementAngle', $event)"></div>
         </div>
     </div>
     <div class="editorColorStopList ui-control-panel">
@@ -41,20 +41,20 @@
             </div>
             <div class="colorPane fs-x-large"
                  ng-style="{'background-color':'{{colorStop.color.alphaColor || colorStop.color.color}}'}"
-                 ng-click="toggleColorStopMenu($index, $event)" ng-if="colorStop.color">
+                 ng-click="once(this, $event, 'toggleColorStopMenu', $index, $event)" ng-if="colorStop.color">
             </div>
             <div class="circular-menu">
                 <div class="circle">
                     <div class="icon-gradient-editor icon-gradient-editor-insert-before"
-                         ng-click="insertColorStop($index, $event)"></div>
+                         ng-click="once(this, $event, 'insertColorStop', $index, $event)"></div>
                     <div class="icon-gradient-editor icon-gradient-editor-remove-before"
-                         ng-click="removeColorStop($index, $event)"></div>
+                         ng-click="once(this, $event, 'removeColorStop', $index, $event)"></div>
                     <div class="icon-gradient-editor icon-gradient-editor-brush-before"
-                         ng-click="setColorStop($index, $event)"></div>
+                         ng-click="once(this, $event, 'setColorStop', $index, $event)"></div>
                     <div class="icon-gradient-editor icon-gradient-editor-copy-before"
-                         ng-click="copyColorStop($index, $event)"></div>
+                         ng-click="once(this, $event, 'copyColorStop', $index, $event)"></div>
                     <div class="icon-gradient-editor icon-gradient-editor-paste-before"
-                         ng-click="pasteColorStop($index, $event)"></div>
+                         ng-click="once(this, $event, 'pasteColorStop', $index, $event)"></div>
                 </div>
             </div>
         </div>

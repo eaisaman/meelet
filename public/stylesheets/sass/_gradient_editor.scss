@@ -144,38 +144,6 @@ $expandedDockWidth: 12em;
             }
         }
 
-        .editorContent.expanded.align-right {
-            .editorColorStopList {
-                .colorStop {
-                    @include circular-navigation(circular-menu, 5, 100px, -25px, 50px, 60px, 60px, 0.5, 1.2);
-
-                    .circular-menu {
-                        position: absolute;
-                        left: 0;
-                        top: 0;
-                        width: 1px;
-                        z-index: 1;
-
-                        .circle {
-                            position: relative;
-                            float: left;
-                            width: 1px;
-
-                            div {
-                                color: $borderColor;
-                                border: solid 1px $borderColor;
-                                background: #fff;
-
-                                &:before {
-                                    font-size: 32px;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
         .editorContent:not(.expanded) {
             .editorColorStopList {
                 @include flipDownOrigin();
@@ -300,47 +268,6 @@ $expandedDockWidth: 12em;
                     > div {
                         position: relative;
                         float: right;
-                    }
-                }
-            }
-        }
-
-        .editorContent.align-right {
-            position: absolute;
-            left: 0;
-            top: 0;
-
-            .editorBar {
-                position: relative;
-                float: left;
-
-                .angleDisplay {
-                    position: relative;
-                    float: left;
-                }
-
-                .gradientSummary {
-                    position: relative;
-                    float: left;
-
-                    .angleLabel {
-                        position: relative;
-                        float: left;
-                    }
-
-                    .colorSummary {
-                        position: relative;
-                        float: left;
-                    }
-                }
-
-                .angleStep {
-                    position: relative;
-                    float: left;
-
-                    > div {
-                        position: relative;
-                        float: left;
                     }
                 }
             }

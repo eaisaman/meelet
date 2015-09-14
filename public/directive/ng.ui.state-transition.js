@@ -22,6 +22,10 @@ define(
                         return {
                             pre: function (scope, element, attrs) {
                                 extension && extension.attach && extension.attach(scope, _.extend(injectObj, {
+                                    "$timeout": $timeout,
+                                    "$q": $q,
+                                    "angularConstants": angularConstants,
+                                    "uiUtilService": uiUtilService,
                                     element: element,
                                     scope: scope
                                 }));
@@ -150,7 +154,7 @@ define(
                                 scope._ = _;
                             },
                             post: function (scope, element, attrs) {
-                                scope.toggleTransitionDetails = function (selector, event) {
+                                return scope.toggleTransitionDetails = function (selector, event) {
                                     scope.toggleSelect(selector, event).then(function (selector) {
                                         var $el = $(selector);
 
@@ -166,17 +170,19 @@ define(
                                             radioClass: 'iradio_square-blue',
                                             increaseArea: '20%'
                                         });
+
+                                        return uiUtilService.getResolveDefer();
                                     });
                                 }
 
                                 scope.selectTransitionDetailsTab = function ($tabContainer, $tabHead, event) {
-                                    scope.toggleSelect("#actionWidgetTreeTab", null, false).then(function () {
-                                        scope.selectTab($tabContainer, $tabHead, event);
+                                    return scope.toggleSelect("#actionWidgetTreeTab", null, false).then(function () {
+                                        return scope.selectTab($tabContainer, $tabHead, event);
                                     });
                                 }
 
                                 scope.toggleActionPanel = function (selector, event) {
-                                    scope.toggleExpand(selector, event).then(function (selector) {
+                                    return scope.toggleExpand(selector, event).then(function (selector) {
                                         var $el = $(selector),
                                             $panel = $el.find(".transition-action-panel");
 
@@ -187,7 +193,7 @@ define(
                                 scope.toggleConfigurationBody = function (event) {
                                     event && event.stopPropagation && event.stopPropagation();
 
-                                    scope.toggleSelect(event.currentTarget).then(function (target) {
+                                    return scope.toggleSelect(event.currentTarget).then(function (target) {
                                         var $el = $(target);
 
                                         if ($el.hasClass("select")) {
@@ -201,13 +207,15 @@ define(
                                                 increaseArea: '20%'
                                             });
                                         }
+
+                                        return uiUtilService.getResolveDefer();
                                     });
                                 }
 
                                 scope.toggleActionWidgetTree = function (action, event) {
                                     event && event.stopPropagation && event.stopPropagation();
 
-                                    scope.toggleSelect("#actionWidgetTreeTab").then(function () {
+                                    return scope.toggleSelect("#actionWidgetTreeTab").then(function () {
                                         if (element.find("#actionWidgetTreeTab").hasClass("select")) {
                                             scope.pickedAction = action;
                                         } else {
@@ -220,6 +228,8 @@ define(
                                             }
                                             scope.pickedAction = null;
                                         }
+
+                                        return uiUtilService.getResolveDefer();
                                     });
                                 }
 
@@ -231,6 +241,8 @@ define(
                                         stateName = $stateOption.attr("name");
 
                                     stateName && scope.activeWidget.addState(stateName);
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.createStateOption = function (event) {
@@ -238,6 +250,8 @@ define(
 
                                     var stateName = $("#stateOptionInput").val();
                                     stateName && scope.activeWidget.addStateOption({name: stateName});
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.createTransition = function (state, event) {
@@ -247,6 +261,8 @@ define(
                                         var transitionName = $("#transitionNameInput").val();
                                         transitionName && state.addTransition(transitionName);
                                     }
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.createAction = function (parentAction, event) {
@@ -256,6 +272,8 @@ define(
                                         var actionType = $("#actionTypeSelect").val();
                                         actionType && parentAction.addAction(actionType);
                                     }
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.onUpdateStopOnEach = function (sequenceAction, stopOnEach) {
@@ -269,6 +287,8 @@ define(
                                     }
 
                                     scope.activeWidget && scope.activeWidget.removeState(state);
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.deleteStateOption = function (stateOption, event) {
@@ -278,6 +298,8 @@ define(
                                     }
 
                                     scope.activeWidget && scope.activeWidget.removeStateOption(stateOption);
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.deleteTransition = function (state, transition, event) {
@@ -295,6 +317,8 @@ define(
 
                                         index != undefined && state.transitions.splice(index, 1);
                                     }
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.deleteAction = function (parentAction, action, event) {
@@ -312,6 +336,8 @@ define(
 
                                         index != undefined && parentAction.childActions.splice(index, 1);
                                     }
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.getStateOptions = function (item) {
@@ -349,12 +375,14 @@ define(
                                 scope.toggleSelectLibraryList = function (event) {
                                     event && event.stopPropagation && event.stopPropagation();
 
-                                    scope.toggleSelect(".effectLibraryList").then(function () {
+                                    return scope.toggleSelect(".effectLibraryList").then(function () {
                                         if (element.find(".effectLibraryList").hasClass("select")) {
                                             element.find(".effectLibraryList").siblings("div").css("opacity", 0);
                                         } else {
                                             element.find(".effectLibraryList").siblings("div").css("opacity", 1);
                                         }
+
+                                        return uiUtilService.getResolveDefer();
                                     });
                                 }
 
@@ -418,6 +446,8 @@ define(
                                         }
 
                                     }
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.toggleLibrarySelection = function (effectLibrary, event) {
@@ -462,6 +492,8 @@ define(
                                             }
                                         }
                                     }
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 if (options.triggerJson) {

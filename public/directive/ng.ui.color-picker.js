@@ -24,6 +24,10 @@ define(
                         return {
                             pre: function (scope, element, attrs) {
                                 extension && extension.attach && extension.attach(scope, _.extend(injectObj, {
+                                    "$timeout": $timeout,
+                                    "$q": $q,
+                                    "angularConstants": angularConstants,
+                                    "uiUtilService": uiUtilService,
                                     element: element,
                                     scope: scope
                                 }));
@@ -87,17 +91,19 @@ define(
                                             scope.pickerPaneBackgroundColor = scope.pickedColor.alphaColor || scope.pickedColor.color;
                                             scope.pickerPaneColor = uiUtilService.contrastColor(value.color);
                                             scope.pickerBarBackgroundColor = scope.pickerPaneColor === "#ffffff" ? uiUtilService.lighterColor(value.color, 0.5) : uiUtilService.lighterColor(value.color, -0.5);
-                                            $timeout(function () {
+                                            return $timeout(function () {
                                                 scope.colorIsSet = true;
                                             });
                                         }
                                     }
+
+                                    return uiUtilService.getResolveDefer();
                                 };
 
                                 scope.toggleColorControl = function () {
-                                    scope.toggleEnableControl().then(function (enable) {
+                                    return scope.toggleEnableControl().then(function (enable) {
                                         if (enable) {
-                                            uiUtilService.whilst(
+                                            return uiUtilService.whilst(
                                                 function () {
                                                     return !scope.color;
                                                 },
@@ -105,9 +111,9 @@ define(
                                                     callback();
                                                 },
                                                 function (err) {
-                                                    scope.setColor(angular.copy(options.color));
-
-                                                    return uiUtilService.getResolveDefer();
+                                                    scope.setColor(angular.copy(options.color)).then(function () {
+                                                        return scope.togglePalette();
+                                                    });
                                                 },
                                                 angularConstants.checkInterval,
                                                 "ui-color-picker-toggleColorControl",
@@ -117,6 +123,8 @@ define(
                                             if (scope.color) {
                                                 scope.color = angular.copy(scope.unsetStyle(scope.color, scope.pseudo));
                                             }
+
+                                            return scope.togglePalette();
                                         }
                                     });
                                 }
@@ -144,7 +152,7 @@ define(
                                         paletteScope = angular.element($palette).scope();
 
                                     if ($wrapper.hasClass("expanded")) {
-                                        paletteScope.closePalette().then(function () {
+                                        return paletteScope.closePalette().then(function () {
                                             return scope.toggleDisplay($panel);
                                         }).then(function () {
                                             scope.watchColor(false);
@@ -152,7 +160,7 @@ define(
                                             return scope.toggleExpand($wrapper);
                                         });
                                     } else {
-                                        scope.toggleExpand($wrapper).then(function () {
+                                        return scope.toggleExpand($wrapper).then(function () {
                                             return scope.toggleDisplay($panel);
                                         }).then(function () {
                                             scope.watchColor(true);

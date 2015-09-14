@@ -30,6 +30,10 @@ define(
                         return {
                             pre: function (scope, element, attrs, ctrl) {
                                 extension && extension.attach && extension.attach(scope, _.extend(injectObj, {
+                                    "$timeout": $timeout,
+                                    "$q": $q,
+                                    "angularConstants": angularConstants,
+                                    "uiUtilService": uiUtilService,
                                     element: element,
                                     scope: scope
                                 }));
@@ -109,7 +113,7 @@ define(
                                 scope.toggleMenu = function (event) {
                                     event && event.stopPropagation && event.stopPropagation();
 
-                                    scope.toggleSelect().then(function () {
+                                    return scope.toggleSelect().then(function () {
                                         if (element.hasClass("select")) {
                                             element.find(".mp-level").each(function (i, el) {
                                                 findLevel($(el));
@@ -119,6 +123,8 @@ define(
                                         } else {
                                             resetMenu();
                                         }
+
+                                        return uiUtilService.getResolveDefer();
                                     });
                                 }
 
@@ -143,6 +149,8 @@ define(
                                             $parentLevel.removeClass('mp-level-overlay');
                                         }
                                     }
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.onSelect = function (event) {
@@ -160,12 +168,14 @@ define(
                                             $mpLevel.addClass('mp-level-overlay');
                                             openMenu($subLevel);
                                         }
+
+                                        return uiUtilService.getResolveDefer();
                                     } else {
                                         element.find(".mp-level").removeClass('mp-level-open').removeClass('mp-level-overlay');
                                         scope.toggleSelect();
 
                                         scope.pickedMenuItem = $el.attr("data-value");
-                                        $timeout(function () {
+                                        return $timeout(function () {
                                             scope.onMenuSelect && scope.onMenuSelect();
                                         });
                                     }

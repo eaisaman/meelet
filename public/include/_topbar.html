@@ -1,18 +1,19 @@
 <link rel="stylesheet" type="text/css" href="fonts/icon-topbar/style.css"/>
 
-<div id="appTopBar" ng-click="unselectButtonGroup($event)">
+<div id="appTopBar" ng-click="once(this, $event, 'unselectButtonGroup', $event)">
     <div class="topbarButton icon-topbar-before icon-topbar-back-before"
-         ng-click="urlService.back()" title="Go Back"></div>
+         ng-click="once(this, $event, 'goBack')" title="Go Back"></div>
     <div class="topbarButton icon-topbar-before icon-topbar-home-before"
-         ng-click="urlService.home()" title="Go Home"></div>
+         ng-click="once(this, $event, 'goHome')" title="Go Home"></div>
 
     <div ui-multi-transclude="extraButtons" class="extraButtons"></div>
 
     <div class="topbarMenu icon-topbar-before icon-topbar-menu-before"
-         ng-click="toggleSelect($event.target, null)">
+         ng-click="once(this, $event, 'toggleSelectMenu', $event)">
         <div class="btn-group open">
             <ul class="dropdown-menu fs-x-small" role="menu">
-                <li class="icon-topbar-before icon-topbar-add-before" ng-click="onNewProject($event)"><a
+                <li class="icon-topbar-before icon-topbar-add-before"
+                    ng-click="once(this, $event, 'onNewProject', $event)"><a
                         href="">New Project</a></li>
                 <li class="icon-topbar-before icon-topbar-select-before">
                     <div id="topbarProjectDropdown" class="stackAndRotateSelect"
@@ -23,7 +24,7 @@
                     </div>
                 </li>
                 <li class="icon-topbar-before icon-topbar-Library-before"
-                    ng-click="onVisitRepoLibrary($event)"><a
+                    ng-click="once(this, $event, 'onVisitRepoLibrary', $event)"><a
                         href="">Repo Library</a></li>
                 <li class="icon-topbar-before icon-topbar-showcase-before"><a href="">Show Case</a></li>
                 <li class="icon-topbar-before icon-topbar-help-before"><a href="">Help</a></li>

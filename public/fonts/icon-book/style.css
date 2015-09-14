@@ -1,0 +1,60 @@
+@font-face {
+    font-family: 'icon-book';
+    src: url('icon-book.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.icon-book:before {
+    font-family: 'icon-book';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-book-before:before {
+    font-family: 'icon-book';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-book-after:after {
+    font-family: 'icon-book';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-book-add-page:before {
+    content: "\e600";
+}
+
+.icon-book-add-page-before:before {
+    content: "\e600";
+}
+
+.icon-book-add-page-after:after {
+    content: "\e600";
+}

@@ -28,6 +28,10 @@ define(
                         return {
                             pre: function (scope, element, attrs) {
                                 extension && extension.attach && extension.attach(scope, _.extend(injectObj, {
+                                    "$timeout": $timeout,
+                                    "$q": $q,
+                                    "angularConstants": angularConstants,
+                                    "uiUtilService": uiUtilService,
                                     element: element,
                                     scope: scope
                                 }));
@@ -112,33 +116,41 @@ define(
                             },
                             post: function (scope, element, attrs) {
                                 scope.toggleBorderControl = function () {
-                                    scope.borderList && scope.borderList.length && scope.toggleEnableControl().then(function (enable) {
-                                        if (enable) {
-                                            uiUtilService.whilst(
-                                                function () {
-                                                    return !scope.border;
-                                                },
-                                                function (callback) {
-                                                    callback();
-                                                },
-                                                function (err) {
-                                                    scope.setBorderColor(angular.copy(options.borderColor));
-                                                    scope.setBorderWidth(options.borderWidth);
-                                                    scope.setBorderStyle(options.borderStyle);
-                                                    scope.setBorderRadius(options.borderRadius);
+                                    if (scope.borderList && scope.borderList.length) {
+                                        return scope.toggleEnableControl().then(function (enable) {
+                                            if (enable) {
+                                                return uiUtilService.whilst(
+                                                    function () {
+                                                        return !scope.border;
+                                                    },
+                                                    function (callback) {
+                                                        callback();
+                                                    },
+                                                    function (err) {
+                                                        $q.all([
+                                                            scope.setBorderColor(angular.copy(options.borderColor)),
+                                                            scope.setBorderWidth(options.borderWidth),
+                                                            scope.setBorderStyle(options.borderStyle),
+                                                            scope.setBorderRadius(options.borderRadius)
+                                                        ]).then(function () {
+                                                            return scope.togglePalette();
+                                                        });
+                                                    },
+                                                    angularConstants.checkInterval,
+                                                    "ui-border-editor.toggleBorderControl",
+                                                    angularConstants.renderTimeout
+                                                );
+                                            } else {
+                                                if (scope.border) {
+                                                    scope.border = angular.copy(scope.unsetStyle(scope.border, scope.pseudo));
+                                                }
 
-                                                    return uiUtilService.getResolveDefer();
-                                                },
-                                                angularConstants.checkInterval,
-                                                "ui-border-editor.toggleBorderControl",
-                                                angularConstants.renderTimeout
-                                            );
-                                        } else {
-                                            if (scope.border) {
-                                                scope.border = angular.copy(scope.unsetStyle(scope.border, scope.pseudo));
+                                                return scope.togglePalette();
                                             }
-                                        }
-                                    });
+                                        });
+                                    } else {
+                                        return uiUtilService.getResolveDefer();
+                                    }
                                 }
 
                                 scope.togglePalette = function (event) {
@@ -148,11 +160,11 @@ define(
                                         $panel = element.find(".ui-control-panel");
 
                                     if ($wrapper.hasClass("expanded")) {
-                                        scope.toggleDisplay($panel).then(function () {
+                                        return scope.toggleDisplay($panel).then(function () {
                                             return scope.toggleExpand($wrapper);
                                         });
                                     } else {
-                                        scope.toggleExpand($wrapper).then(function () {
+                                        return scope.toggleExpand($wrapper).then(function () {
                                             return scope.toggleDisplay($panel);
                                         });
                                     }
@@ -166,16 +178,20 @@ define(
                                         paletteScope = angular.element($palette.find("> :first-child")).scope();
 
                                     if ($borderColorPane.hasClass("select")) {
-                                        paletteScope.closePalette().then(function () {
+                                        return paletteScope.closePalette().then(function () {
                                             return scope.toggleSelect($borderColorPane);
                                         }).then(function () {
                                             scope.watchBorderColor(false);
+
+                                            return uiUtilService.getResolveDefer();
                                         });
                                     } else {
-                                        scope.toggleSelect($borderColorPane).then(function () {
+                                        return scope.toggleSelect($borderColorPane).then(function () {
                                             return paletteScope.openPalette();
                                         }).then(function () {
                                             scope.watchBorderColor(true);
+
+                                            return uiUtilService.getResolveDefer();
                                         });
                                     }
                                 }
@@ -215,12 +231,14 @@ define(
                                             scope.pickedBorderColor = value;
                                             scope.borderColorPaneBackgroundColor = "";
                                             scope.borderColorPaneColor = uiUtilService.contrastColor(value.color);
-                                            $timeout(function () {
+                                            return $timeout(function () {
                                                 scope.borderColorPaneBackgroundColor = value.alphaColor || value.color;
                                                 scope.borderIsSet = true;
                                             });
                                         }
                                     }
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.setBorderWidth = function (value) {
@@ -239,11 +257,13 @@ define(
 
                                             scope.borderIsSet = false;
                                             scope.pickedBorderWidth = value;
-                                            $timeout(function () {
+                                            return $timeout(function () {
                                                 scope.borderIsSet = true;
                                             });
                                         }
                                     }
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.setBorderStyle = function (value) {
@@ -262,11 +282,13 @@ define(
 
                                             scope.borderIsSet = false;
                                             scope.pickedBorderStyle = value;
-                                            $timeout(function () {
+                                            return $timeout(function () {
                                                 scope.borderIsSet = true;
                                             });
                                         }
                                     }
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.setBorderRadius = function (value) {
@@ -285,11 +307,13 @@ define(
 
                                             scope.borderIsSet = false;
                                             scope.pickedBorderRadius = value;
-                                            $timeout(function () {
+                                            return $timeout(function () {
                                                 scope.borderIsSet = true;
                                             });
                                         }
                                     }
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.pseudoChangeWatcher = scope.$on(angularEventTypes.widgetPseudoChangeEvent, function (event, pseudo) {

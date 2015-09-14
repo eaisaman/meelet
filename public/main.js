@@ -1,5 +1,5 @@
 //Javascript libs
-var ANGULAR_LIB_PATH = "javascripts/angular/1.3.0-beta.8/",
+var ANGULAR_LIB_PATH = "javascripts/angular/1.4.5/",
     ANGULAR_MODULES_LIB_PATH = "javascripts/angular-modules/",
     ANGULAR_PLUGINS_LIB_PATH = "javascripts/angular-plugins/",
     HAMMER_LIB_PATH = "javascripts/hammer/2.0.4/",

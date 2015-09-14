@@ -2,8 +2,8 @@
 <link rel="stylesheet" type="text/css" href="fonts/icon-flow/style.css"/>
 
 <script type="text/ng-template" id="_flowSteps.html">
-    <div ui-tree-handle ng-click="$event.stopPropagation();deactivateNameEdit();exclusiveSelect($event)"
-         ng-dblclick="activateNameEdit($event)">
+    <div ui-tree-handle ng-click="$event.stopPropagation();deactivateNameEdit();exclusiveSelect"
+         ng-dblclick="activateNameEdit">
         <a class="fs-x-small btn btn-xs" nodrag
            ng-click="toggle();$event.stopPropagation()">
             <span ng-if="item.childSteps.length" class="icon-flow-before"
@@ -31,11 +31,12 @@
         <div class="flowMainContent" name="mainContent">
             <div ui-topbar>
                 <div name="extraButtons">
-                    <div ng-click="saveProject($event)" ng-if="$root.loadedProject.projectRecord.lock"
+                    <div ng-click="once(this, $event, 'saveProject', $event)"
+                         ng-show="$root.loadedProject.projectRecord.lock"
                          class="topbarButton icon-flow-before icon-flow-save-before" title="Save"></div>
-                    <div ng-click="loadProject($event)"
+                    <div ng-click="once(this, $event, 'loadProject', $event)"
                          class="topbarButton icon-flow-before icon-flow-load-before" title="Load"></div>
-                    <div ng-click="toggleLockProject($event)"
+                    <div ng-click="once(this, $event, 'toggleLockProject', $event)"
                          class="topbarButton icon-flow-before"
                          ng-class="{'icon-flow-unlock-before':$root.loadedProject.projectRecord.lock, 'icon-flow-lock-before':!$root.loadedProject.projectRecord.lock}"
                          title="Lock/Unlock"></div>
@@ -43,15 +44,18 @@
             </div>
             <div class="flowContent fs-x-medium col-as-12">
                 <div class="flowTitles">
-                    <div id="flowProcessTitle" class="flowTitle select" ng-click="selectEditor('process', $event)">
+                    <div id="flowProcessTitle" class="flowTitle select"
+                         ng-click="once(this, $event, 'selectEditor', 'process', $event)">
                         <image src="images/image-flow/process-window.svg"></image>
                         <span>Process</span>
                     </div>
-                    <div id="flowServiceTitle" class="flowTitle" ng-click="selectEditor('service', $event)">
+                    <div id="flowServiceTitle" class="flowTitle"
+                         ng-click="once(this, $event, 'selectEditor', 'proservicecess', $event)">
                         <image src="images/image-flow/api-code-window.svg"></image>
                         <span>Service</span>
                     </div>
-                    <div id="flowConfigTitle" class="flowTitle" ng-click="selectEditor('config', $event)">
+                    <div id="flowConfigTitle" class="flowTitle"
+                         ng-click="once(this, $event, 'selectEditor', 'config', $event)">
                         <image src="images/image-flow/configuration-window.svg"></image>
                         <span>Configuration</span>
                     </div>
@@ -68,12 +72,12 @@
                         <div class="flowTree fs-x-small col-as-8 no-padding">
                             <div class="treeToolBar">
                                 <div class="flowButton icon-flow-before icon-flow-flow-before"
-                                     ng-click="insertAfterFlow($event)"></div>
+                                     ng-click="once(this, $event, 'insertAfterFlow', $event)"></div>
                                 <div class="flowDropdown icon-flow-before icon-flow-invoke-step-before"
-                                     ng-click="toggleSelect($event.currentTarget, null)">
+                                     ng-click="once(this, $event, 'toggleSelect', $event)">
                                     <div class="btn-group open">
                                         <ul class="dropdown-menu fs-x-small" role="menu"
-                                            ng-click="insertAfterInvokeFlowStep($event)">
+                                            ng-click="once(this, $event, 'insertAfterInvokeFlowStep', $event)">
                                             <li><a href="">ChangeWidgetState</a>
                                             </li>
                                             <li><a href="">sendHomeKitMessage</a>
@@ -82,30 +86,30 @@
                                     </div>
                                 </div>
                                 <div class="flowButton icon-flow-before icon-flow-map-step-before"
-                                     ng-click="insertAfterMapFlowStep($event)"></div>
+                                     ng-click="once(this, $event, 'insertAfterMapFlowStep', $event)"></div>
                                 <div class="flowButton icon-flow-before icon-flow-switch-step-before"
-                                     ng-click="insertAfterSwitchFlowStep($event)"></div>
+                                     ng-click="once(this, $event, 'insertAfterSwitchFlowStep', $event)"></div>
                                 <div class="flowButton icon-flow-before icon-flow-repeat-step-before"
-                                     ng-click="insertAfterRepeatFlowStep($event)"></div>
+                                     ng-click="once(this, $event, 'insertAfterRepeatFlowStep', $event)"></div>
                                 <div class="flowButton icon-flow-before icon-flow-sequence-step-before"
-                                     ng-click="insertAfterSequenceFlowStep($event)"></div>
+                                     ng-click="once(this, $event, 'insertAfterSequenceFlowStep', $event)"></div>
                                 <div class="flowButton icon-flow-before icon-flow-exit-step-before"
-                                     ng-click="insertAfterExitFlowStep($event)"></div>
+                                     ng-click="once(this, $event, 'insertAfterExitFlowStep', $event)"></div>
                                 <div class="divider"></div>
                                 <div class="flowButton icon-flow-before icon-flow-trash-before"
-                                     ng-click="removeFlowStep($event)"></div>
+                                     ng-click="once(this, $event, 'removeFlowStep', $event)"></div>
                                 <div class="flowButton icon-flow-before icon-flow-move-up-before"
-                                     ng-click="moveFlowStepUp($event)"></div>
+                                     ng-click="once(this, $event, 'moveFlowStepUp', $event)"></div>
                                 <div class="flowButton icon-flow-before icon-flow-move-down-before"
-                                     ng-click="moveFlowStepDown($event)"></div>
+                                     ng-click="once(this, $event, 'moveFlowStepDown', $event)"></div>
                                 <div class="flowButton icon-flow-before icon-flow-move-left-before"
-                                     ng-click="moveFlowStepLeft($event)"></div>
+                                     ng-click="once(this, $event, 'moveFlowStepLeft', $event)"></div>
                                 <div class="flowButton icon-flow-before icon-flow-move-right-before"
-                                     ng-click="moveFlowStepRight($event)"></div>
+                                     ng-click="once(this, $event, 'moveFlowStepRight', $event)"></div>
                             </div>
                             <ui-tree id="flowStepTree" drag-enabled="false" spacing="20"
                                      coverage="50"
-                                     collapseAll="true" ng-click="clearSelection($event)">
+                                     collapseAll="true" ng-click="once(this, $event, 'clearSelection', $event)">
                                 <ol ui-tree-nodes class="fs-x-small" ng-model="$root.loadedProject.flowWorks.flows">
                                     <li ng-repeat="item in $root.loadedProject.flowWorks.flows" ui-tree-node
                                         ng-attr-id="{{item.id}}" ng-include="'_flowSteps.html'"
@@ -123,7 +127,7 @@
                         </div>
                         <div class="flowConfigDetails col-as-8 no-padding"></div>
                     </div>
-                    <div class="flowKnob" ng-click="toggleExpand('.flowContent', $event)">
+                    <div class="flowKnob" ng-click="once(this, $event, 'toggleExpand''.flowContent', $event)">
                     </div>
                 </div>
             </div>

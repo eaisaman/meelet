@@ -24,6 +24,10 @@ define(
                         return {
                             pre: function (scope, element, attrs) {
                                 extension && extension.attach && extension.attach(scope, _.extend(injectObj, {
+                                    "$timeout": $timeout,
+                                    "$q": $q,
+                                    "angularConstants": angularConstants,
+                                    "uiUtilService": uiUtilService,
                                     element: element,
                                     scope: scope
                                 }));
@@ -77,11 +81,11 @@ define(
 
                                     scope.pickedItem = item;
                                     if ($colorPane.hasClass("select")) {
-                                        paletteScope.closePalette().then(function () {
+                                        return paletteScope.closePalette().then(function () {
                                             return scope.toggleSelect($colorPane);
                                         });
                                     } else {
-                                        scope.toggleSelect($colorPane).then(function () {
+                                        return scope.toggleSelect($colorPane).then(function () {
                                             return paletteScope.openPalette();
                                         });
                                     }
@@ -94,6 +98,8 @@ define(
                                     scope.configurableWidget.applyHandDownConfiguration().then(function () {
                                         scope.widgetSpec.isApplyingHandDown = false;
                                     });
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.initHandDownColorStyle = function (item) {
@@ -137,6 +143,8 @@ define(
                                             item.options.push({name: optionName});
                                         }
                                     }
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.deleteConfigurationItemOption = function (item, option, event) {
@@ -156,11 +164,13 @@ define(
                                             item.pickedValue = "";
                                         }
                                     }
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.toggleConfigurationPanel = function (el, event) {
-                                    scope.toggleDisplay($(el).find("> .configurationPanel"), event).then(function ($panel) {
-                                        scope.toggleSelect($(el).find("> .configurationBar"), null, $panel.hasClass("show"));
+                                    return scope.toggleDisplay($(el).find("> .configurationPanel"), event).then(function ($panel) {
+                                        return scope.toggleSelect($(el).find("> .configurationBar"), null, $panel.hasClass("show"));
                                     });
                                 }
 
@@ -199,41 +209,46 @@ define(
                                 createConfigurationItemAssign("configurationItem.pickedValue");
                             },
                             post: function (scope, element, attrs) {
-                                scope.togglePalette = function (event) {
-                                    event && event.stopPropagation && event.stopPropagation();
+                                scope.init = function () {
+                                    element.find(".configurationPane input[type='checkbox']").on('ifChanged', function (event) {
+                                        var checked = event.target.checked,
+                                            order = parseInt($(event.target).attr("item-order"));
+                                        if (order != null) {
+                                            var item = scope.widgetSpec.configuration[order];
+                                            item.booleanValue = checked;
+                                            scope.setItem(item);
+                                            scope.$apply();
+                                        }
 
-                                    var $wrapper = element.find(".ui-control-wrapper"),
-                                        $panel = element.find(".ui-control-panel");
+                                    }).iCheck({
+                                        checkboxClass: 'icheckbox_square-blue',
+                                        radioClass: 'iradio_square-blue',
+                                        increaseArea: '20%'
+                                    });
 
-                                    if ($wrapper.hasClass("expanded")) {
-                                        scope.toggleDisplay($panel).then(function () {
-                                            return scope.toggleExpand($wrapper);
-                                        });
-                                    } else {
-                                        scope.toggleExpand($wrapper).then(function () {
-                                            $timeout(function () {
-                                                element.find(".configurationPane input[type='checkbox']").on('ifChanged', function (event) {
-                                                    var checked = event.target.checked,
-                                                        order = parseInt($(event.target).attr("item-order"));
-                                                    if (order != null) {
-                                                        var item = scope.widgetSpec.configuration[order];
-                                                        item.booleanValue = checked;
-                                                        scope.setItem(item);
-                                                        scope.$apply();
-                                                    }
+                                    var $content = $(element.find(".modal-control-panel"));
+                                    $content.sly({
+                                        smart: 1,
+                                        activateOn: 'click',
+                                        mouseDragging: 1,
+                                        touchDragging: 0,
+                                        releaseSwing: 1,
+                                        scrollBar: null,
+                                        scrollBy: 10,
+                                        pagesBar: null,
+                                        activatePageOn: 'click',
+                                        speed: 300,
+                                        elasticBounds: 1,
+                                        easing: 'easeOutExpo',
+                                        dragHandle: 1,
+                                        dynamicHandle: 1,
+                                        clickBar: 1
+                                    });
 
-                                                }).iCheck({
-                                                    checkboxClass: 'icheckbox_square-blue',
-                                                    radioClass: 'iradio_square-blue',
-                                                    increaseArea: '20%'
-                                                });
-                                            }, angularConstants.actionDelay);
+                                    $content.css("overflow", "visible");
 
-                                            return scope.toggleDisplay($panel);
-                                        });
-                                    }
+                                    return uiUtilService.getResolveDefer();
                                 }
-
                             }
                         }
                     }

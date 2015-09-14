@@ -1,11 +1,10 @@
 <div class="ui-control-title fs-x-small">
     <p ng-transclude></p>
 
-    <div class="ui-control-enable-button icon-dock-after icon-dock-cross-after" ng-click="toggleBorderControl()"></div>
+    <div class="ui-control-enable-button icon-dock-after icon-dock-cross-after" ng-click="once(this, $event, 'toggleBorderControl')"></div>
 </div>
 <div class="borderContent ui-control-wrapper">
-    <div class="borderBar ui-control-bar fs-x-large"
-         ng-click="togglePalette($event)">
+    <div class="borderBar ui-control-bar fs-x-large">
         <div class="borderSample"
              ng-style="{'border-width':'{{Math.min(parseLength(pickedBorderWidth), 20)}}px', 'border-style':'{{pickedBorderStyle}}', 'border-color':'{{pickedBorderColor}}', 'border-radius':'{{Math.min(parseLength(pickedBorderRadius), 20)}}px'}"
              ng-if="borderIsSet">
@@ -48,7 +47,7 @@
 
                 <div class="col-as-7 no-padding">
                     <div class="borderColorBar fs-x-smaller"
-                         ng-click="toggleSelectBorderColorPane($event)">
+                         ng-click="once(this, $event, 'toggleSelectBorderColorPane', $event)">
                         <div class="borderColorPickerPane"
                              ng-style="{'color':'{{borderColorPaneColor}}', 'background-color':'{{borderColorPaneBackgroundColor}}'}"
                              ng-if="borderColorPaneBackgroundColor">

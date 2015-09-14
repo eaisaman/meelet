@@ -22,6 +22,10 @@ define(
                         return {
                             pre: function (scope, element, attrs) {
                                 extension && extension.attach && extension.attach(scope, _.extend(injectObj, {
+                                    "$timeout": $timeout,
+                                    "$q": $q,
+                                    "angularConstants": angularConstants,
+                                    "uiUtilService": uiUtilService,
                                     element: element,
                                     scope: scope
                                 }));
@@ -43,6 +47,8 @@ define(
                                     if (resourceType && resourceItem) {
                                         return $rootScope.loadedProject.deleteResource(resourceType, resourceItem);
                                     }
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.pickedMarkers = [];
@@ -100,8 +106,10 @@ define(
 
                                         $insertPartPopup.removeData("marker");
 
-                                        scope.toggleDisplay($insertPartPopup, null, false);
+                                        return scope.toggleDisplay($insertPartPopup, null, false);
                                     }
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.insertPartAfter = function (event) {
@@ -111,10 +119,12 @@ define(
                                         var $insertPartPopup = scope.$editorEl.find("#audioSideBar .sideBarContainer:not(.ng-hide) #waveCanvasContainer .insertPartPopup"),
                                             marker = $insertPartPopup.data("marker");
 
-                                        return uiWaveVisualizerService.insertAudioPart(marker.progress, scope.pickedAudioClip).then(function () {
+                                        uiWaveVisualizerService.insertAudioPart(marker.progress, scope.pickedAudioClip).then(function () {
                                             return scope.hideInsertPartPopup();
                                         });
                                     }
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.saveAudio = function (event) {
@@ -132,6 +142,8 @@ define(
                                     event && event.stopPropagation && event.stopPropagation();
 
                                     scope.isPlaying = uiWaveVisualizerService.playPause(playStateHandler);
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.stopAudio = function (event) {
@@ -139,6 +151,8 @@ define(
 
                                     scope.isPlaying = false;
                                     uiWaveVisualizerService.stopPlay();
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.cutAudioClip = function (event) {
@@ -160,6 +174,8 @@ define(
                                             }
                                         );
                                     }
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.copyAudioClip = function (event) {
@@ -171,6 +187,8 @@ define(
 
                                         uiWaveVisualizerService.collectAudioClip(startProgress, endProgress);
                                     }
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.removeAudioPart = function (event) {
@@ -188,6 +206,8 @@ define(
 
                                         uiWaveVisualizerService.removeAudioPart(startProgress, endProgress);
                                     }
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.toggleSelectAudioClip = function (audioClip, event) {
@@ -202,6 +222,8 @@ define(
                                     } else {
                                         cancelInsertAudioPart();
                                     }
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.removeAudioClip = function (audioClip, event) {
@@ -229,12 +251,16 @@ define(
                                             });
                                         }
                                     }
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.toggleAudioClipLoop = function (audioClip, event) {
                                     event && event.stopPropagation && event.stopPropagation();
 
                                     audioClip.isLooped = !audioClip.isLooped;
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.playPauseAudioClip = function (audioClip, event) {
@@ -246,6 +272,8 @@ define(
                                     event && event.stopPropagation && event.stopPropagation();
 
                                     audioClip.isPlaying = uiWaveVisualizerService.playPauseAudioClip(audioClip, playStateHandler);
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.insertAudioPart = function (marker, audioClip) {
@@ -260,6 +288,8 @@ define(
                                         scope.activeMarker = ret[0];
                                         scope.$activeMarkerElement = ret[1];
                                     }
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.toggleMarkerEditMode = function (event, mode) {
@@ -274,7 +304,7 @@ define(
                                         scope.markerEditMode = null;
                                     }
 
-                                    scope.toggleAudioSideBar(scope.markerEditMode === "DisplayClips");
+                                    return scope.toggleAudioSideBar(scope.markerEditMode === "DisplayClips");
                                 }
 
                                 scope.toggleAudioSideBar = function (state) {
@@ -345,6 +375,8 @@ define(
                                             }
                                         }
                                     }
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.displayResourceEditor = function (resourceType, fileName, event) {

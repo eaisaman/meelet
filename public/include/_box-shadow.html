@@ -1,20 +1,20 @@
 <style>
-    {{composeBoxShadowCss(pickedBoxShadow, 'boxShadowPickerPane')}}
+    {{composeBoxShadowCss (pickedBoxShadow, 'boxShadowPickerPane')}}
 </style>
 <div class="ui-control-title fs-x-small">
     <p ng-transclude></p>
 
     <div class="ui-control-enable-button icon-dock-after icon-dock-cross-after"
-         ng-click="toggleBoxShadowControl()"></div>
+         ng-click="once(this, $event, 'toggleBoxShadowControl')"></div>
 </div>
 <div class="boxShadowContent ui-control-wrapper" ng-class="dockAlign">
-    <div class="boxShadowBar ui-control-bar fs-x-large" ng-click="togglePalette($event)">
+    <div class="boxShadowBar ui-control-bar fs-x-large">
         <div id="boxShadowPickerPane" class="boxShadowPickerPane fs-x-large vt-align-center"
              ng-class="{'fs-x-tiny':pickedBoxShadow && hasStyle(pickedBoxShadow)}">
             <span>{{pickedBoxShadow && hasStyle(pickedBoxShadow) && (pickedBoxShadowName || 'Shadowed') || 'None'}}</span>
         </div>
     </div>
-    <div class="boxShadowPalette ui-control-panel" ng-click="selectTab($event.currentTarget, $event.target, $event)">
+    <div class="boxShadowPalette ui-control-panel" ng-click="once(this, $event, 'selectBoxShadowTab', $event)">
         <div class="topBar">
             <div class="boxShadowToolBar fs-x-toolButton-normal">
                 <div tab-sel="tab-head-box-shadow-value-1" tab-content="box-shadow-value"
@@ -37,7 +37,7 @@
                     </div>
                     <div class="accordianGroup fs-x-small"
                          ng-repeat="artifact in filterArtifactList(effectLibrary, $root.loadedProject.xrefRecord)"
-                         ng-click="toggleSelect($event.currentTarget, $event)">
+                         ng-click="once(this, $event, 'toggleSelect', $event)">
 
                         <style>
                             {{generateBoxShadowStyle(artifact.json)}}
@@ -50,7 +50,7 @@
                             <div ng-attr-id="boxShadow-{{pane.value}}"
                                  class="shadowPane fs-x-small col-as-10 no-padding"
                                  ng-repeat="pane in artifact.json"
-                                 ng-click="pickBoxShadow(pane, $event)">
+                                 ng-click="once(this, $event, 'pickBoxShadow', pane, $event)">
                                 <span class="fs-x-tiny vt-align-center">{{pane.name}}</span>
                             </div>
                         </div>
@@ -60,7 +60,7 @@
             <div tab-sel="tab-content-box-shadow-value-2" class="boxShadowValuePanes vt-scroll-pane">
                 <div id="shadowStopColorPalette" class="shadowStopColorPalette" ui-color-editor-palette
                      ui-color-editor-palette-opts="{enableClose:true}" selected-color="selectedShadowStopColor"></div>
-                <div class="accordianGroup shadowStopGroup" ng-click="toggleSelect($event.currentTarget, $event)"
+                <div class="accordianGroup shadowStopGroup" ng-click="once(this, $event, 'toggleSelect', $event)"
                      pseudo="before">
                     <div class="accordianTitle col-as-12 icon-box-shadow-before icon-box-shadow-angle-double-up-before">
                         :before
@@ -108,27 +108,28 @@
                                 </div>
                             </div>
                             <div class="shadowStopColor col-as-2 no-padding-right fs-x-tiny"
-                                 ng-click="toggleShadowStopMenu('before', $index, $event)" ng-if="shadowStop.color">
+                                 ng-click="once(this, $event, 'toggleShadowStopMenu', 'before', $index, $event)"
+                                 ng-if="shadowStop.color">
                                 <span ng-style="{'background-color':'{{shadowStop.color.alphaColor || shadowStop.color.color}}'}"></span>
                             </div>
                             <div class="circular-menu">
                                 <div class="circle">
                                     <div class="icon-box-shadow icon-box-shadow-insert-before"
-                                         ng-click="insertShadowStop('before', $index, $event)"></div>
+                                         ng-click="once(this, $event, 'insertShadowStop', 'before', $index, $event)"></div>
                                     <div class="icon-box-shadow icon-box-shadow-remove-before"
-                                         ng-click="removeShadowStop('before', $index, $event)"></div>
+                                         ng-click="once(this, $event, 'removeShadowStop', 'before', $index, $event)"></div>
                                     <div class="icon-box-shadow icon-box-shadow-brush-before"
-                                         ng-click="setShadowStopColor('before', $index, $event)"></div>
+                                         ng-click="once(this, $event, 'setShadowStopColor', 'before', $index, $event)"></div>
                                     <div class="icon-box-shadow icon-box-shadow-copy-before"
-                                         ng-click="copyShadowStop('before', $index, $event)"></div>
+                                         ng-click="once(this, $event, 'copyShadowStop', 'before', $index, $event)"></div>
                                     <div class="icon-box-shadow icon-box-shadow-paste-before"
-                                         ng-click="pasteShadowStop('before', $index, $event)"></div>
+                                         ng-click="once(this, $event, 'pasteShadowStop', 'before', $index, $event)"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="accordianGroup shadowStopGroup" ng-click="toggleSelect($event.currentTarget, $event)"
+                <div class="accordianGroup shadowStopGroup" ng-click="once(this, $event, 'toggleSelect', $event)"
                      pseudo="">
                     <div class="accordianTitle col-as-12 icon-box-shadow-before icon-box-shadow-angle-double-up-before">
                         :current
@@ -175,27 +176,28 @@
                                 </div>
                             </div>
                             <div class="shadowStopColor col-as-2 no-padding-right fs-x-tiny"
-                                 ng-click="toggleShadowStopMenu('', $index, $event)" ng-if="shadowStop.color">
+                                 ng-click="once(this, $event, 'toggleShadowStopMenu', '', $index, $event)"
+                                 ng-if="shadowStop.color">
                                 <span ng-style="{'background-color':'{{shadowStop.color.alphaColor || shadowStop.color.color}}'}"></span>
                             </div>
                             <div class="circular-menu">
                                 <div class="circle">
                                     <div class="icon-box-shadow icon-box-shadow-insert-before"
-                                         ng-click="insertShadowStop('', $index, $event)"></div>
+                                         ng-click="once(this, $event, 'insertShadowStop', '', $index, $event)"></div>
                                     <div class="icon-box-shadow icon-box-shadow-remove-before"
-                                         ng-click="removeShadowStop('', $index, $event)"></div>
+                                         ng-click="once(this, $event, 'removeShadowStop', '', $index, $event)"></div>
                                     <div class="icon-box-shadow icon-box-shadow-brush-before"
-                                         ng-click="setShadowStopColor('', $index, $event)"></div>
+                                         ng-click="once(this, $event, 'setShadowStopColor', '', $index, $event)"></div>
                                     <div class="icon-box-shadow icon-box-shadow-copy-before"
-                                         ng-click="copyShadowStop('', $index, $event)"></div>
+                                         ng-click="once(this, $event, 'copyShadowStop', '', $index, $event)"></div>
                                     <div class="icon-box-shadow icon-box-shadow-paste-before"
-                                         ng-click="pasteShadowStop('', $index, $event)"></div>
+                                         ng-click="once(this, $event, 'pasteShadowStop', '', $index, $event)"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="accordianGroup shadowStopGroup" ng-click="toggleSelect($event.currentTarget, $event)"
+                <div class="accordianGroup shadowStopGroup" ng-click="once(this, $event, 'toggleSelect', $event)"
                      pseudo="after">
                     <div class="accordianTitle col-as-12 icon-box-shadow-before icon-box-shadow-angle-double-up-before">
                         :after
@@ -243,21 +245,22 @@
                                 </div>
                             </div>
                             <div class="shadowStopColor col-as-2 no-padding-right fs-x-tiny"
-                                 ng-click="toggleShadowStopMenu('after', $index, $event)" ng-if="shadowStop.color">
+                                 ng-click="once(this, $event, 'toggleShadowStopMenu', after', $index, $event)"
+                                 ng-if="shadowStop.color">
                                 <span ng-style="{'background-color':'{{shadowStop.color.alphaColor || shadowStop.color.color}}'}"></span>
                             </div>
                             <div class="circular-menu">
                                 <div class="circle">
                                     <div class="icon-box-shadow icon-box-shadow-insert-before"
-                                         ng-click="insertShadowStop('after', $index, $event)"></div>
+                                         ng-click="once(this, $event, 'insertShadowStop', 'after', $index, $event)"></div>
                                     <div class="icon-box-shadow icon-box-shadow-remove-before"
-                                         ng-click="removeShadowStop('after', $index, $event)"></div>
+                                         ng-click="once(this, $event, 'removeShadowStop', 'after', $index, $event)"></div>
                                     <div class="icon-box-shadow icon-box-shadow-brush-before"
-                                         ng-click="setShadowStopColor('after', $index, $event)"></div>
+                                         ng-click="once(this, $event, 'setShadowStopColor', 'after', $index, $event)"></div>
                                     <div class="icon-box-shadow icon-box-shadow-copy-before"
-                                         ng-click="copyShadowStop('after', $index, $event)"></div>
+                                         ng-click="once(this, $event, 'copyShadowStop', 'after', $index, $event)"></div>
                                     <div class="icon-box-shadow icon-box-shadow-paste-before"
-                                         ng-click="pasteShadowStop('after', $index, $event)"></div>
+                                         ng-click="once(this, $event, 'pasteShadowStop', 'after', $index, $event)"></div>
                                 </div>
                             </div>
                         </div>
@@ -265,7 +268,7 @@
                 </div>
             </div>
             <div tab-sel="tab-content-box-shadow-value-3" class="boxShadowStylePanes vt-scroll-pane">
-                <div class="accordianGroup shadowStopGroup" ng-click="toggleSelect($event.currentTarget, $event)"
+                <div class="accordianGroup shadowStopGroup" ng-click="once(this, $event, 'toggleSelect', $event)"
                      pseudo="before" ng-if="pickedBoxShadow.beforeStyle['content'] != null">
                     <div class="accordianTitle col-as-12 icon-box-shadow-before icon-box-shadow-angle-double-up-before">
                         :before
@@ -286,7 +289,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="accordianGroup shadowStopGroup" ng-click="toggleSelect($event.currentTarget, $event)"
+                <div class="accordianGroup shadowStopGroup" ng-click="once(this, $event, 'toggleSelect', $event)"
                      pseudo="after" ng-if="pickedBoxShadow.afterStyle['content'] != null">
                     <div class="accordianTitle col-as-12 icon-box-shadow-before icon-box-shadow-angle-double-up-before">
                         :after
@@ -311,14 +314,14 @@
                 <div class="accordianGroup"
                      ng-repeat="effectLibrary in markLibrarySelection(effectLibraryList, $root.loadedProject.xrefRecord)"
                      ng-if="effectLibrary.uiControl === 'uiBoxShadowEditor'"
-                     ng-click="toggleSelect($event.currentTarget, $event)">
+                     ng-click="once(this, $event, 'toggleSelect', $event)">
                     <div class="accordianTitle col-as-12 fs-x-small icon-box-shadow-before icon-box-shadow-angle-double-up-before">
                         <span class="col-as-10 no-padding"
                               ng-attr-title="{{effectLibrary.desc}}">{{effectLibrary.desc}}</span>
 
                         <div class="toggleSelectionButton col-as-2 no-padding-right icon-box-shadow-before"
                              ng-class="{'icon-box-shadow-square-before':!effectLibrary._selected, 'icon-box-shadow-square-check-before':effectLibrary._selected, 'partialSelect':isPartialSelection(effectLibrary, $root.loadedProject.xrefRecord)}"
-                             ng-click="toggleLibrarySelection(effectLibrary, $event)"></div>
+                             ng-click="once(this, $event, 'toggleLibrarySelection', effectLibrary, $event)"></div>
                     </div>
                     <div class="accordianBody fs-x-smaller col-as-12 no-padding">
                         <div class="effectPane col-as-12 no-padding"
@@ -328,7 +331,7 @@
 
                             <div class="toggleSelectionButton icon-box-shadow-before"
                                  ng-class="{'icon-box-shadow-square-before':!artifact._selected, 'icon-box-shadow-square-check-before':artifact._selected}"
-                                 ng-click="toggleArtifactSelection(artifact, effectLibrary, $event)"></div>
+                                 ng-click="once(this, $event, 'toggleArtifactSelection', artifact, effectLibrary, $event)"></div>
                         </div>
                     </div>
                 </div>

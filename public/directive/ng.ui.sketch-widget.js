@@ -113,6 +113,7 @@ define(
                                             }
                                         }
 
+
                                         defer.resolve();
                                     });
 
@@ -154,6 +155,9 @@ define(
                                             }
                                             widget.$element.removeClass(angularConstants.widgetClasses.activeClass);
                                         }
+
+                                        //Hide widget popup menu
+                                        uiService.hidePopupMenuHolder();
 
                                         defer.resolve();
                                     });
@@ -225,6 +229,9 @@ define(
                                                 touchY = event.srcEvent.clientY - $u.parent().offset().top;
                                                 $u.data("touchX", touchX);
                                                 $u.data("touchY", touchY);
+
+                                                //Hide widget popup menu
+                                                uiService.hidePopupMenuHolder();
                                             } else if (event.type === "panmove") {
                                                 if (touchX != undefined && touchY != undefined) {
                                                     if (scope.options.direction & DIRECTION_VERTICAL) {
@@ -241,22 +248,12 @@ define(
                                                             ftTop = Math.floor(($u.offset().top - $u.parent().offset().top) * angularConstants.precision) / angularConstants.precision;
                                                         top = ftTop + moveY;
 
-                                                        if (scope.scale) {
-                                                            ftTop = $u.offset().top - $u.parent().offset().top;
-                                                            top = ftTop + moveY;
-                                                            maxHeight *= scope.scale;
-                                                            height *= scope.scale;
-                                                        }
-
                                                         if (top + height / 2 < 0)
                                                             top = -height / 2;
                                                         else if (top + height / 2 > maxHeight)
                                                             top = maxHeight - height / 2;
 
-                                                        if (scope.scale)
-                                                            top = Math.floor(top / scope.scale * angularConstants.precision) / angularConstants.precision;
-                                                        else
-                                                            top = Math.floor(top * angularConstants.precision) / angularConstants.precision;
+                                                        top = Math.floor(top * angularConstants.precision) / angularConstants.precision;
 
                                                         touchY += moveY;
                                                         event.moveY = top - ftTop;
@@ -283,22 +280,12 @@ define(
                                                             ftLeft = Math.floor(($u.offset().left - $u.parent().offset().left) * angularConstants.precision) / angularConstants.precision;
                                                         left = ftLeft + moveX;
 
-                                                        if (scope.scale) {
-                                                            ftLeft = $u.offset().left - $u.parent().offset().left;
-                                                            left = ftLeft + moveX;
-                                                            maxWidth *= scope.scale;
-                                                            width *= scope.scale;
-                                                        }
-
                                                         if (left + width / 2 < 0)
                                                             left = -width / 2;
                                                         else if (left + width / 2 > maxWidth)
                                                             left = maxWidth - width / 2;
 
-                                                        if (scope.scale)
-                                                            left = Math.floor(left / scope.scale * angularConstants.precision) / angularConstants.precision;
-                                                        else
-                                                            left = Math.floor(left * angularConstants.precision) / angularConstants.precision;
+                                                        left = Math.floor(left * angularConstants.precision) / angularConstants.precision;
 
                                                         touchX += moveX;
                                                         event.moveX = left - ftLeft;
@@ -317,6 +304,9 @@ define(
                                             } else {
                                                 $u.removeData("touchX");
                                                 $u.removeData("touchY");
+
+                                                //Show widget popup menu
+                                                uiService.displayPopupMenuHolder(widgetObj);
                                             }
                                         }
 
@@ -374,7 +364,7 @@ define(
 
                     return {
                         restrict: "A",
-                        scope: {scale: "=?", widgetName: "@"},
+                        scope: {widgetName: "@"},
                         replace: false,
                         compile: function (element, attrs) {
                             return {

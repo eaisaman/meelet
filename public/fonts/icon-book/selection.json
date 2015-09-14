@@ -1,0 +1,71 @@
+{
+	"IcoMoonType": "selection",
+	"icons": [
+		{
+			"icon": {
+				"paths": [
+					"M405.714 626.304l-69.144 241.438 241.485-69.097 465.896-465.849-172.341-172.388-465.896 465.896zM895.145 265.633c10.188 10.235 10.188 26.931 0 37.119l-364.256 364.208c-10.235 10.235-26.884 10.235-37.072 0-10.235-10.235-10.235-26.884 0-37.119l364.208-364.208c10.235-10.188 26.931-10.188 37.119 0zM1203.935 171.917l-113.951 113.998-171.964-171.917 114.045-113.998 171.869 171.917zM729.69 753.886l85.51-85.463v355.577h-815.2v-804.352l241.579-205.168h573.668v107.914l-85.51 86.972v-122.676h-396.516v211.629h-247.758v653.519h644.227v-197.952z"
+				],
+				"attrs": [],
+				"isMulticolor": false,
+				"width": 1204,
+				"grid": 24,
+				"tags": [
+					"add-page"
+				]
+			},
+			"attrs": [],
+			"properties": {
+				"order": 51,
+				"id": 0,
+				"name": "add-page",
+				"prevSize": 32,
+				"code": 58880
+			},
+			"setIdx": 0,
+			"setId": 50,
+			"iconIdx": 0
+		}
+	],
+	"height": 1024,
+	"metadata": {
+		"name": "icon-book"
+	},
+	"preferences": {
+		"showGlyphs": true,
+		"showQuickUse": true,
+		"showQuickUse2": true,
+		"showSVGs": true,
+		"fontPref": {
+			"prefix": "icon-book-",
+			"metadata": {
+				"fontFamily": "icon-book",
+				"majorVersion": 1,
+				"minorVersion": 0
+			},
+			"metrics": {
+				"emSize": 1024,
+				"baseline": 6.25,
+				"whitespace": 50
+			},
+			"resetPoint": 58880,
+			"showSelector": true,
+			"selector": "class",
+			"classSelector": ".icon-book",
+			"showMetrics": false,
+			"embed": false
+		},
+		"imagePref": {
+			"prefix": "icon-",
+			"png": true,
+			"useClassSelector": true,
+			"color": 4473924,
+			"bgColor": 16777215,
+			"classSelector": ".icon"
+		},
+		"historySize": 100,
+		"showCodes": false,
+		"gridSize": 16,
+		"showGrid": false
+	}
+}

@@ -3974,40 +3974,6 @@ define(
                             this.isTemporary = value;
                         }
                     },
-                    zoomIn: function ($page) {
-                        var self = this;
-
-                        if ($page && self.$element && self.$element[0].nodeType == 1 && self.$element.parent().length) {
-                            var scaleX = $page.width() / self.$element.width(),
-                                scaleY = $page.height() / self.$element.height(),
-                                scale = Math.max(scaleX, scaleY);
-                            scale = Math.floor(scale * $inject.angularConstants.precision) / $inject.angularConstants.precision;
-
-                            var scaleStyleObj = $inject.uiUtilService.prefixedStyle("transform", "scale({0}, {1})", scale, scale);
-                            self.$element.css(scaleStyleObj);
-
-                            var pageLeft = $page.offset().left, pageTop = $page.offset().top;
-                            pageLeft = Math.floor(pageLeft * $inject.angularConstants.precision) / $inject.angularConstants.precision, pageTop = Math.floor(pageTop * $inject.angularConstants.precision) / $inject.angularConstants.precision;
-                            self.$element.offset({left: pageLeft, top: pageTop});
-
-                            self.addClass("zoom");
-                            self.zoomed = true;
-
-                            return scale;
-                        }
-                    },
-                    zoomOut: function () {
-                        var self = this;
-
-                        if (self.zoomed) {
-                            var scaleStyleObj = $inject.uiUtilService.prefixedStyle("transform", "scale(1, 1)");
-                            self.$element.css(scaleStyleObj);
-
-                            self.$element.css({left: self.css("left"), top: self.css("top")});
-                            self.removeClass("zoom");
-                            self.zoomed = false;
-                        }
-                    },
                     setHtml: function (value) {
                         var self = this;
 
@@ -5484,6 +5450,50 @@ define(
 
                     return editor;
                 }
+            }
+
+            Service.prototype.displayPopupMenuHolder = function (widgetObj) {
+                if (widgetObj && !widgetObj.isKindOf("PageSketchWidget")) {
+                    if (widgetObj.$element && widgetObj.$element[0].nodeType == 1 && widgetObj.$element.parent().length) {
+                        var $holder = $("#widgetPopupHolder"),
+                            $parent = $holder.parent(),
+                            $button = $holder.find("#widgetMenuButton"),
+                            $menu = $holder.find("#widgetPopupMenu"),
+                            $dropdown = $menu.find(".dropdown-menu"),
+                            buttonHeight = $button.height(),
+                            dropDownHeight = $dropdown.height(),
+                            left = widgetObj.$element.offset().left - $parent.offset().left,
+                            top = widgetObj.$element.offset().top - $parent.offset().top;
+
+                        left = Math.floor(left * this.angularConstants.precision) / this.angularConstants.precision;
+                        top = Math.floor(top * this.angularConstants.precision) / this.angularConstants.precision;
+
+                        $holder.css("left", left + "px"), $holder.css("top", top + "px");
+
+                        if (top + dropDownHeight > $parent.height()) {
+                            top = -dropDownHeight;
+                            top = Math.floor(top * this.angularConstants.precision) / this.angularConstants.precision;
+                            $menu.css("top", top + "px")
+                        } else {
+                            $menu.css("top", "0px")
+                        }
+
+                        $holder.removeClass("select");
+                        $holder.addClass("show");
+                    }
+                }
+            }
+
+            Service.prototype.hidePopupMenuHolder = function () {
+                var $holder = $("#widgetPopupHolder");
+
+                $holder.removeClass("show");
+            }
+
+            Service.prototype.hidePopupMenu = function () {
+                var $holder = $("#widgetPopupHolder");
+
+                $holder.removeClass("select");
             }
         }
 

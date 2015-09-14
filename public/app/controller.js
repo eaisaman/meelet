@@ -95,7 +95,6 @@ define(
                     ]);
                 }
 
-                $scope.alertUidGen = uiUtilService.uniqueIdGen("alert-");
                 $rootScope.alertList = [];
                 $rootScope.repoLibraryList = [];
                 $rootScope.effectLibraryList = [];
@@ -109,7 +108,17 @@ define(
                     isPlaying: false
                 };
                 $rootScope.visiblePseudoEnabledWidgets = [];
+                $scope.alertUidGen = uiUtilService.uniqueIdGen("alert-");
                 $scope.urlService = urlService;
+                $scope.sketchDevice = {
+                    type: "desktop",
+                    width: 1024,
+                    height: 768,
+                    img: "device_ipad_horizontal.svg",
+                    rulerMarkerCount: 12
+                };
+                $scope.dockAlign = "align-left";
+                $scope.pseudoOptions = ["", "before", "after"];
 
                 $scope.markSelection = function (target, source, props) {
                     if (toString.call(target) === '[object Array]' && target.length) {
@@ -162,50 +171,36 @@ define(
                     "scope": $scope
                 });
 
-                $scope.zoomWidget = function (event) {
+                $scope.togglePopupMenu = function (event) {
                     event && event.stopPropagation && event.stopPropagation();
 
-                    if ($rootScope.sketchObject.pickedPage && $rootScope.sketchObject.pickedPage.$element) {
-                        var id = $scope.zoomId,
-                            widgetObj;
+                    $(event.currentTarget).parent().toggleClass("select");
 
-                        if (id) {
-                            widgetObj = $("#" + id).data("widgetObject");
-
-                            widgetObj && widgetObj.zoomOut && widgetObj.zoomOut();
-                            $scope.scale = undefined;
-                            $scope.zoomId = null;
-                        } else {
-                            widgetObj = $rootScope.sketchObject.pickedWidget;
-
-                            if (widgetObj && widgetObj.isElement && !widgetObj.isTemporary) {
-                                $scope.scale = widgetObj.zoomIn($rootScope.sketchObject.pickedPage.$element);
-                                $scope.zoomId = widgetObj.id;
-                            }
-                        }
-                    }
+                    return uiUtilService.getResolveDefer();
                 }
 
                 $scope.removeWidget = function (event) {
                     var widgetObj = $rootScope.sketchObject.pickedWidget;
 
                     if (widgetObj && !widgetObj.isTemporary && !widgetObj.isKindOf("PageSketchWidget")) {
-                        widgetObj.dispose().then(function () {
+                        return widgetObj.dispose().then(function () {
                             $rootScope.sketchObject.pickedWidget = null;
+
+                            return uiUtilService.getResolveDefer();
                         });
                     }
+
+                    return uiUtilService.getResolveDefer();
                 }
 
                 $scope.enableAddWidget = function (event) {
                     function addWidgetHandler(event) {
-                        var $container = $("." + angularConstants.widgetClasses.containerClass),
-                            touchX = $shapeElement && $shapeElement.data("touchX") || 0,
-                            touchY = $shapeElement && $shapeElement.data("touchY") || 0;
+                        var touchX = $shapeElement && $shapeElement.data("touchX") || 0,
+                            touchY = $shapeElement && $shapeElement.data("touchY") || 0,
+                            $container = $("." + angularConstants.widgetClasses.containerClass);
 
                         if (event.type === "panstart") {
-
                             $shapeElement = $("<div />");
-
                             $shapeElement.addClass("pickerPaneShape squarePane")
                                 .css("z-index", angularConstants.draggingShapeZIndex);
                             $shapeElement.appendTo($container);
@@ -214,7 +209,7 @@ define(
                             touchY = event.srcEvent.offsetY;
                             $shapeElement.data("touchX", touchX);
                             $shapeElement.data("touchY", touchY);
-                        } else if ($shapeElement && event.type === "panmove") {
+                        } else if (event.type === "panmove") {
                             var left = event.srcEvent.clientX - $shapeElement.parent().offset().left + touchX,
                                 top = event.srcEvent.clientY - $shapeElement.parent().offset().top + touchY;
 
@@ -229,6 +224,11 @@ define(
                                 }
                             } else if ($to.hasClass(angularConstants.widgetClasses.holderClass)) {
                                 $("." + angularConstants.widgetClasses.holderClass).find("." + angularConstants.widgetClasses.hoverClass).removeClass(angularConstants.widgetClasses.hoverClass);
+                            }
+
+                            if (angularConstants.VERBOSE) {
+                                $log.debug("left:" + left);
+                                $log.debug("touchX:" + touchX);
                             }
                         } else if ($shapeElement && event.type === "panend") {
                             $shapeElement.remove();
@@ -260,8 +260,6 @@ define(
                                 );
                             }
                         }
-
-                        return uiUtilService.getResolveDefer();
                     }
 
                     var $el = $(event.target),
@@ -279,6 +277,20 @@ define(
                             mc.off("panstart panmove panend", addWidgetHandler);
                         });
                     }
+
+                    return uiUtilService.getResolveDefer();
+                }
+
+                $scope.configureWidget = function (event) {
+                    var widgetObj = $rootScope.sketchObject.pickedWidget;
+
+                    uiService.hidePopupMenu();
+
+                    if (widgetObj && $scope.isConfigurable(widgetObj)) {
+                        return $scope.showWidgetConfiguration();
+                    }
+
+                    return uiUtilService.getResolveDefer();
                 }
 
                 $scope.locateWidget = function (event) {
@@ -291,6 +303,10 @@ define(
                             nodeScope.expandVisible && nodeScope.expandVisible();
                         }
                     }
+
+                    uiService.hidePopupMenu();
+
+                    return uiUtilService.getResolveDefer();
                 }
 
                 $scope.duplicateWidget = function (event) {
@@ -307,9 +323,16 @@ define(
 
                                 cloneObj.css("left", left + "px");
                                 cloneObj.css("top", top + "px");
+
+                                //Show widget popup menu
+                                uiService.displayPopupMenuHolder(cloneObj);
                             });
                         }
                     }
+
+                    uiService.hidePopupMenu();
+
+                    return uiUtilService.getResolveDefer();
                 }
 
                 $scope.setSelectedButton = function (event) {
@@ -320,6 +343,50 @@ define(
                     $sel.append($el.clone());
 
                     $compile($sel)($scope);
+
+                    return uiUtilService.getResolveDefer();
+                }
+
+                $scope.setSelectedConrol = function (controlId) {
+                    controlId && $scope.toggleExclusiveDisplay("#" + controlId, null, true);
+                }
+
+                $scope.zoomIn = function (event) {
+                    var $container = $("#frameSketchContainer"),
+                        zoomStyle = Math.floor(parseFloat($container.css("zoom")) * 100) / 100,
+                        index;
+
+                    if (!$scope.zoomList.every(function (value, i) {
+                            if (value > zoomStyle) {
+                                index = i;
+                                return false;
+                            }
+                            return true;
+                        })) {
+                        zoomStyle = $scope.zoomList[index];
+                        $container.css("zoom", zoomStyle);
+                    }
+
+                    return uiUtilService.getResolveDefer();
+                }
+
+                $scope.zoomOut = function (event) {
+                    var $container = $("#frameSketchContainer"),
+                        zoomStyle = Math.floor(parseFloat($container.css("zoom")) * 100) / 100,
+                        index;
+
+                    if (!$scope.zoomList.slice(0).reverse().every(function (value, i) {
+                            if (value < zoomStyle) {
+                                index = i;
+                                return false;
+                            }
+                            return true;
+                        })) {
+                        zoomStyle = $scope.zoomList[index];
+                        $container.css("zoom", zoomStyle);
+                    }
+
+                    return uiUtilService.getResolveDefer();
                 }
 
                 $scope.alignLeft = function (event) {
@@ -329,6 +396,8 @@ define(
                         widgetObj.alignLeft && widgetObj.alignLeft();
                         widgetObj.disassemble();
                     }
+
+                    return uiUtilService.getResolveDefer();
                 }
 
                 $scope.alignHorizontalCenter = function (event) {
@@ -338,6 +407,8 @@ define(
                         widgetObj.alignHorizontalCenter && widgetObj.alignHorizontalCenter();
                         widgetObj.disassemble();
                     }
+
+                    return uiUtilService.getResolveDefer();
                 }
 
                 $scope.alignRight = function (event) {
@@ -347,6 +418,8 @@ define(
                         widgetObj.alignRight && widgetObj.alignRight();
                         widgetObj.disassemble();
                     }
+
+                    return uiUtilService.getResolveDefer();
                 }
 
                 $scope.alignTop = function (event) {
@@ -356,6 +429,8 @@ define(
                         widgetObj.alignTop && widgetObj.alignTop();
                         widgetObj.disassemble();
                     }
+
+                    return uiUtilService.getResolveDefer();
                 }
 
                 $scope.alignVerticalCenter = function (event) {
@@ -365,6 +440,8 @@ define(
                         widgetObj.alignVerticalCenter && widgetObj.alignVerticalCenter();
                         widgetObj.disassemble();
                     }
+
+                    return uiUtilService.getResolveDefer();
                 }
 
                 $scope.alignBottom = function (event) {
@@ -374,6 +451,8 @@ define(
                         widgetObj.alignBottom && widgetObj.alignBottom();
                         widgetObj.disassemble();
                     }
+
+                    return uiUtilService.getResolveDefer();
                 }
 
                 $scope.fillParent = function (event) {
@@ -382,6 +461,8 @@ define(
                     if (widgetObj && !widgetObj.isTemporary) {
                         widgetObj.fillParent && widgetObj.fillParent();
                     }
+
+                    return uiUtilService.getResolveDefer();
                 }
 
                 $scope.fillVertical = function (event) {
@@ -390,6 +471,8 @@ define(
                     if (widgetObj && !widgetObj.isTemporary) {
                         widgetObj.fillVertical && widgetObj.fillVertical();
                     }
+
+                    return uiUtilService.getResolveDefer();
                 }
 
                 $scope.fillHorizontal = function (event) {
@@ -398,6 +481,8 @@ define(
                     if (widgetObj && !widgetObj.isTemporary) {
                         widgetObj.fillHorizontal && widgetObj.fillHorizontal();
                     }
+
+                    return uiUtilService.getResolveDefer();
                 }
 
                 $scope.spanVertical = function (event) {
@@ -408,6 +493,8 @@ define(
                         widgetObj.spanVertical && widgetObj.spanVertical();
                         widgetObj.disassemble();
                     }
+
+                    return uiUtilService.getResolveDefer();
                 }
 
                 $scope.spanHorizontal = function (event) {
@@ -418,6 +505,8 @@ define(
                         widgetObj.spanHorizontal && widgetObj.spanHorizontal();
                         widgetObj.disassemble();
                     }
+
+                    return uiUtilService.getResolveDefer();
                 }
 
                 $scope.spaceVertical = function (event) {
@@ -427,6 +516,8 @@ define(
                         widgetObj.spaceVertical && widgetObj.spaceVertical();
                         widgetObj.disassemble();
                     }
+
+                    return uiUtilService.getResolveDefer();
                 }
 
                 $scope.spaceHorizontal = function (event) {
@@ -436,6 +527,8 @@ define(
                         widgetObj.spaceHorizontal && widgetObj.spaceHorizontal();
                         widgetObj.disassemble();
                     }
+
+                    return uiUtilService.getResolveDefer();
                 }
 
                 $scope.groupWidget = function (event) {
@@ -444,6 +537,10 @@ define(
                     if (widgetObj && widgetObj.isElement && widgetObj.isTemporary) {
                         widgetObj.setTemporary(false);
                     }
+
+                    uiService.hidePopupMenu();
+
+                    return uiUtilService.getResolveDefer();
                 }
 
                 $scope.ungroupWidget = function (event) {
@@ -452,6 +549,10 @@ define(
                     if (widgetObj && widgetObj.isElement) {
                         widgetObj.disassemble();
                     }
+
+                    uiService.hidePopupMenu();
+
+                    return uiUtilService.getResolveDefer();
                 }
 
                 $scope.pickParentWidget = function (event) {
@@ -484,26 +585,49 @@ define(
                             }
                         }
                     }
+
+                    uiService.hidePopupMenu();
+
+                    return uiUtilService.getResolveDefer();
                 }
 
                 $scope.moveUpWidget = function (event) {
                     var widgetObj = $rootScope.sketchObject.pickedWidget;
 
                     widgetObj && widgetObj.moveAfter();
+
+                    uiService.hidePopupMenu();
                 }
 
                 $scope.moveDownWidget = function (event) {
                     var widgetObj = $rootScope.sketchObject.pickedWidget;
 
                     widgetObj && widgetObj.moveBefore();
+
+                    uiService.hidePopupMenu();
+
+                    return uiUtilService.getResolveDefer();
                 }
 
                 $scope.toggleRuler = function (event) {
                     $rootScope.sketchWidgetSetting.showRuler = !$rootScope.sketchWidgetSetting.showRuler;
+
+                    return uiUtilService.getResolveDefer();
                 }
 
                 $scope.canPositionWidget = function (widgetObj) {
                     return widgetObj && widgetObj.isElement;
+                }
+
+                $scope.toggleResize = function (event) {
+                    event && event.stopPropagation && event.stopPropagation();
+
+                    var widgetObj = $rootScope.sketchObject.pickedWidget;
+                    if (widgetObj && widgetObj.isElement) {
+                        return $scope.toggleSelect(event);
+                    }
+
+                    return uiUtilService.getResolveDefer();
                 }
 
                 $scope.initWidgetPosition = function () {
@@ -528,6 +652,8 @@ define(
                     $rootScope.sketchWidgetSetting.isPlaying = !$rootScope.sketchWidgetSetting.isPlaying;
 
                     $rootScope.$broadcast(angularEventTypes.playProjectEvent, $rootScope.sketchWidgetSetting.isPlaying);
+
+                    return uiUtilService.getResolveDefer();
                 }
 
                 $scope.saveProject = function (event) {
@@ -603,15 +729,28 @@ define(
                     $canvasContainer.removeClass("select"), $editButton.removeClass("select");
 
                     if ($rootScope.sketchWidgetSetting.isDefingRoute) {
-                        $timeout(function () {
+                        return $timeout(function () {
                             uiCanvasService.initCanvas();
 
                             $rootScope.$broadcast(angularEventTypes.defineWidgetRouteEvent, $rootScope.sketchWidgetSetting.isDefingRoute);
-                            $rootScope.sketchObject.pickedWidget && $rootScope.sketchObject.pickedWidget.displayRoute();
+                            if ($rootScope.sketchObject.pickedWidget) {
+                                $rootScope.sketchObject.pickedWidget.displayRoute();
+
+                                //Hide widget popup menu
+                                uiService.hidePopupMenuHolder();
+                            }
                         }, angularConstants.actionDelay);
                     } else {
                         $rootScope.$broadcast(angularEventTypes.defineWidgetRouteEvent, $rootScope.sketchWidgetSetting.isDefingRoute);
-                        $rootScope.sketchObject.pickedWidget && $rootScope.sketchObject.pickedWidget.hideRoute();
+
+                        if ($rootScope.sketchObject.pickedWidget) {
+                            $rootScope.sketchObject.pickedWidget.hideRoute();
+
+                            //Show widget popup menu
+                            uiService.displayPopupMenuHolder($rootScope.sketchObject.pickedWidget);
+                        }
+
+                        return uiUtilService.getResolveDefer();
                     }
                 }
 
@@ -623,6 +762,7 @@ define(
 
                     $canvasContainer.toggleClass("select"), $editButton.toggleClass("select");
 
+                    return uiUtilService.getResolveDefer();
                 }
 
                 $scope.startLink = function (event) {
@@ -631,12 +771,16 @@ define(
                     var offset = $("#sketchCanvas").offset();
 
                     uiCanvasService.startLink(event.clientX - offset.left, event.clientY - offset.top), uiCanvasService.hideMenu();
+
+                    return uiUtilService.getResolveDefer();
                 }
 
                 $scope.removePoint = function (event) {
                     event && event.stopPropagation && event.stopPropagation();
 
                     uiCanvasService.removePoint(), uiCanvasService.hideMenu();
+
+                    return uiUtilService.getResolveDefer();
                 }
 
                 $scope.showDemo = function (event) {
@@ -662,6 +806,19 @@ define(
                     var scope = angular.element($("#frameSketchContainer > .modalWindowContainer > .md-modal")).scope();
 
                     return scope.toggleModalWindow();
+                }
+
+                $scope.showWidgetConfiguration = function (event) {
+                    event && event.stopPropagation && event.stopPropagation();
+
+                    $scope.modalUsage = "Configuration";
+
+                    var scope = angular.element($("#frameSketchContainer > .modalWindowContainer > .md-modal")).scope();
+
+                    return scope.toggleModalWindow().then(function () {
+                        var configurationScope = angular.element($("#widget-configurator-control .configurationContent")).scope();
+                        return configurationScope.init();
+                    });
                 }
 
                 $scope.showResourceEditor = function (el, event) {
@@ -693,9 +850,15 @@ define(
                     event && event.stopPropagation && event.stopPropagation();
 
                     var scope = angular.element($("#frameSketchContainer > .modalWindowContainer > .md-modal")).scope();
-                    scope.toggleModalWindow().then(function () {
-                        $scope.onModalClose && $scope.onModalClose();
-                        $scope.onModalClose = null;
+                    return scope.toggleModalWindow().then(function () {
+                        try {
+                            $scope.onModalClose && $scope.onModalClose();
+                            $scope.onModalClose = null;
+                        } catch (e) {
+                            $exceptionHandler(e);
+                        }
+
+                        return uiUtilService.getResolveDefer();
                     });
                 }
 
@@ -703,9 +866,15 @@ define(
                     event && event.stopPropagation && event.stopPropagation();
 
                     var scope = angular.element($("#frameSketchContainer > .modalWindowContainer > .md-modal")).scope();
-                    scope.toggleModalWindow().then(function () {
-                        $scope.onModalClose && $scope.onModalClose();
-                        $scope.onModalClose = null;
+                    return scope.toggleModalWindow().then(function () {
+                        try {
+                            $scope.onModalClose && $scope.onModalClose();
+                            $scope.onModalClose = null;
+                        } catch (e) {
+                            $exceptionHandler(e);
+                        }
+
+                        return uiUtilService.getResolveDefer();
                     });
                 }
 
@@ -716,27 +885,13 @@ define(
                 $scope.nextPage = function (event) {
                     event && event.stopPropagation && event.stopPropagation();
 
-                    uiUtilService.latestOnce(
-                        function () {
-                            return uiService.nextPage($rootScope.sketchObject.pickedPage);
-                        },
-                        null,
-                        angularConstants.unresponsiveInterval,
-                        "FrameSketchController.nextPage." + $rootScope.sketchObject.pickedPage.id
-                    )();
+                    return uiService.nextPage($rootScope.sketchObject.pickedPage);
                 }
 
                 $scope.prevPage = function (event) {
                     event && event.stopPropagation && event.stopPropagation();
 
-                    uiUtilService.latestOnce(
-                        function () {
-                            return uiService.prevPage($rootScope.sketchObject.pickedPage);
-                        },
-                        null,
-                        angularConstants.unresponsiveInterval,
-                        "FrameSketchController.prevPage." + $rootScope.sketchObject.pickedPage.id
-                    )();
+                    return uiService.prevPage($rootScope.sketchObject.pickedPage);
                 }
 
                 $scope.onPseudoChange = function (pseudo) {
@@ -840,12 +995,26 @@ define(
                     $scope.pickedWidgetWatcher = $rootScope.$watch("sketchObject.pickedWidget", function (to) {
                         if (!to) {
                             $rootScope.sketchObject.pickedWidget = $rootScope.sketchObject.pickedPage;
+
+                            //Hide widget popup menu holder
+                            uiService.hidePopupMenuHolder();
                         } else {
                             $scope.initWidgetPosition();
 
                             if ($rootScope.sketchWidgetSetting.isDefingRoute) {
                                 if ($rootScope.sketchObject.pickedWidget && !$rootScope.sketchObject.pickedWidget.isTemporary && $rootScope.sketchObject.pickedWidget.isKindOf("ElementSketchWidget")) {
                                     $rootScope.sketchObject.pickedWidget.displayRoute();
+
+                                    //Hide widget popup menu holder
+                                    uiService.hidePopupMenuHolder();
+                                }
+                            } else {
+                                if ($rootScope.sketchObject.pickedWidget.isKindOf("PageSketchWidget")) {
+                                    //Hide widget popup menu holder
+                                    uiService.hidePopupMenuHolder();
+                                } else {
+                                    //Display widget popup menu holder
+                                    uiService.displayPopupMenuHolder($rootScope.sketchObject.pickedWidget);
                                 }
                             }
                         }
@@ -856,6 +1025,13 @@ define(
                             widgetSettingList.forEach(function (setting) {
                                 initWidgetSettingWatch(setting);
                             });
+
+                            //If widget is visible, show popup menu holder, else hide holder.
+                            if (uiUtilService.isVisible($rootScope.sketchObject.pickedWidget.$element)) {
+                                uiService.displayPopupMenuHolder($rootScope.sketchObject.pickedWidget);
+                            } else {
+                                uiService.hidePopupMenuHolder();
+                            }
                         }
                     });
 
@@ -944,22 +1120,51 @@ define(
 
                 $scope.uiService = uiService;
                 $scope.Math = Math;
-                $scope.classie = classie;
-                $scope.dockAlign = "align-left";
-                $scope.pseudoOptions = ["", "before", "after"];
                 $scope.pseudo = "";
                 $scope.iconLibraryList = $rootScope.iconLibraryList;
                 $scope.effectLibraryList = $rootScope.effectLibraryList;
-                $scope.sketchDevice = {
-                    type: "desktop",
-                    width: 1024,
-                    height: 768,
-                    img: "device_ipad_horizontal.svg",
-                    rulerMarkerCount: 12
-                };
+                $scope.zoomList = [0.5, 0.66, 0.75, 1];
+                $scope.controlList = [
+                    {
+                        id: "pseudo-control",
+                        name: "Pseudo Element Style",
+                        thumbnail: "icon-frame-sketch-before icon-frame-sketch-pseudo-element-before"
+                    },
+                    {
+                        id: "background-image-control",
+                        name: "Background Image",
+                        thumbnail: "icon-frame-sketch-before icon-frame-sketch-image-before"
+                    },
+                    {
+                        id: "color-control",
+                        name: "Color",
+                        thumbnail: "icon-frame-sketch-before icon-frame-sketch-color-before"
+                    },
+                    {
+                        id: "border-control",
+                        name: "Border",
+                        thumbnail: "icon-frame-sketch-before icon-frame-sketch-border-before"
+                    },
+                    {
+                        id: "fill-control",
+                        name: "Linear Gradient",
+                        thumbnail: "icon-frame-sketch-before icon-frame-sketch-gradient-before"
+                    },
+                    {
+                        id: "text-shadow-control",
+                        name: "Text Shadow",
+                        thumbnail: "icon-frame-sketch-before icon-frame-sketch-text-shadow-before"
+                    },
+                    {
+                        id: "box-shadow-control",
+                        name: "Box Shadow",
+                        thumbnail: "icon-frame-sketch-before icon-frame-sketch-box-shadow-before"
+                    }
+                ];
+                $scope.pickedControl = "background-image-control";
             }
 
-            function ProjectController($scope, $rootScope, $timeout, $q, angularConstants, appService, uiService, uiFlowService, urlService, uiUtilService) {
+            function ProjectController($scope, $rootScope, $timeout, $q, angularConstants, appService, uiService, uiFlowService, uiBookService, urlService, uiUtilService) {
                 extension && extension.attach && extension.attach($scope, {
                     "$timeout": $timeout,
                     "$q": $q,
@@ -1152,6 +1357,13 @@ define(
                             uiFlowService.loadProject(projectItem).then(function (err) {
                                 if (!err) {
                                     urlService.flow(false, {project: projectItem});
+                                }
+                            });
+                            break;
+                        case "book":
+                            uiBookService.loadProject(projectItem).then(function (err) {
+                                if (!err) {
+                                    urlService.book(false, {project: projectItem});
                                 }
                             });
                             break;
@@ -1380,6 +1592,8 @@ define(
                         $content.children(".show").removeClass("show");
                         $content.children("[editor='{0}']".format(editor)).addClass("show");
                     }
+
+                    return uiUtilService.getResolveDefer();
                 }
 
                 $scope.saveProject = function (event) {
@@ -1419,6 +1633,8 @@ define(
                     scope && scope.unselect();
 
                     $("#flowStepTree [ui-tree-handle].edit").removeClass("edit");
+
+                    return uiUtilService.getResolveDefer();
                 }
 
                 $scope.deactivateNameEdit = function () {
@@ -1461,6 +1677,8 @@ define(
                     } else {
                         $rootScope.loadedProject.addFlow(uiFlowService.createFlow());
                     }
+
+                    return uiUtilService.getResolveDefer();
                 }
 
                 $scope.insertAfterFlowStep = function (step) {
@@ -1478,40 +1696,42 @@ define(
                             }
                         }
                     }
+
+                    return uiUtilService.getResolveDefer();
                 }
 
                 $scope.insertAfterInvokeFlowStep = function (event) {
-                    $scope.insertAfterFlowStep("InvokeFlowStep");
+                    return $scope.insertAfterFlowStep("InvokeFlowStep");
                 }
 
                 $scope.insertAfterMapFlowStep = function (event) {
                     event && event.stopPropagation && event.stopPropagation();
 
-                    $scope.insertAfterFlowStep("MapFlowStep");
+                    return $scope.insertAfterFlowStep("MapFlowStep");
                 }
 
                 $scope.insertAfterSwitchFlowStep = function (event) {
                     event && event.stopPropagation && event.stopPropagation();
 
-                    $scope.insertAfterFlowStep("SwitchFlowStep");
+                    return $scope.insertAfterFlowStep("SwitchFlowStep");
                 }
 
                 $scope.insertAfterRepeatFlowStep = function (event) {
                     event && event.stopPropagation && event.stopPropagation();
 
-                    $scope.insertAfterFlowStep("RepeatFlowStep");
+                    return $scope.insertAfterFlowStep("RepeatFlowStep");
                 }
 
                 $scope.insertAfterSequenceFlowStep = function (event) {
                     event && event.stopPropagation && event.stopPropagation();
 
-                    $scope.insertAfterFlowStep("SequenceFlowStep");
+                    return $scope.insertAfterFlowStep("SequenceFlowStep");
                 }
 
                 $scope.insertAfterExitFlowStep = function (event) {
                     event && event.stopPropagation && event.stopPropagation();
 
-                    $scope.insertAfterFlowStep("ExitFlowStep");
+                    return $scope.insertAfterFlowStep("ExitFlowStep");
                 }
 
                 $scope.removeFlowStep = function (event) {
@@ -1537,6 +1757,7 @@ define(
                         }
                     }
 
+                    return uiUtilService.getResolveDefer();
                 }
 
                 $scope.moveFlowStepUp = function (event) {
@@ -1552,6 +1773,8 @@ define(
                             parentItem && parentItem.moveUpStep(item);
                         }
                     }
+
+                    return uiUtilService.getResolveDefer();
                 }
 
                 $scope.moveFlowStepDown = function (event) {
@@ -1567,6 +1790,8 @@ define(
                             parentItem && parentItem.moveDownStep(item);
                         }
                     }
+
+                    return uiUtilService.getResolveDefer();
                 }
 
                 $scope.moveFlowStepLeft = function (event) {
@@ -1598,6 +1823,8 @@ define(
                             }
                         }
                     }
+
+                    return uiUtilService.getResolveDefer();
                 }
 
                 $scope.moveFlowStepRight = function (event) {
@@ -1629,6 +1856,8 @@ define(
                             }
                         }
                     }
+
+                    return uiUtilService.getResolveDefer();
                 }
 
                 function initMaster() {
@@ -1641,12 +1870,83 @@ define(
                 $scope.activeEditor = "process";
             }
 
+            function BookController($scope, $rootScope, $timeout, $q, $log, $exceptionHandler, $compile, $parse, $templateCache, angularEventTypes, angularConstants, appService, uiService, uiUtilService, uiCanvasService) {
+                extension && extension.attach && extension.attach($scope, {
+                    "$timeout": $timeout,
+                    "$q": $q,
+                    "angularConstants": angularConstants,
+                    "uiUtilService": uiUtilService,
+                    "element": $(".bookContainer"),
+                    "scope": $scope
+                });
+
+                function getExtensionScope() {
+                    return angular.element(document.getElementById("frameSketchContainer")).scope();
+                }
+
+                function defineExtensionScopeHandler(extensionScope) {
+                    extensionScope.enableAddPageWidget = function (event) {
+                        event && event.stopPropagation && event.stopPropagation();
+                    }
+                }
+
+                function addExtensionTemplate() {
+                    var extensionHtml = $templateCache.get("_bookExtension.html"),
+                        $extensionChildren = $(extensionHtml).filter("[extension]"),
+                        $frameSketchContainer = $("#frameSketchContainer");
+
+                    $extensionChildren.each(function (i, element) {
+                        var extensionPoint = element.getAttribute("extension"),
+                            $extensionPoint = $frameSketchContainer.find("[extensionPoint='{0}']".format(extensionPoint));
+
+                        if ($extensionPoint.length) {
+                            $(element).children().insertBefore($extensionPoint[0]);
+                            $compile($extensionPoint.parent())(angular.element($extensionPoint[0]).scope());
+                        }
+                    });
+                }
+
+                function addExtensionSnippet() {
+                    return uiUtilService.whilst(
+                        function () {
+                            return !getExtensionScope();
+                        }, function (callback) {
+                            callback();
+                        }, function () {
+                            uiUtilService.latestOnce(
+                                function () {
+                                    return $timeout(function () {
+                                        var extensionScope = getExtensionScope();
+
+                                        defineExtensionScopeHandler(extensionScope);
+                                        addExtensionTemplate();
+                                    });
+                                },
+                                null,
+                                angularConstants.unresponsiveInterval,
+                                "BookController.addExtensionSnippet"
+                            )();
+                        },
+                        angularConstants.checkInterval,
+                        "BookController.addExtensionSnippet",
+                        angularConstants.renderTimeout
+                    );
+                }
+
+                function initMaster() {
+                    addExtensionSnippet();
+                }
+
+                initMaster();
+            }
+
             appModule.
                 controller('RootController', ["$scope", "$rootScope", "$q", "$timeout", "angularEventTypes", "angularConstants", "appService", "urlService", "uiUtilService", RootController]).
                 controller('FrameSketchController', ["$scope", "$rootScope", "$timeout", "$q", "$log", "$exceptionHandler", "$compile", "$parse", "angularEventTypes", "angularConstants", "appService", "uiService", "uiUtilService", "uiCanvasService", FrameSketchController]).
-                controller('ProjectController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "uiService", "uiFlowService", "urlService", "uiUtilService", ProjectController]).
+                controller('BookController', ["$scope", "$rootScope", "$timeout", "$q", "$log", "$exceptionHandler", "$compile", "$parse", "$templateCache", "angularEventTypes", "angularConstants", "appService", "uiService", "uiUtilService", "uiCanvasService", BookController]).
+                controller('FlowController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "uiService", "uiFlowService", "urlService", "uiUtilService", FlowController]).
+                controller('ProjectController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "uiService", "uiFlowService", "uiBookService", "urlService", "uiUtilService", ProjectController]).
                 controller('RepoController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "urlService", RepoController]).
-                controller('RepoLibController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "urlService", RepoLibController]).
-                controller('FlowController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "uiService", "uiFlowService", "urlService", "uiUtilService", FlowController]);
+                controller('RepoLibController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "urlService", RepoLibController]);
         }
     });

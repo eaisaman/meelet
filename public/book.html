@@ -1,0 +1,14 @@
+<link rel="stylesheet" type="text/css" href="stylesheets/book.css"/>
+<link rel="stylesheet" type="text/css" href="fonts/icon-book/style.css"/>
+
+<script type="text/ng-template" id="_bookExtension.html">
+    <div extension="extraButtonExtensionPoint">
+        <div ng-click="once(this, $event, 'enableAddPageWidget', $event)"
+             class="topbarButton icon-book-before icon-book-add-page-before"
+             title="Add Book Page Widget"></div>
+    </div>
+</script>
+
+<div class="bookContainer fs-x-medium" ng-controller="BookController">
+    <div ng-include="'frameSketch.html'"></div>
+</div>

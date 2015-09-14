@@ -36,6 +36,10 @@ define(
                             pre: function (scope, element, attrs) {
 
                                 extension && extension.attach && extension.attach(scope, _.extend(injectObj, {
+                                    "$timeout": $timeout,
+                                    "$q": $q,
+                                    "angularConstants": angularConstants,
+                                    "uiUtilService": uiUtilService,
                                     element: element,
                                     scope: scope
                                 }));
@@ -116,9 +120,9 @@ define(
                                 }
 
                                 scope.toggleGradientControl = function () {
-                                    scope.toggleEnableControl().then(function (enable) {
+                                    return scope.toggleEnableControl().then(function (enable) {
                                         if (enable) {
-                                            uiUtilService.whilst(
+                                            return uiUtilService.whilst(
                                                 function () {
                                                     return !scope.linearGradientColor;
                                                 },
@@ -126,8 +130,10 @@ define(
                                                     callback();
                                                 },
                                                 function (err) {
-                                                    if (!err)
+                                                    if (!err) {
                                                         scope.setGradientColor(angular.copy(options.linearGradientColor));
+                                                        scope.toggleEditor();
+                                                    }
                                                 },
                                                 angularConstants.checkInterval,
                                                 "ui-gradient-editor.toggleGradientControl",
@@ -137,6 +143,8 @@ define(
                                             if (scope.linearGradientColor) {
                                                 scope.linearGradientColor = angular.copy(scope.unsetStyle(scope.linearGradientColor, scope.pseudo));
                                             }
+
+                                            return scope.toggleEditor();
                                         }
                                     });
                                 }
@@ -152,6 +160,8 @@ define(
 
                                     //Trigger watcher on sketchWidgetSetting.linearGradientColor to apply style to widget
                                     scope.setGradientColor(scope.pickedGradientColor);
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.decrementAngle = function (event, step) {
@@ -166,6 +176,8 @@ define(
 
                                     //Trigger watcher on sketchWidgetSetting.linearGradientColor to apply style to widget
                                     scope.setGradientColor(scope.pickedGradientColor);
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.toggleEditor = function (event) {
@@ -175,24 +187,32 @@ define(
                                         $panel = element.find(".ui-control-panel");
 
                                     if ($wrapper.hasClass("expanded")) {
+                                        element.find(".circular-menu .circle").removeClass("show");
+
                                         if (scope.hasClass(".editorPalette", "show")) {
-                                            scope.toggleDisplay(".editorPalette").then(function () {
+                                            return scope.toggleDisplay(".editorPalette").then(function () {
                                                 return scope.toggleDisplay($panel);
                                             }).then(function () {
                                                 $wrapper.removeClass("expanded");
+
+                                                return uiUtilService.getResolveDefer();
                                             });
                                         } else {
-                                            scope.toggleDisplay($panel).then(function () {
+                                            element.find(".editorPalette").removeClass("show");
+
+                                            return scope.toggleDisplay($panel).then(function () {
                                                 $wrapper.removeClass("expanded");
+
+                                                return uiUtilService.getResolveDefer();
                                             });
                                         }
                                     } else {
-                                        $wrapper.addClass("expanded");
-                                        scope.toggleDisplay($panel);
-                                    }
+                                        element.find(".circular-menu .circle").removeClass("show");
+                                        element.find(".editorPalette").removeClass("show");
 
-                                    element.find(".circular-menu .circle").removeClass("show");
-                                    element.find(".editorPalette").removeClass("show");
+                                        $wrapper.addClass("expanded");
+                                        return scope.toggleDisplay($panel);
+                                    }
                                 }
 
                                 scope.togglePalette = function (event) {
@@ -236,8 +256,10 @@ define(
                                     event && event.stopPropagation && event.stopPropagation();
 
                                     if (!element.find('.editorColorStopList .editorPalette').hasClass('show')) {
-                                        scope.toggleDisplay(".colorStop[color-order=" + index + "] .circular-menu .circle", event);
+                                        return scope.toggleDisplay(".colorStop[color-order=" + index + "] .circular-menu .circle", event);
                                     }
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.insertColorStop = function (index, event) {
@@ -265,6 +287,8 @@ define(
                                         //Trigger watcher on sketchWidgetSetting.linearGradientColor to apply style to widget
                                         scope.setGradientColor(scope.pickedGradientColor);
                                     }
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.removeColorStop = function (index, event) {
@@ -306,6 +330,8 @@ define(
                                             );
                                         }
                                     }
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.setColorStop = function (index, event) {
@@ -319,6 +345,8 @@ define(
 
                                         scope.togglePalette();
                                     }
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.copyColorStop = function (index, event) {
@@ -329,6 +357,8 @@ define(
                                     if (index < scope.pickedGradientColor.colorStopList.length) {
                                         scope.copiedColor = angular.copy(scope.pickedGradientColor.colorStopList[index].color);
                                     }
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.pasteColorStop = function (index, event) {
@@ -339,6 +369,8 @@ define(
                                     if (scope.copiedColor && index < scope.pickedGradientColor.colorStopList.length) {
                                         scope.setStopColor(index, scope.copiedColor);
                                     }
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.setStopColor = function (index, value, event) {

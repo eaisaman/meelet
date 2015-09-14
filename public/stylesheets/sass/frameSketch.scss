@@ -211,6 +211,54 @@ $waveMarkerActiveColor: rgb(221, 125, 0);
                 }
             }
 
+            #frameSketchConfigureModal {
+                position: absolute;
+                left: calc(50% - 10em);
+                top: 0;
+                width: 20em;
+                height: 40%;
+
+                .modal-control {
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+
+                    .modal-control-title {
+                        position: relative;
+                        float: left;
+                        width: 100%;
+                        height: 2em;
+                        line-height: 2;
+                        text-align: center;
+                    }
+
+                    .modal-control-wrapper {
+                        position: relative;
+                        float: left;
+                        width: 100%;
+                        height: 20em;
+
+                        .modal-control-bar {
+                            position: relative;
+                            float: left;
+                            width: 100%;
+                            height: 2em;
+                            margin-bottom: 0.2em;
+
+                            @include box-shadow(0 8px 6px -6px black);
+                        }
+
+                        .modal-control-panel {
+                            position: relative;
+                            float: left;
+                            width: 100%;
+                            height: calc(100% - 2.2em);
+                            background: transparent;
+                        }
+                    }
+                }
+            }
+
             #resourceEditorModal {
                 position: absolute;
                 width: 100%;
@@ -583,14 +631,14 @@ $waveMarkerActiveColor: rgb(221, 125, 0);
     }
 }
 
-#sketchContainer {
+.sketchContainer {
     position: relative;
     float: left;
     width: 100%;
     height: 100%;
     overflow: hidden;
 
-    #sketchHolder {
+    .sketchHolder {
         position: relative;
         float: left;
         width: 100%;
@@ -666,6 +714,110 @@ $waveMarkerActiveColor: rgb(221, 125, 0);
 
                     .ruler {
                         position: absolute;
+                    }
+
+                    #widgetPopupHolder {
+                        position: absolute;
+                        width: 2em;
+                        height: 2em;
+                        pointer-events: none;
+                        visibility: hidden;
+
+                        &.show {
+                            pointer-events: auto;
+                            visibility: visible;
+
+                            &.select {
+                                #widgetMenuButton {
+                                    background-color: #aaa;
+                                    color: $activeColor;
+                                    box-shadow: none;
+                                }
+
+                                #widgetPopupMenu {
+                                    visibility: visible;
+
+                                    .btn-group {
+                                        pointer-events: auto;
+                                        visibility: visible;
+                                    }
+                                }
+                            }
+                        }
+
+                        #widgetMenuButton {
+                            position: relative;
+                            float: left;
+                            width: 2em;
+                            height: 2em;
+                            background-color: #ddd;
+                            box-shadow: inset 0 -2px 0 rgba(0, 0, 0, .135);
+                            display: inline-block;
+                            color: $color;
+                            overflow: hidden;
+
+                            &:active {
+                                background-color: #555;
+                                color: $activeColor;
+                                box-shadow: none;
+                            }
+
+                            &:before {
+                                position: absolute;
+                                width: 100%;
+                                height: 100%;
+                                text-align: center;
+                                line-height: 2;
+                            }
+                        }
+
+                        #widgetPopupMenu {
+                            position: absolute;
+                            left: calc(100% + 5px);
+                            width: 2em;
+                            height: auto;
+                            overflow: visible;
+
+                            .btn-group {
+                                pointer-events: none;
+                                visibility: hidden;
+                                left: 0;
+                                top: 0;
+
+                                .dropdown-menu {
+                                    width: 10em;
+                                    overflow: hidden;
+                                    padding-bottom: 0.5em;
+
+                                    li:not(.divider) {
+                                        height: 2.5em;
+                                        color: $color;
+
+                                        &:before {
+                                            position: absolute;
+                                            width: 2em;
+                                            text-align: center;
+                                            line-height: 2.5;
+                                        }
+
+                                        &:active {
+                                            color: $activeColor;
+                                        }
+
+                                        a {
+                                            position: relative;
+                                            left: 2em;
+                                            line-height: 2.5;
+                                            color: $color;
+
+                                            &:active {
+                                                color: $activeColor;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
 
                     #widgetTextHolder {

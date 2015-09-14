@@ -15077,15 +15077,18 @@ button.close {
 }
 #topbarProjectDropdown .cd-dropdown > span:before {
   position: absolute;
-  width: 100%;
+  left: 0;
+  top: 0;
+  width: 2em;
   line-height: 2;
   text-align: center;
 }
 #topbarProjectDropdown .cd-dropdown > span > span {
   position: absolute;
-  width: calc(100% - 3em);
+  width: calc(100% - 2em);
   height: 100%;
   line-height: 2;
+  padding-left: 1em;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1;
@@ -15115,7 +15118,7 @@ button.close {
   width: 100%;
   height: 2em;
   line-height: 2;
-  padding-left: 1em;
+  padding-left: 2em;
   color: #bcbcbc;
   background: #eee;
   cursor: pointer;
@@ -15131,7 +15134,9 @@ button.close {
 }
 #topbarProjectDropdown .cd-dropdown ul li span:before {
   position: absolute;
-  width: 100%;
+  left: 0;
+  top: 0;
+  width: 2em;
   line-height: 2;
   text-align: center;
 }

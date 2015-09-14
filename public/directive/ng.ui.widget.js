@@ -27,6 +27,10 @@ define(
                         return {
                             pre: function (scope, element, attrs) {
                                 extension && extension.attach && extension.attach(scope, _.extend(injectObj, {
+                                    "$timeout": $timeout,
+                                    "$q": $q,
+                                    "angularConstants": angularConstants,
+                                    "uiUtilService": uiUtilService,
                                     element: element,
                                     scope: scope
                                 }));
@@ -161,11 +165,9 @@ define(
                                     scope.pickedPane = artifact;
                                     scope.pickedArtifact = artifact;
                                     scope.pickedLibrary = widgetLibrary;
-                                    $timeout(function () {
+                                    return $timeout(function () {
                                         scope.pickerPaneWidget = scope.pickedPane;
                                     });
-
-                                    return true;
                                 };
 
                                 scope.togglePalette = function (event) {
@@ -189,17 +191,15 @@ define(
                                     event && event.stopPropagation && event.stopPropagation();
 
                                     scope.pickWidget(artifact, widgetLibrary);
-                                    $timeout(function () {
+                                    return $timeout(function () {
                                         scope.showDemo && scope.showDemo();
                                     });
-
-                                    return true;
                                 }
 
                                 scope.toggleSelectLibraryList = function (event) {
                                     event && event.stopPropagation && event.stopPropagation();
 
-                                    scope.toggleSelect(".widgetLibraryList");
+                                    return scope.toggleSelect(".widgetLibraryList");
                                 }
 
                                 scope.toggleWidgetSelection = function (repoArtifact, widgetLibrary, event) {
@@ -262,6 +262,8 @@ define(
                                         }
 
                                     }
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.toggleLibrarySelection = function (widgetLibrary, event) {
@@ -306,6 +308,8 @@ define(
                                             }
                                         }
                                     }
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.widgetLibraryList = $rootScope.widgetLibraryList;

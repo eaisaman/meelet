@@ -34,6 +34,10 @@ define(
                         return {
                             pre: function (scope, element, attrs) {
                                 extension && extension.attach && extension.attach(scope, _.extend(injectObj, {
+                                    "$timeout": $timeout,
+                                    "$q": $q,
+                                    "angularConstants": angularConstants,
+                                    "uiUtilService": uiUtilService,
                                     element: element,
                                     scope: scope
                                 }));
@@ -143,9 +147,9 @@ define(
                             },
                             post: function (scope, element, attrs) {
                                 scope.toggleBoxShadowControl = function () {
-                                    scope.toggleEnableControl().then(function (enable) {
+                                    return scope.toggleEnableControl().then(function (enable) {
                                         if (enable) {
-                                            uiUtilService.whilst(
+                                            return uiUtilService.whilst(
                                                 function () {
                                                     return !scope.boxShadow;
                                                 },
@@ -154,8 +158,7 @@ define(
                                                 },
                                                 function (err) {
                                                     scope.setBoxShadow(angular.copy(options.boxShadow));
-
-                                                    return uiUtilService.getResolveDefer();
+                                                    scope.togglePalette();
                                                 },
                                                 angularConstants.checkInterval,
                                                 "ui-box-shadow-editor.toggleBoxShadowControl",
@@ -165,8 +168,14 @@ define(
                                             if (scope.boxShadow) {
                                                 scope.boxShadow = angular.copy(scope.unsetStyles(scope.boxShadow));
                                             }
+
+                                            return scope.togglePalette()
                                         }
                                     });
+                                }
+
+                                scope.selectBoxShadowTab = function (event) {
+                                    return scope.selectTab(event.currentTarget, event.target, event);
                                 }
 
                                 scope.togglePalette = function (event) {
@@ -177,7 +186,7 @@ define(
                                         $panel = element.find(".ui-control-panel");
 
                                     if ($wrapper.hasClass("expanded")) {
-                                        scope.selectTab($panel, $panel.find("div[tab-sel^='tab-head-box-shadow-value']:nth-child(1)")).then(
+                                        return scope.selectTab($panel, $panel.find("div[tab-sel^='tab-head-box-shadow-value']:nth-child(1)")).then(
                                             function () {
                                                 return scope.toggleDisplay($panel);
                                             }
@@ -185,11 +194,11 @@ define(
                                                 return scope.toggleExpand($wrapper);
                                             });
                                     } else {
-                                        scope.toggleExpand($wrapper).then(function () {
+                                        return scope.toggleExpand($wrapper).then(function () {
                                             return scope.toggleDisplay($panel);
                                         }).then(
                                             function () {
-                                                scope.selectTab($panel, $panel.find("div[tab-sel^='tab-head-box-shadow-value']:nth-child(1)"));
+                                                return scope.selectTab($panel, $panel.find("div[tab-sel^='tab-head-box-shadow-value']:nth-child(1)"));
                                             }
                                         );
                                     }
@@ -236,7 +245,7 @@ define(
                                     if (value) {
                                         scope.pickedBoxShadow = null;
                                         scope.pickedBoxShadowName = value.name;
-                                        $timeout(function () {
+                                        return $timeout(function () {
                                             var styles = {style: {}, beforeStyle: {}, afterStyle: {}};
                                             ["style", "beforeStyle", "afterStyle"].forEach(function (pseudoStylePrefix) {
                                                 _.each(value[pseudoStylePrefix], function (styleValue, key) {
@@ -246,12 +255,14 @@ define(
                                             scope.setBoxShadow(styles);
                                         });
                                     }
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.toggleShadowStopMenu = function (pseudo, index, event) {
                                     event && event.stopPropagation && event.stopPropagation();
 
-                                    scope.toggleDisplay(".shadowStopGroup[pseudo='" + pseudo + "'] .shadowStop[shadow-order=" + index + "] .circular-menu .circle", event);
+                                    return scope.toggleDisplay(".shadowStopGroup[pseudo='" + pseudo + "'] .shadowStop[shadow-order=" + index + "] .circular-menu .circle", event);
                                 }
 
                                 scope.insertShadowStop = function (pseudo, index, event) {
@@ -269,6 +280,8 @@ define(
 
                                     //Trigger watcher on sketchWidgetSetting.boxShadow to apply style to widget
                                     scope.setBoxShadow(scope.pickedBoxShadow);
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.removeShadowStop = function (pseudo, index, event) {
@@ -287,6 +300,8 @@ define(
                                         //Trigger watcher on sketchWidgetSetting.boxShadow to apply style to widget
                                         scope.setBoxShadow(scope.pickedBoxShadow);
                                     }
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.setShadowStopColor = function (pseudo, index, event) {
@@ -306,6 +321,8 @@ define(
 
                                         scope.toggleShadowStopColorPalette();
                                     }
+                                    return uiUtilService.getResolveDefer();
+
                                 }
 
                                 scope.copyShadowStop = function (pseudo, index, event) {
@@ -321,6 +338,8 @@ define(
                                     if (index < pseudoShadowStyle['box-shadow'].length) {
                                         scope.copiedShadowStopColor = pseudoShadowStyle['box-shadow'][index].color;
                                     }
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.pasteShadowStop = function (pseudo, index, event) {
@@ -340,6 +359,8 @@ define(
                                             scope.setStopColor(pseudo, index, scope.copiedShadowStopColor);
                                         }
                                     }
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.setStopColor = function (pseudo, index, value, event) {
@@ -469,8 +490,9 @@ define(
                                             }
 
                                         }
-
                                     }
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.toggleLibrarySelection = function (effectLibrary, event) {
@@ -515,6 +537,8 @@ define(
                                             }
                                         }
                                     }
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.effectList = [];

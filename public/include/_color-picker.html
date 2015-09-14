@@ -1,11 +1,10 @@
 <div class="ui-control-title fs-x-small">
     <p ng-transclude></p>
 
-    <div class="ui-control-enable-button icon-dock-after icon-dock-cross-after" ng-click="toggleColorControl()"></div>
+    <div class="ui-control-enable-button icon-dock-after icon-dock-cross-after" ng-click="once(this, $event, 'toggleColorControl')"></div>
 </div>
 <div class="pickerContent ui-control-wrapper">
     <div class="pickerBar ui-control-bar fs-x-large"
-         ng-click="togglePalette($event)"
          ng-style="{'background-color':'{{pickerBarBackgroundColor}}'}"
          ng-if="colorIsSet">
         <div class="pickerPane fs-x-smaller"

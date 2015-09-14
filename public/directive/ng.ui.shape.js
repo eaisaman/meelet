@@ -22,6 +22,10 @@ define(
                         return {
                             pre: function (scope, element, attrs) {
                                 extension && extension.attach && extension.attach(scope, _.extend(injectObj, {
+                                    "$timeout": $timeout,
+                                    "$q": $q,
+                                    "angularConstants": angularConstants,
+                                    "uiUtilService": uiUtilService,
                                     element: element,
                                     scope: scope
                                 }));
@@ -161,20 +165,19 @@ define(
                                     return widgetObj;
                                 }
 
-                                scope.pickShape = function (iconLibrary, artifact, icon) {
+                                scope.pickShape = function (iconLibrary, artifact, icon, event) {
+                                    event && event.stopPropagation && event.stopPropagation();
                                     scope.pickerPaneShape = null;
                                     scope.pickedPane = {iconLibrary: iconLibrary, artifact: artifact, icon: icon};
-                                    $timeout(function () {
+                                    return $timeout(function () {
                                         scope.pickerPaneShape = scope.pickedPane;
                                     });
-
-                                    return true;
                                 };
 
                                 scope.toggleSelectLibraryList = function (event) {
                                     event && event.stopPropagation && event.stopPropagation();
 
-                                    scope.toggleSelect(".iconLibraryList");
+                                    return scope.toggleSelect(".iconLibraryList");
                                 }
 
                                 scope.toggleIconSelection = function (repoArtifact, iconLibrary, event) {
@@ -235,8 +238,9 @@ define(
                                                 scope.filterIconLibraryList.push(iconLibrary);
                                             }
                                         }
-
                                     }
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.toggleLibrarySelection = function (iconLibrary, event) {
@@ -281,6 +285,8 @@ define(
                                             }
                                         }
                                     }
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.iconLibraryList = $rootScope.iconLibraryList;

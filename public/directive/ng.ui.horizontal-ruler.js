@@ -17,7 +17,6 @@ define(
                     restrict: "A",
                     scope: {
                         dockAlign: "=",
-                        scale: "=",
                         markerCount: "=",
                         deviceWidth: "=",
                         deviceHeight: "=",
@@ -34,6 +33,10 @@ define(
                                 scope.constants = angularConstants;
 
                                 extension && extension.attach && extension.attach(scope, _.extend(injectObj, {
+                                    "$timeout": $timeout,
+                                    "$q": $q,
+                                    "angularConstants": angularConstants,
+                                    "uiUtilService": uiUtilService,
                                     element: element,
                                     scope: scope
                                 }));

@@ -6,6 +6,8 @@
 @import "simple-dropdown";
 @import "multilevel-menu";
 
+$pageControlBackground: #ecf0f1;
+
 @include angular-ui-tree(pageDetailsTree);
 @include simple-dropdown(widgetStateDropdown, null, $activeColor);
 @include multilevel-menu(null, pageEffectMultilevelMenu, $activeColor);
@@ -13,9 +15,10 @@
 
 @mixin page($pageEditorId) {
     ##{$pageEditorId} {
-        z-index: 20 !important;
-        top: 1em;
-        height: 2.5em !important;
+        position: relative;
+        float: left;
+        width: 100%;
+        height: 100%;
 
         .pageContent.expanded {
             > .pageDetails {
@@ -30,15 +33,22 @@
         }
 
         .pageContent {
+            position: relative;
+            float: left;
+            width: 100%;
+            height: 100%;
             color: $color;
             background: #fff;
-            height: auto !important;
 
             > .pageBar {
-                height: auto !important;
+                position: relative;
+                float: left;
+                width: 100%;
+                height: 4em;
+                margin-bottom: .5em;
 
                 > div {
-                    height: 2.5em;
+                    height: 2em;
 
                     > div {
                         position: relative;
@@ -130,7 +140,10 @@
             }
 
             > .pageDetails {
-                height: auto !important;
+                position: relative;
+                float: left;
+                width: 100%;
+                height: calc(100% - 4.5em);
                 background: inherit;
                 border: 1px solid $borderColor;
 
@@ -209,19 +222,17 @@
                 > .tabContents {
                     position: relative;
                     float: left;
-                    top: 5px;
                     width: 100%;
+                    height: 100%;
 
                     @include transition(opacity 0.3s);
 
                     > div[tab-sel^='tab-content'] {
                         position: absolute;
-                        top: 5px;
                         width: 100%;
-                        height: 450px;
+                        height: 100%;
                         opacity: 0;
                         pointer-events: none;
-                        border: 1px solid $borderColor;
                         background: #fff;
                         overflow: auto;
 
@@ -232,7 +243,6 @@
                             @extend %flipDown;
                         }
 
-                        @include box-shadow(0 4px 3px #555);
                         @include flipDownOrigin();
                         @include animation-duration(0.3s);
                     }
@@ -487,68 +497,41 @@
         .pageContent.align-left {
             > .pageBar {
                 .pageMenu {
-                    position: absolute;
-                    top: -1.5em;
+                    position: relative;
+                    float: left;
                     width: 100%;
-                    height: 1.5em;
-                    background: #fff;
+                    height: 2em;
+                    padding-top: 0.25em;
+                    background: $pageControlBackground;
+                    border-radius: 0 0 5px 5px;
 
-                    div {
-                        position: relative;
-                        float: right;
-                        width: 1.5em;
-                        height: 100%;
-
-                        &:before {
-                            position: absolute;
-                            left: 0;
-                            width: 100%;
-                            height: 100%;
-                            text-align: center;
-                            line-height: 1.5;
-                        }
-
-                        &:active:before {
-                            margin-top: 2px;
-                        }
-
-                        &.togglePageButton.select:before {
-                            @include transition(transform 0.3s);
-                            @include transform(rotateZ(90deg));
-                        }
-                    }
-                }
-            }
-
-            > .pageDetails {
-            }
-        }
-
-        .pageContent.align-right {
-            > .pageBar {
-                .pageMenu {
-                    position: absolute;
-                    top: -1.5em;
-                    width: 100%;
-                    height: 1.5em;
+                    @include box-shadow(0 8px 6px -6px black);
 
                     div {
                         position: relative;
                         float: left;
                         width: 1.5em;
-                        height: 100%;
+                        height: 1.5em;
+                        background-color: #ddd;
+                        box-shadow: inset 0 -2px 0 rgba(0, 0, 0, .135);
+                        border-radius: 0.2em;
+                        display: inline-block;
+                        margin: 0 0.2em;
+                        color: $color;
+                        overflow: hidden;
+
+                        &:active {
+                            background-color: #555;
+                            color: $activeColor;
+                            box-shadow: none;
+                        }
 
                         &:before {
                             position: absolute;
-                            left: 0;
                             width: 100%;
                             height: 100%;
                             text-align: center;
                             line-height: 1.5;
-                        }
-
-                        &:active:before {
-                            margin-top: 2px;
                         }
                     }
                 }

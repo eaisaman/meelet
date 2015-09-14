@@ -2,18 +2,23 @@
 @import "compass/css3/transform";
 @import "compass/css3/user-interface";
 @import "global";
+@import "simple-dropdown";
 
 $splitColor: #CACDC0;
 $activeBorderShadow: rgba(192, 192, 192, 0.8);
 $displayMoveButtonsDelay: 0.5s;
 $hideMoveButtonsDelay: 0.1s;
 $disableBackgroundColor: rgba(0, 0, 0, 0.2);
+$styleControlBackground: #2ecc71;
+$barLinearGradient: (#666 0%, #555 50%, #666 100%);
 
-$numOfControlGroups: 4;
+$numOfControlGroups: 5;
 $controlGroupTitleWidth: 8em;
 $numOfStructureControls: 11;
 $dockWidth: 11em;
 $expandedDockWidth: 12em;
+
+@include simple-dropdown(controlDropDown, null, $styleControlBackground);
 
 @mixin dock($dockId) {
     ##{$dockId} {
@@ -50,20 +55,6 @@ $expandedDockWidth: 12em;
             }
         }
 
-        &.align-right {
-            height: 100%;
-            right: -$dockWidth;
-
-            @include box-shadow(0 1px 4px rgba(0, 0, 0, 0.3));
-
-            &.show {
-                @extend %slideLeft;
-            }
-            &.hiding {
-                @extend %slideRightBack;
-            }
-        }
-
         &.align-left {
             height: 100%;
             left: -$dockWidth;
@@ -87,7 +78,7 @@ $expandedDockWidth: 12em;
             @include box-shadow(0 1px 4px rgba(0, 0, 0, 0.3));
         }
 
-        &.align-right, &.align-left {
+        &.align-left {
             > .dockContent {
                 > .dockHead {
                     position: relative;
@@ -158,23 +149,47 @@ $expandedDockWidth: 12em;
                             width: 100%;
                             height: 100%;
 
+                            #controlDropDown {
+                                position: absolute;
+                                top: 0.5em;
+                                width: calc(100% - 2em);
+
+                                & .cd-dropdown {
+                                    > span {
+                                        background: $styleControlBackground;
+                                        box-shadow: none !important;
+                                        color: #fff;
+
+                                        &:after {
+                                            display: none !important;
+                                        }
+                                    }
+
+                                    ul li {
+                                        box-shadow: none !important;
+                                    }
+                                }
+                            }
+
                             #pseudo-control {
                                 position: relative;
                                 float: left;
                                 width: 100%;
-                                height: auto;
-                                color: $activeColor;
-                                margin-bottom: 0.5em;
-                                border: 1px solid;
-                                border-radius: 5px;
+                                height: 100%;
+                                color: $styleControlBackground;
+                                margin: 0.2em 0;
 
                                 &:before {
+                                    content: "";
                                     position: relative;
                                     float: left;
                                     width: 100%;
-                                    height: 1.5em;
-                                    line-height: 1;
-                                    text-align: left;
+                                    height: 3em;
+                                    background: $styleControlBackground;
+                                    margin-bottom: 0.5em;
+                                    border-radius: 0 0 5px 5px;
+
+                                    @include box-shadow(0 8px 6px -6px black);
                                 }
 
                                 #simple-style-editor {
@@ -191,8 +206,6 @@ $expandedDockWidth: 12em;
                                     padding-left: 5px;
                                     margin-bottom: 0.5em;
                                 }
-
-                                @include box-shadow(0 8px 6px -6px black);
                             }
 
                             .ui-control {
@@ -232,7 +245,7 @@ $expandedDockWidth: 12em;
                                     p {
                                         position: relative;
                                         float: left;
-                                        width: calc(100% - 1.2em);
+                                        width: calc(100% - 1.5em);
                                         line-height: 1;
                                         text-align: left;
                                     }
@@ -264,6 +277,7 @@ $expandedDockWidth: 12em;
 
                             .structureContent {
                                 position: relative;
+                                float: right;
                                 width: calc(100% - 0.2em);
                                 margin: 0 0.2em;
                                 top: 0.8em;
@@ -333,20 +347,13 @@ $expandedDockWidth: 12em;
                                         height: calc(100% - 40px);
                                         z-index: 5;
 
-                                        .contentSlidee {
+                                        > div {
                                             position: absolute;
                                             width: 100%;
-                                            z-index: 6;
-                                            height: 300%;
+                                            height: 100%;
+                                            opacity: 0;
 
-                                            > div {
-                                                position: absolute;
-                                                width: 100%;
-                                                height: 100%;
-                                                opacity: 0;
-
-                                                @include transition(opacity linear 0.3s);
-                                            }
+                                            @include transition(opacity linear 0.3s);
                                         }
                                     }
                                     > input.tab-selector-1:checked ~ .content .content-1,
@@ -364,130 +371,54 @@ $expandedDockWidth: 12em;
                                 height: calc(100% - 3em);
                                 overflow-y: auto;
                             }
-                        }
-                    }
-                }
-            }
-        }
 
-        &.align-right {
-            > .dockContent {
-                > .dockDetail {
-                    .ui-control-group-titles {
-                        position: absolute;
-                        left: calc(-#{$controlGroupTitleWidth * $numOfControlGroups / 2} - 1em - 5px);
-                        top: $controlGroupTitleWidth * $numOfControlGroups / 2 + 2em;
-
-                        @include flex-direction(row-reverse);
-                        @include transform(rotateZ(-90deg));
-
-                        .ui-control-group-title {
-                        }
-
-                        .showButton, .hideButton {
-                            position: absolute;
-                            right: -1.5em;
-                            width: 1.5em;
-                            height: 1.5em;
-                            border: 1px solid;
-                            margin-right: 2px;
-                            bottom: 0;
-
-                            &:before {
-                                position: absolute;
-                                width: 100%;
-                                height: 100%;
-                                line-height: 1.5;
-                                text-align: center;
-                            }
-                        }
-                    }
-
-                    .ui-control-group {
-                        &[tab-sel^='tab-content'] {
-                            position: absolute;
-                            right: -100%;
-                            top: 0;
-
-                            &.select {
-                                @extend %slideLeft;
-                            }
-                        }
-
-                        .ui-control {
-                            float: left;
-
-                            &:not(.ui-control-inline) {
-                                .ui-control-wrapper {
-                                    &.expanded {
-                                        width: $dockWidth * 1.5;
-                                        @extend %pxDockSlideLeft;
-                                    }
-
-                                    &.collapsing {
-                                        width: $dockWidth * 1.5;
-                                        @extend %pxDockSlideRight;
-                                    }
-                                }
-                            }
-
-                            &.ui-control-bordered {
-                                .ui-control-bar {
-                                    border: 1px solid $borderColor;
-                                }
-
-                                .ui-control-panel.show {
-                                    @include box-shadow(0 3px 3px 0px black);
-                                }
-                            }
-
-                            .ui-control-wrapper {
-                                position: relative;
-                                float: left;
-                                width: 100%;
-
-                                .ui-control-bar {
-                                    position: relative;
-                                    float: left;
-                                    width: 100%;
-                                    height: 2em;
-                                }
-
-                                .ui-control-panel {
-                                    position: absolute;
-                                    top: 100%;
-                                    width: 100%;
-                                    margin-top: 5px;
-                                    @include flipDownOrigin();
-
+                            &#style-control-group {
+                                #pseudo-control {
                                     &.show {
-                                        padding-bottom: 10px;
-                                        background: #fff;
-
-                                        @extend %flipDown;
+                                        display: block;
                                     }
 
-                                    &.hiding {
-                                        @extend %flipUp;
-                                    }
+                                    display: none;
                                 }
 
-                                &.expanded {
-                                    .ui-control-bar {
-                                        @include box-shadow(0 8px 6px -6px black);
+                                .ui-control {
+                                    &.show {
+                                        display: block;
                                     }
-                                }
 
-                                &.collapsing {
-                                    .ui-control-bar {
+                                    display: none;
+                                    height: 100%;
+
+                                    .ui-control-title {
+                                        height: 3em;
+                                        margin-bottom: 0.5em;
+                                        border-radius: 0 0 5px 5px;
+                                        background: $styleControlBackground;
+
                                         @include box-shadow(0 8px 6px -6px black);
+
+                                        .ui-control-enable-button {
+                                            color: #fff;
+                                            font-weight: 600;
+                                            top: 3px;
+                                        }
+                                    }
+
+                                    .ui-control-wrapper.expanded {
+                                        height: calc(100% - 5em);
+
+                                        .ui-control-bar {
+                                            height: 2em;
+                                        }
+                                        .ui-control-panel.show {
+                                            top: 2em;
+                                            border: none;
+
+                                            @include box-shadow(none);
+                                        }
                                     }
                                 }
                             }
-                        }
-
-                        .structureContent {
-                            float: left;
                         }
                     }
                 }
@@ -529,12 +460,15 @@ $expandedDockWidth: 12em;
 
                     .ui-control-group {
                         position: absolute;
-                        left: -100%;
+                        left: 0;
                         top: 0;
+                        visibility: hidden;
+                        pointer-events: none;
 
                         &[tab-sel^='tab-content'] {
                             &.select {
-                                @extend %slideRight;
+                                visibility: visible;
+                                pointer-events: auto;
                             }
                         }
 
@@ -608,10 +542,6 @@ $expandedDockWidth: 12em;
                                     }
                                 }
                             }
-                        }
-
-                        .structureContent {
-                            float: right;
                         }
                     }
                 }

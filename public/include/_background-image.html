@@ -2,15 +2,14 @@
     <p ng-transclude></p>
 
     <div class="ui-control-enable-button icon-dock-after icon-dock-cross-after"
-         ng-click="toggleBackgroundImageControl()"></div>
+         ng-click="once(this, $event, 'toggleBackgroundImageControl')"></div>
 </div>
 <div class="backgroundImageContent ui-control-wrapper">
-    <div class="backgroundImageBar ui-control-bar fs-x-large"
-         ng-click="togglePalette($event)">
+    <div class="backgroundImageBar ui-control-bar fs-x-large">
         <img ng-if="pickedBackgroundImageName"
              ng-src="project/{{$root.loadedProject.projectRecord._id}}/resource/image/{{pickedBackgroundImageName}}"/>
 
-        <div ng-if="pickedBackgroundImageName" ng-click="clearBackgroundImageUrl($event)"
+        <div ng-if="pickedBackgroundImageName" ng-click="once(this, $event, 'clearBackgroundImageUrl', $event)"
              class="deleteButton fs-x-huge icon-background-image-before icon-background-image-delete-before"></div>
     </div>
     <div class="backgroundImagePalette ui-control-panel">

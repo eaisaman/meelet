@@ -2,7 +2,7 @@ requirejs.config(
     {
         paths: {
             "icheck": JQUERY_PLUGINS_LIB_PATH + "icheck/1.0.2/icheck.min",
-            "sly": JQUERY_PLUGINS_LIB_PATH + "sly/1.2.7/sly"
+            "sly": JQUERY_PLUGINS_LIB_PATH + "sly/1.6.1/sly"
         },
         shim: {
             "icheck": {deps: ["jquery-lib"]},

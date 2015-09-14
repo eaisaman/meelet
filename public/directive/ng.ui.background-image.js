@@ -30,6 +30,10 @@ define(
                         return {
                             pre: function (scope, element, attrs) {
                                 extension && extension.attach && extension.attach(scope, _.extend(injectObj, {
+                                    "$timeout": $timeout,
+                                    "$q": $q,
+                                    "angularConstants": angularConstants,
+                                    "uiUtilService": uiUtilService,
                                     element: element,
                                     scope: scope
                                 }));
@@ -59,9 +63,9 @@ define(
                                 );
 
                                 scope.toggleBackgroundImageControl = function () {
-                                    scope.toggleEnableControl().then(function (enable) {
+                                    return scope.toggleEnableControl().then(function (enable) {
                                         if (enable) {
-                                            uiUtilService.whilst(
+                                            return uiUtilService.whilst(
                                                 function () {
                                                     return !scope.backgroundImage;
                                                 },
@@ -69,11 +73,16 @@ define(
                                                     callback();
                                                 },
                                                 function (err) {
-                                                    scope.setBackgroundImageUrl("");
-                                                    scope.setBackgroundPosition(options.backgroundPosition.x, options.backgroundPosition.y, options.backgroundPosition.unit);
-                                                    scope.setBackgroundRepeatValue(options.backgroundRepeat);
+                                                    if (!err) {
+                                                        scope.pickedBackgroundPosition = scope.pickBackgroundPositionValue(scope.pseudo);
+                                                        scope.pickedBackgroundRepeat = scope.pickBackgroundRepeatValue(scope.pseudo);
 
-                                                    return uiUtilService.getResolveDefer();
+                                                        scope.setBackgroundImageUrl("");
+                                                        scope.setBackgroundPosition(options.backgroundPosition.x, options.backgroundPosition.y, options.backgroundPosition.unit);
+                                                        scope.setBackgroundRepeatValue(options.backgroundRepeat);
+
+                                                        scope.togglePalette();
+                                                    }
                                                 },
                                                 angularConstants.checkInterval,
                                                 "ui-background-image.toggleBackgroundImageControl",
@@ -83,6 +92,8 @@ define(
                                             if (scope.backgroundImage) {
                                                 scope.backgroundImage = angular.copy(scope.unsetStyle(scope.backgroundImage, scope.pseudo));
                                             }
+
+                                            return scope.togglePalette();
                                         }
                                     });
                                 }
@@ -301,7 +312,7 @@ define(
                                         $panel = element.find(".ui-control-panel");
 
                                     if ($wrapper.hasClass("expanded")) {
-                                        scope.toggleDisplay($panel).then(function () {
+                                        return scope.toggleDisplay($panel).then(function () {
                                             return scope.toggleExpand($wrapper).then(function () {
                                                 var defer = $q.defer();
 
@@ -316,7 +327,7 @@ define(
                                             });
                                         });
                                     } else {
-                                        scope.toggleExpand($wrapper).then(function () {
+                                        return scope.toggleExpand($wrapper).then(function () {
                                             return scope.toggleDisplay($panel).then(function () {
                                                 var defer = $q.defer();
 
@@ -340,6 +351,8 @@ define(
                                         scope.setBackgroundImageUrl("");
                                         scope.pickedBackgroundImageName = "";
                                     }
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.onChangeBackgroundImageName = function () {

@@ -2,11 +2,13 @@
     <div class="sideBarContainer" ng-class="[transition, side, overlay]"
          ng-show="transition|in:['slideInOnTop', 'reveal', 'slideAlong', 'reverseSlideOut', 'scaleDownPusher', 'scaleUp', 'scaleRotatePusher', 'openDoor', 'fallDown']">
         <div ui-multi-transclude="barContent" class="barContent" ng-click="$event.stopPropagation()"></div>
-        <div ui-multi-transclude="mainContent" class="mainContent" ng-click="controllable && toggleSideBar($event, false)"></div>
+        <div ui-multi-transclude="mainContent" class="mainContent"
+             ng-click="controllable && once(this, $event, 'toggleSideBar', $event, false)"></div>
     </div>
     <div class="sideBarContainer" ng-class="[transition, side, overlay]"
          ng-show="transition|in:['rotatePusher', 'rotateIn3D', 'rotateOut3D', 'delayed3DRotate']">
-        <div ui-multi-transclude="mainContent" class="mainContent" ng-click="controllable && toggleSideBar($event, false)">
+        <div ui-multi-transclude="mainContent" class="mainContent"
+             ng-click="controllable && once(this, $event, 'toggleSideBar', false)">
             <div ui-multi-transclude="barContent" class="barContent" ng-click="$event.stopPropagation()"></div>
         </div>
     </div>

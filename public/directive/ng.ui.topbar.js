@@ -2,9 +2,9 @@ define(
     ["angular-lib", "jquery-lib"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$rootScope", "$timeout", "$q", "$exceptionHandler", "urlService", "uiService", "uiUtilService", "angularEventTypes"];
+            var inject = ["$rootScope", "$http", "$timeout", "$q", "$exceptionHandler", "$parse", "$compile", "angularConstants", "angularEventTypes", "appService", "uiUtilService", "uiService", "urlService"];
 
-            appModule.directive("uiTopbar", _.union(inject, [function ($rootScope, $timeout, $q, $exceptionHandler, urlService, uiService, uiUtilService, angularEventTypes) {
+            appModule.directive("uiTopbar", _.union(inject, [function ($rootScope, $http, $timeout, $q, $exceptionHandler, $parse, $compile, angularConstants, angularEventTypes, appService, uiUtilService, uiService, urlService) {
                 'use strict';
 
                 var defaults = {},
@@ -24,6 +24,10 @@ define(
                         return {
                             pre: function (scope, element, attrs) {
                                 extension && extension.attach && extension.attach(scope, _.extend(injectObj, {
+                                    "$timeout": $timeout,
+                                    "$q": $q,
+                                    "angularConstants": angularConstants,
+                                    "uiUtilService": uiUtilService,
                                     element: element,
                                     scope: scope
                                 }));
@@ -31,6 +35,10 @@ define(
                                 scope.urlService = urlService;
                             },
                             post: function (scope, element, attrs) {
+                                scope.toggleSelectMenu = function (event) {
+                                    return scope.toggleSelect(event.target);
+                                }
+
                                 scope.unselectButtonGroup = function (event) {
                                     event && event.stopPropagation && event.stopPropagation();
 
@@ -43,6 +51,24 @@ define(
                                     } else {
                                         scope.toggleSelect($sel, event, false);
                                     }
+
+                                    return uiUtilService.getResolveDefer();
+                                }
+
+                                scope.goBack = function (event) {
+                                    event && event.stopPropagation && event.stopPropagation();
+
+                                    urlService.back();
+
+                                    return uiUtilService.getResolveDefer();
+                                }
+
+                                scope.goHome = function (event) {
+                                    event && event.stopPropagation && event.stopPropagation();
+
+                                    urlService.home();
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.hideTopMenu = function (event) {
@@ -64,6 +90,8 @@ define(
                                             urlService.project(false, {projectAction: "create"});
                                         })
                                     }
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.onSelectProject = function (projectId, event) {
@@ -113,6 +141,8 @@ define(
                                             urlService.repo(false)
                                         })
                                     }
+
+                                    return uiUtilService.getResolveDefer();
                                 }
 
                                 scope.switchProjectWatcher = scope.$on(angularEventTypes.switchProjectEvent, function (event, project) {

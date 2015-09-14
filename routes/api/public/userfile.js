@@ -1498,14 +1498,14 @@ UserFileController.prototype.postConvertToHtml = function (userId, projectId, su
                             wCallback(err);
                         } else {
                             if (data && data.length) {
-                                wCallback(null);
+                                wCallback(null, data[0]);
                             } else {
                                 wCallback("Cannot find project record");
                             }
                         }
                     });
                 },
-                function (wCallback) {
+                function (projectObj, wCallback) {
                     self.schema.ProjectArtifactXref.find({projectId: new self.db.Types.ObjectId(projectId)}, function (err, data) {
                         if (err) {
                             wCallback(err);
@@ -1522,14 +1522,14 @@ UserFileController.prototype.postConvertToHtml = function (userId, projectId, su
                                 });
                             });
 
-                            wCallback(null, artifactList);
+                            wCallback(null, projectObj.type, artifactList);
                         }
                     });
                 },
-                function (artifactList, wCallback) {
+                function (projectType, artifactList, wCallback) {
                     var projectPath = path.join(self.config.userFile.sketchFolder, projectId);
 
-                    commons.convertToHtml(projectPath, artifactList, function (err, htmlPath) {
+                    commons.convertToHtml(projectType, projectPath, artifactList, function (err, htmlPath) {
                         if (err) {
                             wCallback(err);
                         } else {

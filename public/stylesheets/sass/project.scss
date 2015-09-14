@@ -4,11 +4,8 @@
 @import "global";
 @import "animation/directive_animation_keyframes";
 @import "animation/directive_animation";
-@import "simple-dropdown";
 
 $modalColor: #27ae60;
-
-@include simple-dropdown(repoTypeDropdown, null, $activeColor);
 
 .projectContainer {
     position: relative;
