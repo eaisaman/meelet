@@ -11378,6 +11378,48 @@
   background: transparent;
   color: inherit;
 }
+.sketchWidget > .loadExternalSuccess, .sketchWidget .loadExternalFail {
+  position: relative;
+  float: left;
+  width: 100%;
+  height: 3em;
+  top: calc(50% - 1.5em);
+  pointer-events: none;
+}
+.sketchWidget > .loadExternalSuccess:before, .sketchWidget .loadExternalFail:before {
+  position: relative;
+  float: left;
+  width: 2em;
+  text-align: center;
+}
+.sketchWidget > .loadExternalSuccess, .sketchWidget .loadExternalFail {
+  margin: 0;
+  text-shadow: 1px 0px 0px ghostwhite, -1px 0px 0px ghostwhite, 0px 1px 0px ghostwhite, 0px -1px 0px ghostwhite, 1px 1px 0px ghostwhite, -1px -1px 0px ghostwhite, -1px 1px 0px ghostwhite, 1px -1px 0px ghostwhite, 0px 6px 1px silver, 2px 6px 1px gray, -2px 6px 1px gray, 0px 6px 7px black;
+}
+.sketchWidget > .loadExternalSuccess:active, .sketchWidget .loadExternalFail:active {
+  margin-top: 2px;
+  text-shadow: 1px 0px 0px ghostwhite, -1px 0px 0px ghostwhite, 0px 1px 0px ghostwhite, 0px -1px 0px ghostwhite, 1px 1px 0px ghostwhite, -1px -1px 0px ghostwhite, -1px 1px 0px ghostwhite, 1px -1px 0px ghostwhite, 0px 6px 1px silver;
+}
+.sketchWidget > .loadExternalSuccess span, .sketchWidget .loadExternalFail span {
+  position: relative;
+  float: left;
+  height: 100%;
+  line-height: 1;
+  width: calc(100% - 2em);
+  text-align: left;
+  top: calc(50% - 1.5em);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.sketchWidget > .loadExternalSuccess {
+  color: #669933 !important;
+}
+.sketchWidget > .loadExternalFail {
+  color: #e74c3c !important;
+}
 
 #controlDropDown {
   /* Stack the items with a slight offset */
@@ -16397,45 +16439,6 @@
   line-height: 1.5;
 }
 
-#sketchHolder .resize {
-  background: transparent;
-  overflow: visible;
-}
-#sketchHolder .resize .resizeContent {
-  position: relative;
-  float: left;
-  width: calc(100% - 1px);
-  height: calc(100% - 1px);
-  pointer-events: none;
-  border: 1px dashed;
-}
-#sketchHolder .resize .resizeContent > div {
-  position: absolute;
-  width: 10%;
-  height: 10%;
-  border-width: 4px;
-}
-#sketchHolder .resize .resizeContent .resize-nw {
-  left: -4px;
-  top: -4px;
-  border-style: solid none none solid;
-}
-#sketchHolder .resize .resizeContent .resize-ne {
-  right: -4px;
-  top: -4px;
-  border-style: solid solid none none;
-}
-#sketchHolder .resize .resizeContent .resize-se {
-  right: -4px;
-  bottom: -4px;
-  border-style: none solid solid none;
-}
-#sketchHolder .resize .resizeContent .resize-sw {
-  left: -4px;
-  bottom: -4px;
-  border-style: none none solid solid;
-}
-
 #horizontalRuler .horizontalRulerContainer {
   position: relative;
   float: left;
@@ -17008,13 +17011,14 @@
   top: 3px;
 }
 #sketchControls.align-left > .dockContent .dockDetail .ui-control-groups .ui-control-group#style-control-group .ui-control .ui-control-wrapper.expanded {
-  height: 100%;
+  height: calc(100% - 5em);
 }
 #sketchControls.align-left > .dockContent .dockDetail .ui-control-groups .ui-control-group#style-control-group .ui-control .ui-control-wrapper.expanded .ui-control-bar {
   height: 2em;
 }
 #sketchControls.align-left > .dockContent .dockDetail .ui-control-groups .ui-control-group#style-control-group .ui-control .ui-control-wrapper.expanded .ui-control-panel.show {
   top: 2em;
+  border: none;
   -moz-box-shadow: none;
   -webkit-box-shadow: none;
   box-shadow: none;

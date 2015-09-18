@@ -220,7 +220,7 @@ var State = Class({
             stopOnEach: false
         },
         initialize: function (widgetObj, id) {
-            this.initialize.prototype.__proto__.initialize.apply(this, [widgetObj, "Sequence", id]);
+            SequenceTransitionAction.prototype.__proto__.initialize.apply(this, [widgetObj, "Sequence", id]);
             var MEMBERS = arguments.callee.prototype.MEMBERS;
 
             for (var member in MEMBERS) {
@@ -243,7 +243,7 @@ var State = Class({
 
             SequenceTransitionAction.prototype.__proto__.fromObject.apply(ret, [obj, context]);
 
-            var classes = ["EffectTransitionAction", "StateTransitionAction", "ConfigurationTransitionAction", "MovementTransitionAction", "SoundTransitionAction"];
+            var classes = ["EffectTransitionAction", "StateTransitionAction", "ConfigurationTransitionAction", "MovementTransitionAction", "SoundTransitionAction", "IncludeTransitionAction"];
             obj.childActions && obj.childActions.forEach(function (action) {
                 var className = action.CLASS_NAME,
                     actionObj;
@@ -271,7 +271,7 @@ var State = Class({
             effect: {}
         },
         initialize: function (widgetObj, artifactSpec, effect, id) {
-            this.initialize.prototype.__proto__.initialize.apply(this, [widgetObj, "Effect", id]);
+            EffectTransitionAction.prototype.__proto__.initialize.apply(this, [widgetObj, "Effect", id]);
             var MEMBERS = arguments.callee.prototype.MEMBERS;
 
             for (var member in MEMBERS) {
@@ -310,7 +310,7 @@ var State = Class({
             newState: ""
         },
         initialize: function (widgetObj, newState, id) {
-            this.initialize.prototype.__proto__.initialize.apply(this, [widgetObj, "State", id]);
+            StateTransitionAction.prototype.__proto__.initialize.apply(this, [widgetObj, "State", id]);
             var MEMBERS = arguments.callee.prototype.MEMBERS;
 
             for (var member in MEMBERS) {
@@ -337,7 +337,7 @@ var State = Class({
             configuration: []
         },
         initialize: function (widgetObj, configuration, id) {
-            this.initialize.prototype.__proto__.initialize.apply(this, [widgetObj, "Configuration", id]);
+            ConfigurationTransitionAction.prototype.__proto__.initialize.apply(this, [widgetObj, "Configuration", id]);
             var MEMBERS = arguments.callee.prototype.MEMBERS;
 
             for (var member in MEMBERS) {
@@ -392,7 +392,7 @@ var State = Class({
             settings: []
         },
         initialize: function (widgetObj, id) {
-            this.initialize.prototype.__proto__.initialize.apply(this, [widgetObj, "Movement", id]);
+            MovementTransitionAction.prototype.__proto__.initialize.apply(this, [widgetObj, "Movement", id]);
             var MEMBERS = arguments.callee.prototype.MEMBERS;
 
             for (var member in MEMBERS) {
@@ -423,7 +423,7 @@ var State = Class({
             resourceName: ""
         },
         initialize: function (widgetObj, id) {
-            this.initialize.prototype.__proto__.initialize.apply(this, [widgetObj, "Sound", id]);
+            SoundTransitionAction.prototype.__proto__.initialize.apply(this, [widgetObj, "Sound", id]);
             var MEMBERS = arguments.callee.prototype.MEMBERS;
 
             for (var member in MEMBERS) {
@@ -442,6 +442,36 @@ var State = Class({
             ret.resourceName = obj.resourceName;
 
             SoundTransitionAction.prototype.__proto__.fromObject.apply(ret, [obj, context]);
+
+            return ret;
+        }
+    }), IncludeTransitionAction = Class(BaseTransitionAction, {
+        CLASS_NAME: "IncludeTransitionAction",
+        MEMBERS: {
+            url: "",
+            edge: ""
+        },
+        initialize: function (widgetObj, url, edge, id) {
+            IncludeTransitionAction.prototype.__proto__.initialize.apply(this, [widgetObj, "Include", id]);
+            var MEMBERS = arguments.callee.prototype.MEMBERS;
+
+            for (var member in MEMBERS) {
+                this[member] = _.clone(MEMBERS[member]);
+            }
+            this.url = url || this.url;
+            this.edge = edge || this.edge;
+        },
+        toJSON: function () {
+            var jsonObj = IncludeTransitionAction.prototype.__proto__.toJSON.apply(this);
+
+            _.extend(jsonObj, _.pick(this, ["CLASS_NAME", "url", "edge"]));
+
+            return jsonObj;
+        },
+        fromObject: function (obj, context) {
+            var ret = new IncludeTransitionAction(null, obj.url, obj.edge, obj.id);
+
+            IncludeTransitionAction.prototype.__proto__.fromObject.apply(ret, [obj, context]);
 
             return ret;
         }
@@ -472,7 +502,7 @@ var State = Class({
         CLASS_NAME: "GestureTrigger",
         MEMBERS: {},
         initialize: function (id, eventName, options, callback) {
-            this.initialize.prototype.__proto__.initialize.apply(this, [id, "Gesture", eventName, _.clone(options)]);
+            GestureTrigger.prototype.__proto__.initialize.apply(this, [id, "Gesture", eventName, _.clone(options)]);
             var MEMBERS = arguments.callee.prototype.MEMBERS;
 
             for (var member in MEMBERS) {
@@ -787,7 +817,7 @@ var State = Class({
                 }
             });
 
-            var classes = ["ElementSketchWidgetClass", "RepoSketchWidgetClass"];
+            var classes = ["ElementSketchWidgetClass", "RepoSketchWidgetClass", "BookIncludeSketchWidgetClass"];
             obj.childWidgets.forEach(function (c) {
                 var className = c.CLASS_NAME,
                     childWidget;
@@ -881,7 +911,7 @@ var State = Class({
             routes: []
         },
         initialize: function (id, widgetsArr) {
-            this.initialize.prototype.__proto__.initialize.apply(this, [id]);
+            ElementSketchWidgetClass.prototype.__proto__.initialize.apply(this, [id]);
             var self = this,
                 MEMBERS = arguments.callee.prototype.MEMBERS;
 
@@ -890,16 +920,25 @@ var State = Class({
             }
         },
         fromObject: function (obj, context) {
-            var ret = new ElementSketchWidgetClass(obj.id);
+            if (this === ElementSketchWidgetClass.prototype) {
+                var ret = new ElementSketchWidgetClass(obj.id);
 
-            ElementSketchWidgetClass.prototype.__proto__.fromObject.apply(ret, [obj, context]);
-            ret.context = context;
+                ElementSketchWidgetClass.prototype.__proto__.fromObject.apply(ret, [obj, context]);
+                ret.context = context;
 
-            ret.html = obj.html;
-            ret.markdown = obj.markdown;
-            ret.routes = obj.routes || [];
+                ret.html = obj.html;
+                ret.markdown = obj.markdown;
+                ret.routes = obj.routes || [];
 
-            return ret;
+                return ret;
+            } else {
+                ElementSketchWidgetClass.prototype.__proto__.fromObject.apply(this, [obj, context]);
+                this.context = context;
+
+                this.markdown = obj.markdown;
+                this.html = obj.html;
+                this.routes = obj.routes || [];
+            }
         },
         appendTo: function ($, $document, $container, $template, $ngTemplate) {
             ElementSketchWidgetClass.prototype.__proto__.appendTo.apply(this, [$, $document, $container, $template, $ngTemplate]);
@@ -1137,11 +1176,50 @@ var State = Class({
                 self.$ngTemplate.remove();
             }
         }
+    }), BookIncludeSketchWidgetClass = Class(ElementSketchWidgetClass, {
+        CLASS_NAME: "BookIncludeSketchWidget",
+        MEMBERS: {
+            externalBook: null,
+            externalPage: null,
+            externalFile: null,
+            edge: null
+        },
+        initialize: function (id, externalBook, externalPage, externalFile, edge) {
+            BookIncludeSketchWidgetClass.prototype.__proto__.initialize.apply(this, [id]);
+            var self = this,
+                MEMBERS = arguments.callee.prototype.MEMBERS;
+
+            for (var member in MEMBERS) {
+                this[member] = _.clone(MEMBERS[member]);
+            }
+            this.externalBook = externalBook;
+            this.externalPage = externalPage;
+            this.externalFile = externalFile;
+            this.edge = edge;
+        },
+        fromObject: function (obj, context) {
+            var ret = new BookIncludeSketchWidgetClass(obj.id, obj.externalBook, obj.externalPage, obj.externalFile, obj.edge);
+
+            BookIncludeSketchWidgetClass.prototype.__proto__.fromObject.apply(ret, [obj, context]);
+            ret.context = context;
+
+            return ret;
+        },
+        appendTo: function ($, $document, $container, $template, $ngTemplate) {
+            BookIncludeSketchWidgetClass.prototype.__proto__.appendTo.apply(this, [$, $document, $container, $template, $ngTemplate]);
+
+            var self = this;
+
+            if (self.externalBook && self.externalPage && self.externalFile) {
+                var $includeDiv = $("<div></div>").attr("ng-include", _.sprintf("'resource/external/%s/%s/%s'", self.externalBook, self.externalPage, self.externalFile));
+                self.$element.append($includeDiv);
+            }
+        }
     }), PageSketchWidgetClass = Class(BaseSketchWidgetClass, {
         CLASS_NAME: "PageSketchWidget",
         MEMBERS: {},
         initialize: function (id) {
-            this.initialize.prototype.__proto__.initialize.apply(this, [id]);
+            PageSketchWidgetClass.prototype.__proto__.initialize.apply(this, [id]);
             var MEMBERS = arguments.callee.prototype.MEMBERS;
 
             for (var member in MEMBERS) {

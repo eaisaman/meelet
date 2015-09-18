@@ -51,10 +51,58 @@
     content: "\e600";
 }
 
+.icon-book-circle-plus:before {
+    content: "\e601";
+}
+
+.icon-book-circle-minus:before {
+    content: "\e602";
+}
+
+.icon-book-angle-double-up:before {
+    content: "\e603";
+}
+
+.icon-book-book:before {
+    content: "\e604";
+}
+
 .icon-book-add-page-before:before {
     content: "\e600";
 }
 
+.icon-book-circle-plus-before:before {
+    content: "\e601";
+}
+
+.icon-book-circle-minus-before:before {
+    content: "\e602";
+}
+
+.icon-book-angle-double-up-before:before {
+    content: "\e603";
+}
+
+.icon-book-book-before:before {
+    content: "\e604";
+}
+
 .icon-book-add-page-after:after {
     content: "\e600";
+}
+
+.icon-book-circle-plus-after:after {
+    content: "\e601";
+}
+
+.icon-book-circle-minus-after:after {
+    content: "\e602";
+}
+
+.icon-book-angle-double-up-after:after {
+    content: "\e603";
+}
+
+.icon-book-book-after:after {
+    content: "\e604";
 }

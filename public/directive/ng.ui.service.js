@@ -17,16 +17,18 @@ define(
 
             _.extend($inject, _.pick(this, Service.$inject));
 
-            defineWidgetClass(uiUtilService.createObjectClass);
+            defineWidgetClass(uiUtilService.createObjectClass(), uiUtilService.findObjectClass());
         };
 
         Service.$inject = ["$parse", "$timeout", "$q", "$exceptionHandler", "$compile", "$rootScope", "angularEventTypes", "angularConstants", "appService", "uiUtilService", "uiCanvasService", "uiAnimationService"];
         var $inject = {};
 
         //Define sketch widget class
-        function defineWidgetClass(Class) {
+        function defineWidgetClass(Class, FindClass) {
             var Project = Class({
                     CLASS_NAME: "Project",
+                    WIDGET_CLASSES: ["ElementSketchWidgetClass", "RepoSketchWidgetClass"],
+                    ACTION_CLASSES: ["EffectTransitionAction", "StateTransitionAction", "ConfigurationTransitionAction", "MovementTransitionAction", "SoundTransitionAction"],
                     MEMBERS: {
                         projectRecord: {},
                         xrefRecord: [],
@@ -35,9 +37,11 @@ define(
                             pageTransition: {},
                             pages: []
                         },
+                        externalList: [],
                         resources: {
                             audio: [],
-                            image: []
+                            image: [],
+                            external: []
                         },
                         stagingContent: {
                             widgetList: [],
@@ -158,6 +162,11 @@ define(
                                     return resourceItem !== fileName;
                                 })) {
                                 resourceList.push(fileName);
+                            }
+
+                            //Reload external list
+                            if (resourceType === "external") {
+                                self.loadExternal();
                             }
                         }
                     },
@@ -403,6 +412,21 @@ define(
                                             })) {
                                             self.resources[resourceType].splice(index, 1);
                                         }
+
+                                        if (resourceType === "external") {
+                                            if (!self.externalList.every(function (externalItem, i) {
+                                                    if (externalItem.name === fileName) {
+                                                        index = i;
+                                                        return false;
+                                                    }
+
+                                                    return true;
+                                                })) {
+                                                self.externalList.splice(index, 1);
+                                            }
+                                        }
+
+                                        return $inject.uiUtilService.getResolveDefer();
                                     } else {
                                         return $inject.uiUtilService.getRejectDefer(result.data.reason);
                                     }
@@ -514,6 +538,25 @@ define(
 
                         return $inject.uiUtilService.getRejectDefer(err);
                     },
+                    loadExternal: function () {
+                        var self = this;
+
+                        if (self.projectRecord._id) {
+                            self.externalList.splice(0);
+                            return $inject.appService.loadExternal(self.projectRecord._id).then(function (externalItems) {
+                                if (externalItems && externalItems.length) {
+                                    externalItems.splice(0, 0, 0, 0);
+                                    Array.prototype.splice.apply(self.externalList, externalItems);
+                                }
+
+                                return $inject.uiUtilService.getResolveDefer(self);
+                            }, function (err) {
+                                return $inject.uiUtilService.getRejectDefer(err);
+                            });
+                        } else {
+                            return $inject.uiUtilService.getResolveDefer(self);
+                        }
+                    },
                     loadSketch: function () {
                         var self = this;
 
@@ -573,6 +616,30 @@ define(
                             if (_.indexOf(self.resources.audio, resourceName) !== -1) {
                                 return $inject.appService.playSound("project/{0}/resource/audio/{1}".format(self.projectRecord._id, resourceName));
                             }
+                        }
+
+                        return $inject.uiUtilService.getResolveDefer();
+                    },
+                    validateIncludeExternal: function (element, url) {
+                        var self = this,
+                            $element;
+
+                        if (self.projectRecord._id) {
+                            if (element.jquery) {
+                                $element = element;
+                            } else if (typeof element === "string" || angular.isElement(element)) {
+                                $element = $(element);
+                            }
+                            $element.children(".{0}, .{1}".format($inject.angularConstants.widgetClasses.loadExternalSuccessClass, $inject.angularConstants.widgetClasses.loadExternalFailClass)).remove();
+
+                            $inject.appService.validateUrl("project/{0}/resource/external/{1}".format(self.projectRecord._id, url)).then(
+                                function () {
+                                    $element.append("<div class='fs-x-small icon-frame-sketch-before icon-frame-sketch-happy-before {0}'><span>Resource found, please check after converting to html.</span></div>".format($inject.angularConstants.widgetClasses.loadExternalSuccessClass));
+                                },
+                                function (err) {
+                                    $element.append("<div class='fs-x-small icon-frame-sketch-before icon-frame-sketch-baffled-before {1}'><span>Fail to load resource.</span></div>".format($inject.angularConstants.widgetClasses.loadExternalFailClass));
+                                }
+                            );
                         }
 
                         return $inject.uiUtilService.getResolveDefer();
@@ -786,7 +853,7 @@ define(
                         actionType: "",
                         widgetObj: null
                     },
-                    initialize: function (widgetObj, actionType, id) {
+                    initialize: function (widgetObj, id) {
                         var MEMBERS = arguments.callee.prototype.MEMBERS;
 
                         for (var member in MEMBERS) {
@@ -794,7 +861,6 @@ define(
                         }
 
                         this.widgetObj = widgetObj;
-                        this.actionType = actionType;
                         this.id = id || "TransitionAction_" + _.now();
                     },
                     toJSON: function () {
@@ -831,11 +897,12 @@ define(
                 SequenceTransitionAction = Class(BaseTransitionAction, {
                     CLASS_NAME: "SequenceTransitionAction",
                     MEMBERS: {
+                        actionType: "Sequence",
                         childActions: [],
                         stopOnEach: false
                     },
                     initialize: function (widgetObj, id) {
-                        this.initialize.prototype.__proto__.initialize.apply(this, [widgetObj, "Sequence", id]);
+                        SequenceTransitionAction.prototype.__proto__.initialize.apply(this, [widgetObj, id]);
                         var MEMBERS = arguments.callee.prototype.MEMBERS;
 
                         for (var member in MEMBERS) {
@@ -854,16 +921,19 @@ define(
 
                         SequenceTransitionAction.prototype.__proto__.fromObject.apply(ret, [obj]);
 
-                        var classes = ["EffectTransitionAction", "StateTransitionAction", "ConfigurationTransitionAction", "MovementTransitionAction", "SoundTransitionAction"];
+                        var classes = $inject.$rootScope.loadedProject.ACTION_CLASSES;
                         obj.childActions && obj.childActions.forEach(function (action) {
                             var className = action.CLASS_NAME,
                                 actionObj;
 
                             classes.every(function (clazz) {
-                                if (eval("className === {0}.prototype.CLASS_NAME".format(clazz))) {
-                                    actionObj = eval("{0}.prototype.fromObject(action)".format(clazz));
-                                    ret.childActions.push(actionObj);
-                                    return false;
+                                var clazzObj = FindClass(clazz);
+                                if (clazzObj) {
+                                    if (className === clazzObj.prototype.CLASS_NAME) {
+                                        actionObj = clazzObj.prototype.fromObject(action);
+                                        ret.childActions.push(actionObj);
+                                        return false;
+                                    }
                                 }
 
                                 return true;
@@ -930,21 +1000,31 @@ define(
                         }
                     },
                     addAction: function (actionType) {
-                        var action;
+                        var self = this,
+                            actionObj;
 
-                        if (actionType === "Effect") {
-                            action = new EffectTransitionAction(this.widgetObj);
-                        } else if (actionType === "State") {
-                            action = new StateTransitionAction(this.widgetObj, this.widgetObj.initialStateOption.name);
-                        } else if (actionType === "Configuration") {
-                            action = new ConfigurationTransitionAction(this.widgetObj);
-                        } else if (actionType === "Movement") {
-                            action = new MovementTransitionAction(this.widgetObj);
-                        } else if (actionType === "Sound") {
-                            action = new SoundTransitionAction(this.widgetObj);
+                        if (actionType === "State") {
+                            actionObj = new StateTransitionAction(self.widgetObj, self.widgetObj.initialStateOption.name);
+                        } else {
+                            var classes = $inject.$rootScope.loadedProject.ACTION_CLASSES;
+                            var actionObj;
+
+                            classes.every(function (clazz) {
+                                var clazzObj = FindClass(clazz);
+                                if (clazzObj) {
+                                    if (actionType === clazzObj.prototype.MEMBERS.actionType) {
+                                        actionObj = new clazzObj(self.widgetObj)
+                                        return false;
+                                    }
+                                }
+
+                                return true;
+                            });
                         }
 
-                        action && this.childActions.push(action);
+                        actionObj && this.childActions.push(actionObj);
+
+                        return actionObj;
                     },
                     restoreWidget: function () {
                         if (this.chainObject) {
@@ -963,11 +1043,12 @@ define(
                 EffectTransitionAction = Class(BaseTransitionAction, {
                     CLASS_NAME: "EffectTransitionAction",
                     MEMBERS: {
+                        actionType: "Effect",
                         artifactSpec: {},
                         effect: {}
                     },
                     initialize: function (widgetObj, artifactSpec, effect, id) {
-                        this.initialize.prototype.__proto__.initialize.apply(this, [widgetObj, "Effect", id]);
+                        EffectTransitionAction.prototype.__proto__.initialize.apply(this, [widgetObj, id]);
                         var MEMBERS = arguments.callee.prototype.MEMBERS;
 
                         for (var member in MEMBERS) {
@@ -1066,10 +1147,11 @@ define(
                 StateTransitionAction = Class(BaseTransitionAction, {
                     CLASS_NAME: "StateTransitionAction",
                     MEMBERS: {
+                        actionType: "State",
                         newState: ""
                     },
                     initialize: function (widgetObj, newState, id) {
-                        this.initialize.prototype.__proto__.initialize.apply(this, [widgetObj, "State", id]);
+                        StateTransitionAction.prototype.__proto__.initialize.apply(this, [widgetObj, id]);
                         var MEMBERS = arguments.callee.prototype.MEMBERS;
 
                         for (var member in MEMBERS) {
@@ -1122,7 +1204,7 @@ define(
                         configuration: []
                     },
                     initialize: function (widgetObj, configuration, id) {
-                        this.initialize.prototype.__proto__.initialize.apply(this, [widgetObj, "Configuration", id]);
+                        ConfigurationTransitionAction.prototype.__proto__.initialize.apply(this, [widgetObj, id]);
                         var MEMBERS = arguments.callee.prototype.MEMBERS;
 
                         for (var member in MEMBERS) {
@@ -1320,11 +1402,12 @@ define(
                         }
                     ],
                     MEMBERS: {
+                        actionType: "Movement",
                         routeIndex: null,
                         settings: []
                     },
                     initialize: function (widgetObj, id) {
-                        this.initialize.prototype.__proto__.initialize.apply(this, [widgetObj, "Movement", id]);
+                        MovementTransitionAction.prototype.__proto__.initialize.apply(this, [widgetObj, id]);
                         var MEMBERS = arguments.callee.prototype.MEMBERS;
 
                         for (var member in MEMBERS) {
@@ -1390,10 +1473,11 @@ define(
                 SoundTransitionAction = Class(BaseTransitionAction, {
                     CLASS_NAME: "SoundTransitionAction",
                     MEMBERS: {
+                        actionType: "Sound",
                         resourceName: ""
                     },
                     initialize: function (widgetObj, id) {
-                        this.initialize.prototype.__proto__.initialize.apply(this, [widgetObj, "Sound", id]);
+                        SoundTransitionAction.prototype.__proto__.initialize.apply(this, [widgetObj, id]);
                         var MEMBERS = arguments.callee.prototype.MEMBERS;
 
                         for (var member in MEMBERS) {
@@ -1475,7 +1559,7 @@ define(
                     CLASS_NAME: "GestureTrigger",
                     MEMBERS: {},
                     initialize: function (id, eventName, options, callback) {
-                        this.initialize.prototype.__proto__.initialize.apply(this, [id, "Gesture", eventName, _.clone(options)]);
+                        GestureTrigger.prototype.__proto__.initialize.apply(this, [id, "Gesture", eventName, _.clone(options)]);
                         var MEMBERS = arguments.callee.prototype.MEMBERS;
 
                         for (var member in MEMBERS) {
@@ -2326,16 +2410,19 @@ define(
                                 }
                             });
 
-                            var classes = ["ElementSketchWidgetClass", "RepoSketchWidgetClass"];
+                            var classes = $inject.$rootScope.loadedProject.WIDGET_CLASSES;
                             obj.childWidgets.forEach(function (c) {
                                 var className = c.CLASS_NAME,
                                     childWidget;
 
                                 classes.every(function (clazz) {
-                                    if (eval("className === {0}.prototype.CLASS_NAME".format(clazz))) {
-                                        childWidget = eval("{0}.prototype.fromObject(c)".format(clazz));
-                                        childWidget.stateContext = stateMap[c.stateContext];
-                                        return false;
+                                    var clazzObj = FindClass(clazz);
+                                    if (clazzObj) {
+                                        if (className === clazzObj.prototype.CLASS_NAME) {
+                                            childWidget = clazzObj.prototype.fromObject(c);
+                                            childWidget.stateContext = stateMap[c.stateContext];
+                                            return false;
+                                        }
                                     }
 
                                     return true;
@@ -2967,7 +3054,7 @@ define(
 
                             if (stateName) {
                                 self.states.every(function (s) {
-                                    if (s.context.id = self.stateContext.id && s.name == stateName) {
+                                    if (s.context.id == self.stateContext.id && s.name == stateName) {
                                         state = s;
                                         return false;
                                     }
@@ -3423,7 +3510,7 @@ define(
                         routes: []
                     },
                     initialize: function (id, widgetsArr, isTemporary) {
-                        this.initialize.prototype.__proto__.initialize.apply(this, [id]);
+                        ElementSketchWidgetClass.prototype.__proto__.initialize.apply(this, [id]);
                         var self = this,
                             MEMBERS = arguments.callee.prototype.MEMBERS;
 
@@ -3460,14 +3547,21 @@ define(
                         return jsonObj;
                     },
                     fromObject: function (obj) {
-                        var ret = new ElementSketchWidgetClass(obj.id);
+                        if (this === ElementSketchWidgetClass.prototype) {
+                            var ret = new ElementSketchWidgetClass(obj.id);
 
-                        ElementSketchWidgetClass.prototype.__proto__.fromObject.apply(ret, [obj]);
-                        ret.markdown = obj.markdown;
-                        ret.setHtml(obj.html);
-                        ret.routes = obj.routes || [];
+                            ElementSketchWidgetClass.prototype.__proto__.fromObject.apply(ret, [obj]);
+                            ret.markdown = obj.markdown;
+                            ret.setHtml(obj.html);
+                            ret.routes = obj.routes || [];
 
-                        return ret;
+                            return ret;
+                        } else {
+                            ElementSketchWidgetClass.prototype.__proto__.fromObject.apply(this, [obj]);
+                            this.markdown = obj.markdown;
+                            this.setHtml(obj.html);
+                            this.routes = obj.routes || [];
+                        }
                     },
                     isKindOf: function (className) {
                         var self = this;
@@ -4247,8 +4341,7 @@ define(
                     },
                     MEMBERS: {
                         isElement: true,
-                        widgetSpec: null,
-                        project: null
+                        widgetSpec: null
                     },
                     initialize: function (id, widgetSpec) {
                         arguments.callee.prototype.__proto__.initialize.apply(this, [id, widgetSpec && widgetSpec.template || ""]);
@@ -4680,7 +4773,7 @@ define(
                     CLASS_NAME: "PageSketchWidget",
                     MEMBERS: {},
                     initialize: function (id) {
-                        this.initialize.prototype.__proto__.initialize.apply(this, [id]);
+                        PageSketchWidgetClass.prototype.__proto__.initialize.apply(this, [id]);
                         var MEMBERS = arguments.callee.prototype.MEMBERS;
 
                         for (var member in MEMBERS) {
@@ -5058,7 +5151,6 @@ define(
                                 widgetObj = new ElementSketchWidgetClass();
 
                                 widgetObj.attr["ui-sketch-widget"] = "";
-                                widgetObj.attr["scale"] = "$root.sketchWidgetSetting.scale";
                                 widgetObj.attr["ng-class"] = "{'isPlaying': $root.sketchWidgetSetting.isPlaying}";
                                 widgetObj.addOmniClass(self.angularConstants.widgetClasses.widgetClass);
 
@@ -5106,7 +5198,6 @@ define(
                         widgetObj = widgetObj || new ElementSketchWidgetClass();
                         widgetObj.anchor = anchor;
                         widgetObj.attr["ui-sketch-widget"] = "";
-                        widgetObj.attr["scale"] = "$root.sketchWidgetSetting.scale";
                         widgetObj.attr["ng-class"] = "{'isPlaying': $root.sketchWidgetSetting.isPlaying}";
                         widgetObj.addOmniClass(self.angularConstants.widgetClasses.widgetClass);
 
@@ -5124,7 +5215,6 @@ define(
                 var self = this,
                     widgetObj = new RepoSketchWidgetClass(null, widgetSpec);
                 widgetObj.attr["ui-sketch-widget"] = "";
-                widgetObj.attr["scale"] = "$root.sketchWidgetSetting.scale";
                 widgetObj.attr["ng-class"] = "{'isPlaying': $root.sketchWidgetSetting.isPlaying}";
                 widgetObj.addOmniClass(self.angularConstants.widgetClasses.widgetClass);
 
@@ -5155,7 +5245,6 @@ define(
                                 //Add Container Widget
                                 var containerWidget = new ElementSketchWidgetClass();
                                 containerWidget.attr["ui-sketch-widget"] = "";
-                                containerWidget.attr["scale"] = "$root.sketchWidgetSetting.scale";
                                 containerWidget.attr["ng-class"] = "{'isPlaying': $root.sketchWidgetSetting.isPlaying}";
                                 containerWidget.addOmniClass(self.angularConstants.widgetClasses.widgetClass);
                                 containerWidget.setStateContext(widgetObj.state);
@@ -5262,7 +5351,6 @@ define(
                         var compositeObj = new ElementSketchWidgetClass(null, widgetArr, isTemporary);
 
                         compositeObj.attr["ui-sketch-widget"] = "";
-                        compositeObj.attr["scale"] = "$root.sketchWidgetSetting.scale";
                         compositeObj.attr["ng-class"] = "{'isPlaying': $root.sketchWidgetSetting.isPlaying}";
                         compositeObj.addOmniClass(self.angularConstants.widgetClasses.widgetClass);
                         compositeObj.appendTo(containerElement);
@@ -5282,7 +5370,6 @@ define(
                     pageObj = new PageSketchWidgetClass();
 
                 pageObj.attr["ui-sketch-widget"] = "";
-                pageObj.attr["scale"] = "$root.sketchWidgetSetting.scale";
                 pageObj.attr["ng-class"] = "{'isPlaying': $root.sketchWidgetSetting.isPlaying}";
                 pageObj.addOmniClass(self.angularConstants.widgetClasses.holderClass);
 

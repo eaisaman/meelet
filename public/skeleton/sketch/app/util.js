@@ -178,6 +178,15 @@ define(
                         return self.uiAnimationService.moveWidget($widgetElement, self.$rootScope[$widgetElement.attr("id")].routes, action.routeIndex, action.settings);
                     } else if (action.actionType === "Sound") {
                         return action.resourceName && self.appService.playSound("resource/audio/{0}".format(action.resourceName)) || self.uiUtilService.getResolveDefer();
+                    } else if (action.actionType === "Include") {
+                        if (action.edge) {
+                            widgetScope && widgetScope.$on('$destroy', function () {
+                                self.unloadAnimation(action.edge);
+                            });
+
+                            return self.loadAnimation(action.edge);
+                        }
+                        return self.uiUtilService.getResolveDefer();
                     }
                 }
             }
@@ -872,7 +881,7 @@ define(
             utilService.prototype.loadAnimation = function (edgeClass) {
                 var self = this;
 
-                self.uiUtilService.whilst(function () {
+                return self.uiUtilService.whilst(function () {
                         return !document.getElementsByClassName(edgeClass).length;
                     }, function (callback) {
                         callback();

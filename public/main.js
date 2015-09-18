@@ -74,6 +74,7 @@ requirejs(["jquery-lib", "jquery-plugins-lib", "hammer-lib", "jquery-ui-lib", "j
         window.appModule.value("angularEventTypes", {
             boundPropertiesEvent: "boundPropertiesEvent",
             beforeWidgetCreationEvent: "beforeWidgetCreationEvent",
+            beforeBookWidgetCreationEvent: "beforeBookWidgetCreationEvent",
             resourceEditEvent: "resourceEditEvent",
             resourceEditEndEvent: "resourceEditEndEvent",
             switchProjectEvent: "switchProjectEvent",
@@ -102,7 +103,9 @@ requirejs(["jquery-lib", "jquery-plugins-lib", "hammer-lib", "jquery-ui-lib", "j
                 activeClass: "pickedWidget",
                 widgetContainerClass: "widgetContainer",
                 widgetIncludeAnchorClass: "widgetIncludeAnchor",
-                currentPageClass: "currentPage"
+                currentPageClass: "currentPage",
+                loadExternalSuccessClass: "loadExternalSuccess",
+                loadExternalFailClass: "loadExternalFailClass"
             },
             anchorAttr: "widget-anchor",
             repoWidgetClass: "ui-widget",

@@ -195,26 +195,26 @@ define(
 
                 $scope.enableAddWidget = function (event) {
                     function addWidgetHandler(event) {
-                        var touchX = $shapeElement && $shapeElement.data("touchX") || 0,
-                            touchY = $shapeElement && $shapeElement.data("touchY") || 0,
+                        var touchX = $widgetElement && $widgetElement.data("touchX") || 0,
+                            touchY = $widgetElement && $widgetElement.data("touchY") || 0,
                             $container = $("." + angularConstants.widgetClasses.containerClass);
 
                         if (event.type === "panstart") {
-                            $shapeElement = $("<div />");
-                            $shapeElement.addClass("pickerPaneShape squarePane")
+                            $widgetElement = $("<div />");
+                            $widgetElement.addClass("pickerPaneShape squarePane icon-frame-sketch-before icon-frame-sketch-add-widget-before")
                                 .css("z-index", angularConstants.draggingShapeZIndex);
-                            $shapeElement.appendTo($container);
+                            $widgetElement.appendTo($container);
 
                             touchX = event.srcEvent.offsetX;
                             touchY = event.srcEvent.offsetY;
-                            $shapeElement.data("touchX", touchX);
-                            $shapeElement.data("touchY", touchY);
+                            $widgetElement.data("touchX", touchX);
+                            $widgetElement.data("touchY", touchY);
                         } else if (event.type === "panmove") {
-                            var left = event.srcEvent.clientX - $shapeElement.parent().offset().left + touchX,
-                                top = event.srcEvent.clientY - $shapeElement.parent().offset().top + touchY;
+                            var left = event.srcEvent.clientX - $widgetElement.parent().offset().left + touchX,
+                                top = event.srcEvent.clientY - $widgetElement.parent().offset().top + touchY;
 
-                            $shapeElement.css("left", left + "px");
-                            $shapeElement.css("top", top + "px");
+                            $widgetElement.css("left", left + "px");
+                            $widgetElement.css("top", top + "px");
 
                             var $to = $(event.srcEvent.toElement);
                             if ($to.hasClass(angularConstants.widgetClasses.widgetClass)) {
@@ -230,9 +230,9 @@ define(
                                 $log.debug("left:" + left);
                                 $log.debug("touchX:" + touchX);
                             }
-                        } else if ($shapeElement && event.type === "panend") {
-                            $shapeElement.remove();
-                            $shapeElement = null;
+                        } else if ($widgetElement && event.type === "panend") {
+                            $widgetElement.remove();
+                            $widgetElement = null;
                             $("." + angularConstants.widgetClasses.holderClass).find("." + angularConstants.widgetClasses.hoverClass).removeClass(angularConstants.widgetClasses.hoverClass);
 
                             var $to = $(event.srcEvent.toElement);
@@ -264,7 +264,7 @@ define(
 
                     var $el = $(event.target),
                         mc = $el.data("hammer"),
-                        $shapeElement;
+                        $widgetElement;
 
                     if (!mc) {
                         mc = new Hammer.Manager(event.target);
@@ -1870,7 +1870,7 @@ define(
                 $scope.activeEditor = "process";
             }
 
-            function BookController($scope, $rootScope, $timeout, $q, $log, $exceptionHandler, $compile, $parse, $templateCache, angularEventTypes, angularConstants, appService, uiService, uiUtilService, uiCanvasService) {
+            function BookController($scope, $rootScope, $timeout, $q, $log, $exceptionHandler, $compile, $parse, $templateCache, angularEventTypes, angularConstants, appService, uiService, uiBookService, uiUtilService, uiCanvasService) {
                 extension && extension.attach && extension.attach($scope, {
                     "$timeout": $timeout,
                     "$q": $q,
@@ -1885,9 +1885,160 @@ define(
                 }
 
                 function defineExtensionScopeHandler(extensionScope) {
-                    extensionScope.enableAddPageWidget = function (event) {
+                    extensionScope.beforeBookWidgetCreationWatcher = extensionScope.$on(angularEventTypes.beforeBookWidgetCreationEvent, function (event, fn) {
+                        uiUtilService.once(function (fn) {
+                            return extensionScope.showBookWidgetName(fn);
+                        }, null, angularConstants.unresponsiveInterval, "BookController.defineExtensionScopeHandler.beforeBookWidgetCreationWatcher")(fn);
+                    });
+
+                    extensionScope.showBookWidgetName = function (callback) {
                         event && event.stopPropagation && event.stopPropagation();
+
+                        extensionScope.modalUsage = "BookWidgetName";
+                        extensionScope.pickedExternalBook = null;
+                        extensionScope.pickedExternalBookPage = null;
+
+                        $("#newBookWidgetName").val("");
+                        if (callback) {
+                            $scope.onModalClose = function () {
+                                if(extensionScope.pickedExternalBook && extensionScope.pickedExternalBookPage) {
+                                    var pageFile = "",
+                                        edge = "";
+
+                                    extensionScope.pickedExternalBook.pages.every(function (bookPage) {
+                                        if (bookPage.page === extensionScope.pickedExternalBookPage) {
+                                            pageFile = bookPage.file;
+                                            edge = bookPage.edge;
+                                            return false;
+                                        }
+
+                                        return true;
+                                    });
+
+                                    callback($("#newBookWidgetName").val(), extensionScope.pickedExternalBook.name, extensionScope.pickedExternalBookPage, pageFile, edge);
+                                }
+                            };
+                        }
+                        var scope = angular.element($("#frameSketchContainer > .modalWindowContainer > .md-modal")).scope();
+
+                        return scope.toggleModalWindow();
                     }
+
+                    extensionScope.enableAddPageWidget = function (event) {
+                        function addBookWidgetHandler(event) {
+                            var touchX = $bookElement && $bookElement.data("touchX") || 0,
+                                touchY = $bookElement && $bookElement.data("touchY") || 0,
+                                $container = $("." + angularConstants.widgetClasses.containerClass);
+
+                            if (event.type === "panstart") {
+                                $bookElement = $("<div />");
+                                $bookElement.addClass("pickerBookShape icon-book-before icon-book-add-page-before squarePane")
+                                    .css("z-index", angularConstants.draggingShapeZIndex);
+                                $bookElement.appendTo($container);
+
+                                touchX = event.srcEvent.offsetX;
+                                touchY = event.srcEvent.offsetY;
+                                $bookElement.data("touchX", touchX);
+                                $bookElement.data("touchY", touchY);
+                            } else if (event.type === "panmove") {
+                                var left = event.srcEvent.clientX - $bookElement.parent().offset().left + touchX,
+                                    top = event.srcEvent.clientY - $bookElement.parent().offset().top + touchY;
+
+                                $bookElement.css("left", left + "px");
+                                $bookElement.css("top", top + "px");
+
+                                var $to = $(event.srcEvent.toElement);
+                                if ($to.hasClass(angularConstants.widgetClasses.widgetClass)) {
+                                    if (!$to.hasClass(angularConstants.widgetClasses.hoverClass)) {
+                                        $("." + angularConstants.widgetClasses.holderClass).find("." + angularConstants.widgetClasses.hoverClass).removeClass(angularConstants.widgetClasses.hoverClass);
+                                        $to.addClass(angularConstants.widgetClasses.hoverClass);
+                                    }
+                                } else if ($to.hasClass(angularConstants.widgetClasses.holderClass)) {
+                                    $("." + angularConstants.widgetClasses.holderClass).find("." + angularConstants.widgetClasses.hoverClass).removeClass(angularConstants.widgetClasses.hoverClass);
+                                }
+
+                                if (angularConstants.VERBOSE) {
+                                    $log.debug("left:" + left);
+                                    $log.debug("touchX:" + touchX);
+                                }
+                            } else if ($bookElement && event.type === "panend") {
+                                $bookElement.remove();
+                                $bookElement = null;
+                                $("." + angularConstants.widgetClasses.holderClass).find("." + angularConstants.widgetClasses.hoverClass).removeClass(angularConstants.widgetClasses.hoverClass);
+
+                                var $to = $(event.srcEvent.toElement);
+
+                                if (!$rootScope.sketchWidgetSetting.isPlaying && ($to.hasClass(angularConstants.widgetClasses.widgetClass) || $to.hasClass(angularConstants.widgetClasses.holderClass) || $to.attr(angularConstants.anchorAttr))) {
+                                    var x = event.srcEvent.clientX - $to.offset().left,
+                                        y = event.srcEvent.clientY - $to.offset().top;
+
+                                    x = Math.floor(x * angularConstants.precision) / angularConstants.precision;
+                                    y = Math.floor(y * angularConstants.precision) / angularConstants.precision;
+
+                                    uiUtilService.broadcast($scope,
+                                        angularEventTypes.beforeBookWidgetCreationEvent,
+                                        function (name, externalBook, externalBookPage, externalFile, edge) {
+                                            if (name) {
+                                                var widgetObj = uiBookService.createBookWidget($to, externalBook, externalBookPage, externalFile, edge);
+                                                widgetObj.name = name;
+
+                                                if (widgetObj) {
+                                                    widgetObj.css("left", x + "px");
+                                                    widgetObj.css("top", y + "px");
+                                                }
+                                            }
+                                        }
+                                    );
+                                }
+                            }
+                        }
+
+                        var $el = $(event.target),
+                            mc = $el.data("hammer"),
+                            $bookElement;
+
+                        event && event.stopPropagation && event.stopPropagation();
+
+                        if (!mc) {
+                            mc = new Hammer.Manager(event.target);
+                            mc.add(new Hammer.Press());
+                            mc.add(new Hammer.Pan());
+                            mc.on("panstart panmove panend", addBookWidgetHandler);
+                            $el.data("hammer", mc);
+
+                            $scope.$on('$destroy', function () {
+                                mc.off("panstart panmove panend", addBookWidgetHandler);
+                            });
+                        }
+
+                        return uiUtilService.getResolveDefer();
+                    }
+
+                    extensionScope.onPickedExternalBook = function (externalBookScope, externalBookName) {
+                        externalBookScope.pickedExternalBook = _.findWhere($rootScope.loadedProject.externalList, {name: externalBookName});
+                        externalBookScope.pickedExternalBookPages = externalBookScope.pickedExternalBook && externalBookScope.pickedExternalBook.pages || null;
+                        externalBookScope.pickedExternalBookPage = null;
+                    }
+
+                    extensionScope.confirmBookWidgetName = function (event, externalBookObj, externalBookPage) {
+                        event && event.stopPropagation && event.stopPropagation();
+
+                        if (externalBookObj && externalBookPage) {
+                            extensionScope.pickedExternalBook = externalBookObj;
+                            extensionScope.pickedExternalBookPage = externalBookPage;
+
+                            return extensionScope.confirmWidgetName(event);
+                        }
+
+                        return uiUtilService.getResolveDefer();
+                    }
+
+                    extensionScope.$on('$destroy', function () {
+                        if ($scope.beforeBookWidgetCreationWatcher) {
+                            $scope.beforeBookWidgetCreationWatcher();
+                            $scope.beforeBookWidgetCreationWatcher = null;
+                        }
+                    });
                 }
 
                 function addExtensionTemplate() {
@@ -1943,7 +2094,7 @@ define(
             appModule.
                 controller('RootController', ["$scope", "$rootScope", "$q", "$timeout", "angularEventTypes", "angularConstants", "appService", "urlService", "uiUtilService", RootController]).
                 controller('FrameSketchController', ["$scope", "$rootScope", "$timeout", "$q", "$log", "$exceptionHandler", "$compile", "$parse", "angularEventTypes", "angularConstants", "appService", "uiService", "uiUtilService", "uiCanvasService", FrameSketchController]).
-                controller('BookController', ["$scope", "$rootScope", "$timeout", "$q", "$log", "$exceptionHandler", "$compile", "$parse", "$templateCache", "angularEventTypes", "angularConstants", "appService", "uiService", "uiUtilService", "uiCanvasService", BookController]).
+                controller('BookController', ["$scope", "$rootScope", "$timeout", "$q", "$log", "$exceptionHandler", "$compile", "$parse", "$templateCache", "angularEventTypes", "angularConstants", "appService", "uiService", "uiBookService", "uiUtilService", "uiCanvasService", BookController]).
                 controller('FlowController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "uiService", "uiFlowService", "urlService", "uiUtilService", FlowController]).
                 controller('ProjectController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "uiService", "uiFlowService", "uiBookService", "urlService", "uiUtilService", ProjectController]).
                 controller('RepoController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "urlService", RepoController]).

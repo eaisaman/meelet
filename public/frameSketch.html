@@ -446,7 +446,8 @@
                     <div id="frameSketchWidgetDemoArea"></div>
                 </div>
             </div>
-            <div id="widgetNameModal" ng-show="modalUsage === 'WidgetName'" ng-click="$event.stopPropagation()">
+            <div id="widgetNameModal" ng-show="modalUsage === 'WidgetName'" ng-click="$event.stopPropagation()"
+                 extensionPoint="bookWidgetCreationExtensionPoint">
                 <div class="widgetNameContent">
                     <div class="input-group col-as-12 fs-x-medium">
                         <label class="col-as-4 no-padding control-label">Widget Name</label>

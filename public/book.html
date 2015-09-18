@@ -3,9 +3,98 @@
 
 <script type="text/ng-template" id="_bookExtension.html">
     <div extension="extraButtonExtensionPoint">
-        <div ng-click="once(this, $event, 'enableAddPageWidget', $event)"
+        <div ng-mouseenter="once(this, $event, 'enableAddPageWidget', $event)"
              class="topbarButton icon-book-before icon-book-add-page-before"
              title="Add Book Page Widget"></div>
+    </div>
+    <div extension="resourceExtensionPoint">
+        <div class="accordianGroup" ng-click="once(this, $event, 'toggleSelect', $event)">
+            <div class="accordianTitle col-as-12 fs-x-small fs-x-medium-before icon-book-before icon-book-angle-double-up-before">
+                <span class="col-as-12 no-padding icon-book-after icon-book-book-after">External</span>
+            </div>
+
+            <div class="accordianSubTitle fs-x-smaller col-as-12 no-padding" ng-click="$event.stopPropagation()">
+                <div class="uploadContent fs-x-smaller"
+                     flow-init="{'target':'api/public/projectResourceChunk', 'simultaneousUploads':1, 'query':{'projectId':$root.loadedProject.projectRecord._id, 'resourceType':'external'}}"
+                     flow-file-success="onUploadSuccess('external', $file, $message)"
+                     flow-files-submitted="$flow.upload()">
+                    <div class="uploadButton form-control fs-x-smaller-before icon-book-before icon-book-circle-plus-before"
+                         flow-btn>
+                        <input type="file" style="visibility: hidden; position: absolute;">
+                    </div>
+                    <div class="uploadDock" flow-drop ng-class="dropClass" flow-drag-enter="dropClass='drag-over'"
+                         flow-drag-leave="dropClass=''">
+                        OR Drag And Drop file here
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordianBody fs-x-smaller col-as-12 no-padding">
+                <div class="resourcePane col-as-12 no-padding"
+                     ng-click="$event.stopPropagation()"
+                     ng-repeat="resourceItem in $root.loadedProject.resources['external']">
+                    <span>{{resourceItem}}</span>
+
+                    <div class="resourceDeleteButton fs-x-medium-before icon-book icon-book-circle-minus-before"
+                         ng-click="once(this, $event, 'deleteResource', 'external', resourceItem, $event)"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div extension="bookWidgetCreationExtensionPoint">
+        <div id="bookWidgetNameModal" ng-show="modalUsage === 'BookWidgetName'" ng-click="$event.stopPropagation()">
+            <div class="widgetNameContent">
+                <div class="input-group col-as-12 fs-x-medium">
+                    <label class="col-as-4 no-padding control-label">Widget Name</label>
+
+                    <div class="col-as-8 no-padding">
+                        <input id="newBookWidgetName" type="text"
+                               class="form-control no-padding fs-x-medium"/>
+                    </div>
+                </div>
+            </div>
+            <div class="widgetBookContent">
+                <div class="input-group col-as-12 fs-x-medium">
+                    <label class="col-as-4 no-padding control-label">Include Book</label>
+
+                    <div class="col-as-8 no-padding">
+                        <select class="form-control fs-x-medium" ng-model="pickedExternalBookName"
+                                ng-change="onPickedExternalBook(this, pickedExternalBookName)">
+                            <option value="{{externalBook.name}}"
+                                    ng-attr-selected="{{pickedExternalBookName === externalBook.name}}"
+                                    ng-repeat="externalBook in $root.loadedProject.externalList">
+                                {{externalBook.name}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="widgetPageContent">
+                <div class="input-group col-as-12 fs-x-medium">
+                    <label class="col-as-4 no-padding control-label">Include Page</label>
+
+                    <div class="col-as-8 no-padding">
+                        <select class="form-control fs-x-medium" ng-model="pickedExternalBookPage">
+                            <option value="{{externalBookPage.page}}"
+                                    ng-attr-selected="{{pickedExternalBookPage === externalBookPage.page}}"
+                                    ng-repeat="externalBookPage in pickedExternalBookPages">
+                                {{externalBookPage.page}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="widgetNameConfirmBar">
+                <div class="widgetNameButton col-as-6 no-padding"
+                     ng-click="once(this, $event, 'confirmBookWidgetName', $event, pickedExternalBook, pickedExternalBookPage)">
+                    <span class="icon-frame-sketch-before icon-frame-sketch-confirm-before">Confirm</span>
+                </div>
+                <div class="widgetNameButton col-as-6 no-padding"
+                     ng-click="once(this, $event, 'hideModal', $event)">
+                    <span class="icon-frame-sketch-before icon-frame-sketch-cancel-before">Cancel</span>
+                </div>
+            </div>
+        </div>
     </div>
 </script>
 

@@ -1,6 +1,7 @@
 var path = require('path');
 var fs = require('fs');
 var rimraf = require('rimraf');
+var shelljs = require('shelljs');
 var async = require('async');
 var _ = require('underscore');
 var bson = require('bson');
@@ -130,6 +131,7 @@ UserFileController.prototype.postConfiguration = function (projectId, artifactId
 UserFileController.prototype.postSketch = function (projectId, sketchWorks, stagingContent, request, success, fail) {
     var self = this;
 
+    //FIXME JSON.parse may throw error.
     if (projectId) {
         var projectPath = path.join(self.config.userFile.sketchFolder, projectId),
             cssPath = path.join(projectPath, "stylesheets"),
@@ -475,6 +477,39 @@ UserFileController.prototype.getFlow = function (projectId, success, fail) {
     }
 }
 
+UserFileController.prototype.getExternal = function (projectId, success, fail) {
+    var self = this;
+
+    if (projectId) {
+        var projectPath = path.join(self.config.userFile.sketchFolder, projectId);
+
+        fs.mkdir(projectPath, 0777, function (fsError) {
+            if (!fsError || fsError.code === "EEXIST") {
+                var filePath = path.join(projectPath, "external.json"),
+                    rs = fs.createReadStream(filePath),
+                    ms = require('memorystream').createWriteStream();
+
+                rs.on('end', function () {
+                    var ret = ms.toString();
+                    ms.destroy();
+                    success(ret);
+                });
+
+                rs.on('error', function (err) {
+                    ms.destroy();
+                    fail(err);
+                });
+
+                rs.pipe(ms);
+            } else {
+                fail(fsError);
+            }
+        });
+    } else {
+        fail("Empty project id");
+    }
+}
+
 UserFileController.prototype.getProjectImageChunk = function (request, projectId, flowChunkNumber, flowFilename, success, fail) {
     var self = this;
 
@@ -746,12 +781,21 @@ UserFileController.prototype.getProjectResource = function (projectId, success, 
                             if (err) {
                                 callback(err);
                             } else {
-                                _.each(fileNames, function (fileName) {
-                                    var pathItem = path.join(folder, fileName);
-                                    if (!/^\./.test(fileName) && fs.lstatSync(pathItem).isFile()) {
-                                        resources[resourceType].push(fileName);
-                                    }
-                                });
+                                if (resourceType === "external") {
+                                    _.each(fileNames, function (fileName) {
+                                        var pathItem = path.join(folder, fileName);
+                                        if (!/^\./.test(fileName)) {
+                                            resources[resourceType].push(fileName);
+                                        }
+                                    });
+                                } else {
+                                    _.each(fileNames, function (fileName) {
+                                        var pathItem = path.join(folder, fileName);
+                                        if (!/^\./.test(fileName) && fs.lstatSync(pathItem).isFile()) {
+                                            resources[resourceType].push(fileName);
+                                        }
+                                    });
+                                }
                                 callback(null);
                             }
                         });
@@ -784,8 +828,10 @@ UserFileController.prototype.postProjectResourceChunk = function (request, proje
     if (toString.call(flowCurrentChunkSize) === '[object Array]' && flowCurrentChunkSize.length) flowCurrentChunkSize = flowCurrentChunkSize[0];
     if (toString.call(flowTotalSize) === '[object Array]' && flowTotalSize.length) flowTotalSize = flowTotalSize[0];
 
+    //FIXME How to forbid multiple uploads of the same resource up to the same project
     if (projectId && resourceType) {
         var projectPath = path.join(self.config.userFile.sketchFolder, projectId),
+            externalJsonPath = path.join(projectPath, "external.json"),
             resourceAllPath = path.join(projectPath, "resource"),
             resourcePath = path.join(resourceAllPath, resourceType);
 
@@ -965,6 +1011,149 @@ UserFileController.prototype.postProjectResourceChunk = function (request, proje
                                         next(null, savedFileName);
                                     }
                                 });
+                        } else if (resourceType === "external") {
+                            var ext = path.extname(flowFilename),
+                                filename = path.basename(flowFilename).replace(new RegExp(_.sprintf("\%s$", ext)), ''),
+                                tmpFileName = path.join(self.config.userFile.tmpFolder, flowFilename),
+                                tmpUnzipFolder = path.join(self.config.userFile.tmpFolder, filename),
+                                targetFolder = path.join(resourcePath, filename),
+                                resourceJsonPath = path.join(targetFolder, "external.json");
+
+                            if (ext.toLowerCase() === ".zip") {
+                                //Move to tmp folder and unzip there, move the unzipped folder back, remove processed file in tmp folder.
+                                arr.push(
+                                    function (name, next) {
+                                        shelljs.exec(_.sprintf("mv %s %s", finalPath, tmpFileName), {silent: true}, function (code, output) {
+                                            if (code) {
+                                                next(output);
+                                            } else {
+                                                next(null, filename);
+                                            }
+                                        });
+                                    }
+                                );
+
+                                arr.push(
+                                    function (name, next) {
+                                        rimraf(tmpUnzipFolder, function (err) {
+                                            if (err && err.code !== "ENOENT") //Not Found
+                                                next(err);
+                                            else
+                                                next(null, name);
+                                        });
+                                    }
+                                );
+
+                                arr.push(
+                                    function (name, next) {
+                                        shelljs.exec(_.sprintf("unzip -n %s -d %s", tmpFileName, self.config.userFile.tmpFolder), {silent: true}, function (code, output) {
+                                            if (code) {
+                                                next(output);
+                                            } else {
+                                                next(null, name);
+                                            }
+                                        });
+                                    }
+                                );
+
+                                arr.push(
+                                    function (name, next) {
+                                        shelljs.exec(_.sprintf("rm %s", tmpFileName), {silent: true}, function (code, output) {
+                                            if (code) {
+                                                next(output);
+                                            } else {
+                                                next(null, name);
+                                            }
+                                        });
+                                    }
+                                );
+
+                                arr.push(
+                                    function (name, next) {
+                                        shelljs.exec(_.sprintf("mv %s %s", tmpUnzipFolder, resourcePath), {silent: true}, function (code, output) {
+                                            if (code) {
+                                                next(output);
+                                            } else {
+                                                next(null, name);
+                                            }
+                                        });
+                                    }
+                                );
+
+                                //Add resource reference into external.json
+                                arr.push(function (name, next) {
+                                    var rs = fs.createReadStream(externalJsonPath),
+                                        ms = require('memorystream').createWriteStream();
+
+                                    rs.on('end', function () {
+                                        var str = ms.toString();
+                                        ms.destroy();
+                                        next(null, name, JSON.parse(str));
+                                    });
+
+                                    rs.on('error', function (err) {
+                                        ms.destroy();
+                                        if (err) {
+                                            if (err.code !== "ENOENT") //Not Found
+                                            {
+                                                self.config.logger.error(err);
+                                                next(err);
+                                            }
+                                            else {
+                                                next(null, name, []);
+                                            }
+                                        } else {
+                                            next(null, name, []);
+                                        }
+                                    });
+
+                                    rs.pipe(ms);
+                                });
+
+                                arr.push(function (name, externalArr, next) {
+                                    try {
+                                        fs.statSync(resourceJsonPath);
+
+                                        var rs = fs.createReadStream(resourceJsonPath),
+                                            ms = require('memorystream').createWriteStream();
+
+                                        rs.on('end', function () {
+                                            var str = ms.toString();
+                                            ms.destroy();
+
+                                            var resourceItem = JSON.parse(str),
+                                                foundItem = _.findWhere(externalArr, {name: resourceItem.name});
+                                            foundItem && _.extend(foundItem, resourceItem) || externalArr.push(resourceItem);
+
+                                            next(null, name, externalArr);
+                                        });
+
+                                        rs.on('error', function (err) {
+                                            ms.destroy();
+                                            next(err);
+                                        });
+
+                                        rs.pipe(ms);
+                                    } catch (err) {
+                                        next(err);
+                                    }
+                                });
+
+                                arr.push(function (name, externalArr, next) {
+                                    var out = fs.createWriteStream(externalJsonPath);
+
+                                    out.on('finish', function () {
+                                        next(null, name);
+                                    });
+
+                                    out.on('error', function (err) {
+                                        next(err);
+                                    });
+
+                                    out.write(JSON.stringify(externalArr));
+                                    out.end();
+                                });
+                            }
                         }
 
                         async.waterfall(
@@ -978,7 +1167,7 @@ UserFileController.prototype.postProjectResourceChunk = function (request, proje
                             }
                         );
                     } else {
-                        success(flowFilename);
+                        success(resourceType === "external" ? path.basename(flowFilename) : flowFilename);
                     }
                 } else {
                     fail(err, {statusCode: 500});
@@ -999,12 +1188,129 @@ UserFileController.prototype.deleteProjectResource = function (projectId, resour
             resourcePath = path.join(resourceAllPath, resourceType),
             filePath = path.join(resourcePath, fileName);
 
-        fs.unlink(filePath, function (err) {
-            if (err && err.code !== "ENOENT") //Not Found
-                fail(err);
-            else
-                success();
-        })
+        if (fs.existsSync(filePath)) {
+            var arr = [];
+
+            if (resourceType === "external") {
+                var externalJsonPath = path.join(projectPath, "external.json"),
+                    targetFolder = path.join(resourcePath, fileName),
+                    resourceJsonPath = path.join(targetFolder, "external.json");
+
+                //Remove resource reference from external.json
+                arr.push(function (next) {
+                    try {
+                        fs.statSync(externalJsonPath);
+                        fs.statSync(resourceJsonPath);
+
+                        var rs = fs.createReadStream(externalJsonPath),
+                            ms = require('memorystream').createWriteStream();
+
+                        rs.on('end', function () {
+                            var str = ms.toString(),
+                                externalArr;
+                            ms.destroy();
+
+                            try {
+                                externalArr = JSON.parse(str);
+                            } catch (err) {
+                                self.config.logger.error(err);
+                            }
+
+                            next(null, externalArr);
+                        });
+
+                        rs.on('error', function (err) {
+                            ms.destroy();
+                            next(err);
+                        });
+
+                        rs.pipe(ms);
+                    } catch (err) {
+                        next(err);
+                    }
+                });
+
+                arr.push(function (externalArr, next) {
+                    if (externalArr && externalArr.length) {
+                        var rs = fs.createReadStream(resourceJsonPath),
+                            ms = require('memorystream').createWriteStream();
+
+                        rs.on('end', function () {
+                            var str = ms.toString();
+                            ms.destroy();
+
+                            var resourceItem = JSON.parse(str);
+                            if (resourceItem) {
+                                externalArr = _.reject(externalArr, function (item) {
+                                    return item.name === resourceItem.name
+                                });
+                                next(null, externalArr);
+                            } else {
+                                next(null, externalArr);
+                            }
+                        });
+
+                        rs.on('error', function (err) {
+                            ms.destroy();
+                            next(err);
+                        });
+
+                        rs.pipe(ms);
+                    } else {
+                        next(null, null);
+                    }
+                });
+
+                arr.push(function (externalArr, next) {
+                    if (externalArr) {
+                        var out = fs.createWriteStream(externalJsonPath);
+
+                        out.on('finish', function () {
+                            next(null);
+                        });
+
+                        out.on('error', function (err) {
+                            next(err);
+                        });
+
+                        out.write(JSON.stringify(externalArr));
+                        out.end();
+                    } else {
+                        next(null);
+                    }
+                });
+            }
+
+            if (fs.lstatSync(filePath).isFile()) {
+                arr.push(function (next) {
+                    fs.unlink(filePath, function (err) {
+                        if (err && err.code !== "ENOENT") //Not Found
+                            next(err);
+                        else
+                            next(null);
+                    })
+                });
+            } else if (fs.lstatSync(filePath).isDirectory()) {
+                arr.push(function (next) {
+                    rimraf(filePath, function (err) {
+                        if (err && err.code !== "ENOENT") //Not Found
+                            next(err);
+                        else
+                            next(null);
+                    });
+                });
+            }
+
+            async.waterfall(arr, function (err) {
+                if (err) {
+                    fail(err);
+                } else {
+                    success();
+                }
+            })
+        } else {
+            fail("Cannot find path.", {statusCode: 500});
+        }
     } else {
         fail("Empty project id or resource type or file name", {statusCode: 500});
     }

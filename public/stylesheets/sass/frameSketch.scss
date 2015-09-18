@@ -35,7 +35,6 @@
 @include shape(shape-control);
 @include widget(widget-control);
 @include page(page-control);
-@include sketch-widget(sketchHolder);
 @include horizontal-ruler(horizontalRuler);
 @include vertical-ruler(verticalRuler);
 @include dock(sketchControls);

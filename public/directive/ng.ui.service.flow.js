@@ -17,7 +17,7 @@ define(
 
             _.extend($inject, _.pick(this, FlowService.$inject));
 
-            defineFlowClass(uiUtilService.createObjectClass, uiUtilService.findObjectClass);
+            defineFlowClass(uiUtilService.createObjectClass(), uiUtilService.findObjectClass());
         };
 
         FlowService.$inject = ["$parse", "$timeout", "$q", "$exceptionHandler", "$compile", "$rootScope", "angularEventTypes", "angularConstants", "appService", "uiUtilService", "uiCanvasService", "uiAnimationService"];
@@ -33,7 +33,7 @@ define(
                         }
                     },
                     initialize: function (projectRecord) {
-                        this.initialize.prototype.__proto__.initialize.apply(this, [projectRecord]);
+                        FlowProject.prototype.__proto__.initialize.apply(this, [projectRecord]);
                         var MEMBERS = arguments.callee.prototype.MEMBERS;
 
                         for (var member in MEMBERS) {
@@ -518,7 +518,7 @@ define(
                         exitOn: "Failure"//Success, Failure, Done
                     },
                     initialize: function (id) {
-                        this.initialize.prototype.__proto__.initialize.apply(this, ["Sequence", id]);
+                        SequenceFlowStep.prototype.__proto__.initialize.apply(this, ["Sequence", id]);
                         var MEMBERS = arguments.callee.prototype.MEMBERS;
 
                         for (var member in MEMBERS) {
@@ -689,7 +689,7 @@ define(
                         timeout: 0
                     },
                     initialize: function (id) {
-                        this.initialize.prototype.__proto__.initialize.apply(this, ["Invoke", id]);
+                        InvokeFlowStep.prototype.__proto__.initialize.apply(this, ["Invoke", id]);
                         var MEMBERS = arguments.callee.prototype.MEMBERS;
 
                         for (var member in MEMBERS) {
@@ -738,7 +738,7 @@ define(
                         mappings: []//array of object {variable: "v", expression: ""}, expression is evaluated by angular.
                     },
                     initialize: function (id) {
-                        this.initialize.prototype.__proto__.initialize.apply(this, ["Map", id]);
+                        MapFlowStep.prototype.__proto__.initialize.apply(this, ["Map", id]);
                         var MEMBERS = arguments.callee.prototype.MEMBERS;
 
                         for (var member in MEMBERS) {
@@ -790,7 +790,7 @@ define(
                         evaluateLabels: false
                     },
                     initialize: function (id) {
-                        this.initialize.prototype.__proto__.initialize.apply(this, ["Switch", id]);
+                        SwitchFlowStep.prototype.__proto__.initialize.apply(this, ["Switch", id]);
                         var MEMBERS = arguments.callee.prototype.MEMBERS;
 
                         for (var member in MEMBERS) {
@@ -964,7 +964,7 @@ define(
                         interval: 0
                     },
                     initialize: function (id) {
-                        this.initialize.prototype.__proto__.initialize.apply(this, ["Repeat", id]);
+                        RepeatFlowStep.prototype.__proto__.initialize.apply(this, ["Repeat", id]);
                         var MEMBERS = arguments.callee.prototype.MEMBERS;
 
                         for (var member in MEMBERS) {
@@ -1138,7 +1138,7 @@ define(
                         message: ""
                     },
                     initialize: function (id) {
-                        this.initialize.prototype.__proto__.initialize.apply(this, ["Exit", id]);
+                        ExitFlowStep.prototype.__proto__.initialize.apply(this, ["Exit", id]);
                         var MEMBERS = arguments.callee.prototype.MEMBERS;
 
                         for (var member in MEMBERS) {
@@ -1305,7 +1305,7 @@ define(
                     CLASS_NAME: "CallProcessStep",
                     MEMBERS: {},
                     initialize: function (id) {
-                        this.initialize.prototype.__proto__.initialize.apply(this, ["Call", id]);
+                        CallProcessStep.prototype.__proto__.initialize.apply(this, ["Call", id]);
                         var MEMBERS = arguments.callee.prototype.MEMBERS;
 
                         for (var member in MEMBERS) {
@@ -1353,7 +1353,7 @@ define(
                         event: null
                     },
                     initialize: function (id) {
-                        this.initialize.prototype.__proto__.initialize.apply(this, ["Receive", id]);
+                        ReceiveProcessStep.prototype.__proto__.initialize.apply(this, ["Receive", id]);
                         var MEMBERS = arguments.callee.prototype.MEMBERS;
 
                         for (var member in MEMBERS) {
@@ -1399,7 +1399,7 @@ define(
                     CLASS_NAME: "TerminateProcessStep",
                     MEMBERS: {},
                     initialize: function (id) {
-                        this.initialize.prototype.__proto__.initialize.apply(this, ["Terminate", id]);
+                        TerminateProcessStep.prototype.__proto__.initialize.apply(this, ["Terminate", id]);
                         var MEMBERS = arguments.callee.prototype.MEMBERS;
 
                         for (var member in MEMBERS) {
@@ -1445,7 +1445,7 @@ define(
                     CLASS_NAME: "ForkProcessStep",
                     MEMBERS: {},
                     initialize: function (id) {
-                        this.initialize.prototype.__proto__.initialize.apply(this, ["Fork", id]);
+                        ForkProcessStep.prototype.__proto__.initialize.apply(this, ["Fork", id]);
                         var MEMBERS = arguments.callee.prototype.MEMBERS;
 
                         for (var member in MEMBERS) {
@@ -1491,7 +1491,7 @@ define(
                     CLASS_NAME: "JoinProcessStep",
                     MEMBERS: {},
                     initialize: function (id) {
-                        this.initialize.prototype.__proto__.initialize.apply(this, ["Join", id]);
+                        JoinProcessStep.prototype.__proto__.initialize.apply(this, ["Join", id]);
                         var MEMBERS = arguments.callee.prototype.MEMBERS;
 
                         for (var member in MEMBERS) {

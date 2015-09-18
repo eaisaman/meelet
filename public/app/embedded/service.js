@@ -64,6 +64,8 @@ define(
 
         appService.prototype.loadSketch = appService.prototype.NOOP;
 
+        appService.prototype.loadExternal = appService.prototype.NOOP;
+
         appService.prototype.saveFlow = appService.prototype.NOOP;
 
         appService.prototype.loadFlow = appService.prototype.NOOP;
@@ -107,6 +109,8 @@ define(
         appService.prototype.deleteProject = appService.prototype.NOOP;
 
         appService.prototype.convertToHtml = appService.prototype.NOOP;
+
+        appService.prototype.validateUrl = appService.prototype.NOOP;
 
         appService.prototype.playSound = appService.prototype.NOOP;
 

@@ -1064,47 +1064,52 @@ define(
         Util.prototype.createObjectClass = function () {
             var self = this;
 
-            var len = arguments.length;
-            var P = arguments[0];
-            var F = arguments[len - 1];
+            return function() {
+                var len = arguments.length;
+                var P = arguments[0];
+                var F = arguments[len - 1];
 
-            if ((self.classMap = self.classMap || {})[F.CLASS_NAME]) {
-                return self.classMap[F.CLASS_NAME];
+                if ((self.classMap = self.classMap || {})[F.CLASS_NAME]) {
+                    return self.classMap[F.CLASS_NAME];
+                }
+
+                var C = typeof F.initialize == "function" ?
+                    F.initialize :
+                    function () {
+                        P.prototype.initialize.apply(this, arguments);
+                    };
+
+                if (len > 1) {
+                    var newArgs = [].concat(
+                        Array.prototype.slice.call(arguments).slice(1, len - 1), F);
+
+                    var OF = function () {
+                    };
+                    OF.prototype = P.prototype;
+                    C.prototype = new OF;
+
+                    newArgs.forEach(function (o) {
+                        if (typeof o === "function") {
+                            o = o.prototype;
+                        }
+                        _.extend(C.prototype, o);
+                    });
+                } else {
+                    C.prototype = F;
+                }
+
+                self.classMap[F.CLASS_NAME] = C;
+
+                return C;
             }
-
-            var C = typeof F.initialize == "function" ?
-                F.initialize :
-                function () {
-                    P.prototype.initialize.apply(this, arguments);
-                };
-
-            if (len > 1) {
-                var newArgs = [].concat(
-                    Array.prototype.slice.call(arguments).slice(1, len - 1), F);
-
-                var OF = function () {
-                };
-                OF.prototype = P.prototype;
-                C.prototype = new OF;
-
-                newArgs.forEach(function (o) {
-                    if (typeof o === "function") {
-                        o = o.prototype;
-                    }
-                    _.extend(C.prototype, o);
-                });
-            } else {
-                C.prototype = F;
-            }
-
-            self.classMap[F.CLASS_NAME] = C;
-
-            return C;
         }
 
-        Util.prototype.findObjectClass = function (className) {
-            return (this.classMap = this.classMap || {})[className];
+        Util.prototype.findObjectClass = function () {
+            var self = this;
 
+            return function(className) {
+                return (self.classMap = self.classMap || {})[className];
+            }
         }
 
         return function (appModule) {

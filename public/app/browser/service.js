@@ -548,6 +548,27 @@ define(
             );
         }
 
+        appService.prototype.loadExternal = function (projectId) {
+            var self = this;
+
+            return self.$http({
+                method: 'GET',
+                url: '/api/public/external',
+                params: {projectId: projectId}
+            }).then(function (result) {
+                    if (result.data.result === "OK") {
+                        var resultValue = JSON.parse(result.data.resultValue);
+                        return self.getResolveDefer(resultValue);
+                    } else {
+                        return self.getRejectDefer(result.data.reason);
+                    }
+                },
+                function (err) {
+                    return self.getRejectDefer(err);
+                }
+            );
+        }
+
         appService.prototype.saveFlow = function (projectId, flowWorks) {
             return this.$http({
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
@@ -898,6 +919,18 @@ define(
                     }
                 },
                 function (err) {
+                    return self.getRejectDefer(err);
+                }
+            )
+        }
+
+        appService.prototype.validateUrl = function (url) {
+            var self = this;
+
+            return self.$http.get(url).then(
+                function () {
+                    return self.getResolveDefer();
+                }, function (err) {
                     return self.getRejectDefer(err);
                 }
             )
