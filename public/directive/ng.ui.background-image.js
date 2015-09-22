@@ -501,6 +501,7 @@ define(
                                         );
                                     },
                                     null,
+                                    null,
                                     angularConstants.unresponsiveInterval,
                                     "ui-background-image.compile.post.init"
                                 )();

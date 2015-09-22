@@ -304,6 +304,7 @@ define(
                                                 });                                            });
                                         },
                                         null,
+                                        null,
                                         angularConstants.unresponsiveInterval,
                                         "ui-shape.compile.post.refreshArtifactList"
                                     )();
@@ -338,6 +339,7 @@ define(
                                             }
                                         });
                                     },
+                                    null,
                                     null,
                                     angularConstants.unresponsiveInterval,
                                     "ui-shape.compile.post.init"

@@ -144,7 +144,13 @@ define(
                                                 var args = Array.prototype.slice.call(arguments),
                                                     result = assign.apply(fn, args);
 
-                                                uiUtilService.latestOnce(itemHandler, null, angularConstants.unresponsiveInterval, "uiStateAction.createConfigurationItemAssign.itemHandler.{0}.{1}".format($scope.configurationItem.widget.id, $scope.configurationItem.name))();
+                                                uiUtilService.latestOnce(
+                                                    itemHandler,
+                                                    null,
+                                                    null,
+                                                    angularConstants.unresponsiveInterval,
+                                                    "uiStateAction.createConfigurationItemAssign.itemHandler.{0}.{1}".format($scope.configurationItem.widget.id, $scope.configurationItem.name)
+                                                )();
 
                                                 return result;
                                             }
@@ -362,6 +368,7 @@ define(
                                             });
                                         },
                                         null,
+                                        null,
                                         angularConstants.unresponsiveInterval,
                                         "ui-state-action.compile.post.refreshArtifactList"
                                     )();
@@ -381,6 +388,7 @@ define(
                                             $panel.addClass("show");
                                         });
                                     },
+                                    null,
                                     null,
                                     angularConstants.unresponsiveInterval,
                                     "ui-state-action.compile.post.init"

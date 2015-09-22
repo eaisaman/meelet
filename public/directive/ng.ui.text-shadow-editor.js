@@ -147,8 +147,10 @@ define(
                                                     return !scope.textShadow;
                                                 },
                                                 function (err) {
-                                                    scope.setTextShadow(angular.copy(options.textShadow));
-                                                    scope.togglePalette();
+                                                    if (!err) {
+                                                        scope.setTextShadow(angular.copy(options.textShadow));
+                                                        scope.togglePalette();
+                                                    }
                                                 },
                                                 angularConstants.checkInterval,
                                                 "ui-text-shadow-editor.toggleTextShadowControl",
@@ -511,6 +513,7 @@ define(
                                                 });
                                             });
                                         },
+                                        null,
                                         null,
                                         angularConstants.unresponsiveInterval,
                                         "ui-text-shadow-editor.compile.post.refreshArtifactList"

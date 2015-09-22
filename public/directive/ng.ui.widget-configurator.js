@@ -195,7 +195,13 @@ define(
                                                 var args = Array.prototype.slice.call(arguments),
                                                     result = assign.apply(fn, args);
 
-                                                uiUtilService.latestOnce(itemInputHandler, null, angularConstants.unresponsiveInterval, "uiWidgetConfigurator.createConfigurationItemAssign.itemInputHandler.{0}.{1}".format(scope.configurableWidget.id, $scope.configurationItem.name))(value);
+                                                uiUtilService.latestOnce(
+                                                    itemInputHandler,
+                                                    null,
+                                                    null,
+                                                    angularConstants.unresponsiveInterval,
+                                                    "uiWidgetConfigurator.createConfigurationItemAssign.itemInputHandler.{0}.{1}".format(scope.configurableWidget.id, $scope.configurationItem.name)
+                                                )(value);
 
                                                 return result;
                                             }

@@ -224,7 +224,12 @@ define(
 
                                     changeSelectedColor.onceId = "color-editor-palette.changeSelectedColor";
 
-                                    to && uiUtilService.latestOnce(changeSelectedColor, null, angularConstants.unresponsiveInterval)(to);
+                                    to && uiUtilService.latestOnce(
+                                        changeSelectedColor,
+                                        null,
+                                        null,
+                                        angularConstants.unresponsiveInterval
+                                    )(to);
                                 }
 
                                 scope.watchSelectedColor = function (state) {
@@ -421,7 +426,13 @@ define(
                                     }
                                     scope.selectedColorObj.color = null;
 
-                                    uiUtilService.latestOnce(colorObjHandler, null, angularConstants.unresponsiveInterval, "color-editor-palette.colorObjHandler")();
+                                    uiUtilService.latestOnce(
+                                        colorObjHandler,
+                                        null,
+                                        null,
+                                        angularConstants.unresponsiveInterval,
+                                        "color-editor-palette.colorObjHandler"
+                                    )();
                                 }
 
                                 scope.incrementAlpha = function (event) {

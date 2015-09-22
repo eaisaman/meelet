@@ -679,8 +679,8 @@ define(
                     return uiUtilService.whilst(
                         function () {
                             return !document.getElementsByClassName(angularConstants.widgetClasses.deviceHolderClass).length;
-                        }, function () {
-                            uiUtilService.latestOnce(
+                        }, function (err) {
+                            err || uiUtilService.latestOnce(
                                 function () {
                                     return $timeout(function () {
                                         if ($rootScope.loadedProject.sketchWorks.pages.length) {
@@ -694,6 +694,7 @@ define(
                                         }
                                     });
                                 },
+                                null,
                                 null,
                                 angularConstants.unresponsiveInterval,
                                 "FrameSketchController.renderProject"
@@ -2068,8 +2069,8 @@ define(
                     return uiUtilService.whilst(
                         function () {
                             return !getExtensionScope();
-                        }, function () {
-                            uiUtilService.latestOnce(
+                        }, function (err) {
+                            err || uiUtilService.latestOnce(
                                 function () {
                                     return $timeout(function () {
                                         var extensionScope = getExtensionScope();
@@ -2078,6 +2079,7 @@ define(
                                         addExtensionTemplate();
                                     });
                                 },
+                                null,
                                 null,
                                 angularConstants.unresponsiveInterval,
                                 "BookController.addExtensionSnippet"

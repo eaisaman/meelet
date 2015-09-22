@@ -154,8 +154,10 @@ define(
                                                     return !scope.boxShadow;
                                                 },
                                                 function (err) {
-                                                    scope.setBoxShadow(angular.copy(options.boxShadow));
-                                                    scope.togglePalette();
+                                                    if (!err) {
+                                                        scope.setBoxShadow(angular.copy(options.boxShadow));
+                                                        scope.togglePalette();
+                                                    }
                                                 },
                                                 angularConstants.checkInterval,
                                                 "ui-box-shadow-editor.toggleBoxShadowControl",
@@ -554,6 +556,7 @@ define(
                                                 });
                                             });
                                         },
+                                        null,
                                         null,
                                         angularConstants.unresponsiveInterval,
                                         "ui-box-shadow-editor.compile.post.refreshArtifactList"

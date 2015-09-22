@@ -403,8 +403,8 @@ define(
                                     return uiUtilService.whilst(
                                         function () {
                                             return !scope.editorAttached;
-                                        }, function () {
-                                            uiUtilService.latestOnce(
+                                        }, function (err) {
+                                            err || uiUtilService.latestOnce(
                                                 function () {
                                                     return $timeout(function () {
                                                         if (resourceType === "audio") {
@@ -412,6 +412,7 @@ define(
                                                         }
                                                     });
                                                 },
+                                                null,
                                                 null,
                                                 angularConstants.unresponsiveInterval,
                                                 "ui.resource-editor.displayResourceEditor"

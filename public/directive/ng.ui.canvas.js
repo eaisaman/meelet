@@ -80,6 +80,7 @@ define(
                                 );
                             },
                             null,
+                            null,
                             self.angularConstants.unresponsiveInterval,
                             "SketchCanvas.setWidget.deregisterOnMarkRoute"
                         )(value);

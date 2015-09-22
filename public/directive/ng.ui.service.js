@@ -2230,7 +2230,12 @@ define(
                         if (stateValue !== stateMap[state.name]) stateMap[state.name] = stateValue;
 
                         if (!_.isEmpty(stateValue.beforeStyle) || !_.isEmpty(stateValue.afterStyle)) {
-                            $inject.uiUtilService.latestOnce(appendToPseudoEnabledWidgets, null, $inject.angularConstants.unresponsiveInterval)();
+                            $inject.uiUtilService.latestOnce(
+                                appendToPseudoEnabledWidgets,
+                                null,
+                                null,
+                                $inject.angularConstants.unresponsiveInterval
+                            )();
                         }
                     },
                     removePseudoStyle: function () {
@@ -2743,6 +2748,7 @@ define(
                                                         );
                                                     },
                                                     null,
+                                                    null,
                                                     $inject.angularConstants.unresponsiveInterval,
                                                     "BaseSketchWidgetClass.attach.deregisterOnPlaying." + self.id
                                                 )();
@@ -2980,6 +2986,7 @@ define(
                                                         }
                                                     );
                                                 },
+                                                null,
                                                 null,
                                                 $inject.angularConstants.unresponsiveInterval,
                                                 "BaseSketchWidgetClass.appendTo.deregisterOnPlaying." + self.id
@@ -4426,6 +4433,7 @@ define(
                                                 return defer.promise;
                                             },
                                             null,
+                                            null,
                                             $inject.angularConstants.unresponsiveInterval,
                                             "IncludeSketchWidgetClass.onContentIncluded." + self.id
                                         )();
@@ -5415,8 +5423,8 @@ define(
                             self.angularConstants.renderTimeout).then(
                             function () {
                                 return self.uiUtilService.getResolveDefer(cloneObj);
-                            }, function () {
-                                return self.uiUtilService.getRejectDefer();
+                            }, function (err) {
+                                return self.uiUtilService.getRejectDefer(err);
                             }
                         );
                     });

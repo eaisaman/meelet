@@ -446,6 +446,7 @@ define(
                                             );
                                         },
                                         null,
+                                        null,
                                         angularConstants.unresponsiveInterval,
                                         "ui-page.compile.pre.refreshArtifactList"
                                     )();
@@ -463,7 +464,7 @@ define(
                                                     return !$(".pageList select option").length;
                                                 },
                                                 function (err) {
-                                                    uiUtilService.latestOnce(
+                                                    err || uiUtilService.latestOnce(
                                                         function () {
                                                             return $timeout(function () {
                                                                 $(".pageList select").change(function () {
@@ -479,6 +480,7 @@ define(
                                                             });
                                                         },
                                                         null,
+                                                        null,
                                                         angularConstants.unresponsiveInterval,
                                                         "ui-page.compile.post.init.pageListListener"
                                                     )();
@@ -489,6 +491,7 @@ define(
                                             );
                                         });
                                     },
+                                    null,
                                     null,
                                     angularConstants.unresponsiveInterval,
                                     "ui-page.compile.post.init"

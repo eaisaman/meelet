@@ -351,6 +351,7 @@ define(
                                         });
                                     },
                                     null,
+                                    null,
                                     angularConstants.unresponsiveInterval,
                                     "ui-horizontal-ruler.compile.post.init"
                                 )();

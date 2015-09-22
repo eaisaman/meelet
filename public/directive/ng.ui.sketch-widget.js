@@ -399,7 +399,13 @@ define(
                                             //Directive ng-include will recreate element which have no widget id attribute.
                                             var id = element.attr("id") || element.parent().attr("id");
 
-                                            id && uiUtilService.latestOnce(watchHandler, null, angularConstants.unresponsiveInterval, "sketch-widget.playProjectEvent.watchHandler.{0}".format(id))(element, value);
+                                            id && uiUtilService.latestOnce(
+                                                watchHandler,
+                                                null,
+                                                null,
+                                                angularConstants.unresponsiveInterval,
+                                                "sketch-widget.playProjectEvent.watchHandler.{0}".format(id)
+                                            )(element, value);
                                         }
                                     });
 
@@ -419,7 +425,13 @@ define(
                                             //Directive ng-include will recreate element which have no widget id attribute.
                                             var id = element.attr("id") || element.parent().attr("id");
 
-                                            id && uiUtilService.latestOnce(watchHandler, null, angularConstants.unresponsiveInterval, "sketch-widget.defineWidgetRouteEvent.watchHandler.{0}".format(id))(element, value);
+                                            id && uiUtilService.latestOnce(
+                                                watchHandler,
+                                                null,
+                                                null,
+                                                angularConstants.unresponsiveInterval,
+                                                "sketch-widget.defineWidgetRouteEvent.watchHandler.{0}".format(id)
+                                            )(element, value);
                                         }
                                     });
 
@@ -445,7 +457,13 @@ define(
                                                 id = element.parent().attr("id") + ".containerWidget";
                                             }
 
-                                            id && uiUtilService.latestOnce(attachHandler, null, angularConstants.unresponsiveInterval, "sketch-widget.attachHandler.{0}".format(id))(element);
+                                            id && uiUtilService.latestOnce(
+                                                attachHandler,
+                                                null,
+                                                null,
+                                                angularConstants.unresponsiveInterval,
+                                                "sketch-widget.attachHandler.{0}".format(id)
+                                            )(element);
                                         }
                                     });
 

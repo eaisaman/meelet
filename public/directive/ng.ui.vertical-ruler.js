@@ -348,6 +348,7 @@ define(
                                         });
                                     },
                                     null,
+                                    null,
                                     angularConstants.unresponsiveInterval,
                                     "ui-vertical-ruler.compile.post.init"
                                 )();

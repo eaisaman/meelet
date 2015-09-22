@@ -404,8 +404,8 @@ define(
 
             self.whilst(function () {
                     return !scope.$root;
-                }, function () {
-                    scope.$root.$broadcast(eventName, boundObj);
+                }, function (err) {
+                    err || scope.$root.$broadcast(eventName, boundObj);
                 }, self.angularConstants.checkInterval,
                 "uiUtilService.broadcast.{0}-{1}".format(eventName, _.now()))
         }
@@ -460,7 +460,7 @@ define(
                         }
 
                         if (self.whilstMap[whilstId]) {
-                            self.whilstMap[whilstId].defer.resolve("TIMEOUT");
+                            self.whilstMap[whilstId].defer.reject("TIMEOUT");
                             delete self.whilstMap[whilstId];
                         }
 
@@ -642,7 +642,7 @@ define(
             }
         }
 
-        Util.prototype.latestOnce = function (fn, callback, interval, onceId) {
+        Util.prototype.latestOnce = function (fn, callback, errorCallback, interval, onceId) {
             var self = this;
 
             onceId = onceId || fn.onceId;
@@ -654,12 +654,13 @@ define(
                     function () {
                         var fn = self.latestOnceMap[id].fn,
                             callback = self.latestOnceMap[id].callback,
+                            errorCallback = self.latestOnceMap[id].errorCallback,
                             args = self.latestOnceMap[id].args,
                             timestamp = self.latestOnceMap[id].timestamp;
 
-                        function block(err) {
+                        function block(result) {
                             try {
-                                callback && callback.apply(null, [err]);
+                                callback && callback.apply(null, [result]);
                             } catch (e) {
                                 self.$exceptionHandler(e);
                             }
@@ -669,6 +670,27 @@ define(
 
                                 delete self.latestOnceMap[id].fn;
                                 delete self.latestOnceMap[id].callback;
+                                delete self.latestOnceMap[id].errorCallback;
+                                delete self.latestOnceMap[id].timestamp;
+                                delete self.latestOnceMap[id].args;
+                            } else {
+                                latestOnceHandler(id);
+                            }
+                        }
+
+                        function errorBlock(err) {
+                            try {
+                                errorCallback && errorCallback.apply(null, [err]);
+                            } catch (e) {
+                                self.$exceptionHandler(e);
+                            }
+
+                            if (timestamp == self.latestOnceMap[id].timestamp) {
+                                self.latestOnceMap[id].isExecuted = false;
+
+                                delete self.latestOnceMap[id].fn;
+                                delete self.latestOnceMap[id].callback;
+                                delete self.latestOnceMap[id].errorCallback;
                                 delete self.latestOnceMap[id].timestamp;
                                 delete self.latestOnceMap[id].args;
                             } else {
@@ -677,7 +699,7 @@ define(
                         }
 
                         try {
-                            fn.apply(null, args).then(block, block);
+                            fn.apply(null, args).then(block, errorBlock);
                         } catch (e) {
                             self.$exceptionHandler(e);
                         }
@@ -692,6 +714,7 @@ define(
                 self.latestOnceMap[onceId] = self.latestOnceMap[onceId] || {isExecuted: false};
                 self.latestOnceMap[onceId].fn = fn;
                 self.latestOnceMap[onceId].callback = callback;
+                self.latestOnceMap[onceId].errorCallback = errorCallback;
                 self.latestOnceMap[onceId].timestamp = _.now();
                 self.latestOnceMap[onceId].args = args;
 

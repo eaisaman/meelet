@@ -330,6 +330,7 @@ define(
                                             );
                                         },
                                         null,
+                                        null,
                                         angularConstants.unresponsiveInterval,
                                         "ui-widget.compile.pre.refreshArtifactList"
                                     )();
@@ -366,6 +367,7 @@ define(
                                             }
                                         );
                                     },
+                                    null,
                                     null,
                                     angularConstants.unresponsiveInterval,
                                     "ui-widget.compile.post.init"

@@ -50,6 +50,7 @@ define(
                                         }, angularConstants.actionDelay);
                                     },
                                     null,
+                                    null,
                                     angularConstants.unresponsiveInterval,
                                     "ui-dock.compile.post.init"
                                 )();

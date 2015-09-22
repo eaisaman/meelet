@@ -124,7 +124,7 @@ define(
                                                         return !scope.border;
                                                     },
                                                     function (err) {
-                                                        $q.all([
+                                                        err || $q.all([
                                                             scope.setBorderColor(angular.copy(options.borderColor)),
                                                             scope.setBorderWidth(options.borderWidth),
                                                             scope.setBorderStyle(options.borderStyle),
