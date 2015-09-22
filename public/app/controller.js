@@ -1080,7 +1080,11 @@ define(
                         $scope.renderProject();
                     }
 
+                    appService.registerService();
+
                     $scope.$on('$destroy', function () {
+                        appService.unregisterService();
+
                         if ($scope.pickedPageWatcher) {
                             $scope.pickedPageWatcher();
                             $scope.pickedPageWatcher = null;
@@ -1861,6 +1865,11 @@ define(
                 }
 
                 function initMaster() {
+                    uiFlowService.registerService();
+
+                    $scope.$on('$destroy', function () {
+                        uiFlowService.unregisterService();
+                    });
                 }
 
                 initMaster();
@@ -1901,7 +1910,7 @@ define(
                         $("#newBookWidgetName").val("");
                         if (callback) {
                             $scope.onModalClose = function () {
-                                if(extensionScope.pickedExternalBook && extensionScope.pickedExternalBookPage) {
+                                if (extensionScope.pickedExternalBook && extensionScope.pickedExternalBookPage) {
                                     var pageFile = "",
                                         edge = "";
 
@@ -2086,6 +2095,12 @@ define(
 
                 function initMaster() {
                     addExtensionSnippet();
+
+                    uiBookService.registerService();
+
+                    $scope.$on('$destroy', function () {
+                        uiBookService.unregisterService();
+                    });
                 }
 
                 initMaster();

@@ -1,26 +1,28 @@
 define(
     ["angular-lib", "jquery-lib", "underscore-lib", "ng.ui.util", "ng.ui.service"],
     function () {
-        var FlowService = function ($parse, $timeout, $q, $exceptionHandler, $compile, $rootScope, angularEventTypes, angularConstants, appService, uiUtilService, uiCanvasService, uiAnimationService) {
-            this.$parse = $parse;
-            this.$timeout = $timeout;
-            this.$q = $q;
-            this.$exceptionHandler = $exceptionHandler;
-            this.$compile = $compile;
-            this.$rootScope = $rootScope;
-            this.angularEventTypes = angularEventTypes;
-            this.angularConstants = angularConstants;
-            this.appService = appService;
-            this.uiUtilService = uiUtilService;
-            this.uiCanvasService = uiCanvasService;
-            this.uiAnimationService = uiAnimationService;
+        var FEATURE = "FlowService",
+            FlowService = function ($parse, $timeout, $q, $exceptionHandler, $compile, $rootScope, angularEventTypes, angularConstants, appService, serviceRegistry, uiUtilService, uiCanvasService, uiAnimationService) {
+                this.$parse = $parse;
+                this.$timeout = $timeout;
+                this.$q = $q;
+                this.$exceptionHandler = $exceptionHandler;
+                this.$compile = $compile;
+                this.$rootScope = $rootScope;
+                this.angularEventTypes = angularEventTypes;
+                this.angularConstants = angularConstants;
+                this.appService = appService;
+                this.serviceRegistry = serviceRegistry;
+                this.uiUtilService = uiUtilService;
+                this.uiCanvasService = uiCanvasService;
+                this.uiAnimationService = uiAnimationService;
 
-            _.extend($inject, _.pick(this, FlowService.$inject));
+                _.extend($inject, _.pick(this, FlowService.$inject));
 
-            defineFlowClass(uiUtilService.createObjectClass(), uiUtilService.findObjectClass());
-        };
+                defineFlowClass(uiUtilService.createObjectClass(), uiUtilService.findObjectClass());
+            };
 
-        FlowService.$inject = ["$parse", "$timeout", "$q", "$exceptionHandler", "$compile", "$rootScope", "angularEventTypes", "angularConstants", "appService", "uiUtilService", "uiCanvasService", "uiAnimationService"];
+        FlowService.$inject = ["$parse", "$timeout", "$q", "$exceptionHandler", "$compile", "$rootScope", "angularEventTypes", "angularConstants", "appService", "serviceRegistry", "uiUtilService", "uiCanvasService", "uiAnimationService"];
         var $inject = {};
 
         function defineFlowClass(Class, FindClass) {
@@ -1609,6 +1611,14 @@ define(
                     moveStep: function () {
                     }
                 });
+
+            FlowService.prototype.registerService = function () {
+                this.serviceRegistry && this.serviceRegistry.register(this, FEATURE);
+            }
+
+            FlowService.prototype.unregisterService = function () {
+                this.serviceRegistry && this.serviceRegistry.unregister(FEATURE);
+            }
 
             FlowService.prototype.createFlow = function () {
                 return new Flow();

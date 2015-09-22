@@ -1,7 +1,7 @@
 define(
     ["angular-lib", "jquery-lib", "underscore-lib", "ng.ui.util"],
     function () {
-        var Service = function ($parse, $timeout, $q, $exceptionHandler, $compile, $rootScope, angularEventTypes, angularConstants, appService, uiUtilService, uiCanvasService, uiAnimationService) {
+        var Service = function ($parse, $timeout, $q, $exceptionHandler, $compile, $rootScope, angularEventTypes, angularConstants, appService, serviceRegistry, uiUtilService, uiCanvasService, uiAnimationService) {
             this.$parse = $parse;
             this.$timeout = $timeout;
             this.$q = $q;
@@ -11,6 +11,7 @@ define(
             this.angularEventTypes = angularEventTypes;
             this.angularConstants = angularConstants;
             this.appService = appService;
+            this.serviceRegistry = serviceRegistry;
             this.uiUtilService = uiUtilService;
             this.uiCanvasService = uiCanvasService;
             this.uiAnimationService = uiAnimationService;
@@ -20,7 +21,7 @@ define(
             defineWidgetClass(uiUtilService.createObjectClass(), uiUtilService.findObjectClass());
         };
 
-        Service.$inject = ["$parse", "$timeout", "$q", "$exceptionHandler", "$compile", "$rootScope", "angularEventTypes", "angularConstants", "appService", "uiUtilService", "uiCanvasService", "uiAnimationService"];
+        Service.$inject = ["$parse", "$timeout", "$q", "$exceptionHandler", "$compile", "$rootScope", "angularEventTypes", "angularConstants", "appService", "serviceRegistry", "uiUtilService", "uiCanvasService", "uiAnimationService"];
         var $inject = {};
 
         //Define sketch widget class
@@ -1510,6 +1511,117 @@ define(
                     },
                     doAction: function () {
                         return this.resourceName && $inject.$rootScope.loadedProject.playSound(this.resourceName) || $inject.uiUtilService.getResolveDefer();
+                    }
+                }),
+                ServiceInvokeTransitionAction = Class(BaseTransitionAction, {
+                    CLASS_NAME: "ServiceInvokeTransitionAction",
+                    MEMBERS: {
+                        actionType: "Service",
+                        feature: "",
+                        serviceName: "",
+                        communicationType: "",
+                        parameters: [],
+                        input: {},
+                        timeout: 0
+                    },
+                    initialize: function (widgetObj, id) {
+                        ServiceInvokeTransitionAction.prototype.__proto__.initialize.apply(this, [widgetObj, id]);
+                        var MEMBERS = arguments.callee.prototype.MEMBERS;
+
+                        for (var member in MEMBERS) {
+                            this[member] = angular.copy(MEMBERS[member]);
+                        }
+                    },
+                    toJSON: function () {
+                        var jsonObj = ServiceInvokeTransitionAction.prototype.__proto__.toJSON.apply(this);
+                        _.extend(jsonObj, _.pick(this, ["feature", "serviceName", "communicationType", "input", "timeout", "CLASS_NAME"]),
+                            {parameters: $inject.uiUtilService.arrayOmit(this.parameters, "$$hashKey")}
+                        );
+
+                        return jsonObj;
+                    },
+                    fromObject: function (obj) {
+                        var ret = new ServiceInvokeTransitionAction(null, obj.id);
+
+                        ServiceInvokeTransitionAction.prototype.__proto__.fromObject.apply(ret, [obj]);
+                        ret.feature = obj.feature;
+                        ret.serviceName = obj.serviceName;
+                        ret.communicationType = obj.communicationType;
+                        ret.parameters = obj.parameters;
+                        ret.input = obj.input;
+                        ret.timeout = obj.timeout;
+
+                        return ret;
+                    },
+                    clone: function (cloneObj, MEMBERS) {
+                        cloneObj = cloneObj || new ServiceInvokeTransitionAction(this.widgetObj);
+                        cloneObj.feature = this.feature;
+                        cloneObj.serviceName = this.serviceName;
+                        cloneObj.communicationType = this.communicationType;
+                        cloneObj.parameters = this.parameters;
+                        cloneObj.input = this.input;
+                        cloneObj.timeout = this.timeout;
+
+                        _.extend(MEMBERS = MEMBERS || {}, ServiceInvokeTransitionAction.prototype.MEMBERS);
+
+                        ServiceInvokeTransitionAction.prototype.__proto__.clone.apply(this, [cloneObj, MEMBERS]);
+
+                        return cloneObj;
+                    },
+                    doAction: function () {
+                        var self = this,
+                            fn = $inject.serviceRegistry.invoke(self.feature, self.serviceName);
+
+                        if (fn) {
+                            var scope = angular.element(self.widgetObj.$element).scope(),
+                                args = [],
+                                p;
+
+                            _.each(self.parameters, function (param) {
+                                args.push(scope.$eval(input[param]));
+                            });
+
+                            switch (self.communicationType) {
+                                case "one-way":
+                                    fn.apply(null, args);
+                                    return $inject.uiUtilService.getResolveDefer();
+                                case "callback":
+                                    var ret = fn.apply(null, args);
+                                    if (ret && ret.then) {
+                                        p = ret;
+                                    } else {
+                                        return $inject.uiUtilService.getRejectDefer("Expect return promise after invoking function " + self.serviceName + " of callback type.");
+                                    }
+                                case "event":
+                                    var eventHandler;
+                                    if (self.timeout > 0) {
+                                        var defer = $inject.$q.defer();
+                                        p = defer.promise;
+
+                                        eventHandler = function (result) {
+                                            defer.resolve(result);
+                                        }
+                                    }
+                                    fn.apply(eventHandler, args);
+                                    break;
+                                default:
+                                    return $inject.uiUtilService.getRejectDefer("Invalid communication type " + self.communicationType);
+                            }
+
+                            if (self.timeout > 0) {
+                                return $inject.uiUtilService.timeout(
+                                    function () {
+                                        return p;
+                                    },
+                                    null,
+                                    self.timeout
+                                );
+                            } else {
+                                return p;
+                            }
+                        }
+
+                        return $inject.uiUtilService.getRejectDefer("Function {0} not found on implementation of feature {1}".format(self.serviceName, self.feature));
                     }
                 }),
                 BaseTrigger = Class({

@@ -852,17 +852,11 @@ define(
 
                 var t = timeout > 0 && self.$timeout(function () {
                         if (self.timeoutMap[timeoutId]) {
-                            try {
-                                callback && callback("TIMEOUT");
-                            } catch (e) {
-                                self.$exceptionHandler(e);
-                            }
-
-                            self.timeoutMap[timeoutId].defer.resolve("TIMEOUT");
+                            self.timeoutMap[timeoutId].defer.reject("TIMEOUT");
                             delete self.timeoutMap[timeoutId];
-
-                            self.angularConstants.VERBOSE && self.$log.debug("TIMEOUT occurred on timeoutId " + timeoutId);
                         }
+
+                        self.angularConstants.VERBOSE && self.$log.debug("TIMEOUT occurred on timeoutId " + timeoutId);
                     }, timeout) || null;
 
                 callback().then(function (result) {

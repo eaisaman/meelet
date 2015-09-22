@@ -422,31 +422,23 @@ define(
 
             var t = timeout > 0 && self.$timeout(function () {
                     if (self.timeoutMap[timeoutId]) {
-                        try {
-                            callback && callback("TIMEOUT");
-                        } catch (e) {
-                            self.$exceptionHandler(e);
-                        }
-
-                        if (self.timeoutMap[timeoutId]) {
-                            self.timeoutMap[timeoutId].defer.resolve("TIMEOUT");
-                            delete self.timeoutMap[timeoutId];
-                        }
-
-                        self.angularConstants.VERBOSE && self.$log.debug("TIMEOUT occurred on timeoutId " + timeoutId);
+                        self.timeoutMap[timeoutId].defer.reject("TIMEOUT");
+                        delete self.timeoutMap[timeoutId];
                     }
+
+                    self.angularConstants.VERBOSE && self.$log.debug("TIMEOUT occurred on timeoutId " + timeoutId);
                 }, timeout) || null;
 
             callback().then(function (result) {
                 t && self.$timeout.cancel(t);
                 if (self.timeoutMap[timeoutId]) {
-                    self.timeoutMap[timeoutId].defer.resolve();
+                    self.timeoutMap[timeoutId].defer.resolve(result);
                     delete self.timeoutMap[timeoutId];
                 }
             }, function (err) {
                 t && self.$timeout.cancel(t);
                 if (self.timeoutMap[timeoutId]) {
-                    self.timeoutMap[timeoutId].defer.resolve(err);
+                    self.timeoutMap[timeoutId].defer.reject(err);
                     delete self.timeoutMap[timeoutId];
                 }
             });
@@ -1064,7 +1056,7 @@ define(
         Util.prototype.createObjectClass = function () {
             var self = this;
 
-            return function() {
+            return function () {
                 var len = arguments.length;
                 var P = arguments[0];
                 var F = arguments[len - 1];
@@ -1107,7 +1099,7 @@ define(
         Util.prototype.findObjectClass = function () {
             var self = this;
 
-            return function(className) {
+            return function (className) {
                 return (self.classMap = self.classMap || {})[className];
             }
         }

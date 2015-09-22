@@ -1,7 +1,8 @@
 define(
     ["angular-lib", "jquery-lib", "underscore-lib", "ng.ui.util", "ng.ui.service"],
     function () {
-        var BookService = function ($parse, $timeout, $q, $exceptionHandler, $compile, $rootScope, angularEventTypes, angularConstants, appService, uiUtilService, uiCanvasService, uiAnimationService) {
+        var FEATURE = "BookService",
+            BookService = function ($parse, $timeout, $q, $exceptionHandler, $compile, $rootScope, angularEventTypes, angularConstants, serviceRegistry, uiUtilService, uiCanvasService, uiAnimationService) {
             this.$parse = $parse;
             this.$timeout = $timeout;
             this.$q = $q;
@@ -10,7 +11,7 @@ define(
             this.$rootScope = $rootScope;
             this.angularEventTypes = angularEventTypes;
             this.angularConstants = angularConstants;
-            this.appService = appService;
+            this.serviceRegistry = serviceRegistry;
             this.uiUtilService = uiUtilService;
             this.uiCanvasService = uiCanvasService;
             this.uiAnimationService = uiAnimationService;
@@ -20,7 +21,7 @@ define(
             defineBookClass(uiUtilService.createObjectClass(), uiUtilService.findObjectClass());
         };
 
-        BookService.$inject = ["$parse", "$timeout", "$q", "$exceptionHandler", "$compile", "$rootScope", "angularEventTypes", "angularConstants", "appService", "uiUtilService", "uiCanvasService", "uiAnimationService"];
+        BookService.$inject = ["$parse", "$timeout", "$q", "$exceptionHandler", "$compile", "$rootScope", "angularEventTypes", "angularConstants", "serviceRegistry", "uiUtilService", "uiCanvasService", "uiAnimationService"];
         var $inject = {};
 
         function defineBookClass(Class, FindClass) {
@@ -224,6 +225,14 @@ define(
                         return $inject.uiUtilService.getResolveDefer();
                     }
                 });
+
+            BookService.prototype.registerService = function () {
+                this.serviceRegistry && this.serviceRegistry.register(this, FEATURE);
+            }
+
+            BookService.prototype.unregisterService = function () {
+                this.serviceRegistry && this.serviceRegistry.unregister(FEATURE);
+            }
 
             BookService.prototype.loadProject = function (dbObject) {
                 var self = this;

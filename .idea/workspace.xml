@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/public/stylesheets/sass/_dock.scss" line="375" />
-  </component>
   <component name="ChangeListManager">
     <list default="true" id="e0c8aa76-af86-40a2-a1e4-f776d4689a71" name="Default" comment="Add CORS headers">
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/editormd/1.4.3/fonts/FontAwesome.otf" />
@@ -62,15 +59,6 @@
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/jquery-plugins/icheck/1.0.2/skins/flat/blue@2x.png" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/jquery-plugins/icheck/1.0.2/skins/minimal/blue@2x.png" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/jquery-plugins/icheck/1.0.2/skins/square/blue@2x.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/resource/image/character-catoon-1.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/resource/image/character-catoon-2.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/resource/image/character-catoon-3.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/resource/image/character-catoon-4.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/resource/image/character-catoon-5.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/resource/image/character-catoon-6.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/stylesheets/device" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/stylesheets/device" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/stylesheets/device" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/editormd/1.4.3/fonts/editormd-logo.eot" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/editormd/1.4.3/fonts/editormd-logo.ttf" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/editormd/1.4.3/fonts/editormd-logo.woff" />
@@ -94,21 +82,6 @@
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/jquery-plugins/icheck/1.0.2/skins/flat/grey@2x.png" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/jquery-plugins/icheck/1.0.2/skins/minimal/grey@2x.png" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/jquery-plugins/icheck/1.0.2/skins/square/grey@2x.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/fonts/icon-book/icon-book.eot" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/fonts/icon-book/icon-book.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/fonts/icon-book/icon-book.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/fonts/icon-mobile-app/icon-mobile-app.eot" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/fonts/icon-mobile-app/icon-mobile-app.eot" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/fonts/icon-mobile-app/icon-mobile-app.eot" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/fonts/icon-mobile-app/icon-mobile-app.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/fonts/icon-mobile-app/icon-mobile-app.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/fonts/icon-mobile-app/icon-mobile-app.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/fonts/icon-mobile-app/icon-mobile-app.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/fonts/icon-mobile-app/icon-mobile-app.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/fonts/icon-mobile-app/icon-mobile-app.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/javascripts" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/javascripts" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/javascripts" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/jquery-plugins/icheck/1.0.2/skins/line/line.png" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/jquery-plugins/icheck/1.0.2/skins/line/line@2x.png" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/doc/logo.png" />
@@ -153,8 +126,6 @@
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/theme/3024-night.css" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/AUTHORS" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/CONTRIBUTING.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/Chart.js/1.0.2/Chart.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/Chart.js/1.0.2/Chart.min.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/LICENSE" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/README.md" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/jquery-plugins/icheck/1.0.2/README.md" />
@@ -165,81 +136,6 @@
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/jquery-plugins/icheck/1.0.2/skins/line/_all.css" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/jquery-plugins/icheck/1.0.2/skins/minimal/_all.css" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/jquery-plugins/icheck/1.0.2/skins/square/_all.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_animation.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_animation.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_animation.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_appearance.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_appearance.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_appearance.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_background-clip.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_background-clip.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_background-clip.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_background-origin.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_background-origin.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_background-origin.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_background-size.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_background-size.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_background-size.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_border-radius.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_border-radius.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_border-radius.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_box-shadow.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_box-shadow.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_box-shadow.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_box-sizing.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_box-sizing.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_box-sizing.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_columns.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_columns.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_columns.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/stylesheets/sass/.sass-cache/af1a5722249b61fe97c5776f7a26e0902a00f406/_css3.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/stylesheets/sass/.sass-cache/af1a5722249b61fe97c5776f7a26e0902a00f406/_css3.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/stylesheets/sass/.sass-cache/af1a5722249b61fe97c5776f7a26e0902a00f406/_css3.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_filter.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_filter.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_filter.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_flexbox.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_flexbox.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_flexbox.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_font-face.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_font-face.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_font-face.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/stylesheets/sass/_global.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/stylesheets/sass/_global.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/stylesheets/sass/_global.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/stylesheets/sass/.sass-cache/0fe24dfc41fffed2d6891c797fcd7dee100afa65/_hacks.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/stylesheets/sass/.sass-cache/0fe24dfc41fffed2d6891c797fcd7dee100afa65/_hacks.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/stylesheets/sass/.sass-cache/0fe24dfc41fffed2d6891c797fcd7dee100afa65/_hacks.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_hyphenation.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_hyphenation.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_hyphenation.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_images.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_images.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_images.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_inline-block.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_inline-block.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_inline-block.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_opacity.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_opacity.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_opacity.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_regions.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_regions.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_regions.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/stylesheets/sass/.sass-cache/af1a5722249b61fe97c5776f7a26e0902a00f406/_support.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/stylesheets/sass/.sass-cache/af1a5722249b61fe97c5776f7a26e0902a00f406/_support.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/stylesheets/sass/.sass-cache/af1a5722249b61fe97c5776f7a26e0902a00f406/_support.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_text-shadow.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_text-shadow.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_text-shadow.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_transform.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_transform.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_transform.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_transition.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_transition.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_transition.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_user-interface.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_user-interface.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/stylesheets/sass/.sass-cache/17d03613c125918cd0766f51918feb21dc3c074a/_user-interface.scssc" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/addon/selection/active-line.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/doc/activebookmark.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/demo/activeline.html" />
@@ -252,48 +148,34 @@
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/theme/ambiance.css" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/angular/1.3.0-beta.8/angular-animate.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/angular/1.4.5/angular-animate.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/angular/1.4.5/angular-animate.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/angular/1.3.0-beta.8/angular-animate.min.js.map" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/angular/1.4.5/angular-animate.min.js.map" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/angular/1.4.5/angular-animate.min.js.map" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/angular/1.3.0-beta.8/angular-animate.min.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/angular/1.4.5/angular-animate.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/angular/1.4.5/angular-animate.min.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/angular/1.3.0-beta.8/angular-cookies.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/angular/1.4.5/angular-cookies.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/angular/1.4.5/angular-cookies.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/angular/1.3.0-beta.8/angular-cookies.min.js.map" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/angular/1.4.5/angular-cookies.min.js.map" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/angular/1.4.5/angular-cookies.min.js.map" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/angular/1.3.0-beta.8/angular-cookies.min.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/angular/1.4.5/angular-cookies.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/angular/1.4.5/angular-cookies.min.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/angular/1.3.0-beta.8/angular-route.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/angular/1.4.5/angular-route.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/angular/1.4.5/angular-route.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/angular/1.3.0-beta.8/angular-route.min.js.map" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/angular/1.4.5/angular-route.min.js.map" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/angular/1.4.5/angular-route.min.js.map" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/angular/1.3.0-beta.8/angular-route.min.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/angular/1.4.5/angular-route.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/angular/1.4.5/angular-route.min.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/angular/1.3.0-beta.8/angular-touch.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/angular/1.4.5/angular-touch.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/angular/1.4.5/angular-touch.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/angular/1.3.0-beta.8/angular-touch.min.js.map" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/angular/1.4.5/angular-touch.min.js.map" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/angular/1.4.5/angular-touch.min.js.map" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/angular/1.3.0-beta.8/angular-touch.min.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/angular/1.4.5/angular-touch.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/angular/1.4.5/angular-touch.min.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/angular-plugins/angular-ui-tree.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/angular/1.3.0-beta.8/angular.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/angular/1.4.5/angular.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/angular/1.4.5/angular.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/angular/1.3.0-beta.8/angular.min.js.map" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/angular/1.3.0-beta.8/angular.min.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/angular/1.4.5/angular.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/angular/1.4.5/angular.min.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/addon/scroll/annotatescrollbar.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/addon/hint/anyword-hint.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/demo/anywordhint.html" />
@@ -302,7 +184,6 @@
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/mode/asterisk/asterisk.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/bin/authors.sh" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/katex/0.3.0/contrib/auto-render.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/resource/image/avatar.svg" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/theme/base16-dark.css" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/theme/base16-light.css" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/demo/bidi.html" />
@@ -311,9 +192,6 @@
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/jquery-plugins/icheck/1.0.2/skins/line/blue.css" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/jquery-plugins/icheck/1.0.2/skins/minimal/blue.css" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/jquery-plugins/icheck/1.0.2/skins/square/blue.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/stylesheets/book.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/book.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/stylesheets/sass/book.scss" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/bower.json" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/addon/fold/brace-fold.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/demo/btree.html" />
@@ -344,38 +222,14 @@
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/demo/complete.html" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/doc/compress.html" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/bin/compress" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/stylesheets/sass/config.rb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/stylesheets/sass/config.rb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/stylesheets/sass/config.rb" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/addon/comment/continuecomment.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/addon/edit/continuelist.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/app/controller.ejs" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/app/controller.ejs" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/app/controller.ejs" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/app/controller.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/app/controller.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/app/controller.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/embedded/cordova.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/embedded/cordova.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/embedded/cordova.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/addon/hint/css-hint.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/addon/lint/css-lint.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/mode/css/css.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/mode/cypher/cypher.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/mode/d/d.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/mode/dart/dart.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/fonts/icon-book/demo-files/demo.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/fonts/icon-mobile-app/demo-files/demo.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/fonts/icon-mobile-app/demo-files/demo.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/fonts/icon-mobile-app/demo-files/demo.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/fonts/icon-book/demo.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/fonts/icon-mobile-app/demo.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/fonts/icon-mobile-app/demo.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/fonts/icon-mobile-app/demo.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/fonts/icon-book/demo-files/demo.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/fonts/icon-mobile-app/demo-files/demo.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/fonts/icon-mobile-app/demo-files/demo.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/fonts/icon-mobile-app/demo-files/demo.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/addon/dialog/dialog.css" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/addon/dialog/dialog.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/mode/diff/diff.js" />
@@ -389,10 +243,6 @@
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/mode/ebnf/ebnf.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/mode/ecl/ecl.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/theme/eclipse.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/edge/5.0.1/edge.5.0.1.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/edge/5.0.1/edge.5.0.1.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/edge/5.0.1/edge.5.0.1.min.map" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/edge/6.0.0/edge.6.0.0.min.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/editormd/1.4.3/fonts/editormd-logo.svg" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/editormd/1.4.3/css/editormd.css" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/editormd/1.4.3/editormd.js" />
@@ -411,9 +261,6 @@
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/editormd/1.4.3/languages/en.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/theme/erlang-dark.css" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/mode/erlang/erlang.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/app/filter.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/app/filter.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/app/filter.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/jquery-plugins/icheck/1.0.2/skins/flat/flat.css" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/flowchart/1.4.0/flowchart.amd-1.4.0.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/flowchart/1.4.0/flowchart.amd-1.4.0.min.js" />
@@ -453,7 +300,6 @@
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/mode/haxe/haxe.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/editormd/1.4.3/plugins/help-dialog/help-dialog.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/editormd/1.4.3/plugins/help-dialog/help.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/resource/image/help.svg" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/editormd/1.4.3/plugins/html-entities-dialog/html-entities-dialog.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/editormd/1.4.3/plugins/html-entities-dialog/html-entities.json" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/addon/hint/html-hint.js" />
@@ -464,17 +310,10 @@
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/jquery-plugins/icheck/1.0.2/icheck.jquery.json" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/jquery-plugins/icheck/1.0.2/icheck.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/jquery-plugins/icheck/1.0.2/icheck.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/fonts/icon-book/icon-book.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/fonts/icon-mobile-app/icon-mobile-app.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/fonts/icon-mobile-app/icon-mobile-app.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/fonts/icon-mobile-app/icon-mobile-app.svg" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/mode/idl/idl.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/editormd/1.4.3/plugins/image-dialog/image-dialog.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/addon/fold/indent-fold.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/demo/indentwrap.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/stylesheets/index.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/stylesheets/index.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/stylesheets/index.css" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/index.html" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/mode/index.html" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/mode/apl/index.html" />
@@ -575,12 +414,6 @@
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/mode/yaml/index.html" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/mode/z80/index.html" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/test/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/stylesheets/sass/index.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/stylesheets/sass/index.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/stylesheets/sass/index.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/stylesheets/sass/.sass-cache/eff9af857fa15653cd775d1d2e5a8ebb313cec6d/index.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/stylesheets/sass/.sass-cache/eff9af857fa15653cd775d1d2e5a8ebb313cec6d/index.scssc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/stylesheets/sass/.sass-cache/eff9af857fa15653cd775d1d2e5a8ebb313cec6d/index.scssc" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/doc/internals.html" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/mode/jade/jade.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/addon/hint/javascript-hint.js" />
@@ -598,22 +431,10 @@
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/jquery.flowchart/1.0.0/jquery.flowchart.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/jquery.flowchart/1.0.0/jquery.flowchart.min.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/jquery/2.1.1/jquery.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/jquery/2.1.1/jquery.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/jquery/2.1.1/jquery.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/jquery/2.1.1/jquery.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/jquery/2.1.1/jquery.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/jquery/2.1.1/jquery.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/jquery/2.1.1/jquery.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/jquery/2.1.1/jquery.min.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/jquery/2.1.1/jquery.min.map" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/jquery/2.1.1/jquery.min.map" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/jquery/2.1.1/jquery.min.map" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/jquery/2.1.1/jquery.min.map" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/mode/javascript/json-ld.html" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/addon/lint/json-lint.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/app/requirejs-plugins/json.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/app/requirejs-plugins/json.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/app/requirejs-plugins/json.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/mode/julia/julia.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/katex/0.3.0/katex.min.css" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/katex/0.3.0/katex.min.js" />
@@ -711,19 +532,6 @@
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/sequence-diagram/1.0.4/main.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/underscore/1.6.0/main.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/velocity/1.2.2/main.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/Chart.js/1.0.2/main.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/angular/1.4.5/main.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/edge/5.0.1/main.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/edge/6.0.0/main.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/main.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/app/main.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/directive/main.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/main.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/app/main.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/directive/main.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/main.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/app/main.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/directive/main.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/doc/manual.html" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/addon/selection/mark-selection.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/addon/fold/markdown-fold.js" />
@@ -741,16 +549,10 @@
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/addon/edit/matchtags.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/theme/mbo.css" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/theme/mdn-like.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/meelet.skeleton.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/meelet.skeleton.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/meelet.skeleton.html" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/addon/merge/merge.css" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/demo/merge.html" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/addon/merge/merge.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/mode/meta.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/app/meta.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/app/meta.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/app/meta.json" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/theme/midnight.css" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/jquery-plugins/icheck/1.0.2/skins/minimal/minimal.css" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/mode/mirc/mirc.js" />
@@ -770,25 +572,6 @@
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/theme/neo.css" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/angular-modules/ng-flow/2.5.1/ng-flow-standalone.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/angular-modules/ng-flow/2.5.1/ng-flow-standalone.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/directive/ng.ui.animation.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/directive/ng.ui.animation.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/directive/ng.ui.animation.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/directive/ng.ui.extension.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/directive/ng.ui.extension.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/directive/ng.ui.extension.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/directive/ng.ui.hammer-gestures.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/directive/ng.ui.hammer-gestures.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/directive/ng.ui.hammer-gestures.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/directive/ng.ui.include.replace.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/directive/ng.ui.include.replace.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/directive/ng.ui.include.replace.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/directive/ng.ui.service.book.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/directive/ng.ui.service.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/directive/ng.ui.service.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/directive/ng.ui.service.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/directive/ng.ui.util.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/directive/ng.ui.util.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/directive/ng.ui.util.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/mode/nginx/nginx.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/theme/night.css" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/mode/ntriples/ntriples.js" />
@@ -799,12 +582,6 @@
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/jquery-plugins/icheck/1.0.2/skins/square/orange.css" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/addon/mode/overlay.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/stylesheets/page-Widget_0000000000000.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/page-Widget_0000000000000.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/stylesheets/sass/page-Widget_0000000000000.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/stylesheets/page-Widget_0000000000001.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/page-Widget_0000000000001.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/stylesheets/sass/page-Widget_0000000000001.scss" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/demo/panel.html" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/addon/display/panel.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/theme/paraiso-dark.css" />
@@ -847,17 +624,15 @@
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/jquery-plugins/icheck/1.0.2/skins/minimal/red.css" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/jquery-plugins/icheck/1.0.2/skins/square/red.css" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/editormd/1.4.3/plugins/reference-link-dialog/reference-link-dialog.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/app/registry.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/app/registry.json" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/bin/release" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/doc/releases.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/resource/image/report.svg" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/doc/reporting.html" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/require/require.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/require/require.min.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/demo/requirejs.html" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/demo/resize.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/app/route.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/app/route.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/app/route.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/mode/rpm/rpm.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/mode/rst/rst.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/mode/ruby/ruby.js" />
@@ -884,19 +659,8 @@
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/test/search_test.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/addon/search/searchcursor.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/addon/selection/selection-pointer.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/fonts/icon-book/selection.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/fonts/icon-mobile-app/selection.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/fonts/icon-mobile-app/selection.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/fonts/icon-mobile-app/selection.json" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/sequence-diagram/1.0.4/build/sequence-diagram-min.js.map" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/sequence-diagram/1.0.4/sequence-diagram-min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/app/browser/service.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/app/embedded/service.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/app/browser/service.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/app/embedded/service.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/app/browser/service.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/app/embedded/service.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/resource/image/setting.svg" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/mode/shell/shell.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/addon/hint/show-hint.css" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/addon/hint/show-hint.js" />
@@ -909,10 +673,8 @@
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/mode/slim/slim.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/jquery-plugins/sly/1.2.7/sly.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/jquery-plugins/sly/1.6.1/sly.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/jquery-plugins/sly/1.6.1/sly.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/jquery-plugins/sly/1.2.7/sly.min.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/jquery-plugins/sly/1.6.1/sly.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/javascripts/jquery-plugins/sly/1.6.1/sly.min.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/mode/smalltalk/smalltalk.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/mode/smarty/smarty.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/theme/solarized.css" />
@@ -921,18 +683,12 @@
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/mode/soy/soy.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/demo/spanaffectswrapping_shim.html" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/mode/sparql/sparql.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/resource/image/speaker_mute_.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/resource/image/speaker_up_.svg" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/mode/spreadsheet/spreadsheet.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/test/sql-hint-test.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/addon/hint/sql-hint.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/mode/sql/sql.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/jquery-plugins/icheck/1.0.2/skins/square/square.css" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/mode/stex/stex.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/fonts/icon-book/style.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/fonts/icon-mobile-app/style.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/fonts/icon-mobile-app/style.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/fonts/icon-mobile-app/style.css" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/mode/stylus/stylus.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/demo/sublime.html" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/keymap/sublime.js" />
@@ -958,9 +714,6 @@
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/mode/xml/test.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/mode/xquery/test.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/test/test.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/app/requirejs-plugins/text.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/app/requirejs-plugins/text.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/app/requirejs-plugins/text.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/mode/textile/textile.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/theme/the-matrix.css" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/demo/theme.html" />
@@ -984,9 +737,6 @@
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/doc/upgrade_v2.2.html" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/doc/upgrade_v3.html" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/doc/upgrade_v4.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/app/util.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/app/util.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/app/util.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/demo/variableheight.html" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/mode/vb/vb.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/mode/vbscript/vbscript.js" />
@@ -999,9 +749,6 @@
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/keymap/vim.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/test/vim_test.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/demo/visibletabs.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/book/directive/widget.anchor.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/flow/directive/widget.anchor.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/skeleton/sketch/directive/widget.anchor.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/demo/widget.html" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/addon/tern/worker.js" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/project/modules/codemirror/5.2.0/addon/fold/xml-fold.js" />
@@ -1024,131 +771,22 @@
       <change type="DELETED" beforePath="$PROJECT_DIR$/project/54aa095281dea526028dd7fd/stylesheets/sass/548e48d1708048063a0041a8/_configuration-Widget_1425018388663.scss" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/project/54aa095281dea526028dd7fd/stylesheets/sass/548e48d1708048063a0041a8/configurable-widget-Widget_1425018388663.scss" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/project/54aa095281dea526028dd7fd/stylesheets/sass/548e48d1708048063a0041a8/sass" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/directive/ng.ui.draggable.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/skeleton/app/browser/service.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/skeleton/app/controller.ejs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/skeleton/app/controller.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/skeleton/app/embedded/service.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/skeleton/app/filter.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/skeleton/app/main.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/skeleton/app/meta.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/skeleton/app/requirejs-plugins/json.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/skeleton/app/requirejs-plugins/text.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/skeleton/app/route.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/skeleton/app/util.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/skeleton/directive/main.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/skeleton/directive/ng.ui.animation.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/skeleton/directive/ng.ui.draggable.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/skeleton/directive/ng.ui.extension.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/skeleton/directive/ng.ui.hammer-gestures.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/skeleton/directive/ng.ui.include.replace.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/skeleton/directive/ng.ui.service.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/skeleton/directive/ng.ui.util.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/skeleton/directive/widget.anchor.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/skeleton/fonts/icon-mobile-app/demo-files/demo.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/skeleton/fonts/icon-mobile-app/demo-files/demo.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/skeleton/fonts/icon-mobile-app/demo.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/skeleton/fonts/icon-mobile-app/icon-mobile-app.eot" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/skeleton/fonts/icon-mobile-app/icon-mobile-app.svg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/skeleton/fonts/icon-mobile-app/icon-mobile-app.ttf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/skeleton/fonts/icon-mobile-app/icon-mobile-app.woff" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/skeleton/fonts/icon-mobile-app/selection.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/skeleton/fonts/icon-mobile-app/style.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/skeleton/javascripts" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/skeleton/jquery/2.1.1/jquery.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/skeleton/jquery/2.1.1/jquery.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/skeleton/jquery/2.1.1/jquery.min.map" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/skeleton/main.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/skeleton/meelet.skeleton.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/skeleton/stylesheets/device" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/skeleton/stylesheets/index.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/skeleton/stylesheets/sass/config.rb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/public/skeleton/stylesheets/sass/index.scss" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/fonts/icon-frame-sketch/icon-frame-sketch.eot" afterPath="$PROJECT_DIR$/public/fonts/icon-frame-sketch/icon-frame-sketch.eot" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/fonts/icon-frame-sketch/icon-frame-sketch.ttf" afterPath="$PROJECT_DIR$/public/fonts/icon-frame-sketch/icon-frame-sketch.ttf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/fonts/icon-frame-sketch/icon-frame-sketch.woff" afterPath="$PROJECT_DIR$/public/fonts/icon-frame-sketch/icon-frame-sketch.woff" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/stylesheets/sass/_background-image-editor.scss" afterPath="$PROJECT_DIR$/public/stylesheets/sass/_background-image-editor.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/include/_background-image.html" afterPath="$PROJECT_DIR$/public/include/_background-image.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/include/_border-editor.html" afterPath="$PROJECT_DIR$/public/include/_border-editor.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/include/_box-shadow.html" afterPath="$PROJECT_DIR$/public/include/_box-shadow.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/include/_color-editor-palette.html" afterPath="$PROJECT_DIR$/public/include/_color-editor-palette.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/include/_color-picker.html" afterPath="$PROJECT_DIR$/public/include/_color-picker.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/stylesheets/sass/_color_editor_palette.scss" afterPath="$PROJECT_DIR$/public/stylesheets/sass/_color_editor_palette.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/include/_dock.html" afterPath="$PROJECT_DIR$/public/include/_dock.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/stylesheets/sass/_dock.scss" afterPath="$PROJECT_DIR$/public/stylesheets/sass/_dock.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/include/_gradient-editor.html" afterPath="$PROJECT_DIR$/public/include/_gradient-editor.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/stylesheets/sass/_gradient_editor.scss" afterPath="$PROJECT_DIR$/public/stylesheets/sass/_gradient_editor.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/include/_modal_window.html" afterPath="$PROJECT_DIR$/public/include/_modal_window.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/include/_multilevel_menu.html" afterPath="$PROJECT_DIR$/public/include/_multilevel_menu.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/include/_page.html" afterPath="$PROJECT_DIR$/public/include/_page.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/stylesheets/sass/_page.scss" afterPath="$PROJECT_DIR$/public/stylesheets/sass/_page.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/include/_resource-editor.html" afterPath="$PROJECT_DIR$/public/include/_resource-editor.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/include/_shape.html" afterPath="$PROJECT_DIR$/public/include/_shape.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/include/_sidebar.html" afterPath="$PROJECT_DIR$/public/include/_sidebar.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/include/_simple-dropdown.html" afterPath="$PROJECT_DIR$/public/include/_simple-dropdown.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/stylesheets/sass/_simple-dropdown.scss" afterPath="$PROJECT_DIR$/public/stylesheets/sass/_simple-dropdown.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/include/_state_action.html" afterPath="$PROJECT_DIR$/public/include/_state_action.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/include/_state_transition.html" afterPath="$PROJECT_DIR$/public/include/_state_transition.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/include/_text-shadow.html" afterPath="$PROJECT_DIR$/public/include/_text-shadow.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/include/_topbar.html" afterPath="$PROJECT_DIR$/public/include/_topbar.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/include/_widget-configurator.html" afterPath="$PROJECT_DIR$/public/include/_widget-configurator.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/stylesheets/sass/_widget-configurator.scss" afterPath="$PROJECT_DIR$/public/stylesheets/sass/_widget-configurator.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/include/_widget.html" afterPath="$PROJECT_DIR$/public/include/_widget.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/commons.js" afterPath="$PROJECT_DIR$/commons.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config-development.json" afterPath="$PROJECT_DIR$/config-development.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config-production.json" afterPath="$PROJECT_DIR$/config-production.json" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/app/embedded/service.js" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/project/55e69a54c57957980cf74584/app/controller.js" afterPath="$PROJECT_DIR$/project/55e69a54c57957980cf74584/app/controller.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/controller.js" afterPath="$PROJECT_DIR$/public/app/controller.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/fonts/icon-frame-sketch/demo.html" afterPath="$PROJECT_DIR$/public/fonts/icon-frame-sketch/demo.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/flow.html" afterPath="$PROJECT_DIR$/public/flow.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/stylesheets/frameSketch.css" afterPath="$PROJECT_DIR$/public/stylesheets/frameSketch.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/frameSketch.html" afterPath="$PROJECT_DIR$/public/frameSketch.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/stylesheets/sass/frameSketch.scss" afterPath="$PROJECT_DIR$/public/stylesheets/sass/frameSketch.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/fonts/icon-frame-sketch/icon-frame-sketch.svg" afterPath="$PROJECT_DIR$/public/fonts/icon-frame-sketch/icon-frame-sketch.svg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/stylesheets/index.css" afterPath="$PROJECT_DIR$/public/stylesheets/index.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/project/55e69a54c57957980cf74584/main.js" afterPath="$PROJECT_DIR$/project/55e69a54c57957980cf74584/main.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/main.js" afterPath="$PROJECT_DIR$/public/main.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/main.js" afterPath="$PROJECT_DIR$/public/directive/main.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/jquery-plugins/main.js" afterPath="$PROJECT_DIR$/public/javascripts/jquery-plugins/main.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/meta.json" afterPath="$PROJECT_DIR$/public/app/meta.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.background-image.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.background-image.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.border-editor.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.border-editor.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.box-shadow-editor.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.box-shadow-editor.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.color-editor-palette.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.color-editor-palette.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.color-picker.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.color-picker.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.dock.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.dock.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.extension.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.extension.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.gradient-editor.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.gradient-editor.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.horizontal-ruler.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.horizontal-ruler.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.modal-window.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.modal-window.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.multilevel-menu.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.multilevel-menu.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.page.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.page.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.resource-editor.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.resource-editor.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/main.js" afterPath="$PROJECT_DIR$/public/app/main.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.service.book.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.service.book.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.service.flow.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.service.flow.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.service.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.service.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.shape.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.shape.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.sidebar.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.sidebar.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.simple-dropdown.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.simple-dropdown.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.simple-style-editor.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.simple-style-editor.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.sketch-widget.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.sketch-widget.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.state-action.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.state-action.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.state-transition.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.state-transition.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.text-shadow-editor.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.text-shadow-editor.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.topbar.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.topbar.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.util.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.util.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.vertical-ruler.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.vertical-ruler.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.widget-configurator.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.widget-configurator.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/directive/ng.ui.widget.js" afterPath="$PROJECT_DIR$/public/directive/ng.ui.widget.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/project/55e69a54c57957980cf74584/stylesheets/sass/.sass-cache/68c5a1eca466d7f209d8485a0b28eb0dbd931476/page-Widget_1441176722817.scssc" afterPath="$PROJECT_DIR$/project/55e69a54c57957980cf74584/stylesheets/sass/.sass-cache/68c5a1eca466d7f209d8485a0b28eb0dbd931476/page-Widget_1441176722817.scssc" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/stylesheets/project.css" afterPath="$PROJECT_DIR$/public/stylesheets/project.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/project.html" afterPath="$PROJECT_DIR$/public/project.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/stylesheets/sass/project.scss" afterPath="$PROJECT_DIR$/public/stylesheets/sass/project.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/stylesheets/repo.css" afterPath="$PROJECT_DIR$/public/stylesheets/repo.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/stylesheets/repoLib.css" afterPath="$PROJECT_DIR$/public/stylesheets/repoLib.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/fonts/icon-frame-sketch/selection.json" afterPath="$PROJECT_DIR$/public/fonts/icon-frame-sketch/selection.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/project/55e69a54c57957980cf74584/app/browser/service.js" afterPath="$PROJECT_DIR$/project/55e69a54c57957980cf74584/app/browser/service.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/project/55e69a54c57957980cf74584/app/embedded/service.js" afterPath="$PROJECT_DIR$/project/55e69a54c57957980cf74584/app/embedded/service.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/fonts/icon-frame-sketch/style.css" afterPath="$PROJECT_DIR$/public/fonts/icon-frame-sketch/style.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/api/public/userfile.js" afterPath="$PROJECT_DIR$/routes/api/public/userfile.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/browser/service.js" afterPath="$PROJECT_DIR$/public/app/browser/service.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/skeleton/book/app/util.js" afterPath="$PROJECT_DIR$/public/skeleton/book/app/util.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/skeleton/flow/app/util.js" afterPath="$PROJECT_DIR$/public/skeleton/flow/app/util.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/skeleton/sketch/app/util.js" afterPath="$PROJECT_DIR$/public/skeleton/sketch/app/util.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="meelet.iws" />
@@ -1170,117 +808,104 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="frameSketch.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/frameSketch.html">
+      <file leaf-file-name="controller.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/app/controller.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-15.125">
-              <caret line="302" column="0" selection-start-line="302" selection-start-column="0" selection-end-line="302" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="2100" column="56" selection-start-line="2100" selection-start-column="56" selection-end-line="2100" selection-end-column="56" />
               <folding>
-                <element signature="n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="false" />
-                <marker date="1442238931000" expanded="true" signature="12653:12905" placeholder="{&quot;background-image&quot;: 'url(images/{{sketchDevice.img}})'...}" />
-                <marker date="1442238931000" expanded="true" signature="12999:13192" placeholder="{&quot;min-width&quot;: '{{sketchDevice.width + 90}}'...}" />
+                <element signature="e#43597#45364#0" expanded="false" />
+                <element signature="e#64814#70732#0" expanded="false" />
+                <element signature="e#87438#96883#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ng.ui.background-image.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.background-image.js">
+      <file leaf-file-name="ng.ui.service.book.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.service.book.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="84" column="53" selection-start-line="84" selection-start-column="53" selection-end-line="84" selection-end-column="53" />
+              <caret line="26" column="52" selection-start-line="26" selection-start-column="52" selection-end-line="26" selection-end-column="52" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/main.js">
+      <file leaf-file-name="registry.json" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/public/app/registry.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="121" column="30" selection-start-line="121" selection-start-column="30" selection-end-line="121" selection-end-column="30" />
+            <state vertical-scroll-proportion="0.2630745">
+              <caret line="144" column="19" selection-start-line="144" selection-start-column="19" selection-end-line="144" selection-end-column="19" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="page-Widget_1441176722817.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/project/55e69a54c57957980cf74584/page-Widget_1441176722817.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-5.625">
+              <caret line="9" column="66" selection-start-line="9" selection-start-column="66" selection-end-line="9" selection-end-column="66" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="controller.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/app/controller.js">
+        <entry file="file://$PROJECT_DIR$/project/55e69a54c57957980cf74584/app/controller.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="40" column="34" selection-start-line="40" selection-start-column="27" selection-end-line="40" selection-end-column="34" />
+              <caret line="231" column="0" selection-start-line="231" selection-start-column="0" selection-end-line="231" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="util.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/project/55e69a54c57957980cf74584/app/util.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="491" column="65" selection-start-line="491" selection-start-column="65" selection-end-line="491" selection-end-column="65" />
               <folding>
-                <element signature="e#45991#47496#0" expanded="false" />
-                <element signature="e#77993#78580#0" expanded="false" />
-                <element signature="e#83017#84220#0" expanded="false" />
-                <element signature="e#84714#85910#0" expanded="false" />
+                <element signature="e#22395#26129#0" expanded="false" />
+                <element signature="e#26196#29916#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="_page.scss" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/stylesheets/sass/_page.scss">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-15.0">
-              <caret line="314" column="50" selection-start-line="314" selection-start-column="50" selection-end-line="314" selection-end-column="50" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="_page.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/include/_page.html">
+      <file leaf-file-name="service.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/project/55e69a54c57957980cf74584/app/browser/service.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="59" column="55" selection-start-line="59" selection-start-column="55" selection-end-line="59" selection-end-column="55" />
+              <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
               <folding>
-                <element signature="n#div#0;n#div#0;n#div#0;n#!!top" expanded="false" />
+                <element signature="e#1594#8280#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="frameSketch.scss" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/stylesheets/sass/frameSketch.scss">
+      <file leaf-file-name="util.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/skeleton/book/app/util.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="528" column="70" selection-start-line="528" selection-start-column="65" selection-end-line="528" selection-end-column="70" />
+              <caret line="23" column="31" selection-start-line="23" selection-start-column="29" selection-end-line="23" selection-end-column="31" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="registry.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/app/registry.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="69" column="48" selection-start-line="69" selection-start-column="38" selection-end-line="69" selection-end-column="48" />
               <folding>
-                <element signature="e#2581#4122#0" expanded="false" />
-                <element signature="e#4153#6712#0" expanded="false" />
-                <element signature="e#7096#7358#0" expanded="false" />
+                <element signature="e#747#3539#0" expanded="false" />
+                <element signature="e#3624#4148#0" expanded="false" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="_dock.scss" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/stylesheets/sass/_dock.scss">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-8.875">
-              <caret line="407" column="61" selection-start-line="407" selection-start-column="61" selection-end-line="407" selection-end-column="61" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ng.ui.dock.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.dock.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.77099234">
-              <caret line="55" column="0" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ng.ui.extension.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.extension.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="747" column="2" selection-start-line="747" selection-start-column="2" selection-end-line="747" selection-end-column="2" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -1290,8 +915,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="JavaScript File" />
         <option value="Html5" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -1304,42 +929,8 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/public/include/_widget.html" />
-        <option value="$PROJECT_DIR$/public/stylesheets/sass/_background-image-editor.scss" />
-        <option value="$PROJECT_DIR$/public/flow.html" />
-        <option value="$PROJECT_DIR$/public/directive/ng.ui.topbar.js" />
-        <option value="$PROJECT_DIR$/public/directive/ng.ui.util.js" />
-        <option value="$PROJECT_DIR$/public/book.html" />
-        <option value="$PROJECT_DIR$/public/directive/ng.ui.draggable.js" />
-        <option value="$PROJECT_DIR$/public/directive/ng.ui.color-editor-palette.js" />
-        <option value="$PROJECT_DIR$/public/include/_color-editor-palette.html" />
-        <option value="$PROJECT_DIR$/public/stylesheets/sass/_color_editor_palette.scss" />
-        <option value="$PROJECT_DIR$/public/stylesheets/sass/_gradient_editor.scss" />
-        <option value="$PROJECT_DIR$/public/javascripts/jquery-plugins/main.js" />
-        <option value="$PROJECT_DIR$/public/fonts/icon-frame-sketch/style.css" />
-        <option value="$PROJECT_DIR$/public/directive/ng.ui.horizontal-ruler.js" />
-        <option value="$PROJECT_DIR$/public/directive/ng.ui.sketch-widget.js" />
-        <option value="$PROJECT_DIR$/public/directive/ng.ui.vertical-ruler.js" />
-        <option value="$PROJECT_DIR$/public/directive/ng.ui.service.js" />
-        <option value="$PROJECT_DIR$/public/directive/main.js" />
-        <option value="$PROJECT_DIR$/public/skeleton/book/directive/main.js" />
-        <option value="$PROJECT_DIR$/public/skeleton/flow/directive/main.js" />
-        <option value="$PROJECT_DIR$/public/skeleton/sketch/directive/main.js" />
-        <option value="$PROJECT_DIR$/public/stylesheets/sass/repo.scss" />
-        <option value="$PROJECT_DIR$/public/stylesheets/sass/project.scss" />
-        <option value="$PROJECT_DIR$/public/include/_simple-dropdown.html" />
-        <option value="$PROJECT_DIR$/public/stylesheets/sass/_simple-dropdown.scss" />
-        <option value="$PROJECT_DIR$/public/directive/ng.ui.simple-dropdown.js" />
-        <option value="$PROJECT_DIR$/public/include/_widget-configurator.html" />
-        <option value="$PROJECT_DIR$/public/include/_modal_window.html" />
-        <option value="$PROJECT_DIR$/public/app/controller.js" />
-        <option value="$PROJECT_DIR$/public/directive/ng.ui.extension.js" />
-        <option value="$PROJECT_DIR$/public/directive/ng.ui.widget-configurator.js" />
-        <option value="$PROJECT_DIR$/public/stylesheets/sass/_widget-configurator.scss" />
-        <option value="$PROJECT_DIR$/public/stylesheets/sass/frameSketch.scss" />
         <option value="$PROJECT_DIR$/public/include/_page.html" />
         <option value="$PROJECT_DIR$/public/stylesheets/sass/_page.scss" />
-        <option value="$PROJECT_DIR$/public/frameSketch.html" />
         <option value="$PROJECT_DIR$/public/include/_color-picker.html" />
         <option value="$PROJECT_DIR$/public/directive/ng.ui.color-picker.js" />
         <option value="$PROJECT_DIR$/public/include/_background-image.html" />
@@ -1351,10 +942,44 @@
         <option value="$PROJECT_DIR$/public/directive/ng.ui.text-shadow-editor.js" />
         <option value="$PROJECT_DIR$/public/include/_box-shadow.html" />
         <option value="$PROJECT_DIR$/public/directive/ng.ui.box-shadow-editor.js" />
-        <option value="$PROJECT_DIR$/public/main.js" />
         <option value="$PROJECT_DIR$/public/directive/ng.ui.background-image.js" />
         <option value="$PROJECT_DIR$/public/stylesheets/sass/_dock.scss" />
         <option value="$PROJECT_DIR$/public/directive/ng.ui.dock.js" />
+        <option value="$PROJECT_DIR$/public/include/_resource-editor.html" />
+        <option value="$PROJECT_DIR$/project/55f1388761ca4a160468107f/book.json" />
+        <option value="$PROJECT_DIR$/commons.js" />
+        <option value="$PROJECT_DIR$/package.json" />
+        <option value="$PROJECT_DIR$/routes/api/public/userfile.js" />
+        <option value="$PROJECT_DIR$/public/fonts/icon-book/style.css" />
+        <option value="$PROJECT_DIR$/public/stylesheets/book.css" />
+        <option value="$PROJECT_DIR$/public/frameSketch.html" />
+        <option value="$PROJECT_DIR$/public/stylesheets/sass/book.scss" />
+        <option value="$PROJECT_DIR$/public/book.html" />
+        <option value="$PROJECT_DIR$/public/app/embedded/service.js" />
+        <option value="$PROJECT_DIR$/public/stylesheets/sass/frameSketch.scss" />
+        <option value="$PROJECT_DIR$/public/fonts/icon-frame-sketch/style.css" />
+        <option value="$PROJECT_DIR$/public/stylesheets/sass/_sketch_widget.scss" />
+        <option value="$PROJECT_DIR$/project/55f1388761ca4a160468107f/page-Widget_1442382476763.html" />
+        <option value="$PROJECT_DIR$/project/55f1388761ca4a160468107f/page-Widget_1442567139951.html" />
+        <option value="$PROJECT_DIR$/project/55f1388761ca4a160468107f/external.json" />
+        <option value="$PROJECT_DIR$/project/55f1388761ca4a160468107f/meelet.json" />
+        <option value="$PROJECT_DIR$/project/55f1388761ca4a160468107f/app/util.js" />
+        <option value="$PROJECT_DIR$/meeletClasses.js" />
+        <option value="$PROJECT_DIR$/project/55f1388761ca4a160468107f/page-Widget_1442586376090.html" />
+        <option value="$PROJECT_DIR$/public/directive/ng.ui.util.js" />
+        <option value="$PROJECT_DIR$/public/app/main.js" />
+        <option value="$PROJECT_DIR$/project/55f1388761ca4a160468107f/app/controller.js" />
+        <option value="$PROJECT_DIR$/public/directive/ng.ui.service.js" />
+        <option value="$PROJECT_DIR$/public/main.js" />
+        <option value="$PROJECT_DIR$/public/app/registry.js" />
+        <option value="$PROJECT_DIR$/public/app/browser/service.js" />
+        <option value="$PROJECT_DIR$/public/directive/ng.ui.service.book.js" />
+        <option value="$PROJECT_DIR$/public/directive/ng.ui.service.flow.js" />
+        <option value="$PROJECT_DIR$/public/app/controller.js" />
+        <option value="$PROJECT_DIR$/public/skeleton/book/app/util.js" />
+        <option value="$PROJECT_DIR$/public/skeleton/flow/app/util.js" />
+        <option value="$PROJECT_DIR$/public/skeleton/sketch/app/util.js" />
+        <option value="$PROJECT_DIR$/public/app/registry.json" />
       </list>
     </option>
   </component>
@@ -1510,11 +1135,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="fonts" />
+              <option name="myItemId" value="project" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1528,15 +1149,33 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
+              <option name="myItemId" value="project" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="fonts" />
+              <option name="myItemId" value="55e69a54c57957980cf74584" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="meelet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="meelet" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="icon-frame-sketch" />
+              <option name="myItemId" value="project" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="55e69a54c57957980cf74584" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1580,11 +1219,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/public/skeleton/sketch/app" />
+      <recent name="$PROJECT_DIR$/public/skeleton/flow/app" />
+      <recent name="$PROJECT_DIR$/public/skeleton/book/app" />
       <recent name="$PROJECT_DIR$/public/fonts/icon-frame-sketch" />
-      <recent name="$PROJECT_DIR$/project/modules/jquery-plugins" />
       <recent name="$PROJECT_DIR$/public/fonts/icon-book" />
-      <recent name="$PROJECT_DIR$/project/modules/angular" />
-      <recent name="$PROJECT_DIR$/public/javascripts/angular/1.4.5" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/routes/api/private" />
@@ -1594,7 +1233,10 @@
       <recent name="$PROJECT_DIR$/public/javascripts/require" />
     </key>
   </component>
-  <component name="RunManager" selected="Node.js.meelet">
+  <component name="RunManager" selected="Node.js.ng.ui.service.js">
+    <configuration default="false" name="ng.ui.service.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" path-to-node="/usr/bin/node" path-to-js-file="$PROJECT_DIR$/public/directive/ng.ui.service.js" working-dir="$PROJECT_DIR$">
+      <method />
+    </configuration>
     <configuration default="true" type="BashConfigurationType" factoryName="Bash">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="INTERPRETER_PATH" value="/bin/bash" />
@@ -1656,9 +1298,15 @@
       <ConfigurationWrapper RunnerId="debuggableProgram" />
       <method />
     </configuration>
-    <list size="1">
+    <list size="2">
       <item index="0" class="java.lang.String" itemvalue="Node.js.meelet" />
+      <item index="1" class="java.lang.String" itemvalue="Node.js.ng.ui.service.js" />
     </list>
+    <recent_temporary>
+      <list size="1">
+        <item index="0" class="java.lang.String" itemvalue="Node.js.ng.ui.service.js" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
   <component name="SvnConfiguration">
@@ -1670,18 +1318,6 @@
       <created>1422867219159</created>
       <option name="number" value="Default" />
       <updated>1422867219159</updated>
-    </task>
-    <task id="LOCAL-00047" summary="Add project QR Code.">
-      <created>1431670450046</created>
-      <option name="number" value="00047" />
-      <option name="project" value="LOCAL" />
-      <updated>1431670450046</updated>
-    </task>
-    <task id="LOCAL-00048" summary="Add CORS headers in debug mode.">
-      <created>1432194823567</created>
-      <option name="number" value="00048" />
-      <option name="project" value="LOCAL" />
-      <updated>1432194823567</updated>
     </task>
     <task id="LOCAL-00049" summary="Add CORS headers">
       <created>1432619478154</created>
@@ -1965,7 +1601,19 @@
       <option name="project" value="LOCAL" />
       <updated>1441463193983</updated>
     </task>
-    <option name="localTasksCounter" value="96" />
+    <task id="LOCAL-00096" summary="Redesign UI:move some tool buttons to widget popup menu;add 'style' tab to hold ui controls;'structure' tab hold page and its descendant items;most ng-click handler is ensured to call one in a small time interval in case fast click or it's bound more than once.">
+      <created>1442242678217</created>
+      <option name="number" value="00096" />
+      <option name="project" value="LOCAL" />
+      <updated>1442242678231</updated>
+    </task>
+    <task id="LOCAL-00097" summary="Enable display Adobe edge book in widget.">
+      <created>1442588306630</created>
+      <option name="number" value="00097" />
+      <option name="project" value="LOCAL" />
+      <updated>1442588306647</updated>
+    </task>
+    <option name="localTasksCounter" value="98" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1983,19 +1631,19 @@
     <layout>
       <window_info id="Grunt " active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25972995" sideWeight="0.5183016" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33821377" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3274596" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32599118" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2494043" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2668785" sideWeight="0.4816984" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31771597" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2915012" sideWeight="0.4816984" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31571218" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32210836" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2319301" sideWeight="0.5124451" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32452276" sideWeight="0.50039715" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3235725" sideWeight="0.50039715" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3235725" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.329429" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2737921" sideWeight="0.49960285" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2716593" sideWeight="0.49960285" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Grunt" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32796487" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
@@ -2018,7 +1666,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="Add Widget Movement Route Define Feature." />
     <MESSAGE value="Introduce velocity.js" />
     <MESSAGE value="Velocity animate configuration." />
     <MESSAGE value="Bug Fix for enable canvas negative coordinates." />
@@ -2043,230 +1690,204 @@
     <MESSAGE value="Change side bar gradient color." />
     <MESSAGE value="Add Play Sound on Device." />
     <MESSAGE value="Redesign UI:move some tool buttons to widget popup menu;add 'style' tab to hold ui controls;'structure' tab hold page and its descendant items;most ng-click handler is ensured to call one in a small time interval in case fast click or it's bound more than once." />
-    <option name="LAST_COMMIT_MESSAGE" value="Redesign UI:move some tool buttons to widget popup menu;add 'style' tab to hold ui controls;'structure' tab hold page and its descendant items;most ng-click handler is ensured to call one in a small time interval in case fast click or it's bound more than once." />
+    <MESSAGE value="Enable display Adobe edge book in widget." />
+    <option name="LAST_COMMIT_MESSAGE" value="Enable display Adobe edge book in widget." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="485" />
+      <option name="time" value="523" />
     </breakpoint-manager>
-    <watches-manager>
-      <configuration name="NodeJSConfigurationType">
-        <watch expression="skeletonPath" language="JavaScript" />
-      </configuration>
-    </watches-manager>
+    <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.wave.visualizer.js">
+    <entry file="file://$PROJECT_DIR$/public/frameSketch.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5579399">
-          <caret line="266" column="25" selection-start-line="266" selection-start-column="25" selection-end-line="266" selection-end-column="25" />
+        <state vertical-scroll-proportion="-5.5416665">
+          <caret line="344" column="43" selection-start-line="344" selection-start-column="43" selection-end-line="344" selection-end-column="78" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/directive/main.js">
+    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.resource-editor.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.9540582">
-          <caret line="198" column="2" selection-start-line="198" selection-start-column="2" selection-end-line="198" selection-end-column="2" />
+        <state vertical-scroll-proportion="0.3832061">
+          <caret line="37" column="41" selection-start-line="37" selection-start-column="41" selection-end-line="37" selection-end-column="41" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/skeleton/flow/directive/main.js">
+    <entry file="file://$PROJECT_DIR$/public/stylesheets/sass/book.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.9540582">
-          <caret line="48" column="2" selection-start-line="48" selection-start-column="2" selection-end-line="48" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/skeleton/sketch/directive/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.9540582">
-          <caret line="48" column="2" selection-start-line="48" selection-start-column="2" selection-end-line="48" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/skeleton/book/directive/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8269525">
-          <caret line="45" column="30" selection-start-line="0" selection-start-column="0" selection-end-line="48" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.horizontal-ruler.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.237366">
-          <caret line="19" column="35" selection-start-line="19" selection-start-column="35" selection-end-line="19" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.vertical-ruler.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.28330782">
-          <caret line="21" column="42" selection-start-line="21" selection-start-column="42" selection-end-line="21" selection-end-column="42" />
+        <state vertical-scroll-proportion="-10.0">
+          <caret line="53" column="21" selection-start-line="53" selection-start-column="21" selection-end-line="53" selection-end-column="21" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.sketch-widget.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.237366">
-          <caret line="366" column="32" selection-start-line="366" selection-start-column="32" selection-end-line="366" selection-end-column="32" />
+        <state vertical-scroll-proportion="0.36030534">
+          <caret line="427" column="82" selection-start-line="427" selection-start-column="70" selection-end-line="427" selection-end-column="82" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/include/_state_transition.html">
+    <entry file="file://$PROJECT_DIR$/public/skeleton/sketch/app/controller.ejs">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.49920762">
-          <caret line="95" column="0" selection-start-line="87" selection-start-column="0" selection-end-line="95" selection-end-column="0" />
+        <state vertical-scroll-proportion="-0.40449437">
+          <caret line="15" column="47" selection-start-line="15" selection-start-column="47" selection-end-line="15" selection-end-column="47" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.service.js">
+    <entry file="file://$PROJECT_DIR$/config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.36030534">
+          <caret line="39" column="17" selection-start-line="39" selection-start-column="17" selection-end-line="39" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/stylesheets/global.css">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="3982" column="44" selection-start-line="3982" selection-start-column="44" selection-end-line="3982" selection-end-column="44" />
-          <folding />
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/project.html">
+    <entry file="file://$PROJECT_DIR$/public/stylesheets/sass/_global.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.49920762">
-          <caret line="21" column="99" selection-start-line="21" selection-start-column="99" selection-end-line="21" selection-end-column="99" />
+        <state vertical-scroll-proportion="0.16640253">
+          <caret line="7" column="12" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="12" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/include/_topbar.html">
+    <entry file="file://$PROJECT_DIR$/public/stylesheets/sass/_topbar.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33280507">
-          <caret line="14" column="69" selection-start-line="14" selection-start-column="69" selection-end-line="14" selection-end-column="69" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/stylesheets/sass/repo.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.14263074">
-          <caret line="6" column="63" selection-start-line="6" selection-start-column="63" selection-end-line="6" selection-end-column="63" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/stylesheets/sass/project.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.14263074">
-          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/include/_simple-dropdown.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.23771791">
-          <caret line="10" column="42" selection-start-line="10" selection-start-column="38" selection-end-line="10" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.simple-dropdown.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2687023">
-          <caret line="260" column="56" selection-start-line="260" selection-start-column="46" selection-end-line="260" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/stylesheets/sass/_simple-dropdown.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.31061807">
-          <caret line="314" column="17" selection-start-line="311" selection-start-column="16" selection-end-line="314" selection-end-column="17" />
-          <folding>
-            <element signature="e#4915#5945#0" expanded="false" />
-            <element signature="e#6113#7256#0" expanded="false" />
-            <element signature="e#7388#8786#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/repo.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.21394612">
-          <caret line="9" column="30" selection-start-line="9" selection-start-column="24" selection-end-line="9" selection-end-column="30" />
+        <state vertical-scroll-proportion="0.85736924">
+          <caret line="261" column="1" selection-start-line="261" selection-start-column="1" selection-end-line="261" selection-end-column="1" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/fonts/icon-frame-sketch/style.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.19295558">
-          <caret line="49" column="25" selection-start-line="49" selection-start-column="1" selection-end-line="49" selection-end-column="25" />
-          <folding />
+        <state vertical-scroll-proportion="0.3129771">
+          <caret line="515" column="1" selection-start-line="515" selection-start-column="1" selection-end-line="515" selection-end-column="1" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/stylesheets/sass/_gradient_editor.scss">
+    <entry file="file://$PROJECT_DIR$/config-development.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5703518">
-          <caret line="110" column="47" selection-start-line="110" selection-start-column="47" selection-end-line="110" selection-end-column="47" />
-          <folding />
+        <state vertical-scroll-proportion="0.75">
+          <caret line="20" column="18" selection-start-line="20" selection-start-column="18" selection-end-line="20" selection-end-column="18" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.15075377">
-          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.extension.js">
+    <entry file="file://$PROJECT_DIR$/project/55d53b2e645ed15505920bc0/meelet.json">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="747" column="2" selection-start-line="747" selection-start-column="2" selection-end-line="747" selection-end-column="2" />
-          <folding />
+          <caret line="0" column="32" selection-start-line="0" selection-start-column="32" selection-end-line="0" selection-end-column="32" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/include/_modal_window.html">
+    <entry file="file://$PROJECT_DIR$/public/stylesheets/sass/project.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.16693164">
-          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-          <folding />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="45" column="38" selection-start-line="45" selection-start-column="38" selection-end-line="45" selection-end-column="38" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/stylesheets/sass/_widget-configurator.scss">
+    <entry file="file://$PROJECT_DIR$/public/stylesheets/sass/frameSketch.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.67839193">
-          <caret line="25" column="29" selection-start-line="25" selection-start-column="29" selection-end-line="25" selection-end-column="29" />
-          <folding />
+        <state vertical-scroll-proportion="1.3875">
+          <caret line="829" column="1" selection-start-line="829" selection-start-column="1" selection-end-line="829" selection-end-column="1" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.widget-configurator.js">
+    <entry file="file://$PROJECT_DIR$/public/stylesheets/sass/_sketch_widget.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33886257">
-          <caret line="228" column="87" selection-start-line="228" selection-start-column="87" selection-end-line="228" selection-end-column="87" />
-          <folding />
+        <state vertical-scroll-proportion="0.2275">
+          <caret line="50" column="23" selection-start-line="50" selection-start-column="23" selection-end-line="50" selection-end-column="23" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/include/_widget-configurator.html">
+    <entry file="file://$PROJECT_DIR$/project/modules/angular/1.4.5/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.15075377">
-          <caret line="4" column="37" selection-start-line="4" selection-start-column="37" selection-end-line="4" selection-end-column="37" />
-          <folding>
-            <element signature="n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="false" />
-          </folding>
+        <state vertical-scroll-proportion="0.41221374">
+          <caret line="18" column="2" selection-start-line="18" selection-start-column="2" selection-end-line="18" selection-end-column="2" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.modal-window.js">
+    <entry file="file://$PROJECT_DIR$/project/55f1388761ca4a160468107f/resource/external/上教/首页/index/publish/web/book.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.41469195">
-          <caret line="38" column="55" selection-start-line="38" selection-start-column="38" selection-end-line="38" selection-end-column="55" />
-          <folding />
+        <state vertical-scroll-proportion="0.42925277">
+          <caret line="18" column="39" selection-start-line="18" selection-start-column="39" selection-end-line="18" selection-end-column="39" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/include/_shape.html">
+    <entry file="file://$PROJECT_DIR$/project/55f1388761ca4a160468107f/resource/external/上教/首页/index/publish/web/index_edge.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.23847377">
+        <state vertical-scroll-proportion="0.5053599">
+          <caret line="22" column="44" selection-start-line="22" selection-start-column="44" selection-end-line="22" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/api/public/userfile.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4519084">
+          <caret line="1121" column="57" selection-start-line="1121" selection-start-column="57" selection-end-line="1121" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/book.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5007924">
+          <caret line="87" column="65" selection-start-line="87" selection-start-column="65" selection-end-line="87" selection-end-column="65" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/commons.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1049" column="20" selection-start-line="1049" selection-start-column="20" selection-end-line="1049" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/skeleton/book/app/controller.ejs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="48" column="38" selection-start-line="48" selection-start-column="29" selection-end-line="48" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/project/55f1388761ca4a160468107f/meelet.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/meeletClasses.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1223" column="0" selection-start-line="1223" selection-start-column="0" selection-end-line="1223" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/project/55f1388761ca4a160468107f/page-Widget_1442586376090.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.18028846">
+          <caret line="5" column="6" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/app/meta.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.21394612">
+          <caret line="9" column="1" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/api/private/user.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.5972435">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
@@ -2274,198 +1895,226 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.shape.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="360" column="2" selection-start-line="360" selection-start-column="2" selection-end-line="360" selection-end-column="2" />
+        <state vertical-scroll-proportion="0.4287902">
+          <caret line="314" column="0" selection-start-line="311" selection-start-column="0" selection-end-line="314" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/stylesheets/sass/_topbar.scss">
+    <entry file="file://$PROJECT_DIR$/public/app/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="12" selection-start-line="15" selection-start-column="12" selection-end-line="40" selection-end-column="13" />
+        <state vertical-scroll-proportion="0.48238897">
+          <caret line="21" column="31" selection-start-line="21" selection-start-column="31" selection-end-line="21" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/project/55f1388761ca4a160468107f/external.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3100159">
+          <caret line="13" column="8" selection-start-line="13" selection-start-column="8" selection-end-line="13" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/project/55f1388761ca4a160468107f/app/controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.54058194">
+          <caret line="108" column="2" selection-start-line="108" selection-start-column="2" selection-end-line="108" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/project/55e69a54c57957980cf74584/app/route.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8621746">
+          <caret line="109" column="7" selection-start-line="109" selection-start-column="7" selection-end-line="109" selection-end-column="7" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/stylesheets/sass/frameSketch.scss">
+    <entry file="file://$PROJECT_DIR$/public/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.36753446">
+          <caret line="87" column="28" selection-start-line="87" selection-start-column="28" selection-end-line="87" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/repo/widget/standard/54c1f7ff708048a2060041a7/1.0.0/directive/ng.ui.widget.tab.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.06891271">
+          <caret line="3" column="52" selection-start-line="3" selection-start-column="36" selection-end-line="3" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/skeleton/sketch/javascripts/angular/1.4.5/angular.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.6983156">
+          <caret line="3958" column="0" selection-start-line="3958" selection-start-column="0" selection-end-line="3958" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/javascripts/angular/1.3.0-beta.8/angular.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4058193">
+          <caret line="4013" column="0" selection-start-line="4013" selection-start-column="0" selection-end-line="4013" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.service.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="528" column="70" selection-start-line="528" selection-start-column="65" selection-end-line="528" selection-end-column="70" />
+          <caret line="1585" column="57" selection-start-line="1585" selection-start-column="57" selection-end-line="1585" selection-end-column="57" />
           <folding>
-            <element signature="e#2581#4122#0" expanded="false" />
-            <element signature="e#4153#6712#0" expanded="false" />
-            <element signature="e#7096#7358#0" expanded="false" />
+            <element signature="e#42325#44331#0" expanded="false" />
+            <element signature="e#51095#56467#0" expanded="false" />
+            <element signature="e#56538#58960#0" expanded="false" />
+            <element signature="e#59039#66929#0" expanded="false" />
+            <element signature="e#67003#72458#0" expanded="false" />
+            <element signature="e#67103#68964#0" expanded="false" />
+            <element signature="e#82107#86805#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/directive/color-editor-palette.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33919597">
-          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/include/_page.html">
+    <entry file="file://$PROJECT_DIR$/public/app/browser/service.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="59" column="55" selection-start-line="59" selection-start-column="55" selection-end-line="59" selection-end-column="55" />
+          <caret line="60" column="0" selection-start-line="52" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
           <folding>
-            <element signature="n#div#0;n#div#0;n#div#0;n#!!top" expanded="false" />
+            <element signature="e#22952#23388#0" expanded="false" />
+            <element signature="e#23453#24148#0" expanded="false" />
+            <element signature="e#24215#24912#0" expanded="false" />
+            <element signature="e#24986#25348#0" expanded="false" />
+            <element signature="e#25411#26104#0" expanded="false" />
+            <element signature="e#26178#27046#0" expanded="false" />
+            <element signature="e#27122#27993#0" expanded="false" />
+            <element signature="e#28076#28352#0" expanded="false" />
+            <element signature="e#28425#28641#0" expanded="false" />
+            <element signature="e#28716#28935#0" expanded="false" />
+            <element signature="e#29008#29198#0" expanded="false" />
+            <element signature="e#29298#29539#0" expanded="false" />
+            <element signature="e#29615#29833#0" expanded="false" />
+            <element signature="e#29936#30203#0" expanded="false" />
+            <element signature="e#30282#30502#0" expanded="false" />
+            <element signature="e#30581#31377#0" expanded="false" />
+            <element signature="e#31443#32224#0" expanded="false" />
+            <element signature="e#32298#32968#0" expanded="false" />
+            <element signature="e#33044#33689#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/stylesheets/sass/_page.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-15.0">
-          <caret line="314" column="50" selection-start-line="314" selection-start-column="50" selection-end-line="314" selection-end-column="50" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.color-picker.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.49312976">
-          <caret line="107" column="72" selection-start-line="107" selection-start-column="72" selection-end-line="107" selection-end-column="72" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/include/_color-picker.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.118858956">
-          <caret line="5" column="44" selection-start-line="5" selection-start-column="44" selection-end-line="5" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/include/_background-image.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.09508716">
-          <caret line="4" column="53" selection-start-line="4" selection-start-column="53" selection-end-line="4" selection-end-column="53" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/app/controller.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="40" column="34" selection-start-line="40" selection-start-column="27" selection-end-line="40" selection-end-column="34" />
+          <caret line="2100" column="56" selection-start-line="2100" selection-start-column="56" selection-end-line="2100" selection-end-column="56" />
           <folding>
-            <element signature="e#45991#47496#0" expanded="false" />
-            <element signature="e#77993#78580#0" expanded="false" />
-            <element signature="e#83017#84220#0" expanded="false" />
-            <element signature="e#84714#85910#0" expanded="false" />
+            <element signature="e#43597#45364#0" expanded="false" />
+            <element signature="e#64814#70732#0" expanded="false" />
+            <element signature="e#87438#96883#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.border-editor.js">
+    <entry file="file://$PROJECT_DIR$/public/app/registry.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6534351">
-          <caret line="134" column="77" selection-start-line="134" selection-start-column="77" selection-end-line="134" selection-end-column="77" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/include/_border-editor.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.07131537">
-          <caret line="3" column="122" selection-start-line="3" selection-start-column="122" selection-end-line="3" selection-end-column="122" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.gradient-editor.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5618321">
-          <caret line="134" column="77" selection-start-line="134" selection-start-column="77" selection-end-line="134" selection-end-column="77" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/include/_gradient-editor.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.09508716">
-          <caret line="4" column="51" selection-start-line="4" selection-start-column="51" selection-end-line="4" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.text-shadow-editor.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5389313">
-          <caret line="152" column="106" selection-start-line="152" selection-start-column="106" selection-end-line="152" selection-end-column="106" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/include/_text-shadow.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.09508716">
-          <caret line="4" column="53" selection-start-line="4" selection-start-column="53" selection-end-line="4" selection-end-column="53" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.box-shadow-editor.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.21832061">
-          <caret line="406" column="32" selection-start-line="406" selection-start-column="32" selection-end-line="406" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/include/_box-shadow.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.16640253">
-          <caret line="7" column="50" selection-start-line="7" selection-start-column="50" selection-end-line="7" selection-end-column="50" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/frameSketch.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-15.125">
-          <caret line="302" column="0" selection-start-line="302" selection-start-column="0" selection-end-line="302" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="69" column="48" selection-start-line="69" selection-start-column="38" selection-end-line="69" selection-end-column="48" />
           <folding>
-            <element signature="n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="false" />
-            <marker date="1442238931000" expanded="true" signature="12653:12905" placeholder="{&quot;background-image&quot;: 'url(images/{{sketchDevice.img}})'...}" />
-            <marker date="1442238931000" expanded="true" signature="12999:13192" placeholder="{&quot;min-width&quot;: '{{sketchDevice.width + 90}}'...}" />
+            <element signature="e#747#3539#0" expanded="false" />
+            <element signature="e#3624#4148#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/main.js">
+    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.service.flow.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="3.610687">
+          <caret line="1769" column="1" selection-start-line="1769" selection-start-column="1" selection-end-line="1769" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/skeleton/flow/app/util.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6763359">
+          <caret line="859" column="0" selection-start-line="859" selection-start-column="0" selection-end-line="859" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/skeleton/sketch/app/util.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6763359">
+          <caret line="859" column="0" selection-start-line="859" selection-start-column="0" selection-end-line="859" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.util.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="121" column="30" selection-start-line="121" selection-start-column="30" selection-end-line="121" selection-end-column="30" />
+          <caret line="429" column="0" selection-start-line="423" selection-start-column="0" selection-end-line="429" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.background-image.js">
+    <entry file="file://$PROJECT_DIR$/public/skeleton/book/app/util.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="84" column="53" selection-start-line="84" selection-start-column="53" selection-end-line="84" selection-end-column="53" />
+          <caret line="23" column="31" selection-start-line="23" selection-start-column="29" selection-end-line="23" selection-end-column="31" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/stylesheets/sass/_dock.scss">
+    <entry file="file://$PROJECT_DIR$/project/55e69a54c57957980cf74584/app/browser/service.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.875">
-          <caret line="407" column="61" selection-start-line="407" selection-start-column="61" selection-end-line="407" selection-end-column="61" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <folding>
+            <element signature="e#1594#8280#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/project/55e69a54c57957980cf74584/page-Widget_1441176722817.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.625">
+          <caret line="9" column="66" selection-start-line="9" selection-start-column="66" selection-end-line="9" selection-end-column="66" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.dock.js">
+    <entry file="file://$PROJECT_DIR$/project/55e69a54c57957980cf74584/app/controller.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.77099234">
-          <caret line="55" column="0" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="231" column="0" selection-start-line="231" selection-start-column="0" selection-end-line="231" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/project/55e69a54c57957980cf74584/app/util.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="491" column="65" selection-start-line="491" selection-start-column="65" selection-end-line="491" selection-end-column="65" />
+          <folding>
+            <element signature="e#22395#26129#0" expanded="false" />
+            <element signature="e#26196#29916#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/directive/ng.ui.service.book.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="26" column="52" selection-start-line="26" selection-start-column="52" selection-end-line="26" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/app/registry.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2630745">
+          <caret line="144" column="19" selection-start-line="144" selection-start-column="19" selection-end-line="144" selection-end-column="19" />
           <folding />
         </state>
       </provider>
