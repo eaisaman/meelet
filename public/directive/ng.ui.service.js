@@ -28,7 +28,7 @@ define(
         function defineWidgetClass(Class, FindClass) {
             var Project = Class({
                     CLASS_NAME: "Project",
-                    WIDGET_CLASSES: ["ElementSketchWidgetClass", "RepoSketchWidgetClass"],
+                    WIDGET_CLASSES: ["ElementSketchWidget", "RepoSketchWidget"],
                     ACTION_CLASSES: ["EffectTransitionAction", "StateTransitionAction", "ConfigurationTransitionAction", "MovementTransitionAction", "SoundTransitionAction", "ServiceInvokeTransitionAction"],
                     MEMBERS: {
                         projectRecord: {},

@@ -50,105 +50,87 @@
 .icon-project-edit:before {
 	content: "\e600";
 }
-
 .icon-project-gif:before {
 	content: "\e601";
 }
-
 .icon-project-qr-code:before {
 	content: "\e602";
 }
-
-.icon-project-delete:before {
+.icon-project-menu:before {
 	content: "\e603";
 }
-
-.icon-project-menu:before {
+.icon-project-download:before {
 	content: "\e604";
 }
-
-.icon-project-download:before {
+.icon-project-check:before {
 	content: "\e605";
 }
-
-.icon-project-check:before {
+.icon-project-uncheck:before {
 	content: "\e606";
 }
-
-.icon-project-uncheck:before {
+.icon-project-confirm:before {
 	content: "\e607";
 }
-
-.icon-project-confirm:before {
+.icon-project-cancel:before {
 	content: "\e608";
 }
-
-.icon-project-cancel:before {
+.icon-project-add:before {
 	content: "\e609";
 }
-
-.icon-project-add:before {
+.icon-project-lock:before {
 	content: "\e60a";
 }
-
-.icon-project-back:before {
+.icon-project-delete:before {
 	content: "\e60b";
 }
-
-.icon-project-home:before {
+.icon-project-back:before {
 	content: "\e60c";
+}
+.icon-project-home:before {
+	content: "\e60d";
 }
 
 .icon-project-edit-before:before {
 	content: "\e600";
 }
-
 .icon-project-gif-before:before {
 	content: "\e601";
 }
-
 .icon-project-qr-code-before:before {
 	content: "\e602";
 }
-
-.icon-project-delete-before:before {
+.icon-project-menu-before:before {
 	content: "\e603";
 }
-
-.icon-project-menu-before:before {
+.icon-project-download-before:before {
 	content: "\e604";
 }
-
-.icon-project-download-before:before {
+.icon-project-check-before:before {
 	content: "\e605";
 }
-
-.icon-project-check-before:before {
+.icon-project-uncheck-before:before {
 	content: "\e606";
 }
-
-.icon-project-uncheck-before:before {
+.icon-project-confirm-before:before {
 	content: "\e607";
 }
-
-.icon-project-confirm-before:before {
+.icon-project-cancel-before:before {
 	content: "\e608";
 }
-
-.icon-project-cancel-before:before {
+.icon-project-add-before:before {
 	content: "\e609";
 }
-
-.icon-project-add-before:before {
+.icon-project-lock-before:before {
 	content: "\e60a";
 }
-
-.icon-project-back-before:before {
+.icon-project-delete-before:before {
 	content: "\e60b";
 }
-
-.icon-project-home-before:before {
+.icon-project-back-before:before {
 	content: "\e60c";
+}
+.icon-project-home-before:before {
+	content: "\e60d";
 }
 
 .icon-project-edit-after:after {
@@ -163,43 +145,46 @@
 	content: "\e602";
 }
 
-.icon-project-delete-after:after {
+.icon-project-menu-after:after {
 	content: "\e603";
 }
 
-.icon-project-menu-after:after {
+.icon-project-download-after:after {
 	content: "\e604";
 }
 
-.icon-project-download-after:after {
+.icon-project-check-after:after {
 	content: "\e605";
 }
 
-.icon-project-check-after:after {
+.icon-project-uncheck-after:after {
 	content: "\e606";
 }
 
-.icon-project-uncheck-after:after {
+.icon-project-confirm-after:after {
 	content: "\e607";
 }
 
-.icon-project-confirm-after:after {
+.icon-project-cancel-after:after {
 	content: "\e608";
 }
 
-.icon-project-cancel-after:after {
+.icon-project-add-after:after {
 	content: "\e609";
 }
 
-.icon-project-add-after:after {
+.icon-project-lock-after:after {
 	content: "\e60a";
 }
 
-.icon-project-back-after:after {
+.icon-project-delete-after:after {
 	content: "\e60b";
 }
 
-.icon-project-home-after:after {
+.icon-project-back-after:after {
 	content: "\e60c";
 }
 
+.icon-project-home-after:after {
+	content: "\e60d";
+}

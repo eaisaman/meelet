@@ -52,6 +52,8 @@
         "name": "setStateOnWidget",
         "description": "Set widget's state.",
         "parameters": [
+          "widgetId",
+          "state"
         ],
         "communicationType": "callback"
       },

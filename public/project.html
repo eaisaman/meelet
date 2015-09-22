@@ -10,10 +10,12 @@
                          ng-click="displayProjectCreation($event)" title="Create Project"></div>
                     <div class="topbarButton topbarToggleButton icon-project-before icon-project-edit-before"
                          ng-click="toggleProjectEditButton($event)" title="Modify Project"></div>
-                    <div ng-hide="true" class="topbarButton topbarToggleButton icon-project-before icon-project-download-before"
+                    <div ng-hide="true"
+                         class="topbarButton topbarToggleButton icon-project-before icon-project-download-before"
                          action="download"
                          ng-click="toggleProjectButton($event)"></div>
-                    <div ng-hide="true" class="topbarButton topbarToggleButton icon-project-before icon-project-gif-before"
+                    <div ng-hide="true"
+                         class="topbarButton topbarToggleButton icon-project-before icon-project-gif-before"
                          action="gif"
                          ng-click="toggleProjectButton($event)"></div>
                 </div>
@@ -31,7 +33,8 @@
                          ng-click="toggleDisplay('#{0} .projectItemQrCode'.format(projectItem._id), $event)"></div>
 
                     <div class="projectItemInfoList col-as-12 no-padding">
-                        <div class="projectItemInfo projectItemDesc col-as-12">
+                        <div class="projectItemInfo projectItemDesc col-as-12 fs-x-medium-before icon-project-before"
+                             ng-class="{'icon-project-lock-before':projectItem.lock}">
                             <span class="col-as-12">{{projectItem.desc}}</span>
                         </div>
                         <div class="projectItemInfo col-as-12 input-group">
