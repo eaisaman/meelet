@@ -29,8 +29,8 @@
                 {{item.effect && item.effect.name || 'Choose an Effect'}}
             </div>
         </div>
-        <div class="accordianBody col-as-12 no-padding">
-            <div class="animationOptions" ng-if="item.effect.type == 'Animation'"
+        <div class="accordianBody col-as-12 no-padding" ng-show="item.effect.type == 'Animation'">
+            <div class="animationOptions"
                  ng-click="$event.stopPropagation()">
                 <div class="input-group col-as-12">
                     <label class="col-as-5 no-padding-right control-label fs-x-smaller">Duration</label>
@@ -139,6 +139,47 @@
             </div>
         </div>
     </div>
+    <div class="accordianGroup" ng-if="item.actionType == 'Service'"
+         ng-click="once(this, $event, 'toggleSelect', $event)">
+        <div class="accordianTitle col-as-12 icon-state-transition-before icon-state-transition-keyboard-before">
+            <div class="deleteButton fs-x-tiny icon-state-transition-before icon-state-transition-cross-before"
+                 ng-click="once(this, $event, 'deleteAction', parentAction, item, $event)"></div>
+            <span class="col-as-offset-1 col-as-4 no-padding">Service</span>
+        </div>
+        <div class="accordianBody col-as-12 no-padding">
+            <div class="serviceBody" ng-click="$event.stopPropagation()">
+                <div class="servicePane">
+                    <div class="input-group col-as-12 fs-x-smaller">
+                        <label class="col-as-3 no-padding control-label">Feature</label>
+
+                        <select class="col-as-8 no-padding form-control" ng-model="item.feature"
+                                ng-change="onPickServiceFeature(item)">
+                            <option value="{{featureItem.feature}}"
+                                    ng-attr-selected="{{item.feature === featureItem.name}}"
+                                    ng-repeat="featureItem in registry" title="{{featureItem.description}}">
+                                {{featureItem.feature}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="servicePane">
+                    <div class="input-group col-as-12 fs-x-smaller">
+                        <label class="col-as-3 no-padding control-label">Invoke</label>
+
+                        <select class="col-as-8 no-padding form-control" ng-model="item.serviceName"
+                                ng-change="onPickService(item)">
+                            <option value="{{service.name}}"
+                                    ng-attr-selected="{{item.serviceName === service.name}}"
+                                    ng-repeat="service in pickedServiceFeature.serviceList"
+                                    title="{{service.description}}">
+                                {{service.name}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="accordianGroup" ng-if="item.actionType == 'Movement'"
          ng-click="once(this, $event, 'toggleSelect', $event)">
         <div class="accordianTitle col-as-12 icon-state-action-before icon-state-action-set-state-before">
@@ -200,7 +241,8 @@
             </div>
         </div>
     </div>
-    <div class="accordianGroup" ng-if="item.actionType == 'Sound'" ng-click="once(this, $event, 'toggleSelect', $event)">
+    <div class="accordianGroup" ng-if="item.actionType == 'Sound'"
+         ng-click="once(this, $event, 'toggleSelect', $event)">
         <div class="accordianTitle col-as-12 icon-state-action-before icon-state-action-sound-before">
             <div class="deleteButton fs-x-tiny icon-state-action-before icon-state-action-cross-before"
                  ng-click="once(this, $event, 'deleteAction', parentAction, item, $event)"></div>
@@ -227,8 +269,8 @@
         </div>
     </div>
 </script>
-<div class="stateActionContent ui-control-wrapper" ng-class="dockAlign">
-    <div class="stateActionDetails ui-control-panel fs-x-medium">
+<div class="stateActionContent" ng-class="dockAlign">
+    <div class="stateActionDetails fs-x-medium">
 
         <div class="state-action-wrapper" ng-init="parentAction = activeWidget.state.actionObj"
              ng-repeat="item in activeWidget.state.actionObj.childActions"
@@ -242,6 +284,7 @@
                     <option value="Effect">Effect</option>
                     <option value="State">Change State</option>
                     <option value="Configuration">Change Configuration</option>
+                    <option value="Service">Service</option>
                     <option value="Movement">Movement</option>
                     <option value="Sound">Sound</option>
                 </select>

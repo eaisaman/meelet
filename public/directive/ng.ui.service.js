@@ -29,7 +29,7 @@ define(
             var Project = Class({
                     CLASS_NAME: "Project",
                     WIDGET_CLASSES: ["ElementSketchWidgetClass", "RepoSketchWidgetClass"],
-                    ACTION_CLASSES: ["EffectTransitionAction", "StateTransitionAction", "ConfigurationTransitionAction", "MovementTransitionAction", "SoundTransitionAction"],
+                    ACTION_CLASSES: ["EffectTransitionAction", "StateTransitionAction", "ConfigurationTransitionAction", "MovementTransitionAction", "SoundTransitionAction", "ServiceInvokeTransitionAction"],
                     MEMBERS: {
                         projectRecord: {},
                         xrefRecord: [],

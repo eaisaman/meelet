@@ -4,19 +4,32 @@
 @import "simple-dropdown";
 @import "multilevel-menu";
 
-$maxNumOfConfigurationItems: 10;
+$maxNumOfConfigurationItems: 100;
 
 @mixin state-action($stateActionId) {
     ##{$stateActionId} {
+        position: relative;
+        float: left;
+        width: 100%;
+        height: 100%;
         margin: 0;
 
         > .stateActionContent {
+            position: relative;
+            float: left;
+            width: 100%;
+            height: 100%;
             color: $color;
             background: #fff;
 
             > .stateActionDetails {
+                position: relative;
+                float: left;
+                width: 100%;
+                height: 100%;
+                color: $color;
+                background: #fff;
                 top: 0 !important;
-                background: inherit;
 
                 .state-action-wrapper {
                     position: relative;
@@ -124,14 +137,14 @@ $maxNumOfConfigurationItems: 10;
 
                             @include transition(transform 0.3s);
 
-                            > .animationOptions, .configurationBody, .movementBody, .soundBody {
+                            > .animationOptions, .configurationBody, .movementBody, .soundBody, .serviceBody {
                                 opacity: 0;
                                 pointer-events: none;
                                 height: 0px;
                                 overflow: hidden;
                             }
 
-                            .configurationPane, .movementPane, .soundPane {
+                            .configurationPane, .movementPane, .soundPane, .servicePane {
                                 position: relative;
                                 float: left;
                                 width: 100%;
@@ -161,7 +174,7 @@ $maxNumOfConfigurationItems: 10;
 
                                 @include box-shadow(inset 0 0 6px #555);
 
-                                > .animationOptions, .configurationBody, .movementBody, .soundBody {
+                                > .animationOptions, .configurationBody, .movementBody, .soundBody, .serviceBody {
                                     opacity: 1;
                                     pointer-events: auto;
                                     height: auto;

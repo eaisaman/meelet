@@ -2,13 +2,12 @@ define(
     ["angular-lib", "jquery-lib"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$rootScope", "$http", "$parse", "$timeout", "$q", "$exceptionHandler", "angularEventTypes", "angularConstants", "uiUtilService", "uiService", "uiCanvasService", "appService"];
+            var inject = ["$rootScope", "$http", "$parse", "$timeout", "$q", "$exceptionHandler", "angularEventTypes", "angularConstants", "uiUtilService", "uiService", "uiCanvasService", "appService", "serviceRegistry"];
 
-            appModule.directive("uiStateAction", _.union(inject, [function ($rootScope, $http, $parse, $timeout, $q, $exceptionHandler, angularEventTypes, angularConstants, uiUtilService, uiService, uiCanvasService, appService) {
+            appModule.directive("uiStateAction", _.union(inject, [function ($rootScope, $http, $parse, $timeout, $q, $exceptionHandler, angularEventTypes, angularConstants, uiUtilService, uiService, uiCanvasService, appService, serviceRegistry) {
                 'use strict';
 
-                var defaults = {
-                    },
+                var defaults = {},
                     options = angular.extend(defaults, opts),
                     injectObj = _.object(inject, Array.prototype.slice.call(arguments));
 
@@ -114,6 +113,14 @@ define(
                                     }
 
                                     $rootScope.$broadcast(angularEventTypes.markWidgetRouteEvent, routeIndex);
+                                }
+
+                                scope.onPickServiceFeature = function (action) {
+                                    scope.pickedServiceFeature = _.findWhere(scope.registry, {feature: action.feature});
+                                }
+
+                                scope.onPickService = function (action) {
+
                                 }
 
                                 function createConfigurationItemAssign(name) {
@@ -340,6 +347,7 @@ define(
                                 scope.effectList = [];
                                 scope.effectLibraryList = $rootScope.effectLibraryList;
                                 scope.filterEffectLibraryList = [];
+                                scope.registry = serviceRegistry.registry;
 
                                 function refreshArtifactList(project) {
                                     uiUtilService.latestOnce(

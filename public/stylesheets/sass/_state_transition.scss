@@ -6,12 +6,16 @@
 @import "multilevel-menu";
 @import "angular-ui-tree";
 
-$maxNumOfConfigurationItems: 10;
+$maxNumOfConfigurationItems: 100;
 
 @include angular-ui-tree(actionWidgetTree);
 
 @mixin state-transition($stateEditorId) {
     ##{$stateEditorId} {
+        position: relative;
+        float: left;
+        width: 100%;
+        height: 100%;
 
         .stateContent.expanded {
         }
@@ -20,17 +24,28 @@ $maxNumOfConfigurationItems: 10;
         }
 
         .stateContent {
+            position: relative;
+            float: left;
+            width: 100%;
+            height: 100%;
             color: $color;
             background: #fff;
 
             > .stateBar {
+                position: relative;
+                float: left;
+                width: 100%;
+                height: 2em;
+                margin-bottom: .5em;
+
                 @include gradient-horizontal(#339933, #ecf0f1);
 
                 .stateTitle {
-                    position: absolute;
-                    top: 5px;
+                    position: relative;
+                    float: left;
+                    top: calc(25% - 0.5em);
                     width: 100%;
-                    height: 1em;
+                    height: 50%;
                     line-height: 1;
                     text-align: center;
                     font-weight: 600;
@@ -47,16 +62,20 @@ $maxNumOfConfigurationItems: 10;
                 }
 
                 .stateName {
-                    position: absolute;
-                    bottom: 0;
+                    position: relative;
+                    float: left;
                     width: 100%;
-                    height: 1em;
+                    height: 50%;
                     line-height: 1;
                     text-align: center;
                 }
             }
 
             > .stateDetails {
+                position: relative;
+                float: left;
+                width: 100%;
+                height: calc(100% - 2.5em);
                 background: inherit;
 
                 > .accordianGroup {
@@ -322,14 +341,14 @@ $maxNumOfConfigurationItems: 10;
 
                                                             @include transition(transform 0.3s);
 
-                                                            > .animationOptions, .configurationBody, .movementBody, .soundBody {
+                                                            > .animationOptions, .configurationBody, .movementBody, .soundBody, .serviceBody {
                                                                 opacity: 0;
                                                                 pointer-events: none;
                                                                 height: 0px;
                                                                 overflow: hidden;
                                                             }
 
-                                                            .configurationPane, .movementPane, .soundPane {
+                                                            .configurationPane, .movementPane, .soundPane, .servicePane {
                                                                 position: relative;
                                                                 float: left;
                                                                 width: 100%;
@@ -359,7 +378,7 @@ $maxNumOfConfigurationItems: 10;
 
                                                                 @include box-shadow(inset 0 0 6px #555);
 
-                                                                > .animationOptions, .configurationBody, .movementBody, .soundBody {
+                                                                > .animationOptions, .configurationBody, .movementBody, .soundBody, .serviceBody {
                                                                     opacity: 1;
                                                                     pointer-events: auto;
                                                                     height: auto;

@@ -2,9 +2,9 @@ define(
     ["angular-lib", "jquery-lib"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$rootScope", "$http", "$parse", "$timeout", "$q", "$exceptionHandler", "angularEventTypes", "angularConstants", "uiUtilService", "uiService", "uiCanvasService", "appService"];
+            var inject = ["$rootScope", "$http", "$parse", "$timeout", "$q", "$exceptionHandler", "angularEventTypes", "angularConstants", "uiUtilService", "uiService", "uiCanvasService", "appService", "serviceRegistry"];
 
-            appModule.directive("uiStateTransition", _.union(inject, [function ($rootScope, $http, $parse, $timeout, $q, $exceptionHandler, angularEventTypes, angularConstants, uiUtilService, uiService, uiCanvasService, appService) {
+            appModule.directive("uiStateTransition", _.union(inject, [function ($rootScope, $http, $parse, $timeout, $q, $exceptionHandler, angularEventTypes, angularConstants, uiUtilService, uiService, uiCanvasService, appService, serviceRegistry) {
                 'use strict';
 
                 var defaults = {
@@ -117,6 +117,14 @@ define(
                                     $rootScope.$broadcast(angularEventTypes.markWidgetRouteEvent, routeIndex);
                                 }
 
+                                scope.onPickServiceFeature = function (action) {
+                                    scope.pickedServiceFeature = _.findWhere(scope.registry, {feature: action.feature});
+                                }
+
+                                scope.onPickService = function (action) {
+
+                                }
+
                                 function createConfigurationItemAssign(name) {
                                     var fn = $parse(name),
                                         assign = fn.assign;
@@ -154,8 +162,8 @@ define(
                                 scope._ = _;
                             },
                             post: function (scope, element, attrs) {
-                                return scope.toggleTransitionDetails = function (selector, event) {
-                                    scope.toggleSelect(selector, event).then(function (selector) {
+                                scope.toggleTransitionDetails = function (selector, event) {
+                                    return scope.toggleSelect(selector, event).then(function (selector) {
                                         var $el = $(selector);
 
                                         scope.selectTab(
@@ -175,9 +183,9 @@ define(
                                     });
                                 }
 
-                                scope.selectTransitionDetailsTab = function ($tabContainer, $tabHead, event) {
+                                scope.selectTransitionDetailsTab = function (event) {
                                     return scope.toggleSelect("#actionWidgetTreeTab", null, false).then(function () {
-                                        return scope.selectTab($tabContainer, $tabHead, event);
+                                        return scope.selectTab(event.currentTarget, event.target, event);
                                     });
                                 }
 
@@ -508,6 +516,7 @@ define(
                                 scope.effectList = [];
                                 scope.effectLibraryList = $rootScope.effectLibraryList;
                                 scope.filterEffectLibraryList = [];
+                                scope.registry = serviceRegistry.registry;
 
                                 function refreshArtifactList(project) {
                                     uiUtilService.latestOnce(
