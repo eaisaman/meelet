@@ -52,8 +52,10 @@ define(
                                                 if (value && scope.hasStyle(value)) {
                                                     scope.pickedBoxShadow = value;
                                                     scope.enableControl();
+                                                    scope.togglePalette(true);
                                                 } else {
                                                     scope.disableControl();
+                                                    scope.togglePalette(false);
                                                 }
                                             }
                                         },
@@ -156,7 +158,7 @@ define(
                                                 function (err) {
                                                     if (!err) {
                                                         scope.setBoxShadow(angular.copy(options.boxShadow));
-                                                        scope.togglePalette();
+                                                        scope.togglePalette(true);
                                                     }
                                                 },
                                                 angularConstants.checkInterval,
@@ -168,7 +170,7 @@ define(
                                                 scope.boxShadow = angular.copy(scope.unsetStyles(scope.boxShadow));
                                             }
 
-                                            return scope.togglePalette()
+                                            return scope.togglePalette(false)
                                         }
                                     });
                                 }
@@ -177,29 +179,31 @@ define(
                                     return scope.selectTab(event.currentTarget, event.target, event);
                                 }
 
-                                scope.togglePalette = function (event) {
+                                scope.togglePalette = function (state) {
                                     //toggleDisplayService is bought from extension object
                                     event && event.stopPropagation && event.stopPropagation();
 
                                     var $wrapper = element.find(".ui-control-wrapper"),
                                         $panel = element.find(".ui-control-panel");
 
-                                    if ($wrapper.hasClass("expanded")) {
-                                        return scope.selectTab($panel, $panel.find("div[tab-sel^='tab-head-box-shadow-value']:nth-child(1)")).then(
-                                            function () {
+                                    if (state == null || $wrapper.hasClass("expanded") ^ state) {
+                                        if ($wrapper.hasClass("expanded")) {
+                                            return scope.selectTab($panel, $panel.find("div[tab-sel^='tab-head-box-shadow-value']:nth-child(1)")).then(
+                                                function () {
+                                                    return scope.toggleDisplay($panel);
+                                                }
+                                            ).then(function () {
+                                                    return scope.toggleExpand($wrapper);
+                                                });
+                                        } else {
+                                            return scope.toggleExpand($wrapper).then(function () {
                                                 return scope.toggleDisplay($panel);
-                                            }
-                                        ).then(function () {
-                                                return scope.toggleExpand($wrapper);
-                                            });
-                                    } else {
-                                        return scope.toggleExpand($wrapper).then(function () {
-                                            return scope.toggleDisplay($panel);
-                                        }).then(
-                                            function () {
-                                                return scope.selectTab($panel, $panel.find("div[tab-sel^='tab-head-box-shadow-value']:nth-child(1)"));
-                                            }
-                                        );
+                                            }).then(
+                                                function () {
+                                                    return scope.selectTab($panel, $panel.find("div[tab-sel^='tab-head-box-shadow-value']:nth-child(1)"));
+                                                }
+                                            );
+                                        }
                                     }
                                 }
 

@@ -54,9 +54,12 @@ define(
 
                                                 if (scope.pickedGradientColor) {
                                                     scope.enableControl();
+                                                    scope.toggleEditor(true);
                                                 } else {
                                                     scope.disableControl();
+                                                    scope.toggleEditor(false);
                                                 }
+
                                             }
                                         },
                                         {
@@ -129,7 +132,7 @@ define(
                                                 function (err) {
                                                     if (!err) {
                                                         scope.setGradientColor(angular.copy(options.linearGradientColor));
-                                                        scope.toggleEditor();
+                                                        scope.toggleEditor(true);
                                                     }
                                                 },
                                                 angularConstants.checkInterval,
@@ -141,7 +144,7 @@ define(
                                                 scope.linearGradientColor = angular.copy(scope.unsetStyle(scope.linearGradientColor, scope.pseudo));
                                             }
 
-                                            return scope.toggleEditor();
+                                            return scope.toggleEditor(false);
                                         }
                                     });
                                 }
@@ -177,38 +180,40 @@ define(
                                     return uiUtilService.getResolveDefer();
                                 }
 
-                                scope.toggleEditor = function (event) {
+                                scope.toggleEditor = function (state) {
                                     event && event.stopPropagation && event.stopPropagation();
 
                                     var $wrapper = element.find(".ui-control-wrapper"),
                                         $panel = element.find(".ui-control-panel");
 
-                                    if ($wrapper.hasClass("expanded")) {
-                                        element.find(".circular-menu .circle").removeClass("show");
+                                    if (state == null || $wrapper.hasClass("expanded") ^ state) {
+                                        if ($wrapper.hasClass("expanded")) {
+                                            element.find(".circular-menu .circle").removeClass("show");
 
-                                        if (scope.hasClass(".editorPalette", "show")) {
-                                            return scope.toggleDisplay(".editorPalette").then(function () {
-                                                return scope.toggleDisplay($panel);
-                                            }).then(function () {
-                                                $wrapper.removeClass("expanded");
+                                            if (scope.hasClass(".editorPalette", "show")) {
+                                                return scope.toggleDisplay(".editorPalette").then(function () {
+                                                    return scope.toggleDisplay($panel);
+                                                }).then(function () {
+                                                    $wrapper.removeClass("expanded");
 
-                                                return uiUtilService.getResolveDefer();
-                                            });
+                                                    return uiUtilService.getResolveDefer();
+                                                });
+                                            } else {
+                                                element.find(".editorPalette").removeClass("show");
+
+                                                return scope.toggleDisplay($panel).then(function () {
+                                                    $wrapper.removeClass("expanded");
+
+                                                    return uiUtilService.getResolveDefer();
+                                                });
+                                            }
                                         } else {
+                                            element.find(".circular-menu .circle").removeClass("show");
                                             element.find(".editorPalette").removeClass("show");
 
-                                            return scope.toggleDisplay($panel).then(function () {
-                                                $wrapper.removeClass("expanded");
-
-                                                return uiUtilService.getResolveDefer();
-                                            });
+                                            $wrapper.addClass("expanded");
+                                            return scope.toggleDisplay($panel);
                                         }
-                                    } else {
-                                        element.find(".circular-menu .circle").removeClass("show");
-                                        element.find(".editorPalette").removeClass("show");
-
-                                        $wrapper.addClass("expanded");
-                                        return scope.toggleDisplay($panel);
                                     }
                                 }
 

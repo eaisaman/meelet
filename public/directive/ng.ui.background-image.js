@@ -15,7 +15,8 @@ define(
                             left: "0",
                             top: "0"
                         },
-                        backgroundRepeat: "no-repeat"
+                        backgroundRepeat: "no-repeat",
+                        backgroundSize: "contain"
                     },
                     options = angular.extend(defaults, opts),
                     injectObj = _.object(inject, Array.prototype.slice.call(arguments));
@@ -51,10 +52,13 @@ define(
                                                 if (scope.pickedBackgroundImageName) {
                                                     scope.pickedBackgroundPosition = scope.pickBackgroundPositionValue();
                                                     scope.pickedBackgroundRepeat = scope.pickBackgroundRepeatValue();
+                                                    scope.pickedBackgroundSize = scope.pickBackgroundSizeValue();
 
                                                     scope.enableControl();
+                                                    scope.togglePalette(true);
                                                 } else {
                                                     scope.disableControl();
+                                                    scope.togglePalette(false);
                                                 }
                                             }
                                         },
@@ -71,14 +75,12 @@ define(
                                                 },
                                                 function (err) {
                                                     if (!err) {
-                                                        scope.pickedBackgroundPosition = scope.pickBackgroundPositionValue(scope.pseudo);
-                                                        scope.pickedBackgroundRepeat = scope.pickBackgroundRepeatValue(scope.pseudo);
-
                                                         scope.setBackgroundImageUrl("");
                                                         scope.setBackgroundPosition(options.backgroundPosition.x, options.backgroundPosition.y, options.backgroundPosition.unit);
                                                         scope.setBackgroundRepeatValue(options.backgroundRepeat);
+                                                        scope.setBackgroundSizeValue(options.backgroundSize);
 
-                                                        scope.togglePalette();
+                                                        scope.togglePalette(true);
                                                     }
                                                 },
                                                 angularConstants.checkInterval,
@@ -90,7 +92,7 @@ define(
                                                 scope.backgroundImage = angular.copy(scope.unsetStyle(scope.backgroundImage, scope.pseudo));
                                             }
 
-                                            return scope.togglePalette();
+                                            return scope.togglePalette(false);
                                         }
                                     });
                                 }
@@ -116,12 +118,21 @@ define(
                                     return scope.backgroundImage && scope.pickStyle(scope.backgroundImage, pseudo != null ? pseudo : scope.pseudo)["background-repeat"] || (useDefault && options.backgroundRepeat || null);
                                 }
 
+                                scope.pickBackgroundSizeValue = function (pseudo, useDefault) {
+                                    useDefault = useDefault == null || useDefault;
+                                    return scope.backgroundImage && scope.pickStyle(scope.backgroundImage, pseudo != null ? pseudo : scope.pseudo)["background-size"] || (useDefault && options.backgroundSize || null);
+                                }
+
                                 scope.project = $rootScope.loadedProject;
                                 scope.repeatList = [
                                     {name: "No Repeat", value: "no-repeat"},
                                     {name: "Repeat", value: "repeat"},
                                     {name: "Repeat X", value: "repeat-x"},
                                     {name: "Repeat Y", value: "repeat-y"}
+                                ];
+                                scope.sizeList = [
+                                    {name: "Cover", value: "cover"},
+                                    {name: "Contain", value: "contain"}
                                 ];
                             },
                             post: function (scope, element, attrs) {
@@ -302,42 +313,44 @@ define(
                                     }
                                 }
 
-                                scope.togglePalette = function (event) {
+                                scope.togglePalette = function (state) {
                                     event && event.stopPropagation && event.stopPropagation();
 
                                     var $wrapper = element.find(".ui-control-wrapper"),
                                         $panel = element.find(".ui-control-panel");
 
-                                    if ($wrapper.hasClass("expanded")) {
-                                        return scope.toggleDisplay($panel).then(function () {
-                                            return scope.toggleExpand($wrapper).then(function () {
-                                                var defer = $q.defer();
-
-                                                $timeout(function () {
-                                                    //scope.watchBackgroundImageValue(false);
-                                                    scope.watchBackgroundPositionValue(false);
-
-                                                    defer.resolve();
-                                                });
-
-                                                return defer.promise;
-                                            });
-                                        });
-                                    } else {
-                                        return scope.toggleExpand($wrapper).then(function () {
+                                    if (state == null || $wrapper.hasClass("expanded") ^ state) {
+                                        if ($wrapper.hasClass("expanded")) {
                                             return scope.toggleDisplay($panel).then(function () {
-                                                var defer = $q.defer();
+                                                return scope.toggleExpand($wrapper).then(function () {
+                                                    var defer = $q.defer();
 
-                                                $timeout(function () {
-                                                    //scope.watchBackgroundImageValue(true);
-                                                    scope.watchBackgroundPositionValue(true);
+                                                    $timeout(function () {
+                                                        //scope.watchBackgroundImageValue(false);
+                                                        scope.watchBackgroundPositionValue(false);
 
-                                                    defer.resolve();
+                                                        defer.resolve();
+                                                    });
+
+                                                    return defer.promise;
                                                 });
-
-                                                return defer.promise;
                                             });
-                                        });
+                                        } else {
+                                            return scope.toggleExpand($wrapper).then(function () {
+                                                return scope.toggleDisplay($panel).then(function () {
+                                                    var defer = $q.defer();
+
+                                                    $timeout(function () {
+                                                        //scope.watchBackgroundImageValue(true);
+                                                        scope.watchBackgroundPositionValue(true);
+
+                                                        defer.resolve();
+                                                    });
+
+                                                    return defer.promise;
+                                                });
+                                            });
+                                        }
                                     }
                                 }
 
@@ -404,6 +417,25 @@ define(
                                             scope.backgroundImage = angular.copy(scope.backgroundImage);
 
                                             scope.pickedBackgroundRepeat = value;
+                                        }
+                                    }
+                                }
+
+                                scope.setBackgroundSizeValue = function (value) {
+                                    if (value) {
+                                        var pseudoStylePrefix = (scope.pseudo || "") + "Style";
+                                        pseudoStylePrefix = pseudoStylePrefix.charAt(0).toLowerCase() + pseudoStylePrefix.substr(1);
+
+                                        scope.backgroundImage[pseudoStylePrefix] = scope.backgroundImage[pseudoStylePrefix] || {};
+                                        var pseudoStyle = scope.backgroundImage[pseudoStylePrefix];
+
+                                        if (pseudoStyle['background-size'] != value) {
+                                            pseudoStyle['background-size'] = value;
+
+                                            //Trigger watcher on sketchWidgetSetting.backgroundImage to apply style to widget
+                                            scope.backgroundImage = angular.copy(scope.backgroundImage);
+
+                                            scope.pickedBackgroundSize = value;
                                         }
                                     }
                                 }
@@ -512,6 +544,7 @@ define(
                                     if (scope.pickedBackgroundImageName) {
                                         scope.pickedBackgroundPosition = scope.pickBackgroundPositionValue(pseudo);
                                         scope.pickedBackgroundRepeat = scope.pickBackgroundRepeatValue(pseudo);
+                                        scope.pickedBackgroundSize = scope.pickBackgroundSizeValue(pseudo);
 
                                         scope.enableControl();
                                     } else {

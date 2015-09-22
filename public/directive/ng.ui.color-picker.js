@@ -54,9 +54,11 @@ define(
                                                     $timeout(function () {
                                                         scope.colorIsSet = true;
                                                         scope.enableControl();
+                                                        scope.togglePalette(true);
                                                     });
                                                 } else {
                                                     scope.disableControl();
+                                                    scope.togglePalette(false);
                                                 }
                                             }
                                         },
@@ -109,7 +111,7 @@ define(
                                                 },
                                                 function (err) {
                                                     err || scope.setColor(angular.copy(options.color)).then(function () {
-                                                        return scope.togglePalette();
+                                                        return scope.togglePalette(true);
                                                     });
                                                 },
                                                 angularConstants.checkInterval,
@@ -121,7 +123,7 @@ define(
                                                 scope.color = angular.copy(scope.unsetStyle(scope.color, scope.pseudo));
                                             }
 
-                                            return scope.togglePalette();
+                                            return scope.togglePalette(false);
                                         }
                                     });
                                 }
@@ -140,7 +142,7 @@ define(
                                 }
                             },
                             post: function (scope, element, attrs) {
-                                scope.togglePalette = function (event) {
+                                scope.togglePalette = function (state) {
                                     event && event.stopPropagation && event.stopPropagation();
 
                                     var $wrapper = element.find(".ui-control-wrapper"),
@@ -148,22 +150,24 @@ define(
                                         $palette = element.find("#colorPickerPalette > :first-child"),
                                         paletteScope = angular.element($palette).scope();
 
-                                    if ($wrapper.hasClass("expanded")) {
-                                        return paletteScope.closePalette().then(function () {
-                                            return scope.toggleDisplay($panel);
-                                        }).then(function () {
-                                            scope.watchColor(false);
+                                    if (state == null || $wrapper.hasClass("expanded") ^ state) {
+                                        if ($wrapper.hasClass("expanded")) {
+                                            return paletteScope.closePalette().then(function () {
+                                                return scope.toggleDisplay($panel);
+                                            }).then(function () {
+                                                scope.watchColor(false);
 
-                                            return scope.toggleExpand($wrapper);
-                                        });
-                                    } else {
-                                        return scope.toggleExpand($wrapper).then(function () {
-                                            return scope.toggleDisplay($panel);
-                                        }).then(function () {
-                                            scope.watchColor(true);
+                                                return scope.toggleExpand($wrapper);
+                                            });
+                                        } else {
+                                            return scope.toggleExpand($wrapper).then(function () {
+                                                return scope.toggleDisplay($panel);
+                                            }).then(function () {
+                                                scope.watchColor(true);
 
-                                            return paletteScope.openPalette();
-                                        });
+                                                return paletteScope.openPalette();
+                                            });
+                                        }
                                     }
                                 }
 

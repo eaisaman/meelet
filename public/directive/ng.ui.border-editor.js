@@ -52,6 +52,7 @@ define(
 
                                                 if (!scope.pickedBorderColor && !scope.pickedBorderWidth && !scope.pickedBorderStyle && !scope.pickedBorderRadius) {
                                                     scope.disableControl();
+                                                    scope.togglePalette(false);
                                                 } else {
                                                     scope.pickedBorderColor = scope.pickedBorderColor || angular.copy(options.borderColor);
                                                     scope.pickedBorderWidth = scope.pickedBorderWidth || options.borderWidth;
@@ -66,6 +67,7 @@ define(
                                                         scope.borderIsSet = true;
                                                     });
                                                     scope.enableControl();
+                                                    scope.togglePalette(true);
                                                 }
                                             }
                                         },
@@ -130,7 +132,7 @@ define(
                                                             scope.setBorderStyle(options.borderStyle),
                                                             scope.setBorderRadius(options.borderRadius)
                                                         ]).then(function () {
-                                                            return scope.togglePalette();
+                                                            return scope.togglePalette(true);
                                                         });
                                                     },
                                                     angularConstants.checkInterval,
@@ -142,7 +144,7 @@ define(
                                                     scope.border = angular.copy(scope.unsetStyle(scope.border, scope.pseudo));
                                                 }
 
-                                                return scope.togglePalette();
+                                                return scope.togglePalette(false);
                                             }
                                         });
                                     } else {
@@ -150,20 +152,22 @@ define(
                                     }
                                 }
 
-                                scope.togglePalette = function (event) {
+                                scope.togglePalette = function (state) {
                                     event && event.stopPropagation && event.stopPropagation();
 
                                     var $wrapper = element.find(".ui-control-wrapper"),
                                         $panel = element.find(".ui-control-panel");
 
-                                    if ($wrapper.hasClass("expanded")) {
-                                        return scope.toggleDisplay($panel).then(function () {
-                                            return scope.toggleExpand($wrapper);
-                                        });
-                                    } else {
-                                        return scope.toggleExpand($wrapper).then(function () {
-                                            return scope.toggleDisplay($panel);
-                                        });
+                                    if (state == null || $wrapper.hasClass("expanded") ^ state) {
+                                        if ($wrapper.hasClass("expanded")) {
+                                            return scope.toggleDisplay($panel).then(function () {
+                                                return scope.toggleExpand($wrapper);
+                                            });
+                                        } else {
+                                            return scope.toggleExpand($wrapper).then(function () {
+                                                return scope.toggleDisplay($panel);
+                                            });
+                                        }
                                     }
                                 }
 

@@ -12,6 +12,7 @@ $activeColor: #669933;
 
 @include simple-dropdown(positionDropdown, null, $activeColor);
 @include simple-dropdown(repeatDropdown, null, $activeColor);
+@include simple-dropdown(sizeDropdown, null, $activeColor);
 
 @mixin background-image-editor($backgroundImageEditorId) {
     ##{$backgroundImageEditorId} {

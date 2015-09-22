@@ -93,5 +93,15 @@
                  on-option-select="setBackgroundRepeatValue(pickedBackgroundRepeat)">
             </div>
         </div>
+        <div class="backgroundImagePane">
+            <div class="paneTitle fs-x-small">Size</div>
+            <div id="sizeDropdown" class="paneContent fs-x-smaller stackAndRotateSelect"
+                 ui-simple-dropdown
+                 ui-simple-dropdown-opts="{dataField:'value', labelField:'name', zIndex:100, gutter: 5, showTitle: true, displayUnsetOption: false}"
+                 selection-list="sizeList"
+                 select-item="pickedBackgroundSize"
+                 on-option-select="setBackgroundSizeValue(pickedBackgroundSize)">
+            </div>
+        </div>
     </div>
 </div>

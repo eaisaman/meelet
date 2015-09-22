@@ -6,19 +6,109 @@
 @import "color_editor_palette";
 
 $activeBackgroundColor: rgba(0, 0, 0, 0.3);
-$deepShadow: #555;
-$activeBorderShadow: rgba(192, 192, 192, 0.8);
-$dockWidth: 8em;
-$expandedDockWidth: 12em;
 
 @include color-editor-palette(colorStopEditorPalette, null);
 
 @mixin gradient-editor($gradientEditorId) {
     ##{$gradientEditorId} {
 
-        .editorContent.expanded {
+        > .editorContent {
+            position: absolute;
+            left: 0;
+            top: 0;
+
             .editorBar {
-                @include box-shadow(0 8px 6px -6px $activeBorderShadow);
+                position: relative;
+                float: right;
+                width: 100%;
+                height: 2em;
+
+                .angleDisplay {
+                    position: relative;
+                    float: right;
+                    width: 2em;
+                    height: 2em;
+                    @include transform-origin(50% 50%);
+                    @include transform(rotate(0deg));
+
+                    svg {
+                        width: 100%;
+                        height: 100%;
+
+                        g {
+                            fill: $borderColor;
+                        }
+                    }
+                }
+
+                .gradientSummary {
+                    position: relative;
+                    float: right;
+                    width: calc(100% - 3.4em);
+                    min-width: 2em;
+                    height: 100%;
+                    margin: 0 0.2em;
+                    overflow: hidden;
+
+                    @include transition(width 0.3s);
+
+                    .angleLabel {
+                        position: relative;
+                        float: right;
+                        width: 100%;
+                        height: 50%;
+                        text-align: center;
+                        font-weight: 600;
+                        color: $color;
+                    }
+
+                    .colorSummary {
+                        position: relative;
+                        float: right;
+                        width: 100%;
+                        height: 50%;
+
+                        @include display-flex;
+                        @include flex-direction(row);
+                        @include justify-content(center);
+                        @include align-items(center);
+
+                        > div {
+                            @include flex(1);
+                        }
+                    }
+                }
+
+                .angleStep {
+                    position: relative;
+                    float: right;
+                    width: 1em;
+                    height: 100%;
+
+                    > div {
+                        position: relative;
+                        float: right;
+                        width: 100%;
+                        height: calc(50% - 4px);
+                        margin: 2px 0;
+                        border: 2px solid $borderColor;
+                        border-radius: 4px;
+
+                        &:before {
+                            position: absolute;
+                            width: 100%;
+                            height: 1em;
+                            top: calc(50% - 0.5em);
+                            font-weight: 600;
+                            text-align: center;
+                            color: $color;
+                        }
+
+                        &:active {
+                            background: $activeBackgroundColor;
+                        }
+                    }
+                }
             }
 
             .editorColorStopList {
@@ -26,7 +116,28 @@ $expandedDockWidth: 12em;
                 background: #fff;
                 border: 1px solid $borderColor;
 
+                &.show {
+                    @extend %flipDown;
+                }
+
                 @include box-shadow(0 4px 3px #555);
+                @include flipDownOrigin();
+
+                .editorPalette {
+                    position: absolute;
+                    left: 100%;
+                    top: 0px;
+                    opacity: 0;
+                    pointer-events: none;
+
+                    &.show {
+                        pointer-events: auto;
+                        opacity: 1;
+                        @extend %twisterInDown;
+                    }
+
+                    @include animation-duration(0.3s);
+                }
 
                 .colorStop {
                     position: relative;
@@ -91,30 +202,7 @@ $expandedDockWidth: 12em;
                             @include box-shadow(none);
                         }
                     }
-                }
-            }
-        }
 
-        .editorContent.expanded.align-left {
-            .editorColorStopList {
-
-                .editorPalette {
-                    position: absolute;
-                    left: 100%;
-                    top: 0px;
-                    opacity: 0;
-                    pointer-events: none;
-
-                    &.show {
-                        pointer-events: auto;
-                        opacity: 1;
-                        @extend %twisterInDown;
-                    }
-
-                    @include animation-duration(0.3s);
-                }
-
-                .colorStop {
                     @include circular-navigation(circular-menu, 5, 100px, -25px, 50px, 60px, 60px, -0.5, 1.2);
 
                     .circular-menu {
@@ -139,135 +227,6 @@ $expandedDockWidth: 12em;
                                 }
                             }
                         }
-                    }
-                }
-            }
-        }
-
-        .editorContent:not(.expanded) {
-            .editorColorStopList {
-                @include flipDownOrigin();
-            }
-        }
-
-        .editorContent {
-            .editorBar {
-                width: 100%;
-                height: 2em;
-
-                .angleDisplay {
-                    width: 2em;
-                    height: 2em;
-                    @include transform-origin(50% 50%);
-                    @include transform(rotate(0deg));
-
-                    svg {
-                        width: 100%;
-                        height: 100%;
-
-                        g {
-                            fill: $borderColor;
-                        }
-                    }
-                }
-
-                .gradientSummary {
-                    width: calc(100% - 3.4em);
-                    min-width: 2em;
-                    height: 100%;
-                    margin: 0 0.2em;
-                    overflow: hidden;
-
-                    @include transition(width 0.3s);
-
-                    .angleLabel {
-                        width: 100%;
-                        height: 50%;
-                        text-align: center;
-                        font-weight: 600;
-                        color: $color;
-                    }
-
-                    .colorSummary {
-                        width: 100%;
-                        height: 50%;
-
-                        @include display-flex;
-                        @include flex-direction(row);
-                        @include justify-content(center);
-                        @include align-items(center);
-
-                        > div {
-                            @include flex(1);
-                        }
-                    }
-                }
-
-                .angleStep {
-                    width: 1em;
-                    height: 100%;
-
-                    > div {
-                        width: 100%;
-                        height: calc(50% - 4px);
-                        margin: 2px 0;
-                        border: 2px solid $borderColor;
-                        border-radius: 4px;
-
-                        &:before {
-                            position: absolute;
-                            width: 100%;
-                            height: 1em;
-                            top: calc(50% - 0.5em);
-                            font-weight: 600;
-                            text-align: center;
-                            color: $color;
-                        }
-
-                        &:active {
-                            background: $activeBackgroundColor;
-                        }
-                    }
-                }
-            }
-        }
-
-        .editorContent.align-left {
-            position: absolute;
-            left: 0;
-            top: 0;
-
-            .editorBar {
-                position: relative;
-                float: right;
-
-                .angleDisplay {
-                    position: relative;
-                    float: right;
-                }
-
-                .gradientSummary {
-                    position: relative;
-                    float: right;
-
-                    .angleLabel {
-                        position: relative;
-                        float: right;
-                    }
-
-                    .colorSummary {
-                        position: relative;
-                        float: right;
-                    }
-                }
-
-                .angleStep {
-                    position: relative;
-                    float: right;
-
-                    > div {
-                        position: relative;
-                        float: right;
                     }
                 }
             }
