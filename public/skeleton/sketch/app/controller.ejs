@@ -57,17 +57,15 @@ self["<%=id%>"].set<%=context||"State"%> = function(name) {
 <%if (context) {%>
     self["<%=id%>"].setState = self["<%=id%>"].set<%=context%>;
 <%}%>
-    utilService.setStateOnWidget("<%=id%>", name);
+    var arr = [];
+    arr.push(function () { return utilService.setStateOnWidget("<%=id%>", name);});
     switch (name) {<%
         for(var i = 0;i < stateNames.length;i++) {
             var name = stateNames[i], value = stateTree[name], transition = value.transition, stateAction = value.stateAction, offspring = value.offspring;%>
         case "<%=name%>":
-            var arr = [];<%
-            if (!_isEmpty(stateAction)) {%>
-            arr.push(<%
-                handleStateAction(stateAction);%>);<%
-            }
-            if (!_isEmpty(transition)) {%>
+            <% if (!_isEmpty(stateAction)) {%>
+            arr.push(<% handleStateAction(stateAction);%>);<%
+            } if (!_isEmpty(transition)) {%>
             arr.push(<%
                 handleTransition(id, transition);%>);<%
             }
@@ -82,13 +80,12 @@ self["<%=id%>"].set<%=context||"State"%> = function(name) {
 <%
                 });%>}); });<%
             }%>
-            return arr.length && uiUtilService.chain(arr, "chain-stateFn-<%=id%>") || uiUtilService.getResolveDefer();
-        break;
-        default:
-            return uiUtilService.getResolveDefer();<%
+        break;<%
         }
      %>
     }
+
+    return uiUtilService.chain(arr, "chain-stateFn-<%=id%>");
 }
 });
 <%

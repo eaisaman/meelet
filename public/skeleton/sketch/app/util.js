@@ -146,8 +146,6 @@ define(
                         self.uiUtilService.whilst(function () {
                                 var scope = angular.element($widgetElement.find("[widget-container]:nth-of-type(1)").first().children()[0]).scope();
                                 return !scope;
-                            }, function (callback) {
-                                callback();
                             }, function (err) {
                                 if (!err) {
                                     var scope = angular.element($widgetElement.find("[widget-container]:nth-of-type(1)").first().children()[0]).scope();
@@ -206,36 +204,52 @@ define(
 
             utilService.prototype.setStateOnWidget = function (id, name) {
                 var self = this,
-                    $widgetElement = $("#" + id);
+                    defer = self.$q.defer();
 
-                if ($widgetElement.length) {
-                    $widgetElement.attr("state", name);
+                self.uiUtilService.whilst(function () {
+                        return !document.getElementById(id);
+                    },
+                    function (err) {
+                        if (!err) {
+                            var $widgetElement = $("#" + id);
 
-                    if ($widgetElement.hasClass(self.angularConstants.widgetClasses.widgetIncludeAnchorClass)) {
-                        return self.uiUtilService.whilst(function () {
-                                var scope = angular.element($widgetElement.find("[widget-container]:nth-of-type(1)").first().children()[0]).scope();
-                                return !scope;
-                            }, function (callback) {
-                                callback();
-                            }, function (err) {
-                                if (!err) {
-                                    var scope = angular.element($widgetElement.find("[widget-container]:nth-of-type(1)").first().children()[0]).scope();
-                                    scope.state = name;
+                            $widgetElement.attr("state", name);
+                            if ($widgetElement.hasClass(self.angularConstants.widgetClasses.widgetIncludeAnchorClass)) {
+                                self.uiUtilService.whilst(function () {
+                                        var scope = angular.element($widgetElement.find("[widget-container]:nth-of-type(1)").first().children()[0]).scope();
+                                        return !scope;
+                                    }, function (err) {
+                                        if (!err) {
+                                            var scope = angular.element($widgetElement.find("[widget-container]:nth-of-type(1)").first().children()[0]).scope();
+                                            scope.state = name;
+                                            defer.resolve();
+                                        } else {
+                                            defer.reject(err);
+                                        }
+                                    },
+                                    self.angularConstants.checkInterval,
+                                    "utilService.setStateOnWidget.RepoSketchWidget." + id,
+                                    self.angularConstants.renderTimeout
+                                )
+                            } else {
+                                var animationName = $widgetElement.css("animation-name");
+                                if (animationName && animationName !== "none") {
+                                    self.uiUtilService.onAnimationEnd($widgetElement).then(function () {
+                                        defer.resolve();
+                                    });
+                                } else {
+                                    defer.resolve();
                                 }
-                            },
-                            self.angularConstants.checkInterval,
-                            "utilService.setStateOnWidget." + id,
-                            self.angularConstants.renderTimeout
-                        )
-                    } else {
-                        var animationName = $widgetElement.css("animation-name");
-                        if (animationName && animationName !== "none") {
-                            return self.uiUtilService.onAnimationEnd($widgetElement);
+                            }
                         } else {
-                            return self.uiUtilService.getResolveDefer();
+                            defer.reject(err);
                         }
-                    }
-                }
+                    },
+                    self.angularConstants.checkInterval,
+                    "utilService.setStateOnWidget." + id,
+                    self.angularConstants.renderTimeout);
+
+                return defer.promise;
             }
 
             utilService.prototype.registerTrigger = function (id, eventMap) {
@@ -245,9 +259,6 @@ define(
                 function createWidgetObject(action) {
                     self.uiUtilService.whilst(function () {
                             return !document.getElementById(action.widgetObj);
-                        },
-                        function (callback) {
-                            callback();
                         },
                         function (err) {
                             if (!err) {
@@ -312,9 +323,6 @@ define(
 
                 self.uiUtilService.whilst(function () {
                         return !document.getElementById(id);
-                    },
-                    function (callback) {
-                        callback();
                     },
                     function (err) {
                         if (!err) {
@@ -877,8 +885,6 @@ define(
 
                 return self.uiUtilService.whilst(function () {
                         return !document.getElementsByClassName(edgeClass).length;
-                    }, function (callback) {
-                        callback();
                     }, function (err) {
                         if (!err) {
                             try {
