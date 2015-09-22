@@ -404,8 +404,6 @@ define(
 
             self.whilst(function () {
                     return !scope.$root;
-                }, function (callback) {
-                    callback();
                 }, function () {
                     scope.$root.$broadcast(eventName, boundObj);
                 }, self.angularConstants.checkInterval,
@@ -446,7 +444,7 @@ define(
             return self.timeoutMap[timeoutId].defer.promise;
         }
 
-        Util.prototype.whilst = function (test, iterator, callback, interval, whilstId, timeout) {
+        Util.prototype.whilst = function (test, callback, interval, whilstId, timeout) {
             var self = this;
 
             whilstId = whilstId || "whilst_" + _.now();
@@ -473,25 +471,9 @@ define(
             self.$timeout(function () {
                 if (self.whilstMap[whilstId]) {
                     if (test()) {
-                        iterator(function (err) {
-                            if (self.whilstMap[whilstId]) {
-                                if (err) {
-                                    t && self.$timeout.cancel(t);
-
-                                    try {
-                                        callback && callback(err);
-                                    } catch (e) {
-                                        self.$exceptionHandler(e);
-                                    }
-
-                                    if (self.whilstMap[whilstId]) {
-                                        self.whilstMap[whilstId].defer.resolve(err);
-                                        delete self.whilstMap[whilstId];
-                                    }
-                                } else
-                                    self.whilst(test, iterator, callback, interval, whilstId);
-                            }
-                        });
+                        if (self.whilstMap[whilstId]) {
+                            self.whilst(test, callback, interval, whilstId);
+                        }
                     }
                     else {
                         t && self.$timeout.cancel(t);

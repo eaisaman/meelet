@@ -123,9 +123,6 @@ define(
                                                     function () {
                                                         return !scope.border;
                                                     },
-                                                    function (callback) {
-                                                        callback();
-                                                    },
                                                     function (err) {
                                                         $q.all([
                                                             scope.setBorderColor(angular.copy(options.borderColor)),

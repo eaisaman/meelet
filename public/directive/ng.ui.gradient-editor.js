@@ -126,9 +126,6 @@ define(
                                                 function () {
                                                     return !scope.linearGradientColor;
                                                 },
-                                                function (callback) {
-                                                    callback();
-                                                },
                                                 function (err) {
                                                     if (!err) {
                                                         scope.setGradientColor(angular.copy(options.linearGradientColor));

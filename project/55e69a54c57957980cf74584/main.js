@@ -1,6 +1,6 @@
 //Javascript libs
 var MODULES_PATH = window.codeGenModulePath || "../modules";
-var ANGULAR_LIB_PATH = MODULES_PATH + "/angular/1.3.0-beta.8/",
+var ANGULAR_LIB_PATH = MODULES_PATH + "/angular/1.4.5/",
     ANGULAR_MODULES_LIB_PATH = MODULES_PATH + "/angular-modules/",
     ANGULAR_PLUGINS_LIB_PATH = MODULES_PATH + "/angular-plugins/",
     HAMMER_LIB_PATH = MODULES_PATH + "/hammer/2.0.4/",

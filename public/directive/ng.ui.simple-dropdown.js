@@ -279,9 +279,6 @@ define(
                                             function () {
                                                 return element.find("ul").find("li").length !== scope.optionLength(to);
                                             },
-                                            function (callback) {
-                                                callback();
-                                            },
                                             function (err) {
                                                 var defer = $q.defer();
 

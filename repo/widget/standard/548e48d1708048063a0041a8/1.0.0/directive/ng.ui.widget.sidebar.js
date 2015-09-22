@@ -129,8 +129,6 @@ define(
                                     if (element.hasClass(angularConstants.repoWidgetClass)) {
                                         uiUtilService.whilst(function () {
                                                 return !(element.closest && element.closest(".widgetContainer").attr("id"));
-                                            }, function (callback) {
-                                                callback();
                                             }, function (err) {
                                                 if (!err) {
                                                     //id of widget of RepoSketchWidgetClass type

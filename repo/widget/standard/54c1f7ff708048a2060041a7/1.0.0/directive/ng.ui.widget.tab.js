@@ -20,8 +20,6 @@ define(
                                         uiUtilService.whilst(
                                             function () {
                                                 return !el.scope();
-                                            }, function (callback) {
-                                                callback();
                                             }, function (err) {
                                                 var defer = $q.defer();
 
@@ -195,8 +193,6 @@ define(
                                     if (element.hasClass(angularConstants.repoWidgetClass)) {
                                         uiUtilService.whilst(function () {
                                                 return !(element.closest && element.closest(".widgetContainer").attr("id"));
-                                            }, function (callback) {
-                                                callback();
                                             }, function (err) {
                                                 if (!err) {
                                                     //id of widget of RepoSketchWidgetClass type

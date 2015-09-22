@@ -153,9 +153,6 @@ define(
                                                 function () {
                                                     return !scope.boxShadow;
                                                 },
-                                                function (callback) {
-                                                    callback();
-                                                },
                                                 function (err) {
                                                     scope.setBoxShadow(angular.copy(options.boxShadow));
                                                     scope.togglePalette();

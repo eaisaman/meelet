@@ -146,9 +146,6 @@ define(
                                                 function () {
                                                     return !scope.textShadow;
                                                 },
-                                                function (callback) {
-                                                    callback();
-                                                },
                                                 function (err) {
                                                     scope.setTextShadow(angular.copy(options.textShadow));
                                                     scope.togglePalette();

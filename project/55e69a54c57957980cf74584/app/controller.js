@@ -64,6 +64,17 @@ define(
             }
 
             function RootController($scope, $rootScope, $q, $timeout, angularConstants, angularEventTypes, appService, urlService, utilService, uiUtilService) {
+                window.onTakeAvatarPhoto = function() {
+                    appService.takeMyPhoto().then(function(url) {
+                        if (url) {
+                            var m = url.match("resource\/image\/.+$");
+                            if (m && m.length) {
+                                $rootScope.avatarUrl = m[0];
+                            }
+                        }
+                    });
+                }
+
                 window.onToggleSound = function (widgetId, url, loop) {
                     appService.isPlayingSound().then(function (isPlaying) {
                         if (isPlaying) {

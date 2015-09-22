@@ -403,8 +403,6 @@ define(
                                     return uiUtilService.whilst(
                                         function () {
                                             return !scope.editorAttached;
-                                        }, function (callback) {
-                                            callback();
                                         }, function () {
                                             uiUtilService.latestOnce(
                                                 function () {

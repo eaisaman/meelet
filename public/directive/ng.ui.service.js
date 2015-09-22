@@ -4314,8 +4314,6 @@ define(
                         $inject.uiUtilService.whilst(
                             function () {
                                 return !self.$element.children("." + $inject.angularConstants.widgetClasses.widgetContainerClass).length;
-                            }, function (callback) {
-                                callback();
                             }, function (err) {
                                 if (!err) {
                                     var childWidgets = self.childWidgets;
@@ -4342,8 +4340,6 @@ define(
                                     var widgetScope = angular.element(self.$element.find("[widget-container]:nth-of-type(1)").first().children()[0]).scope();
 
                                     return !widgetScope || widgetScope.widgetId !== self.id;
-                                }, function (callback) {
-                                    callback();
                                 }, function (err) {
                                     if (!err) {
                                         $inject.uiUtilService.latestOnce(
@@ -4387,8 +4383,6 @@ define(
                                                                 return !anchors.every(function (anchor) {
                                                                     return self.$element.find("[{0}='{1}']".format($inject.angularConstants.anchorAttr, anchor)).length;
                                                                 });
-                                                            }, function (callback) {
-                                                                callback();
                                                             }, function (err) {
                                                                 if (err) {
                                                                     defer.reject(err);
@@ -4717,8 +4711,6 @@ define(
                             $inject.uiUtilService.whilst(function () {
                                     var scope = angular.element(self.$element.find("[widget-container]:nth-of-type(1)").first().children()[0]).scope();
                                     return !scope || scope.widgetId !== self.id;
-                                }, function (callback) {
-                                    callback();
                                 }, function (err) {
                                     if (!err) {
                                         var scope = angular.element(self.$element.find("[widget-container]:nth-of-type(1)").first().children()[0]).scope();
@@ -5412,8 +5404,6 @@ define(
                         return self.uiUtilService.whilst(
                             function () {
                                 return !cloneObj.$element.data("sketch-widget-hammer");
-                            }, function (callback) {
-                                callback();
                             }, function () {
                                 var manager = cloneObj.$element.data("sketch-widget-hammer"),
                                     element = cloneObj.$element.get(0);

@@ -12,8 +12,6 @@ define(
                                 uiUtilService.whilst(
                                     function () {
                                         return !el.scope();
-                                    }, function (callback) {
-                                        callback();
                                     }, function (err) {
                                         var defer = $q.defer();
 

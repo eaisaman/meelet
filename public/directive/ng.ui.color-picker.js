@@ -107,9 +107,6 @@ define(
                                                 function () {
                                                     return !scope.color;
                                                 },
-                                                function (callback) {
-                                                    callback();
-                                                },
                                                 function (err) {
                                                     scope.setColor(angular.copy(options.color)).then(function () {
                                                         return scope.togglePalette();

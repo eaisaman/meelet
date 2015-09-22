@@ -69,9 +69,6 @@ define(
                                                 function () {
                                                     return !scope.backgroundImage;
                                                 },
-                                                function (callback) {
-                                                    callback();
-                                                },
                                                 function (err) {
                                                     if (!err) {
                                                         scope.pickedBackgroundPosition = scope.pickBackgroundPositionValue(scope.pseudo);

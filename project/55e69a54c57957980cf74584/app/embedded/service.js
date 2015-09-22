@@ -115,12 +115,39 @@ define(
                     return self.getResolveDefer(false);
                 }
             );
-
-
         }
 
         appService.prototype.exitPage = function () {
             return this.cordovaPromise("exitPage").apply(this, Array.prototype.slice.call(arguments));
+        }
+
+        appService.prototype.takeAvatarPhoto = function (projectId) {
+            var self = this,
+                defer = self.$q.defer();
+
+            self.$timeout(function () {
+                navigator.camera.getPicture(function (imageURI) {
+                    defer.resolve(projectId, imageURI);
+                }, function () {
+                    defer.reject();
+                }, {
+                    quality: 50,
+                    destinationType: 1, // 1:FILE_URI
+                    sourceType: 1,//1:CAMERA
+                    encodingType: 0,//0:JPEG
+                    targetWidth: 360,
+                    targetHeight: 360
+                });
+            });
+
+            return defer.promise.then(
+                function (projectId, uri) {
+                    return self.cordovaPromise("saveAvatar").apply(this, Array.prototype.slice.call(arguments))
+                },
+                function (err) {
+                    return self.getRejectDefer(err);
+                }
+            );
         }
 
         return function (appModule) {

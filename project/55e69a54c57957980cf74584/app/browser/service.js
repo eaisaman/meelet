@@ -217,6 +217,8 @@ define(
             window.close();
         };
 
+        appService.prototype.takeAvatarPhoto = appService.prototype.NOOP;
+
         return function (appModule) {
             if (isBrowser) {
                 appModule.

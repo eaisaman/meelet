@@ -258,9 +258,6 @@ define(
                                                     function () {
                                                         return !angular.element(element.find("#widgetStateDropdown > div")).scope();
                                                     },
-                                                    function (callback) {
-                                                        callback();
-                                                    },
                                                     function (err) {
                                                         if (!err) {
                                                             var $dropdown = element.find("#widgetStateDropdown");
@@ -464,9 +461,6 @@ define(
                                             uiUtilService.whilst(
                                                 function () {
                                                     return !$(".pageList select option").length;
-                                                },
-                                                function (callback) {
-                                                    callback();
                                                 },
                                                 function (err) {
                                                     uiUtilService.latestOnce(

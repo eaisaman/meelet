@@ -679,8 +679,6 @@ define(
                     return uiUtilService.whilst(
                         function () {
                             return !document.getElementsByClassName(angularConstants.widgetClasses.deviceHolderClass).length;
-                        }, function (callback) {
-                            callback();
                         }, function () {
                             uiUtilService.latestOnce(
                                 function () {
@@ -2070,8 +2068,6 @@ define(
                     return uiUtilService.whilst(
                         function () {
                             return !getExtensionScope();
-                        }, function (callback) {
-                            callback();
                         }, function () {
                             uiUtilService.latestOnce(
                                 function () {
