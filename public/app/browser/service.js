@@ -2,6 +2,7 @@ define(
     ["jquery", "angular"],
     function () {
         var FEATURE = "BaseService",
+            PLATFORM = "browser",
             appService = function ($rootScope, $http, $timeout, $q, $exceptionHandler, $compile, $cookies, $cookieStore, utilService, serviceRegistry) {
                 this.$rootScope = $rootScope;
                 this.$http = $http;
@@ -51,11 +52,11 @@ define(
         }
 
         appService.prototype.registerService = function () {
-            this.serviceRegistry && this.serviceRegistry.register(this, FEATURE);
+            this.serviceRegistry && this.serviceRegistry.register(this, FEATURE, PLATFORM);
         }
 
         appService.prototype.unregisterService = function () {
-            this.serviceRegistry && this.serviceRegistry.unregister(FEATURE);
+            this.serviceRegistry && this.serviceRegistry.unregister(FEATURE, PLATFORM);
         }
 
         appService.prototype.loadRepoArtifact = function (repoArtifact, repoLibId, repoLibName, version, demoSelector) {

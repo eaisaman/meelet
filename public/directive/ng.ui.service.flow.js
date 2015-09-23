@@ -2,6 +2,7 @@ define(
     ["angular-lib", "jquery-lib", "underscore-lib", "ng.ui.util", "ng.ui.service"],
     function () {
         var FEATURE = "FlowService",
+            PLATFORM = "browser",
             FlowService = function ($parse, $timeout, $q, $exceptionHandler, $compile, $rootScope, angularEventTypes, angularConstants, appService, serviceRegistry, uiUtilService, uiCanvasService, uiAnimationService) {
                 this.$parse = $parse;
                 this.$timeout = $timeout;
@@ -1613,11 +1614,11 @@ define(
                 });
 
             FlowService.prototype.registerService = function () {
-                this.serviceRegistry && this.serviceRegistry.register(this, FEATURE);
+                this.serviceRegistry && this.serviceRegistry.register(this, FEATURE, PLATFORM);
             }
 
             FlowService.prototype.unregisterService = function () {
-                this.serviceRegistry && this.serviceRegistry.unregister(FEATURE);
+                this.serviceRegistry && this.serviceRegistry.unregister(FEATURE, PLATFORM);
             }
 
             FlowService.prototype.createFlow = function () {

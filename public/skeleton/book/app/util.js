@@ -202,18 +202,32 @@ define(
                 }
             }
 
-            utilService.prototype.setStateOnWidget = function (id, name) {
+            utilService.prototype.setStateOnWidget = function (id, state) {
                 var self = this,
-                    defer = self.$q.defer();
+                    defer = self.$q.defer(),
+                    name;
+
+                //Accept widget name
+                if (!/Widget_\d+$/.test(id)) {
+                    name = id;
+                    id = null;
+                }
 
                 self.uiUtilService.whilst(function () {
-                        return !document.getElementById(id);
+                        return name ? !document.getElementsByName(name).length : !document.getElementById(id);
                     },
                     function (err) {
                         if (!err) {
-                            var $widgetElement = $("#" + id);
+                            var $widgetElement;
+                            if (name) {
+                                var element = document.getElementsByName(name)[0];
+                                $widgetElement = $(element);
+                                id = element.id;
+                            } else {
+                                $widgetElement = $("#" + id);
+                            }
 
-                            $widgetElement.attr("state", name);
+                            $widgetElement.attr("state", state);
                             if ($widgetElement.hasClass(self.angularConstants.widgetClasses.widgetIncludeAnchorClass)) {
                                 self.uiUtilService.whilst(function () {
                                         var scope = angular.element($widgetElement.find("[widget-container]:nth-of-type(1)").first().children()[0]).scope();
@@ -221,7 +235,7 @@ define(
                                     }, function (err) {
                                         if (!err) {
                                             var scope = angular.element($widgetElement.find("[widget-container]:nth-of-type(1)").first().children()[0]).scope();
-                                            scope.state = name;
+                                            scope.state = state;
                                             defer.resolve();
                                         } else {
                                             defer.reject(err);

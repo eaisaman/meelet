@@ -61,7 +61,6 @@
         "name": "playSound",
         "description": "Play audio.",
         "parameters": [
-          "projectId",
           "url",
           "playLoop"
         ],
@@ -78,7 +77,6 @@
         "name": "toggleSound",
         "description": "Toggle playing audio.",
         "parameters": [
-          "projectId",
           "url",
           "playLoop"
         ],
@@ -88,7 +86,6 @@
         "name": "playWidgetSound",
         "description": "Play audio. Widget has states '*' and 'mute', which controls play or stop.",
         "parameters": [
-          "projectId",
           "url",
           "playLoop",
           "widgetId"
@@ -107,7 +104,6 @@
         "name": "togglePlayWidgetSound",
         "description": "Toggle playing audio. Widget controls play or stop.",
         "parameters": [
-          "projectId",
           "url",
           "playLoop",
           "widgetId"
@@ -165,6 +161,20 @@
       {
         "name": "takeAvatarPhoto",
         "description": "Take photo for avatar use.",
+        "parameters": [
+        ],
+        "communicationType": "event"
+      },
+      {
+        "name": "startWidgetRecord",
+        "description": "Start recording. Widget controls the process",
+        "parameters": [
+        ],
+        "communicationType": "event"
+      },
+      {
+        "name": "stopWidgetRecord",
+        "description": "Stop recording. Widget controls the process",
         "parameters": [
         ],
         "communicationType": "event"

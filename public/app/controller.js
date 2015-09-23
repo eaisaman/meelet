@@ -2,7 +2,7 @@ define(
     ["angular", "jquery", "jquery-ui", "app-util", "app-route", "app-filter", "app-service"],
     function () {
         return function (appModule, extension) {
-            function RootController($scope, $rootScope, $q, $timeout, angularEventTypes, angularConstants, appService, urlService, uiUtilService) {
+            function RootController($scope, $rootScope, $q, $timeout, angularEventTypes, angularConstants, appService, serviceRegistry, urlService, uiUtilService) {
                 //For development convenience, we do fake login or restore user info if already authenticated.
 
                 extension && extension.attach && extension.attach($scope, {
@@ -15,6 +15,8 @@ define(
                 });
 
                 function initMaster() {
+                    serviceRegistry.makeGlobal();
+
                     $rootScope.showAlert = function (alertObj) {
                         alertObj.id = $scope.alertUidGen();
                         $rootScope.alertList.splice(0, 0, alertObj);
@@ -2105,7 +2107,7 @@ define(
             }
 
             appModule.
-                controller('RootController', ["$scope", "$rootScope", "$q", "$timeout", "angularEventTypes", "angularConstants", "appService", "urlService", "uiUtilService", RootController]).
+                controller('RootController', ["$scope", "$rootScope", "$q", "$timeout", "angularEventTypes", "angularConstants", "appService", "serviceRegistry", "urlService", "uiUtilService", RootController]).
                 controller('FrameSketchController', ["$scope", "$rootScope", "$timeout", "$q", "$log", "$exceptionHandler", "$compile", "$parse", "angularEventTypes", "angularConstants", "appService", "uiService", "uiUtilService", "uiCanvasService", FrameSketchController]).
                 controller('BookController', ["$scope", "$rootScope", "$timeout", "$q", "$log", "$exceptionHandler", "$compile", "$parse", "$templateCache", "angularEventTypes", "angularConstants", "appService", "uiService", "uiBookService", "uiUtilService", "uiCanvasService", BookController]).
                 controller('FlowController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "uiService", "uiFlowService", "urlService", "uiUtilService", FlowController]).

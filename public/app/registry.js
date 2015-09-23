@@ -14,71 +14,136 @@ define(
 
             serviceRegistry.$inject = ["$rootScope", "$http", "$timeout", "$q", "uiUtilService", "angularConstants"];
 
-            serviceRegistry.prototype.register = function (serviceImpl, feature, serviceName) {
+            serviceRegistry.prototype.makeGlobal = function () {
+                window.serviceRegistry = this;
+            }
+
+            /**
+             * @description
+             *
+             * When a new serviceImpl is registered, a new object with implemented functions is
+             * set to feature item's impl. This object inherits previous object created during
+             * service registration. So new service function overrides old one, while other old
+             * service functions may still served for unimplemented functions.
+             *
+             * @param serviceImpl
+             * @param feature
+             */
+            serviceRegistry.prototype.register = function (serviceImpl, feature, platform) {
                 var self = this,
                     featureItem = _.findWhere(self.registry, {feature: feature});
 
                 if (featureItem && serviceImpl) {
-                    var serviceList = featureItem.serviceList;
-
-                    featureItem.impl = serviceImpl;
-                    featureItem.services = {};
-                    if (serviceName) {
-                        serviceList = [];
-                        var serviceItem = _.findWhere(serviceList, {name: serviceName});
-                        serviceItem && serviceList.push(serviceItem);
+                    if (featureItem.impl && featureItem.impl.canRunOn(platform)) {
+                        return;
                     }
 
+                    var featureClassTmpl = {
+                            FEATURE_NAME: feature,
+                            MEMBERS: {
+                                platform: null,
+                                delegate: null,
+                                eventWatchers: {}
+                            },
+                            initialize: function (delegate, platform) {
+                                var MEMBERS = arguments.callee.prototype.MEMBERS;
+
+                                for (var member in MEMBERS) {
+                                    this[member] = angular.copy(MEMBERS[member]);
+                                }
+
+                                this.delegate = delegate;
+                                this.platform = platform;
+                            },
+                            canRunOn: function (platform) {
+                                return this.platform == platform;
+                            },
+                            unregister: function (platform, offspring) {
+                                var clazz = featureClassTmpl.initialize;
+
+                                if (this.canRunOn(platform)) {
+                                    if (offspring) {
+                                        offspring.initialize.prototype.__proto__ = clazz.prototype.__proto__;
+                                    } else {
+                                        var impl = clazz.prototype.__proto__,
+                                            item = _.findWhere(self.registry, {feature: feature});
+                                        if (_.isEmpty(impl)) {
+                                            delete item.impl;
+                                        } else {
+                                            item.impl = impl;
+                                        }
+                                    }
+
+                                    _.each(this.eventWatchers, function (watcher) {
+                                        watcher && watcher();
+                                    });
+                                    delete this.delegate;
+                                } else {
+                                    clazz.prototype.__proto__.unregister(platform, this);
+                                }
+                            }
+                        },
+                        serviceList = featureItem.serviceList,
+                        featureClass;
+
                     _.each(serviceList, function (serviceItem) {
-                        var fn = featureItem.impl[serviceItem.name];
+                        var fn = serviceImpl[serviceItem.name];
 
                         if (fn && typeof fn === "function") {
                             switch (serviceItem.communicationType) {
                                 case "one-way":
-                                    featureItem.services[serviceItem.name] = function () {
-                                        fn.apply(featureItem.impl, Array.prototype.slice.call(arguments));
+                                    featureClassTmpl[serviceItem.name] = function () {
+                                        fn.apply(this.delegate, Array.prototype.slice.call(arguments));
                                     }
                                     break;
                                 case "callback":
-                                    featureItem.services[serviceItem.name] = function () {
+                                    featureClassTmpl[serviceItem.name] = function () {
                                         //Promise.then
-                                        return fn.apply(featureItem.impl, Array.prototype.slice.call(arguments));
+                                        return fn.apply(this.delegate, Array.prototype.slice.call(arguments));
                                     }
                                     break;
                                 case "event":
-                                    featureItem.services[serviceItem.name] = function (eventHandler) {
-                                        var eventId = "SERVICE-EVENT-FEATURE-{0}-SERVICE-{1}-{2}".format(featureItem.name, serviceItem.name, _.now()),
-                                            watcher = self.$rootScope.$on(eventId, function (event, result) {
-                                                try {
-                                                    eventHandler && eventHandler(result);
-                                                } catch (e) {
-                                                    self.$exceptionHandler(e);
-                                                }
+                                    featureClassTmpl[serviceItem.name] = function (eventHandler, eventId) {
+                                        var instance = this;
 
-                                                watcher();
-                                            });
+                                        eventId = eventId || "SERVICE-EVENT-FEATURE-{0}-SERVICE-{1}-{2}".format(feature, serviceItem.name, _.now());
+                                        instance.eventWatchers[eventId] && instance.eventWatchers[eventId]();
+                                        instance.eventWatchers[eventId] = self.$rootScope.$on(eventId, function (event, result) {
+                                            try {
+                                                eventHandler && eventHandler(result);
+                                            } catch (e) {
+                                                self.$exceptionHandler(e);
+                                            }
 
-                                        fn.apply(featureItem.impl, Array.prototype.concat.apply([eventId], Array.prototype.slice.call(arguments, 1, arguments.length)));
+                                            if (instance.eventWatchers[eventId]) {
+                                                instance.eventWatchers[eventId]();
+                                                delete instance.eventWatchers[eventId];
+                                            }
+                                        });
+
+                                        fn.apply(instance.delegate, Array.prototype.concat.apply([eventId], Array.prototype.slice.call(arguments, 1, arguments.length)));
                                     }
                                     break;
                             }
                         }
                     });
+
+                    featureClass = featureClassTmpl.initialize;
+                    featureClass.prototype = featureClassTmpl;
+                    if (featureItem.impl) {
+                        featureClassTmpl.__proto__ = featureItem.impl;
+                    }
+
+                    featureItem.impl = new featureClass(serviceImpl, platform);
                 }
             }
 
-            serviceRegistry.prototype.unregister = function (feature, serviceName) {
+            serviceRegistry.prototype.unregister = function (feature, platform) {
                 var self = this,
                     featureItem = _.findWhere(self.registry, {feature: feature});
 
-                if (featureItem) {
-                    if (serviceName) {
-                        delete featureItem.services[serviceName];
-                        _.isEmpty(featureItem.services) && delete featureItem.impl;
-                    } else {
-                        delete featureItem.impl;
-                        featureItem.services = {};
-                    }
+                if (featureItem && featureItem.impl) {
+                    featureItem.impl.unregister(platform);
                 }
             }
 
@@ -87,7 +152,7 @@ define(
                     featureItem = _.findWhere(self.registry, {feature: feature});
 
                 if (featureItem && featureItem.impl) {
-                    var fn = featureItem.services[serviceName];
+                    var fn = featureItem.impl[serviceName];
                     if (fn) {
                         return fn;
                     } else {
