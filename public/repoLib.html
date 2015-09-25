@@ -44,7 +44,7 @@
                 </div>
             </div>
         </div>
-        <div class="repoLibModalContent" name="modalContent">
+        <div class="repoLibModalContent" name="modalContent" ng-click="$event.stopPropagation()">
             <div class="hideButton icon-repo-before icon-repo-exit-before" ng-click="hideDemo($event)"></div>
             <div class="demoContainer">
                 <div id="demoArea"></div>

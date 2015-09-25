@@ -1,29 +1,27 @@
 define(
-    ["angular-lib", "jquery-lib", "underscore-lib", "ng.ui.util", "ng.ui.service"],
+    ["angular-lib", "jquery-lib", "underscore-lib", "flow-service", "app-service-registry", "app-util", "ng.ui.canvas", "ng.ui.animation"],
     function () {
-        var FEATURE = "FlowService",
-            PLATFORM = "browser",
-            FlowService = function ($parse, $timeout, $q, $exceptionHandler, $compile, $rootScope, angularEventTypes, angularConstants, appService, serviceRegistry, uiUtilService, uiCanvasService, uiAnimationService) {
-                this.$parse = $parse;
-                this.$timeout = $timeout;
-                this.$q = $q;
-                this.$exceptionHandler = $exceptionHandler;
-                this.$compile = $compile;
-                this.$rootScope = $rootScope;
-                this.angularEventTypes = angularEventTypes;
-                this.angularConstants = angularConstants;
-                this.appService = appService;
-                this.serviceRegistry = serviceRegistry;
-                this.uiUtilService = uiUtilService;
-                this.uiCanvasService = uiCanvasService;
-                this.uiAnimationService = uiAnimationService;
+        var Service = function ($parse, $timeout, $q, $exceptionHandler, $compile, $rootScope, angularEventTypes, angularConstants, flowService, serviceRegistry, utilService, uiCanvasService, uiAnimationService) {
+            this.$parse = $parse;
+            this.$timeout = $timeout;
+            this.$q = $q;
+            this.$exceptionHandler = $exceptionHandler;
+            this.$compile = $compile;
+            this.$rootScope = $rootScope;
+            this.angularEventTypes = angularEventTypes;
+            this.angularConstants = angularConstants;
+            this.flowService = flowService;
+            this.serviceRegistry = serviceRegistry;
+            this.utilService = utilService;
+            this.uiCanvasService = uiCanvasService;
+            this.uiAnimationService = uiAnimationService;
 
-                _.extend($inject, _.pick(this, FlowService.$inject));
+            _.extend($inject, _.pick(this, Service.$inject));
 
-                defineFlowClass(uiUtilService.createObjectClass(), uiUtilService.findObjectClass());
-            };
+            defineFlowClass(utilService.createObjectClass(), utilService.findObjectClass());
+        };
 
-        FlowService.$inject = ["$parse", "$timeout", "$q", "$exceptionHandler", "$compile", "$rootScope", "angularEventTypes", "angularConstants", "appService", "serviceRegistry", "uiUtilService", "uiCanvasService", "uiAnimationService"];
+        Service.$inject = ["$parse", "$timeout", "$q", "$exceptionHandler", "$compile", "$rootScope", "angularEventTypes", "angularConstants", "flowService", "serviceRegistry", "utilService", "uiCanvasService", "uiAnimationService"];
         var $inject = {};
 
         function defineFlowClass(Class, FindClass) {
@@ -51,12 +49,12 @@ define(
                                 function () {
                                     return self.saveFlow();
                                 }, function (err) {
-                                    return $inject.uiUtilService.getRejectDefer(err);
+                                    return $inject.utilService.getRejectDefer(err);
                                 }
                             );
                         }
 
-                        return $inject.uiUtilService.getRejectDefer(err);
+                        return $inject.utilService.getRejectDefer(err);
                     },
                     loadFlow: function () {
                         var self = this;
@@ -69,25 +67,25 @@ define(
                                     processes = flowWorks.processes;
 
                                 flows && flows.forEach(function (flowObj) {
-                                    var flow = FlowService.prototype.fromObject(flowObj);
+                                    var flow = Service.prototype.fromObject(flowObj);
                                     if (flow) {
                                         self.flowWorks.flows.push(flow);
                                     }
                                 });
 
                                 processes && processes.forEach(function (processObj) {
-                                    var process = FlowService.prototype.fromObject(processObj);
+                                    var process = Service.prototype.fromObject(processObj);
                                     if (process) {
                                         self.flowWorks.processes.push(process);
                                     }
                                 });
 
-                                return $inject.uiUtilService.getResolveDefer(self);
+                                return $inject.utilService.getResolveDefer(self);
                             }, function (err) {
-                                return $inject.uiUtilService.getRejectDefer(err);
+                                return $inject.utilService.getRejectDefer(err);
                             });
                         } else {
-                            return $inject.uiUtilService.getResolveDefer(self);
+                            return $inject.utilService.getResolveDefer(self);
                         }
                     },
                     saveFlow: function () {
@@ -96,7 +94,7 @@ define(
                         if (self.projectRecord._id) {
                             return $inject.appService.saveFlow(self.projectRecord._id, self.flowWorks);
                         } else {
-                            return $inject.uiUtilService.getResolveDefer();
+                            return $inject.utilService.getResolveDefer();
                         }
                     },
                     addFlow: function (flow, beforeFlow) {
@@ -316,7 +314,7 @@ define(
                         this.id = id || "Flow" + _.now();
                     },
                     toJSON: function () {
-                        return _.extend(_.pick(this, ["id", "name", "comment"], "CLASS_NAME"), {childSteps: $inject.uiUtilService.arrayOmit(this.childSteps, "$$hashKey")});
+                        return _.extend(_.pick(this, ["id", "name", "comment"], "CLASS_NAME"), {childSteps: $inject.utilService.arrayOmit(this.childSteps, "$$hashKey")});
                     },
                     fromObject: function (obj) {
                         var ret = new Flow(obj.id);
@@ -530,7 +528,7 @@ define(
                     },
                     toJSON: function () {
                         var jsonObj = SequenceFlowStep.prototype.__proto__.toJSON.apply(this);
-                        _.extend(jsonObj, _.pick(this, ["CLASS_NAME", "exitOn"]), {childSteps: $inject.uiUtilService.arrayOmit(this.childSteps, "$$hashKey")});
+                        _.extend(jsonObj, _.pick(this, ["CLASS_NAME", "exitOn"]), {childSteps: $inject.utilService.arrayOmit(this.childSteps, "$$hashKey")});
 
                         return jsonObj;
                     },
@@ -750,7 +748,7 @@ define(
                     },
                     toJSON: function () {
                         var jsonObj = MapFlowStep.prototype.__proto__.toJSON.apply(this);
-                        _.extend(jsonObj, _.pick(this, ["CLASS_NAME"]), {mappings: $inject.uiUtilService.arrayOmit(this.mappings, "$$hashKey")});
+                        _.extend(jsonObj, _.pick(this, ["CLASS_NAME"]), {mappings: $inject.utilService.arrayOmit(this.mappings, "$$hashKey")});
 
                         return jsonObj;
                     },
@@ -802,7 +800,7 @@ define(
                     },
                     toJSON: function () {
                         var jsonObj = SwitchFlowStep.prototype.__proto__.toJSON.apply(this);
-                        _.extend(jsonObj, _.pick(this, ["CLASS_NAME", "switchExpression", "evaluateLabels"]), {childSteps: $inject.uiUtilService.arrayOmit(this.childSteps, "$$hashKey")});
+                        _.extend(jsonObj, _.pick(this, ["CLASS_NAME", "switchExpression", "evaluateLabels"]), {childSteps: $inject.utilService.arrayOmit(this.childSteps, "$$hashKey")});
 
                         return jsonObj;
                     },
@@ -976,7 +974,7 @@ define(
                     },
                     toJSON: function () {
                         var jsonObj = RepeatFlowStep.prototype.__proto__.toJSON.apply(this);
-                        _.extend(jsonObj, _.pick(this, ["CLASS_NAME", "repeatOn", "count", "timeout", "interval"]), {childSteps: $inject.uiUtilService.arrayOmit(this.childSteps, "$$hashKey")});
+                        _.extend(jsonObj, _.pick(this, ["CLASS_NAME", "repeatOn", "count", "timeout", "interval"]), {childSteps: $inject.utilService.arrayOmit(this.childSteps, "$$hashKey")});
 
                         return jsonObj;
                     },
@@ -1203,7 +1201,7 @@ define(
                         this.id = id || "Process" + _.now();
                     },
                     toJSON: function () {
-                        return _.extend(_.pick(this, ["id", "name"], "CLASS_NAME"), {processSteps: $inject.uiUtilService.arrayOmit(this.processSteps, "$$hashKey")});
+                        return _.extend(_.pick(this, ["id", "name"], "CLASS_NAME"), {processSteps: $inject.utilService.arrayOmit(this.processSteps, "$$hashKey")});
                     },
                     fromObject: function (obj) {
                         var ret = new Process(obj.id);
@@ -1613,19 +1611,11 @@ define(
                     }
                 });
 
-            FlowService.prototype.registerService = function () {
-                this.serviceRegistry && this.serviceRegistry.register(this, FEATURE, PLATFORM);
-            }
-
-            FlowService.prototype.unregisterService = function () {
-                this.serviceRegistry && this.serviceRegistry.unregister(FEATURE, PLATFORM);
-            }
-
-            FlowService.prototype.createFlow = function () {
+            Service.prototype.createFlow = function () {
                 return new Flow();
             }
 
-            FlowService.prototype.createFlowStep = function (className) {
+            Service.prototype.createFlowStep = function (className) {
                 var classes = ["SequenceFlowStep", "InvokeFlowStep", "MapFlowStep", "SwitchFlowStep", "RepeatFlowStep", "ExitFlowStep"];
 
                 var stepObj;
@@ -1641,11 +1631,11 @@ define(
                 return stepObj;
             }
 
-            FlowService.prototype.createProcess = function () {
+            Service.prototype.createProcess = function () {
                 return new Process();
             }
 
-            FlowService.prototype.createProcessStep = function (className) {
+            Service.prototype.createProcessStep = function (className) {
                 var classes = ["ReceiveProcessStep", "TerminateProcessStep", "ForkProcessStep", "JoinProcessStep"];
 
                 var stepObj;
@@ -1661,7 +1651,7 @@ define(
                 return stepObj;
             }
 
-            FlowService.prototype.prepareFakeFlow = function () {
+            Service.prototype.prepareFakeFlow = function () {
                 var self = this,
                     sequence = new SequenceFlowStep();
 
@@ -1710,7 +1700,7 @@ define(
                 return flow;
             }
 
-            FlowService.prototype.fromObject = function (obj) {
+            Service.prototype.fromObject = function (obj) {
                 var className = obj.CLASS_NAME,
                     classes = ["Flow", "Process"],
                     ret;
@@ -1727,7 +1717,7 @@ define(
                 return ret;
             }
 
-            FlowService.prototype.loadProject = function (dbObject) {
+            Service.prototype.loadProject = function (dbObject) {
                 var self = this;
 
                 if (!_.isEmpty(self.$rootScope.loadedProject)) {
@@ -1736,7 +1726,7 @@ define(
                 self.$rootScope.loadedProject = new FlowProject(dbObject);
 
                 //FIXME Need display error alert here.
-                return this.uiUtilService.chain(
+                return this.utilService.chain(
                     [
                         function () {
                             return self.$rootScope.loadedProject.loadDependencies();
@@ -1763,7 +1753,7 @@ define(
         return function (appModule) {
             appModule.
                 config(["$provide", function ($provide) {
-                    $provide.service('uiFlowService', FlowService);
+                    $provide.service('uiFlowService', Service);
                 }]);
         };
     }

@@ -2,17 +2,17 @@ define(
     ["angular"],
     function () {
         return function (appModule, registry) {
-            var serviceRegistry = function ($rootScope, $http, $timeout, $q, uiUtilService, angularConstants) {
+            var serviceRegistry = function ($rootScope, $http, $timeout, $q, utilService, angularConstants) {
                 this.$rootScope = $rootScope;
                 this.$http = $http;
                 this.$timeout = $timeout;
                 this.$q = $q;
-                this.uiUtilService = uiUtilService;
+                this.utilService = utilService;
                 this.angularConstants = angularConstants;
                 this.registry = _.clone(registry);
             };
 
-            serviceRegistry.$inject = ["$rootScope", "$http", "$timeout", "$q", "uiUtilService", "angularConstants"];
+            serviceRegistry.$inject = ["$rootScope", "$http", "$timeout", "$q", "utilService", "angularConstants"];
 
             serviceRegistry.prototype.makeGlobal = function () {
                 window.serviceRegistry = this;

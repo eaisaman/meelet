@@ -2,7 +2,7 @@ define(
     ["angular", "jquery"],
     function () {
 
-        function PageTransitionDemoController($scope, $rootScope, $timeout, $q, uiUtilService) {
+        function PageTransitionDemoController($scope, $rootScope, $timeout, $q, utilService) {
             $scope.isAnimating = false;
             $scope.transitionName = "moveToLeft";
 
@@ -26,8 +26,8 @@ define(
                     }
 
                     $q.all([
-                        uiUtilService.onAnimationEnd($current),
-                        uiUtilService.onAnimationEnd($next)
+                        utilService.onAnimationEnd($current),
+                        utilService.onAnimationEnd($next)
                     ]).then(function () {
                         $current.removeClass("forward currentPage");
                         $current.removeAttr("effect");
@@ -43,6 +43,6 @@ define(
 
         return function ($injector, $compileProvider, $controllerProvider, extension, directiveUrl) {
             $controllerProvider.
-                register('PageTransitionDemoController', ["$scope", "$rootScope", "$timeout", "$q", "uiUtilService", PageTransitionDemoController]);
+                register('PageTransitionDemoController', ["$scope", "$rootScope", "$timeout", "$q", "utilService", PageTransitionDemoController]);
         }
     });

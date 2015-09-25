@@ -1,9 +1,7 @@
 define(
-    ["angular-lib", "jquery-lib", "underscore-lib", "ng.ui.util", "ng.ui.service"],
+    ["angular-lib", "jquery-lib", "underscore-lib", "book-service", "app-service-registry", "app-util", "ng.ui.canvas", "ng.ui.animation"],
     function () {
-        var FEATURE = "BookService",
-            PLATFORM = "browser",
-            BookService = function ($parse, $timeout, $q, $exceptionHandler, $compile, $rootScope, angularEventTypes, angularConstants, serviceRegistry, uiUtilService, uiCanvasService, uiAnimationService) {
+        var Service = function ($parse, $timeout, $q, $exceptionHandler, $compile, $rootScope, angularEventTypes, angularConstants, bookService, serviceRegistry, utilService, uiCanvasService, uiAnimationService) {
             this.$parse = $parse;
             this.$timeout = $timeout;
             this.$q = $q;
@@ -12,17 +10,18 @@ define(
             this.$rootScope = $rootScope;
             this.angularEventTypes = angularEventTypes;
             this.angularConstants = angularConstants;
+            this.bookService = bookService;
             this.serviceRegistry = serviceRegistry;
-            this.uiUtilService = uiUtilService;
+            this.utilService = utilService;
             this.uiCanvasService = uiCanvasService;
             this.uiAnimationService = uiAnimationService;
 
-            _.extend($inject, _.pick(this, BookService.$inject));
+            _.extend($inject, _.pick(this, Service.$inject));
 
-            defineBookClass(uiUtilService.createObjectClass(), uiUtilService.findObjectClass());
+            defineBookClass(utilService.createObjectClass(), utilService.findObjectClass());
         };
 
-        BookService.$inject = ["$parse", "$timeout", "$q", "$exceptionHandler", "$compile", "$rootScope", "angularEventTypes", "angularConstants", "serviceRegistry", "uiUtilService", "uiCanvasService", "uiAnimationService"];
+        Service.$inject = ["$parse", "$timeout", "$q", "$exceptionHandler", "$compile", "$rootScope", "angularEventTypes", "angularConstants", "bookService", "serviceRegistry", "utilService", "uiCanvasService", "uiAnimationService"];
         var $inject = {};
 
         function defineBookClass(Class, FindClass) {
@@ -72,6 +71,11 @@ define(
                         _.each(BookIncludeSketchWidgetClass.prototype.DEFAULT_STYLE, function (styleValue, styleName) {
                             !self.css(styleName) && self.css(styleName, angular.copy(styleValue));
                         });
+
+                        //Not called by inheriting class
+                        if (this.CLASS_NAME == arguments.callee.prototype.CLASS_NAME) {
+                            $inject.utilService.onceWrapper(this, "appendTo");
+                        }
                     },
                     toJSON: function () {
                         var jsonObj = BookIncludeSketchWidgetClass.prototype.__proto__.toJSON.apply(this);
@@ -155,12 +159,12 @@ define(
                                         $inject.$rootScope.loadedProject.validateIncludeExternal(self.$element, "{0}/{1}/{2}".format(self.externalBook, self.externalPage, self.externalFile));
                                     }
 
-                                    return $inject.uiUtilService.getResolveDefer(self);
+                                    return $inject.utilService.getResolveDefer(self);
                                 } else {
-                                    return $inject.uiUtilService.getRejectDefer("Invalid Element {0}".format(self.id));
+                                    return $inject.utilService.getRejectDefer("Invalid Element {0}".format(self.id));
                                 }
                             }, function (err) {
-                                return $inject.uiUtilService.getRejectDefer(err);
+                                return $inject.utilService.getRejectDefer(err);
                             }
                         );
                     },
@@ -223,19 +227,11 @@ define(
                         return cloneObj;
                     },
                     doAction: function () {
-                        return $inject.uiUtilService.getResolveDefer();
+                        return $inject.utilService.getResolveDefer();
                     }
                 });
 
-            BookService.prototype.registerService = function () {
-                this.serviceRegistry && this.serviceRegistry.register(this, FEATURE, PLATFORM);
-            }
-
-            BookService.prototype.unregisterService = function () {
-                this.serviceRegistry && this.serviceRegistry.unregister(FEATURE, PLATFORM);
-            }
-
-            BookService.prototype.loadProject = function (dbObject) {
+            Service.prototype.loadProject = function (dbObject) {
                 var self = this;
 
                 if (!_.isEmpty(self.$rootScope.loadedProject)) {
@@ -244,7 +240,7 @@ define(
                 self.$rootScope.loadedProject = new BookProject(dbObject);
 
                 //FIXME Need display error alert here.
-                return this.uiUtilService.chain(
+                return this.utilService.chain(
                     [
                         function () {
                             return self.$rootScope.loadedProject.loadDependencies();
@@ -267,7 +263,7 @@ define(
                 );
             }
 
-            BookService.prototype.createBookWidget = function (containerElement, externalBook, externalPage, externalFile, edge) {
+            Service.prototype.createBookWidget = function (containerElement, externalBook, externalPage, externalFile, edge) {
                 var self = this,
                     $container;
 
@@ -309,7 +305,7 @@ define(
         return function (appModule) {
             appModule.
                 config(["$provide", function ($provide) {
-                    $provide.service('uiBookService', BookService);
+                    $provide.service('uiBookService', Service);
                 }]);
         };
     }

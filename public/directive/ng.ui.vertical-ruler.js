@@ -2,9 +2,9 @@ define(
     ["angular-lib", "jquery-lib", "hammer-lib"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$timeout", "$q", "$exceptionHandler", "$log", "angularEventTypes", "angularConstants", "uiService", "uiUtilService", "appService"];
+            var inject = ["$timeout", "$q", "$exceptionHandler", "$log", "angularEventTypes", "angularConstants", "uiService", "utilService", "appService"];
 
-            appModule.directive("uiVerticalRuler", _.union(inject, [function ($timeout, $q, $exceptionHandler, $log, angularEventTypes, angularConstants, uiService, uiUtilService, appService) {
+            appModule.directive("uiVerticalRuler", _.union(inject, [function ($timeout, $q, $exceptionHandler, $log, angularEventTypes, angularConstants, uiService, utilService, appService) {
                 'use strict';
 
                 var defaults = {
@@ -36,7 +36,7 @@ define(
                                     "$timeout": $timeout,
                                     "$q": $q,
                                     "angularConstants": angularConstants,
-                                    "uiUtilService": uiUtilService,
+                                    "utilService": utilService,
                                     element: element,
                                     scope: scope
                                 }));
@@ -74,8 +74,8 @@ define(
                                         } else if (event.type === "panmove") {
                                             if (touchY != undefined) {
                                                 var moveY = event.srcEvent.clientY - ($u.offset().top + touchY),
-                                                    maxHeight = uiUtilService.calculateHeight($u.parent()),
-                                                    height = uiUtilService.calculateHeight($u),
+                                                    maxHeight = utilService.calculateHeight($u.parent()),
+                                                    height = utilService.calculateHeight($u),
                                                     ftTop,
                                                     top;
 
@@ -112,7 +112,7 @@ define(
                                         } else {
                                             if (touchY != undefined) {
                                                 if (scope.nearByMarkerIndex != null) {
-                                                    var height = uiUtilService.calculateHeight($u),
+                                                    var height = utilService.calculateHeight($u),
                                                         ftTop, top;
 
                                                     var m = ($u.css("top") || "").match(/([-\d\.]+)px$/);
@@ -148,8 +148,8 @@ define(
                                         } else if (event.type === "panmove") {
                                             if (touchY != undefined) {
                                                 var moveY = event.srcEvent.clientY - ($u.parent().offset().top + touchY),
-                                                    maxHeight = uiUtilService.calculateHeight($u.parent()),
-                                                    height = uiUtilService.calculateHeight($u),
+                                                    maxHeight = utilService.calculateHeight($u.parent()),
+                                                    height = utilService.calculateHeight($u),
                                                     ftTop,
                                                     top;
 
@@ -208,7 +208,7 @@ define(
                                             if (touchY != undefined) {
                                                 if (scope.alignCenter) {
                                                     if (scope.nearByMarkerIndex != null) {
-                                                        var height = uiUtilService.calculateHeight($u),
+                                                        var height = utilService.calculateHeight($u),
                                                             bottom = Math.floor((scope.nearByMarkerIndex * scope.markerHeight) * angularConstants.precision) / angularConstants.precision,
                                                             top = bottom - height / 2;
 
@@ -220,7 +220,7 @@ define(
 
                                                     if (moveDirection === "down") {
                                                         if (scope.nearByMarkerIndex != null) {
-                                                            var height = uiUtilService.calculateHeight($u),
+                                                            var height = utilService.calculateHeight($u),
                                                                 bottom = Math.floor((scope.nearByMarkerIndex * scope.markerHeight) * angularConstants.precision) / angularConstants.precision,
                                                                 top = bottom - height;
 
@@ -255,8 +255,8 @@ define(
                                         } else if (event.type === "panmove") {
                                             if (touchY != undefined) {
                                                 var newHeight = event.srcEvent.clientY - $u.offset().top + touchY,
-                                                    maxHeight = uiUtilService.calculateHeight($u.parent()),
-                                                    height = uiUtilService.calculateHeight($u),
+                                                    maxHeight = utilService.calculateHeight($u.parent()),
+                                                    height = utilService.calculateHeight($u),
                                                     ftTop;
 
                                                 var m = ($u.css("top") || "").match(/([-\d\.]+)px$/);
@@ -341,7 +341,7 @@ define(
                                     }
                                 }
 
-                                uiUtilService.latestOnce(
+                                utilService.latestOnce(
                                     function () {
                                         return $timeout(function () {
                                             registerHandlers();

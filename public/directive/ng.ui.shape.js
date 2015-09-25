@@ -1,10 +1,10 @@
 define(
     ["angular-lib", "jquery-lib", "hammer-lib"],
     function () {
-        var inject = ["$rootScope", "$http", "$timeout", "$q", "$exceptionHandler", "$parse", "$compile", "angularConstants", "angularEventTypes", "appService", "uiUtilService", "uiService"];
+        var inject = ["$rootScope", "$http", "$timeout", "$q", "$exceptionHandler", "$parse", "$compile", "angularConstants", "angularEventTypes", "appService", "utilService", "uiService"];
 
         return function (appModule, extension, opts) {
-            appModule.directive("uiShape", _.union(inject, [function ($rootScope, $http, $timeout, $q, $exceptionHandler, $parse, $compile, angularConstants, angularEventTypes, appService, uiUtilService, uiService) {
+            appModule.directive("uiShape", _.union(inject, [function ($rootScope, $http, $timeout, $q, $exceptionHandler, $parse, $compile, angularConstants, angularEventTypes, appService, utilService, uiService) {
                 'use strict';
 
                 var defaults = {},
@@ -25,7 +25,7 @@ define(
                                     "$timeout": $timeout,
                                     "$q": $q,
                                     "angularConstants": angularConstants,
-                                    "uiUtilService": uiUtilService,
+                                    "utilService": utilService,
                                     element: element,
                                     scope: scope
                                 }));
@@ -39,7 +39,7 @@ define(
                                 options.elementZIndex = angularConstants.draggingShapeZIndex;
 
                                 scope.filterLibraryList = function (libraryList, xrefList) {
-                                    return uiUtilService.filterSelection(libraryList, xrefList, [{
+                                    return utilService.filterSelection(libraryList, xrefList, [{
                                         target: '_id',
                                         source: 'libraryId'
                                     }]);
@@ -48,14 +48,14 @@ define(
                                 scope.filterArtifactList = function (iconLibrary, xrefList) {
                                     var artifactList = (_.findWhere(xrefList, {libraryId: iconLibrary._id}) || {}).artifactList;
 
-                                    return uiUtilService.filterSelection(iconLibrary.artifactList, artifactList, [{
+                                    return utilService.filterSelection(iconLibrary.artifactList, artifactList, [{
                                         target: '_id',
                                         source: 'artifactId'
                                     }]);
                                 }
 
                                 scope.markLibrarySelection = function (libraryList, xrefList) {
-                                    return uiUtilService.markSelection(libraryList, xrefList, [{
+                                    return utilService.markSelection(libraryList, xrefList, [{
                                         target: '_id',
                                         source: 'libraryId'
                                     }]);
@@ -65,7 +65,7 @@ define(
                                     var xref = _.findWhere(xrefList, {libraryId: iconLibrary._id}) || {},
                                         artifactList = xref.artifactList;
 
-                                    return uiUtilService.markSelection(iconLibrary.artifactList, artifactList, [{
+                                    return utilService.markSelection(iconLibrary.artifactList, artifactList, [{
                                         target: '_id',
                                         source: 'artifactId'
                                     }]);
@@ -136,7 +136,7 @@ define(
                                                 y = Math.floor(y * angularConstants.precision) / angularConstants.precision;
 
                                                 if (!$rootScope.sketchWidgetSetting.isPlaying) {
-                                                    uiUtilService.broadcast(scope,
+                                                    utilService.broadcast(scope,
                                                         angularEventTypes.beforeWidgetCreationEvent,
                                                         function (name) {
                                                             if (name) {
@@ -240,7 +240,7 @@ define(
                                         }
                                     }
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.toggleLibrarySelection = function (iconLibrary, event) {
@@ -286,14 +286,14 @@ define(
                                         }
                                     }
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.iconLibraryList = $rootScope.iconLibraryList;
                                 scope.filterIconLibraryList = [];
 
                                 function refreshArtifactList(project) {
-                                    uiUtilService.latestOnce(
+                                    utilService.latestOnce(
                                         function () {
                                             return $timeout(function () {
                                                 appService.loadIconArtifactList().then(function () {
@@ -314,7 +314,7 @@ define(
                                     refreshArtifactList(project);
                                 });
 
-                                uiUtilService.latestOnce(
+                                utilService.latestOnce(
                                     function () {
                                         return $timeout(function () {
                                             var $element = $(element),

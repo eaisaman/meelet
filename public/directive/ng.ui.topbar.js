@@ -2,9 +2,9 @@ define(
     ["angular-lib", "jquery-lib"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$rootScope", "$http", "$timeout", "$q", "$exceptionHandler", "$parse", "$compile", "angularConstants", "angularEventTypes", "appService", "uiUtilService", "uiService", "urlService"];
+            var inject = ["$rootScope", "$http", "$timeout", "$q", "$exceptionHandler", "$parse", "$compile", "angularConstants", "angularEventTypes", "appService", "utilService", "uiService", "urlService"];
 
-            appModule.directive("uiTopbar", _.union(inject, [function ($rootScope, $http, $timeout, $q, $exceptionHandler, $parse, $compile, angularConstants, angularEventTypes, appService, uiUtilService, uiService, urlService) {
+            appModule.directive("uiTopbar", _.union(inject, [function ($rootScope, $http, $timeout, $q, $exceptionHandler, $parse, $compile, angularConstants, angularEventTypes, appService, utilService, uiService, urlService) {
                 'use strict';
 
                 var defaults = {},
@@ -27,7 +27,7 @@ define(
                                     "$timeout": $timeout,
                                     "$q": $q,
                                     "angularConstants": angularConstants,
-                                    "uiUtilService": uiUtilService,
+                                    "utilService": utilService,
                                     element: element,
                                     scope: scope
                                 }));
@@ -52,7 +52,7 @@ define(
                                         scope.toggleSelect($sel, event, false);
                                     }
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.goBack = function (event) {
@@ -60,7 +60,7 @@ define(
 
                                     urlService.back();
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.goHome = function (event) {
@@ -68,7 +68,7 @@ define(
 
                                     urlService.home();
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.hideTopMenu = function (event) {
@@ -91,7 +91,7 @@ define(
                                         })
                                     }
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.onSelectProject = function (projectId, event) {
@@ -142,7 +142,7 @@ define(
                                         })
                                     }
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.switchProjectWatcher = scope.$on(angularEventTypes.switchProjectEvent, function (event, project) {

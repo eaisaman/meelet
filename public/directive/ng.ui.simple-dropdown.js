@@ -2,9 +2,9 @@ define(
     ["angular-lib", "jquery-lib"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$rootScope", "$http", "$timeout", "$q", "$exceptionHandler", "$parse", "$compile", "angularConstants", "angularEventTypes", "appService", "uiUtilService", "uiService"];
+            var inject = ["$rootScope", "$http", "$timeout", "$q", "$exceptionHandler", "$parse", "$compile", "angularConstants", "angularEventTypes", "appService", "utilService", "uiService"];
 
-            appModule.directive("uiSimpleDropdown", _.union(inject, [function ($rootScope, $http, $timeout, $q, $exceptionHandler, $parse, $compile, angularConstants, angularEventTypes, appService, uiUtilService, uiService) {
+            appModule.directive("uiSimpleDropdown", _.union(inject, [function ($rootScope, $http, $timeout, $q, $exceptionHandler, $parse, $compile, angularConstants, angularEventTypes, appService, utilService, uiService) {
                 'use strict';
 
                 var boundProperties = {
@@ -54,7 +54,7 @@ define(
                                     "$timeout": $timeout,
                                     "$q": $q,
                                     "angularConstants": angularConstants,
-                                    "uiUtilService": uiUtilService,
+                                    "utilService": utilService,
                                     element: element,
                                     scope: scope
                                 }));
@@ -212,7 +212,7 @@ define(
                                 scope.toggleOpen = function (event) {
                                     element.find(".cd-dropdown.cd-active").length && scope.close(event) || scope.open(event);
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.open = function (event) {
@@ -275,7 +275,7 @@ define(
 
                                 scope.$watch("selectionList", function (to) {
                                     if (to != null && to.length) {
-                                        uiUtilService.whilst(
+                                        utilService.whilst(
                                             function () {
                                                 return element.find("ul").find("li").length !== scope.optionLength(to);
                                             },

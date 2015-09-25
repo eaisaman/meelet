@@ -1,10 +1,10 @@
 define(
     ["angular-lib", "jquery-lib", "hammer-lib"],
     function () {
-        var inject = ["$rootScope", "$http", "$timeout", "$q", "$exceptionHandler", "$parse", "$compile", "angularConstants", "angularEventTypes", "appService", "uiUtilService", "uiService"];
+        var inject = ["$rootScope", "$http", "$timeout", "$q", "$exceptionHandler", "$parse", "$compile", "angularConstants", "angularEventTypes", "appService", "utilService", "uiService"];
 
         return function (appModule, extension, opts) {
-            appModule.directive("uiWidget", _.union(inject, [function ($rootScope, $http, $timeout, $q, $exceptionHandler, $parse, $compile, angularConstants, angularEventTypes, appService, uiUtilService, uiService) {
+            appModule.directive("uiWidget", _.union(inject, [function ($rootScope, $http, $timeout, $q, $exceptionHandler, $parse, $compile, angularConstants, angularEventTypes, appService, utilService, uiService) {
                 'use strict';
 
                 var defaults = {
@@ -30,7 +30,7 @@ define(
                                     "$timeout": $timeout,
                                     "$q": $q,
                                     "angularConstants": angularConstants,
-                                    "uiUtilService": uiUtilService,
+                                    "utilService": utilService,
                                     element: element,
                                     scope: scope
                                 }));
@@ -43,7 +43,7 @@ define(
                                 options.anchorAttr = angularConstants.anchorAttr;
 
                                 scope.filterLibraryList = function (libraryList, xrefList) {
-                                    return uiUtilService.filterSelection(libraryList, xrefList, [{
+                                    return utilService.filterSelection(libraryList, xrefList, [{
                                         target: '_id',
                                         source: 'libraryId'
                                     }]);
@@ -52,14 +52,14 @@ define(
                                 scope.filterArtifactList = function (widgetLibrary, xrefList) {
                                     var artifactList = (_.findWhere(xrefList, {libraryId: widgetLibrary._id}) || {}).artifactList;
 
-                                    return uiUtilService.filterSelection(widgetLibrary.artifactList, artifactList, [{
+                                    return utilService.filterSelection(widgetLibrary.artifactList, artifactList, [{
                                         target: '_id',
                                         source: 'artifactId'
                                     }]);
                                 }
 
                                 scope.markLibrarySelection = function (libraryList, xrefList) {
-                                    return uiUtilService.markSelection(libraryList, xrefList, [{
+                                    return utilService.markSelection(libraryList, xrefList, [{
                                         target: '_id',
                                         source: 'libraryId'
                                     }]);
@@ -69,7 +69,7 @@ define(
                                     var xref = _.findWhere(xrefList, {libraryId: widgetLibrary._id}) || {},
                                         artifactList = xref.artifactList;
 
-                                    return uiUtilService.markSelection(widgetLibrary.artifactList, artifactList, [{
+                                    return utilService.markSelection(widgetLibrary.artifactList, artifactList, [{
                                         target: '_id',
                                         source: 'artifactId'
                                     }]);
@@ -121,7 +121,7 @@ define(
                                             y = Math.floor(y * angularConstants.precision) / angularConstants.precision;
 
                                             if (!$rootScope.sketchWidgetSetting.isPlaying && ($to.hasClass(options.widgetClass) || $to.hasClass(options.holderClass) || $to.attr(options.anchorAttr))) {
-                                                uiUtilService.broadcast(scope,
+                                                utilService.broadcast(scope,
                                                     angularEventTypes.beforeWidgetCreationEvent,
                                                     function (name) {
                                                         if (name) {
@@ -263,7 +263,7 @@ define(
 
                                     }
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.toggleLibrarySelection = function (widgetLibrary, event) {
@@ -309,14 +309,14 @@ define(
                                         }
                                     }
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.widgetLibraryList = $rootScope.widgetLibraryList;
                                 scope.filterWidgetLibraryList = [];
 
                                 function refreshArtifactList(project) {
-                                    uiUtilService.latestOnce(
+                                    utilService.latestOnce(
                                         function () {
                                             return $timeout(
                                                 function () {
@@ -340,7 +340,7 @@ define(
                                     refreshArtifactList(project);
                                 });
 
-                                uiUtilService.latestOnce(
+                                utilService.latestOnce(
                                     function () {
                                         return $timeout(
                                             function () {

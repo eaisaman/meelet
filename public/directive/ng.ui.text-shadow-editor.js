@@ -2,9 +2,9 @@ define(
     ["angular-lib", "jquery-lib"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$parse", "$rootScope", "$http", "$timeout", "$q", "$exceptionHandler", "angularConstants", "angularEventTypes", "uiUtilService", "appService"];
+            var inject = ["$parse", "$rootScope", "$http", "$timeout", "$q", "$exceptionHandler", "angularConstants", "angularEventTypes", "utilService", "appService"];
 
-            appModule.directive("uiTextShadowEditor", _.union(inject, [function ($parse, $rootScope, $http, $timeout, $q, $exceptionHandler, angularConstants, angularEventTypes, uiUtilService, appService) {
+            appModule.directive("uiTextShadowEditor", _.union(inject, [function ($parse, $rootScope, $http, $timeout, $q, $exceptionHandler, angularConstants, angularEventTypes, utilService, appService) {
                 'use strict';
 
                 var boundProperties = {textShadow: "="},
@@ -27,14 +27,14 @@ define(
                                     "$timeout": $timeout,
                                     "$q": $q,
                                     "angularConstants": angularConstants,
-                                    "uiUtilService": uiUtilService,
+                                    "utilService": utilService,
                                     element: element,
                                     scope: scope
                                 }));
 
-                                uiUtilService.broadcast(scope,
+                                utilService.broadcast(scope,
                                     angularEventTypes.boundPropertiesEvent,
-                                    uiUtilService.createDirectiveBoundMap(
+                                    utilService.createDirectiveBoundMap(
                                         boundProperties,
                                         attrs,
                                         {
@@ -84,7 +84,7 @@ define(
                                                 var args = Array.prototype.slice.call(arguments),
                                                     result = assign.apply(fn, args);
 
-                                                uiUtilService.once(shadowStopHandler, null, angularConstants.unresponsiveInterval)(value);
+                                                utilService.once(shadowStopHandler, null, angularConstants.unresponsiveInterval)(value);
 
                                                 return result;
                                             }
@@ -101,7 +101,7 @@ define(
 
 
                                 scope.filterLibraryList = function (libraryList, xrefList) {
-                                    return uiUtilService.filterSelection(libraryList, xrefList, [{
+                                    return utilService.filterSelection(libraryList, xrefList, [{
                                         target: '_id',
                                         source: 'libraryId'
                                     }]);
@@ -110,14 +110,14 @@ define(
                                 scope.filterArtifactList = function (effectLibrary, xrefList) {
                                     var artifactList = (_.findWhere(xrefList, {libraryId: effectLibrary._id}) || {}).artifactList;
 
-                                    return uiUtilService.filterSelection(effectLibrary.artifactList, artifactList, [{
+                                    return utilService.filterSelection(effectLibrary.artifactList, artifactList, [{
                                         target: '_id',
                                         source: 'artifactId'
                                     }]);
                                 }
 
                                 scope.markLibrarySelection = function (libraryList, xrefList) {
-                                    return uiUtilService.markSelection(libraryList, xrefList, [{
+                                    return utilService.markSelection(libraryList, xrefList, [{
                                         target: '_id',
                                         source: 'libraryId'
                                     }]);
@@ -127,7 +127,7 @@ define(
                                     var xref = _.findWhere(xrefList, {libraryId: effectLibrary._id}) || {},
                                         artifactList = xref.artifactList;
 
-                                    return uiUtilService.markSelection(effectLibrary.artifactList, artifactList, [{
+                                    return utilService.markSelection(effectLibrary.artifactList, artifactList, [{
                                         target: '_id',
                                         source: 'artifactId'
                                     }]);
@@ -144,7 +144,7 @@ define(
                                 scope.toggleTextShadowControl = function () {
                                     return scope.toggleEnableControl().then(function (enable) {
                                         if (enable) {
-                                            return uiUtilService.whilst(
+                                            return utilService.whilst(
                                                 function () {
                                                     return !scope.textShadow;
                                                 },
@@ -210,7 +210,7 @@ define(
                                         return paletteScope.closePalette().then(function () {
                                             scope.watchSelectedShadowStopColor(false);
 
-                                            return uiUtilService.getResolveDefer();
+                                            return utilService.getResolveDefer();
                                         });
                                     } else {
                                         var top = element.find(".shadowStop[shadow-order=" + scope.selectedShadowStopIndex + "]").offset().top,
@@ -221,7 +221,7 @@ define(
                                         return paletteScope.openPalette().then(function () {
                                             scope.watchSelectedShadowStopColor(true);
 
-                                            return uiUtilService.getResolveDefer();
+                                            return utilService.getResolveDefer();
                                         });
                                     }
                                 }
@@ -250,7 +250,7 @@ define(
                                         });
                                     }
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.toggleShadowStopMenu = function (index, event) {
@@ -270,7 +270,7 @@ define(
                                     //Trigger watcher on sketchWidgetSetting.textShadow to apply style to widget
                                     scope.setTextShadow(scope.pickedTextShadow);
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
                                 scope.removeShadowStop = function (index, event) {
                                     event && event.stopPropagation && event.stopPropagation();
@@ -283,7 +283,7 @@ define(
                                         //Trigger watcher on sketchWidgetSetting.textShadow to apply style to widget
                                         scope.setTextShadow(scope.pickedTextShadow);
                                     }
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
 
                                 }
                                 scope.setShadowStopColor = function (index, event) {
@@ -297,7 +297,7 @@ define(
 
                                         scope.toggleShadowStopColorPalette();
                                     }
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
 
                                 }
                                 scope.copyShadowStop = function (index, event) {
@@ -309,7 +309,7 @@ define(
                                         scope.copiedShadowStopColor = scope.pickedTextShadow[index].color;
                                     }
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
                                 scope.pasteShadowStop = function (index, event) {
                                     event && event.stopPropagation && event.stopPropagation();
@@ -324,7 +324,7 @@ define(
                                         }
                                     }
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.setStopColor = function (index, value, event) {
@@ -332,7 +332,7 @@ define(
 
                                     if (value.color && index < scope.pickedTextShadow.length) {
                                         if (value.alpha < 1 && !value.alphaColor) {
-                                            value.alphaColor = uiUtilService.rgba(value);
+                                            value.alphaColor = utilService.rgba(value);
                                         }
 
                                         var shadowStop = scope.pickedTextShadow[index];
@@ -348,7 +348,7 @@ define(
                                             }).then($timeout(function () {
                                                 var $shadowStop = element.find(".shadowStop[shadow-order=" + index + "]");
 
-                                                uiUtilService.onAnimationEnd($shadowStop).then(
+                                                utilService.onAnimationEnd($shadowStop).then(
                                                     function () {
                                                         $shadowStop.removeClass("animate");
                                                     }
@@ -369,7 +369,7 @@ define(
                                             } else if (typeof shadowStop.color === "object") {
                                                 shadowStop.color = _.pick(shadowStop.color, ["color", "alpha", "alphaColor"]);
                                                 if (shadowStop.color.alpha < 1 && !shadowStop.color.alphaColor) {
-                                                    shadowStop.color.alphaColor = uiUtilService.rgba(shadowStop.color);
+                                                    shadowStop.color.alphaColor = utilService.rgba(shadowStop.color);
                                                 }
                                             }
                                         });
@@ -452,7 +452,7 @@ define(
 
                                     }
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.toggleLibrarySelection = function (effectLibrary, event) {
@@ -498,7 +498,7 @@ define(
                                         }
                                     }
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.effectList = [];
@@ -506,7 +506,7 @@ define(
                                 scope.filterEffectLibraryList = [];
 
                                 function refreshArtifactList(project) {
-                                    uiUtilService.latestOnce(
+                                    utilService.latestOnce(
                                         function () {
                                             return $timeout(function () {
                                                 appService.loadEffectArtifactList().then(function () {

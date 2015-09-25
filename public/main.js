@@ -25,6 +25,7 @@ var ANGULAR_LIB_PATH = "javascripts/angular/1.4.5/",
     WAVESURFER_LIB_PATH = "javascripts/wavesurfer/1.0.29/",
     FABRIC_LIB_PATH = "javascripts/fabric/1.5.0/",
     APP_LIB_PATH = "app/",
+    APP_COMMON_LIB_PATH = "common/",
     DIRECTIVE_LIB_PATH = "directive/",
     isBrowser = !!(typeof window !== 'undefined' && typeof navigator !== 'undefined' && !/jsDom$/i.test(navigator.appName) && window.document);
 
@@ -59,11 +60,13 @@ requirejs.config({
         "velocity-lib": VELOCITY_LIB_PATH + "main",
         "wavesurfer-lib": WAVESURFER_LIB_PATH + "main",
         "fabric-lib": FABRIC_LIB_PATH + "main",
+        "app-common-lib": APP_COMMON_LIB_PATH + "main",
         "app-lib": APP_LIB_PATH + "main",
         "directive-lib": DIRECTIVE_LIB_PATH + "main"
     },
     shim: {
-        "app-lib": {deps: ["directive-lib"]}
+        "app-lib": {deps: ["app-common-lib"]},
+        "directive-lib": {deps: ["app-common-lib"]}
     },
     waitSeconds: 0
 });
@@ -143,10 +146,10 @@ requirejs(["jquery-lib", "jquery-plugins-lib", "hammer-lib", "jquery-ui-lib", "j
         arguments[6](window.appModule);
     }
 
-    window.modouleLogger && window.modouleLogger.debug(["angular-plugins-lib", "directive-lib", "app-lib"].join(",") + " Loading");
+    window.modouleLogger && window.modouleLogger.debug(["angular-plugins-lib", "app-common-lib", "directive-lib", "app-lib"].join(",") + " Loading");
 
-    requirejs(["angular-plugins-lib", "directive-lib", "app-lib"], function () {
-        window.modouleLogger && window.modouleLogger.debug(["angular-plugins-lib", "directive-lib", "app-lib"].join(",") + " Load Complete.");
+    requirejs(["angular-plugins-lib", "app-common-lib", "directive-lib", "app-lib"], function () {
+        window.modouleLogger && window.modouleLogger.debug(["angular-plugins-lib", "app-common-lib", "directive-lib", "app-lib"].join(",") + " Load Complete.");
 
         if (isBrowser) {
             var configs = Array.prototype.slice.call(arguments, 0, arguments.length - 1),

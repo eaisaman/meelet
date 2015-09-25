@@ -1,7 +1,7 @@
 define(
     ["angular-lib", "jquery-lib", "fabric-lib", "wavesurfer-lib"],
     function () {
-        var WaveVisualizer = function ($log, $compile, $parse, $timeout, $q, $exceptionHandler, flowFactory, uiUtilService, uiCanvasService, angularConstants, angularEventTypes) {
+        var WaveVisualizer = function ($log, $compile, $parse, $timeout, $q, $exceptionHandler, flowFactory, utilService, uiCanvasService, angularConstants, angularEventTypes) {
                 this.$log = $log;
                 this.$compile = $compile;
                 this.$parse = $parse;
@@ -9,7 +9,7 @@ define(
                 this.$q = $q;
                 this.$exceptionHandler = $exceptionHandler;
                 this.flowFactory = flowFactory;
-                this.uiUtilService = uiUtilService;
+                this.utilService = utilService;
                 this.angularConstants = angularConstants;
                 this.angularEventTypes = angularEventTypes;
 
@@ -461,7 +461,7 @@ define(
 
                     return attachedObj.defer.promise;
                 } else {
-                    return self.uiUtilService.getRejectDefer();
+                    return self.utilService.getRejectDefer();
                 }
             }
         }
@@ -602,7 +602,7 @@ define(
 
                 return defer.promise;
             } else {
-                return self.uiUtilService.getRejectDefer();
+                return self.utilService.getRejectDefer();
             }
         }
 
@@ -760,7 +760,7 @@ define(
             return defer.promise;
         }
 
-        WaveVisualizer.$inject = ["$log", "$compile", "$parse", "$timeout", "$q", "$exceptionHandler", "flowFactory", "uiUtilService", "uiCanvasService", "angularConstants", "angularEventTypes"];
+        WaveVisualizer.$inject = ["$log", "$compile", "$parse", "$timeout", "$q", "$exceptionHandler", "flowFactory", "utilService", "uiCanvasService", "angularConstants", "angularEventTypes"];
         var $inject = {};
 
         return function (appModule) {

@@ -2,9 +2,9 @@ define(
     ["angular-lib", "jquery-lib"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$parse", "$http", "$timeout", "$q", "$exceptionHandler", "angularConstants", "angularEventTypes", "uiUtilService", "uiService"];
+            var inject = ["$parse", "$http", "$timeout", "$q", "$exceptionHandler", "angularConstants", "angularEventTypes", "utilService", "uiService"];
 
-            appModule.directive("uiWidgetConfigurator", _.union(inject, [function ($parse, $http, $timeout, $q, $exceptionHandler, angularConstants, angularEventTypes, uiUtilService, uiService) {
+            appModule.directive("uiWidgetConfigurator", _.union(inject, [function ($parse, $http, $timeout, $q, $exceptionHandler, angularConstants, angularEventTypes, utilService, uiService) {
                 'use strict';
 
                 var defaults = {},
@@ -27,7 +27,7 @@ define(
                                     "$timeout": $timeout,
                                     "$q": $q,
                                     "angularConstants": angularConstants,
-                                    "uiUtilService": uiUtilService,
+                                    "utilService": utilService,
                                     element: element,
                                     scope: scope
                                 }));
@@ -99,12 +99,12 @@ define(
                                         scope.widgetSpec.isApplyingHandDown = false;
                                     });
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.initHandDownColorStyle = function (item) {
                                     $("#handDownConfiguration-" + item.index + " .configurationColorPickerPane").css({
-                                        'color': uiUtilService.contrastColor(item.pickedValue.alphaColor || item.pickedValue.color),
+                                        'color': utilService.contrastColor(item.pickedValue.alphaColor || item.pickedValue.color),
                                         'background-color': item.pickedValue.alphaColor || item.pickedValue.color
                                     });
                                 }
@@ -144,7 +144,7 @@ define(
                                         }
                                     }
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.deleteConfigurationItemOption = function (item, option, event) {
@@ -165,7 +165,7 @@ define(
                                         }
                                     }
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.toggleConfigurationPanel = function (el, event) {
@@ -195,7 +195,7 @@ define(
                                                 var args = Array.prototype.slice.call(arguments),
                                                     result = assign.apply(fn, args);
 
-                                                uiUtilService.latestOnce(
+                                                utilService.latestOnce(
                                                     itemInputHandler,
                                                     null,
                                                     null,
@@ -253,7 +253,7 @@ define(
 
                                     $content.css("overflow", "visible");
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
                             }
                         }

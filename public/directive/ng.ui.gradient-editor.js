@@ -1,10 +1,10 @@
 define(
-    ["angular-lib", "jquery-lib", "hammer-lib", "ng.ui.hammer-gestures", "ng.ui.extension"],
+    ["angular-lib", "jquery-lib", "hammer-lib", "ng.ui.hammer-gestures"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$timeout", "$q", "$exceptionHandler", "angularEventTypes", "angularConstants", "uiUtilService"];
+            var inject = ["$timeout", "$q", "$exceptionHandler", "angularEventTypes", "angularConstants", "utilService"];
 
-            appModule.directive("uiGradientEditor", _.union(inject, [function ($timeout, $q, $exceptionHandler, angularEventTypes, angularConstants, uiUtilService) {
+            appModule.directive("uiGradientEditor", _.union(inject, [function ($timeout, $q, $exceptionHandler, angularEventTypes, angularConstants, utilService) {
                 'use strict';
 
                 var boundProperties = {linearGradientColor: "="},
@@ -17,7 +17,7 @@ define(
                                     color: {color: "#000000", alpha: 1},
                                     minPercent: 0,
                                     maxPercent: 100,
-                                    backgroundColor: uiUtilService.lighterColor("#000000", 0.5)
+                                    backgroundColor: utilService.lighterColor("#000000", 0.5)
                                 }
                             ]
                         }
@@ -39,14 +39,14 @@ define(
                                     "$timeout": $timeout,
                                     "$q": $q,
                                     "angularConstants": angularConstants,
-                                    "uiUtilService": uiUtilService,
+                                    "utilService": utilService,
                                     element: element,
                                     scope: scope
                                 }));
 
-                                uiUtilService.broadcast(scope,
+                                utilService.broadcast(scope,
                                     angularEventTypes.boundPropertiesEvent,
-                                    uiUtilService.createDirectiveBoundMap(boundProperties, attrs,
+                                    utilService.createDirectiveBoundMap(boundProperties, attrs,
                                         {
                                             linearGradientColor: function (value) {
                                                 scope.linearGradientColor = value;
@@ -125,7 +125,7 @@ define(
                                 scope.toggleGradientControl = function () {
                                     return scope.toggleEnableControl().then(function (enable) {
                                         if (enable) {
-                                            return uiUtilService.whilst(
+                                            return utilService.whilst(
                                                 function () {
                                                     return !scope.linearGradientColor;
                                                 },
@@ -161,7 +161,7 @@ define(
                                     //Trigger watcher on sketchWidgetSetting.linearGradientColor to apply style to widget
                                     scope.setGradientColor(scope.pickedGradientColor);
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.decrementAngle = function (event, step) {
@@ -177,7 +177,7 @@ define(
                                     //Trigger watcher on sketchWidgetSetting.linearGradientColor to apply style to widget
                                     scope.setGradientColor(scope.pickedGradientColor);
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.toggleEditor = function (state) {
@@ -196,7 +196,7 @@ define(
                                                 }).then(function () {
                                                     $wrapper.removeClass("expanded");
 
-                                                    return uiUtilService.getResolveDefer();
+                                                    return utilService.getResolveDefer();
                                                 });
                                             } else {
                                                 element.find(".editorPalette").removeClass("show");
@@ -204,7 +204,7 @@ define(
                                                 return scope.toggleDisplay($panel).then(function () {
                                                     $wrapper.removeClass("expanded");
 
-                                                    return uiUtilService.getResolveDefer();
+                                                    return utilService.getResolveDefer();
                                                 });
                                             }
                                         } else {
@@ -261,7 +261,7 @@ define(
                                         return scope.toggleDisplay(".colorStop[color-order=" + index + "] .circular-menu .circle", event);
                                     }
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.insertColorStop = function (index, event) {
@@ -290,7 +290,7 @@ define(
                                         scope.setGradientColor(scope.pickedGradientColor);
                                     }
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.removeColorStop = function (index, event) {
@@ -333,7 +333,7 @@ define(
                                         }
                                     }
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.setColorStop = function (index, event) {
@@ -348,7 +348,7 @@ define(
                                         scope.togglePalette();
                                     }
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.copyColorStop = function (index, event) {
@@ -360,7 +360,7 @@ define(
                                         scope.copiedColor = angular.copy(scope.pickedGradientColor.colorStopList[index].color);
                                     }
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.pasteColorStop = function (index, event) {
@@ -372,7 +372,7 @@ define(
                                         scope.setStopColor(index, scope.copiedColor);
                                     }
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.setStopColor = function (index, value, event) {
@@ -380,7 +380,7 @@ define(
 
                                     if (value.color && index < scope.pickedGradientColor.colorStopList.length) {
                                         if (value.alpha < 1 && !value.alphaColor) {
-                                            value.alphaColor = uiUtilService.rgba(value);
+                                            value.alphaColor = utilService.rgba(value);
                                         }
 
                                         var colorStop = scope.pickedGradientColor.colorStopList[index];
@@ -390,14 +390,14 @@ define(
 
                                             $timeout(function () {
                                                 colorStop.color = value;
-                                                colorStop.backgroundColor = uiUtilService.contrastColor(value.color) === "#ffffff" ? uiUtilService.lighterColor(value.color, 0.5) : uiUtilService.lighterColor(value.color, -0.5);
+                                                colorStop.backgroundColor = utilService.contrastColor(value.color) === "#ffffff" ? utilService.lighterColor(value.color, 0.5) : utilService.lighterColor(value.color, -0.5);
 
                                                 //Trigger watcher on sketchWidgetSetting.linearGradientColor to apply style to widget
                                                 scope.setGradientColor(scope.pickedGradientColor);
                                             }).then($timeout(function () {
                                                 var $colorStop = element.find(".colorStop[color-order=" + index + "]");
 
-                                                uiUtilService.onAnimationEnd($colorStop).then(
+                                                utilService.onAnimationEnd($colorStop).then(
                                                     function () {
                                                         $colorStop.removeClass("animate");
                                                     }
@@ -413,7 +413,7 @@ define(
                                 scope.setGradientColor = function (value) {
                                     value.colorStopList.forEach(function (colorStop) {
                                         if (colorStop.color.alpha < 1 && !colorStop.color.alphaColor) {
-                                            colorStop.color.alphaColor = uiUtilService.rgba(colorStop.color);
+                                            colorStop.color.alphaColor = utilService.rgba(colorStop.color);
                                         }
                                     });
 

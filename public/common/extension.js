@@ -7,14 +7,14 @@ define(
 
         Extension.prototype.attach = function (bindObj, injectObj) {
             var self = this,
-                uiUtilService = injectObj.uiUtilService;
+                utilService = injectObj.utilService;
 
             for (var name in self) {
                 var fn = self[name];
                 if (typeof fn === "function") {
                     var m = name.match(/(\w+)Service$/);
                     if (m && m.length == 2) {
-                        var argNames = uiUtilService.formalParameterList(fn),
+                        var argNames = utilService.formalParameterList(fn),
                             args = []
 
                         argNames.forEach(function (argName) {
@@ -26,13 +26,13 @@ define(
             }
         }
 
-        Extension.prototype.onceService = function (element, $q, $timeout, uiUtilService, angularConstants) {
+        Extension.prototype.onceService = function (element, $q, $timeout, utilService, angularConstants) {
             return function (scope, event, functionName) {
                 event && event.stopPropagation && event.stopPropagation();
 
                 var args = Array.prototype.slice.call(arguments, 3);
 
-                uiUtilService.once(
+                utilService.once(
                     function () {
                         return scope[functionName].apply(scope, args);
                     },
@@ -43,7 +43,7 @@ define(
             }
         }
 
-        Extension.prototype.toggleExpandService = function (element, $q, $timeout, uiUtilService) {
+        Extension.prototype.toggleExpandService = function (element, $q, $timeout, utilService) {
             return function (selector, event, state) {
                 event && event.stopPropagation && event.stopPropagation();
 
@@ -73,7 +73,7 @@ define(
                                 defer.resolve(selector);
                             });
                         } else {
-                            uiUtilService.onAnimationEnd($el).then(
+                            utilService.onAnimationEnd($el).then(
                                 function () {
                                     $el.removeClass("collapsing");
                                     defer.resolve(selector);
@@ -88,7 +88,7 @@ define(
                                 defer.resolve(selector);
                             });
                         } else {
-                            uiUtilService.onAnimationEnd($el).then(
+                            utilService.onAnimationEnd($el).then(
                                 function () {
                                     defer.resolve(selector);
                                 }
@@ -105,7 +105,7 @@ define(
             };
         }
 
-        Extension.prototype.toggleDisplayService = function (element, $q, $timeout, uiUtilService) {
+        Extension.prototype.toggleDisplayService = function (element, $q, $timeout, utilService) {
             return function (selector, event, state) {
                 event && event.stopPropagation && event.stopPropagation();
 
@@ -136,7 +136,7 @@ define(
                                 defer.resolve(selector);
                             });
                         } else {
-                            uiUtilService.onAnimationEnd($el).then(
+                            utilService.onAnimationEnd($el).then(
                                 function () {
                                     $el.removeClass("hiding");
                                     defer.resolve(selector);
@@ -151,7 +151,7 @@ define(
                                 defer.resolve(selector);
                             });
                         } else {
-                            uiUtilService.onAnimationEnd($el).then(
+                            utilService.onAnimationEnd($el).then(
                                 function () {
                                     defer.resolve(selector);
                                 }
@@ -168,7 +168,7 @@ define(
             };
         }
 
-        Extension.prototype.toggleExclusiveDisplayService = function (element, $q, $timeout, uiUtilService) {
+        Extension.prototype.toggleExclusiveDisplayService = function (element, $q, $timeout, utilService) {
             return function (selector, event, state) {
                 event && event.stopPropagation && event.stopPropagation();
 
@@ -204,7 +204,7 @@ define(
             };
         }
 
-        Extension.prototype.toggleEnableControlService = function (element, $q, $timeout, uiUtilService) {
+        Extension.prototype.toggleEnableControlService = function (element, $q, $timeout, utilService) {
             return function (selector, event, state) {
                 event && event.stopPropagation && event.stopPropagation();
 
@@ -231,7 +231,7 @@ define(
                             defer.resolve($el.hasClass("enable"));
                         });
                     } else {
-                        uiUtilService.onAnimationEnd($el).then(
+                        utilService.onAnimationEnd($el).then(
                             function () {
                                 defer.resolve($el.hasClass("enable"));
                             }
@@ -247,7 +247,7 @@ define(
             };
         }
 
-        Extension.prototype.enableControlService = function (element, $q, $timeout, uiUtilService) {
+        Extension.prototype.enableControlService = function (element, $q, $timeout, utilService) {
             return function (selector, event) {
                 event && event.stopPropagation && event.stopPropagation();
 
@@ -272,7 +272,7 @@ define(
                         defer.resolve();
                     });
                 } else {
-                    uiUtilService.onAnimationEnd($el).then(
+                    utilService.onAnimationEnd($el).then(
                         function () {
                             defer.resolve();
                         }
@@ -283,7 +283,7 @@ define(
             };
         }
 
-        Extension.prototype.disableControlService = function (element, $q, $timeout, uiUtilService) {
+        Extension.prototype.disableControlService = function (element, $q, $timeout, utilService) {
             return function (selector, event) {
                 event && event.stopPropagation && event.stopPropagation();
 
@@ -308,7 +308,7 @@ define(
                         defer.resolve();
                     });
                 } else {
-                    uiUtilService.onAnimationEnd($el).then(
+                    utilService.onAnimationEnd($el).then(
                         function () {
                             defer.resolve();
                         }
@@ -319,7 +319,7 @@ define(
             };
         }
 
-        Extension.prototype.toggleSelectService = function (element, $q, $timeout, uiUtilService) {
+        Extension.prototype.toggleSelectService = function (element, $q, $timeout, utilService) {
             return function (selector, event, state) {
                 event && event.stopPropagation && event.stopPropagation();
 
@@ -345,7 +345,7 @@ define(
                             defer.resolve(selector);
                         });
                     } else {
-                        uiUtilService.onAnimationEnd($el).then(
+                        utilService.onAnimationEnd($el).then(
                             function () {
                                 defer.resolve(selector);
                             }
@@ -361,7 +361,7 @@ define(
             };
         }
 
-        Extension.prototype.toggleExclusiveSelectService = function (element, $q, $timeout, uiUtilService) {
+        Extension.prototype.toggleExclusiveSelectService = function (element, $q, $timeout, utilService) {
             return function (selector, event, state) {
                 event && event.stopPropagation && event.stopPropagation();
 
@@ -388,7 +388,7 @@ define(
                             defer.resolve();
                         });
                     } else {
-                        uiUtilService.onAnimationEnd($el).then(
+                        utilService.onAnimationEnd($el).then(
                             function () {
                                 defer.resolve();
                             }
@@ -404,7 +404,7 @@ define(
             };
         }
 
-        Extension.prototype.selectTabService = function ($q, $timeout, uiUtilService) {
+        Extension.prototype.selectTabService = function ($q, $timeout, utilService) {
             return function ($tabContainer, $tabHead, event, content) {
                 event && event.stopPropagation && event.stopPropagation();
 
@@ -430,7 +430,7 @@ define(
                             defer.resolve();
                         });
                     } else {
-                        uiUtilService.onAnimationEnd($el).then(
+                        utilService.onAnimationEnd($el).then(
                             function () {
                                 defer.resolve();
                             }
@@ -549,13 +549,13 @@ define(
             }
         }
 
-        Extension.prototype.composeTextShadowCssService = function (uiUtilService) {
+        Extension.prototype.composeTextShadowCssService = function (utilService) {
             return function (value) {
                 var arr = [];
 
                 if (value && toString.call(value) === '[object Array]') {
                     value.forEach(function (item) {
-                        var str = "{0} {1} {2} {3}".format(uiUtilService.rgba(item.color) || "", item["h-shadow"] || "", item["v-shadow"] || "", item["blur"] || "").trim();
+                        var str = "{0} {1} {2} {3}".format(utilService.rgba(item.color) || "", item["h-shadow"] || "", item["v-shadow"] || "", item["blur"] || "").trim();
                         str && arr.push(str);
                     });
                 }
@@ -564,7 +564,7 @@ define(
             }
         }
 
-        Extension.prototype.composeBoxShadowCssService = function (uiUtilService) {
+        Extension.prototype.composeBoxShadowCssService = function (utilService) {
             return function (styles, id) {
                 if (styles && id) {
                     var styleBlockArr = [];
@@ -579,7 +579,7 @@ define(
                         if (s) {
                             var styleArr = [];
                             _.each(s, function (styleValue, styleName) {
-                                var styleObj = uiUtilService.composeCssStyle(styleName, styleValue);
+                                var styleObj = utilService.composeCssStyle(styleName, styleValue);
 
                                 _.each(styleObj, function (value, key) {
                                     styleArr.push("{0}:{1}".format(key, value || '\"\"'));
@@ -597,7 +597,7 @@ define(
             }
         }
 
-        Extension.prototype.generateBoxShadowStyleService = function (uiUtilService) {
+        Extension.prototype.generateBoxShadowStyleService = function (utilService) {
             return function (group) {
                 var ret = [];
 
@@ -615,7 +615,7 @@ define(
                         if (s) {
                             var styleArr = [];
                             _.each(s, function (styleValue, styleName) {
-                                var styleObj = uiUtilService.composeCssStyle(styleName, styleValue);
+                                var styleObj = utilService.composeCssStyle(styleName, styleValue);
 
                                 _.each(styleObj, function (value, key) {
                                     styleArr.push("{0}:{1}".format(key, value || '\"\"'));
@@ -633,7 +633,7 @@ define(
             }
         }
 
-        Extension.prototype.composePseudoElementCssService = function (uiUtilService) {
+        Extension.prototype.composePseudoElementCssService = function (utilService) {
             return function (widgets) {
                 var ret = [];
 
@@ -647,7 +647,7 @@ define(
                             if (beforeStyle) {
                                 var beforeStyleArr = [];
                                 _.each(beforeStyle, function (styleValue, styleName) {
-                                    var styleObj = uiUtilService.composeCssStyle(styleName, styleValue);
+                                    var styleObj = utilService.composeCssStyle(styleName, styleValue);
 
                                     _.each(styleObj, function (value, key) {
                                         beforeStyleArr.push("{0}:{1}".format(key, value || '\"\"'));
@@ -659,7 +659,7 @@ define(
                             if (afterStyle) {
                                 var afterStyleArr = [];
                                 _.each(afterStyle, function (styleValue, styleName) {
-                                    var styleObj = uiUtilService.composeCssStyle(styleName, styleValue);
+                                    var styleObj = utilService.composeCssStyle(styleName, styleValue);
 
                                     _.each(styleObj, function (value, key) {
                                         afterStyleArr.push("{0}:{1}".format(key, value || '\"\"'));

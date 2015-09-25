@@ -2,14 +2,14 @@ define(
     ["angular", "jquery"],
     function () {
         return function ($injector, $compileProvider, $controllerProvider, extension, directiveUrl) {
-            var inject = ["$http", "$timeout", "$q", "$parse", "angularConstants", "angularEventTypes", "uiUtilService"],
+            var inject = ["$http", "$timeout", "$q", "$parse", "angularConstants", "angularEventTypes", "utilService"],
                 name = "uiWidgetSideBar",
                 version = "1.0.0",
                 directive = name + version.replace(/\./g, ""),
                 directiveService = name + version.replace(/\./g, "") + "Directive";
 
             if (!$injector.has(directiveService)) {
-                $compileProvider.directive(directive, _.union(inject, [function ($http, $timeout, $q, $parse, angularConstants, angularEventTypes, uiUtilService) {
+                $compileProvider.directive(directive, _.union(inject, [function ($http, $timeout, $q, $parse, angularConstants, angularEventTypes, utilService) {
                     'use strict';
 
                     var injectObj = _.object(inject, Array.prototype.slice.call(arguments));
@@ -127,13 +127,13 @@ define(
                                 },
                                 post: function (scope, element, attrs) {
                                     if (element.hasClass(angularConstants.repoWidgetClass)) {
-                                        uiUtilService.whilst(function () {
+                                        utilService.whilst(function () {
                                                 return !(element.closest && element.closest(".widgetContainer").attr("id"));
                                             }, function (err) {
                                                 if (!err) {
                                                     //id of widget of RepoSketchWidgetClass type
                                                     scope.widgetId = element.closest(".widgetContainer").parent().attr("id");
-                                                    uiUtilService.broadcast(scope, angularConstants.widgetEventPattern.format(angularEventTypes.widgetContentIncludedEvent, scope.widgetId), {
+                                                    utilService.broadcast(scope, angularConstants.widgetEventPattern.format(angularEventTypes.widgetContentIncludedEvent, scope.widgetId), {
                                                         widgetId: scope.widgetId,
                                                         widgetScope: scope,
                                                         $element: element.closest(".widgetContainer").parent()

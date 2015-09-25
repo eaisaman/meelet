@@ -2,9 +2,9 @@ define(
     ["angular-lib", "jquery-lib"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$rootScope", "$http", "$parse", "$timeout", "$q", "$exceptionHandler", "angularEventTypes", "angularConstants", "uiUtilService", "uiService", "uiCanvasService", "appService", "serviceRegistry"];
+            var inject = ["$rootScope", "$http", "$parse", "$timeout", "$q", "$exceptionHandler", "angularEventTypes", "angularConstants", "utilService", "uiService", "uiCanvasService", "appService", "serviceRegistry"];
 
-            appModule.directive("uiStateTransition", _.union(inject, [function ($rootScope, $http, $parse, $timeout, $q, $exceptionHandler, angularEventTypes, angularConstants, uiUtilService, uiService, uiCanvasService, appService, serviceRegistry) {
+            appModule.directive("uiStateTransition", _.union(inject, [function ($rootScope, $http, $parse, $timeout, $q, $exceptionHandler, angularEventTypes, angularConstants, utilService, uiService, uiCanvasService, appService, serviceRegistry) {
                 'use strict';
 
                 var defaults = {
@@ -25,7 +25,7 @@ define(
                                     "$timeout": $timeout,
                                     "$q": $q,
                                     "angularConstants": angularConstants,
-                                    "uiUtilService": uiUtilService,
+                                    "utilService": utilService,
                                     element: element,
                                     scope: scope
                                 }));
@@ -66,7 +66,7 @@ define(
                                 }
 
                                 scope.filterLibraryList = function (libraryList, xrefList) {
-                                    return uiUtilService.filterSelection(libraryList, xrefList, [{
+                                    return utilService.filterSelection(libraryList, xrefList, [{
                                         target: '_id',
                                         source: 'libraryId'
                                     }]);
@@ -75,14 +75,14 @@ define(
                                 scope.filterArtifactList = function (effectLibrary, xrefList) {
                                     var artifactList = (_.findWhere(xrefList, {libraryId: effectLibrary._id}) || {}).artifactList;
 
-                                    return uiUtilService.filterSelection(effectLibrary.artifactList, artifactList, [{
+                                    return utilService.filterSelection(effectLibrary.artifactList, artifactList, [{
                                         target: '_id',
                                         source: 'artifactId'
                                     }]);
                                 }
 
                                 scope.markLibrarySelection = function (libraryList, xrefList) {
-                                    return uiUtilService.markSelection(libraryList, xrefList, [{
+                                    return utilService.markSelection(libraryList, xrefList, [{
                                         target: '_id',
                                         source: 'libraryId'
                                     }]);
@@ -92,7 +92,7 @@ define(
                                     var xref = _.findWhere(xrefList, {libraryId: effectLibrary._id}) || {},
                                         artifactList = xref.artifactList;
 
-                                    return uiUtilService.markSelection(effectLibrary.artifactList, artifactList, [{
+                                    return utilService.markSelection(effectLibrary.artifactList, artifactList, [{
                                         target: '_id',
                                         source: 'artifactId'
                                     }]);
@@ -146,7 +146,7 @@ define(
                                                 var args = Array.prototype.slice.call(arguments),
                                                     result = assign.apply(fn, args);
 
-                                                uiUtilService.latestOnce(
+                                                utilService.latestOnce(
                                                     itemHandler,
                                                     null,
                                                     null,
@@ -184,7 +184,7 @@ define(
                                             increaseArea: '20%'
                                         });
 
-                                        return uiUtilService.getResolveDefer();
+                                        return utilService.getResolveDefer();
                                     });
                                 }
 
@@ -221,7 +221,7 @@ define(
                                             });
                                         }
 
-                                        return uiUtilService.getResolveDefer();
+                                        return utilService.getResolveDefer();
                                     });
                                 }
 
@@ -242,7 +242,7 @@ define(
                                             scope.pickedAction = null;
                                         }
 
-                                        return uiUtilService.getResolveDefer();
+                                        return utilService.getResolveDefer();
                                     });
                                 }
 
@@ -255,7 +255,7 @@ define(
 
                                     stateName && scope.activeWidget.addState(stateName);
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.createStateOption = function (event) {
@@ -264,7 +264,7 @@ define(
                                     var stateName = $("#stateOptionInput").val();
                                     stateName && scope.activeWidget.addStateOption({name: stateName});
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.createTransition = function (state, event) {
@@ -275,7 +275,7 @@ define(
                                         transitionName && state.addTransition(transitionName);
                                     }
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.createAction = function (parentAction, event) {
@@ -286,7 +286,7 @@ define(
                                         actionType && parentAction.addAction(actionType);
                                     }
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.onUpdateStopOnEach = function (sequenceAction, stopOnEach) {
@@ -301,7 +301,7 @@ define(
 
                                     scope.activeWidget && scope.activeWidget.removeState(state);
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.deleteStateOption = function (stateOption, event) {
@@ -312,7 +312,7 @@ define(
 
                                     scope.activeWidget && scope.activeWidget.removeStateOption(stateOption);
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.deleteTransition = function (state, transition, event) {
@@ -331,7 +331,7 @@ define(
                                         index != undefined && state.transitions.splice(index, 1);
                                     }
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.deleteAction = function (parentAction, action, event) {
@@ -350,7 +350,7 @@ define(
                                         index != undefined && parentAction.childActions.splice(index, 1);
                                     }
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.getStateOptions = function (item) {
@@ -395,7 +395,7 @@ define(
                                             element.find(".effectLibraryList").siblings("div").css("opacity", 1);
                                         }
 
-                                        return uiUtilService.getResolveDefer();
+                                        return utilService.getResolveDefer();
                                     });
                                 }
 
@@ -460,7 +460,7 @@ define(
 
                                     }
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.toggleLibrarySelection = function (effectLibrary, event) {
@@ -506,7 +506,7 @@ define(
                                         }
                                     }
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 if (options.triggerJson) {
@@ -524,7 +524,7 @@ define(
                                 scope.registry = serviceRegistry.registry;
 
                                 function refreshArtifactList(project) {
-                                    uiUtilService.latestOnce(
+                                    utilService.latestOnce(
                                         function () {
                                             return $timeout(function () {
                                                 appService.loadEffectArtifactList().then(function () {
@@ -546,7 +546,7 @@ define(
                                     refreshArtifactList(project);
                                 });
 
-                                uiUtilService.latestOnce(
+                                utilService.latestOnce(
                                     function () {
                                         return $timeout(function () {
                                             var $wrapper = element.find(".ui-control-wrapper"),

@@ -234,7 +234,6 @@ define(
                     fn.apply($rootScope)
                 });
 
-                $rootScope.pickedPage = meta.locations[0];
                 $scope.nextPage = function (event) {
                     event && event.stopPropagation();
                     utilService.nextPage($rootScope.pickedPage);
@@ -247,7 +246,8 @@ define(
                     event && event.stopPropagation();
                     utilService.firstPage($rootScope.pickedPage);
                 }
-                utilService.loadPage(null, $rootScope.pickedPage, true);
+                $rootScope.pickedPage = null;
+                utilService.loadPage($rootScope.pickedPage, meta.locations[0], true).then(function(location) {$rootScope.pickedPage = location;});
             }
 
             function Widget_1441176722817_Controller($scope, $rootScope, $q, $timeout, appService, urlService, utilService, uiUtilService) {

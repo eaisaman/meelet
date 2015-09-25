@@ -2,9 +2,9 @@ define(
     ["angular-lib", "jquery-lib"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$parse", "$rootScope", "$http", "$timeout", "$q", "$exceptionHandler", "angularConstants", "angularEventTypes", "uiUtilService", "appService"];
+            var inject = ["$parse", "$rootScope", "$http", "$timeout", "$q", "$exceptionHandler", "angularConstants", "angularEventTypes", "utilService", "appService"];
 
-            appModule.directive("uiBoxShadowEditor", _.union(inject, [function ($parse, $rootScope, $http, $timeout, $q, $exceptionHandler, angularConstants, angularEventTypes, uiUtilService, appService) {
+            appModule.directive("uiBoxShadowEditor", _.union(inject, [function ($parse, $rootScope, $http, $timeout, $q, $exceptionHandler, angularConstants, angularEventTypes, utilService, appService) {
                 'use strict';
 
                 var boundProperties = {boxShadow: "="},
@@ -37,14 +37,14 @@ define(
                                     "$timeout": $timeout,
                                     "$q": $q,
                                     "angularConstants": angularConstants,
-                                    "uiUtilService": uiUtilService,
+                                    "utilService": utilService,
                                     element: element,
                                     scope: scope
                                 }));
 
-                                uiUtilService.broadcast(scope,
+                                utilService.broadcast(scope,
                                     angularEventTypes.boundPropertiesEvent,
-                                    uiUtilService.createDirectiveBoundMap(
+                                    utilService.createDirectiveBoundMap(
                                         boundProperties,
                                         attrs,
                                         {
@@ -86,7 +86,7 @@ define(
                                                 var args = Array.prototype.slice.call(arguments),
                                                     result = assign.apply(fn, args);
 
-                                                uiUtilService.once(shadowHandler, null, angularConstants.unresponsiveInterval)(value);
+                                                utilService.once(shadowHandler, null, angularConstants.unresponsiveInterval)(value);
 
                                                 return result;
                                             }
@@ -106,7 +106,7 @@ define(
                                 createBoxShadowValueInputAssign("pickedBoxShadow.afterStyle[shadowStyle]");
 
                                 scope.filterLibraryList = function (libraryList, xrefList) {
-                                    return uiUtilService.filterSelection(libraryList, xrefList, [{
+                                    return utilService.filterSelection(libraryList, xrefList, [{
                                         target: '_id',
                                         source: 'libraryId'
                                     }]);
@@ -115,14 +115,14 @@ define(
                                 scope.filterArtifactList = function (effectLibrary, xrefList) {
                                     var artifactList = (_.findWhere(xrefList, {libraryId: effectLibrary._id}) || {}).artifactList;
 
-                                    return uiUtilService.filterSelection(effectLibrary.artifactList, artifactList, [{
+                                    return utilService.filterSelection(effectLibrary.artifactList, artifactList, [{
                                         target: '_id',
                                         source: 'artifactId'
                                     }]);
                                 }
 
                                 scope.markLibrarySelection = function (libraryList, xrefList) {
-                                    return uiUtilService.markSelection(libraryList, xrefList, [{
+                                    return utilService.markSelection(libraryList, xrefList, [{
                                         target: '_id',
                                         source: 'libraryId'
                                     }]);
@@ -132,7 +132,7 @@ define(
                                     var xref = _.findWhere(xrefList, {libraryId: effectLibrary._id}) || {},
                                         artifactList = xref.artifactList;
 
-                                    return uiUtilService.markSelection(effectLibrary.artifactList, artifactList, [{
+                                    return utilService.markSelection(effectLibrary.artifactList, artifactList, [{
                                         target: '_id',
                                         source: 'artifactId'
                                     }]);
@@ -151,7 +151,7 @@ define(
                                 scope.toggleBoxShadowControl = function () {
                                     return scope.toggleEnableControl().then(function (enable) {
                                         if (enable) {
-                                            return uiUtilService.whilst(
+                                            return utilService.whilst(
                                                 function () {
                                                     return !scope.boxShadow;
                                                 },
@@ -259,7 +259,7 @@ define(
                                         });
                                     }
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.toggleShadowStopMenu = function (pseudo, index, event) {
@@ -284,7 +284,7 @@ define(
                                     //Trigger watcher on sketchWidgetSetting.boxShadow to apply style to widget
                                     scope.setBoxShadow(scope.pickedBoxShadow);
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.removeShadowStop = function (pseudo, index, event) {
@@ -304,7 +304,7 @@ define(
                                         scope.setBoxShadow(scope.pickedBoxShadow);
                                     }
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.setShadowStopColor = function (pseudo, index, event) {
@@ -324,7 +324,7 @@ define(
 
                                         scope.toggleShadowStopColorPalette();
                                     }
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
 
                                 }
 
@@ -342,7 +342,7 @@ define(
                                         scope.copiedShadowStopColor = pseudoShadowStyle['box-shadow'][index].color;
                                     }
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.pasteShadowStop = function (pseudo, index, event) {
@@ -363,7 +363,7 @@ define(
                                         }
                                     }
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.setStopColor = function (pseudo, index, value, event) {
@@ -377,7 +377,7 @@ define(
                                         var pseudoShadowStyle = scope.pickedBoxShadow[pseudoStylePrefix];
                                         if (index < pseudoShadowStyle['box-shadow'].length) {
                                             if (value.alpha < 1 && !value.alphaColor) {
-                                                value.alphaColor = uiUtilService.rgba(value);
+                                                value.alphaColor = utilService.rgba(value);
                                             }
 
                                             var shadowStop = pseudoShadowStyle['box-shadow'][index];
@@ -393,7 +393,7 @@ define(
                                                 }).then($timeout(function () {
                                                     var $shadowStop = element.find(".shadowStopGroup[pseudo='" + pseudo + "'] .shadowStop[shadow-order=" + index + "]");
 
-                                                    uiUtilService.onAnimationEnd($shadowStop).then(
+                                                    utilService.onAnimationEnd($shadowStop).then(
                                                         function () {
                                                             $shadowStop.removeClass("animate");
                                                         }
@@ -417,7 +417,7 @@ define(
                                                     } else if (typeof shadowStop.color === "object") {
                                                         shadowStop.color = _.pick(shadowStop.color, ["color", "alpha", "alphaColor"]);
                                                         if (shadowStop.color.alpha < 1 && !shadowStop.color.alphaColor) {
-                                                            shadowStop.color.alphaColor = uiUtilService.rgba(shadowStop.color);
+                                                            shadowStop.color.alphaColor = utilService.rgba(shadowStop.color);
                                                         }
                                                     }
                                                 });
@@ -495,7 +495,7 @@ define(
                                         }
                                     }
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.toggleLibrarySelection = function (effectLibrary, event) {
@@ -541,7 +541,7 @@ define(
                                         }
                                     }
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.effectList = [];
@@ -549,7 +549,7 @@ define(
                                 scope.filterEffectLibraryList = [];
 
                                 function refreshArtifactList(project) {
-                                    uiUtilService.latestOnce(
+                                    utilService.latestOnce(
                                         function () {
                                             return $timeout(function () {
                                                 appService.loadEffectArtifactList().then(function () {

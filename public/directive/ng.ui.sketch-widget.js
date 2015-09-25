@@ -22,11 +22,11 @@ define(
                     direction: 'all'
                 },
                 options = angular.extend(defaults, opts),
-                inject = ['$rootScope', '$parse', '$timeout', "$q", "$exceptionHandler", "$compile", "$log", "angularConstants", "angularEventTypes", "uiUtilService", "uiService"];
+                inject = ['$rootScope', '$parse', '$timeout', "$q", "$exceptionHandler", "$compile", "$log", "angularConstants", "angularEventTypes", "utilService", "uiService"];
 
             appModule.directive(
                 DIRECTIVE,
-                _.union(inject, [function ($rootScope, $parse, $timeout, $q, $exceptionHandler, $compile, $log, angularConstants, angularEventTypes, uiUtilService, uiService) {
+                _.union(inject, [function ($rootScope, $parse, $timeout, $q, $exceptionHandler, $compile, $log, angularConstants, angularEventTypes, utilService, uiService) {
                     var injectObj = _.object(inject, Array.prototype.slice.call(arguments));
 
                     var tapRecognizer, panRecognizer, pressRecognizer, toggleHandler, toggleTextModeHandler, dragHandler;
@@ -131,7 +131,7 @@ define(
 
                                     var widget = $target.data("widgetObject");
                                     if (widget) {
-                                        uiUtilService.once(handler, null, angularConstants.unresponsiveInterval, "sketch-widget.toggleHandler.handler" + widget.id)(widget, event.srcEvent && event.srcEvent.shiftKey);
+                                        utilService.once(handler, null, angularConstants.unresponsiveInterval, "sketch-widget.toggleHandler.handler" + widget.id)(widget, event.srcEvent && event.srcEvent.shiftKey);
                                     }
                                 }
                             }
@@ -176,7 +176,7 @@ define(
 
                                     var widget = $target.data("widgetObject");
                                     if (widget && widget.isKindOf("ElementSketchWidget")) {
-                                        uiUtilService.once(handler, null, angularConstants.unresponsiveInterval, "registerHandlers.toggleTextModeHandler." + widget.id)(widget);
+                                        utilService.once(handler, null, angularConstants.unresponsiveInterval, "registerHandlers.toggleTextModeHandler." + widget.id)(widget);
                                     }
                                 }
                             }
@@ -318,7 +318,7 @@ define(
 
                                 if (!$rootScope.sketchWidgetSetting.isPlaying && !event.srcEvent.defaultPrevented) {
                                     if (event.srcEvent.target.id === widgetObj.id && $(event.srcEvent.target).hasClass(angularConstants.widgetClasses.activeClass)) {
-                                        uiUtilService.once(handler, null, angularConstants.unresponsiveInterval, "sketch-widget.registerHandlers.dragHandler.handler." + widgetObj.id)(event);
+                                        utilService.once(handler, null, angularConstants.unresponsiveInterval, "sketch-widget.registerHandlers.dragHandler.handler." + widgetObj.id)(event);
                                     }
                                 }
                             };
@@ -392,14 +392,14 @@ define(
                                                 registerHandlers(scope, el);
                                             }
 
-                                            return uiUtilService.getResolveDefer();
+                                            return utilService.getResolveDefer();
                                         }
 
                                         if (element.parent().length) {
                                             //Directive ng-include will recreate element which have no widget id attribute.
                                             var id = element.attr("id") || element.parent().attr("id");
 
-                                            id && uiUtilService.latestOnce(
+                                            id && utilService.latestOnce(
                                                 watchHandler,
                                                 null,
                                                 null,
@@ -418,14 +418,14 @@ define(
                                                 registerHandlers(scope, el);
                                             }
 
-                                            return uiUtilService.getResolveDefer();
+                                            return utilService.getResolveDefer();
                                         }
 
                                         if (element.parent().length) {
                                             //Directive ng-include will recreate element which have no widget id attribute.
                                             var id = element.attr("id") || element.parent().attr("id");
 
-                                            id && uiUtilService.latestOnce(
+                                            id && utilService.latestOnce(
                                                 watchHandler,
                                                 null,
                                                 null,
@@ -447,7 +447,7 @@ define(
                                                 $rootScope.sketchWidgetSetting.isPlaying || registerHandlers(scope, el);
                                             }
 
-                                            return uiUtilService.getResolveDefer();
+                                            return utilService.getResolveDefer();
                                         }
 
                                         if (element.parent().length) {
@@ -457,7 +457,7 @@ define(
                                                 id = element.parent().attr("id") + ".containerWidget";
                                             }
 
-                                            id && uiUtilService.latestOnce(
+                                            id && utilService.latestOnce(
                                                 attachHandler,
                                                 null,
                                                 null,

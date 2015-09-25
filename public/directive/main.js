@@ -1,7 +1,6 @@
 requirejs.config(
     {
         paths: {
-            "ng.ui.util": DIRECTIVE_LIB_PATH + "ng.ui.util",
             "ng.ui.canvas": DIRECTIVE_LIB_PATH + "ng.ui.canvas",
             "ng.ui.svg": DIRECTIVE_LIB_PATH + "ng.ui.svg",
             "ng.ui.wave.visualizer": DIRECTIVE_LIB_PATH + "ng.ui.wave.visualizer",
@@ -9,7 +8,6 @@ requirejs.config(
             "ng.ui.service": DIRECTIVE_LIB_PATH + "ng.ui.service",
             "ng.ui.service.flow": DIRECTIVE_LIB_PATH + "ng.ui.service.flow",
             "ng.ui.service.book": DIRECTIVE_LIB_PATH + "ng.ui.service.book",
-            "ng.ui.extension": DIRECTIVE_LIB_PATH + "ng.ui.extension",
             "ng.ui.hammer-gestures": DIRECTIVE_LIB_PATH + "ng.ui.hammer-gestures",
             "ng.ui.multi-transclude": DIRECTIVE_LIB_PATH + "ng.ui.multi-transclude",
             "ng.ui.multilevel-menu": DIRECTIVE_LIB_PATH + "ng.ui.multilevel-menu",
@@ -43,7 +41,6 @@ requirejs.config(
 
 
 define([
-        "ng.ui.util",
         "ng.ui.canvas",
         "ng.ui.svg",
         "ng.ui.wave.visualizer",
@@ -51,7 +48,7 @@ define([
         "ng.ui.service",
         "ng.ui.service.flow",
         "ng.ui.service.book",
-        "ng.ui.extension",
+        "app-extension",
         "ng.ui.hammer-gestures",
         "ng.ui.multi-transclude",
         "ng.ui.multilevel-menu",
@@ -80,20 +77,17 @@ define([
         "ng.ui.state-action"
     ],
     function () {
-        var utilConfig = arguments[0],
-            canvasConfig = arguments[1],
-            svgConfig = arguments[2],
-            waveVisualizerConfig = arguments[3],
-            animationConfig = arguments[4],
-            serviceConfig = arguments[5],
-            flowServiceConfig = arguments[6],
-            bookServiceConfig = arguments[7],
-            extension = arguments[8],
-            directiveConfigs = Array.prototype.slice.call(arguments, 9);
+        var canvasConfig = arguments[0],
+            svgConfig = arguments[1],
+            waveVisualizerConfig = arguments[2],
+            animationConfig = arguments[3],
+            serviceConfig = arguments[4],
+            flowServiceConfig = arguments[5],
+            bookServiceConfig = arguments[6],
+            extension = arguments[7],
+            directiveConfigs = Array.prototype.slice.call(arguments, 8);
 
         return function (appModule) {
-            utilConfig(appModule);
-
             canvasConfig(appModule);
 
             svgConfig(appModule);

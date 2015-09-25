@@ -2,9 +2,9 @@ define(
     ["angular-lib", "jquery-lib"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$http", "$timeout", "$q", "$exceptionHandler", "$parse", "angularConstants", "angularEventTypes", "uiUtilService"];
+            var inject = ["$http", "$timeout", "$q", "$exceptionHandler", "$parse", "angularConstants", "angularEventTypes", "utilService"];
 
-            appModule.directive("uiMultilevelMenu", _.union(inject, [function ($http, $timeout, $q, $exceptionHandler, $parse, angularConstants, angularEventTypes, uiUtilService) {
+            appModule.directive("uiMultilevelMenu", _.union(inject, [function ($http, $timeout, $q, $exceptionHandler, $parse, angularConstants, angularEventTypes, utilService) {
                 'use strict';
 
                 var injectObj = _.object(inject, Array.prototype.slice.call(arguments)),
@@ -33,7 +33,7 @@ define(
                                     "$timeout": $timeout,
                                     "$q": $q,
                                     "angularConstants": angularConstants,
-                                    "uiUtilService": uiUtilService,
+                                    "utilService": utilService,
                                     element: element,
                                     scope: scope
                                 }));
@@ -45,7 +45,7 @@ define(
                                         scope.level = parseInt($subLevel.attr('data-level'));
 
                                         // reset transform for sublevel
-                                        $subLevel.css(uiUtilService.prefixedStyle("transform", ""));
+                                        $subLevel.css(utilService.prefixedStyle("transform", ""));
 
                                         $subLevel.addClass('mp-level-open');
                                     } else {
@@ -124,7 +124,7 @@ define(
                                             resetMenu();
                                         }
 
-                                        return uiUtilService.getResolveDefer();
+                                        return utilService.getResolveDefer();
                                     });
                                 }
 
@@ -150,7 +150,7 @@ define(
                                         }
                                     }
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.onSelect = function (event) {
@@ -169,7 +169,7 @@ define(
                                             openMenu($subLevel);
                                         }
 
-                                        return uiUtilService.getResolveDefer();
+                                        return utilService.getResolveDefer();
                                     } else {
                                         element.find(".mp-level").removeClass('mp-level-open').removeClass('mp-level-overlay');
                                         scope.toggleSelect();

@@ -2,9 +2,9 @@ define(
     ["angular-lib", "jquery-lib"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$rootScope", "$http", "$timeout", "$q", "$exceptionHandler", "angularEventTypes", "angularConstants", "uiUtilService", "uiWaveVisualizerService"];
+            var inject = ["$rootScope", "$http", "$timeout", "$q", "$exceptionHandler", "angularEventTypes", "angularConstants", "utilService", "uiWaveVisualizerService"];
 
-            appModule.directive("uiResourceEditor", _.union(inject, [function ($rootScope, $http, $timeout, $q, $exceptionHandler, angularEventTypes, angularConstants, uiUtilService, uiWaveVisualizerService) {
+            appModule.directive("uiResourceEditor", _.union(inject, [function ($rootScope, $http, $timeout, $q, $exceptionHandler, angularEventTypes, angularConstants, utilService, uiWaveVisualizerService) {
                 'use strict';
 
                 var boundProperties = {},
@@ -25,7 +25,7 @@ define(
                                     "$timeout": $timeout,
                                     "$q": $q,
                                     "angularConstants": angularConstants,
-                                    "uiUtilService": uiUtilService,
+                                    "utilService": utilService,
                                     element: element,
                                     scope: scope
                                 }));
@@ -48,7 +48,7 @@ define(
                                         return $rootScope.loadedProject.deleteResource(resourceType, resourceItem);
                                     }
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.pickedMarkers = [];
@@ -109,7 +109,7 @@ define(
                                         return scope.toggleDisplay($insertPartPopup, null, false);
                                     }
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.insertPartAfter = function (event) {
@@ -124,7 +124,7 @@ define(
                                         });
                                     }
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.saveAudio = function (event) {
@@ -143,7 +143,7 @@ define(
 
                                     scope.isPlaying = uiWaveVisualizerService.playPause(playStateHandler);
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.stopAudio = function (event) {
@@ -152,7 +152,7 @@ define(
                                     scope.isPlaying = false;
                                     uiWaveVisualizerService.stopPlay();
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.cutAudioClip = function (event) {
@@ -175,7 +175,7 @@ define(
                                         );
                                     }
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.copyAudioClip = function (event) {
@@ -188,7 +188,7 @@ define(
                                         uiWaveVisualizerService.collectAudioClip(startProgress, endProgress);
                                     }
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.removeAudioPart = function (event) {
@@ -207,7 +207,7 @@ define(
                                         uiWaveVisualizerService.removeAudioPart(startProgress, endProgress);
                                     }
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.toggleSelectAudioClip = function (audioClip, event) {
@@ -223,7 +223,7 @@ define(
                                         cancelInsertAudioPart();
                                     }
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.removeAudioClip = function (audioClip, event) {
@@ -246,13 +246,13 @@ define(
                                             }
 
                                             $clipItem.addClass("moveOut");
-                                            uiUtilService.onAnimationEnd($clipItem).then(function () {
+                                            utilService.onAnimationEnd($clipItem).then(function () {
                                                 scope.audioClips.splice(index, 1);
                                             });
                                         }
                                     }
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.toggleAudioClipLoop = function (audioClip, event) {
@@ -260,7 +260,7 @@ define(
 
                                     audioClip.isLooped = !audioClip.isLooped;
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.playPauseAudioClip = function (audioClip, event) {
@@ -273,7 +273,7 @@ define(
 
                                     audioClip.isPlaying = uiWaveVisualizerService.playPauseAudioClip(audioClip, playStateHandler);
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.insertAudioPart = function (marker, audioClip) {
@@ -289,7 +289,7 @@ define(
                                         scope.$activeMarkerElement = ret[1];
                                     }
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.toggleMarkerEditMode = function (event, mode) {
@@ -376,7 +376,7 @@ define(
                                         }
                                     }
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.displayResourceEditor = function (resourceType, fileName, event) {
@@ -385,7 +385,7 @@ define(
                                     scope.resourceEditorType = resourceType;
 
                                     var editorEl = element.find(".resourceEditor");
-                                    uiUtilService.broadcast(scope,
+                                    utilService.broadcast(scope,
                                         angularEventTypes.resourceEditEvent,
                                         {
                                             editor: editorEl.length && editorEl || null,
@@ -400,11 +400,11 @@ define(
                                         }
                                     );
 
-                                    return uiUtilService.whilst(
+                                    return utilService.whilst(
                                         function () {
                                             return !scope.editorAttached;
                                         }, function (err) {
-                                            err || uiUtilService.latestOnce(
+                                            err || utilService.latestOnce(
                                                 function () {
                                                     return $timeout(function () {
                                                         if (resourceType === "audio") {
@@ -425,7 +425,7 @@ define(
                                 }
 
                                 scope.resourceEditEndWatcher = scope.$on(angularEventTypes.resourceEditEndEvent, function (event) {
-                                    uiUtilService.once(function () {
+                                    utilService.once(function () {
                                         return $timeout(function () {
                                             uiWaveVisualizerService.release();
 

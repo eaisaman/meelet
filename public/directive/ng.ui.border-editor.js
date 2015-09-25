@@ -2,9 +2,9 @@ define(
     ["angular-lib", "jquery-lib"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$parse", "$http", "$timeout", "$q", "$exceptionHandler", "angularEventTypes", "angularConstants", "uiUtilService"];
+            var inject = ["$parse", "$http", "$timeout", "$q", "$exceptionHandler", "angularEventTypes", "angularConstants", "utilService"];
 
-            appModule.directive("uiBorderEditor", _.union(inject, [function ($parse, $http, $timeout, $q, $exceptionHandler, angularEventTypes, angularConstants, uiUtilService) {
+            appModule.directive("uiBorderEditor", _.union(inject, [function ($parse, $http, $timeout, $q, $exceptionHandler, angularEventTypes, angularConstants, utilService) {
                 'use strict';
 
                 var boundProperties = {border: "="},
@@ -31,14 +31,14 @@ define(
                                     "$timeout": $timeout,
                                     "$q": $q,
                                     "angularConstants": angularConstants,
-                                    "uiUtilService": uiUtilService,
+                                    "utilService": utilService,
                                     element: element,
                                     scope: scope
                                 }));
 
-                                uiUtilService.broadcast(scope,
+                                utilService.broadcast(scope,
                                     angularEventTypes.boundPropertiesEvent,
-                                    uiUtilService.createDirectiveBoundMap(
+                                    utilService.createDirectiveBoundMap(
                                         boundProperties,
                                         attrs,
                                         {
@@ -61,7 +61,7 @@ define(
 
                                                     scope.borderIsSet = false;
                                                     scope.borderColorPaneBackgroundColor = "";
-                                                    scope.borderColorPaneColor = uiUtilService.contrastColor(scope.pickedBorderColor.color);
+                                                    scope.borderColorPaneColor = utilService.contrastColor(scope.pickedBorderColor.color);
                                                     $timeout(function () {
                                                         scope.borderColorPaneBackgroundColor = scope.pickedBorderColor && (scope.pickedBorderColor.alphaColor || scope.pickedBorderColor.color) || "";
                                                         scope.borderIsSet = true;
@@ -121,7 +121,7 @@ define(
                                     if (scope.borderList && scope.borderList.length) {
                                         return scope.toggleEnableControl().then(function (enable) {
                                             if (enable) {
-                                                return uiUtilService.whilst(
+                                                return utilService.whilst(
                                                     function () {
                                                         return !scope.border;
                                                     },
@@ -148,7 +148,7 @@ define(
                                             }
                                         });
                                     } else {
-                                        return uiUtilService.getResolveDefer();
+                                        return utilService.getResolveDefer();
                                     }
                                 }
 
@@ -184,7 +184,7 @@ define(
                                         }).then(function () {
                                             scope.watchBorderColor(false);
 
-                                            return uiUtilService.getResolveDefer();
+                                            return utilService.getResolveDefer();
                                         });
                                     } else {
                                         return scope.toggleSelect($borderColorPane).then(function () {
@@ -192,7 +192,7 @@ define(
                                         }).then(function () {
                                             scope.watchBorderColor(true);
 
-                                            return uiUtilService.getResolveDefer();
+                                            return utilService.getResolveDefer();
                                         });
                                     }
                                 }
@@ -213,7 +213,7 @@ define(
                                 scope.setBorderColor = function (value) {
                                     if (value && value.color) {
                                         if (value.alpha < 1 && !value.alphaColor) {
-                                            value.alphaColor = uiUtilService.rgba(value);
+                                            value.alphaColor = utilService.rgba(value);
                                         }
 
                                         var pseudoStylePrefix = (scope.pseudo || "") + "Style";
@@ -231,7 +231,7 @@ define(
                                             scope.borderIsSet = false;
                                             scope.pickedBorderColor = value;
                                             scope.borderColorPaneBackgroundColor = "";
-                                            scope.borderColorPaneColor = uiUtilService.contrastColor(value.color);
+                                            scope.borderColorPaneColor = utilService.contrastColor(value.color);
                                             return $timeout(function () {
                                                 scope.borderColorPaneBackgroundColor = value.alphaColor || value.color;
                                                 scope.borderIsSet = true;
@@ -239,7 +239,7 @@ define(
                                         }
                                     }
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.setBorderWidth = function (value) {
@@ -264,7 +264,7 @@ define(
                                         }
                                     }
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.setBorderStyle = function (value) {
@@ -289,7 +289,7 @@ define(
                                         }
                                     }
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.setBorderRadius = function (value) {
@@ -314,7 +314,7 @@ define(
                                         }
                                     }
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.pseudoChangeWatcher = scope.$on(angularEventTypes.widgetPseudoChangeEvent, function (event, pseudo) {
@@ -333,7 +333,7 @@ define(
 
                                         scope.borderIsSet = false;
                                         scope.borderColorPaneBackgroundColor = "";
-                                        scope.borderColorPaneColor = uiUtilService.contrastColor(scope.pickedBorderColor.color);
+                                        scope.borderColorPaneColor = utilService.contrastColor(scope.pickedBorderColor.color);
                                         $timeout(function () {
                                             scope.borderColorPaneBackgroundColor = scope.pickedBorderColor && (scope.pickedBorderColor.alphaColor || scope.pickedBorderColor.color) || "";
                                             scope.borderIsSet = true;

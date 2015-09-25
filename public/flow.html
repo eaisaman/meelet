@@ -127,12 +127,12 @@
                         </div>
                         <div class="flowConfigDetails col-as-8 no-padding"></div>
                     </div>
-                    <div class="flowKnob" ng-click="once(this, $event, 'toggleExpand''.flowContent', $event)">
+                    <div class="flowKnob" ng-click="once(this, $event, 'toggleExpand', '.flowContent', $event)">
                     </div>
                 </div>
             </div>
         </div>
-        <div class="flowModalContent" name="modalContent">
+        <div class="flowModalContent" name="modalContent" ng-click="$event.stopPropagation())">
         </div>
     </div>
 </div>

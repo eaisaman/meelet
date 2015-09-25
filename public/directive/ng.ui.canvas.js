@@ -1,14 +1,14 @@
 define(
     ["angular-lib", "jquery-lib", "fabric-lib"],
     function () {
-        var SketchCanvas = function ($log, $compile, $parse, $timeout, $q, $exceptionHandler, uiUtilService, angularConstants, angularEventTypes) {
+        var SketchCanvas = function ($log, $compile, $parse, $timeout, $q, $exceptionHandler, utilService, angularConstants, angularEventTypes) {
                 this.$log = $log;
                 this.$compile = $compile;
                 this.$parse = $parse;
                 this.$timeout = $timeout;
                 this.$q = $q;
                 this.$exceptionHandler = $exceptionHandler;
-                this.uiUtilService = uiUtilService;
+                this.utilService = utilService;
                 this.angularConstants = angularConstants;
                 this.angularEventTypes = angularEventTypes;
             },
@@ -17,7 +17,7 @@ define(
             CanvasObject_Point = 2,
             CanvasObject_LineEnd = 3;
 
-        SketchCanvas.$inject = ["$log", "$compile", "$parse", "$timeout", "$q", "$exceptionHandler", "uiUtilService", "angularConstants", "angularEventTypes"];
+        SketchCanvas.$inject = ["$log", "$compile", "$parse", "$timeout", "$q", "$exceptionHandler", "utilService", "angularConstants", "angularEventTypes"];
 
         SketchCanvas.prototype.initCanvas = function () {
             var self = this;
@@ -71,7 +71,7 @@ define(
                 self.deregisterOnMarkRoute = scope.$on(
                     self.angularEventTypes.markWidgetRouteEvent,
                     function (event, value) {
-                        self.uiUtilService.latestOnce(
+                        self.utilService.latestOnce(
                             function (markedIndex) {
                                 return self.$timeout(
                                     function () {

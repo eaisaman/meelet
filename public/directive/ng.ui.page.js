@@ -2,9 +2,9 @@ define(
     ["angular-lib", "jquery-lib"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$timeout", "$q", "$exceptionHandler", "$parse", "$rootScope", "angularEventTypes", "angularConstants", "uiUtilService", "uiService", "appService"];
+            var inject = ["$timeout", "$q", "$exceptionHandler", "$parse", "$rootScope", "angularEventTypes", "angularConstants", "utilService", "uiService", "appService"];
 
-            appModule.directive("uiPage", _.union(inject, [function ($timeout, $q, $exceptionHandler, $parse, $rootScope, angularEventTypes, angularConstants, uiUtilService, uiService, appService) {
+            appModule.directive("uiPage", _.union(inject, [function ($timeout, $q, $exceptionHandler, $parse, $rootScope, angularEventTypes, angularConstants, utilService, uiService, appService) {
                 'use strict';
 
                 var defaults = {},
@@ -23,7 +23,7 @@ define(
                                     "$timeout": $timeout,
                                     "$q": $q,
                                     "angularConstants": angularConstants,
-                                    "uiUtilService": uiUtilService,
+                                    "utilService": utilService,
                                     element: element,
                                     scope: scope
                                 }));
@@ -73,7 +73,7 @@ define(
                                 }
 
                                 scope.filterLibraryList = function (libraryList, xrefList) {
-                                    return uiUtilService.filterSelection(libraryList, xrefList, [{
+                                    return utilService.filterSelection(libraryList, xrefList, [{
                                         target: '_id',
                                         source: 'libraryId'
                                     }]);
@@ -82,14 +82,14 @@ define(
                                 scope.filterArtifactList = function (effectLibrary, xrefList) {
                                     var artifactList = (_.findWhere(xrefList, {libraryId: effectLibrary._id}) || {}).artifactList;
 
-                                    return uiUtilService.filterSelection(effectLibrary.artifactList, artifactList, [{
+                                    return utilService.filterSelection(effectLibrary.artifactList, artifactList, [{
                                         target: '_id',
                                         source: 'artifactId'
                                     }]);
                                 }
 
                                 scope.markLibrarySelection = function (libraryList, xrefList) {
-                                    return uiUtilService.markSelection(libraryList, xrefList, [{
+                                    return utilService.markSelection(libraryList, xrefList, [{
                                         target: '_id',
                                         source: 'libraryId'
                                     }]);
@@ -99,7 +99,7 @@ define(
                                     var xref = _.findWhere(xrefList, {libraryId: effectLibrary._id}) || {},
                                         artifactList = xref.artifactList;
 
-                                    return uiUtilService.markSelection(effectLibrary.artifactList, artifactList, [{
+                                    return utilService.markSelection(effectLibrary.artifactList, artifactList, [{
                                         target: '_id',
                                         source: 'artifactId'
                                     }]);
@@ -128,7 +128,7 @@ define(
                                         }).then(function () {
                                             $wrapper.toggleClass("expanded");
 
-                                            return uiUtilService.getResolveDefer();
+                                            return utilService.getResolveDefer();
                                         });
                                     } else {
                                         $wrapper.toggleClass("expanded");
@@ -151,7 +151,7 @@ define(
                                     event && event.stopPropagation && event.stopPropagation();
 
                                     if ($rootScope.loadedProject) {
-                                        uiUtilService.broadcast(scope,
+                                        utilService.broadcast(scope,
                                             angularEventTypes.beforeWidgetCreationEvent,
                                             function (name) {
                                                 if (name) {
@@ -173,7 +173,7 @@ define(
                                         );
                                     }
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.removePage = function (event) {
@@ -204,14 +204,14 @@ define(
                                         }
                                     }
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.copyPage = function (event) {
                                     event && event.stopPropagation && event.stopPropagation();
 
                                     if ($rootScope.loadedProject) {
-                                        uiUtilService.broadcast(scope,
+                                        utilService.broadcast(scope,
                                             angularEventTypes.beforeWidgetCreationEvent,
                                             function (name) {
                                                 if (name) {
@@ -241,7 +241,7 @@ define(
                                         );
                                     }
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.toggleSelectState = function (item, event) {
@@ -254,7 +254,7 @@ define(
                                             scope.stateTreeNodeItem = item;
 
                                             if (item.stateOptions.length) {
-                                                return uiUtilService.whilst(
+                                                return utilService.whilst(
                                                     function () {
                                                         return !angular.element(element.find("#widgetStateDropdown > div")).scope();
                                                     },
@@ -289,14 +289,14 @@ define(
                                                     angularConstants.renderTimeout
                                                 );
                                             } else {
-                                                return uiUtilService.getResolveDefer();
+                                                return utilService.getResolveDefer();
                                             }
                                         });
                                     } else {
                                         return scope.toggleSelect(element.find("#widgetStateDropdown"), null, false).then(function () {
                                             scope.stateTreeNodeItem = null;
 
-                                            return uiUtilService.getResolveDefer();
+                                            return utilService.getResolveDefer();
                                         });
                                     }
                                 }
@@ -311,7 +311,7 @@ define(
                                             element.find(".effectLibraryList").siblings("div").css("opacity", 1);
                                         }
 
-                                        return uiUtilService.getResolveDefer();
+                                        return utilService.getResolveDefer();
                                     });
                                 }
 
@@ -378,7 +378,7 @@ define(
                                         }
                                     }
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.toggleLibrarySelection = function (effectLibrary, event) {
@@ -424,7 +424,7 @@ define(
                                         }
                                     }
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.effectList = [];
@@ -432,7 +432,7 @@ define(
                                 scope.filterEffectLibraryList = [];
 
                                 function refreshArtifactList(project) {
-                                    uiUtilService.latestOnce(
+                                    utilService.latestOnce(
                                         function () {
                                             return $timeout(
                                                 function () {
@@ -456,15 +456,15 @@ define(
                                     refreshArtifactList(project);
                                 });
 
-                                uiUtilService.latestOnce(
+                                utilService.latestOnce(
                                     function () {
                                         return $timeout(function () {
-                                            uiUtilService.whilst(
+                                            utilService.whilst(
                                                 function () {
                                                     return !$(".pageList select option").length;
                                                 },
                                                 function (err) {
-                                                    err || uiUtilService.latestOnce(
+                                                    err || utilService.latestOnce(
                                                         function () {
                                                             return $timeout(function () {
                                                                 $(".pageList select").change(function () {

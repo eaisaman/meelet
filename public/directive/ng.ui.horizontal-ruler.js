@@ -2,9 +2,9 @@ define(
     ["angular-lib", "jquery-lib", "hammer-lib"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$timeout", "$q", "$exceptionHandler", "$log", "angularEventTypes", "angularConstants", "uiService", "uiUtilService", "appService"];
+            var inject = ["$timeout", "$q", "$exceptionHandler", "$log", "angularEventTypes", "angularConstants", "uiService", "utilService", "appService"];
 
-            appModule.directive("uiHorizontalRuler", _.union(inject, [function ($timeout, $q, $exceptionHandler, $log, angularEventTypes, angularConstants, uiService, uiUtilService, appService) {
+            appModule.directive("uiHorizontalRuler", _.union(inject, [function ($timeout, $q, $exceptionHandler, $log, angularEventTypes, angularConstants, uiService, utilService, appService) {
                 'use strict';
 
                 var defaults = {
@@ -36,7 +36,7 @@ define(
                                     "$timeout": $timeout,
                                     "$q": $q,
                                     "angularConstants": angularConstants,
-                                    "uiUtilService": uiUtilService,
+                                    "utilService": utilService,
                                     element: element,
                                     scope: scope
                                 }));
@@ -76,8 +76,8 @@ define(
                                         } else if (event.type === "panmove") {
                                             if (touchX != undefined) {
                                                 var moveX = event.srcEvent.clientX - ($u.offset().left + touchX),
-                                                    maxWidth = uiUtilService.calculateWidth($u.parent()),
-                                                    width = uiUtilService.calculateWidth($u),
+                                                    maxWidth = utilService.calculateWidth($u.parent()),
+                                                    width = utilService.calculateWidth($u),
                                                     ftLeft,
                                                     left;
 
@@ -114,7 +114,7 @@ define(
                                         } else {
                                             if (touchX != undefined) {
                                                 if (scope.nearByMarkerIndex != null) {
-                                                    var width = uiUtilService.calculateWidth($u),
+                                                    var width = utilService.calculateWidth($u),
                                                         ftLeft, left;
 
                                                     var m = ($u.css("left") || "").match(/([-\d\.]+)px$/);
@@ -150,8 +150,8 @@ define(
                                         } else if (event.type === "panmove") {
                                             if (touchX != undefined) {
                                                 var moveX = event.srcEvent.clientX - ($u.parent().offset().left + touchX),
-                                                    maxWidth = uiUtilService.calculateWidth($u.parent()),
-                                                    width = uiUtilService.calculateWidth($u),
+                                                    maxWidth = utilService.calculateWidth($u.parent()),
+                                                    width = utilService.calculateWidth($u),
                                                     ftLeft,
                                                     left;
 
@@ -211,7 +211,7 @@ define(
                                             if (touchX != undefined) {
                                                 if (scope.alignCenter) {
                                                     if (scope.nearByMarkerIndex != null) {
-                                                        var width = uiUtilService.calculateWidth($u),
+                                                        var width = utilService.calculateWidth($u),
                                                             right = Math.floor((scope.nearByMarkerIndex * scope.markerWidth) * angularConstants.precision) / angularConstants.precision,
                                                             left = right - width / 2;
 
@@ -223,7 +223,7 @@ define(
 
                                                     if (moveDirection === "right") {
                                                         if (scope.nearByMarkerIndex != null) {
-                                                            var width = uiUtilService.calculateWidth($u),
+                                                            var width = utilService.calculateWidth($u),
                                                                 right = Math.floor((scope.nearByMarkerIndex * scope.markerWidth) * angularConstants.precision) / angularConstants.precision,
                                                                 left = right - width;
 
@@ -258,8 +258,8 @@ define(
                                         } else if (event.type === "panmove") {
                                             if (touchX != undefined) {
                                                 var newWidth = event.srcEvent.clientX - $u.offset().left + touchX,
-                                                    maxWidth = uiUtilService.calculateWidth($u.parent()),
-                                                    width = uiUtilService.calculateWidth($u),
+                                                    maxWidth = utilService.calculateWidth($u.parent()),
+                                                    width = utilService.calculateWidth($u),
                                                     ftLeft;
 
                                                 var m = ($u.css("left") || "").match(/([-\d\.]+)px$/);
@@ -344,7 +344,7 @@ define(
                                     }
                                 }
 
-                                uiUtilService.latestOnce(
+                                utilService.latestOnce(
                                     function () {
                                         return $timeout(function () {
                                             registerHandlers();

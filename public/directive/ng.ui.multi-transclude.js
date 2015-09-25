@@ -3,13 +3,13 @@ define(
     function () {
         return function (appModule) {
 
-            appModule.controller('uiMultiTranscludeController', ['$scope', '$transclude', '$q', '$timeout', 'angularConstants', 'uiUtilService', function ($scope, $transclude, $q, $timeout, angularConstants, uiUtilService) {
+            appModule.controller('uiMultiTranscludeController', ['$scope', '$transclude', '$q', '$timeout', 'angularConstants', 'utilService', function ($scope, $transclude, $q, $timeout, angularConstants, utilService) {
                 this.transclude = function (name, element) {
                     $transclude && $transclude(function (clone) {
                         for (var i = 0; i < clone.length; ++i) {
                             var el = angular.element(clone[i]);
                             if (el.attr('name') === name) {
-                                uiUtilService.whilst(
+                                utilService.whilst(
                                     function () {
                                         return !el.scope();
                                     }, function (err) {

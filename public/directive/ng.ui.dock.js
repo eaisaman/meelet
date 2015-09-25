@@ -2,9 +2,9 @@ define(
     ["angular-lib", "jquery-lib"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$timeout", "$q", "$exceptionHandler", "uiUtilService", "angularConstants"];
+            var inject = ["$timeout", "$q", "$exceptionHandler", "utilService", "angularConstants"];
 
-            appModule.directive("uiDock", _.union(inject, [function ($timeout, $q, $exceptionHandler, uiUtilService, angularConstants) {
+            appModule.directive("uiDock", _.union(inject, [function ($timeout, $q, $exceptionHandler, utilService, angularConstants) {
                 'use strict';
 
                 var defaults = {},
@@ -24,7 +24,7 @@ define(
                                     "$timeout": $timeout,
                                     "$q": $q,
                                     "angularConstants": angularConstants,
-                                    "uiUtilService": uiUtilService,
+                                    "utilService": utilService,
                                     element: element,
                                     scope: scope
                                 }));
@@ -38,7 +38,7 @@ define(
                                     return scope.selectTab(event.currentTarget, event.target, event, "control-group");
                                 }
 
-                                uiUtilService.latestOnce(
+                                utilService.latestOnce(
                                     function () {
                                         return $timeout(function () {
                                             scope.selectContentTab(

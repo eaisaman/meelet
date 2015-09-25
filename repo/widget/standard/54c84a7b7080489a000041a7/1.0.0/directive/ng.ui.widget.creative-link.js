@@ -2,7 +2,7 @@ define(
     ["angular", "jquery"],
     function () {
         return function ($injector, $compileProvider, $controllerProvider, extension, directiveUrl) {
-            var inject = ["$http", "$timeout", "$q", "$parse", "$compile", "angularConstants", "angularEventTypes", "uiUtilService"],
+            var inject = ["$http", "$timeout", "$q", "$parse", "$compile", "angularConstants", "angularEventTypes", "utilService"],
                 name = "uiWidgetCreativeLink",
                 version = "1.0.0",
                 directive = name + version.replace(/\./g, ""),
@@ -11,7 +11,7 @@ define(
 
             if (!$injector.has(directiveService)) {
                 $controllerProvider.
-                    register(controllerService, ['$scope', '$transclude', '$q', '$timeout', 'angularConstants', 'uiUtilService', function ($scope, $transclude, $q, $timeout, angularConstants, uiUtilService) {
+                    register(controllerService, ['$scope', '$transclude', '$q', '$timeout', 'angularConstants', 'utilService', function ($scope, $transclude, $q, $timeout, angularConstants, utilService) {
                         //This widget need copy of transcluded element to render transition effect.
                         //If the element has widget anchor attribute, the copied one must have anchor different from the original.
                         this.transclude = function (directiveScope, element) {
@@ -27,7 +27,7 @@ define(
                         }
                     }]);
 
-                $compileProvider.directive(directive, _.union(inject, [function ($http, $timeout, $q, $parse, $compile, angularConstants, angularEventTypes, uiUtilService) {
+                $compileProvider.directive(directive, _.union(inject, [function ($http, $timeout, $q, $parse, $compile, angularConstants, angularEventTypes, utilService) {
                     'use strict';
 
                     var injectObj = _.object(inject, Array.prototype.slice.call(arguments));
@@ -66,7 +66,7 @@ define(
 
                                         if (scope.isPlaying == null || scope.isPlaying) {
                                             if ((scope.configuration.stateGroup || scope.stateGroup) && scope.widgetId) {
-                                                uiUtilService.broadcast(scope, angularConstants.stateGroupEventPattern.format(scope.configuration.stateGroup || scope.stateGroup), {
+                                                utilService.broadcast(scope, angularConstants.stateGroupEventPattern.format(scope.configuration.stateGroup || scope.stateGroup), {
                                                     widgetId: scope.widgetId
                                                 });
                                             } else {
@@ -104,13 +104,13 @@ define(
                                 },
                                 post: function (scope, element, attrs, ctrl) {
                                     if (element.hasClass(angularConstants.repoWidgetClass)) {
-                                        uiUtilService.whilst(function () {
+                                        utilService.whilst(function () {
                                                 return !(element.closest && element.closest(".widgetContainer").attr("id"));
                                             }, function (err) {
                                                 if (!err) {
                                                     //id of widget of RepoSketchWidgetClass type
                                                     scope.widgetId = element.closest(".widgetContainer").parent().attr("id");
-                                                    uiUtilService.broadcast(scope, angularConstants.widgetEventPattern.format(angularEventTypes.widgetContentIncludedEvent, scope.widgetId), {widgetId: scope.widgetId});
+                                                    utilService.broadcast(scope, angularConstants.widgetEventPattern.format(angularEventTypes.widgetContentIncludedEvent, scope.widgetId), {widgetId: scope.widgetId});
 
                                                     scope.stateGroup && scope.setStateGroup(scope.stateGroup);
                                                 }

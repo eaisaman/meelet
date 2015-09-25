@@ -2,9 +2,9 @@ define(
     ["angular-lib", "jquery-lib"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$rootScope", "$http", "$timeout", "$q", "$exceptionHandler", "angularConstants", "angularEventTypes", "appService", "uiUtilService"];
+            var inject = ["$rootScope", "$http", "$timeout", "$q", "$exceptionHandler", "angularConstants", "angularEventTypes", "appService", "utilService"];
 
-            appModule.directive("uiBackgroundImage", _.union(inject, [function ($rootScope, $http, $timeout, $q, $exceptionHandler, angularConstants, angularEventTypes, appService, uiUtilService) {
+            appModule.directive("uiBackgroundImage", _.union(inject, [function ($rootScope, $http, $timeout, $q, $exceptionHandler, angularConstants, angularEventTypes, appService, utilService) {
                 'use strict';
 
                 var boundProperties = {backgroundImage: "="},
@@ -34,14 +34,14 @@ define(
                                     "$timeout": $timeout,
                                     "$q": $q,
                                     "angularConstants": angularConstants,
-                                    "uiUtilService": uiUtilService,
+                                    "utilService": utilService,
                                     element: element,
                                     scope: scope
                                 }));
 
-                                uiUtilService.broadcast(scope,
+                                utilService.broadcast(scope,
                                     angularEventTypes.boundPropertiesEvent,
-                                    uiUtilService.createDirectiveBoundMap(
+                                    utilService.createDirectiveBoundMap(
                                         boundProperties,
                                         attrs,
                                         {
@@ -69,7 +69,7 @@ define(
                                 scope.toggleBackgroundImageControl = function () {
                                     return scope.toggleEnableControl().then(function (enable) {
                                         if (enable) {
-                                            return uiUtilService.whilst(
+                                            return utilService.whilst(
                                                 function () {
                                                     return !scope.backgroundImage;
                                                 },
@@ -362,7 +362,7 @@ define(
                                         scope.pickedBackgroundImageName = "";
                                     }
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.onChangeBackgroundImageName = function () {
@@ -524,7 +524,7 @@ define(
                                     }
                                 }
 
-                                uiUtilService.latestOnce(
+                                utilService.latestOnce(
                                     function () {
                                         return $timeout(
                                             function () {

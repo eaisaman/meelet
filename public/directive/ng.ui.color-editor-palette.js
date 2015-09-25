@@ -2,9 +2,9 @@ define(
     ["angular-lib", "jquery-lib"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$parse", "$http", "$timeout", "$q", "$exceptionHandler", "angularConstants", "angularEventTypes", "uiUtilService"];
+            var inject = ["$parse", "$http", "$timeout", "$q", "$exceptionHandler", "angularConstants", "angularEventTypes", "utilService"];
 
-            appModule.directive("uiColorEditorPalette", _.union(inject, [function ($parse, $http, $timeout, $q, $exceptionHandler, angularConstants, angularEventTypes, uiUtilService) {
+            appModule.directive("uiColorEditorPalette", _.union(inject, [function ($parse, $http, $timeout, $q, $exceptionHandler, angularConstants, angularEventTypes, utilService) {
                 'use strict';
 
                 var defaults = {
@@ -37,7 +37,7 @@ define(
                                     "$timeout": $timeout,
                                     "$q": $q,
                                     "angularConstants": angularConstants,
-                                    "uiUtilService": uiUtilService,
+                                    "utilService": utilService,
                                     element: element,
                                     scope: scope
                                 }));
@@ -54,7 +54,7 @@ define(
                                     scope.colors = scope.options.colors || [];
                                 }
 
-                                scope.util = uiUtilService;
+                                scope.util = utilService;
                                 scope.Math = Math;
                                 scope.selectedColorObj = scope.selectedColorObj || {alpha: 1};
                             },
@@ -104,14 +104,14 @@ define(
 
                                     for (var i = 0; i < stopCount; i++) {
                                         rgb.splice(spliceIndex, 1, Math.floor(i * step));
-                                        var colorStop = uiUtilService.rgbToHex.apply(uiUtilService, rgb);
+                                        var colorStop = utilService.rgbToHex.apply(utilService, rgb);
                                         webkitStops.push("color-stop({1}%, {0})".format(colorStop, Math.floor((i / stopCount) * 100)));
                                         stops.push("{0} {1}%".format(colorStop, Math.floor((i / stopCount) * 100)));
                                     }
 
                                     var $scrollBar = element.find(scrollBarSelector);
                                     $scrollBar.css("background", "-webkit-gradient(linear, 50% 0%, 50% 100%, {0})".format(webkitStops.join(",")));
-                                    uiUtilService.prefixedStyleValue("{0}linear-gradient(top, {1})", stops.join(",")).forEach(function (gradientStyleValue) {
+                                    utilService.prefixedStyleValue("{0}linear-gradient(top, {1})", stops.join(",")).forEach(function (gradientStyleValue) {
                                         $scrollBar.css("background", gradientStyleValue);
                                     });
                                 }
@@ -143,56 +143,56 @@ define(
 
                                     for (var i = 0; i < stopCount; i++) {
                                         hsl.splice(spliceIndex, 1, Math.floor(i * step * 100) / 100);
-                                        var colorStop = uiUtilService.hslToHex.apply(uiUtilService, hsl);
+                                        var colorStop = utilService.hslToHex.apply(utilService, hsl);
                                         webkitStops.push("color-stop({1}%, {0})".format(colorStop, Math.floor((i / stopCount) * 100)));
                                         stops.push("{0} {1}%".format(colorStop, Math.floor((i / stopCount) * 100)));
                                     }
 
                                     var $scrollBar = element.find(scrollBarSelector);
                                     $scrollBar.css("background", "-webkit-gradient(linear, 50% 0%, 50% 100%, {0})".format(webkitStops.join(",")));
-                                    uiUtilService.prefixedStyleValue("{0}linear-gradient(top, {1})", stops.join(",")).forEach(function (gradientStyleValue) {
+                                    utilService.prefixedStyleValue("{0}linear-gradient(top, {1})", stops.join(",")).forEach(function (gradientStyleValue) {
                                         $scrollBar.css("background", gradientStyleValue);
                                     });
                                 }
 
                                 scope.$watch("selectedColorObj.rValue", function (to) {
                                     if (to != null) {
-                                        scope.selectedColorObj.color = uiUtilService.rgbToHex(scope.selectedColorObj.rValue, scope.selectedColorObj.gValue, scope.selectedColorObj.bValue)
+                                        scope.selectedColorObj.color = utilService.rgbToHex(scope.selectedColorObj.rValue, scope.selectedColorObj.gValue, scope.selectedColorObj.bValue)
                                         rgbLinearGradient(scope.selectedColorObj.rValue, scope.selectedColorObj.gValue, scope.selectedColorObj.bValue, "G");
                                         rgbLinearGradient(scope.selectedColorObj.rValue, scope.selectedColorObj.gValue, scope.selectedColorObj.bValue, "B");
                                     }
                                 });
                                 scope.$watch("selectedColorObj.gValue", function (to) {
                                     if (to != null) {
-                                        scope.selectedColorObj.color = uiUtilService.rgbToHex(scope.selectedColorObj.rValue, scope.selectedColorObj.gValue, scope.selectedColorObj.bValue)
+                                        scope.selectedColorObj.color = utilService.rgbToHex(scope.selectedColorObj.rValue, scope.selectedColorObj.gValue, scope.selectedColorObj.bValue)
                                         rgbLinearGradient(scope.selectedColorObj.rValue, scope.selectedColorObj.gValue, scope.selectedColorObj.bValue, "R");
                                         rgbLinearGradient(scope.selectedColorObj.rValue, scope.selectedColorObj.gValue, scope.selectedColorObj.bValue, "B");
                                     }
                                 });
                                 scope.$watch("selectedColorObj.bValue", function (to) {
                                     if (to != null) {
-                                        scope.selectedColorObj.color = uiUtilService.rgbToHex(scope.selectedColorObj.rValue, scope.selectedColorObj.gValue, scope.selectedColorObj.bValue)
+                                        scope.selectedColorObj.color = utilService.rgbToHex(scope.selectedColorObj.rValue, scope.selectedColorObj.gValue, scope.selectedColorObj.bValue)
                                         rgbLinearGradient(scope.selectedColorObj.rValue, scope.selectedColorObj.gValue, scope.selectedColorObj.bValue, "R");
                                         rgbLinearGradient(scope.selectedColorObj.rValue, scope.selectedColorObj.gValue, scope.selectedColorObj.bValue, "G");
                                     }
                                 });
                                 scope.$watch("selectedColorObj.hueValue", function (to) {
                                     if (to != null) {
-                                        scope.selectedColorObj.color = uiUtilService.hslToHex(scope.selectedColorObj.hueValue, scope.selectedColorObj.saturationValue, scope.selectedColorObj.lightValue)
+                                        scope.selectedColorObj.color = utilService.hslToHex(scope.selectedColorObj.hueValue, scope.selectedColorObj.saturationValue, scope.selectedColorObj.lightValue)
                                         hslLinearGradient(scope.selectedColorObj.hueValue, scope.selectedColorObj.saturationValue, scope.selectedColorObj.lightValue, "Saturation");
                                         hslLinearGradient(scope.selectedColorObj.hueValue, scope.selectedColorObj.saturationValue, scope.selectedColorObj.lightValue, "Light");
                                     }
                                 });
                                 scope.$watch("selectedColorObj.saturationValue", function (to) {
                                     if (to != null) {
-                                        scope.selectedColorObj.color = uiUtilService.hslToHex(scope.selectedColorObj.hueValue, scope.selectedColorObj.saturationValue, scope.selectedColorObj.lightValue)
+                                        scope.selectedColorObj.color = utilService.hslToHex(scope.selectedColorObj.hueValue, scope.selectedColorObj.saturationValue, scope.selectedColorObj.lightValue)
                                         hslLinearGradient(scope.selectedColorObj.hueValue, scope.selectedColorObj.saturationValue, scope.selectedColorObj.lightValue, "Hue");
                                         hslLinearGradient(scope.selectedColorObj.hueValue, scope.selectedColorObj.saturationValue, scope.selectedColorObj.lightValue, "Light");
                                     }
                                 });
                                 scope.$watch("selectedColorObj.lightValue", function (to) {
                                     if (to != null) {
-                                        scope.selectedColorObj.color = uiUtilService.hslToHex(scope.selectedColorObj.hueValue, scope.selectedColorObj.saturationValue, scope.selectedColorObj.lightValue)
+                                        scope.selectedColorObj.color = utilService.hslToHex(scope.selectedColorObj.hueValue, scope.selectedColorObj.saturationValue, scope.selectedColorObj.lightValue)
                                         hslLinearGradient(scope.selectedColorObj.hueValue, scope.selectedColorObj.saturationValue, scope.selectedColorObj.lightValue, "Hue");
                                         hslLinearGradient(scope.selectedColorObj.hueValue, scope.selectedColorObj.saturationValue, scope.selectedColorObj.lightValue, "Saturation");
                                     }
@@ -209,9 +209,9 @@ define(
                                         $timeout(function () {
                                             //FIXME value.color conflicts with its rValue/gValue/bValue, we recalculate color hex value as workaround here.
                                             if (value.rValue && value.gValue && value.bValue) {
-                                                value.color = uiUtilService.rgbToHex(value.rValue, value.gValue, value.bValue);
+                                                value.color = utilService.rgbToHex(value.rValue, value.gValue, value.bValue);
                                             }
-                                            value.alphaColor = uiUtilService.rgba(value);
+                                            value.alphaColor = utilService.rgba(value);
                                             scope.selectedColor = _.pick(value, ["color", "alpha", "alphaColor"]);
                                             scope.onColorSelect && $timeout(function () {
                                                 scope.onColorSelect();
@@ -224,7 +224,7 @@ define(
 
                                     changeSelectedColor.onceId = "color-editor-palette.changeSelectedColor";
 
-                                    to && uiUtilService.latestOnce(
+                                    to && utilService.latestOnce(
                                         changeSelectedColor,
                                         null,
                                         null,
@@ -286,7 +286,7 @@ define(
 
                                         return scope.pickColor(color);
                                     } else {
-                                        return uiUtilService.getResolveDefer();
+                                        return utilService.getResolveDefer();
                                     }
                                 }
 
@@ -317,7 +317,7 @@ define(
                                         return scope.pickColor(color);
                                     }
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.pickColor = function (colorObj, event) {
@@ -336,22 +336,22 @@ define(
                                         }
 
                                         if (colorObj.rValue != null && colorObj.gValue != null && colorObj.bValue != null) {
-                                            colorObj.color = uiUtilService.rgbToHex(colorObj.rValue, colorObj.gValue, colorObj.bValue);
+                                            colorObj.color = utilService.rgbToHex(colorObj.rValue, colorObj.gValue, colorObj.bValue);
                                         } else if (colorObj.hueValue != null && colorObj.saturationValue != null && colorObj.lightValue != null) {
-                                            colorObj.color = uiUtilService.hslToHex(colorObj.hueValue, colorObj.saturationValue, colorObj.lightValue);
+                                            colorObj.color = utilService.hslToHex(colorObj.hueValue, colorObj.saturationValue, colorObj.lightValue);
                                         }
                                     }
 
                                     if (colorObj.color) {
                                         if (colorObj.rValue == null || colorObj.gValue == null || colorObj.bValue == null) {
-                                            var rgb = uiUtilService.hexTorgb(colorObj.color);
+                                            var rgb = utilService.hexTorgb(colorObj.color);
                                             colorObj.rValue = rgb[0];
                                             colorObj.gValue = rgb[1];
                                             colorObj.bValue = rgb[2];
                                         }
 
                                         if ((colorObj.hueValue == null || colorObj.saturationValue == null) || colorObj.lightValue == null) {
-                                            var hsl = uiUtilService.hexTohsl(colorObj.color);
+                                            var hsl = utilService.hexTohsl(colorObj.color);
                                             colorObj.hueValue = Math.round(hsl[0] * 100) / 100;
                                             colorObj.hueDegreeValue = Math.floor(colorObj.hueValue * 359);
                                             colorObj.saturationValue = Math.round(hsl[1] * 100) / 100;
@@ -364,7 +364,7 @@ define(
                                     if (colorObj.alpha == 1)
                                         delete colorObj.alphaColor;
                                     else
-                                        colorObj.alphaColor = uiUtilService.rgba(colorObj, colorObj.alpha);
+                                        colorObj.alphaColor = utilService.rgba(colorObj, colorObj.alpha);
 
                                     //adjustScrollMeterPosition(colorObj);
                                     scope.selectedColorObj = colorObj;
@@ -372,7 +372,7 @@ define(
 
                                     element.find(".colorSticker").css("background-color", colorObj.color).attr("picked-color", colorObj.color);
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.copyPickedColor = function (event) {
@@ -393,13 +393,13 @@ define(
                                         }
                                     }
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 function colorObjHandler() {
                                     scope.pickColor(scope.selectedColorObj);
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 }
 
                                 scope.onColorInputChange = function (event) {
@@ -426,7 +426,7 @@ define(
                                     }
                                     scope.selectedColorObj.color = null;
 
-                                    uiUtilService.latestOnce(
+                                    utilService.latestOnce(
                                         colorObjHandler,
                                         null,
                                         null,
@@ -462,7 +462,7 @@ define(
 
                                     var $u = $(event.target),
                                         $container = $u.parent().parent(),
-                                        height = uiUtilService.calculateHeight($u),
+                                        height = utilService.calculateHeight($u),
                                         top = Math.floor((($u.offset().top + height / 2) - $container.offset().top) * angularConstants.precision) / angularConstants.precision,
                                         range = parseInt($u.attr("color-range")),
                                         valueName = $u.attr("color-value-name"),
@@ -482,7 +482,7 @@ define(
                                             color.gValue = scope.selectedColorObj.gValue;
                                             color.bValue = scope.selectedColorObj.bValue;
                                             color[valueName] = value;
-                                            color.color = uiUtilService.rgbToHex(color.rValue, color.gValue, color.bValue);
+                                            color.color = utilService.rgbToHex(color.rValue, color.gValue, color.bValue);
                                         } else if (valueName === "hueValue" || valueName === "saturationValue" || valueName === "lightValue") {
                                             value = Math.floor(value * 100) / 100;
                                             color.hueValue = scope.selectedColorObj.hueValue;
@@ -490,12 +490,12 @@ define(
                                             color.saturationValue = scope.selectedColorObj.saturationValue;
                                             color.lightValue = scope.selectedColorObj.lightValue;
                                             color[valueName] = value;
-                                            color.color = uiUtilService.hslToHex(color.hueValue, color.saturationValue, color.lightValue);
+                                            color.color = utilService.hslToHex(color.hueValue, color.saturationValue, color.lightValue);
                                         }
 
                                         return scope.pickColor(color);
                                     } else {
-                                        return uiUtilService.getResolveDefer();
+                                        return utilService.getResolveDefer();
                                     }
                                 }
 
@@ -511,7 +511,7 @@ define(
                                             }
                                         );
                                     } else {
-                                        return uiUtilService.getResolveDefer();
+                                        return utilService.getResolveDefer();
                                     }
                                 }
 
@@ -541,7 +541,7 @@ define(
                                             }
                                         );
                                     } else {
-                                        return uiUtilService.getResolveDefer();
+                                        return utilService.getResolveDefer();
                                     }
                                 }
 

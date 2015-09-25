@@ -49,7 +49,60 @@
         "communicationType": "callback"
       },
       {
-        "name": "setStateOnWidget",
+        "name": "nextPage",
+        "description": "Navigate to next page.",
+        "parameters": [
+        ],
+        "communicationType": "callback"
+      },
+      {
+        "name": "prevPage",
+        "description": "Navigate to previous page.",
+        "parameters": [
+        ],
+        "communicationType": "callback"
+      },
+      {
+        "name": "gotoPage",
+        "description": "Jump to page.",
+        "parameters": [
+          "pageNum"
+        ],
+        "communicationType": "callback"
+      },
+      {
+        "name": "firstPage",
+        "description": "Jump to first page.",
+        "parameters": [
+        ],
+        "communicationType": "callback"
+      },
+      {
+        "name": "exitPage",
+        "description": "Exit from surfing page.",
+        "parameters": [
+        ],
+        "communicationType": "callback"
+      },
+      {
+        "name": "loadPage",
+        "description": "Load page html content, add animation if defined.",
+        "parameters": [
+          "location",
+          "markCurrent"
+        ],
+        "communicationType": "callback"
+      },
+      {
+        "name": "getState",
+        "description": "Get widget's state.",
+        "parameters": [
+          "widgetId"
+        ],
+        "communicationType": "callback"
+      },
+      {
+        "name": "setState",
         "description": "Set widget's state.",
         "parameters": [
           "widgetId",
@@ -86,9 +139,9 @@
         "name": "playWidgetSound",
         "description": "Play audio. Widget has states '*' and 'mute', which controls play or stop.",
         "parameters": [
+          "widgetId",
           "url",
-          "playLoop",
-          "widgetId"
+          "playLoop"
         ],
         "communicationType": "callback"
       },
@@ -101,12 +154,12 @@
         "communicationType": "callback"
       },
       {
-        "name": "togglePlayWidgetSound",
+        "name": "toggleWidgetSound",
         "description": "Toggle playing audio. Widget controls play or stop.",
         "parameters": [
+          "widgetId",
           "url",
-          "playLoop",
-          "widgetId"
+          "playLoop"
         ],
         "communicationType": "callback"
       }
@@ -122,42 +175,6 @@
     "feature": "BookService",
     "description": "Book project app services",
     "serviceList": [
-      {
-        "name": "nextPage",
-        "description": "Navigate to next page.",
-        "parameters": [
-        ],
-        "communicationType": "callback"
-      },
-      {
-        "name": "prevPage",
-        "description": "Navigate to previous page.",
-        "parameters": [
-        ],
-        "communicationType": "callback"
-      },
-      {
-        "name": "gotoPage",
-        "description": "Jump to page.",
-        "parameters": [
-          "pageNum"
-        ],
-        "communicationType": "callback"
-      },
-      {
-        "name": "firstPage",
-        "description": "Jump to first page.",
-        "parameters": [
-        ],
-        "communicationType": "callback"
-      },
-      {
-        "name": "exitPage",
-        "description": "Exit book.",
-        "parameters": [
-        ],
-        "communicationType": "callback"
-      },
       {
         "name": "takeAvatarPhoto",
         "description": "Take photo for avatar use.",

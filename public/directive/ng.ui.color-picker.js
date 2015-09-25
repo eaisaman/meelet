@@ -2,9 +2,9 @@ define(
     ["angular-lib", "jquery-lib"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$http", "$timeout", "$q", "$exceptionHandler", "angularEventTypes", "angularConstants", "uiUtilService"];
+            var inject = ["$http", "$timeout", "$q", "$exceptionHandler", "angularEventTypes", "angularConstants", "utilService"];
 
-            appModule.directive("uiColorPicker", _.union(inject, [function ($http, $timeout, $q, $exceptionHandler, angularEventTypes, angularConstants, uiUtilService) {
+            appModule.directive("uiColorPicker", _.union(inject, [function ($http, $timeout, $q, $exceptionHandler, angularEventTypes, angularConstants, utilService) {
                 'use strict';
 
                 var boundProperties = {color: "="},
@@ -27,14 +27,14 @@ define(
                                     "$timeout": $timeout,
                                     "$q": $q,
                                     "angularConstants": angularConstants,
-                                    "uiUtilService": uiUtilService,
+                                    "utilService": utilService,
                                     element: element,
                                     scope: scope
                                 }));
 
-                                uiUtilService.broadcast(scope,
+                                utilService.broadcast(scope,
                                     angularEventTypes.boundPropertiesEvent,
-                                    uiUtilService.createDirectiveBoundMap(
+                                    utilService.createDirectiveBoundMap(
                                         boundProperties,
                                         attrs,
                                         {
@@ -46,11 +46,11 @@ define(
                                                     scope.colorIsSet = false;
 
                                                     if (scope.pickedColor.alpha < 1 && !scope.pickedColor.alphaColor) {
-                                                        scope.pickedColor.alphaColor = uiUtilService.rgba(scope.pickedColor);
+                                                        scope.pickedColor.alphaColor = utilService.rgba(scope.pickedColor);
                                                     }
                                                     scope.pickerPaneBackgroundColor = scope.pickedColor.alphaColor || scope.pickedColor.color;
-                                                    scope.pickerPaneColor = uiUtilService.contrastColor(scope.pickedColor.color);
-                                                    scope.pickerBarBackgroundColor = scope.pickerPaneColor === "#ffffff" ? uiUtilService.lighterColor(scope.pickedColor.color, 0.5) : uiUtilService.lighterColor(scope.pickedColor.color, -0.5);
+                                                    scope.pickerPaneColor = utilService.contrastColor(scope.pickedColor.color);
+                                                    scope.pickerBarBackgroundColor = scope.pickerPaneColor === "#ffffff" ? utilService.lighterColor(scope.pickedColor.color, 0.5) : utilService.lighterColor(scope.pickedColor.color, -0.5);
                                                     $timeout(function () {
                                                         scope.colorIsSet = true;
                                                         scope.enableControl();
@@ -74,7 +74,7 @@ define(
                                 scope.setColor = function (value) {
                                     if (value.color) {
                                         if (value.alpha < 1 && !value.alphaColor) {
-                                            value.alphaColor = uiUtilService.rgba(value);
+                                            value.alphaColor = utilService.rgba(value);
                                         }
 
                                         var pseudoStylePrefix = (scope.pseudo || "") + "Style";
@@ -91,21 +91,21 @@ define(
                                             scope.colorIsSet = false;
                                             scope.pickedColor = value;
                                             scope.pickerPaneBackgroundColor = scope.pickedColor.alphaColor || scope.pickedColor.color;
-                                            scope.pickerPaneColor = uiUtilService.contrastColor(value.color);
-                                            scope.pickerBarBackgroundColor = scope.pickerPaneColor === "#ffffff" ? uiUtilService.lighterColor(value.color, 0.5) : uiUtilService.lighterColor(value.color, -0.5);
+                                            scope.pickerPaneColor = utilService.contrastColor(value.color);
+                                            scope.pickerBarBackgroundColor = scope.pickerPaneColor === "#ffffff" ? utilService.lighterColor(value.color, 0.5) : utilService.lighterColor(value.color, -0.5);
                                             return $timeout(function () {
                                                 scope.colorIsSet = true;
                                             });
                                         }
                                     }
 
-                                    return uiUtilService.getResolveDefer();
+                                    return utilService.getResolveDefer();
                                 };
 
                                 scope.toggleColorControl = function () {
                                     return scope.toggleEnableControl().then(function (enable) {
                                         if (enable) {
-                                            return uiUtilService.whilst(
+                                            return utilService.whilst(
                                                 function () {
                                                     return !scope.color;
                                                 },
@@ -181,11 +181,11 @@ define(
                                             scope.enableControl();
 
                                             if (scope.pickedColor.alpha < 1 && !scope.pickedColor.alphaColor) {
-                                                scope.pickedColor.alphaColor = uiUtilService.rgba(scope.pickedColor);
+                                                scope.pickedColor.alphaColor = utilService.rgba(scope.pickedColor);
                                             }
                                             scope.pickerPaneBackgroundColor = scope.pickedColor.alphaColor || scope.pickedColor.color;
-                                            scope.pickerPaneColor = uiUtilService.contrastColor(scope.pickedColor.color);
-                                            scope.pickerBarBackgroundColor = scope.pickerPaneColor === "#ffffff" ? uiUtilService.lighterColor(scope.pickedColor.color, 0.5) : uiUtilService.lighterColor(scope.pickedColor.color, -0.5);
+                                            scope.pickerPaneColor = utilService.contrastColor(scope.pickedColor.color);
+                                            scope.pickerBarBackgroundColor = scope.pickerPaneColor === "#ffffff" ? utilService.lighterColor(scope.pickedColor.color, 0.5) : utilService.lighterColor(scope.pickedColor.color, -0.5);
                                         } else {
                                             scope.disableControl();
                                         }

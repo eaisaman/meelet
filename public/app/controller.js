@@ -2,14 +2,14 @@ define(
     ["angular", "jquery", "jquery-ui", "app-util", "app-route", "app-filter", "app-service"],
     function () {
         return function (appModule, extension) {
-            function RootController($scope, $rootScope, $q, $timeout, angularEventTypes, angularConstants, appService, serviceRegistry, urlService, uiUtilService) {
+            function RootController($scope, $rootScope, $q, $timeout, angularEventTypes, angularConstants, appService, serviceRegistry, urlService, utilService) {
                 //For development convenience, we do fake login or restore user info if already authenticated.
 
                 extension && extension.attach && extension.attach($scope, {
                     "$timeout": $timeout,
                     "$q": $q,
                     "angularConstants": angularConstants,
-                    "uiUtilService": uiUtilService,
+                    "utilService": utilService,
                     "element": $("#rootBody"),
                     "scope": $scope
                 });
@@ -45,7 +45,7 @@ define(
                             function (result) {
                                 $rootScope.repoLibraryList = result && result.data.result == "OK" && result.data.resultValue || [];
                             }, function (err) {
-                                return uiUtilService.getRejectDefer(err);
+                                return utilService.getRejectDefer(err);
                             }
                         ),
                         appService.restoreUserFromStorage().then(
@@ -58,10 +58,10 @@ define(
                                                 function (userObj) {
                                                     userObj && _.extend($rootScope.loginUser, userObj);
 
-                                                    return uiUtilService.getResolveDefer();
+                                                    return utilService.getResolveDefer();
                                                 },
                                                 function (err) {
-                                                    return uiUtilService.getRejectDefer(err);
+                                                    return utilService.getRejectDefer(err);
                                                 }
                                             )
                                         }
@@ -73,25 +73,25 @@ define(
                                         function (result) {
                                             result && result.data.result == "OK" && _.extend($rootScope.userDetail, result.data.resultValue[0]);
 
-                                            return uiUtilService.getResolveDefer();
+                                            return utilService.getResolveDefer();
                                         },
                                         function (err) {
-                                            return uiUtilService.getRejectDefer(err);
+                                            return utilService.getRejectDefer(err);
                                         }
                                     );
                                 });
 
-                                return uiUtilService.chain(arr).then(
+                                return utilService.chain(arr).then(
                                     function (err) {
                                         if (err) {
-                                            return uiUtilService.getRejectDefer(err);
+                                            return utilService.getRejectDefer(err);
                                         } else {
-                                            return uiUtilService.getResolveDefer();
+                                            return utilService.getResolveDefer();
                                         }
                                     }
                                 );
                             }, function (err) {
-                                return uiUtilService.getRejectDefer(err);
+                                return utilService.getRejectDefer(err);
                             }
                         )
                     ]);
@@ -110,7 +110,7 @@ define(
                     isPlaying: false
                 };
                 $rootScope.visiblePseudoEnabledWidgets = [];
-                $scope.alertUidGen = uiUtilService.uniqueIdGen("alert-");
+                $scope.alertUidGen = utilService.uniqueIdGen("alert-");
                 $scope.urlService = urlService;
                 $scope.sketchDevice = {
                     type: "desktop",
@@ -163,12 +163,12 @@ define(
                 );
             }
 
-            function FrameSketchController($scope, $rootScope, $timeout, $q, $log, $exceptionHandler, $compile, $parse, angularEventTypes, angularConstants, appService, uiService, uiUtilService, uiCanvasService) {
+            function FrameSketchController($scope, $rootScope, $timeout, $q, $log, $exceptionHandler, $compile, $parse, angularEventTypes, angularConstants, appService, uiService, utilService, uiCanvasService) {
                 extension && extension.attach && extension.attach($scope, {
                     "$timeout": $timeout,
                     "$q": $q,
                     "angularConstants": angularConstants,
-                    "uiUtilService": uiUtilService,
+                    "utilService": utilService,
                     "element": $("#frameSketchContainer"),
                     "scope": $scope
                 });
@@ -178,7 +178,7 @@ define(
 
                     $(event.currentTarget).parent().toggleClass("select");
 
-                    return uiUtilService.getResolveDefer();
+                    return utilService.getResolveDefer();
                 }
 
                 $scope.removeWidget = function (event) {
@@ -188,11 +188,11 @@ define(
                         return widgetObj.dispose().then(function () {
                             $rootScope.sketchObject.pickedWidget = null;
 
-                            return uiUtilService.getResolveDefer();
+                            return utilService.getResolveDefer();
                         });
                     }
 
-                    return uiUtilService.getResolveDefer();
+                    return utilService.getResolveDefer();
                 }
 
                 $scope.enableAddWidget = function (event) {
@@ -246,7 +246,7 @@ define(
                                 x = Math.floor(x * angularConstants.precision) / angularConstants.precision;
                                 y = Math.floor(y * angularConstants.precision) / angularConstants.precision;
 
-                                uiUtilService.broadcast($scope,
+                                utilService.broadcast($scope,
                                     angularEventTypes.beforeWidgetCreationEvent,
                                     function (name) {
                                         if (name) {
@@ -280,7 +280,7 @@ define(
                         });
                     }
 
-                    return uiUtilService.getResolveDefer();
+                    return utilService.getResolveDefer();
                 }
 
                 $scope.configureWidget = function (event) {
@@ -292,7 +292,7 @@ define(
                         return $scope.showWidgetConfiguration();
                     }
 
-                    return uiUtilService.getResolveDefer();
+                    return utilService.getResolveDefer();
                 }
 
                 $scope.locateWidget = function (event) {
@@ -308,7 +308,7 @@ define(
 
                     uiService.hidePopupMenu();
 
-                    return uiUtilService.getResolveDefer();
+                    return utilService.getResolveDefer();
                 }
 
                 $scope.duplicateWidget = function (event) {
@@ -334,7 +334,7 @@ define(
 
                     uiService.hidePopupMenu();
 
-                    return uiUtilService.getResolveDefer();
+                    return utilService.getResolveDefer();
                 }
 
                 $scope.setSelectedButton = function (event) {
@@ -346,7 +346,7 @@ define(
 
                     $compile($sel)($scope);
 
-                    return uiUtilService.getResolveDefer();
+                    return utilService.getResolveDefer();
                 }
 
                 $scope.setSelectedConrol = function (controlId) {
@@ -369,7 +369,7 @@ define(
                         $container.css("zoom", zoomStyle);
                     }
 
-                    return uiUtilService.getResolveDefer();
+                    return utilService.getResolveDefer();
                 }
 
                 $scope.zoomOut = function (event) {
@@ -388,7 +388,7 @@ define(
                         $container.css("zoom", zoomStyle);
                     }
 
-                    return uiUtilService.getResolveDefer();
+                    return utilService.getResolveDefer();
                 }
 
                 $scope.alignLeft = function (event) {
@@ -399,7 +399,7 @@ define(
                         widgetObj.disassemble();
                     }
 
-                    return uiUtilService.getResolveDefer();
+                    return utilService.getResolveDefer();
                 }
 
                 $scope.alignHorizontalCenter = function (event) {
@@ -410,7 +410,7 @@ define(
                         widgetObj.disassemble();
                     }
 
-                    return uiUtilService.getResolveDefer();
+                    return utilService.getResolveDefer();
                 }
 
                 $scope.alignRight = function (event) {
@@ -421,7 +421,7 @@ define(
                         widgetObj.disassemble();
                     }
 
-                    return uiUtilService.getResolveDefer();
+                    return utilService.getResolveDefer();
                 }
 
                 $scope.alignTop = function (event) {
@@ -432,7 +432,7 @@ define(
                         widgetObj.disassemble();
                     }
 
-                    return uiUtilService.getResolveDefer();
+                    return utilService.getResolveDefer();
                 }
 
                 $scope.alignVerticalCenter = function (event) {
@@ -443,7 +443,7 @@ define(
                         widgetObj.disassemble();
                     }
 
-                    return uiUtilService.getResolveDefer();
+                    return utilService.getResolveDefer();
                 }
 
                 $scope.alignBottom = function (event) {
@@ -454,7 +454,7 @@ define(
                         widgetObj.disassemble();
                     }
 
-                    return uiUtilService.getResolveDefer();
+                    return utilService.getResolveDefer();
                 }
 
                 $scope.fillParent = function (event) {
@@ -464,7 +464,7 @@ define(
                         widgetObj.fillParent && widgetObj.fillParent();
                     }
 
-                    return uiUtilService.getResolveDefer();
+                    return utilService.getResolveDefer();
                 }
 
                 $scope.fillVertical = function (event) {
@@ -474,7 +474,7 @@ define(
                         widgetObj.fillVertical && widgetObj.fillVertical();
                     }
 
-                    return uiUtilService.getResolveDefer();
+                    return utilService.getResolveDefer();
                 }
 
                 $scope.fillHorizontal = function (event) {
@@ -484,7 +484,7 @@ define(
                         widgetObj.fillHorizontal && widgetObj.fillHorizontal();
                     }
 
-                    return uiUtilService.getResolveDefer();
+                    return utilService.getResolveDefer();
                 }
 
                 $scope.spanVertical = function (event) {
@@ -496,7 +496,7 @@ define(
                         widgetObj.disassemble();
                     }
 
-                    return uiUtilService.getResolveDefer();
+                    return utilService.getResolveDefer();
                 }
 
                 $scope.spanHorizontal = function (event) {
@@ -508,7 +508,7 @@ define(
                         widgetObj.disassemble();
                     }
 
-                    return uiUtilService.getResolveDefer();
+                    return utilService.getResolveDefer();
                 }
 
                 $scope.spaceVertical = function (event) {
@@ -519,7 +519,7 @@ define(
                         widgetObj.disassemble();
                     }
 
-                    return uiUtilService.getResolveDefer();
+                    return utilService.getResolveDefer();
                 }
 
                 $scope.spaceHorizontal = function (event) {
@@ -530,7 +530,7 @@ define(
                         widgetObj.disassemble();
                     }
 
-                    return uiUtilService.getResolveDefer();
+                    return utilService.getResolveDefer();
                 }
 
                 $scope.groupWidget = function (event) {
@@ -542,7 +542,7 @@ define(
 
                     uiService.hidePopupMenu();
 
-                    return uiUtilService.getResolveDefer();
+                    return utilService.getResolveDefer();
                 }
 
                 $scope.ungroupWidget = function (event) {
@@ -554,7 +554,7 @@ define(
 
                     uiService.hidePopupMenu();
 
-                    return uiUtilService.getResolveDefer();
+                    return utilService.getResolveDefer();
                 }
 
                 $scope.pickParentWidget = function (event) {
@@ -590,7 +590,7 @@ define(
 
                     uiService.hidePopupMenu();
 
-                    return uiUtilService.getResolveDefer();
+                    return utilService.getResolveDefer();
                 }
 
                 $scope.moveUpWidget = function (event) {
@@ -608,13 +608,13 @@ define(
 
                     uiService.hidePopupMenu();
 
-                    return uiUtilService.getResolveDefer();
+                    return utilService.getResolveDefer();
                 }
 
                 $scope.toggleRuler = function (event) {
                     $rootScope.sketchWidgetSetting.showRuler = !$rootScope.sketchWidgetSetting.showRuler;
 
-                    return uiUtilService.getResolveDefer();
+                    return utilService.getResolveDefer();
                 }
 
                 $scope.canPositionWidget = function (widgetObj) {
@@ -629,7 +629,7 @@ define(
                         return $scope.toggleSelect(event);
                     }
 
-                    return uiUtilService.getResolveDefer();
+                    return utilService.getResolveDefer();
                 }
 
                 $scope.initWidgetPosition = function () {
@@ -655,7 +655,7 @@ define(
 
                     $rootScope.$broadcast(angularEventTypes.playProjectEvent, $rootScope.sketchWidgetSetting.isPlaying);
 
-                    return uiUtilService.getResolveDefer();
+                    return utilService.getResolveDefer();
                 }
 
                 $scope.saveProject = function (event) {
@@ -665,7 +665,7 @@ define(
                 $scope.loadProject = function (event) {
                     $rootScope.loadedProject.unload();
 
-                    return uiUtilService.chain(
+                    return utilService.chain(
                         [
                             function () {
                                 return $rootScope.loadedProject.load();
@@ -678,11 +678,11 @@ define(
                 }
 
                 $scope.renderProject = function () {
-                    return uiUtilService.whilst(
+                    return utilService.whilst(
                         function () {
                             return !document.getElementsByClassName(angularConstants.widgetClasses.deviceHolderClass).length;
                         }, function (err) {
-                            err || uiUtilService.latestOnce(
+                            err || utilService.latestOnce(
                                 function () {
                                     return $timeout(function () {
                                         if ($rootScope.loadedProject.sketchWorks.pages.length) {
@@ -751,7 +751,7 @@ define(
                             uiService.displayPopupMenuHolder($rootScope.sketchObject.pickedWidget);
                         }
 
-                        return uiUtilService.getResolveDefer();
+                        return utilService.getResolveDefer();
                     }
                 }
 
@@ -763,7 +763,7 @@ define(
 
                     $canvasContainer.toggleClass("select"), $editButton.toggleClass("select");
 
-                    return uiUtilService.getResolveDefer();
+                    return utilService.getResolveDefer();
                 }
 
                 $scope.startLink = function (event) {
@@ -773,7 +773,7 @@ define(
 
                     uiCanvasService.startLink(event.clientX - offset.left, event.clientY - offset.top), uiCanvasService.hideMenu();
 
-                    return uiUtilService.getResolveDefer();
+                    return utilService.getResolveDefer();
                 }
 
                 $scope.removePoint = function (event) {
@@ -781,7 +781,7 @@ define(
 
                     uiCanvasService.removePoint(), uiCanvasService.hideMenu();
 
-                    return uiUtilService.getResolveDefer();
+                    return utilService.getResolveDefer();
                 }
 
                 $scope.showDemo = function (event) {
@@ -827,7 +827,7 @@ define(
 
                     $scope.modalUsage = "ResourceEditor";
                     $scope.onModalClose = function () {
-                        uiUtilService.broadcast(scope,
+                        utilService.broadcast(scope,
                             angularEventTypes.resourceEditEndEvent
                         );
                     };
@@ -843,7 +843,7 @@ define(
                     }
 
                     return scope.toggleModalWindow().then(function () {
-                        return uiUtilService.getResolveDefer($el);
+                        return utilService.getResolveDefer($el);
                     });
                 }
 
@@ -859,7 +859,7 @@ define(
                             $exceptionHandler(e);
                         }
 
-                        return uiUtilService.getResolveDefer();
+                        return utilService.getResolveDefer();
                     });
                 }
 
@@ -875,7 +875,7 @@ define(
                             $exceptionHandler(e);
                         }
 
-                        return uiUtilService.getResolveDefer();
+                        return utilService.getResolveDefer();
                     });
                 }
 
@@ -904,7 +904,7 @@ define(
                         var setterName = source && "setTrackablePseudoStyle" || ("set" + name.charAt(0).toUpperCase() + name.substr(1)),
                             setter = obj[setterName];
                         if (setter) {
-                            uiUtilService.once(function (widgetObj, styleSource, setterFn, value) {
+                            utilService.once(function (widgetObj, styleSource, setterFn, value) {
                                 return $timeout(function () {
                                     if (styleSource)
                                         setterFn.apply(widgetObj, [styleSource, value]);
@@ -967,7 +967,7 @@ define(
                                 if (value) {
                                     var m = (value || "").match(/([-\d\.]+)px$/);
                                     if (m && m.length == 2) {
-                                        uiUtilService.once(positionInputHandler, null, angularConstants.unresponsiveInterval, "FrameSketchController.initMaster.createWidgetPositionInputAssign.positionInputHandler." + name)(value);
+                                        utilService.once(positionInputHandler, null, angularConstants.unresponsiveInterval, "FrameSketchController.initMaster.createWidgetPositionInputAssign.positionInputHandler." + name)(value);
                                     }
 
                                     var args = Array.prototype.slice.call(arguments),
@@ -1028,7 +1028,7 @@ define(
                             });
 
                             //If widget is visible, show popup menu holder, else hide holder.
-                            if (uiUtilService.isVisible($rootScope.sketchObject.pickedWidget.$element)) {
+                            if (utilService.isVisible($rootScope.sketchObject.pickedWidget.$element)) {
                                 uiService.displayPopupMenuHolder($rootScope.sketchObject.pickedWidget);
                             } else {
                                 uiService.hidePopupMenuHolder();
@@ -1054,13 +1054,13 @@ define(
                     });
 
                     $scope.beforeWidgetCreationWatcher = $scope.$on(angularEventTypes.beforeWidgetCreationEvent, function (event, fn) {
-                        uiUtilService.once(function (fn) {
+                        utilService.once(function (fn) {
                             return $scope.showWidgetName(fn);
                         }, null, angularConstants.unresponsiveInterval, "FrameSketchController.initMaster.beforeWidgetCreation")(fn);
                     });
 
                     $scope.resourceEditWatcher = $scope.$on(angularEventTypes.resourceEditEvent, function (event, obj) {
-                        uiUtilService.once(function (obj) {
+                        utilService.once(function (obj) {
                             return $scope.showResourceEditor(obj.editor).then(function ($editorEl) {
                                 try {
                                     obj.callback && obj.callback($editorEl);
@@ -1068,7 +1068,7 @@ define(
                                     $exceptionHandler(e);
                                 }
 
-                                return uiUtilService.getResolveDefer();
+                                return utilService.getResolveDefer();
                             })
                         }, null, angularConstants.unresponsiveInterval, "FrameSketchController.initMaster.resourceEditWatcher")(obj);
                     });
@@ -1169,12 +1169,12 @@ define(
                 $scope.pickedControl = "background-image-control";
             }
 
-            function ProjectController($scope, $rootScope, $timeout, $q, angularConstants, appService, uiService, uiFlowService, uiBookService, urlService, uiUtilService) {
+            function ProjectController($scope, $rootScope, $timeout, $q, angularConstants, appService, uiService, uiFlowService, uiBookService, urlService, utilService) {
                 extension && extension.attach && extension.attach($scope, {
                     "$timeout": $timeout,
                     "$q": $q,
                     "angularConstants": angularConstants,
-                    "uiUtilService": uiUtilService,
+                    "utilService": utilService,
                     "element": $(".projectContainer"),
                     "scope": $scope
                 });
@@ -1572,12 +1572,12 @@ define(
                 $scope._ = _;
             }
 
-            function FlowController($scope, $rootScope, $timeout, $q, angularConstants, appService, uiService, uiFlowService, urlService, uiUtilService) {
+            function FlowController($scope, $rootScope, $timeout, $q, angularConstants, appService, uiService, uiFlowService, flowService, urlService, utilService) {
                 extension && extension.attach && extension.attach($scope, {
                     "$timeout": $timeout,
                     "$q": $q,
                     "angularConstants": angularConstants,
-                    "uiUtilService": uiUtilService,
+                    "utilService": utilService,
                     "element": $(".flowContainer"),
                     "scope": $scope
                 });
@@ -1598,7 +1598,7 @@ define(
                         $content.children("[editor='{0}']".format(editor)).addClass("show");
                     }
 
-                    return uiUtilService.getResolveDefer();
+                    return utilService.getResolveDefer();
                 }
 
                 $scope.saveProject = function (event) {
@@ -1612,7 +1612,7 @@ define(
 
                     $rootScope.loadedProject.unload();
 
-                    return uiUtilService.chain(
+                    return utilService.chain(
                         [
                             function () {
                                 return $rootScope.loadedProject.load();
@@ -1639,7 +1639,7 @@ define(
 
                     $("#flowStepTree [ui-tree-handle].edit").removeClass("edit");
 
-                    return uiUtilService.getResolveDefer();
+                    return utilService.getResolveDefer();
                 }
 
                 $scope.deactivateNameEdit = function () {
@@ -1683,7 +1683,7 @@ define(
                         $rootScope.loadedProject.addFlow(uiFlowService.createFlow());
                     }
 
-                    return uiUtilService.getResolveDefer();
+                    return utilService.getResolveDefer();
                 }
 
                 $scope.insertAfterFlowStep = function (step) {
@@ -1702,7 +1702,7 @@ define(
                         }
                     }
 
-                    return uiUtilService.getResolveDefer();
+                    return utilService.getResolveDefer();
                 }
 
                 $scope.insertAfterInvokeFlowStep = function (event) {
@@ -1762,7 +1762,7 @@ define(
                         }
                     }
 
-                    return uiUtilService.getResolveDefer();
+                    return utilService.getResolveDefer();
                 }
 
                 $scope.moveFlowStepUp = function (event) {
@@ -1779,7 +1779,7 @@ define(
                         }
                     }
 
-                    return uiUtilService.getResolveDefer();
+                    return utilService.getResolveDefer();
                 }
 
                 $scope.moveFlowStepDown = function (event) {
@@ -1796,7 +1796,7 @@ define(
                         }
                     }
 
-                    return uiUtilService.getResolveDefer();
+                    return utilService.getResolveDefer();
                 }
 
                 $scope.moveFlowStepLeft = function (event) {
@@ -1829,7 +1829,7 @@ define(
                         }
                     }
 
-                    return uiUtilService.getResolveDefer();
+                    return utilService.getResolveDefer();
                 }
 
                 $scope.moveFlowStepRight = function (event) {
@@ -1862,14 +1862,14 @@ define(
                         }
                     }
 
-                    return uiUtilService.getResolveDefer();
+                    return utilService.getResolveDefer();
                 }
 
                 function initMaster() {
-                    uiFlowService.registerService();
+                    flowService.registerService();
 
                     $scope.$on('$destroy', function () {
-                        uiFlowService.unregisterService();
+                        flowService.unregisterService();
                     });
                 }
 
@@ -1880,12 +1880,12 @@ define(
                 $scope.activeEditor = "process";
             }
 
-            function BookController($scope, $rootScope, $timeout, $q, $log, $exceptionHandler, $compile, $parse, $templateCache, angularEventTypes, angularConstants, appService, uiService, uiBookService, uiUtilService, uiCanvasService) {
+            function BookController($scope, $rootScope, $timeout, $q, $log, $exceptionHandler, $compile, $parse, $templateCache, angularEventTypes, angularConstants, appService, uiService, uiBookService, bookService, utilService, uiCanvasService) {
                 extension && extension.attach && extension.attach($scope, {
                     "$timeout": $timeout,
                     "$q": $q,
                     "angularConstants": angularConstants,
-                    "uiUtilService": uiUtilService,
+                    "utilService": utilService,
                     "element": $(".bookContainer"),
                     "scope": $scope
                 });
@@ -1896,7 +1896,7 @@ define(
 
                 function defineExtensionScopeHandler(extensionScope) {
                     extensionScope.beforeBookWidgetCreationWatcher = extensionScope.$on(angularEventTypes.beforeBookWidgetCreationEvent, function (event, fn) {
-                        uiUtilService.once(function (fn) {
+                        utilService.once(function (fn) {
                             return extensionScope.showBookWidgetName(fn);
                         }, null, angularConstants.unresponsiveInterval, "BookController.defineExtensionScopeHandler.beforeBookWidgetCreationWatcher")(fn);
                     });
@@ -1985,7 +1985,7 @@ define(
                                     x = Math.floor(x * angularConstants.precision) / angularConstants.precision;
                                     y = Math.floor(y * angularConstants.precision) / angularConstants.precision;
 
-                                    uiUtilService.broadcast($scope,
+                                    utilService.broadcast($scope,
                                         angularEventTypes.beforeBookWidgetCreationEvent,
                                         function (name, externalBook, externalBookPage, externalFile, edge) {
                                             if (name) {
@@ -2021,7 +2021,7 @@ define(
                             });
                         }
 
-                        return uiUtilService.getResolveDefer();
+                        return utilService.getResolveDefer();
                     }
 
                     extensionScope.onPickedExternalBook = function (externalBookScope, externalBookName) {
@@ -2040,7 +2040,7 @@ define(
                             return extensionScope.confirmWidgetName(event);
                         }
 
-                        return uiUtilService.getResolveDefer();
+                        return utilService.getResolveDefer();
                     }
 
                     extensionScope.$on('$destroy', function () {
@@ -2068,11 +2068,11 @@ define(
                 }
 
                 function addExtensionSnippet() {
-                    return uiUtilService.whilst(
+                    return utilService.whilst(
                         function () {
                             return !getExtensionScope();
                         }, function (err) {
-                            err || uiUtilService.latestOnce(
+                            err || utilService.latestOnce(
                                 function () {
                                     return $timeout(function () {
                                         var extensionScope = getExtensionScope();
@@ -2096,10 +2096,10 @@ define(
                 function initMaster() {
                     addExtensionSnippet();
 
-                    uiBookService.registerService();
+                    bookService.registerService();
 
                     $scope.$on('$destroy', function () {
-                        uiBookService.unregisterService();
+                        bookService.unregisterService();
                     });
                 }
 
@@ -2107,11 +2107,11 @@ define(
             }
 
             appModule.
-                controller('RootController', ["$scope", "$rootScope", "$q", "$timeout", "angularEventTypes", "angularConstants", "appService", "serviceRegistry", "urlService", "uiUtilService", RootController]).
-                controller('FrameSketchController', ["$scope", "$rootScope", "$timeout", "$q", "$log", "$exceptionHandler", "$compile", "$parse", "angularEventTypes", "angularConstants", "appService", "uiService", "uiUtilService", "uiCanvasService", FrameSketchController]).
-                controller('BookController', ["$scope", "$rootScope", "$timeout", "$q", "$log", "$exceptionHandler", "$compile", "$parse", "$templateCache", "angularEventTypes", "angularConstants", "appService", "uiService", "uiBookService", "uiUtilService", "uiCanvasService", BookController]).
-                controller('FlowController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "uiService", "uiFlowService", "urlService", "uiUtilService", FlowController]).
-                controller('ProjectController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "uiService", "uiFlowService", "uiBookService", "urlService", "uiUtilService", ProjectController]).
+                controller('RootController', ["$scope", "$rootScope", "$q", "$timeout", "angularEventTypes", "angularConstants", "appService", "serviceRegistry", "urlService", "utilService", RootController]).
+                controller('FrameSketchController', ["$scope", "$rootScope", "$timeout", "$q", "$log", "$exceptionHandler", "$compile", "$parse", "angularEventTypes", "angularConstants", "appService", "uiService", "utilService", "uiCanvasService", FrameSketchController]).
+                controller('BookController', ["$scope", "$rootScope", "$timeout", "$q", "$log", "$exceptionHandler", "$compile", "$parse", "$templateCache", "angularEventTypes", "angularConstants", "appService", "uiService", "uiBookService", "bookService", "utilService", "uiCanvasService", BookController]).
+                controller('FlowController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "uiService", "uiFlowService", "flowService", "urlService", "utilService", FlowController]).
+                controller('ProjectController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "uiService", "uiFlowService", "uiBookService", "urlService", "utilService", ProjectController]).
                 controller('RepoController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "urlService", RepoController]).
                 controller('RepoLibController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "urlService", RepoLibController]);
         }

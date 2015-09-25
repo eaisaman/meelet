@@ -2,7 +2,7 @@ define(
     ["angular", "jquery"],
     function () {
         return function ($injector, $compileProvider, $controllerProvider, extension, directiveUrl) {
-            var inject = ["$http", "$timeout", "$q", "$parse", "$compile", "angularConstants", "angularEventTypes", "uiUtilService"],
+            var inject = ["$http", "$timeout", "$q", "$parse", "$compile", "angularConstants", "angularEventTypes", "utilService"],
                 name = "uiWidgetTab",
                 version = "1.0.0",
                 directive = name + version.replace(/\./g, ""),
@@ -11,13 +11,13 @@ define(
 
             if (!$injector.has(directiveService)) {
                 $controllerProvider.
-                    register('uiWidgetTabController', ['$scope', '$transclude', '$q', '$timeout', 'uiUtilService', function ($scope, $transclude, $q, $timeout, uiUtilService) {
+                    register('uiWidgetTabController', ['$scope', '$transclude', '$q', '$timeout', 'utilService', function ($scope, $transclude, $q, $timeout, utilService) {
                         this.transclude = function (name, element) {
                             $transclude && $transclude(function (clone) {
                                 for (var i = 0; i < clone.length; ++i) {
                                     var el = angular.element(clone[i]);
                                     if (el.attr('name') === name) {
-                                        uiUtilService.whilst(
+                                        utilService.whilst(
                                             function () {
                                                 return !el.scope();
                                             }, function (err) {
@@ -45,7 +45,7 @@ define(
                         }
                     }]);
 
-                $compileProvider.directive(directive, _.union(inject, [function ($http, $timeout, $q, $parse, $compile, angularConstants, angularEventTypes, uiUtilService) {
+                $compileProvider.directive(directive, _.union(inject, [function ($http, $timeout, $q, $parse, $compile, angularConstants, angularEventTypes, utilService) {
                     'use strict';
 
                     var injectObj = _.object(inject, Array.prototype.slice.call(arguments));
@@ -110,7 +110,7 @@ define(
                                             }
                                         }
 
-                                        return uiUtilService.getResolveDefer();
+                                        return utilService.getResolveDefer();
                                     }
 
                                     scope.onModifyTabTitles = function (to) {
@@ -191,13 +191,13 @@ define(
                                 },
                                 post: function (scope, element, attrs, ctrl) {
                                     if (element.hasClass(angularConstants.repoWidgetClass)) {
-                                        uiUtilService.whilst(function () {
+                                        utilService.whilst(function () {
                                                 return !(element.closest && element.closest(".widgetContainer").attr("id"));
                                             }, function (err) {
                                                 if (!err) {
                                                     //id of widget of RepoSketchWidgetClass type
                                                     scope.widgetId = element.closest(".widgetContainer").parent().attr("id");
-                                                    uiUtilService.broadcast(scope, angularConstants.widgetEventPattern.format(angularEventTypes.widgetContentIncludedEvent, scope.widgetId), {widgetId: scope.widgetId});
+                                                    utilService.broadcast(scope, angularConstants.widgetEventPattern.format(angularEventTypes.widgetContentIncludedEvent, scope.widgetId), {widgetId: scope.widgetId});
                                                 }
                                             },
                                             angularConstants.checkInterval,

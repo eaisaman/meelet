@@ -1,7 +1,7 @@
 define(
-    ["angular-lib", "jquery-lib", "underscore-lib", "ng.ui.util"],
+    ["angular-lib", "jquery-lib", "underscore-lib", "app-service", "app-service-registry", "app-util", "ng.ui.canvas", "ng.ui.animation"],
     function () {
-        var Service = function ($parse, $timeout, $q, $exceptionHandler, $compile, $rootScope, angularEventTypes, angularConstants, appService, serviceRegistry, uiUtilService, uiCanvasService, uiAnimationService) {
+        var Service = function ($parse, $timeout, $q, $exceptionHandler, $compile, $rootScope, angularEventTypes, angularConstants, appService, serviceRegistry, utilService, uiCanvasService, uiAnimationService) {
             this.$parse = $parse;
             this.$timeout = $timeout;
             this.$q = $q;
@@ -12,16 +12,16 @@ define(
             this.angularConstants = angularConstants;
             this.appService = appService;
             this.serviceRegistry = serviceRegistry;
-            this.uiUtilService = uiUtilService;
+            this.utilService = utilService;
             this.uiCanvasService = uiCanvasService;
             this.uiAnimationService = uiAnimationService;
 
             _.extend($inject, _.pick(this, Service.$inject));
 
-            defineWidgetClass(uiUtilService.createObjectClass(), uiUtilService.findObjectClass());
+            defineWidgetClass(utilService.createObjectClass(), utilService.findObjectClass());
         };
 
-        Service.$inject = ["$parse", "$timeout", "$q", "$exceptionHandler", "$compile", "$rootScope", "angularEventTypes", "angularConstants", "appService", "serviceRegistry", "uiUtilService", "uiCanvasService", "uiAnimationService"];
+        Service.$inject = ["$parse", "$timeout", "$q", "$exceptionHandler", "$compile", "$rootScope", "angularEventTypes", "angularConstants", "appService", "serviceRegistry", "utilService", "uiCanvasService", "uiAnimationService"];
         var $inject = {};
 
         //Define sketch widget class
@@ -105,22 +105,22 @@ define(
                                                 result.splice(0, 0, 0, 0);
                                                 Array.prototype.splice.apply(self.artifactSpecs, result);
 
-                                                return $inject.uiUtilService.getResolveDefer();
+                                                return $inject.utilService.getResolveDefer();
                                             },
                                             function (err) {
-                                                return $inject.uiUtilService.getRejectDefer(err);
+                                                return $inject.utilService.getRejectDefer(err);
                                             }
                                         );
                                     } else {
-                                        return $inject.uiUtilService.getRejectDefer(result.data.reason);
+                                        return $inject.utilService.getRejectDefer(result.data.reason);
                                     }
                                 },
                                 function (err) {
-                                    return $inject.uiUtilService.getRejectDefer(err);
+                                    return $inject.utilService.getRejectDefer(err);
                                 }
                             );
                         } else {
-                            return $inject.uiUtilService.getRejectDefer();
+                            return $inject.utilService.getRejectDefer();
                         }
                     },
                     loadResources: function () {
@@ -141,17 +141,17 @@ define(
                                             }
                                         });
 
-                                        return $inject.uiUtilService.getResolveDefer();
+                                        return $inject.utilService.getResolveDefer();
                                     } else {
-                                        return $inject.uiUtilService.getRejectDefer(result.data.reason);
+                                        return $inject.utilService.getRejectDefer(result.data.reason);
                                     }
                                 },
                                 function (err) {
-                                    return $inject.uiUtilService.getRejectDefer(err);
+                                    return $inject.utilService.getRejectDefer(err);
                                 }
                             );
                         } else {
-                            return $inject.uiUtilService.getRejectDefer();
+                            return $inject.utilService.getRejectDefer();
                         }
                     },
                     addResource: function (resourceType, fileName) {
@@ -231,7 +231,7 @@ define(
                             loadedSpec = _.findWhere(self.artifactSpecs, {artifactId: artifactId, version: version});
 
                         if (loadedSpec) {
-                            return $inject.uiUtilService.getResolveDefer(loadedSpec);
+                            return $inject.utilService.getResolveDefer(loadedSpec);
                         } else {
                             var xref = _.findWhere(self.xrefRecord, {libraryId: libraryId}),
                                 artifact;
@@ -250,14 +250,14 @@ define(
                                     type: xref.type
                                 }, xref.libraryId, xref.libraryName, version).then(
                                     function (loadedSpec) {
-                                        return $inject.uiUtilService.getResolveDefer(loadedSpec);
+                                        return $inject.utilService.getResolveDefer(loadedSpec);
                                     },
                                     function (err) {
-                                        return $inject.uiUtilService.getRejectDefer(err);
+                                        return $inject.utilService.getRejectDefer(err);
                                     }
                                 );
                             } else {
-                                return $inject.uiUtilService.getRejectDefer("Cannot find artifact {0} reference record in project {1}.".format(artifactId, self.projectRecord._id));
+                                return $inject.utilService.getRejectDefer("Cannot find artifact {0} reference record in project {1}.".format(artifactId, self.projectRecord._id));
                             }
                         }
                     },
@@ -427,15 +427,15 @@ define(
                                             }
                                         }
 
-                                        return $inject.uiUtilService.getResolveDefer();
+                                        return $inject.utilService.getResolveDefer();
                                     } else {
-                                        return $inject.uiUtilService.getRejectDefer(result.data.reason);
+                                        return $inject.utilService.getRejectDefer(result.data.reason);
                                     }
                                 }, function (err) {
-                                    return $inject.uiUtilService.getRejectDefer(err);
+                                    return $inject.utilService.getRejectDefer(err);
                                 });
                         } else {
-                            return $inject.uiUtilService.getRejectDefer();
+                            return $inject.utilService.getRejectDefer();
                         }
                     },
                     tryLock: function (userId) {
@@ -446,14 +446,14 @@ define(
                                 function () {
                                     self.projectRecord.lock = true;
 
-                                    return $inject.uiUtilService.getResolveDefer(self);
+                                    return $inject.utilService.getResolveDefer(self);
                                 },
                                 function () {
-                                    return $inject.uiUtilService.getResolveDefer(self);
+                                    return $inject.utilService.getResolveDefer(self);
                                 }
                             );
                         } else {
-                            return $inject.uiUtilService.getResolveDefer(self);
+                            return $inject.utilService.getResolveDefer(self);
                         }
                     },
                     unlock: function (userId) {
@@ -464,14 +464,14 @@ define(
                                 function () {
                                     self.projectRecord.lock = false;
 
-                                    return $inject.uiUtilService.getResolveDefer(self);
+                                    return $inject.utilService.getResolveDefer(self);
                                 },
                                 function (err) {
-                                    return $inject.uiUtilService.getResolveDefer(self);
+                                    return $inject.utilService.getResolveDefer(self);
                                 }
                             );
                         } else {
-                            return $inject.uiUtilService.getResolveDefer(self);
+                            return $inject.utilService.getResolveDefer(self);
                         }
                     },
                     load: function () {
@@ -489,15 +489,15 @@ define(
 
                                     arr.length && _.extend(self.projectRecord, arr[0]);
 
-                                    return $inject.uiUtilService.getResolveDefer(self);
+                                    return $inject.utilService.getResolveDefer(self);
                                 } else {
-                                    return $inject.uiUtilService.getRejectDefer(result[0].data.reason);
+                                    return $inject.utilService.getRejectDefer(result[0].data.reason);
                                 }
                             }, function (err) {
-                                return $inject.uiUtilService.getRejectDefer(err);
+                                return $inject.utilService.getRejectDefer(err);
                             });
                         } else {
-                            return $inject.uiUtilService.getResolveDefer(self);
+                            return $inject.utilService.getResolveDefer(self);
                         }
                     },
                     unload: function () {
@@ -531,13 +531,13 @@ define(
                                     }
                                 );
 
-                                return promiseArr.length && $inject.$q.all(promiseArr) || $inject.uiUtilService.getResolveDefer();
+                                return promiseArr.length && $inject.$q.all(promiseArr) || $inject.utilService.getResolveDefer();
                             }, function (err) {
-                                return $inject.uiUtilService.getRejectDefer(err);
+                                return $inject.utilService.getRejectDefer(err);
                             });
                         }
 
-                        return $inject.uiUtilService.getRejectDefer(err);
+                        return $inject.utilService.getRejectDefer(err);
                     },
                     loadExternal: function () {
                         var self = this;
@@ -550,12 +550,12 @@ define(
                                     Array.prototype.splice.apply(self.externalList, externalItems);
                                 }
 
-                                return $inject.uiUtilService.getResolveDefer(self);
+                                return $inject.utilService.getResolveDefer(self);
                             }, function (err) {
-                                return $inject.uiUtilService.getRejectDefer(err);
+                                return $inject.utilService.getRejectDefer(err);
                             });
                         } else {
-                            return $inject.uiUtilService.getResolveDefer(self);
+                            return $inject.utilService.getResolveDefer(self);
                         }
                     },
                     loadSketch: function () {
@@ -584,12 +584,12 @@ define(
 
                                 self.sketchWorks.pageTransition = sketchWorks.pageTransition || {};
 
-                                return $inject.uiUtilService.getResolveDefer(self);
+                                return $inject.utilService.getResolveDefer(self);
                             }, function (err) {
-                                return $inject.uiUtilService.getRejectDefer(err);
+                                return $inject.utilService.getRejectDefer(err);
                             });
                         } else {
-                            return $inject.uiUtilService.getResolveDefer(self);
+                            return $inject.utilService.getResolveDefer(self);
                         }
                     },
                     saveSketch: function () {
@@ -598,7 +598,7 @@ define(
                         if (self.projectRecord._id) {
                             return $inject.appService.saveSketch(self.projectRecord._id, self.sketchWorks, self.stagingContent);
                         } else {
-                            return $inject.uiUtilService.getResolveDefer();
+                            return $inject.utilService.getResolveDefer();
                         }
                     },
                     convertToHtml: function (userId) {
@@ -607,7 +607,7 @@ define(
                         if (self.projectRecord._id && self.projectRecord.lock) {
                             return $inject.appService.convertToHtml(userId, self.projectRecord._id);
                         } else {
-                            return $inject.uiUtilService.getResolveDefer();
+                            return $inject.utilService.getResolveDefer();
                         }
                     },
                     playSound: function (resourceName) {
@@ -619,7 +619,7 @@ define(
                             }
                         }
 
-                        return $inject.uiUtilService.getResolveDefer();
+                        return $inject.utilService.getResolveDefer();
                     },
                     validateIncludeExternal: function (element, url) {
                         var self = this,
@@ -643,7 +643,7 @@ define(
                             );
                         }
 
-                        return $inject.uiUtilService.getResolveDefer();
+                        return $inject.utilService.getResolveDefer();
                     }
                 }),
                 State = Class({
@@ -678,7 +678,7 @@ define(
                     },
                     toJSON: function () {
                         return _.extend(_.pick(this, ["id", "node", "name", "actionObj"], "CLASS_NAME"), {
-                            transitions: $inject.uiUtilService.arrayOmit(this.transitions, "$$hashKey"),
+                            transitions: $inject.utilService.arrayOmit(this.transitions, "$$hashKey"),
                             context: this.context && this.context.node !== "?" && this.context.id || ""
                         });
                     },
@@ -817,13 +817,13 @@ define(
                                 if (self.actionObj) {
                                     return self.actionObj.doAction();
                                 } else {
-                                    return $inject.uiUtilService.getResolveDefer();
+                                    return $inject.utilService.getResolveDefer();
                                 }
                             }
 
                             doActionHandler.onceId = "Transition.setTrigger.triggerCallback.doActionHandler";
 
-                            return $inject.uiUtilService.once(doActionHandler, null, $inject.angularConstants.unresponsiveInterval)();
+                            return $inject.utilService.once(doActionHandler, null, $inject.angularConstants.unresponsiveInterval)();
                         }
 
                         if (triggerType === "Gesture") {
@@ -912,7 +912,7 @@ define(
                     },
                     toJSON: function () {
                         var jsonObj = SequenceTransitionAction.prototype.__proto__.toJSON.apply(this);
-                        _.extend(jsonObj, _.pick(this, ["stopOnEach", "CLASS_NAME"]), {childActions: $inject.uiUtilService.arrayOmit(this.childActions, "$$hashKey")});
+                        _.extend(jsonObj, _.pick(this, ["stopOnEach", "CLASS_NAME"]), {childActions: $inject.utilService.arrayOmit(this.childActions, "$$hashKey")});
 
                         return jsonObj;
                     },
@@ -985,7 +985,7 @@ define(
                             if (self.chainObject && self.chainObject.isComplete()) self.chainObject = null;
 
                             if (!self.chainObject) {
-                                self.chainObject = $inject.uiUtilService.chain(arr,
+                                self.chainObject = $inject.utilService.chain(arr,
                                     chainId,
                                     $inject.angularConstants.renderTimeout,
                                     self.stopOnEach
@@ -994,7 +994,7 @@ define(
 
                             return self.chainObject.next();
                         } else {
-                            return $inject.uiUtilService.chain(arr,
+                            return $inject.utilService.chain(arr,
                                 chainId,
                                 $inject.angularConstants.renderTimeout
                             );
@@ -1097,18 +1097,18 @@ define(
 
                                 if (self.effect.options.duration) {
                                     _.extend(
-                                        self.cssAnimation, $inject.uiUtilService.prefixedStyle("animation-duration", "{0}s", self.effect.options.duration)
+                                        self.cssAnimation, $inject.utilService.prefixedStyle("animation-duration", "{0}s", self.effect.options.duration)
                                     );
                                 }
                                 if (self.effect.options.timing) {
                                     _.extend(
-                                        self.cssAnimation, $inject.uiUtilService.prefixedStyle("timing-function", "{0}", self.effect.options.timing)
+                                        self.cssAnimation, $inject.utilService.prefixedStyle("timing-function", "{0}", self.effect.options.timing)
                                     );
                                 }
 
                                 self.widgetObj.$element.css(self.cssAnimation);
 
-                                $inject.uiUtilService.onAnimationEnd(self.widgetObj.$element).then(function () {
+                                $inject.utilService.onAnimationEnd(self.widgetObj.$element).then(function () {
                                     self.restoreWidget();
                                     defer.resolve(self);
                                 });
@@ -1191,7 +1191,7 @@ define(
                             if (ret && ret.then) {
                                 return ret;
                             } else {
-                                return $inject.uiUtilService.getResolveDefer();
+                                return $inject.utilService.getResolveDefer();
                             }
                         });
                     },
@@ -1220,14 +1220,14 @@ define(
                     toJSON: function () {
                         var jsonObj = ConfigurationTransitionAction.prototype.__proto__.toJSON.apply(this);
 
-                        var configuration = $inject.uiUtilService.arrayOmit(this.configuration, ["$$hashKey", "widget"]),
+                        var configuration = $inject.utilService.arrayOmit(this.configuration, ["$$hashKey", "widget"]),
                             arr = [];
                         configuration.forEach(function (configurationItem) {
                             if (configurationItem.pickedValue != null) {
                                 var config = {key: configurationItem.key};
 
                                 if (configurationItem.type === "boundWriteList") {
-                                    config.pickedValue = $inject.uiUtilService.arrayOmit(configurationItem.pickedValue, "$$hashKey");
+                                    config.pickedValue = $inject.utilService.arrayOmit(configurationItem.pickedValue, "$$hashKey");
                                 } else {
                                     config.pickedValue = configurationItem.pickedValue;
                                 }
@@ -1281,7 +1281,7 @@ define(
                                 if (self.widgetObj.$element && self.widgetObj.$element[0].nodeType == 1 && self.widgetObj.$element.parent().length) {
                                     var animationName = self.widgetObj.$element.css("animation-name");
                                     if (animationName && animationName !== "none") {
-                                        $inject.uiUtilService.onAnimationEnd(self.widgetObj.$element).then(function () {
+                                        $inject.utilService.onAnimationEnd(self.widgetObj.$element).then(function () {
                                             defer.resolve(self);
                                         });
                                     }
@@ -1430,7 +1430,7 @@ define(
                         var jsonObj = MovementTransitionAction.prototype.__proto__.toJSON.apply(this);
 
                         _.extend(jsonObj, _.pick(this, ["CLASS_NAME", "routeIndex"]), {
-                            settings: $inject.uiUtilService.arrayOmit(this.settings, "$$hashKey", "options", "name", "type")
+                            settings: $inject.utilService.arrayOmit(this.settings, "$$hashKey", "options", "name", "type")
                         });
 
                         return jsonObj;
@@ -1510,7 +1510,7 @@ define(
                         return cloneObj;
                     },
                     doAction: function () {
-                        return this.resourceName && $inject.$rootScope.loadedProject.playSound(this.resourceName) || $inject.uiUtilService.getResolveDefer();
+                        return this.resourceName && $inject.$rootScope.loadedProject.playSound(this.resourceName) || $inject.utilService.getResolveDefer();
                     }
                 }),
                 ServiceInvokeTransitionAction = Class(BaseTransitionAction, {
@@ -1535,7 +1535,7 @@ define(
                     toJSON: function () {
                         var jsonObj = ServiceInvokeTransitionAction.prototype.__proto__.toJSON.apply(this);
                         _.extend(jsonObj, _.pick(this, ["feature", "serviceName", "communicationType", "input", "timeout", "CLASS_NAME"]),
-                            {parameters: $inject.uiUtilService.arrayOmit(this.parameters, "$$hashKey")}
+                            {parameters: $inject.utilService.arrayOmit(this.parameters, "$$hashKey")}
                         );
 
                         return jsonObj;
@@ -1584,13 +1584,13 @@ define(
                             switch (self.communicationType) {
                                 case "one-way":
                                     fn.apply(null, args);
-                                    return $inject.uiUtilService.getResolveDefer();
+                                    return $inject.utilService.getResolveDefer();
                                 case "callback":
                                     var ret = fn.apply(null, args);
                                     if (ret && ret.then) {
                                         p = ret;
                                     } else {
-                                        return $inject.uiUtilService.getRejectDefer("Expect return promise after invoking function " + self.serviceName + " of callback type.");
+                                        return $inject.utilService.getRejectDefer("Expect return promise after invoking function " + self.serviceName + " of callback type.");
                                     }
                                 case "event":
                                     var eventHandler;
@@ -1605,11 +1605,11 @@ define(
                                     fn.apply(eventHandler, args);
                                     break;
                                 default:
-                                    return $inject.uiUtilService.getRejectDefer("Invalid communication type " + self.communicationType);
+                                    return $inject.utilService.getRejectDefer("Invalid communication type " + self.communicationType);
                             }
 
                             if (self.timeout > 0) {
-                                return $inject.uiUtilService.timeout(
+                                return $inject.utilService.timeout(
                                     function () {
                                         return p;
                                     },
@@ -1621,7 +1621,7 @@ define(
                             }
                         }
 
-                        return $inject.uiUtilService.getRejectDefer("Function {0} not found on implementation of feature {1}".format(self.serviceName, self.feature));
+                        return $inject.utilService.getRejectDefer("Function {0} not found on implementation of feature {1}".format(self.serviceName, self.feature));
                     }
                 }),
                 BaseTrigger = Class({
@@ -2230,7 +2230,7 @@ define(
                         if (stateValue !== stateMap[state.name]) stateMap[state.name] = stateValue;
 
                         if (!_.isEmpty(stateValue.beforeStyle) || !_.isEmpty(stateValue.afterStyle)) {
-                            $inject.uiUtilService.latestOnce(
+                            $inject.utilService.latestOnce(
                                 appendToPseudoEnabledWidgets,
                                 null,
                                 null,
@@ -2255,7 +2255,7 @@ define(
                         var self = this;
 
                         if (self.widgetObj.$element) {
-                            var styleObj = $inject.uiUtilService.composeCssStyle(styleName, styleValue);
+                            var styleObj = $inject.utilService.composeCssStyle(styleName, styleValue);
                             styleObj && _.each(styleObj, function (value, key) {
                                 if (toString.call(value) === '[object Array]') {
                                     value.forEach(function (v) {
@@ -2453,20 +2453,20 @@ define(
                             });
 
                             if (promiseArr.length) {
-                                return $inject.uiUtilService.chain(
+                                return $inject.utilService.chain(
                                     [
                                         function () {
                                             return $inject.$q.all(promiseArr);
                                         },
                                         function () {
                                             self.remove();
-                                            return $inject.uiUtilService.getResolveDefer();
+                                            return $inject.utilService.getResolveDefer();
                                         }
                                     ]
                                 );
                             } else {
                                 self.remove();
-                                return $inject.uiUtilService.getResolveDefer();
+                                return $inject.utilService.getResolveDefer();
                             }
                         },
                         startMatchReference: function () {
@@ -2493,9 +2493,9 @@ define(
                             return _.extend(_.pick(this, ["id", "name", "anchor", "attr", "styleManager"]), {
                                 state: this.state.id,
                                 stateContext: this.stateContext.node !== "?" && this.stateContext.id || "",
-                                childWidgets: $inject.uiUtilService.arrayOmit(this.childWidgets, "$$hashKey"),
-                                states: $inject.uiUtilService.arrayOmit(this.states, "$$hashKey"),
-                                stateOptions: $inject.uiUtilService.arrayOmit(this.stateOptions, "$$hashKey")
+                                childWidgets: $inject.utilService.arrayOmit(this.childWidgets, "$$hashKey"),
+                                states: $inject.utilService.arrayOmit(this.states, "$$hashKey"),
+                                stateOptions: $inject.utilService.arrayOmit(this.stateOptions, "$$hashKey")
                             });
                         },
                         fromObject: function (obj) {
@@ -2582,10 +2582,10 @@ define(
                         handleEventOnce: function (fn) {
                             var self = this;
 
-                            return $inject.uiUtilService.once(function () {
+                            return $inject.utilService.once(function () {
                                 var result = fn() || {};
 
-                                return result.then && result || $inject.uiUtilService.getResolveDefer();
+                                return result.then && result || $inject.utilService.getResolveDefer();
                             }, null, $inject.angularConstants.eventThrottleInterval, "BaseSketchWidgetClass.handleEventOnce.{0}".format(self.id));
                         },
                         parent: function () {
@@ -2739,7 +2739,7 @@ define(
                                     self.deregisterOnPlaying = self.deregisterOnPlaying || $inject.$rootScope.$on(
                                             $inject.angularEventTypes.playProjectEvent,
                                             function (event, value) {
-                                                $inject.uiUtilService.latestOnce(
+                                                $inject.utilService.latestOnce(
                                                     function () {
                                                         return $inject.$timeout(
                                                             function () {
@@ -2771,11 +2771,11 @@ define(
                                     if (promiseArr.length) {
                                         return $inject.$q.all(promiseArr);
                                     } else {
-                                        return $inject.uiUtilService.getResolveDefer(self);
+                                        return $inject.utilService.getResolveDefer(self);
                                     }
                                 },
                                 function (err) {
-                                    return $inject.uiUtilService.getRejectDefer(err);
+                                    return $inject.utilService.getRejectDefer(err);
                                 }
                             );
                         },
@@ -2978,7 +2978,7 @@ define(
                                 self.deregisterOnPlaying = self.deregisterOnPlaying || $inject.$rootScope.$on(
                                         $inject.angularEventTypes.playProjectEvent,
                                         function (event, value) {
-                                            $inject.uiUtilService.latestOnce(
+                                            $inject.utilService.latestOnce(
                                                 function () {
                                                     return $inject.$timeout(
                                                         function () {
@@ -2997,12 +2997,12 @@ define(
 
                             return promiseArr.length && $inject.$q.all(promiseArr).then(
                                     function () {
-                                        return $inject.uiUtilService.getResolveDefer(self);
+                                        return $inject.utilService.getResolveDefer(self);
                                     },
                                     function (err) {
-                                        return $inject.uiUtilService.getRejectDefer(err);
+                                        return $inject.utilService.getRejectDefer(err);
                                     }
-                                ) || $inject.uiUtilService.getResolveDefer(self);
+                                ) || $inject.utilService.getResolveDefer(self);
                         },
                         moveAfter: function () {
                             var self = this,
@@ -3154,7 +3154,7 @@ define(
                                                         //Enable trigger after action is performed.
                                                         self.registerTrigger();
 
-                                                        return $inject.uiUtilService.getResolveDefer();
+                                                        return $inject.utilService.getResolveDefer();
                                                     }
                                                 );
                                             } else {
@@ -3378,8 +3378,8 @@ define(
                                 $parent = self.$element && self.$element[0].nodeType == 1 && self.$element.parent();
 
                             if ($parent && $parent.length) {
-                                var height = $inject.uiUtilService.calculateHeight($parent),
-                                    width = $inject.uiUtilService.calculateWidth($parent);
+                                var height = $inject.utilService.calculateHeight($parent),
+                                    width = $inject.utilService.calculateWidth($parent);
 
                                 self.css("width", width + "px");
                                 self.css("height", height + "px");
@@ -3392,7 +3392,7 @@ define(
                                 $parent = self.$element && self.$element[0].nodeType == 1 && self.$element.parent();
 
                             if ($parent && $parent.length) {
-                                var height = $inject.uiUtilService.calculateHeight($parent);
+                                var height = $inject.utilService.calculateHeight($parent);
 
                                 self.css("height", height + "px");
                                 self.css("top", "0px");
@@ -3403,7 +3403,7 @@ define(
                                 $parent = self.$element && self.$element[0].nodeType == 1 && self.$element.parent();
 
                             if ($parent && $parent.length) {
-                                var width = $inject.uiUtilService.calculateWidth($parent);
+                                var width = $inject.utilService.calculateWidth($parent);
 
                                 self.css("width", width + "px");
                                 self.css("left", "0px");
@@ -3433,7 +3433,7 @@ define(
                                 defer = $inject.$q.defer();
 
                             self.css(animation);
-                            self.$element && self.$element[0].nodeType == 1 && self.$element.parent().length && $inject.uiUtilService.onAnimationEnd(self.$element).then(function () {
+                            self.$element && self.$element[0].nodeType == 1 && self.$element.parent().length && $inject.utilService.onAnimationEnd(self.$element).then(function () {
                                 defer.resolve();
                             }) || $inject.$timeout(function () {
                                 defer.resolve();
@@ -3527,7 +3527,7 @@ define(
 
                                     var styles = [];
                                     styles.push("-webkit-gradient(linear, {0}% {1}%, {2}% {3}%, {4})".format(x1, y1, x2, y2, webkitStops.join(",")));
-                                    $inject.uiUtilService.prefixedStyleValue("{0}linear-gradient({1}deg, {2})", value.angle, stops.join(",")).forEach(
+                                    $inject.utilService.prefixedStyleValue("{0}linear-gradient({1}deg, {2})", value.angle, stops.join(",")).forEach(
                                         function (gradientStyleValue) {
                                             styles.push(gradientStyleValue);
                                         }
@@ -3563,7 +3563,7 @@ define(
                                                     colorStopList.push({
                                                         percent: parseInt(s[2]),
                                                         color: color,
-                                                        backgroundColor: $inject.uiUtilService.contrastColor(color) === "#ffffff" ? $inject.uiUtilService.lighterColor(color, 0.5) : $inject.uiUtilService.lighterColor(color, -0.5)
+                                                        backgroundColor: $inject.utilService.contrastColor(color) === "#ffffff" ? $inject.utilService.lighterColor(color, 0.5) : $inject.utilService.lighterColor(color, -0.5)
                                                     });
                                                 }
                                             });
@@ -3596,7 +3596,7 @@ define(
                                             color: value,
                                             minPercent: 0,
                                             maxPercent: 100,
-                                            backgroundColor: $inject.uiUtilService.contrastColor(value) === "#ffffff" ? $inject.uiUtilService.lighterColor(value, 0.5) : $inject.uiUtilService.lighterColor(value, -0.5)
+                                            backgroundColor: $inject.utilService.contrastColor(value) === "#ffffff" ? $inject.utilService.lighterColor(value, 0.5) : $inject.utilService.lighterColor(value, -0.5)
                                         }
                                     ]
                                 };
@@ -3656,11 +3656,16 @@ define(
                         _.each(ElementSketchWidgetClass.prototype.DEFAULT_STYLE, function (styleValue, styleName) {
                             !self.css(styleName) && self.css(styleName, angular.copy(styleValue));
                         });
+
+                        //Not called by inheriting class
+                        if (this.CLASS_NAME == arguments.callee.prototype.CLASS_NAME) {
+                            $inject.utilService.onceWrapper(this, "appendTo");
+                        }
                     },
                     toJSON: function () {
                         var jsonObj = ElementSketchWidgetClass.prototype.__proto__.toJSON.apply(this);
                         _.extend(jsonObj, _.pick(this, ["CLASS_NAME", "html", "markdown"]), {
-                            routes: $inject.uiUtilService.arrayOmit(this.routes, "currentStop", "point", "$$hashKey")
+                            routes: $inject.utilService.arrayOmit(this.routes, "currentStop", "point", "$$hashKey")
                         });
 
                         return jsonObj;
@@ -3702,10 +3707,10 @@ define(
                         return ElementSketchWidgetClass.prototype.__proto__.appendTo.apply(self, [container]).then(
                             function () {
                                 self.html && self.setHtml(self.html);
-                                return $inject.uiUtilService.getResolveDefer(self);
+                                return $inject.utilService.getResolveDefer(self);
                             },
                             function (err) {
-                                return $inject.uiUtilService.getRejectDefer(err);
+                                return $inject.utilService.getRejectDefer(err);
                             }
                         );
                     },
@@ -4233,6 +4238,11 @@ define(
                         }
 
                         this.template = template;
+
+                        //Not called by inheriting class
+                        if (this.CLASS_NAME == arguments.callee.prototype.CLASS_NAME) {
+                            $inject.utilService.onceWrapper(this, "appendTo");
+                        }
                     },
                     dispose: function () {
                         var self = this;
@@ -4298,12 +4308,12 @@ define(
                                         //FIXME contentIncludeWatcher needs to be called when the holding page is unloaded.
                                     }
 
-                                    return $inject.uiUtilService.getResolveDefer(self);
+                                    return $inject.utilService.getResolveDefer(self);
                                 } else {
-                                    return $inject.uiUtilService.getRejectDefer("Invalid Element {0}".format(self.id));
+                                    return $inject.utilService.getRejectDefer("Invalid Element {0}".format(self.id));
                                 }
                             }, function (err) {
-                                return $inject.uiUtilService.getRejectDefer(err);
+                                return $inject.utilService.getRejectDefer(err);
                             }
                         );
                     },
@@ -4318,7 +4328,7 @@ define(
 
                         self.$element.addClass($inject.angularConstants.widgetClasses.widgetIncludeAnchorClass);
 
-                        $inject.uiUtilService.whilst(
+                        $inject.utilService.whilst(
                             function () {
                                 return !self.$element.children("." + $inject.angularConstants.widgetClasses.widgetContainerClass).length;
                             }, function (err) {
@@ -4342,14 +4352,14 @@ define(
                         var self = this;
 
                         return function (event, obj) {
-                            $inject.uiUtilService.whilst(
+                            $inject.utilService.whilst(
                                 function () {
                                     var widgetScope = angular.element(self.$element.find("[widget-container]:nth-of-type(1)").first().children()[0]).scope();
 
                                     return !widgetScope || widgetScope.widgetId !== self.id;
                                 }, function (err) {
                                     if (!err) {
-                                        $inject.uiUtilService.latestOnce(
+                                        $inject.utilService.latestOnce(
                                             function () {
                                                 var defer = $inject.$q.defer();
 
@@ -4385,7 +4395,7 @@ define(
                                                     }
 
                                                     if (anchors.length) {
-                                                        $inject.uiUtilService.whilst(
+                                                        $inject.utilService.whilst(
                                                             function () {
                                                                 return !anchors.every(function (anchor) {
                                                                     return self.$element.find("[{0}='{1}']".format($inject.angularConstants.anchorAttr, anchor)).length;
@@ -4472,6 +4482,11 @@ define(
                         _.each(RepoSketchWidgetClass.prototype.DEFAULT_STYLE, function (styleValue, styleName) {
                             !self.css(styleName) && self.css(styleName, angular.copy(styleValue));
                         });
+
+                        //Not called by inheriting class
+                        if (this.CLASS_NAME == arguments.callee.prototype.CLASS_NAME) {
+                            $inject.utilService.onceWrapper(this, "appendTo");
+                        }
                     },
                     dispose: function () {
                         var self = this;
@@ -4483,7 +4498,7 @@ define(
                         return RepoSketchWidgetClass.prototype.__proto__.dispose.apply(self).then(function () {
                             return $inject.$rootScope.loadedProject.deleteConfigurableArtifact(self.id, self.widgetSpec.artifactId);
                         }, function (err) {
-                            return $inject.uiUtilService.getRejectDefer(err);
+                            return $inject.utilService.getRejectDefer(err);
                         });
                     },
                     toJSON: function () {
@@ -4495,7 +4510,7 @@ define(
                         _.each(this.widgetSpec.configuration.handDownConfiguration, function (config, key) {
                             if (config.pickedValue != null) {
                                 if (config.type === "boundWriteList") {
-                                    handDownConfiguration[key] = {pickedValue: $inject.uiUtilService.arrayOmit(config.pickedValue, "$$hashKey")};
+                                    handDownConfiguration[key] = {pickedValue: $inject.utilService.arrayOmit(config.pickedValue, "$$hashKey")};
                                 } else {
                                     handDownConfiguration[key] = {pickedValue: config.pickedValue};
                                 }
@@ -4505,7 +4520,7 @@ define(
                         _.each(_.omit(this.widgetSpec.configuration, "state", "handDownConfiguration"), function (config, key) {
                             if (config.pickedValue != null) {
                                 if (config.type === "boundWriteList") {
-                                    configuration[key] = {pickedValue: $inject.uiUtilService.arrayOmit(config.pickedValue, "$$hashKey")};
+                                    configuration[key] = {pickedValue: $inject.utilService.arrayOmit(config.pickedValue, "$$hashKey")};
                                 } else {
                                     configuration[key] = {pickedValue: config.pickedValue};
                                 }
@@ -4615,7 +4630,7 @@ define(
                                     });
                                 }
 
-                                return $inject.uiUtilService.chain(
+                                return $inject.utilService.chain(
                                     [
                                         function () {
                                             return $inject.appService.addConfigurableArtifact(
@@ -4637,7 +4652,7 @@ define(
                                 );
                             },
                             function (err) {
-                                return $inject.uiUtilService.getRejectDefer(err);
+                                return $inject.utilService.getRejectDefer(err);
                             }
                         );
                     },
@@ -4716,7 +4731,7 @@ define(
                         }
 
                         if (self.$element && self.$element[0].nodeType == 1 && self.$element.parent().length) {
-                            $inject.uiUtilService.whilst(function () {
+                            $inject.utilService.whilst(function () {
                                     var scope = angular.element(self.$element.find("[widget-container]:nth-of-type(1)").first().children()[0]).scope();
                                     return !scope || scope.widgetId !== self.id;
                                 }, function (err) {
@@ -4830,16 +4845,16 @@ define(
                                         function () {
                                             self.handDownConfigurationList.splice(0);
 
-                                            return $inject.uiUtilService.getResolveDefer();
+                                            return $inject.utilService.getResolveDefer();
                                         },
                                         function (err) {
-                                            $inject.uiUtilService.getRejectDefer(err);
+                                            $inject.utilService.getRejectDefer(err);
                                         }
                                     )
                                 ]
                             );
                         } else {
-                            return $inject.uiUtilService.getResolveDefer();
+                            return $inject.utilService.getResolveDefer();
                         }
                     },
                     addState: function () {
@@ -4893,6 +4908,11 @@ define(
                         }
 
                         this.resizable = false;
+
+                        //Not called by inheriting class
+                        if (this.CLASS_NAME == arguments.callee.prototype.CLASS_NAME) {
+                            $inject.utilService.onceWrapper(this, "appendTo");
+                        }
                     },
                     toJSON: function () {
                         var jsonObj = PageSketchWidgetClass.prototype.__proto__.toJSON.apply(this);
@@ -5045,8 +5065,8 @@ define(
                                 $next.css("visibility", "visible");
 
                                 return self.$q.all([
-                                    self.uiUtilService.onAnimationEnd($current),
-                                    self.uiUtilService.onAnimationEnd($next)
+                                    self.utilService.onAnimationEnd($current),
+                                    self.utilService.onAnimationEnd($next)
                                 ]).then(function () {
                                     $current.removeClass("forward");
                                     $current.removeAttr("effect");
@@ -5054,7 +5074,7 @@ define(
                                     $next.css("visibility", "");
                                     self.setCurrentPage(pageObj.nextSibling);
 
-                                    return self.uiUtilService.getResolveDefer();
+                                    return self.utilService.getResolveDefer();
                                 });
 
                             } else {
@@ -5064,17 +5084,17 @@ define(
                                     fullName && $current.removeAttr(fullName);
                                     self.setCurrentPage(pageObj.nextSibling);
 
-                                    return self.uiUtilService.getResolveDefer();
+                                    return self.utilService.getResolveDefer();
                                 });
                             }
                         },
                         function (err) {
-                            return self.uiUtilService.getRejectDefer(err);
+                            return self.utilService.getRejectDefer(err);
                         }
                     );
                 }
 
-                return self.uiUtilService.getResolveDefer();
+                return self.utilService.getResolveDefer();
             }
 
             Service.prototype.prevPage = function (pageObj) {
@@ -5106,8 +5126,8 @@ define(
                                 $prev.css("visibility", "visible");
 
                                 return self.$q.all([
-                                    self.uiUtilService.onAnimationEnd($current),
-                                    self.uiUtilService.onAnimationEnd($prev)
+                                    self.utilService.onAnimationEnd($current),
+                                    self.utilService.onAnimationEnd($prev)
                                 ]).then(function () {
                                     $prev.removeClass("backward previousPage");
                                     $prev.removeAttr("effect");
@@ -5115,7 +5135,7 @@ define(
                                     $prev.css("visibility", "");
                                     self.setCurrentPage(pageObj.prevSibling);
 
-                                    return self.uiUtilService.getResolveDefer();
+                                    return self.utilService.getResolveDefer();
                                 });
 
                             } else {
@@ -5125,17 +5145,17 @@ define(
                                     fullName && $prev.removeAttr(fullName);
                                     self.setCurrentPage(pageObj.prevSibling);
 
-                                    return self.uiUtilService.getResolveDefer();
+                                    return self.utilService.getResolveDefer();
                                 });
                             }
                         },
                         function (err) {
-                            return self.uiUtilService.getRejectDefer(err);
+                            return self.utilService.getRejectDefer(err);
                         }
                     );
                 }
 
-                return self.uiUtilService.getResolveDefer();
+                return self.utilService.getResolveDefer();
             }
 
             Service.prototype.loadPage = function (currentPageObj, pageObj, markCurrent) {
@@ -5179,17 +5199,17 @@ define(
                             var scope = angular.element($container).scope();
                             self.$compile(pageObj.$element)(scope);
 
-                            return self.uiUtilService.getResolveDefer(pageObj);
+                            return self.utilService.getResolveDefer(pageObj);
                         }, function (err) {
                             self.$exceptionHandler(err);
-                            return self.uiUtilService.getRejectDefer(err);
+                            return self.utilService.getRejectDefer(err);
                         });
                     } else {
-                        return self.uiUtilService.getRejectDefer("The number of pages in dom exceeds maximum limit.");
+                        return self.utilService.getRejectDefer("The number of pages in dom exceeds maximum limit.");
                     }
                 }
 
-                return self.uiUtilService.getResolveDefer(pageObj);
+                return self.utilService.getResolveDefer(pageObj);
             }
 
             Service.prototype.setCurrentPage = function (pageObj) {
@@ -5366,17 +5386,17 @@ define(
                                 var parentScope = angular.element($parent).scope();
                                 self.$compile(widgetObj.$element)(parentScope);
 
-                                return self.uiUtilService.getResolveDefer(widgetObj);
+                                return self.utilService.getResolveDefer(widgetObj);
                             },
                             function (err) {
-                                return self.uiUtilService.getRejectDefer(err);
+                                return self.utilService.getRejectDefer(err);
                             }
                         );
 
                     }
                 }
 
-                return self.uiUtilService.getRejectDefer();
+                return self.utilService.getRejectDefer();
             }
 
             Service.prototype.copyWidget = function (widgetObj, containerElement) {
@@ -5409,7 +5429,7 @@ define(
                         var parentScope = angular.element($parent).scope();
                         self.$compile(cloneObj.$element)(parentScope);
 
-                        return self.uiUtilService.whilst(
+                        return self.utilService.whilst(
                             function () {
                                 return !cloneObj.$element.data("sketch-widget-hammer");
                             }, function () {
@@ -5422,15 +5442,15 @@ define(
                             "Service.copyWidget." + cloneObj.id,
                             self.angularConstants.renderTimeout).then(
                             function () {
-                                return self.uiUtilService.getResolveDefer(cloneObj);
+                                return self.utilService.getResolveDefer(cloneObj);
                             }, function (err) {
-                                return self.uiUtilService.getRejectDefer(err);
+                                return self.utilService.getRejectDefer(err);
                             }
                         );
                     });
 
 
-                    return self.uiUtilService.getRejectDefer();
+                    return self.utilService.getRejectDefer();
                 }
             }
 
@@ -5594,7 +5614,7 @@ define(
                 self.$rootScope.loadedProject = new Project(dbObject);
 
                 //FIXME Need display error alert here.
-                return this.uiUtilService.chain(
+                return this.utilService.chain(
                     [
                         function () {
                             return self.$rootScope.loadedProject.loadDependencies();

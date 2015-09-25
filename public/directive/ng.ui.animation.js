@@ -1,19 +1,19 @@
 define(
     ["angular-lib", "jquery-lib", "velocity-lib"],
     function () {
-        var SketchAnimation = function ($log, $compile, $parse, $timeout, $q, $exceptionHandler, uiUtilService, angularConstants, angularEventTypes) {
+        var SketchAnimation = function ($log, $compile, $parse, $timeout, $q, $exceptionHandler, utilService, angularConstants, angularEventTypes) {
             this.$log = $log;
             this.$compile = $compile;
             this.$parse = $parse;
             this.$timeout = $timeout;
             this.$q = $q;
             this.$exceptionHandler = $exceptionHandler;
-            this.uiUtilService = uiUtilService;
+            this.utilService = utilService;
             this.angularConstants = angularConstants;
             this.angularEventTypes = angularEventTypes;
         };
 
-        SketchAnimation.$inject = ["$log", "$compile", "$parse", "$timeout", "$q", "$exceptionHandler", "uiUtilService", "angularConstants", "angularEventTypes"];
+        SketchAnimation.$inject = ["$log", "$compile", "$parse", "$timeout", "$q", "$exceptionHandler", "utilService", "angularConstants", "angularEventTypes"];
 
         SketchAnimation.prototype.moveWidget = function ($element, routes, routeIndex, settings) {
             var self = this;
@@ -57,7 +57,7 @@ define(
                 }
             }
 
-            return self.uiUtilService.getResolveDefer();
+            return self.utilService.getResolveDefer();
         }
 
         SketchAnimation.prototype.doAnimation = function ($element, effect) {
@@ -75,7 +75,7 @@ define(
                 return defer.promise;
             }
 
-            return self.uiUtilService.getResolveDefer();
+            return self.utilService.getResolveDefer();
         }
 
         return function (appModule) {
