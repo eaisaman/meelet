@@ -1390,7 +1390,6 @@ define(
 
                 initMaster();
 
-                $scope.classie = classie;
                 $scope._ = _;
             }
 
@@ -1514,11 +1513,19 @@ define(
                 });
 
 
-                $scope.classie = classie;
                 $scope._ = _;
             }
 
-            function RepoController($scope, $rootScope, $timeout, $q, angularConstants, appService, urlService) {
+            function RepoController($scope, $rootScope, $timeout, $q, angularConstants, appService, urlService, utilService) {
+                extension && extension.attach && extension.attach($scope, {
+                    "$timeout": $timeout,
+                    "$q": $q,
+                    "angularConstants": angularConstants,
+                    "utilService": utilService,
+                    "element": $(".repoContainer"),
+                    "scope": $scope
+                });
+
                 $scope.setRepoType = function (repoTypeValue) {
                     appService.getRepoLibrary(repoTypeValue && {type: repoTypeValue} || {}).then(function (result) {
                         $rootScope.repoLibraryList = result.data.result == "OK" && result.data.resultValue || [];
@@ -1568,7 +1575,6 @@ define(
                 initMaster();
 
                 $scope.repoTypes = angularConstants.repoTypes;
-                $scope.classie = classie;
                 $scope._ = _;
             }
 
@@ -1875,7 +1881,6 @@ define(
 
                 initMaster();
 
-                $scope.classie = classie;
                 $scope._ = _;
                 $scope.activeEditor = "process";
             }
@@ -2112,7 +2117,7 @@ define(
                 controller('BookController', ["$scope", "$rootScope", "$timeout", "$q", "$log", "$exceptionHandler", "$compile", "$parse", "$templateCache", "angularEventTypes", "angularConstants", "appService", "uiService", "uiBookService", "bookService", "utilService", "uiCanvasService", BookController]).
                 controller('FlowController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "uiService", "uiFlowService", "flowService", "urlService", "utilService", FlowController]).
                 controller('ProjectController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "uiService", "uiFlowService", "uiBookService", "urlService", "utilService", ProjectController]).
-                controller('RepoController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "urlService", RepoController]).
+                controller('RepoController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "urlService", "utilService", RepoController]).
                 controller('RepoLibController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "urlService", RepoLibController]);
         }
     });

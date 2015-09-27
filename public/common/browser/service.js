@@ -1,7 +1,7 @@
 define(
     ["angular-lib", "jquery-lib", "underscore-lib", "app-util", "app-service-registry"],
     function () {
-        return function (appModule, meta) {
+        return function (appModule, extension, meta) {
             var FEATURE = "BaseService",
                 PLATFORM = "browser",
                 appService = function ($rootScope, $http, $timeout, $q, $exceptionHandler, $compile, $cookies, $cookieStore, utilService, angularConstants, angularEventTypes, serviceRegistry) {
@@ -1407,67 +1407,72 @@ define(
                 if (fn) {
                     return fn(state);
                 } else {
-                    var defer = self.$q.defer(),
-                        widgetName;
-
-                    //Accept widget name
-                    if (!/Widget_\d+$/.test(id)) {
-                        widgetName = id;
-                        id = null;
-                    }
-
-                    self.utilService.whilst(function () {
-                            return widgetName ? !document.getElementsByName(widgetName).length : !document.getElementById(id);
-                        },
-                        function (err) {
-                            if (!err) {
-                                var $widgetElement;
-                                if (widgetName) {
-                                    var element = document.getElementsByName(widgetName)[0];
-                                    $widgetElement = $(element);
-                                    id = element.id;
-                                } else {
-                                    $widgetElement = $("#" + id);
-                                }
-
-                                $widgetElement.attr("state", state);
-                                if ($widgetElement.hasClass(self.angularConstants.widgetClasses.widgetIncludeAnchorClass)) {
-                                    self.utilService.whilst(function () {
-                                            var scope = angular.element($widgetElement.find("[widget-container]:nth-of-type(1)").first().children()[0]).scope();
-                                            return !scope;
-                                        }, function (err) {
-                                            if (!err) {
-                                                var scope = angular.element($widgetElement.find("[widget-container]:nth-of-type(1)").first().children()[0]).scope();
-                                                scope.state = state;
-                                                defer.resolve();
-                                            } else {
-                                                defer.reject(err);
-                                            }
-                                        },
-                                        self.angularConstants.checkInterval,
-                                        "appService.setState.RepoSketchWidget." + id,
-                                        self.angularConstants.renderTimeout
-                                    )
-                                } else {
-                                    var animationName = $widgetElement.css("animation-name");
-                                    if (animationName && animationName !== "none") {
-                                        self.utilService.onAnimationEnd($widgetElement).then(function () {
-                                            defer.resolve();
-                                        });
-                                    } else {
-                                        defer.resolve();
-                                    }
-                                }
-                            } else {
-                                defer.reject(err);
-                            }
-                        },
-                        self.angularConstants.checkInterval,
-                        "appService.setState.{0}({1})".format(id || "", widgetName || ""),
-                        self.angularConstants.renderTimeout);
-
-                    return defer.promise;
+                    return this.setStateOnWidget(id, state);
                 }
+            }
+
+            appService.prototype.setStateOnWidget = function (id, state) {
+                var self = this,
+                    defer = self.$q.defer(),
+                    widgetName;
+
+                //Accept widget name
+                if (!/Widget_\d+$/.test(id)) {
+                    widgetName = id;
+                    id = null;
+                }
+
+                self.utilService.whilst(function () {
+                        return widgetName ? !document.getElementsByName(widgetName).length : !document.getElementById(id);
+                    },
+                    function (err) {
+                        if (!err) {
+                            var $widgetElement;
+                            if (widgetName) {
+                                var element = document.getElementsByName(widgetName)[0];
+                                $widgetElement = $(element);
+                                id = element.id;
+                            } else {
+                                $widgetElement = $("#" + id);
+                            }
+
+                            $widgetElement.attr("state", state);
+                            if ($widgetElement.hasClass(self.angularConstants.widgetClasses.widgetIncludeAnchorClass)) {
+                                self.utilService.whilst(function () {
+                                        var scope = angular.element($widgetElement.find("[widget-container]:nth-of-type(1)").first().children()[0]).scope();
+                                        return !scope;
+                                    }, function (err) {
+                                        if (!err) {
+                                            var scope = angular.element($widgetElement.find("[widget-container]:nth-of-type(1)").first().children()[0]).scope();
+                                            scope.state = state;
+                                            defer.resolve();
+                                        } else {
+                                            defer.reject(err);
+                                        }
+                                    },
+                                    self.angularConstants.checkInterval,
+                                    "appService.setState.RepoSketchWidget." + id,
+                                    self.angularConstants.renderTimeout
+                                )
+                            } else {
+                                var animationName = $widgetElement.css("animation-name");
+                                if (animationName && animationName !== "none") {
+                                    self.utilService.onAnimationEnd($widgetElement).then(function () {
+                                        defer.resolve();
+                                    });
+                                } else {
+                                    defer.resolve();
+                                }
+                            }
+                        } else {
+                            defer.reject(err);
+                        }
+                    },
+                    self.angularConstants.checkInterval,
+                    "appService.setState.{0}({1})".format(id || "", widgetName || ""),
+                    self.angularConstants.renderTimeout);
+
+                return defer.promise;
             }
 
             appService.prototype.isPlayingSound = function () {

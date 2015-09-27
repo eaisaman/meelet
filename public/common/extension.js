@@ -460,6 +460,36 @@ define(
             };
         }
 
+        Extension.prototype.addClassService = function (element) {
+            return function (selector, clazz) {
+                if (typeof selector == "string")
+                    return clazz && element.find(selector).addClass(clazz);
+                else if (selector && typeof selector === "object") {
+                    if (angular.isElement(selector)) {
+                        return clazz && (selector.jquery && selector || $(selector)).addClass(clazz);
+                    } else {
+                        selector.stopPropagation();
+                        return clazz && $(selector.currentTarget).addClass(clazz);
+                    }
+                }
+            };
+        }
+
+        Extension.prototype.removeClassService = function (element) {
+            return function (selector, clazz) {
+                if (typeof selector == "string")
+                    return clazz && element.find(selector).removeClass(clazz);
+                else if (selector && typeof selector === "object") {
+                    if (angular.isElement(selector)) {
+                        return clazz && (selector.jquery && selector || $(selector)).removeClass(clazz);
+                    } else {
+                        selector.stopPropagation();
+                        return clazz && $(selector.currentTarget).removeClass(clazz);
+                    }
+                }
+            };
+        }
+
         Extension.prototype.toggleClassService = function (element) {
             return function (selector, clazz) {
                 if (typeof selector == "string")

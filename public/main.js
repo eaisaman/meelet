@@ -8,7 +8,6 @@ var ANGULAR_LIB_PATH = "javascripts/angular/1.4.5/",
     JQUERY_UI_LIB_PATH = "javascripts/jquery-ui/1.11.0/",
     JQUERY_UI_PLUGINS_LIB_PATH = "javascripts/jquery-ui-plugins/",
     UNDERSCORE_LIB_PATH = "javascripts/underscore/1.6.0/",
-    CLASSIE_LIB_PATH = "javascripts/classie/",
     MODERNIZR_LIB_PATH = "javascripts/modernizr/",
     STRING_LIB_PATH = "javascripts/String/",
     RAPHAEL_LIB_PATH = "javascripts/raphael/2.1.2/",//Depended by flowchart, sequence-diagram
@@ -44,7 +43,6 @@ requirejs.config({
         "jquery-ui-lib": JQUERY_UI_LIB_PATH + "main",
         "jquery-ui-plugins-lib": JQUERY_UI_PLUGINS_LIB_PATH + "main",
         "underscore-lib": UNDERSCORE_LIB_PATH + "main",
-        "classie-lib": CLASSIE_LIB_PATH + "main",
         "modernizr-lib": MODERNIZR_LIB_PATH + "main",
         "string-lib": STRING_LIB_PATH + "main",
         "raphael-lib": RAPHAEL_LIB_PATH + "main",
@@ -71,7 +69,7 @@ requirejs.config({
     waitSeconds: 0
 });
 
-requirejs(["jquery-lib", "jquery-plugins-lib", "hammer-lib", "jquery-ui-lib", "jquery-ui-plugins-lib", "angular-lib", "angular-modules-lib", "underscore-lib", "classie-lib", "modernizr-lib", "string-lib", "editormd-lib", "snap-svg-lib", "velocity-lib", "wavesurfer-lib", "fabric-lib"], function () {
+requirejs(["jquery-lib", "jquery-plugins-lib", "hammer-lib", "jquery-ui-lib", "jquery-ui-plugins-lib", "angular-lib", "angular-modules-lib", "underscore-lib", "modernizr-lib", "string-lib", "editormd-lib", "snap-svg-lib", "velocity-lib", "wavesurfer-lib", "fabric-lib"], function () {
     if (isBrowser) {
         window.appModule = angular.module(APP_MODULE_NAME, APP_MODULE_DEPS);
         window.appModule.value("angularEventTypes", {
@@ -148,23 +146,33 @@ requirejs(["jquery-lib", "jquery-plugins-lib", "hammer-lib", "jquery-ui-lib", "j
 
     window.modouleLogger && window.modouleLogger.debug(["angular-plugins-lib", "app-common-lib", "directive-lib", "app-lib"].join(",") + " Loading");
 
-    requirejs(["angular-plugins-lib", "app-common-lib", "directive-lib", "app-lib"], function () {
-        window.modouleLogger && window.modouleLogger.debug(["angular-plugins-lib", "app-common-lib", "directive-lib", "app-lib"].join(",") + " Load Complete.");
+    requirejs(["angular-plugins-lib", "app-common-lib"], function (pluginsConfig, commonConfig) {
+        window.modouleLogger && window.modouleLogger.debug(["angular-plugins-lib", "app-common-lib"].join(",") + " Load Complete.");
 
         if (isBrowser) {
-            var configs = Array.prototype.slice.call(arguments, 0, arguments.length - 1),
-                appConfig = arguments[arguments.length - 1];
+            pluginsConfig(window.appModule);
 
-            configs.forEach(function (config) {
-                config(window.appModule);
-            });
+            commonConfig(window.appModule, function () {
+                requirejs(["directive-lib", "app-lib"], function () {
+                    window.modouleLogger && window.modouleLogger.debug(["directive-lib", "app-lib"].join(",") + " Load Complete.");
 
-            appConfig(window.appModule, function () {
-                angular.bootstrap(document, [APP_MODULE_NAME]);
+                    if (isBrowser) {
+                        var configs = Array.prototype.slice.call(arguments, 0, arguments.length - 1),
+                            appConfig = arguments[arguments.length - 1];
+
+                        configs.forEach(function (config) {
+                            config(window.appModule);
+                        });
+
+                        appConfig(window.appModule, function () {
+                            angular.bootstrap(document, [APP_MODULE_NAME]);
+                        });
+                    }
+
+                    //On load function will be bound to window object if post processing needed.
+                    window.onModulesLoaded && window.onModulesLoaded();
+                });
             });
         }
-
-        //On load function will be bound to window object if post processing needed.
-        window.onModulesLoaded && window.onModulesLoaded();
     });
 });

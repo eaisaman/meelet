@@ -10,8 +10,14 @@ module.exports = function (grunt) {
                     {
                         expand: true,
                         cwd: 'public/app',
-                        src: ['**/*.js', '!**/*.min.js', '!**/main.js', '!**/requirejs-plugins/*.js'],
+                        src: ['**/*.js', '!**/*.min.js', '!**/main.js'],
                         dest: 'release/app'
+                    },
+                    {
+                        expand: true,
+                        cwd: 'public/common',
+                        src: ['**/*.js', '!**/*.min.js', '!**/main.js', '!**/requirejs-plugins/*.js'],
+                        dest: 'release/common'
                     },
                     {
                         expand: true,
@@ -33,6 +39,12 @@ module.exports = function (grunt) {
                     {
                         expand: true,
                         cwd: 'public/app',
+                        src: ['**/main.js'],
+                        dest: 'release/app'
+                    },
+                    {
+                        expand: true,
+                        cwd: 'public/common',
                         src: ['**/main.js', '**/*.json', '**/requirejs-plugins/*.js'],
                         dest: 'release/app'
                     },

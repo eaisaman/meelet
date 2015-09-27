@@ -33,7 +33,7 @@ define(
             utilService.prototype.handleEventOnce = function (widgetId, fn) {
                 var self = this;
 
-                return self.uiUtilService.once(function () {
+                return self.utilService.once(function () {
                     var result = fn() || {};
 
                     return result.then && result || self.uiUtilService.getResolveDefer();
@@ -67,7 +67,7 @@ define(
                                 //FIXME Need code review on releasing resource after scope destroyed.
                                 action.scopeDestroyWatcher && action.scopeDestroyWatcher();
 
-                                var chainObject = self.uiUtilService.chain(arr,
+                                var chainObject = self.utilService.chain(arr,
                                     chainId,
                                     null,
                                     action.stopOnEach
@@ -85,7 +85,7 @@ define(
                         } else {
                             action.scopeDestroyWatcher && action.scopeDestroyWatcher();
 
-                            var promise = self.uiUtilService.chain(arr,
+                            var promise = self.utilService.chain(arr,
                                 chainId);
 
                             if (widgetScope && promise.cancel) {

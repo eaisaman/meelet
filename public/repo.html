@@ -20,8 +20,8 @@
              ng-repeat="repoLib in markSelection(repoLibraryList, $root.loadedProject && $root.loadedProject.xrefRecord, [{target:'_id',source:'libraryId'}])"
              ng-click="urlService.repoLib(false, {repoLib:repoLib})">
             <div class="repoImg fs-x-huge">
-                <img onerror="classie.addClass(this.parentNode, 'imgLoadError')"
-                     onload="classie.removeClass(this.parentNode, 'imgLoadError')"
+                <img onerror="this.parentNode.classList.add('imgLoadError')"
+                     onload="this.parentNode.classList.remove('imgLoadError')"
                      ng-src="repo/{{repoLib.type}}/{{repoLib.name}}/.meta/{{repoLib.thumbnailImg}}"/>
 
                 <div class="icon-repo-before icon-repo-broken-before"></div>

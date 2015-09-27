@@ -1,7 +1,7 @@
 define(
     ["angular-lib", "jquery-lib", "underscore-lib", "app-util", "app-service-registry"],
     function () {
-        return function (appModule) {
+        return function (appModule, extension, meta) {
             var FEATURE = "BookService",
                 PLATFORM = "browser",
                 BookService = function ($rootScope, $http, $timeout, $q, $exceptionHandler, $compile, $cookies, $cookieStore, utilService, angularConstants, angularEventTypes, serviceRegistry) {

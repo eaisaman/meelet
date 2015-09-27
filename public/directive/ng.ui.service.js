@@ -1202,6 +1202,7 @@ define(
                 ConfigurationTransitionAction = Class(BaseTransitionAction, {
                     CLASS_NAME: "ConfigurationTransitionAction",
                     MEMBERS: {
+                        actionType: "Configuration",
                         configuration: []
                     },
                     initialize: function (widgetObj, configuration, id) {
@@ -2756,6 +2757,8 @@ define(
                                         );
                                 }
                             }
+
+                            return $inject.utilService.getResolveDefer();
                         },
                         relink: function (containerWidget) {
                             var self = this;
@@ -3659,7 +3662,7 @@ define(
 
                         //Not called by inheriting class
                         if (this.CLASS_NAME == arguments.callee.prototype.CLASS_NAME) {
-                            $inject.utilService.onceWrapper(this, "appendTo");
+                            $inject.utilService.onceWrapper(this, "appendTo", "attach");
                         }
                     },
                     toJSON: function () {
@@ -4241,7 +4244,7 @@ define(
 
                         //Not called by inheriting class
                         if (this.CLASS_NAME == arguments.callee.prototype.CLASS_NAME) {
-                            $inject.utilService.onceWrapper(this, "appendTo");
+                            $inject.utilService.onceWrapper(this, "appendTo", "attach");
                         }
                     },
                     dispose: function () {
@@ -4322,31 +4325,51 @@ define(
                     },
                     attach: function (element) {
                         var self = this,
-                            containerWidget;
+                            containerWidget,
+                            attachDefer = $inject.$q.defer();
 
-                        IncludeSketchWidgetClass.prototype.__proto__.attach.apply(self, [element]);
-
-                        self.$element.addClass($inject.angularConstants.widgetClasses.widgetIncludeAnchorClass);
-
-                        $inject.utilService.whilst(
+                        IncludeSketchWidgetClass.prototype.__proto__.attach.apply(self, [element]).then(
                             function () {
-                                return !self.$element.children("." + $inject.angularConstants.widgetClasses.widgetContainerClass).length;
-                            }, function (err) {
-                                if (!err) {
-                                    var childWidgets = self.childWidgets;
+                                self.$element.addClass($inject.angularConstants.widgetClasses.widgetIncludeAnchorClass);
+                                self.styleManager.draw();
 
-                                    containerWidget = childWidgets.length && childWidgets[0];
-                                    if (containerWidget) {
-                                        containerWidget.attach(self.$element.children()[0]);
+                                $inject.utilService.whilst(
+                                    function () {
+                                        return !self.$element.children("." + $inject.angularConstants.widgetClasses.widgetContainerClass).length;
+                                    }, function (err) {
+                                        if (!err) {
+                                            var childWidgets = self.childWidgets;
 
-                                        containerWidget.addOmniClass($inject.angularConstants.widgetClasses.widgetContainerClass);
-                                    }
-                                }
+                                            containerWidget = childWidgets.length && childWidgets[0];
+                                            if (containerWidget) {
+                                                containerWidget.attach(self.$element.children()[0]).then(
+                                                    function () {
+                                                        attachDefer.resolve();
+                                                    },
+                                                    function (err) {
+                                                        attachDefer.reject(err);
+                                                    }
+                                                );
+
+                                                containerWidget.addOmniClass($inject.angularConstants.widgetClasses.widgetContainerClass);
+                                            } else {
+                                                attachDefer.resolve();
+                                            }
+                                        } else {
+                                            attachDefer.reject(err);
+                                        }
+                                    },
+                                    $inject.angularConstants.loadCheckInterval,
+                                    "IncludeSketchWidgetClass.attach.containerWidget." + self.id,
+                                    $inject.angularConstants.loadRenderTimeout
+                                );
                             },
-                            $inject.angularConstants.loadCheckInterval,
-                            "IncludeSketchWidgetClass.attach.containerWidget." + self.id,
-                            $inject.angularConstants.loadRenderTimeout
+                            function (err) {
+                                attachDefer.reject(err);
+                            }
                         );
+
+                        return attachDefer.promise;
                     },
                     onContentIncluded: function () {
                         var self = this;
@@ -4485,7 +4508,7 @@ define(
 
                         //Not called by inheriting class
                         if (this.CLASS_NAME == arguments.callee.prototype.CLASS_NAME) {
-                            $inject.utilService.onceWrapper(this, "appendTo");
+                            $inject.utilService.onceWrapper(this, "appendTo", "attach");
                         }
                     },
                     dispose: function () {

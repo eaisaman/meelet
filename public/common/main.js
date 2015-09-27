@@ -16,7 +16,7 @@ requirejs.config(
 );
 
 define(
-    ["json!" + APP_COMMON_LIB_PATH + "meta.json", "json!" + APP_COMMON_LIB_PATH + "registry.json", "app-util", "app-route", "app-extension", "app-service-registry", "app-service", "book-service", "flow-service"],
+    ["json!meta.json", "json!" + APP_COMMON_LIB_PATH + "registry.json", "app-util", "app-route", "app-extension", "app-service-registry", "app-service", "book-service", "flow-service"],
     function (meta, registry) {
         var utilConfig = arguments[2],
             routeConfig = arguments[3],

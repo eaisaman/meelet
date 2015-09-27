@@ -1220,7 +1220,7 @@ Commons.prototype.convertToHtml = function (projectType, projectPath, artifactLi
                     //Write meta.json
 
                     if (pages && pages.length) {
-                        var metaFile = path.join(projectPath, "app", self.config.settings.meeletMetaFile);
+                        var metaFile = path.join(projectPath, self.config.settings.meeletMetaFile);
 
                         try {
                             var out = fs.createWriteStream(metaFile);

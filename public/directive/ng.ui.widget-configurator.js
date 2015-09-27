@@ -141,6 +141,7 @@ define(
                                                 return opt.name !== optionName;
                                             })) {
                                             item.options.push({name: optionName});
+                                            scope.setItem(item);
                                         }
                                     }
 
@@ -160,17 +161,16 @@ define(
                                             return true;
                                         })) {
                                         item.options.splice(index, 1);
-                                        if (!item.options.length) {
-                                            item.pickedValue = "";
-                                        }
+                                        scope.setItem(item);
                                     }
 
                                     return utilService.getResolveDefer();
                                 }
 
-                                scope.toggleConfigurationPanel = function (el, event) {
-                                    return scope.toggleDisplay($(el).find("> .configurationPanel"), event).then(function ($panel) {
-                                        return scope.toggleSelect($(el).find("> .configurationBar"), null, $panel.hasClass("show"));
+                                scope.toggleConfigurationPanel = function (event) {
+                                    var $el = $(event.currentTarget);
+                                    return scope.toggleDisplay($el.find("> .configurationPanel"), event).then(function ($panel) {
+                                        return scope.toggleSelect($el.find("> .configurationBar"), null, $panel.hasClass("show"));
                                     });
                                 }
 

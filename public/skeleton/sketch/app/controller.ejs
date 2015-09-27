@@ -58,7 +58,7 @@ self["<%=id%>"].set<%=context||"State"%> = function(name) {
     self["<%=id%>"].setState = self["<%=id%>"].set<%=context%>;
 <%}%>
     var arr = [];
-    arr.push(function () { return utilService.setStateOnWidget("<%=id%>", name);});
+    arr.push(function () { return appService.setStateOnWidget("<%=id%>", name);});
     switch (name) {<%
         for(var i = 0;i < stateNames.length;i++) {
             var name = stateNames[i], value = stateTree[name], transition = value.transition, stateAction = value.stateAction, offspring = value.offspring;%>
@@ -85,7 +85,7 @@ self["<%=id%>"].set<%=context||"State"%> = function(name) {
      %>
     }
 
-    return uiUtilService.chain(arr, "chain-stateFn-<%=id%>");
+    return utilService.chain(arr, "chain-stateFn-<%=id%>");
 }
 });
 <%
@@ -114,10 +114,10 @@ function handleEventMap(eventMap) {
 }%>
 
 define(
-    ["angular", "jquery", "app-route", "app-service"],
+    ["angular", "jquery", "app-route", "app-service", "app-util", "sketch-util"],
     function () {
-        return function (appModule, meta) {
-            function RootController($scope, $rootScope, $q, $timeout, appService, urlService, utilService, uiUtilService) {
+        return function (appModule, extension) {
+            function RootController($scope, $rootScope, $q, $timeout, appService, urlService, utilService, sketchUtilService) {
                 $rootScope.initFns = [];
                 $rootScope.stateFns = [];
 <%if (pages && pages.length) {
@@ -144,26 +144,25 @@ define(
 
                 $rootScope.stateFns.forEach(function(fn) {fn.apply($rootScope)});
 
-                $rootScope.pickedPage = meta.locations[0];
                 $scope.nextPage = function(event) {
                     event && event.stopPropagation();
-                    utilService.nextPage($rootScope.pickedPage);
+                    appService.nextPage();
                 }
                 $scope.prevPage = function(event) {
                     event && event.stopPropagation();
-                    utilService.prevPage($rootScope.pickedPage);
+                    appService.prevPage();
                 }
                 $scope.exitPage = function(event) {
                     event && event.stopPropagation();
                     appService.exitPage();
                 }
-                utilService.loadPage(null, $rootScope.pickedPage, true);
+                appService.loadPage(urlService.locations[0], true);
             }
 <%if (pages && pages.length) {
     pages.forEach(function(page) {
 %>
-            function <%= page.id %>_Controller($scope, $rootScope, $q, $timeout, appService, urlService, utilService, uiUtilService) {
-                utilService.setState("<%= page.id %>", "*");
+            function <%= page.id %>_Controller($scope, $rootScope, $q, $timeout, appService, urlService, utilService, sketchUtilService) {
+                appService.setState("<%= page.id %>", "*");
             }
 <%
     });
@@ -171,12 +170,12 @@ define(
 
             if (isBrowser) {
                 appModule.
-                    controller('RootController', ["$scope", "$rootScope", "$q", "$timeout", "appService", "urlService", "utilService", "uiUtilService", RootController]);
+                    controller('RootController', ["$scope", "$rootScope", "$q", "$timeout", "appService", "urlService", "utilService", "sketchUtilService", RootController]);
 <%if (pages && pages.length) {
     pages.forEach(function(page) {
 %>
                 appModule.
-                    controller('<%= page.id %>_Controller', ["$scope", "$rootScope", "$q", "$timeout", "appService", "urlService", "utilService", "uiUtilService", <%= page.id %>_Controller]);
+                    controller('<%= page.id %>_Controller', ["$scope", "$rootScope", "$q", "$timeout", "appService", "urlService", "utilService", "sketchUtilService", <%= page.id %>_Controller]);
 <%
     });
 %>

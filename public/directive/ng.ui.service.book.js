@@ -74,7 +74,7 @@ define(
 
                         //Not called by inheriting class
                         if (this.CLASS_NAME == arguments.callee.prototype.CLASS_NAME) {
-                            $inject.utilService.onceWrapper(this, "appendTo");
+                            $inject.utilService.onceWrapper(this, "appendTo", "attach");
                         }
                     },
                     toJSON: function () {

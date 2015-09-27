@@ -113,7 +113,7 @@ define(
                                         return utilService.getResolveDefer();
                                     }
 
-                                    scope.onModifyTabTitles = function (to) {
+                                    scope.setTabTitles = function (to) {
                                         if (to != null) {
                                             if (!scope.pickedTabTitle || to.every(function (titleObj) {
                                                     return scope.getTitle(titleObj) !== scope.pickedTabTitle;
