@@ -2,12 +2,12 @@ define(
     ["angular", "jquery"],
     function () {
 
-        function MagicAnimationDemoController($scope, $rootScope, $timeout, $q, uiUtilService) {
+        function MagicAnimationDemoController($scope, $rootScope, $timeout, $q, utilService) {
             $scope.doAnimation = function (animation) {
                 var $el = $("#timing");
 
                 $el.attr("effect", animation);
-                uiUtilService.onAnimationEnd($el).then(function () {
+                utilService.onAnimationEnd($el).then(function () {
                     $el.attr("effect", "");
                 });
             }
@@ -15,6 +15,6 @@ define(
 
         return function ($injector, $compileProvider, $controllerProvider, extension, directiveUrl) {
             $controllerProvider.
-                register('MagicAnimationDemoController', ["$scope", "$rootScope", "$timeout", "$q", "uiUtilService", MagicAnimationDemoController]);
+                register('MagicAnimationDemoController', ["$scope", "$rootScope", "$timeout", "$q", "utilService", MagicAnimationDemoController]);
         }
     });

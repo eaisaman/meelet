@@ -2,7 +2,7 @@ define(
     ["angular", "jquery", "velocity", "velocity.ui"],
     function () {
 
-        function VelocityAnimationDemoController($scope, $rootScope, $timeout, $q, uiUtilService) {
+        function VelocityAnimationDemoController($scope, $rootScope, $timeout, $q) {
             $scope.doAnimation = function (effect) {
                 var $el = $("#timing");
 
@@ -12,6 +12,6 @@ define(
 
         return function ($injector, $compileProvider, $controllerProvider, extension, directiveUrl) {
             $controllerProvider.
-                register('VelocityAnimationDemoController', ["$scope", "$rootScope", "$timeout", "$q", "uiUtilService", VelocityAnimationDemoController]);
+                register('VelocityAnimationDemoController', ["$scope", "$rootScope", "$timeout", "$q", VelocityAnimationDemoController]);
         }
     });

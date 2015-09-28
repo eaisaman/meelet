@@ -55,8 +55,9 @@
         </div>
 
         <div class="pageList col-as-7" ng-click="$event.stopPropagation()">
-            <select class="form-control fs-x-medium vt-align-center" title="{{$root.sketchObject.pickedPage.name}}">
-                <option value="{{$index}}" ng-attr-selected="{{p.id === $root.sketchObject.pickedPage.id}}"
+            <select class="form-control fs-x-medium vt-align-center" title="{{$root.sketchObject.pickedPage.name}}"
+                    ng-model="pickedPageIndex" ng-change="onPickedPage(pickedPageIndex)">
+                <option value="{{$index}}" ng-attr-selected="{{$index === pickedPageIndex}}"
                         ng-repeat="p in $root.loadedProject.sketchWorks.pages">
                     {{$index+1}}
                 </option>

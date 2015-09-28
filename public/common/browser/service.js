@@ -964,7 +964,7 @@ define(
 
                             $current.addClass("forward");
 
-                            if (self.meta.pageTransition) {
+                            if (!_.isEmpty(self.meta.pageTransition)) {
                                 hasAnimation = self.meta.pageTransition.effect.type === "Animation";
 
                                 fullName = self.meta.pageTransition.artifactSpec.directiveName;
@@ -980,8 +980,8 @@ define(
                                 $next.css("visibility", "visible");
 
                                 return self.$q.all([
-                                    self.onAnimationEnd($current),
-                                    self.onAnimationEnd($next)
+                                    self.utilService.onAnimationEnd($current),
+                                    self.utilService.onAnimationEnd($next)
                                 ]).then(function () {
                                     $current.removeClass("forward");
                                     $current.removeAttr("effect");
@@ -1031,64 +1031,64 @@ define(
                     return true;
                 });
 
-                return self.loadPage(self.meta.locations[locationIndex - 1]).then(
-                    function () {
-                        var $current = findPageElement(location),
-                            $prev = findPageElement(self.meta.locations[locationIndex - 1]),
-                            hasAnimation = false,
-                            fullName;
+                if (locationIndex > 0) {
+                    return self.loadPage(self.meta.locations[locationIndex - 1]).then(
+                        function () {
+                            var $current = findPageElement(location),
+                                $prev = findPageElement(self.meta.locations[locationIndex - 1]),
+                                hasAnimation = false,
+                                fullName;
 
-                        $prev.addClass("backward previousPage");
+                            $prev.addClass("backward previousPage");
 
-                        if (self.meta.pageTransition) {
-                            hasAnimation = self.meta.pageTransition.effect.type === "Animation";
+                            if (!_.isEmpty(self.meta.pageTransition)) {
+                                hasAnimation = self.meta.pageTransition.effect.type === "Animation";
 
-                            fullName = self.meta.pageTransition.artifactSpec.directiveName;
-                            if (self.meta.pageTransition.artifactSpec.version) {
-                                fullName = fullName + "-" + self.meta.pageTransition.artifactSpec.version.replace(/\./g, "-")
+                                fullName = self.meta.pageTransition.artifactSpec.directiveName;
+                                if (self.meta.pageTransition.artifactSpec.version) {
+                                    fullName = fullName + "-" + self.meta.pageTransition.artifactSpec.version.replace(/\./g, "-")
+                                }
+
+                                $prev.attr(fullName, "");
+                                $prev.attr("effect", self.meta.pageTransition.effect.name);
                             }
 
-                            $prev.attr(fullName, "");
-                            $prev.attr("effect", self.meta.pageTransition.effect.name);
-                        }
+                            if (hasAnimation) {
+                                $prev.css("visibility", "visible");
 
-                        if (hasAnimation) {
-                            $prev.css("visibility", "visible");
+                                return self.$q.all([
+                                    self.utilService.onAnimationEnd($current),
+                                    self.utilService.onAnimationEnd($prev)
+                                ]).then(function () {
+                                    $prev.removeClass("backward previousPage");
+                                    $prev.removeAttr("effect");
+                                    fullName && $prev.removeAttr(fullName);
+                                    $prev.css("visibility", "");
+                                    setCurrentPage($prev);
+                                    self.$rootScope.pickedPage = self.meta.locations[locationIndex - 1];
 
-                            return self.$q.all([
-                                self.onAnimationEnd($current),
-                                self.onAnimationEnd($prev)
-                            ]).then(function () {
-                                $prev.removeClass("backward previousPage");
-                                $prev.removeAttr("effect");
-                                fullName && $prev.removeAttr(fullName);
-                                $prev.css("visibility", "");
-                                setCurrentPage($prev);
-                                self.$rootScope.pickedPage = self.meta.locations[locationIndex - 1];
-
-                                return self.setState(self.$rootScope.pickedPage.replace("page-", ""), "*").then(function () {
-                                    return self.utilService.getResolveDefer(location);
+                                    return self.setState(self.$rootScope.pickedPage.replace("page-", ""), "*").then(function () {
+                                        return self.utilService.getResolveDefer(location);
+                                    });
                                 });
-                            });
-                        } else {
-                            return self.$timeout(function () {
-                                $prev.removeClass("backward previousPage");
-                                $prev.removeAttr("effect");
-                                fullName && $prev.removeAttr(fullName);
-                                setCurrentPage($prev);
-                                self.$rootScope.pickedPage = self.meta.locations[locationIndex - 1];
+                            } else {
+                                return self.$timeout(function () {
+                                    $prev.removeClass("backward previousPage");
+                                    $prev.removeAttr("effect");
+                                    fullName && $prev.removeAttr(fullName);
+                                    setCurrentPage($prev);
+                                    self.$rootScope.pickedPage = self.meta.locations[locationIndex - 1];
 
-                                return self.setState(self.$rootScope.pickedPage.replace("page-", ""), "*").then(function () {
-                                    return self.utilService.getResolveDefer(location);
+                                    return self.setState(self.$rootScope.pickedPage.replace("page-", ""), "*").then(function () {
+                                        return self.utilService.getResolveDefer(location);
+                                    });
                                 });
-                            });
+                            }
+                        },
+                        function (err) {
+                            return self.utilService.getRejectDefer(err);
                         }
-                    },
-                    function (err) {
-                        return self.utilService.getRejectDefer(err);
-                    }
-                );
-                if (locationIndex > 0) {
+                    );
                 }
 
                 return self.utilService.getResolveDefer(location);
@@ -1135,7 +1135,7 @@ define(
                             if (pageNum < locationIndex) {
                                 $goto.addClass("backward previousPage");
 
-                                if (self.meta.pageTransition) {
+                                if (!_.isEmpty(self.meta.pageTransition)) {
                                     hasAnimation = self.meta.pageTransition.effect.type === "Animation";
 
                                     fullName = self.meta.pageTransition.artifactSpec.directiveName;
@@ -1151,8 +1151,8 @@ define(
                                     $goto.css("visibility", "visible");
 
                                     return self.$q.all([
-                                        self.onAnimationEnd($current),
-                                        self.onAnimationEnd($goto)
+                                        self.utilService.onAnimationEnd($current),
+                                        self.utilService.onAnimationEnd($goto)
                                     ]).then(function () {
                                         $goto.removeClass("backward previousPage");
                                         $goto.removeAttr("effect");
@@ -1195,7 +1195,7 @@ define(
                             } else {
                                 $current.addClass("forward");
 
-                                if (self.meta.pageTransition) {
+                                if (!_.isEmpty(self.meta.pageTransition)) {
                                     hasAnimation = self.meta.pageTransition.effect.type === "Animation";
 
                                     fullName = self.meta.pageTransition.artifactSpec.directiveName;
@@ -1211,8 +1211,8 @@ define(
                                     $goto.css("visibility", "visible");
 
                                     return self.$q.all([
-                                        self.onAnimationEnd($current),
-                                        self.onAnimationEnd($goto)
+                                        self.utilService.onAnimationEnd($current),
+                                        self.utilService.onAnimationEnd($goto)
                                     ]).then(function () {
                                         $current.removeClass("forward");
                                         $current.removeAttr("effect");
@@ -1265,7 +1265,7 @@ define(
             }
 
             appService.prototype.exitPage = function () {
-                var currentLocation = self.$rootScope.pickedPage;
+                var currentLocation = this.$rootScope.pickedPage;
 
                 if (currentLocation !== this.meta.locations[0]) {
                     return this.firstPage();
@@ -1339,7 +1339,10 @@ define(
                                         includeWatcher = scope.$on("$includeContentLoaded", function () {
                                             includeWatcher();
 
-                                            markCurrent && $container.children("#" + widgetId).addClass("currentPage");
+                                            if (markCurrent) {
+                                                setCurrentPage($container.children("#" + widgetId));
+                                                self.$rootScope.pickedPage = location;
+                                            }
 
                                             defer.resolve(location);
                                         });
@@ -1350,9 +1353,7 @@ define(
                                 },
                                 location,
                                 self.angularConstants.loadTimeout
-                            ).then(function (err) {
-                                    return err && self.utilService.getRejectDefer(err) || self.utilService.getResolveDefer(location);
-                                });
+                            );
                         } else {
                             return self.utilService.getRejectDefer("The number of pages in dom exceeds maximum limit.");
                         }
@@ -1403,76 +1404,11 @@ define(
             }
 
             appService.prototype.setState = function (id, state) {
-                var fn = this.$rootScope[id] && this.$rootScope[id].setState;
-                if (fn) {
-                    return fn(state);
-                } else {
-                    return this.setStateOnWidget(id, state);
-                }
+                return this.utilService.setState(id, state);
             }
 
             appService.prototype.setStateOnWidget = function (id, state) {
-                var self = this,
-                    defer = self.$q.defer(),
-                    widgetName;
-
-                //Accept widget name
-                if (!/Widget_\d+$/.test(id)) {
-                    widgetName = id;
-                    id = null;
-                }
-
-                self.utilService.whilst(function () {
-                        return widgetName ? !document.getElementsByName(widgetName).length : !document.getElementById(id);
-                    },
-                    function (err) {
-                        if (!err) {
-                            var $widgetElement;
-                            if (widgetName) {
-                                var element = document.getElementsByName(widgetName)[0];
-                                $widgetElement = $(element);
-                                id = element.id;
-                            } else {
-                                $widgetElement = $("#" + id);
-                            }
-
-                            $widgetElement.attr("state", state);
-                            if ($widgetElement.hasClass(self.angularConstants.widgetClasses.widgetIncludeAnchorClass)) {
-                                self.utilService.whilst(function () {
-                                        var scope = angular.element($widgetElement.find("[widget-container]:nth-of-type(1)").first().children()[0]).scope();
-                                        return !scope;
-                                    }, function (err) {
-                                        if (!err) {
-                                            var scope = angular.element($widgetElement.find("[widget-container]:nth-of-type(1)").first().children()[0]).scope();
-                                            scope.state = state;
-                                            defer.resolve();
-                                        } else {
-                                            defer.reject(err);
-                                        }
-                                    },
-                                    self.angularConstants.checkInterval,
-                                    "appService.setState.RepoSketchWidget." + id,
-                                    self.angularConstants.renderTimeout
-                                )
-                            } else {
-                                var animationName = $widgetElement.css("animation-name");
-                                if (animationName && animationName !== "none") {
-                                    self.utilService.onAnimationEnd($widgetElement).then(function () {
-                                        defer.resolve();
-                                    });
-                                } else {
-                                    defer.resolve();
-                                }
-                            }
-                        } else {
-                            defer.reject(err);
-                        }
-                    },
-                    self.angularConstants.checkInterval,
-                    "appService.setState.{0}({1})".format(id || "", widgetName || ""),
-                    self.angularConstants.renderTimeout);
-
-                return defer.promise;
+                return this.utilService.setStateOnWidget(id, state);
             }
 
             appService.prototype.isPlayingSound = function () {

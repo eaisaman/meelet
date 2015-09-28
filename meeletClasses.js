@@ -38,6 +38,7 @@ var Class = function () {
     }, Classes = function () {
     }, c = new Classes(),
     angularConstants = {
+        NO_NAME: "NO NAME",
         widgetClasses: {
             containerClass: "sketchHolder",
             deviceHolderClass: "deviceHolder",
@@ -682,7 +683,7 @@ var State = Class({
                 }
             } else if (styleName === "background-position") {
                 if (styleValue && !_.isEmpty(styleValue)) {
-                    out.write(_.string.sprintf("background-position: %s %s;", styleValue.x, styleValue.y));
+                    out.write(_.string.sprintf("background-position: %s%s %s%s;", styleValue.x, styleValue.unit, styleValue.y, styleValue.unit));
                 }
             } else if (styleName === "color" || styleName === "border-color") {
                 if (styleValue && !_.isEmpty(styleValue)) {
@@ -847,6 +848,7 @@ var State = Class({
             self.$element = $("<div />").attr("id", self.id);
             self.$element.attr(_.omit(self.attr, ["ui-sketch-widget", "scale", "ng-class", "sketch-object"]));
             self.$element.attr("state", self.state.name);
+            self.name && self.name !== angularConstants.NO_NAME && self.$element.attr("name", self.name);
             self.styleManager.insertClass();
 
             if (self.anchor) {

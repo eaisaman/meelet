@@ -12,8 +12,8 @@ define(
                         deviation: 10,
                         backgroundPosition: {
                             unit: "%",
-                            left: "0",
-                            top: "0"
+                            x: 0,
+                            y: 0
                         },
                         backgroundRepeat: "no-repeat",
                         backgroundSize: "contain"
@@ -48,12 +48,11 @@ define(
                                             backgroundImage: function (value) {
                                                 scope.backgroundImage = value;
                                                 scope.pickedBackgroundImageName = scope.pickBackgroundImageValue(null);
+                                                scope.pickedBackgroundPosition = scope.pickBackgroundPositionValue();
+                                                scope.pickedBackgroundRepeat = scope.pickBackgroundRepeatValue();
+                                                scope.pickedBackgroundSize = scope.pickBackgroundSizeValue();
 
                                                 if (scope.pickedBackgroundImageName) {
-                                                    scope.pickedBackgroundPosition = scope.pickBackgroundPositionValue();
-                                                    scope.pickedBackgroundRepeat = scope.pickBackgroundRepeatValue();
-                                                    scope.pickedBackgroundSize = scope.pickBackgroundSizeValue();
-
                                                     scope.enableControl();
                                                     scope.togglePalette(true);
                                                 } else {
@@ -110,7 +109,7 @@ define(
 
                                 scope.pickBackgroundPositionValue = function (pseudo, useDefault) {
                                     useDefault = useDefault == null || useDefault;
-                                    return scope.backgroundImage && scope.pickStyle(scope.backgroundImage, pseudo != null ? pseudo : scope.pseudo)["background-position"] || (useDefault && options.backgroundPosition || null);
+                                    return scope.backgroundImage && scope.pickStyle(scope.backgroundImage, pseudo != null ? pseudo : scope.pseudo)["background-position"] || (useDefault && _.clone(options.backgroundPosition) || null);
                                 }
 
                                 scope.pickBackgroundRepeatValue = function (pseudo, useDefault) {
@@ -391,12 +390,14 @@ define(
                                     scope.backgroundImage[pseudoStylePrefix] = scope.backgroundImage[pseudoStylePrefix] || {};
                                     var pseudoStyle = scope.backgroundImage[pseudoStylePrefix];
                                     pseudoStyle['background-position'] = pseudoStyle['background-position'] || {};
-                                    pseudoStyle['background-position'].x = x + unit;
-                                    pseudoStyle['background-position'].y = y + unit;
+                                    pseudoStyle['background-position'].x = x;
+                                    pseudoStyle['background-position'].y = y;
+                                    pseudoStyle['background-position'].unit = unit;
 
                                     //Trigger watcher on sketchWidgetSetting.backgroundImage to apply style to widget
                                     scope.backgroundImage = angular.copy(scope.backgroundImage);
 
+                                    scope.pickedBackgroundPosition = scope.pickedBackgroundPosition || {};
                                     if (scope.pickedBackgroundPosition.x != x) scope.pickedBackgroundPosition.x = x;
                                     if (scope.pickedBackgroundPosition.y != y) scope.pickedBackgroundPosition.y = y;
                                     if (scope.pickedBackgroundPosition.unit != unit) scope.pickedBackgroundPosition.unit = unit;
@@ -463,6 +464,7 @@ define(
                                                         left,
                                                         width;
 
+                                                    to = Number.parseInt(to);
                                                     if (m && m.length == 2)
                                                         left = Math.floor(parseFloat(m[1]) * angularConstants.precision) / angularConstants.precision;
                                                     else
@@ -490,6 +492,7 @@ define(
                                                         top,
                                                         height;
 
+                                                    to = Number.parseInt(to);
                                                     if (m && m.length == 2)
                                                         top = Math.floor(parseFloat(m[1]) * angularConstants.precision) / angularConstants.precision;
                                                     else

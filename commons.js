@@ -1256,7 +1256,8 @@ Commons.prototype.convertToHtml = function (projectType, projectPath, artifactLi
                             ncp(cssPath, target, {
                                 clobber: true,
                                 stopOnErr: true,
-                                dereference: true
+                                dereference: true,
+                                filter: /\/[^\.][^\/]+$/
                             }, function (err) {
                                 cb(err);
                             });

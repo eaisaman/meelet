@@ -1,7 +1,8 @@
 define(
     ["angular-lib", "jquery-lib", "hammer-lib"],
     function () {
-        var utilService = function ($log, $parse, $timeout, $q, $exceptionHandler, angularConstants) {
+        var utilService = function ($rootScope, $log, $parse, $timeout, $q, $exceptionHandler, angularConstants) {
+            this.$rootScope = $rootScope;
             this.$log = $log;
             this.$parse = $parse;
             this.$timeout = $timeout;
@@ -10,7 +11,7 @@ define(
             this.angularConstants = angularConstants;
         };
 
-        utilService.$inject = ["$log", "$parse", "$timeout", "$q", "$exceptionHandler", "angularConstants"];
+        utilService.$inject = ["$rootScope", "$log", "$parse", "$timeout", "$q", "$exceptionHandler", "angularConstants"];
 
         var _keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
 
@@ -649,7 +650,7 @@ define(
                 }
             } else if (styleName === "background-position") {
                 if (styleValue && !_.isEmpty(styleValue)) {
-                    styleObj = {"background-position": "{0} {1}".format(styleValue.x, styleValue.y)};
+                    styleObj = {"background-position": "{0}{2} {1}{2}".format(styleValue.x, styleValue.y, styleValue.unit)};
                 } else {
                     styleObj = {"background-position": ""};
                 }
@@ -1260,13 +1261,86 @@ define(
             };
         }
 
+        utilService.prototype.setState = function (id, state) {
+            var fn = this.$rootScope[id] && this.$rootScope[id].setState;
+            if (fn) {
+                return fn(state);
+            } else {
+                return this.setStateOnWidget(id, state);
+            }
+        }
+
+        utilService.prototype.setStateOnWidget = function (id, state) {
+            var self = this,
+                defer = self.$q.defer(),
+                widgetName;
+
+            //Accept widget name
+            if (!/Widget_\d+$/.test(id)) {
+                widgetName = id;
+                id = null;
+            }
+
+            self.whilst(function () {
+                    return widgetName ? !document.getElementsByName(widgetName).length : !document.getElementById(id);
+                },
+                function (err) {
+                    if (!err) {
+                        var $widgetElement;
+                        if (widgetName) {
+                            var element = document.getElementsByName(widgetName)[0];
+                            $widgetElement = $(element);
+                            id = element.id;
+                        } else {
+                            $widgetElement = $("#" + id);
+                        }
+
+                        $widgetElement.attr("state", state);
+                        if ($widgetElement.hasClass(self.angularConstants.widgetClasses.widgetIncludeAnchorClass)) {
+                            self.whilst(function () {
+                                    var scope = angular.element($widgetElement.find("[widget-container]:nth-of-type(1)").first().children()[0]).scope();
+                                    return !scope;
+                                }, function (err) {
+                                    if (!err) {
+                                        var scope = angular.element($widgetElement.find("[widget-container]:nth-of-type(1)").first().children()[0]).scope();
+                                        scope.state = state;
+                                        defer.resolve();
+                                    } else {
+                                        defer.reject(err);
+                                    }
+                                },
+                                self.angularConstants.checkInterval,
+                                "utilService.setState.RepoSketchWidget." + id,
+                                self.angularConstants.renderTimeout
+                            )
+                        } else {
+                            var animationName = $widgetElement.css("animation-name");
+                            if (animationName && animationName !== "none") {
+                                self.onAnimationEnd($widgetElement).then(function () {
+                                    defer.resolve();
+                                });
+                            } else {
+                                defer.resolve();
+                            }
+                        }
+                    } else {
+                        defer.reject(err);
+                    }
+                },
+                self.angularConstants.checkInterval,
+                "utilService.setState.{0}({1})".format(id || "", widgetName || ""),
+                self.angularConstants.renderTimeout);
+
+            return defer.promise;
+        }
+
         utilService.prototype.handleEventOnce = function (widgetId, fn) {
             var self = this;
 
             return self.once(function () {
                 var result = fn() || {};
 
-                return result.then && result || self.uiUtilService.getResolveDefer();
+                return result.then && result || self.getResolveDefer();
             }, null, self.angularConstants.eventThrottleInterval, "handleEventOnce.{0}".format(widgetId));
         }
 
@@ -1340,18 +1414,18 @@ define(
 
                         if (action.effect.options.duration) {
                             _.extend(
-                                cssAnimation, self.uiUtilService.prefixedStyle("animation-duration", "{0}s", action.effect.options.duration)
+                                cssAnimation, self.prefixedStyle("animation-duration", "{0}s", action.effect.options.duration)
                             );
                         }
                         if (action.effect.options.timing) {
                             _.extend(
-                                cssAnimation, self.uiUtilService.prefixedStyle("timing-function", "{0}", action.effect.options.timing)
+                                cssAnimation, self.prefixedStyle("timing-function", "{0}", action.effect.options.timing)
                             );
                         }
 
                         $widgetElement.css(cssAnimation);
 
-                        self.uiUtilService.onAnimationEnd($widgetElement).then(function () {
+                        self.onAnimationEnd($widgetElement).then(function () {
                             $widgetElement.removeAttr(fullName);
                             $widgetElement.removeAttr("effect");
 
@@ -1406,7 +1480,7 @@ define(
                 } else if (action.actionType === "Movement") {
                     return self.uiAnimationService.moveWidget($widgetElement, self.$rootScope[$widgetElement.attr("id")].routes, action.routeIndex, action.settings);
                 } else if (action.actionType === "Sound") {
-                    return action.resourceName && self.appService.playSound("resource/audio/{0}".format(action.resourceName)) || self.uiUtilService.getResolveDefer();
+                    return action.resourceName && self.appService.playSound("resource/audio/{0}".format(action.resourceName)) || self.getResolveDefer();
                 } else if (action.actionType === "Include") {
                     if (action.edge) {
                         widgetScope && widgetScope.$on('$destroy', function () {
@@ -1415,7 +1489,7 @@ define(
 
                         return self.loadAnimation(action.edge);
                     }
-                    return self.uiUtilService.getResolveDefer();
+                    return self.getResolveDefer();
                 }
             }
         }

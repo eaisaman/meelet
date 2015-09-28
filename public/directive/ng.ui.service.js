@@ -687,18 +687,16 @@ define(
 
                         if (obj.actionObj) {
                             var classes = ["SequenceTransitionAction"],
-                                className = obj.actionObj.CLASS_NAME,
-                                actionObj;
+                                className = obj.actionObj.CLASS_NAME;
 
                             classes.every(function (clazz) {
                                 if (eval("className === {0}.prototype.CLASS_NAME".format(clazz))) {
-                                    actionObj = eval("{0}.prototype.fromObject(obj.actionObj)".format(clazz));
+                                    ret.actionObj = eval("{0}.prototype.fromObject(obj.actionObj)".format(clazz));
                                     return false;
                                 }
 
                                 return true;
                             });
-                            ret.actionObj = actionObj;
                         }
 
                         obj.transitions && obj.transitions.forEach(function (t) {
@@ -737,7 +735,7 @@ define(
                         });
                     },
                     clone: function (widgetObj) {
-                        var cloneObj = new State(widgetObj, this.name, this.context, this.actionObj.clone());
+                        var cloneObj = new State(widgetObj, this.name, this.context, null, this.actionObj.clone());
                         this.actionObj.widgetObj = widgetObj;
 
                         return cloneObj;
@@ -2757,8 +2755,6 @@ define(
                                         );
                                 }
                             }
-
-                            return $inject.utilService.getResolveDefer();
                         },
                         relink: function (containerWidget) {
                             var self = this;
@@ -3662,7 +3658,7 @@ define(
 
                         //Not called by inheriting class
                         if (this.CLASS_NAME == arguments.callee.prototype.CLASS_NAME) {
-                            $inject.utilService.onceWrapper(this, "appendTo", "attach");
+                            $inject.utilService.onceWrapper(this, "appendTo");
                         }
                     },
                     toJSON: function () {
@@ -4244,7 +4240,7 @@ define(
 
                         //Not called by inheriting class
                         if (this.CLASS_NAME == arguments.callee.prototype.CLASS_NAME) {
-                            $inject.utilService.onceWrapper(this, "appendTo", "attach");
+                            $inject.utilService.onceWrapper(this, "appendTo");
                         }
                     },
                     dispose: function () {
@@ -4325,51 +4321,32 @@ define(
                     },
                     attach: function (element) {
                         var self = this,
-                            containerWidget,
-                            attachDefer = $inject.$q.defer();
+                            containerWidget;
 
-                        IncludeSketchWidgetClass.prototype.__proto__.attach.apply(self, [element]).then(
+                        IncludeSketchWidgetClass.prototype.__proto__.attach.apply(self, [element]);
+
+                        self.$element.addClass($inject.angularConstants.widgetClasses.widgetIncludeAnchorClass);
+                        self.styleManager.draw();
+
+                        $inject.utilService.whilst(
                             function () {
-                                self.$element.addClass($inject.angularConstants.widgetClasses.widgetIncludeAnchorClass);
-                                self.styleManager.draw();
+                                return !self.$element.children("." + $inject.angularConstants.widgetClasses.widgetContainerClass).length;
+                            }, function (err) {
+                                if (!err) {
+                                    var childWidgets = self.childWidgets;
 
-                                $inject.utilService.whilst(
-                                    function () {
-                                        return !self.$element.children("." + $inject.angularConstants.widgetClasses.widgetContainerClass).length;
-                                    }, function (err) {
-                                        if (!err) {
-                                            var childWidgets = self.childWidgets;
+                                    containerWidget = childWidgets.length && childWidgets[0];
+                                    if (containerWidget) {
+                                        containerWidget.attach(self.$element.children()[0]);
 
-                                            containerWidget = childWidgets.length && childWidgets[0];
-                                            if (containerWidget) {
-                                                containerWidget.attach(self.$element.children()[0]).then(
-                                                    function () {
-                                                        attachDefer.resolve();
-                                                    },
-                                                    function (err) {
-                                                        attachDefer.reject(err);
-                                                    }
-                                                );
-
-                                                containerWidget.addOmniClass($inject.angularConstants.widgetClasses.widgetContainerClass);
-                                            } else {
-                                                attachDefer.resolve();
-                                            }
-                                        } else {
-                                            attachDefer.reject(err);
-                                        }
-                                    },
-                                    $inject.angularConstants.loadCheckInterval,
-                                    "IncludeSketchWidgetClass.attach.containerWidget." + self.id,
-                                    $inject.angularConstants.loadRenderTimeout
-                                );
+                                        containerWidget.addOmniClass($inject.angularConstants.widgetClasses.widgetContainerClass);
+                                    }
+                                }
                             },
-                            function (err) {
-                                attachDefer.reject(err);
-                            }
+                            $inject.angularConstants.loadCheckInterval,
+                            "IncludeSketchWidgetClass.attach.containerWidget." + self.id,
+                            $inject.angularConstants.loadRenderTimeout
                         );
-
-                        return attachDefer.promise;
                     },
                     onContentIncluded: function () {
                         var self = this;
@@ -4508,7 +4485,7 @@ define(
 
                         //Not called by inheriting class
                         if (this.CLASS_NAME == arguments.callee.prototype.CLASS_NAME) {
-                            $inject.utilService.onceWrapper(this, "appendTo", "attach");
+                            $inject.utilService.onceWrapper(this, "appendTo");
                         }
                     },
                     dispose: function () {
@@ -5072,7 +5049,7 @@ define(
 
                             $current.addClass("forward");
 
-                            if (!_.isEmpty(pageTransition)) {
+                            if (!_.isEmpty(pageTransition) && !_.isEmpty(pageTransition.effect)) {
                                 hasAnimation = pageTransition.effect.type === "Animation";
 
                                 fullName = pageTransition.artifactSpec.directiveName;
@@ -5134,7 +5111,7 @@ define(
 
                             $prev.addClass("backward previousPage");
 
-                            if (pageTransition) {
+                            if (!_.isEmpty(pageTransition) && !_.isEmpty(pageTransition.effect)) {
                                 hasAnimation = pageTransition.effect.type === "Animation";
 
                                 fullName = pageTransition.artifactSpec.directiveName;

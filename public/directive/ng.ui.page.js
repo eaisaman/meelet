@@ -215,13 +215,11 @@ define(
                                             angularEventTypes.beforeWidgetCreationEvent,
                                             function (name) {
                                                 if (name) {
-                                                    var $select = $(".pageList select"),
-                                                        i = parseInt($select.val()),
-                                                        pageObj = $rootScope.loadedProject.sketchWorks.pages[i],
+                                                    var pageObj = $rootScope.loadedProject.sketchWorks.pages[scope.pickedPageIndex],
                                                         cloneObj = uiService.copyPage(pageObj);
 
                                                     cloneObj.name = name;
-                                                    $rootScope.loadedProject.sketchWorks.pages.splice(i + 1, 0, cloneObj);
+                                                    $rootScope.loadedProject.sketchWorks.pages.splice(scope.pickedPageIndex + 1, 0, cloneObj);
 
                                                     var next = pageObj.nextSibling;
                                                     pageObj.nextSibling = cloneObj;
@@ -234,7 +232,7 @@ define(
 
                                                     uiService.loadPage($rootScope.sketchObject.pickedPage, cloneObj).then(function () {
                                                         uiService.setCurrentPage(cloneObj);
-                                                        $select.val(i + 1);
+                                                        scope.pickedPageIndex++;
                                                     });
                                                 }
                                             }
@@ -427,9 +425,19 @@ define(
                                     return utilService.getResolveDefer();
                                 }
 
+                                scope.onPickedPage = function (i) {
+                                    var pageObj = $rootScope.loadedProject.sketchWorks.pages[i];
+
+                                    uiService.loadPage($rootScope.sketchObject.pickedPage, pageObj).then(function () {
+                                        uiService.setCurrentPage(pageObj);
+                                        scope.$broadcast("collapseAll");
+                                    });
+                                }
+
                                 scope.effectList = [];
                                 scope.effectLibraryList = $rootScope.effectLibraryList;
                                 scope.filterEffectLibraryList = [];
+                                scope.pickedPageIndex = 0;
 
                                 function refreshArtifactList(project) {
                                     utilService.latestOnce(
@@ -455,47 +463,6 @@ define(
                                 scope.switchProjectWatcher = scope.$on(angularEventTypes.switchProjectEvent, function (event, project) {
                                     refreshArtifactList(project);
                                 });
-
-                                utilService.latestOnce(
-                                    function () {
-                                        return $timeout(function () {
-                                            utilService.whilst(
-                                                function () {
-                                                    return !$(".pageList select option").length;
-                                                },
-                                                function (err) {
-                                                    err || utilService.latestOnce(
-                                                        function () {
-                                                            return $timeout(function () {
-                                                                $(".pageList select").change(function () {
-                                                                    var i = $(this).val(),
-                                                                        pageObj = $rootScope.loadedProject.sketchWorks.pages[i];
-
-                                                                    uiService.loadPage($rootScope.sketchObject.pickedPage, pageObj).then(function () {
-                                                                        uiService.setCurrentPage(pageObj);
-                                                                    });
-                                                                });
-
-                                                                scope.$broadcast("collapseAll");
-                                                            });
-                                                        },
-                                                        null,
-                                                        null,
-                                                        angularConstants.unresponsiveInterval,
-                                                        "ui-page.compile.post.init.pageListListener"
-                                                    )();
-                                                },
-                                                angularConstants.checkInterval,
-                                                "ui-page.compile.post.init.pageList",
-                                                angularConstants.renderTimeout
-                                            );
-                                        });
-                                    },
-                                    null,
-                                    null,
-                                    angularConstants.unresponsiveInterval,
-                                    "ui-page.compile.post.init"
-                                )();
 
                                 if ($rootScope.loadedProject.projectRecord && $rootScope.loadedProject.projectRecord._id) {
                                     refreshArtifactList($rootScope.loadedProject);
