@@ -240,7 +240,7 @@ var State = Class({
         },
         fromObject: function (obj, context) {
             var ret = new SequenceTransitionAction(null, obj.id);
-            ret.stopOnEach = obj.stopOnEach || false;
+            if (obj.stopOnEach != null) ret.stopOnEach = obj.stopOnEach;
 
             SequenceTransitionAction.prototype.__proto__.fromObject.apply(ret, [obj, context]);
 
@@ -269,7 +269,8 @@ var State = Class({
         CLASS_NAME: "EffectTransitionAction",
         MEMBERS: {
             artifactSpec: {},
-            effect: {}
+            effect: {},
+            runAfterComplete: true
         },
         initialize: function (widgetObj, artifactSpec, effect, id) {
             EffectTransitionAction.prototype.__proto__.initialize.apply(this, [widgetObj, "Effect", id]);
@@ -283,12 +284,13 @@ var State = Class({
         },
         toJSON: function () {
             var jsonObj = EffectTransitionAction.prototype.__proto__.toJSON.apply(this);
-            _.extend(jsonObj, _.pick(this, ["artifactSpec", "effect"]));
+            _.extend(jsonObj, _.pick(this, ["artifactSpec", "effect", "runAfterComplete"]));
 
             return jsonObj;
         },
         fromObject: function (obj, context) {
             var ret = new EffectTransitionAction(null, obj.artifactSpec, obj.effect, obj.id);
+            if (obj.runAfterComplete != null) ret.runAfterComplete = obj.runAfterComplete;
 
             EffectTransitionAction.prototype.__proto__.fromObject.apply(ret, [obj, context]);
 
@@ -409,7 +411,7 @@ var State = Class({
         },
         fromObject: function (obj, context) {
             var ret = new MovementTransitionAction(null, obj.id);
-            ret.routeIndex = obj.routeIndex;
+            if (obj.routeIndex != null) ret.routeIndex = obj.routeIndex;
             _.each(obj.settings, function (s) {
                 ret.settings.push(_.clone(s));
             });
@@ -440,7 +442,7 @@ var State = Class({
         },
         fromObject: function (obj, context) {
             var ret = new SoundTransitionAction(null, obj.id);
-            ret.resourceName = obj.resourceName;
+            if (obj.resourceName != null) ret.resourceName = obj.resourceName;
 
             SoundTransitionAction.prototype.__proto__.fromObject.apply(ret, [obj, context]);
 
@@ -539,8 +541,8 @@ var State = Class({
         },
         fromObject: function (obj, context) {
             var ret = new StyleManager();
-            ret.stateMaps = obj.stateMaps;
-            ret.omniClasses = obj.omniClasses;
+            if (obj.stateMaps != null) ret.stateMaps = obj.stateMaps;
+            if (obj.omniClasses != null) ret.omniClasses = obj.omniClasses;
 
             return ret;
         },
@@ -792,9 +794,9 @@ var State = Class({
         fromObject: function (obj, context) {
             var self = this;
 
-            self.anchor = obj.anchor;
-            self.name = obj.name;
-            self.attr = _.omit(obj.attr, ["$$hashKey"]);
+            if (obj.anchor != null) self.anchor = obj.anchor;
+            if (obj.name != null) self.name = obj.name;
+            if (obj.attr != null) self.attr = _.omit(obj.attr, ["$$hashKey"]);
             self.styleManager = StyleManager.prototype.fromObject(obj.styleManager, context);
             self.styleManager.widgetObj = self;
             obj.stateOptions.forEach(function (stateOption) {
@@ -925,12 +927,12 @@ var State = Class({
             if (this === ElementSketchWidgetClass.prototype) {
                 var ret = new ElementSketchWidgetClass(obj.id);
 
+                if (obj.html != null) ret.html = obj.html;
+                if (obj.markdown != null) ret.markdown = obj.markdown;
+                if (obj.routes != null) ret.routes = obj.routes;
+
                 ElementSketchWidgetClass.prototype.__proto__.fromObject.apply(ret, [obj, context]);
                 ret.context = context;
-
-                ret.html = obj.html;
-                ret.markdown = obj.markdown;
-                ret.routes = obj.routes || [];
 
                 return ret;
             } else {
@@ -1013,7 +1015,7 @@ var State = Class({
         fromObject: function (obj, context) {
             var self = this;
 
-            self.template = obj.template;
+            if (obj.template != null) self.template = obj.template;
 
             IncludeSketchWidgetClass.prototype.__proto__.fromObject.apply(self, [obj, context]);
 

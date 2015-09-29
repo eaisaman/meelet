@@ -153,10 +153,16 @@ define(
                                         attrs,
                                         {
                                             simpleStyle: function (value) {
-                                                scope.pickedFontSize = scope.pickFontSizeValue();
-                                                scope.pickedOpacity = scope.pickOpacityValue();
-                                                scope.pickedLeft = scope.pickPseudoLeftValue();
-                                                scope.pickedTop = scope.pickPseudoTopValue();
+                                                scope.simpleStyle = value;
+
+                                                scope.styleIsSet = false;
+                                                $timeout(function () {
+                                                    scope.styleIsSet = true;
+                                                    scope.pickedFontSize = scope.pickFontSizeValue();
+                                                    scope.pickedOpacity = scope.pickOpacityValue();
+                                                    scope.pickedLeft = scope.pickPseudoLeftValue();
+                                                    scope.pickedTop = scope.pickPseudoTopValue();
+                                                });
                                             }
                                         },
                                         {simpleStyle: "uiSimpleStyleEditor"}

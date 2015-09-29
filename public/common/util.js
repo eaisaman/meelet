@@ -1,7 +1,7 @@
 define(
     ["angular-lib", "jquery-lib", "hammer-lib"],
     function () {
-        var utilService = function ($rootScope, $log, $parse, $timeout, $q, $exceptionHandler, angularConstants) {
+        var utilService = function ($rootScope, $log, $parse, $timeout, $q, $exceptionHandler, angularConstants, serviceRegistry) {
             this.$rootScope = $rootScope;
             this.$log = $log;
             this.$parse = $parse;
@@ -9,9 +9,10 @@ define(
             this.$q = $q;
             this.$exceptionHandler = $exceptionHandler;
             this.angularConstants = angularConstants;
+            this.serviceRegistry = serviceRegistry;
         };
 
-        utilService.$inject = ["$rootScope", "$log", "$parse", "$timeout", "$q", "$exceptionHandler", "angularConstants"];
+        utilService.$inject = ["$rootScope", "$log", "$parse", "$timeout", "$q", "$exceptionHandler", "angularConstants", "serviceRegistry"];
 
         var _keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
 
@@ -120,6 +121,24 @@ define(
             }
             output = _utf8_decode(output);
             return output;
+        }
+
+        utilService.prototype.listOmit = function (list) {
+            var self = this,
+                keys = Array.prototype.concat.apply(Array.prototype, Array.prototype.slice.call(arguments, 1)),
+                arr = [];
+
+            list && list.forEach(function (obj) {
+                var item = _.omit(obj, keys);
+                if (obj.list) {
+                    var args = keys.slice();
+                    args.splice(0, 0, 0, obj.list);
+                    item.list = self.listOmit.apply(self, args);
+                }
+                arr.push(item);
+            });
+
+            return arr;
         }
 
         utilService.prototype.arrayOmit = function (objects) {
@@ -685,6 +704,25 @@ define(
 
         utilService.prototype.eventType = function () {
             return this.mobileCheck() ? 'touchstart' : 'click';
+        }
+
+        utilService.prototype.onAnimationStart = function (target) {
+            var animEndEventNames = {
+                    'WebkitAnimation': 'webkitAnimationStart',
+                    'OAnimation': 'oAnimationStart',
+                    'msAnimation': 'MSAnimationStart',
+                    'animation': 'animationstart'
+                },
+                animEndEventName = animEndEventNames[Modernizr.prefixed('animation')],
+                self = this,
+                defer = self.$q.defer();
+
+            target.on(animEndEventName, function () {
+                $(this).off(animEndEventName);
+                defer.resolve();
+            });
+
+            return defer.promise;
         }
 
         utilService.prototype.onAnimationEnd = function (target) {
@@ -1358,16 +1396,16 @@ define(
                     var arr = [],
                         chainId = "utilService.doAction." + action.id;
 
-                    action.childActions && action.childActions.forEach(function (childAction) {
-                        arr.push(function () {
-                            return self.doAction(childAction);
-                        });
-                    });
-
                     if (action.stopOnEach) {
                         if (action.chainObject && action.chainObject.isComplete()) action.chainObject = null;
 
                         if (!action.chainObject) {
+                            action.childActions && action.childActions.forEach(function (childAction) {
+                                arr.push(function () {
+                                    return self.doAction(childAction);
+                                });
+                            });
+
                             //FIXME Need code review on releasing resource after scope destroyed.
                             action.scopeDestroyWatcher && action.scopeDestroyWatcher();
 
@@ -1387,6 +1425,12 @@ define(
 
                         return action.chainObject.next();
                     } else {
+                        action.childActions && action.childActions.forEach(function (childAction) {
+                            arr.push(function () {
+                                return self.doAction(childAction);
+                            });
+                        });
+
                         action.scopeDestroyWatcher && action.scopeDestroyWatcher();
 
                         var promise = self.chain(arr,
@@ -1425,16 +1469,31 @@ define(
 
                         $widgetElement.css(cssAnimation);
 
-                        self.onAnimationEnd($widgetElement).then(function () {
-                            $widgetElement.removeAttr(fullName);
-                            $widgetElement.removeAttr("effect");
+                        if (action.runAfterComplete) {
+                            self.onAnimationEnd($widgetElement).then(function () {
+                                $widgetElement.removeAttr(fullName);
+                                $widgetElement.removeAttr("effect");
 
-                            for (var key in cssAnimation) {
-                                $widgetElement.css(key, "");
-                            }
+                                for (var key in cssAnimation) {
+                                    $widgetElement.css(key, "");
+                                }
 
-                            defer.resolve();
-                        });
+                                defer.resolve();
+                            });
+                        } else {
+                            self.onAnimationStart($widgetElement).then(function () {
+                                defer.resolve();
+                            });
+
+                            self.onAnimationEnd($widgetElement).then(function () {
+                                $widgetElement.removeAttr(fullName);
+                                $widgetElement.removeAttr("effect");
+
+                                for (var key in cssAnimation) {
+                                    $widgetElement.css(key, "");
+                                }
+                            });
+                        }
                     } else {
                         self.$timeout(function () {
                             defer.resolve();
@@ -1480,7 +1539,7 @@ define(
                 } else if (action.actionType === "Movement") {
                     return self.uiAnimationService.moveWidget($widgetElement, self.$rootScope[$widgetElement.attr("id")].routes, action.routeIndex, action.settings);
                 } else if (action.actionType === "Sound") {
-                    return action.resourceName && self.appService.playSound("resource/audio/{0}".format(action.resourceName)) || self.getResolveDefer();
+                    return action.resourceName && self.serviceRegistry.invoke("BaseService", "playSound")("resource/audio/{0}".format(action.resourceName))|| self.getResolveDefer();
                 } else if (action.actionType === "Include") {
                     if (action.edge) {
                         widgetScope && widgetScope.$on('$destroy', function () {

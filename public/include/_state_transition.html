@@ -16,7 +16,7 @@
 </script>
 <script type="text/ng-template" id="_childActions.html">
     <div class="accordianGroup" ng-if="item.actionType == 'Effect'"
-         ng-click="once(this, $event, 'toggleSelect', $event)">
+         ng-click="once(this, $event, 'toggleSelect', $event)" ng-init="initEffectList(item)">
         <div class="accordianTitle fs-x-medium-before col-as-12 icon-state-transition-before icon-state-transition-animation-before">
             <div class="deleteButton fs-x-tiny icon-state-transition-before icon-state-transition-cross-before"
                  ng-click="once(this, $event, 'deleteAction', parentAction, item, $event)"></div>
@@ -31,7 +31,7 @@
                      ui-multilevel-menu-opts="{dataField:'_id', labelField:'name', listField:'artifactList', listFilter:{_selected:true}, zIndex:100}"
                      picked-menu-item="pickedEffectArtifactId"
                      on-menu-select="pickEffectArtifact(item, pickedEffectArtifactId)">
-                    {{pickedEffectArtifact && pickedEffectArtifact.name || "Choose an Artifact"}}
+                    {{item.artifactSpec && item.artifactSpec.artifactName || "Choose an Artifact"}}
                 </div>
                 <div class="toggleLibraryButton col-as-3 no-padding-right">
                     <span class="fs-x-medium-before icon-state-transition-before icon-state-transition-library-before"
@@ -71,6 +71,13 @@
                             <option value="ease-out">ease-out</option>
                             <option value="ease-in-out">ease-in-out</option>
                         </select>
+                    </div>
+                </div>
+                <div class="input-group col-as-12">
+                    <label class="col-as-5 no-padding-right control-label fs-x-smaller">Run After Complete</label>
+
+                    <div class="col-as-7 no-padding-left">
+                        <input type="checkbox" class="form-control no-padding fs-x-smaller" ng-model="item.runAfterComplete"/>
                     </div>
                 </div>
             </div>

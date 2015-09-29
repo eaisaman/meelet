@@ -78,6 +78,17 @@ define(
             return self.utilService.getResolveDefer();
         }
 
+        SketchAnimation.prototype.doAnimationWithCallback = function ($element, effect, start, complete) {
+            if ($element && $element[0].nodeType == 1 && $element.parent().length) {
+                $element.velocity(effect, {
+                    start: start,
+                    complete: complete
+                });
+
+                return defer.promise;
+            }
+        }
+
         return function (appModule) {
             appModule.
                 config(["$provide", function ($provide) {

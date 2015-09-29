@@ -916,7 +916,7 @@ define(
                     },
                     fromObject: function (obj) {
                         var ret = new SequenceTransitionAction(null, obj.id);
-                        ret.stopOnEach = obj.stopOnEach || false;
+                        if (obj.stopOnEach != null) ret.stopOnEach = obj.stopOnEach;
 
                         SequenceTransitionAction.prototype.__proto__.fromObject.apply(ret, [obj]);
 
@@ -1044,7 +1044,8 @@ define(
                     MEMBERS: {
                         actionType: "Effect",
                         artifactSpec: {},
-                        effect: {}
+                        effect: {},
+                        runAfterComplete: true //Indicates whether running the next action after the effect animation completes or not
                     },
                     initialize: function (widgetObj, artifactSpec, effect, id) {
                         EffectTransitionAction.prototype.__proto__.initialize.apply(this, [widgetObj, id]);
@@ -1058,12 +1059,13 @@ define(
                     },
                     toJSON: function () {
                         var jsonObj = EffectTransitionAction.prototype.__proto__.toJSON.apply(this);
-                        _.extend(jsonObj, _.pick(this, ["artifactSpec", "effect", "CLASS_NAME"]));
+                        _.extend(jsonObj, _.pick(this, ["artifactSpec", "effect", "runAfterComplete", "CLASS_NAME"]));
 
                         return jsonObj;
                     },
                     fromObject: function (obj) {
                         var ret = new EffectTransitionAction(null, obj.artifactSpec, obj.effect, obj.id);
+                        if (obj.runAfterComplete != null) ret.runAfterComplete = obj.runAfterComplete;
 
                         EffectTransitionAction.prototype.__proto__.fromObject.apply(ret, [obj]);
 
@@ -1075,6 +1077,7 @@ define(
                         _.extend(MEMBERS = MEMBERS || {}, EffectTransitionAction.prototype.MEMBERS);
 
                         EffectTransitionAction.prototype.__proto__.clone.apply(this, [cloneObj, MEMBERS]);
+                        cloneObj.runAfterComplete = this.runAfterComplete;
 
                         return cloneObj;
                     },
@@ -1106,17 +1109,35 @@ define(
 
                                 self.widgetObj.$element.css(self.cssAnimation);
 
-                                $inject.utilService.onAnimationEnd(self.widgetObj.$element).then(function () {
-                                    self.restoreWidget();
-                                    defer.resolve(self);
-                                });
+                                if (self.runAfterComplete) {
+                                    $inject.utilService.onAnimationEnd(self.widgetObj.$element).then(function () {
+                                        self.restoreWidget();
+                                        defer.resolve(self);
+                                    });
+                                } else {
+                                    $inject.utilService.onAnimationEnd(self.widgetObj.$element).then(function () {
+                                        defer.resolve(self);
+                                    });
+
+                                    $inject.utilService.onAnimationEnd(self.widgetObj.$element).then(function () {
+                                        self.restoreWidget();
+                                    });
+                                }
 
                                 return defer.promise;
                             } else if (self.effect.type === "Script") {
-                                $inject.uiAnimationService.doAnimation(self.widgetObj.$element, self.effect.name).then(function () {
-                                    self.restoreWidget();
-                                    defer.resolve(self);
-                                });
+                                if (self.runAfterComplete) {
+                                    $inject.uiAnimationService.doAnimationWithCallback(self.widgetObj.$element, self.effect.name, null, function () {
+                                        self.restoreWidget();
+                                        defer.resolve(self);
+                                    });
+                                } else {
+                                    $inject.uiAnimationService.doAnimationWithCallback(self.widgetObj.$element, self.effect.name, function () {
+                                        defer.resolve(self);
+                                    }, function () {
+                                        self.restoreWidget();
+                                    });
+                                }
                             }
                         }
 
@@ -1436,7 +1457,7 @@ define(
                     },
                     fromObject: function (obj) {
                         var ret = new MovementTransitionAction(null, obj.id);
-                        ret.routeIndex = obj.routeIndex;
+                        if (obj.routeIndex != null) ret.routeIndex = obj.routeIndex;
                         _.each(obj.settings, function (s) {
                             _.extend(_.findWhere(ret.settings, {key: s.key}), s);
                         });
@@ -1492,9 +1513,9 @@ define(
                     },
                     fromObject: function (obj) {
                         var ret = new SoundTransitionAction(null, obj.id);
+                        if (obj.resourceName != null) ret.resourceName = obj.resourceName;
 
                         SoundTransitionAction.prototype.__proto__.fromObject.apply(ret, [obj]);
-                        ret.resourceName = obj.resourceName;
 
                         return ret;
                     },
@@ -1542,13 +1563,13 @@ define(
                     fromObject: function (obj) {
                         var ret = new ServiceInvokeTransitionAction(null, obj.id);
 
+                        if (obj.feature != null) ret.feature = obj.feature;
+                        if (obj.serviceName != null) ret.serviceName = obj.serviceName;
+                        if (obj.communicationType != null) ret.communicationType = obj.communicationType;
+                        if (obj.parameters != null) ret.parameters = obj.parameters;
+                        if (obj.input != null) ret.input = obj.input;
+                        if (obj.timeout != null) ret.timeout = obj.timeout;
                         ServiceInvokeTransitionAction.prototype.__proto__.fromObject.apply(ret, [obj]);
-                        ret.feature = obj.feature;
-                        ret.serviceName = obj.serviceName;
-                        ret.communicationType = obj.communicationType;
-                        ret.parameters = obj.parameters;
-                        ret.input = obj.input;
-                        ret.timeout = obj.timeout;
 
                         return ret;
                     },
@@ -1802,8 +1823,8 @@ define(
                     },
                     fromObject: function (obj) {
                         var ret = new StyleManager();
-                        ret.stateMaps = obj.stateMaps;
-                        ret.omniClasses = obj.omniClasses;
+                        if (obj.stateMaps != null) ret.stateMaps = obj.stateMaps;
+                        if (obj.omniClasses != null) ret.omniClasses = obj.omniClasses;
 
                         return ret;
                     },
@@ -2500,9 +2521,9 @@ define(
                         fromObject: function (obj) {
                             var self = this;
 
-                            self.anchor = obj.anchor;
-                            self.name = obj.name;
-                            self.attr = _.omit(obj.attr, ["$$hashKey"]);
+                            if (obj.anchor != null) self.anchor = obj.anchor;
+                            if (obj.name != null) self.name = obj.name;
+                            if (obj.attr != null) self.attr = _.omit(obj.attr, ["$$hashKey"]);
                             self.styleManager = StyleManager.prototype.fromObject(obj.styleManager);
                             self.styleManager.widgetObj = self;
                             obj.stateOptions.forEach(function (stateOption) {
@@ -3673,10 +3694,10 @@ define(
                         if (this === ElementSketchWidgetClass.prototype) {
                             var ret = new ElementSketchWidgetClass(obj.id);
 
+                            if (obj.markdown != null) ret.markdown = obj.markdown;
+                            if (obj.html != null) ret.setHtml(obj.html);
+                            if (obj.routes != null) ret.routes = obj.routes;
                             ElementSketchWidgetClass.prototype.__proto__.fromObject.apply(ret, [obj]);
-                            ret.markdown = obj.markdown;
-                            ret.setHtml(obj.html);
-                            ret.routes = obj.routes || [];
 
                             return ret;
                         } else {
@@ -4272,7 +4293,7 @@ define(
                     fromObject: function (obj) {
                         var self = this;
 
-                        self.template = obj.template;
+                        if (obj.template != null) self.template = obj.template;
 
                         IncludeSketchWidgetClass.prototype.__proto__.fromObject.apply(self, [obj]);
 

@@ -2,17 +2,17 @@ define(
     ["angular"],
     function () {
         return function (appModule, registry) {
-            var serviceRegistry = function ($rootScope, $http, $timeout, $q, utilService, angularConstants) {
+            var serviceRegistry = function ($rootScope, $http, $timeout, $q, $log, angularConstants) {
                 this.$rootScope = $rootScope;
                 this.$http = $http;
                 this.$timeout = $timeout;
                 this.$q = $q;
-                this.utilService = utilService;
+                this.$log = $log;
                 this.angularConstants = angularConstants;
                 this.registry = _.clone(registry);
             };
 
-            serviceRegistry.$inject = ["$rootScope", "$http", "$timeout", "$q", "utilService", "angularConstants"];
+            serviceRegistry.$inject = ["$rootScope", "$http", "$timeout", "$q", "$log", "angularConstants"];
 
             serviceRegistry.prototype.makeGlobal = function () {
                 window.serviceRegistry = this;
@@ -154,7 +154,9 @@ define(
                 if (featureItem && featureItem.impl) {
                     var fn = featureItem.impl[serviceName];
                     if (fn) {
-                        return fn;
+                        return function() {
+                            fn.apply(featureItem.impl, Array.prototype.slice.call(arguments));
+                        };
                     } else {
                         self.$log.warn("Function {0} not found on implementation of feature {1}".format(serviceName, feature));
                     }

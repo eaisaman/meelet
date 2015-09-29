@@ -85,7 +85,7 @@
                          ui-multilevel-menu-opts="{dataField:'_id', labelField:'name', listField:'artifactList', listFilter:{_selected:true}, zIndex:100}"
                          picked-menu-item="pickedEffectArtifactId"
                          on-menu-select="pickEffectArtifact(pickedEffectArtifactId)">
-                        {{pickedEffectArtifact && pickedEffectArtifact.name || "Choose an Artifact"}}
+                        {{$root.loadedProject.sketchWorks.pageTransition.artifactSpec && $root.loadedProject.sketchWorks.pageTransition.artifactSpec.artifactName || "Choose an Artifact"}}
                     </div>
                     <div class="toggleLibraryButton col-as-3 no-padding-right">
                     <span class="fs-x-medium-before icon-page-before icon-page-library-before"
@@ -97,9 +97,8 @@
                 <div class="pageEffectMultilevelMenu fs-x-smaller" ui-multilevel-menu menu-list="effectList"
                      ui-multilevel-menu-opts="{dataField:'value', labelField:'name', zIndex:101}"
                      picked-menu-item="pickedEffect"
-                     on-menu-select="$root.loadedProject.sketchWorks.pageTransition = createEffectObj(pickedEffect)">
-                    {{$root.loadedProject.sketchWorks.pageTransition.effect &&
-                    $root.loadedProject.sketchWorks.pageTransition.effect.name || 'Choose an Effect'}}
+                     on-menu-select="$root.loadedProject.sketchWorks.pageTransition.effect = createEffectObj(pickedEffect)">
+                    {{$root.loadedProject.sketchWorks.pageTransition.effect && $root.loadedProject.sketchWorks.pageTransition.effect.name || 'Choose an Effect'}}
                 </div>
 
                 <div class="effectLibraryList">

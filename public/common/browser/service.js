@@ -18,9 +18,154 @@ define(
                     this.angularConstants = angularConstants;
                     this.angularEventTypes = angularEventTypes;
                     this.meta = angular.copy(meta);
+
+                    _.extend(SoundContructor.prototype, _.pick(this, appService.$inject));
                 };
 
             appService.$inject = ["$rootScope", "$http", "$timeout", "$q", "$exceptionHandler", "$compile", "$cookies", "$cookieStore", "utilService", "angularConstants", "angularEventTypes", "serviceRegistry"];
+
+            var SoundContructor = function () {
+                this.audioSourceNode = null;
+                this.audioScriptNode = null;
+                this.audioContext = null;
+                this.offlineAudioContext = null;
+            };
+
+            SoundContructor.prototype.PLAYING_STATE = 0;
+            SoundContructor.prototype.PAUSED_STATE = 1;
+            SoundContructor.prototype.FINISHED_STATE = 2;
+            SoundContructor.prototype.soundSeekPrecision = 100000;
+
+            SoundContructor.prototype.createAudioProcessHandler = function (handler) {
+                var instance = this;
+
+                return function (event) {
+                    var time = instance.audioContext.currentTime - instance.audioSourceNode.lastPlay,
+                        duration = instance.audioSourceNode.buffer.duration;
+
+                    if (time >= duration) {
+                        instance.progress = 1;
+                        instance.$timeout(function () {
+                            var prevUrl = instance.url;
+
+                            instance.stop();
+
+                            if (instance.playLoop) {
+                                instance.play(prevUrl);
+                            }
+                        });
+                    } else {
+                        instance.progress = Math.floor((time / duration) * instance.soundSeekPrecision) / instance.soundSeekPrecision;
+                    }
+
+                    handler && handler(instance.progress);
+                }
+            }
+
+            SoundContructor.prototype.init = function (buffer, callback) {
+                this.audioSourceNode = this.audioContext.createBufferSource();
+                this.audioSourceNode.playbackRate.value = 1;
+                this.audioSourceNode.buffer = buffer;
+
+                this.audioScriptNode = this.audioContext.createScriptProcessor(256);
+                this.audioScriptNode.onaudioprocess = this.createAudioProcessHandler(callback);
+
+                this.audioSourceNode.connect(this.audioContext.destination);
+                this.audioScriptNode.connect(this.audioContext.destination);
+            }
+
+            SoundContructor.prototype.play = function (url, callback) {
+                url = url || this.url;
+
+                if (!this.offlineAudioContext) {
+                    this.offlineAudioContext = new (
+                        window.OfflineAudioContext || window.webkitOfflineAudioContext
+                    )(1, 2, 44100);
+                }
+
+                if (!this.audioContext) {
+                    this.audioContext = new (
+                        window.AudioContext || window.webkitAudioContext
+                    );
+                }
+
+                if (this.playState === this.PLAYING_STATE) {
+                    if (this.url === url) {
+                        return this.utilService.getResolveDefer();
+                    }
+                }
+
+                if (this.url !== url) {
+                    this.stop();
+
+                    this.url = url;
+                    this.playDefer = this.$q.defer();
+                    this.progress = 0;
+                    var instance = this;
+                    instance.playState = instance.PLAYING_STATE;
+                    instance.$http({url: url, method: "GET", responseType: "arraybuffer"}).then(
+                        function (result) {
+                            if (instance.playState == instance.PLAYING_STATE) {
+                                instance.offlineAudioContext.decodeAudioData(result.data, function (buffer) {
+                                    instance.init(buffer, callback);
+                                    instance.audioSourceNode.start(0, 0);
+                                    instance.audioSourceNode.lastPlay = instance.audioContext.currentTime;
+                                });
+                            }
+                        },
+                        function (err) {
+                            instance.playState = instance.PAUSED_STATE;
+                            instance.$exceptionHandler(err);
+                            instance.playDefer.reject(err);
+                            instance.playDefer = null;
+                        }
+                    );
+                } else {
+                    this.playDefer = this.$q.defer();
+                    this.audioSourceNode.start(0, this.audioSourceNode.buffer.duration * this.progress);
+                    this.playState = this.PLAYING_STATE;
+                }
+
+                return this.playDefer.promise;
+            }
+
+            SoundContructor.prototype.pause = function () {
+                if (this.playState === this.PLAYING_STATE) {
+                    if (this.audioSourceNode) {
+                        this.audioSourceNode.stop(0);
+                        this.playState = this.PAUSED_STATE;
+                    }
+
+                    if (this.playDefer) {
+                        this.playDefer.resolve(this.progress);
+                        this.playDefer = null;
+                    }
+                }
+            }
+
+            SoundContructor.prototype.stop = function () {
+                if (this.audioSourceNode) {
+                    this.audioSourceNode.stop(0);
+                    this.audioSourceNode.disconnect();
+                    this.audioSourceNode = null;
+                }
+                if (this.audioScriptNode) {
+                    this.audioScriptNode.disconnect();
+                    this.audioScriptNode.onaudioprocess = null;
+                    this.audioScriptNode = null;
+                }
+                if (this.playDefer) {
+                    this.playDefer.resolve(this.progress);
+                    this.playDefer = null;
+                }
+                this.playState = this.FINISHED_STATE;
+                this.progress = 0;
+                this.url = null;
+            }
+
+            SoundContructor.prototype.isPlaying = function () {
+                return this.playState === this.PLAYING_STATE;
+            }
 
             appService.prototype.registerService = function () {
                 this.serviceRegistry && this.serviceRegistry.register(this, FEATURE, PLATFORM);
@@ -1421,150 +1566,7 @@ define(
                 var self = this;
 
                 if (!self.soundDelegate) {
-                    var Constructor = function () {
-                        this.audioSourceNode = null;
-                        this.audioScriptNode = null;
-                        this.audioContext = null;
-                        this.offlineAudioContext = null;
-                    };
-
-                    Constructor.prototype.PLAYING_STATE = 0;
-                    Constructor.prototype.PAUSED_STATE = 1;
-                    Constructor.prototype.FINISHED_STATE = 2;
-                    Constructor.prototype.soundSeekPrecision = 100000;
-
-                    Constructor.prototype.createAudioProcessHandler = function (handler) {
-                        var instance = this;
-
-                        return function (event) {
-                            var time = instance.audioContext.currentTime - instance.audioSourceNode.lastPlay,
-                                duration = instance.audioSourceNode.buffer.duration;
-
-                            if (time >= duration) {
-                                instance.progress = 1;
-                                self.$timeout(function () {
-                                    var prevUrl = instance.url;
-
-                                    instance.stop();
-
-                                    if (instance.playLoop) {
-                                        instance.play(prevUrl);
-                                    }
-                                });
-                            } else {
-                                instance.progress = Math.floor((time / duration) * instance.soundSeekPrecision) / instance.soundSeekPrecision;
-                            }
-
-                            handler && handler(instance.progress);
-                        }
-                    }
-
-                    Constructor.prototype.init = function (buffer, callback) {
-                        this.audioSourceNode = this.audioContext.createBufferSource();
-                        this.audioSourceNode.playbackRate.value = 1;
-                        this.audioSourceNode.buffer = buffer;
-
-                        this.audioScriptNode = this.audioContext.createScriptProcessor(256);
-                        this.audioScriptNode.onaudioprocess = this.createAudioProcessHandler(callback);
-
-                        this.audioSourceNode.connect(this.audioContext.destination);
-                        this.audioScriptNode.connect(this.audioContext.destination);
-                    }
-
-                    Constructor.prototype.play = function (url, callback) {
-                        url = url || this.url;
-
-                        if (!this.offlineAudioContext) {
-                            this.offlineAudioContext = new (
-                                window.OfflineAudioContext || window.webkitOfflineAudioContext
-                            )(1, 2, 44100);
-                        }
-
-                        if (!this.audioContext) {
-                            this.audioContext = new (
-                                window.AudioContext || window.webkitAudioContext
-                            );
-                        }
-
-                        if (this.playState === this.PLAYING_STATE) {
-                            if (this.url === url) {
-                                return self.utilService.getResolveDefer();
-                            }
-                        }
-
-                        if (this.url !== url) {
-                            this.stop();
-
-                            this.url = url;
-                            this.playDefer = self.$q.defer();
-                            this.progress = 0;
-                            var instance = this;
-                            instance.playState = instance.PLAYING_STATE;
-                            self.$http({url: url, method: "GET", responseType: "arraybuffer"}).then(
-                                function (result) {
-                                    if (instance.playState == instance.PLAYING_STATE) {
-                                        instance.offlineAudioContext.decodeAudioData(result.data, function (buffer) {
-                                            instance.init(buffer, callback);
-                                            instance.audioSourceNode.start(0, 0);
-                                            instance.audioSourceNode.lastPlay = instance.audioContext.currentTime;
-                                        });
-                                    }
-                                },
-                                function (err) {
-                                    instance.playState = instance.PAUSED_STATE;
-                                    self.$exceptionHandler(err);
-                                    instance.playDefer.reject(err);
-                                    instance.playDefer = null;
-                                }
-                            );
-                        } else {
-                            this.playDefer = self.$q.defer();
-                            this.audioSourceNode.start(0, this.audioSourceNode.buffer.duration * this.progress);
-                            this.playState = this.PLAYING_STATE;
-                        }
-
-                        return this.playDefer.promise;
-                    }
-
-                    Constructor.prototype.pause = function () {
-                        if (this.playState === this.PLAYING_STATE) {
-                            if (this.audioSourceNode) {
-                                this.audioSourceNode.stop(0);
-                                this.playState = this.PAUSED_STATE;
-                            }
-
-                            if (this.playDefer) {
-                                this.playDefer.resolve(this.progress);
-                                this.playDefer = null;
-                            }
-                        }
-                    }
-
-                    Constructor.prototype.stop = function () {
-                        if (this.audioSourceNode) {
-                            this.audioSourceNode.stop(0);
-                            this.audioSourceNode.disconnect();
-                            this.audioSourceNode = null;
-                        }
-                        if (this.audioScriptNode) {
-                            this.audioScriptNode.disconnect();
-                            this.audioScriptNode.onaudioprocess = null;
-                            this.audioScriptNode = null;
-                        }
-                        if (this.playDefer) {
-                            this.playDefer.resolve(this.progress);
-                            this.playDefer = null;
-                        }
-                        this.playState = this.FINISHED_STATE;
-                        this.progress = 0;
-                        this.url = null;
-                    }
-
-                    Constructor.prototype.isPlaying = function () {
-                        return this.playState === this.PLAYING_STATE;
-                    }
-
-                    self.soundDelegate = new Constructor();
+                    self.soundDelegate = new SoundContructor();
                 }
 
                 self.soundDelegate.playLoop = playLoop;

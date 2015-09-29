@@ -30,31 +30,25 @@ define(
                                     scope: scope
                                 }));
 
-                                scope.pickedWidgetWatcher = scope.$watch("pickedWidget", function (value) {
-                                    if (value) {
-                                        var widgetObj = uiService.configurableWidget(value);
-                                        scope.activeWidget = widgetObj || value;
-                                    }
-                                });
-
                                 scope.pickEffectArtifact = function (action, artifactId) {
                                     scope.effectList.splice(0);
 
                                     scope.filterEffectLibraryList.every(function (library) {
                                         return library.artifactList.every(function (artifact) {
                                             if (artifact._id === artifactId) {
-                                                scope.pickedEffectArtifact = artifact;
-
                                                 var arr = artifact.json.slice(0, artifact.json.length);
                                                 arr.splice(0, 0, 0, 0);
                                                 Array.prototype.splice.apply(scope.effectList, arr);
 
-                                                action.artifactSpec = {
-                                                    type: artifact.type,
-                                                    directiveName: artifact.directiveName,
-                                                    libraryName: library.name,
-                                                    artifactId: artifact._id,
-                                                    version: artifact._version || (artifact.versionList.length && artifact.versionList[artifact.versionList.length - 1].name) || ""
+                                                if (!action.artifactSpec || action.artifactSpec.artifactId !== artifact._id) {
+                                                    action.artifactSpec = {
+                                                        type: artifact.type,
+                                                        directiveName: artifact.directiveName,
+                                                        libraryName: library.name,
+                                                        artifactName: artifact.name,
+                                                        artifactId: artifact._id,
+                                                        version: artifact._version || (artifact.versionList.length && artifact.versionList[artifact.versionList.length - 1].name) || ""
+                                                    }
                                                 }
                                                 return false;
                                             }
@@ -63,6 +57,29 @@ define(
                                         });
 
                                     });
+                                }
+
+                                scope.initEffectList = function (action) {
+                                    scope.effectList.splice();
+
+                                    if (action.artifactSpec && action.artifactSpec.artifactId) {
+                                        var artifactId = action.artifactSpec.artifactId;
+
+                                        scope.filterEffectLibraryList.every(function (library) {
+                                            return library.artifactList.every(function (artifact) {
+                                                if (artifact._id === artifactId) {
+                                                    var arr = utilService.listOmit(artifact.json, "$$hashkey");
+                                                    arr.splice(0, 0, 0, 0);
+                                                    Array.prototype.splice.apply(scope.effectList, arr);
+
+                                                    return false;
+                                                }
+
+                                                return true;
+                                            });
+
+                                        });
+                                    }
                                 }
 
                                 scope.filterLibraryList = function (libraryList, xrefList) {
@@ -541,6 +558,13 @@ define(
                                         "ui-state-transition.compile.post.refreshArtifactList"
                                     )();
                                 }
+
+                                scope.pickedWidgetWatcher = scope.$watch("pickedWidget", function (value) {
+                                    if (value) {
+                                        var widgetObj = uiService.configurableWidget(value);
+                                        scope.activeWidget = widgetObj || value;
+                                    }
+                                });
 
                                 scope.switchProjectWatcher = scope.$on(angularEventTypes.switchProjectEvent, function (event, project) {
                                     refreshArtifactList(project);

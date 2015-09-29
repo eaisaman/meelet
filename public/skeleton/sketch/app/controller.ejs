@@ -85,7 +85,7 @@ self["<%=id%>"].set<%=context||"State"%> = function(name) {
      %>
     }
 
-    return utilService.chain(arr, "chain-stateFn-<%=id%>");
+    return utilService.chain(arr, "chain-stateFn-<%=id%>-{0}".format(name));
 }
 });
 <%
@@ -114,10 +114,10 @@ function handleEventMap(eventMap) {
 }%>
 
 define(
-    ["angular", "jquery", "app-route", "app-service", "app-util", "sketch-util"],
+    ["angular", "jquery", "app-route", "app-service", "app-service-registry", "app-util", "sketch-util"],
     function () {
         return function (appModule, extension) {
-            function RootController($scope, $rootScope, $q, $timeout, appService, urlService, utilService, sketchUtilService) {
+            function RootController($scope, $rootScope, $q, $timeout, appService, serviceRegistry, urlService, utilService, sketchUtilService) {
                 $rootScope.initFns = [];
                 $rootScope.stateFns = [];
 <%if (pages && pages.length) {
@@ -157,11 +157,12 @@ define(
                     appService.exitPage();
                 }
                 appService.loadPage(urlService.locations[0], true);
+                appService.registerService();
             }
 <%if (pages && pages.length) {
     pages.forEach(function(page) {
 %>
-            function <%= page.id %>_Controller($scope, $rootScope, $q, $timeout, appService, urlService, utilService, sketchUtilService) {
+            function <%= page.id %>_Controller($scope, $rootScope, $q, $timeout, appService, serviceRegistry, urlService, utilService, sketchUtilService) {
                 appService.setState("<%= page.id %>", "*");
             }
 <%
@@ -170,12 +171,12 @@ define(
 
             if (isBrowser) {
                 appModule.
-                    controller('RootController', ["$scope", "$rootScope", "$q", "$timeout", "appService", "urlService", "utilService", "sketchUtilService", RootController]);
+                    controller('RootController', ["$scope", "$rootScope", "$q", "$timeout", "appService", "serviceRegistry", "urlService", "utilService", "sketchUtilService", RootController]);
 <%if (pages && pages.length) {
     pages.forEach(function(page) {
 %>
                 appModule.
-                    controller('<%= page.id %>_Controller', ["$scope", "$rootScope", "$q", "$timeout", "appService", "urlService", "utilService", "sketchUtilService", <%= page.id %>_Controller]);
+                    controller('<%= page.id %>_Controller', ["$scope", "$rootScope", "$q", "$timeout", "appService", "serviceRegistry", "urlService", "utilService", "sketchUtilService", <%= page.id %>_Controller]);
 <%
     });
 %>

@@ -1,10 +1,10 @@
 requirejs.config(
     {
         paths: {
+            "app-service-registry": APP_COMMON_LIB_PATH + "registry",
             "app-util": APP_COMMON_LIB_PATH + "util",
             "app-route": APP_COMMON_LIB_PATH + "route",
             "app-extension": APP_COMMON_LIB_PATH + "extension",
-            "app-service-registry": APP_COMMON_LIB_PATH + "registry",
             "app-service": APP_COMMON_LIB_PATH + "browser/service",
             "book-service": APP_COMMON_LIB_PATH + "browser/service.book",
             "flow-service": APP_COMMON_LIB_PATH + "browser/service.flow",
@@ -16,20 +16,20 @@ requirejs.config(
 );
 
 define(
-    ["json!meta.json", "json!" + APP_COMMON_LIB_PATH + "registry.json", "app-util", "app-route", "app-extension", "app-service-registry", "app-service", "book-service", "flow-service"],
+    ["json!meta.json", "json!" + APP_COMMON_LIB_PATH + "registry.json", "app-service-registry", "app-util", "app-route", "app-extension", "app-service", "book-service", "flow-service"],
     function (meta, registry) {
-        var utilConfig = arguments[2],
-            routeConfig = arguments[3],
-            extension = arguments[4],
-            registryConfig = arguments[5],
+        var registryConfig = arguments[2],
+            utilConfig = arguments[3],
+            routeConfig = arguments[4],
+            extension = arguments[5],
             appConfigs = Array.prototype.slice.call(arguments, 6);
 
         return function (appModule, callback) {
+            registryConfig(appModule, registry);
+
             utilConfig(appModule);
 
             routeConfig(appModule, meta);
-
-            registryConfig(appModule, registry);
 
             appConfigs.forEach(function (config) {
                 config(appModule, extension, meta);

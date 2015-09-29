@@ -36,8 +36,16 @@ define(
                                     scope.filterEffectLibraryList.every(function (library) {
                                         return library.artifactList.every(function (artifact) {
                                             if (artifact._id === artifactId) {
-                                                scope.pickedEffectArtifact = artifact;
-                                                scope.pickedEffectLibrary = library;
+                                                if (!$rootScope.loadedProject.sketchWorks.pageTransition.artifactSpec || $rootScope.loadedProject.sketchWorks.pageTransition.artifactSpec.artifactId !== artifact._id) {
+                                                    $rootScope.loadedProject.sketchWorks.pageTransition.artifactSpec = {
+                                                        type: artifact.type,
+                                                        directiveName: artifact.directiveName,
+                                                        libraryName: library.name,
+                                                        artifactName: artifact.name,
+                                                        artifactId: artifact._id,
+                                                        version: artifact._version || (artifact.versionList.length && artifact.versionList[artifact.versionList.length - 1].name) || ""
+                                                    };
+                                                }
 
                                                 var arr = artifact.json.slice(0, artifact.json.length);
                                                 arr.splice(0, 0, 0, 0);
@@ -53,22 +61,10 @@ define(
                                 }
 
                                 scope.createEffectObj = function (effectValue) {
-                                    var artifact = scope.pickedEffectArtifact,
-                                        library = scope.pickedEffectLibrary;
-
                                     return {
-                                        artifactSpec: {
-                                            type: artifact.type,
-                                            directiveName: artifact.directiveName,
-                                            libraryName: library.name,
-                                            artifactId: artifact._id,
-                                            version: artifact._version || (artifact.versionList.length && artifact.versionList[artifact.versionList.length - 1].name) || ""
-                                        },
-                                        effect: {
-                                            name: effectValue.replace(/\+.+$/g, ''),
-                                            type: effectValue.replace(/^.+\+/g, ''),
-                                            options: {}
-                                        }
+                                        name: effectValue.replace(/\+.+$/g, ''),
+                                        type: effectValue.replace(/^.+\+/g, ''),
+                                        options: {}
                                     };
                                 }
 
@@ -439,6 +435,29 @@ define(
                                 scope.filterEffectLibraryList = [];
                                 scope.pickedPageIndex = 0;
 
+                                function initEffectList(pageTransition) {
+                                    scope.effectList.splice();
+
+                                    if (pageTransition.artifactSpec && pageTransition.artifactSpec.artifactId) {
+                                        var artifactId = pageTransition.artifactSpec.artifactId;
+
+                                        scope.filterEffectLibraryList.every(function (library) {
+                                            return library.artifactList.every(function (artifact) {
+                                                if (artifact._id === artifactId) {
+                                                    var arr = utilService.listOmit(artifact.json, "$$hashkey");
+                                                    arr.splice(0, 0, 0, 0);
+                                                    Array.prototype.splice.apply(scope.effectList, arr);
+
+                                                    return false;
+                                                }
+
+                                                return true;
+                                            });
+
+                                        });
+                                    }
+                                }
+
                                 function refreshArtifactList(project) {
                                     utilService.latestOnce(
                                         function () {
@@ -449,6 +468,8 @@ define(
                                                         arr.splice(0, 0, 0, 0);
                                                         scope.filterEffectLibraryList.splice(0);
                                                         Array.prototype.splice.apply(scope.filterEffectLibraryList, arr);
+
+                                                        initEffectList(project.sketchWorks.pageTransition);
                                                     });
                                                 }
                                             );
@@ -466,6 +487,7 @@ define(
 
                                 if ($rootScope.loadedProject.projectRecord && $rootScope.loadedProject.projectRecord._id) {
                                     refreshArtifactList($rootScope.loadedProject);
+
                                 }
 
                                 scope.$on('$destroy', function () {
