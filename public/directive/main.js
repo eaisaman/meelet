@@ -2,9 +2,7 @@ requirejs.config(
     {
         paths: {
             "ng.ui.canvas": DIRECTIVE_LIB_PATH + "ng.ui.canvas",
-            "ng.ui.svg": DIRECTIVE_LIB_PATH + "ng.ui.svg",
             "ng.ui.wave.visualizer": DIRECTIVE_LIB_PATH + "ng.ui.wave.visualizer",
-            "ng.ui.animation": DIRECTIVE_LIB_PATH + "ng.ui.animation",
             "ng.ui.service": DIRECTIVE_LIB_PATH + "ng.ui.service",
             "ng.ui.service.flow": DIRECTIVE_LIB_PATH + "ng.ui.service.flow",
             "ng.ui.service.book": DIRECTIVE_LIB_PATH + "ng.ui.service.book",
@@ -42,9 +40,7 @@ requirejs.config(
 
 define([
         "ng.ui.canvas",
-        "ng.ui.svg",
         "ng.ui.wave.visualizer",
-        "ng.ui.animation",
         "ng.ui.service",
         "ng.ui.service.flow",
         "ng.ui.service.book",
@@ -78,23 +74,17 @@ define([
     ],
     function () {
         var canvasConfig = arguments[0],
-            svgConfig = arguments[1],
-            waveVisualizerConfig = arguments[2],
-            animationConfig = arguments[3],
-            serviceConfig = arguments[4],
-            flowServiceConfig = arguments[5],
-            bookServiceConfig = arguments[6],
-            extension = arguments[7],
-            directiveConfigs = Array.prototype.slice.call(arguments, 8);
+            waveVisualizerConfig = arguments[1],
+            serviceConfig = arguments[2],
+            flowServiceConfig = arguments[3],
+            bookServiceConfig = arguments[4],
+            extension = arguments[5],
+            directiveConfigs = Array.prototype.slice.call(arguments, 6);
 
         return function (appModule) {
             canvasConfig(appModule);
 
-            svgConfig(appModule);
-
             waveVisualizerConfig(appModule);
-
-            animationConfig(appModule);
 
             serviceConfig(appModule);
 

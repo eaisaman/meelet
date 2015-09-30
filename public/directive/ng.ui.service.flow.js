@@ -1,7 +1,7 @@
 define(
-    ["angular-lib", "jquery-lib", "underscore-lib", "flow-service", "app-service-registry", "app-util", "ng.ui.canvas", "ng.ui.animation"],
+    ["angular-lib", "jquery-lib", "underscore-lib", "flow-service", "app-service-registry", "app-util", "app-animation", "ng.ui.canvas"],
     function () {
-        var Service = function ($parse, $timeout, $q, $exceptionHandler, $compile, $rootScope, angularEventTypes, angularConstants, flowService, serviceRegistry, utilService, uiCanvasService, uiAnimationService) {
+        var Service = function ($parse, $timeout, $q, $exceptionHandler, $compile, $rootScope, angularEventTypes, angularConstants, flowService, serviceRegistry, utilService, uiCanvasService, animationService) {
             this.$parse = $parse;
             this.$timeout = $timeout;
             this.$q = $q;
@@ -14,14 +14,14 @@ define(
             this.serviceRegistry = serviceRegistry;
             this.utilService = utilService;
             this.uiCanvasService = uiCanvasService;
-            this.uiAnimationService = uiAnimationService;
+            this.animationService = animationService;
 
             _.extend($inject, _.pick(this, Service.$inject));
 
             defineFlowClass(utilService.createObjectClass(), utilService.findObjectClass());
         };
 
-        Service.$inject = ["$parse", "$timeout", "$q", "$exceptionHandler", "$compile", "$rootScope", "angularEventTypes", "angularConstants", "flowService", "serviceRegistry", "utilService", "uiCanvasService", "uiAnimationService"];
+        Service.$inject = ["$parse", "$timeout", "$q", "$exceptionHandler", "$compile", "$rootScope", "angularEventTypes", "angularConstants", "flowService", "serviceRegistry", "utilService", "uiCanvasService", "animationService"];
         var $inject = {};
 
         function defineFlowClass(Class, FindClass) {

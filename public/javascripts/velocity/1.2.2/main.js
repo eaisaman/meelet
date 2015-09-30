@@ -12,7 +12,9 @@ define(
     [
             "velocity", "velocity.ui"
     ],
-    function () {
+    function (Velocity) {
+        window.Velocity = Velocity;
+
         return function () {
         }
     }

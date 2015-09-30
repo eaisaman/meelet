@@ -1,7 +1,7 @@
 define(
     ["angular-lib", "jquery-lib", "hammer-lib"],
     function () {
-        var utilService = function ($rootScope, $log, $parse, $timeout, $q, $exceptionHandler, angularConstants, serviceRegistry) {
+        var utilService = function ($rootScope, $log, $parse, $timeout, $q, $exceptionHandler, angularConstants, serviceRegistry, animationService) {
             this.$rootScope = $rootScope;
             this.$log = $log;
             this.$parse = $parse;
@@ -10,9 +10,10 @@ define(
             this.$exceptionHandler = $exceptionHandler;
             this.angularConstants = angularConstants;
             this.serviceRegistry = serviceRegistry;
+            this.animationService = animationService;
         };
 
-        utilService.$inject = ["$rootScope", "$log", "$parse", "$timeout", "$q", "$exceptionHandler", "angularConstants", "serviceRegistry"];
+        utilService.$inject = ["$rootScope", "$log", "$parse", "$timeout", "$q", "$exceptionHandler", "angularConstants", "serviceRegistry", "animationService"];
 
         var _keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
 
@@ -1537,7 +1538,7 @@ define(
 
                     return defer.promise;
                 } else if (action.actionType === "Movement") {
-                    return self.uiAnimationService.moveWidget($widgetElement, self.$rootScope[$widgetElement.attr("id")].routes, action.routeIndex, action.settings);
+                    return self.animationService.moveWidget($widgetElement, self.$rootScope[$widgetElement.attr("id")].routes, action.routeIndex, action.settings, action.runThrough);
                 } else if (action.actionType === "Sound") {
                     return action.resourceName && self.serviceRegistry.invoke("BaseService", "playSound")("resource/audio/{0}".format(action.resourceName))|| self.getResolveDefer();
                 } else if (action.actionType === "Include") {

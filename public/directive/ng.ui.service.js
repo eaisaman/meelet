@@ -1,7 +1,7 @@
 define(
-    ["angular-lib", "jquery-lib", "underscore-lib", "app-service", "app-service-registry", "app-util", "ng.ui.canvas", "ng.ui.animation"],
+    ["angular-lib", "jquery-lib", "underscore-lib", "app-service", "app-service-registry", "app-util", "app-animation", "ng.ui.canvas"],
     function () {
-        var Service = function ($parse, $timeout, $q, $exceptionHandler, $compile, $rootScope, angularEventTypes, angularConstants, appService, serviceRegistry, utilService, uiCanvasService, uiAnimationService) {
+        var Service = function ($parse, $timeout, $q, $exceptionHandler, $compile, $rootScope, angularEventTypes, angularConstants, appService, serviceRegistry, utilService, uiCanvasService, animationService) {
             this.$parse = $parse;
             this.$timeout = $timeout;
             this.$q = $q;
@@ -14,14 +14,14 @@ define(
             this.serviceRegistry = serviceRegistry;
             this.utilService = utilService;
             this.uiCanvasService = uiCanvasService;
-            this.uiAnimationService = uiAnimationService;
+            this.animationService = animationService;
 
             _.extend($inject, _.pick(this, Service.$inject));
 
             defineWidgetClass(utilService.createObjectClass(), utilService.findObjectClass());
         };
 
-        Service.$inject = ["$parse", "$timeout", "$q", "$exceptionHandler", "$compile", "$rootScope", "angularEventTypes", "angularConstants", "appService", "serviceRegistry", "utilService", "uiCanvasService", "uiAnimationService"];
+        Service.$inject = ["$parse", "$timeout", "$q", "$exceptionHandler", "$compile", "$rootScope", "angularEventTypes", "angularConstants", "appService", "serviceRegistry", "utilService", "uiCanvasService", "animationService"];
         var $inject = {};
 
         //Define sketch widget class
@@ -1127,12 +1127,12 @@ define(
                                 return defer.promise;
                             } else if (self.effect.type === "Script") {
                                 if (self.runAfterComplete) {
-                                    $inject.uiAnimationService.doAnimationWithCallback(self.widgetObj.$element, self.effect.name, null, function () {
+                                    $inject.animationService.doAnimationWithCallback(self.widgetObj.$element, self.effect.name, null, function () {
                                         self.restoreWidget();
                                         defer.resolve(self);
                                     });
                                 } else {
-                                    $inject.uiAnimationService.doAnimationWithCallback(self.widgetObj.$element, self.effect.name, function () {
+                                    $inject.animationService.doAnimationWithCallback(self.widgetObj.$element, self.effect.name, function () {
                                         defer.resolve(self);
                                     }, function () {
                                         self.restoreWidget();
@@ -1425,7 +1425,8 @@ define(
                     MEMBERS: {
                         actionType: "Movement",
                         routeIndex: null,
-                        settings: []
+                        settings: [],
+                        runThrough: true
                     },
                     initialize: function (widgetObj, id) {
                         MovementTransitionAction.prototype.__proto__.initialize.apply(this, [widgetObj, id]);
@@ -1449,7 +1450,7 @@ define(
                     toJSON: function () {
                         var jsonObj = MovementTransitionAction.prototype.__proto__.toJSON.apply(this);
 
-                        _.extend(jsonObj, _.pick(this, ["CLASS_NAME", "routeIndex"]), {
+                        _.extend(jsonObj, _.pick(this, ["CLASS_NAME", "routeIndex", "runThrough"]), {
                             settings: $inject.utilService.arrayOmit(this.settings, "$$hashKey", "options", "name", "type")
                         });
 
@@ -1458,6 +1459,7 @@ define(
                     fromObject: function (obj) {
                         var ret = new MovementTransitionAction(null, obj.id);
                         if (obj.routeIndex != null) ret.routeIndex = obj.routeIndex;
+                        if (obj.runThrough != null) ret.runThrough = obj.runThrough;
                         _.each(obj.settings, function (s) {
                             _.extend(_.findWhere(ret.settings, {key: s.key}), s);
                         });
@@ -1469,6 +1471,7 @@ define(
                     clone: function (cloneObj, MEMBERS) {
                         cloneObj = cloneObj || new MovementTransitionAction(this.widgetObj);
                         cloneObj.routeIndex = this.routeIndex;
+                        cloneObj.runThrough = this.runThrough;
                         _.each(this.settings, function (s) {
                             _.extend(_.findWhere(cloneObj.settings, {key: s.key}), s);
                         })
@@ -1480,10 +1483,12 @@ define(
                         return cloneObj;
                     },
                     doAction: function () {
-                        return $inject.uiAnimationService.moveWidget(this.widgetObj.$element, this.widgetObj.routes, this.routeIndex, this.settings);
+                        return $inject.animationService.moveWidget(this.widgetObj.$element, this.widgetObj.routes, this.routeIndex, this.settings, this.runThrough);
                     },
                     restoreWidget: function () {
                         var self = this;
+
+                        $inject.animationService.restoreWidget(self.widgetObj.$element, self.widgetObj.routes, self.routeIndex);
 
                         if (self.widgetObj.$element && self.widgetObj.$element[0].nodeType == 1 && self.widgetObj.$element.parent().length) {
                             var left = self.widgetObj.css("left"), top = self.widgetObj.css("top");
@@ -2759,18 +2764,15 @@ define(
                                     self.deregisterOnPlaying = self.deregisterOnPlaying || $inject.$rootScope.$on(
                                             $inject.angularEventTypes.playProjectEvent,
                                             function (event, value) {
-                                                $inject.utilService.latestOnce(
+                                                $inject.utilService.once(
                                                     function () {
-                                                        return $inject.$timeout(
-                                                            function () {
-                                                                self.setIsPlaying(value);
-                                                            }
-                                                        );
+                                                        self.setIsPlaying(value);
+
+                                                        return $inject.utilService.getResolveDefer();
                                                     },
                                                     null,
-                                                    null,
                                                     $inject.angularConstants.unresponsiveInterval,
-                                                    "BaseSketchWidgetClass.attach.deregisterOnPlaying." + self.id
+                                                    "BaseSketchWidgetClass.deregisterOnPlaying." + self.id
                                                 )();
                                             }
                                         );
@@ -2998,18 +3000,15 @@ define(
                                 self.deregisterOnPlaying = self.deregisterOnPlaying || $inject.$rootScope.$on(
                                         $inject.angularEventTypes.playProjectEvent,
                                         function (event, value) {
-                                            $inject.utilService.latestOnce(
+                                            $inject.utilService.once(
                                                 function () {
-                                                    return $inject.$timeout(
-                                                        function () {
-                                                            self.setIsPlaying(value);
-                                                        }
-                                                    );
+                                                    self.setIsPlaying(value);
+
+                                                    return $inject.utilService.getResolveDefer();
                                                 },
                                                 null,
-                                                null,
                                                 $inject.angularConstants.unresponsiveInterval,
-                                                "BaseSketchWidgetClass.appendTo.deregisterOnPlaying." + self.id
+                                                "BaseSketchWidgetClass.deregisterOnPlaying." + self.id
                                             )();
                                         }
                                     );

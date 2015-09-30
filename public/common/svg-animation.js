@@ -1,14 +1,13 @@
 define(
     ["angular-lib", "jquery-lib", "snap-svg-lib"],
     function () {
-        var SVGAnimation = function ($log, $compile, $parse, $timeout, $q, $exceptionHandler, utilService, angularConstants, angularEventTypes) {
+        var SVGAnimation = function ($log, $compile, $parse, $timeout, $q, $exceptionHandler, angularConstants, angularEventTypes) {
                 this.$log = $log;
                 this.$compile = $compile;
                 this.$parse = $parse;
                 this.$timeout = $timeout;
                 this.$q = $q;
                 this.$exceptionHandler = $exceptionHandler;
-                this.utilService = utilService;
                 this.angularConstants = angularConstants;
                 this.angularEventTypes = angularEventTypes;
             },
@@ -19,7 +18,29 @@ define(
                 easingOut: mina.linear
             };
 
-        SVGAnimation.$inject = ["$log", "$compile", "$parse", "$timeout", "$q", "$exceptionHandler", "utilService", "angularConstants", "angularEventTypes"];
+        SVGAnimation.$inject = ["$log", "$compile", "$parse", "$timeout", "$q", "$exceptionHandler", "angularConstants", "angularEventTypes"];
+
+        SVGAnimation.prototype.getResolveDefer = function (result) {
+            var self = this,
+                defer = self.$q.defer();
+
+            self.$timeout(function () {
+                defer.resolve(result);
+            });
+
+            return defer.promise;
+        }
+
+        SVGAnimation.prototype.getRejectDefer = function (err) {
+            var self = this,
+                errorDefer = self.$q.defer();
+
+            self.$timeout(function () {
+                errorDefer.reject(err);
+            });
+
+            return errorDefer.promise;
+        }
 
         SVGAnimation.prototype.init = function (element, options, openingSteps, closingSteps) {
             if (element) {
@@ -78,7 +99,7 @@ define(
                 }
             }
 
-            return self.utilService.getResolveDefer();
+            return self.getResolveDefer();
         }
 
         SVGAnimation.prototype.hide = function (element, options, closingSteps) {
@@ -111,13 +132,13 @@ define(
                 }
             }
 
-            return self.utilService.getResolveDefer();
+            return self.getResolveDefer();
         }
 
         return function (appModule) {
             appModule.
                 config(["$provide", function ($provide) {
-                    $provide.service('uiSVGService', SVGAnimation);
+                    $provide.service('svgAnimoService', SVGAnimation);
                 }]);
         };
     }

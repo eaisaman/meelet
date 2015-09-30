@@ -6,14 +6,14 @@ var ANGULAR_LIB_PATH = MODULES_PATH + "/angular/1.4.5/",
     HAMMER_LIB_PATH = MODULES_PATH + "/hammer/2.0.4/",
     JQUERY_LIB_PATH = MODULES_PATH + "/jquery/2.1.1/",
     UNDERSCORE_LIB_PATH = MODULES_PATH + "/underscore/1.6.0/",
-    CLASSIE_LIB_PATH = MODULES_PATH + "/classie/",
     MODERNIZR_LIB_PATH = MODULES_PATH + "/modernizr/",
     STRING_LIB_PATH = MODULES_PATH + "/String/",
+    SNAP_SVG_LIB_PATH = MODULES_PATH + "/snap/0.4.1/",
     VELOCITY_LIB_PATH = MODULES_PATH + "/velocity/1.2.2/",
     FABRIC_LIB_PATH = MODULES_PATH + "/fabric/1.5.0/",
     CHART_LIB_PATH = MODULES_PATH + "/Chart.js/1.0.2/",
-    EDGE_LIB_PATH = MODULES_PATH + "/edge/5.0.1/",
     APP_LIB_PATH = "app/",
+    APP_COMMON_LIB_PATH = "common/",
     DIRECTIVE_LIB_PATH = "directive/",
     isBrowser = !!(typeof window !== 'undefined' && typeof navigator !== 'undefined' && !/jsDom$/i.test(navigator.appName) && window.document);
 
@@ -29,27 +29,29 @@ requirejs.config({
         "hammer-lib": HAMMER_LIB_PATH + "main",
         "jquery-lib": JQUERY_LIB_PATH + "main",
         "underscore-lib": UNDERSCORE_LIB_PATH + "main",
-        "classie-lib": CLASSIE_LIB_PATH + "main",
         "modernizr-lib": MODERNIZR_LIB_PATH + "main",
         "string-lib": STRING_LIB_PATH + "main",
+        "snap-svg-lib": SNAP_SVG_LIB_PATH + "main",
         "velocity-lib": VELOCITY_LIB_PATH + "main",
         "fabric-lib": FABRIC_LIB_PATH + "main",
         "chart-lib": CHART_LIB_PATH + "main",
-        "edge-lib": EDGE_LIB_PATH + "main",
+        "app-common-lib": APP_COMMON_LIB_PATH + "main",
         "app-lib": APP_LIB_PATH + "main",
         "directive-lib": DIRECTIVE_LIB_PATH + "main"
     },
     shim: {
-        "app-lib": {deps: ["directive-lib"]}
+        "app-lib": {deps: ["app-common-lib"]},
+        "directive-lib": {deps: ["app-common-lib"]}
     }
 });
 
-requirejs(["angular-lib", "angular-modules-lib", "hammer-lib", "jquery-lib", "underscore-lib", "classie-lib", "modernizr-lib", "string-lib", "velocity-lib", "fabric-lib", "chart-lib", "edge-lib"], function () {
+requirejs(["angular-lib", "angular-modules-lib", "hammer-lib", "jquery-lib", "underscore-lib", "modernizr-lib", "string-lib", "snap-svg-lib", "velocity-lib", "fabric-lib", "chart-lib"], function () {
     if (isBrowser) {
         window.appModule = angular.module(APP_MODULE_NAME, APP_MODULE_DEPS);
         window.appModule.value("angularEventTypes", {
             boundPropertiesEvent: "boundPropertiesEvent",
             beforeWidgetCreationEvent: "beforeWidgetCreationEvent",
+            beforeBookWidgetCreationEvent: "beforeBookWidgetCreationEvent",
             resourceEditEvent: "resourceEditEvent",
             resourceEditEndEvent: "resourceEditEndEvent",
             switchProjectEvent: "switchProjectEvent",
@@ -78,7 +80,9 @@ requirejs(["angular-lib", "angular-modules-lib", "hammer-lib", "jquery-lib", "un
                 activeClass: "pickedWidget",
                 widgetContainerClass: "widgetContainer",
                 widgetIncludeAnchorClass: "widgetIncludeAnchor",
-                currentPageClass: "currentPage"
+                currentPageClass: "currentPage",
+                loadExternalSuccessClass: "loadExternalSuccess",
+                loadExternalFailClass: "loadExternalFailClass"
             },
             anchorAttr: "widget-anchor",
             repoWidgetClass: "ui-widget",
@@ -116,25 +120,32 @@ requirejs(["angular-lib", "angular-modules-lib", "hammer-lib", "jquery-lib", "un
         arguments[1](window.appModule);
     }
 
-    window.modouleLogger && window.modouleLogger.debug(["angular-plugins-lib", "directive-lib", "app-lib"].join(",") + " Loading");
+    window.modouleLogger && window.modouleLogger.debug(["angular-plugins-lib", "app-common-lib"].join(",") + " Loading");
 
-    requirejs(["angular-plugins-lib", "directive-lib", "app-lib"], function () {
-        window.modouleLogger && window.modouleLogger.debug(["angular-plugins-lib", "directive-lib", "app-lib"].join(",") + " Load Complete.");
+    requirejs(["angular-plugins-lib", "app-common-lib"], function (pluginsConfig, commonConfig) {
+        window.modouleLogger && window.modouleLogger.debug(["angular-plugins-lib", "app-common-lib"].join(",") + " Load Complete.");
 
         if (isBrowser) {
-            var configs = Array.prototype.slice.call(arguments, 0, arguments.length - 1),
-                appConfig = arguments[arguments.length - 1];
-
-            configs.forEach(function (config) {
-                config(window.appModule);
-            });
-
-            appConfig(window.appModule, function () {
-                angular.bootstrap(document, [APP_MODULE_NAME]);
-            });
+            pluginsConfig(window.appModule);
         }
 
-        //On load function will be bound to window object if post processing needed.
-        window.onModulesLoaded && window.onModulesLoaded();
+        commonConfig(window.appModule, function () {
+            window.modouleLogger && window.modouleLogger.debug(["directive-lib", "app-lib"].join(",") + " Loading");
+
+            requirejs(["directive-lib", "app-lib"], function (directiveConfig, appConfig) {
+                window.modouleLogger && window.modouleLogger.debug(["directive-lib", "app-lib"].join(",") + " Load Complete.");
+
+                if (isBrowser) {
+                    directiveConfig(window.appModule);
+
+                    appConfig(window.appModule, function () {
+                        angular.bootstrap(document, [APP_MODULE_NAME]);
+                    });
+                }
+
+                //On load function will be bound to window object if post processing needed.
+                window.onModulesLoaded && window.onModulesLoaded();
+            });
+        });
     });
 });

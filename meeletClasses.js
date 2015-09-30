@@ -188,7 +188,7 @@ var State = Class({
             actionType: "",
             widgetObj: null
         },
-        initialize: function (widgetObj, actionType, id) {
+        initialize: function (widgetObj, id) {
             var MEMBERS = arguments.callee.prototype.MEMBERS;
 
             for (var member in MEMBERS) {
@@ -196,7 +196,6 @@ var State = Class({
             }
 
             this.widgetObj = widgetObj;
-            this.actionType = actionType;
             this.id = id || "TransitionAction_" + _.now();
         },
         toJSON: function () {
@@ -217,11 +216,12 @@ var State = Class({
     }), SequenceTransitionAction = Class(BaseTransitionAction, {
         CLASS_NAME: "SequenceTransitionAction",
         MEMBERS: {
+            actionType: "Sequence",
             childActions: [],
             stopOnEach: false
         },
         initialize: function (widgetObj, id) {
-            SequenceTransitionAction.prototype.__proto__.initialize.apply(this, [widgetObj, "Sequence", id]);
+            SequenceTransitionAction.prototype.__proto__.initialize.apply(this, [widgetObj, id]);
             var MEMBERS = arguments.callee.prototype.MEMBERS;
 
             for (var member in MEMBERS) {
@@ -268,12 +268,13 @@ var State = Class({
     }), EffectTransitionAction = Class(BaseTransitionAction, {
         CLASS_NAME: "EffectTransitionAction",
         MEMBERS: {
+            actionType: "Effect",
             artifactSpec: {},
             effect: {},
             runAfterComplete: true
         },
         initialize: function (widgetObj, artifactSpec, effect, id) {
-            EffectTransitionAction.prototype.__proto__.initialize.apply(this, [widgetObj, "Effect", id]);
+            EffectTransitionAction.prototype.__proto__.initialize.apply(this, [widgetObj, id]);
             var MEMBERS = arguments.callee.prototype.MEMBERS;
 
             for (var member in MEMBERS) {
@@ -310,10 +311,11 @@ var State = Class({
     }), StateTransitionAction = Class(BaseTransitionAction, {
         CLASS_NAME: "StateTransitionAction",
         MEMBERS: {
+            actionType: "State",
             newState: ""
         },
         initialize: function (widgetObj, newState, id) {
-            StateTransitionAction.prototype.__proto__.initialize.apply(this, [widgetObj, "State", id]);
+            StateTransitionAction.prototype.__proto__.initialize.apply(this, [widgetObj, id]);
             var MEMBERS = arguments.callee.prototype.MEMBERS;
 
             for (var member in MEMBERS) {
@@ -337,10 +339,11 @@ var State = Class({
     }), ConfigurationTransitionAction = Class(BaseTransitionAction, {
         CLASS_NAME: "ConfigurationTransitionAction",
         MEMBERS: {
+            actionType: "Configuration",
             configuration: []
         },
         initialize: function (widgetObj, configuration, id) {
-            ConfigurationTransitionAction.prototype.__proto__.initialize.apply(this, [widgetObj, "Configuration", id]);
+            ConfigurationTransitionAction.prototype.__proto__.initialize.apply(this, [widgetObj, id]);
             var MEMBERS = arguments.callee.prototype.MEMBERS;
 
             for (var member in MEMBERS) {
@@ -391,11 +394,13 @@ var State = Class({
     }), MovementTransitionAction = Class(BaseTransitionAction, {
         CLASS_NAME: "MovementTransitionAction",
         MEMBERS: {
+            actionType: "Movement",
             routeIndex: null,
-            settings: []
+            settings: [],
+            runThrough: true
         },
         initialize: function (widgetObj, id) {
-            MovementTransitionAction.prototype.__proto__.initialize.apply(this, [widgetObj, "Movement", id]);
+            MovementTransitionAction.prototype.__proto__.initialize.apply(this, [widgetObj, id]);
             var MEMBERS = arguments.callee.prototype.MEMBERS;
 
             for (var member in MEMBERS) {
@@ -405,13 +410,14 @@ var State = Class({
         toJSON: function () {
             var jsonObj = MovementTransitionAction.prototype.__proto__.toJSON.apply(this);
 
-            _.extend(jsonObj, _.pick(this, ["CLASS_NAME", "routeIndex", "settings"]));
+            _.extend(jsonObj, _.pick(this, ["CLASS_NAME", "routeIndex", "settings", "runThrough"]));
 
             return jsonObj;
         },
         fromObject: function (obj, context) {
             var ret = new MovementTransitionAction(null, obj.id);
             if (obj.routeIndex != null) ret.routeIndex = obj.routeIndex;
+            if (obj.runThrough != null) ret.runThrough = obj.runThrough;
             _.each(obj.settings, function (s) {
                 ret.settings.push(_.clone(s));
             });
@@ -423,10 +429,11 @@ var State = Class({
     }), SoundTransitionAction = Class(BaseTransitionAction, {
         CLASS_NAME: "SoundTransitionAction",
         MEMBERS: {
+            actionType: "Sound",
             resourceName: ""
         },
         initialize: function (widgetObj, id) {
-            SoundTransitionAction.prototype.__proto__.initialize.apply(this, [widgetObj, "Sound", id]);
+            SoundTransitionAction.prototype.__proto__.initialize.apply(this, [widgetObj, id]);
             var MEMBERS = arguments.callee.prototype.MEMBERS;
 
             for (var member in MEMBERS) {
@@ -451,11 +458,12 @@ var State = Class({
     }), IncludeTransitionAction = Class(BaseTransitionAction, {
         CLASS_NAME: "IncludeTransitionAction",
         MEMBERS: {
+            actionType: "Include",
             url: "",
             edge: ""
         },
         initialize: function (widgetObj, url, edge, id) {
-            IncludeTransitionAction.prototype.__proto__.initialize.apply(this, [widgetObj, "Include", id]);
+            IncludeTransitionAction.prototype.__proto__.initialize.apply(this, [widgetObj, id]);
             var MEMBERS = arguments.callee.prototype.MEMBERS;
 
             for (var member in MEMBERS) {

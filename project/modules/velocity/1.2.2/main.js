@@ -11,7 +11,9 @@ define(
     [
             "velocity"
     ],
-    function () {
+    function (Velocity) {
+        window.Velocity = Velocity;
+
         return function () {
         }
     }

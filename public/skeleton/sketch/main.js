@@ -8,6 +8,7 @@ var ANGULAR_LIB_PATH = MODULES_PATH + "/angular/1.4.5/",
     UNDERSCORE_LIB_PATH = MODULES_PATH + "/underscore/1.6.0/",
     MODERNIZR_LIB_PATH = MODULES_PATH + "/modernizr/",
     STRING_LIB_PATH = MODULES_PATH + "/String/",
+    SNAP_SVG_LIB_PATH = MODULES_PATH + "/snap/0.4.1/",
     VELOCITY_LIB_PATH = MODULES_PATH + "/velocity/1.2.2/",
     FABRIC_LIB_PATH = MODULES_PATH + "/fabric/1.5.0/",
     CHART_LIB_PATH = MODULES_PATH + "/Chart.js/1.0.2/",
@@ -30,6 +31,7 @@ requirejs.config({
         "underscore-lib": UNDERSCORE_LIB_PATH + "main",
         "modernizr-lib": MODERNIZR_LIB_PATH + "main",
         "string-lib": STRING_LIB_PATH + "main",
+        "snap-svg-lib": SNAP_SVG_LIB_PATH + "main",
         "velocity-lib": VELOCITY_LIB_PATH + "main",
         "fabric-lib": FABRIC_LIB_PATH + "main",
         "chart-lib": CHART_LIB_PATH + "main",
@@ -43,7 +45,7 @@ requirejs.config({
     }
 });
 
-requirejs(["angular-lib", "angular-modules-lib", "hammer-lib", "jquery-lib", "underscore-lib", "modernizr-lib", "string-lib", "velocity-lib", "fabric-lib", "chart-lib"], function () {
+requirejs(["angular-lib", "angular-modules-lib", "hammer-lib", "jquery-lib", "underscore-lib", "modernizr-lib", "string-lib", "snap-svg-lib", "velocity-lib", "fabric-lib", "chart-lib"], function () {
     if (isBrowser) {
         window.appModule = angular.module(APP_MODULE_NAME, APP_MODULE_DEPS);
         window.appModule.value("angularEventTypes", {

@@ -1,7 +1,6 @@
 requirejs.config(
     {
         paths: {
-            "ng.ui.animation": DIRECTIVE_LIB_PATH + "ng.ui.animation",
             "widget.anchor": DIRECTIVE_LIB_PATH + "widget.anchor",
             "ng.ui.include.replace": DIRECTIVE_LIB_PATH + "ng.ui.include.replace"
         }
@@ -9,18 +8,14 @@ requirejs.config(
 );
 
 define([
-        "ng.ui.animation",
         "widget.anchor",
         "ng.ui.include.replace"
     ],
     function () {
-        var animationConfig = arguments[0],
-            directiveConfigs = Array.prototype.slice.call(arguments, 1);
+        var directiveConfigs = Array.prototype.slice.call(arguments);
 
         return function (appModule) {
             if (isBrowser) {
-                animationConfig(appModule);
-
                 //widget-anchor directive
                 directiveConfigs[0](appModule);
 

@@ -1,0 +1,1 @@
+../../../common/svg-animation.js
