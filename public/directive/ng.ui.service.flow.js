@@ -1,7 +1,7 @@
 define(
-    ["angular-lib", "jquery-lib", "underscore-lib", "flow-service", "app-service-registry", "app-util", "app-animation", "ng.ui.canvas"],
+    ["angular-lib", "jquery-lib", "underscore-lib", "flow-service", "app-service-registry", "app-util", "ng.ui.canvas"],
     function () {
-        var Service = function ($parse, $timeout, $q, $exceptionHandler, $compile, $rootScope, angularEventTypes, angularConstants, flowService, serviceRegistry, utilService, uiCanvasService, animationService) {
+        var Service = function ($parse, $timeout, $q, $exceptionHandler, $compile, $rootScope, angularEventTypes, angularConstants, flowService, serviceRegistry, utilService, uiCanvasService) {
             this.$parse = $parse;
             this.$timeout = $timeout;
             this.$q = $q;
@@ -14,14 +14,13 @@ define(
             this.serviceRegistry = serviceRegistry;
             this.utilService = utilService;
             this.uiCanvasService = uiCanvasService;
-            this.animationService = animationService;
 
             _.extend($inject, _.pick(this, Service.$inject));
 
             defineFlowClass(utilService.createObjectClass(), utilService.findObjectClass());
         };
 
-        Service.$inject = ["$parse", "$timeout", "$q", "$exceptionHandler", "$compile", "$rootScope", "angularEventTypes", "angularConstants", "flowService", "serviceRegistry", "utilService", "uiCanvasService", "animationService"];
+        Service.$inject = ["$parse", "$timeout", "$q", "$exceptionHandler", "$compile", "$rootScope", "angularEventTypes", "angularConstants", "flowService", "serviceRegistry", "utilService", "uiCanvasService"];
         var $inject = {};
 
         function defineFlowClass(Class, FindClass) {
@@ -1613,7 +1612,7 @@ define(
 
             Service.prototype.createFlow = function () {
                 return new Flow();
-            }
+            };
 
             Service.prototype.createFlowStep = function (className) {
                 var classes = ["SequenceFlowStep", "InvokeFlowStep", "MapFlowStep", "SwitchFlowStep", "RepeatFlowStep", "ExitFlowStep"];
@@ -1629,11 +1628,11 @@ define(
                 });
 
                 return stepObj;
-            }
+            };
 
             Service.prototype.createProcess = function () {
                 return new Process();
-            }
+            };
 
             Service.prototype.createProcessStep = function (className) {
                 var classes = ["ReceiveProcessStep", "TerminateProcessStep", "ForkProcessStep", "JoinProcessStep"];
@@ -1649,7 +1648,7 @@ define(
                 });
 
                 return stepObj;
-            }
+            };
 
             Service.prototype.prepareFakeFlow = function () {
                 var self = this,
@@ -1698,7 +1697,7 @@ define(
                 this.$rootScope.loadedProject.addFlow(flow);
 
                 return flow;
-            }
+            };
 
             Service.prototype.fromObject = function (obj) {
                 var className = obj.CLASS_NAME,
@@ -1715,7 +1714,7 @@ define(
                 });
 
                 return ret;
-            }
+            };
 
             Service.prototype.loadProject = function (dbObject) {
                 var self = this;

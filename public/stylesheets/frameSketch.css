@@ -17614,6 +17614,14 @@
   padding-bottom: 0.5em;
   height: 2em;
 }
+#state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > #triggerContent > li > div.triggerRunOnceCheckBox {
+  padding-left: 0.5em;
+  padding-bottom: 0.5em;
+  height: 2em;
+}
+#state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > #triggerContent > li > div.triggerRunOnceCheckBox > label {
+  line-height: 2;
+}
 #state-transition-control .stateContent > .stateDetails > .accordianGroup.select > .accordianBody .transition.select > .transitionDetails .transition-details-tabs .tab-content-transition-details > #triggerContent > li > div:not(.checked) ~ .triggerEventDropdown {
   cursor: not-allowed;
 }

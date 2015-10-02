@@ -15,7 +15,7 @@ define(
                     var m = name.match(/(\w+)Service$/);
                     if (m && m.length == 2) {
                         var argNames = utilService.formalParameterList(fn),
-                            args = []
+                            args = [];
 
                         argNames.forEach(function (argName) {
                             args.push(injectObj[argName]);
@@ -24,7 +24,7 @@ define(
                     }
                 }
             }
-        }
+        };
 
         Extension.prototype.onceService = function (element, $q, $timeout, utilService, angularConstants) {
             return function (scope, event, functionName) {
@@ -41,7 +41,7 @@ define(
                     "scope{0}.{1}".format(scope.$id, functionName)
                 )();
             }
-        }
+        };
 
         Extension.prototype.toggleExpandService = function (element, $q, $timeout, utilService) {
             return function (selector, event, state) {
@@ -103,7 +103,7 @@ define(
 
                 return defer.promise;
             };
-        }
+        };
 
         Extension.prototype.toggleDisplayService = function (element, $q, $timeout, utilService) {
             return function (selector, event, state) {
@@ -166,7 +166,7 @@ define(
 
                 return defer.promise;
             };
-        }
+        };
 
         Extension.prototype.toggleExclusiveDisplayService = function (element, $q, $timeout, utilService) {
             return function (selector, event, state) {
@@ -193,7 +193,7 @@ define(
 
                     return $q.all(arr);
                 } else {
-                    var defer = $q.defer()
+                    var defer = $q.defer();
 
                     $timeout(function () {
                         defer.resolve(selector);
@@ -202,7 +202,7 @@ define(
                     return defer.promise;
                 }
             };
-        }
+        };
 
         Extension.prototype.toggleEnableControlService = function (element, $q, $timeout, utilService) {
             return function (selector, event, state) {
@@ -245,7 +245,7 @@ define(
 
                 return defer.promise;
             };
-        }
+        };
 
         Extension.prototype.enableControlService = function (element, $q, $timeout, utilService) {
             return function (selector, event) {
@@ -281,7 +281,7 @@ define(
 
                 return defer.promise;
             };
-        }
+        };
 
         Extension.prototype.disableControlService = function (element, $q, $timeout, utilService) {
             return function (selector, event) {
@@ -317,7 +317,7 @@ define(
 
                 return defer.promise;
             };
-        }
+        };
 
         Extension.prototype.toggleSelectService = function (element, $q, $timeout, utilService) {
             return function (selector, event, state) {
@@ -359,7 +359,7 @@ define(
 
                 return defer.promise;
             };
-        }
+        };
 
         Extension.prototype.toggleExclusiveSelectService = function (element, $q, $timeout, utilService) {
             return function (selector, event, state) {
@@ -402,7 +402,7 @@ define(
 
                 return defer.promise;
             };
-        }
+        };
 
         Extension.prototype.selectTabService = function ($q, $timeout, utilService) {
             return function ($tabContainer, $tabHead, event, content) {
@@ -444,7 +444,7 @@ define(
 
                 return defer.promise;
             };
-        }
+        };
 
         Extension.prototype.hasClassService = function (element) {
             return function (selector, clazz) {
@@ -458,7 +458,7 @@ define(
                     }
                 }
             };
-        }
+        };
 
         Extension.prototype.addClassService = function (element) {
             return function (selector, clazz) {
@@ -473,7 +473,7 @@ define(
                     }
                 }
             };
-        }
+        };
 
         Extension.prototype.removeClassService = function (element) {
             return function (selector, clazz) {
@@ -488,7 +488,7 @@ define(
                     }
                 }
             };
-        }
+        };
 
         Extension.prototype.toggleClassService = function (element) {
             return function (selector, clazz) {
@@ -503,7 +503,7 @@ define(
                     }
                 }
             };
-        }
+        };
 
         Extension.prototype.attrService = function (element) {
             return function (selector, attr) {
@@ -517,7 +517,7 @@ define(
                     }
                 }
             };
-        }
+        };
 
         Extension.prototype.isLengthyService = function () {
             return function (value) {
@@ -530,7 +530,7 @@ define(
                     return value > 0;
                 } else return false;
             }
-        }
+        };
 
         Extension.prototype.parseLengthService = function () {
             return function (value) {
@@ -543,7 +543,7 @@ define(
                     return value;
                 } else return 0;
             }
-        }
+        };
 
         Extension.prototype.prefixedStyleService = function () {
             return function (style, format) {
@@ -560,11 +560,11 @@ define(
 
                 return styleObj;
             }
-        }
+        };
 
         Extension.prototype.composePrefixedCssService = function () {
             return function (style, format) {
-                var arr = []
+                var arr = [];
 
                 if (style && format) {
                     var prefixes = ["-webkit-", "-moz-", "-ms-", "-o-", ""],
@@ -577,7 +577,7 @@ define(
 
                 return arr.length && arr.join(";") || "";
             }
-        }
+        };
 
         Extension.prototype.composeTextShadowCssService = function (utilService) {
             return function (value) {
@@ -592,7 +592,7 @@ define(
 
                 return arr.length && {"text-shadow": arr.join(",")} || {};
             }
-        }
+        };
 
         Extension.prototype.composeBoxShadowCssService = function (utilService) {
             return function (styles, id) {
@@ -625,7 +625,7 @@ define(
 
                 return "";
             }
-        }
+        };
 
         Extension.prototype.generateBoxShadowStyleService = function (utilService) {
             return function (group) {
@@ -661,7 +661,7 @@ define(
 
                 return ret.join(" ");
             }
-        }
+        };
 
         Extension.prototype.composePseudoElementCssService = function (utilService) {
             return function (widgets) {
@@ -703,13 +703,13 @@ define(
 
                 return ret.join(" ");
             }
-        }
+        };
 
         Extension.prototype.hasStyleService = function () {
             return function (styles) {
                 return !(_.isEmpty(styles) || (_.isEmpty(styles.style) && _.isEmpty(styles.beforeStyle) && _.isEmpty(styles.afterStyle)));
             }
-        }
+        };
 
         Extension.prototype.pickStyleService = function () {
             return function (styles, pseudo) {
@@ -718,7 +718,7 @@ define(
 
                 return (styles[pseudoStylePrefix] = styles[pseudoStylePrefix] || {});
             }
-        }
+        };
 
         Extension.prototype.unsetStyleService = function () {
             return function (styles, pseudo) {
@@ -731,7 +731,7 @@ define(
 
                 return styles;
             }
-        }
+        };
 
         Extension.prototype.unsetStylesService = function () {
             return function (styles) {
@@ -741,7 +741,7 @@ define(
 
                 return styles;
             }
-        }
+        };
 
         Extension.prototype.getIconClassListService = function () {
             return function (libraryName, artifactName, iconName, pseudo) {
@@ -763,7 +763,7 @@ define(
                     ];
                 }
             }
-        }
+        };
 
         Extension.prototype.stopEventService = function (element) {
             return function (event, filterSelector) {
@@ -771,7 +771,7 @@ define(
                     filterSelector && element.find(filterSelector).is(event.target) || event.stopPropagation();
                 }
             }
-        }
+        };
 
         return e;
     }

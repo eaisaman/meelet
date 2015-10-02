@@ -60,7 +60,7 @@ define(
 
                     handler && handler(instance.progress);
                 }
-            }
+            };
 
             SoundContructor.prototype.init = function (buffer, callback) {
                 this.audioSourceNode = this.audioContext.createBufferSource();
@@ -72,7 +72,7 @@ define(
 
                 this.audioSourceNode.connect(this.audioContext.destination);
                 this.audioScriptNode.connect(this.audioContext.destination);
-            }
+            };
 
             SoundContructor.prototype.play = function (url, callback) {
                 url = url || this.url;
@@ -127,7 +127,7 @@ define(
                 }
 
                 return this.playDefer.promise;
-            }
+            };
 
             SoundContructor.prototype.pause = function () {
                 if (this.playState === this.PLAYING_STATE) {
@@ -141,7 +141,7 @@ define(
                         this.playDefer = null;
                     }
                 }
-            }
+            };
 
             SoundContructor.prototype.stop = function () {
                 if (this.audioSourceNode) {
@@ -161,19 +161,19 @@ define(
                 this.playState = this.FINISHED_STATE;
                 this.progress = 0;
                 this.url = null;
-            }
+            };
 
             SoundContructor.prototype.isPlaying = function () {
                 return this.playState === this.PLAYING_STATE;
-            }
+            };
 
             appService.prototype.registerService = function () {
                 this.serviceRegistry && this.serviceRegistry.register(this, FEATURE, PLATFORM);
-            }
+            };
 
             appService.prototype.unregisterService = function () {
                 this.serviceRegistry && this.serviceRegistry.unregister(FEATURE, PLATFORM);
-            }
+            };
 
             appService.prototype.loadRepoArtifact = function (repoArtifact, repoLibId, repoLibName, version, demoSelector) {
                 version = version || repoArtifact.versionList[repoArtifact.versionList.length - 1].name;
@@ -204,7 +204,7 @@ define(
                                 link.type = "text/css";
                                 link.rel = "stylesheet";
                                 link.href = "{0}/{1}".format(repoUrl, href);
-                                link.setAttribute("artifact", repoArtifact._id)
+                                link.setAttribute("artifact", repoArtifact._id);
 
                                 document.getElementsByTagName("head")[0].appendChild(link);
 
@@ -269,7 +269,7 @@ define(
                                         });
 
                                         jsDefer.resolve();
-                                    })
+                                    });
 
                                     return jsDefer.promise;
                                 })());
@@ -309,7 +309,7 @@ define(
                                     link.type = "text/css";
                                     link.rel = "stylesheet";
                                     link.href = "{0}/{1}".format(repoUrl, href);
-                                    link.setAttribute("artifact", repoArtifact._id)
+                                    link.setAttribute("artifact", repoArtifact._id);
 
                                     document.getElementsByTagName("head")[0].appendChild(link);
 
@@ -384,7 +384,7 @@ define(
                 );
 
                 return defer.promise;
-            }
+            };
 
             appService.prototype.loadArtifactList = function (type) {
                 var self = this,
@@ -506,7 +506,7 @@ define(
                         return errorDefer.promise;
                     }
                 );
-            }
+            };
 
             appService.prototype.loadEffectArtifactList = function () {
                 var self = this;
@@ -525,7 +525,7 @@ define(
                         return self.utilService.getRejectDefer(err);
                     }
                 );
-            }
+            };
 
             appService.prototype.loadIconArtifactList = function () {
                 var self = this;
@@ -543,11 +543,11 @@ define(
                         return self.utilService.getRejectDefer(err);
                     }
                 );
-            }
+            };
 
             appService.prototype.loadWidgetArtifactList = function () {
                 return this.loadArtifactList("widget");
-            }
+            };
 
             appService.prototype.addConfigurableArtifact = function (projectId, widgetId, libraryName, artifactId, type, version) {
                 var self = this;
@@ -652,7 +652,7 @@ define(
                         stagingContent: JSON.stringify(stagingContent)
                     })
                 });
-            }
+            };
 
             appService.prototype.loadSketch = function (projectId) {
                 var self = this;
@@ -673,7 +673,7 @@ define(
                         return self.utilService.getRejectDefer(err);
                     }
                 );
-            }
+            };
 
             appService.prototype.loadExternal = function (projectId) {
                 var self = this;
@@ -694,7 +694,7 @@ define(
                         return self.utilService.getRejectDefer(err);
                     }
                 );
-            }
+            };
 
             appService.prototype.saveFlow = function (projectId, flowWorks) {
                 return this.$http({
@@ -706,7 +706,7 @@ define(
                         flowWorks: JSON.stringify(flowWorks)
                     })
                 });
-            }
+            };
 
             appService.prototype.loadFlow = function (projectId) {
                 var self = this;
@@ -727,7 +727,7 @@ define(
                         return self.utilService.getRejectDefer(err);
                     }
                 );
-            }
+            };
 
             appService.prototype.lockProject = function (userId, projectId) {
                 var self = this;
@@ -752,7 +752,7 @@ define(
                         return self.utilService.getRejectDefer(err);
                     }
                 );
-            }
+            };
 
             appService.prototype.unlockProject = function (userId, projectId) {
                 var self = this;
@@ -777,7 +777,7 @@ define(
                         return self.utilService.getRejectDefer(err);
                     }
                 )
-            }
+            };
 
             appService.prototype.removeProjectImage = function (projectId, fileName) {
                 fileName = fileName.replace(/(.+\/)?([^\/]+)$/, "$2");
@@ -786,7 +786,7 @@ define(
                     url: '/api/public/projectImage',
                     params: {projectId: projectId, fileName: fileName}
                 });
-            }
+            };
 
             appService.prototype.getRepoLibrary = function (libraryFilter) {
                 return this.$http({
@@ -795,7 +795,7 @@ define(
                     params: {libraryFilter: JSON.stringify(libraryFilter || {})}
                 });
 
-            }
+            };
 
             appService.prototype.getRepoArtifact = function (artifactFilter) {
                 return this.$http({
@@ -804,7 +804,7 @@ define(
                     params: {artifactFilter: JSON.stringify(artifactFilter || {})}
                 });
 
-            }
+            };
 
             appService.prototype.getProjectResource = function (projectId) {
                 return this.$http({
@@ -813,7 +813,7 @@ define(
                     params: {projectId: projectId}
                 });
 
-            }
+            };
 
             appService.prototype.deleteProjectResource = function (projectId, resourceType, fileName) {
                 return this.$http({
@@ -822,7 +822,7 @@ define(
                     params: {projectId: projectId, resourceType: resourceType, fileName: fileName}
                 });
 
-            }
+            };
 
             appService.prototype.getProjectDependency = function (xrefFilter) {
                 return this.$http({
@@ -831,7 +831,7 @@ define(
                     params: {xrefFilter: JSON.stringify(xrefFilter || {})}
                 });
 
-            }
+            };
 
             appService.prototype.updateProjectDependency = function (projectId, libraryId, artifactList) {
                 return this.$http({
@@ -844,7 +844,7 @@ define(
                     }
                 });
 
-            }
+            };
 
             appService.prototype.deleteProjectDependency = function (xrefFilter) {
                 return this.$http({
@@ -852,7 +852,7 @@ define(
                     url: '/api/public/projectArtifactXref',
                     params: {xrefFilter: JSON.stringify(xrefFilter || {})}
                 });
-            }
+            };
 
             appService.prototype.createProject = function (project, sketchWorks) {
                 var self = this;
@@ -877,7 +877,7 @@ define(
                     }
                 )
 
-            }
+            };
 
             appService.prototype.modifyProject = function (project) {
                 var self = this;
@@ -902,7 +902,7 @@ define(
                     }
                 )
 
-            }
+            };
 
             appService.prototype.deleteProject = function (userId, project) {
                 var self = this;
@@ -923,7 +923,7 @@ define(
                         return self.utilService.getRejectDefer(err);
                     }
                 )
-            }
+            };
 
             appService.prototype.convertToHtml = function (userId, projectId) {
                 var self = this;
@@ -944,7 +944,7 @@ define(
                         return self.utilService.getRejectDefer(err);
                     }
                 )
-            }
+            };
 
             appService.prototype.validateUrl = function (url) {
                 var self = this;
@@ -956,7 +956,7 @@ define(
                         return self.utilService.getRejectDefer(err);
                     }
                 )
-            }
+            };
 
             /* Services managed by registry are visible to designer, serving generated app. */
             function findPageElement(location) {
@@ -1010,7 +1010,7 @@ define(
                 }, function (err) {
                     return self.utilService.getRejectDefer(err);
                 });
-            }
+            };
 
             appService.prototype.doLogin = function (loginName, password) {
                 var self = this,
@@ -1019,7 +1019,7 @@ define(
                 this.$http.defaults.headers.common.Authorization = 'Basic ' + encoded;
 
                 return self.refreshUser(loginName);
-            }
+            };
 
             appService.prototype.doLogout = function () {
                 var self = this,
@@ -1038,7 +1038,7 @@ define(
                 });
 
                 return defer.promise;
-            }
+            };
 
             appService.prototype.restoreUserFromStorage = function () {
                 var self = this,
@@ -1065,7 +1065,7 @@ define(
                 );
 
                 return defer.promise;
-            }
+            };
 
             appService.prototype.getUserDetail = function (userFilter) {
                 return this.$http({
@@ -1074,7 +1074,7 @@ define(
                     params: {userFilter: JSON.stringify(userFilter || {})}
                 });
 
-            }
+            };
 
             appService.prototype.getProject = function (projectFilter) {
                 return this.$http({
@@ -1083,7 +1083,7 @@ define(
                     params: {projectFilter: JSON.stringify(projectFilter || {})}
                 });
 
-            }
+            };
 
             appService.prototype.nextPage = function () {
                 var self = this,
@@ -1160,7 +1160,7 @@ define(
                 }
 
                 return self.utilService.getResolveDefer(location);
-            }
+            };
 
             appService.prototype.prevPage = function () {
                 var self = this,
@@ -1237,7 +1237,7 @@ define(
                 }
 
                 return self.utilService.getResolveDefer(location);
-            }
+            };
 
             appService.prototype.gotoPage = function (pageNum) {
                 var self = this,
@@ -1403,11 +1403,11 @@ define(
                 }
 
                 return self.utilService.getResolveDefer(location);
-            }
+            };
 
             appService.prototype.firstPage = function () {
                 return this.gotoPage(0);
-            }
+            };
 
             appService.prototype.exitPage = function () {
                 var currentLocation = this.$rootScope.pickedPage;
@@ -1417,7 +1417,7 @@ define(
                 }
 
                 return this.utilService.getResolveDefer();
-            }
+            };
 
             appService.prototype.loadPage = function (location, markCurrent) {
                 var self = this,
@@ -1443,7 +1443,7 @@ define(
                                 $unloaded = $pages.eq(0);
                             }
 
-                            if ($unloaded) {
+                            if ($unloaded && $unloaded.length) {
                                 var scope = angular.element($unloaded).scope();
                                 $unloaded.remove();
                                 scope && scope.$destroy();
@@ -1503,14 +1503,26 @@ define(
                             return self.utilService.getRejectDefer("The number of pages in dom exceeds maximum limit.");
                         }
                     } else {
-                        markCurrent && $container.children("#" + widgetId).addClass("currentPage");
+                        var $current = $container.children("#" + widgetId);
+                        var scope = angular.element($current).scope();
+                        if (scope) {
+                            _.each(scope.restoreHandlers, function (handler) {
+                                try {
+                                    handler && handler();
+                                } catch (err) {
+                                    self.$exceptionHandler(err);
+                                }
+                            });
+                            scope.restoreHandlers = null;
+                        }
+                        markCurrent && $current.addClass("currentPage");
                     }
                 } else {
                     return self.utilService.getRejectDefer("Invalid widget id value.");
                 }
 
                 return self.utilService.getResolveDefer(location);
-            }
+            };
 
             appService.prototype.getState = function (id) {
                 var defer = self.$q.defer(),
@@ -1546,21 +1558,21 @@ define(
                     self.angularConstants.renderTimeout);
 
                 return defer.promise;
-            }
+            };
 
             appService.prototype.setState = function (id, state) {
                 return this.utilService.setState(id, state);
-            }
+            };
 
             appService.prototype.setStateOnWidget = function (id, state) {
                 return this.utilService.setStateOnWidget(id, state);
-            }
+            };
 
             appService.prototype.isPlayingSound = function () {
                 var self = this;
 
                 return self.utilService.getResolveDefer(self.soundDelegate && self.soundDelegate.isPlaying());
-            }
+            };
 
             appService.prototype.playSound = function (url, playLoop) {
                 var self = this;
@@ -1572,13 +1584,13 @@ define(
                 self.soundDelegate.playLoop = playLoop;
 
                 return self.soundDelegate.play(url);
-            }
+            };
 
             appService.prototype.stopPlaySound = function () {
                 this.soundDelegate && this.soundDelegate.stop();
 
                 return self.utilService.getResolveDefer();
-            }
+            };
 
             appService.prototype.toggleSound = function (url, playLoop) {
                 var self = this;
@@ -1586,7 +1598,7 @@ define(
                 return self.isPlayingSound().then(function (isPlaying) {
                     return isPlaying && self.stopPlaySound() || self.playSound(url, playLoop);
                 })
-            }
+            };
 
             appService.prototype.playWidgetSound = function (widgetId, url, playLoop) {
                 var self = this,
@@ -1615,7 +1627,7 @@ define(
                 }
 
                 return self.utilService.chain(arr);
-            }
+            };
 
             appService.prototype.stopPlayWidgetSound = function (widgetId) {
                 var self = this,
@@ -1644,7 +1656,7 @@ define(
                 }
 
                 return self.utilService.chain(arr);
-            }
+            };
 
             appService.prototype.toggleWidgetSound = function (widgetId, url, playLoop) {
                 var self = this,
@@ -1673,7 +1685,7 @@ define(
                 }
 
                 return self.utilService.chain(arr);
-            }
+            };
 
             appModule.
                 config(['$httpProvider',

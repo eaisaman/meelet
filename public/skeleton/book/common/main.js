@@ -6,7 +6,7 @@ requirejs.config(
             "app-route": APP_COMMON_LIB_PATH + "route",
             "app-extension": APP_COMMON_LIB_PATH + "extension",
             "app-service": APP_COMMON_LIB_PATH + "browser/service",
-            "app-service-flow": APP_COMMON_LIB_PATH + "browser/service.flow",
+            "app-service-book": APP_COMMON_LIB_PATH + "browser/service.book",
             "text": APP_COMMON_LIB_PATH + "requirejs-plugins/text",
             "json": APP_COMMON_LIB_PATH + "requirejs-plugins/json"
         },
@@ -15,7 +15,7 @@ requirejs.config(
 );
 
 define(
-    ["json!meta.json", "json!" + APP_COMMON_LIB_PATH + "registry.json", "app-service-registry", "app-util", "app-route", "app-extension", "app-service", "app-service-flow"],
+    ["json!meta.json", "json!" + APP_COMMON_LIB_PATH + "registry.json", "app-service-registry", "app-util", "app-route", "app-extension", "app-service", "app-service-book"],
     function (meta, registry) {
         var registryConfig = arguments[2],
             utilConfig = arguments[3],

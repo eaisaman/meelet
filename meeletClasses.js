@@ -58,7 +58,7 @@ Classes.prototype.snakeCase = function (name, separator) {
     return name.replace(/[A-Z]/g, function (letter, pos) {
         return (pos ? separator : '') + letter.toLowerCase();
     });
-}
+};
 
 var State = Class({
         CLASS_NAME: "State",
@@ -397,7 +397,8 @@ var State = Class({
             actionType: "Movement",
             routeIndex: null,
             settings: [],
-            runThrough: true
+            runThrough: true,
+            stepCount: 0
         },
         initialize: function (widgetObj, id) {
             MovementTransitionAction.prototype.__proto__.initialize.apply(this, [widgetObj, id]);
@@ -410,7 +411,7 @@ var State = Class({
         toJSON: function () {
             var jsonObj = MovementTransitionAction.prototype.__proto__.toJSON.apply(this);
 
-            _.extend(jsonObj, _.pick(this, ["CLASS_NAME", "routeIndex", "settings", "runThrough"]));
+            _.extend(jsonObj, _.pick(this, ["CLASS_NAME", "routeIndex", "settings", "runThrough", "stepCount"]));
 
             return jsonObj;
         },
@@ -418,6 +419,7 @@ var State = Class({
             var ret = new MovementTransitionAction(null, obj.id);
             if (obj.routeIndex != null) ret.routeIndex = obj.routeIndex;
             if (obj.runThrough != null) ret.runThrough = obj.runThrough;
+            if (obj.stepCount != null) ret.stepCount = obj.stepCount;
             _.each(obj.settings, function (s) {
                 ret.settings.push(_.clone(s));
             });
@@ -493,7 +495,8 @@ var State = Class({
             triggerType: "",
             eventName: "",
             options: null,
-            widgetObj: null
+            widgetObj: null,
+            runOnce: true
         },
         initialize: function (id, triggerType, eventName, options) {
             var MEMBERS = arguments.callee.prototype.MEMBERS;
@@ -508,6 +511,7 @@ var State = Class({
             this.options = options;
         },
         fromObject: function (obj, context) {
+            if (obj.runOnce != null) this.runOnce = obj.runOnce;
         }
     }), GestureTrigger = Class(BaseTrigger, {
         CLASS_NAME: "GestureTrigger",
@@ -601,7 +605,7 @@ var State = Class({
                         }
 
                         return true;
-                    })
+                    });
 
                     value && self.widgetObj.childWidgets.forEach(function (child) {
                         child.writeScss(out, value);
@@ -621,7 +625,7 @@ var State = Class({
 
                 if (styleValue != null) {
                     if (toString.call(styleValue) === '[object Object]')
-                        arr = [styleValue]
+                        arr = [styleValue];
                     else if (toString.call(styleValue) === '[object Array]')
                         arr = styleValue;
                 }
@@ -645,7 +649,7 @@ var State = Class({
                 if (styleValue != null) {
                     if (toString.call(styleValue) === '[object Array]') {
                         styleValue.forEach(function (item) {
-                            var str = _.string.trim(_.string.sprintf("%s %s %s %s %s %s", item["h-shadow"] || "", item["v-shadow"] || "", item["blur"] || "", item["spread"] || "", item["inset"] || "", self.rgba(item.color) || ""))
+                            var str = _.string.trim(_.string.sprintf("%s %s %s %s %s %s", item["h-shadow"] || "", item["v-shadow"] || "", item["blur"] || "", item["spread"] || "", item["inset"] || "", self.rgba(item.color) || ""));
                             str && arr.push(str);
                         });
                     }
@@ -657,7 +661,7 @@ var State = Class({
                 if (styleValue != null) {
                     if (toString.call(styleValue) === '[object Array]') {
                         styleValue.forEach(function (item) {
-                            var str = _.string.trim(_.string.sprintf("%s %s %s %s", item["h-shadow"] || "", item["v-shadow"] || "", item["blur"] || "", self.rgba(item.color) || ""))
+                            var str = _.string.trim(_.string.sprintf("%s %s %s %s", item["h-shadow"] || "", item["v-shadow"] || "", item["blur"] || "", self.rgba(item.color) || ""));
                             str && arr.push(str);
                         });
                     }
@@ -882,7 +886,7 @@ var State = Class({
                 stateAction: {},
                 offspring: {},
                 states: []
-            }
+            };
 
             self.states && self.states.forEach(function (state) {
                 self.eventMap.states.push(_.extend(_.pick(state, ["id", "name"]), {context: state.context && state.context.id || ""}));
@@ -900,7 +904,7 @@ var State = Class({
                         transitionConfig.state = transition.state.name;
                         transitionConfig.actionObj = transition.actionObj.toJSON();
 
-                        triggerMap[transition.trigger.eventName] = triggerMap[transition.trigger.eventName] || _.pick(transition.trigger, ["triggerType", "eventName", "options"]);
+                        triggerMap[transition.trigger.eventName] = triggerMap[transition.trigger.eventName] || _.pick(transition.trigger, ["triggerType", "eventName", "options", "runOnce"]);
                         (triggerMap[transition.trigger.eventName].actions = triggerMap[transition.trigger.eventName].actions || []).push(transitionConfig);
                     }
                 });
@@ -1359,6 +1363,6 @@ Classes.prototype.fromObject = function (obj) {
     });
 
     return ret;
-}
+};
 
 module.exports = c;

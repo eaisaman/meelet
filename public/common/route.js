@@ -20,7 +20,7 @@ define(
                 } else {
                     return "";
                 }
-            }
+            };
             urlService.prototype.back = function () {
                 if (this.$rootScope.urlStack.length > 1) {
                     var urlObj = this.$rootScope.urlStack.pop();
@@ -29,7 +29,7 @@ define(
                     urlObj = this.$rootScope.urlStack[this.$rootScope.urlStack.length - 1];
                     urlObj.fn.apply(this, [urlObj.location, true, this.$rootScope.urlParams[urlObj.location]]);
                 }
-            }
+            };
             urlService.prototype.home = function (needLoad) {
                 if (this.$rootScope.urlStack.length > 1) {
                     this.clearUrlStack(this.$rootScope.urlStack.length - 1);
@@ -39,7 +39,7 @@ define(
                         urlObj.fn.apply(this, [urlObj.location, true, this.$rootScope.urlParams[urlObj.location]]);
                     }
                 }
-            }
+            };
             urlService.prototype.clearUrlStack = function (depth) {
                 var self = this;
 
@@ -50,7 +50,7 @@ define(
                 });
 
                 self.$rootScope.urlStack.splice(self.$rootScope.urlStack.length - depth, depth);
-            }
+            };
             urlService.prototype.route = function (location, skipUrlTrack, urlParams) {
                 this.$rootScope.step = location;
                 this.$rootScope.urlParams = this.$rootScope.urlParams || {};
@@ -69,7 +69,7 @@ define(
                 }
 
                 this.$location.path(location);
-            }
+            };
             urlService.prototype.addLocation = function (location) {
                 var self = this,
                     arr;
@@ -91,10 +91,10 @@ define(
                             }
                     });
                 }
-            }
+            };
             urlService.prototype.firstPage = function () {
                 this.locations.length && this[this.locations[0]]();
-            }
+            };
 
             appModule.
                 config(["$provide", function ($provide) {

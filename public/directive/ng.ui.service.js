@@ -1,7 +1,7 @@
 define(
-    ["angular-lib", "jquery-lib", "underscore-lib", "app-service", "app-service-registry", "app-util", "app-animation", "ng.ui.canvas"],
+    ["angular-lib", "jquery-lib", "underscore-lib", "app-service", "app-service-registry", "app-util", "ng.ui.canvas"],
     function () {
-        var Service = function ($parse, $timeout, $q, $exceptionHandler, $compile, $rootScope, angularEventTypes, angularConstants, appService, serviceRegistry, utilService, uiCanvasService, animationService) {
+        var Service = function ($parse, $timeout, $q, $exceptionHandler, $compile, $rootScope, angularEventTypes, angularConstants, appService, serviceRegistry, utilService, uiCanvasService) {
             this.$parse = $parse;
             this.$timeout = $timeout;
             this.$q = $q;
@@ -14,14 +14,13 @@ define(
             this.serviceRegistry = serviceRegistry;
             this.utilService = utilService;
             this.uiCanvasService = uiCanvasService;
-            this.animationService = animationService;
 
             _.extend($inject, _.pick(this, Service.$inject));
 
             defineWidgetClass(utilService.createObjectClass(), utilService.findObjectClass());
         };
 
-        Service.$inject = ["$parse", "$timeout", "$q", "$exceptionHandler", "$compile", "$rootScope", "angularEventTypes", "angularConstants", "appService", "serviceRegistry", "utilService", "uiCanvasService", "animationService"];
+        Service.$inject = ["$parse", "$timeout", "$q", "$exceptionHandler", "$compile", "$rootScope", "angularEventTypes", "angularConstants", "appService", "serviceRegistry", "utilService", "uiCanvasService"];
         var $inject = {};
 
         //Define sketch widget class
@@ -181,7 +180,7 @@ define(
                             });
                             artifactList = _.reject(artifactList, function (a) {
                                 return _.findWhere(arr, {artifactId: a.artifactId});
-                            })
+                            });
                             if (artifactList.length) {
                                 artifactList.splice(0, 0, arr.length, 0);
                                 Array.prototype.splice.apply(arr, artifactList);
@@ -973,16 +972,26 @@ define(
                             arr = [],
                             chainId = "SequenceTransitionAction.doAction." + self.id;
 
-                        self.childActions.forEach(function (actionObj) {
-                            arr.push(function () {
-                                return actionObj.doAction();
-                            });
-                        });
-
                         if (self.stopOnEach) {
                             if (self.chainObject && self.chainObject.isComplete()) self.chainObject = null;
 
                             if (!self.chainObject) {
+                                self.childActions && self.childActions.forEach(function (childAction) {
+                                    if (childAction.runThrough != null && !childAction.runThrough) {
+                                        var stepCount = childAction.getStepCount();
+
+                                        for (var i = 0; i < stepCount; i++) {
+                                            arr.push(function () {
+                                                return childAction.doAction();
+                                            });
+                                        }
+                                    } else {
+                                        arr.push(function () {
+                                            return childAction.doAction();
+                                        });
+                                    }
+                                });
+
                                 self.chainObject = $inject.utilService.chain(arr,
                                     chainId,
                                     $inject.angularConstants.renderTimeout,
@@ -992,6 +1001,12 @@ define(
 
                             return self.chainObject.next();
                         } else {
+                            self.childActions.forEach(function (actionObj) {
+                                arr.push(function () {
+                                    return actionObj.doAction();
+                                });
+                            });
+
                             return $inject.utilService.chain(arr,
                                 chainId,
                                 $inject.angularConstants.renderTimeout
@@ -1012,7 +1027,7 @@ define(
                                 var clazzObj = FindClass(clazz);
                                 if (clazzObj) {
                                     if (actionType === clazzObj.prototype.MEMBERS.actionType) {
-                                        actionObj = new clazzObj(self.widgetObj)
+                                        actionObj = new clazzObj(self.widgetObj);
                                         return false;
                                     }
                                 }
@@ -1127,12 +1142,12 @@ define(
                                 return defer.promise;
                             } else if (self.effect.type === "Script") {
                                 if (self.runAfterComplete) {
-                                    $inject.animationService.doAnimationWithCallback(self.widgetObj.$element, self.effect.name, null, function () {
+                                    $inject.utilService.doAnimationWithCallback(self.widgetObj.$element, self.effect.name, null, function () {
                                         self.restoreWidget();
                                         defer.resolve(self);
                                     });
                                 } else {
-                                    $inject.animationService.doAnimationWithCallback(self.widgetObj.$element, self.effect.name, function () {
+                                    $inject.utilService.doAnimationWithCallback(self.widgetObj.$element, self.effect.name, function () {
                                         defer.resolve(self);
                                     }, function () {
                                         self.restoreWidget();
@@ -1424,7 +1439,7 @@ define(
                     ],
                     MEMBERS: {
                         actionType: "Movement",
-                        routeIndex: null,
+                        routeIndex: 0,
                         settings: [],
                         runThrough: true
                     },
@@ -1450,7 +1465,9 @@ define(
                     toJSON: function () {
                         var jsonObj = MovementTransitionAction.prototype.__proto__.toJSON.apply(this);
 
-                        _.extend(jsonObj, _.pick(this, ["CLASS_NAME", "routeIndex", "runThrough"]), {
+                        _.extend(jsonObj, _.pick(this, ["CLASS_NAME", "runThrough"]), {
+                            routeIndex: parseInt(this.routeIndex),
+                            stepCount: this.getStepCount(),
                             settings: $inject.utilService.arrayOmit(this.settings, "$$hashKey", "options", "name", "type")
                         });
 
@@ -1474,7 +1491,7 @@ define(
                         cloneObj.runThrough = this.runThrough;
                         _.each(this.settings, function (s) {
                             _.extend(_.findWhere(cloneObj.settings, {key: s.key}), s);
-                        })
+                        });
 
                         _.extend(MEMBERS = MEMBERS || {}, MovementTransitionAction.prototype.MEMBERS);
 
@@ -1483,17 +1500,30 @@ define(
                         return cloneObj;
                     },
                     doAction: function () {
-                        return $inject.animationService.moveWidget(this.widgetObj.$element, this.widgetObj.routes, this.routeIndex, this.settings, this.runThrough);
+                        return $inject.utilService.moveWidget(this.widgetObj.$element, this.widgetObj.routes, this);
                     },
                     restoreWidget: function () {
                         var self = this;
 
-                        $inject.animationService.restoreWidget(self.widgetObj.$element, self.widgetObj.routes, self.routeIndex);
+                        $inject.utilService.restoreAnimationWidget(self.widgetObj.$element, self, self.widgetObj.routes);
 
                         if (self.widgetObj.$element && self.widgetObj.$element[0].nodeType == 1 && self.widgetObj.$element.parent().length) {
                             var left = self.widgetObj.css("left"), top = self.widgetObj.css("top");
                             self.widgetObj.css("left", left), self.widgetObj.css("top", top);
                         }
+                    },
+                    getStepCount: function () {
+                        var routes = this.widgetObj && this.widgetObj.routes,
+                            routeIndex = parseInt(this.routeIndex);
+
+                        if (routes && routes.length && routeIndex < routes.length) {
+                            var stepCount = 0;
+                            for(var stop = routes[routeIndex];stop;stop = stop.nextStop, stepCount++) {}
+
+                            return stepCount;
+                        }
+
+                        return 0;
                     }
                 }),
                 SoundTransitionAction = Class(BaseTransitionAction, {
@@ -1656,7 +1686,8 @@ define(
                         triggerType: "",
                         eventName: "",
                         options: null,
-                        widgetObj: null
+                        widgetObj: null,
+                        runOnce: true
                     },
                     initialize: function (id, triggerType, eventName, options) {
                         var MEMBERS = arguments.callee.prototype.MEMBERS;
@@ -1671,9 +1702,10 @@ define(
                         this.options = options;
                     },
                     toJSON: function () {
-                        return _.extend(_.pick(this, ["id", "triggerType", "eventName", "options", "CLASS_NAME"]));
+                        return _.extend(_.pick(this, ["id", "triggerType", "eventName", "options", "runOnce", "CLASS_NAME"]));
                     },
                     fromObject: function (obj) {
+                        if (obj.runOnce != null) this.runOnce = obj.runOnce;
                     },
                     clone: function (cloneObj, MEMBERS) {
                         var self = this;
@@ -4761,7 +4793,7 @@ define(
                                         if (typeof key === "object") {
                                             _.each(key, function (item, itemKey) {
                                                 if (item.type === "size") {
-                                                    var m = ((item.pickedValue || item.defaultValue) || "").match(/([-\d\.]+)(px|em|%)+$/)
+                                                    var m = ((item.pickedValue || item.defaultValue) || "").match(/([-\d\.]+)(px|em|%)+$/);
                                                     if (m && m.length == 3) {
                                                         scope[itemKey] = item.pickedValue || item.defaultValue;
                                                     }
@@ -5115,7 +5147,7 @@ define(
                 }
 
                 return self.utilService.getResolveDefer();
-            }
+            };
 
             Service.prototype.prevPage = function (pageObj) {
                 var self = this;
@@ -5176,7 +5208,7 @@ define(
                 }
 
                 return self.utilService.getResolveDefer();
-            }
+            };
 
             Service.prototype.loadPage = function (currentPageObj, pageObj, markCurrent) {
                 var self = this,
@@ -5230,7 +5262,7 @@ define(
                 }
 
                 return self.utilService.getResolveDefer(pageObj);
-            }
+            };
 
             Service.prototype.setCurrentPage = function (pageObj) {
                 var self = this;
@@ -5244,7 +5276,7 @@ define(
                     pageObj.$element.addClass(self.angularConstants.widgetClasses.activeClass)
                         .addClass(self.angularConstants.widgetClasses.currentPageClass);
                 }
-            }
+            };
 
             Service.prototype.createWidgetObj = function (element) {
                 var self = this,
@@ -5323,7 +5355,7 @@ define(
                 }
 
                 return widgetObj;
-            }
+            };
 
             Service.prototype.createWidget = function (containerElement, widgetObj) {
                 var self = this,
@@ -5361,7 +5393,7 @@ define(
                         return widgetObj;
                     }
                 }
-            }
+            };
 
             Service.prototype.createRepoWidget = function (containerElement, widgetSpec) {
                 var self = this,
@@ -5417,7 +5449,7 @@ define(
                 }
 
                 return self.utilService.getRejectDefer();
-            }
+            };
 
             Service.prototype.copyWidget = function (widgetObj, containerElement) {
                 var self = this,
@@ -5472,7 +5504,7 @@ define(
 
                     return self.utilService.getRejectDefer();
                 }
-            }
+            };
 
             Service.prototype.createComposite = function (widgetObjs, isTemporary) {
                 if (widgetObjs && widgetObjs.length) {
@@ -5513,7 +5545,7 @@ define(
                 }
 
                 return null;
-            }
+            };
 
             Service.prototype.createPage = function () {
                 var self = this,
@@ -5524,7 +5556,7 @@ define(
                 pageObj.addOmniClass(self.angularConstants.widgetClasses.holderClass);
 
                 return pageObj;
-            }
+            };
 
             Service.prototype.loadPages = function (pageObjs) {
                 var self = this,
@@ -5538,14 +5570,14 @@ define(
                 }
 
                 return self.$q.all(arr);
-            }
+            };
 
             Service.prototype.copyPage = function (pageObj) {
                 var self = this,
                     cloneObj = pageObj.clone();
 
                 return cloneObj;
-            }
+            };
 
             Service.prototype.fromObject = function (obj) {
                 var className = obj.CLASS_NAME,
@@ -5562,11 +5594,11 @@ define(
                 });
 
                 return ret;
-            }
+            };
 
             Service.prototype.isConfigurable = function (widgetObj) {
                 return this.configurableWidget(widgetObj);
-            }
+            };
 
             Service.prototype.configurableWidget = function (widgetObj) {
                 var self = this,
@@ -5585,7 +5617,7 @@ define(
                 }
 
                 return result;
-            }
+            };
 
             Service.prototype.anchorElement = function (element) {
                 var $element;
@@ -5605,7 +5637,7 @@ define(
                         widgetObj.anchor = anchor;
                     });
                 }
-            }
+            };
 
             Service.prototype.disposeElement = function (element) {
                 var $element;
@@ -5623,7 +5655,7 @@ define(
                     widgetObj.dispose();
                 });
                 $element.remove();
-            }
+            };
 
             Service.prototype.loadProject = function (dbObject) {
                 var self = this;
@@ -5652,7 +5684,7 @@ define(
                         }
                     ]
                 );
-            }
+            };
 
             Service.prototype.createEditor = function (holder, markdown) {
                 var $textHolder;
@@ -5687,7 +5719,7 @@ define(
 
                     return editor;
                 }
-            }
+            };
 
             Service.prototype.displayPopupMenuHolder = function (widgetObj) {
                 if (widgetObj && !widgetObj.isKindOf("PageSketchWidget")) {
@@ -5719,13 +5751,13 @@ define(
                         $holder.addClass("show");
                     }
                 }
-            }
+            };
 
             Service.prototype.hidePopupMenuHolder = function () {
                 var $holder = $("#widgetPopupHolder");
 
                 $holder.removeClass("show");
-            }
+            };
 
             Service.prototype.hidePopupMenu = function () {
                 var $holder = $("#widgetPopupHolder");

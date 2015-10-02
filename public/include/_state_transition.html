@@ -238,6 +238,16 @@
                     </div>
                 </div>
 
+                <div class="movementPane">
+                    <div class="input-group col-as-12 fs-x-smaller">
+                        <label class="col-as-5 no-padding control-label">Run Through</label>
+
+                        <div class="no-padding col-as-7" ng-click="$event.stopPropagation()">
+                            <input type="checkbox" class="form-control no-padding fs-x-smaller" ng-model="item.runThrough"/>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="movementPane" ng-repeat="settingItem in item.settings">
                     <div class="input-group col-as-12 fs-x-smaller">
                         <label class="col-as-5 no-padding control-label fs-x-smaller">{{settingItem.name}}</label>
@@ -351,22 +361,23 @@
                                                checked>
                                         <label for="input-gesture-radio">Gesture</label>
 
-                                        <div class="triggerEventDropdown stackAndRotateSelect col-as-12 input-group"
+                                        <div class="triggerEventDropdown stackAndRotateSelect col-as-12 no-padding-left input-group"
                                              ui-simple-dropdown
                                              ui-simple-dropdown-opts="{dataField:'id', labelField:'name', zIndex:100, gutter: 5, showTitle: true, displayUnsetOption: false}"
                                              selection-list="triggers['Gesture']"
                                              select-item="pickedTriggerEventId"
                                              on-option-select="pickTriggerEvent('Gesture', transition, pickedTriggerEventId)">
-                                            {{transition.trigger && transition.trigger.eventName || "Choose Trigger
-                                            Event"}}
+                                            {{transition.trigger && transition.trigger.eventName || "Choose Trigger;
+                                            Event";}}
                                         </div>
-                                    </li>
-                                    <li>
-                                        <input type="radio" id="input-bind-expression-radio"
-                                               name="trigger-content-radio">
-                                        <label for="input-bind-expression-radio">Bind Expression</label>
 
-                                        <div class="triggerInput">Input2</div>
+                                        <div class="triggerRunOnceCheckBox input-group col-as-12 no-padding-left">
+                                            <label class="col-as-5 no-padding-right control-label fs-x-smaller">Run Once</label>
+
+                                            <div class="col-as-7 no-padding-left">
+                                                <input type="checkbox" class="form-control no-padding fs-x-smaller" ng-model="transition.trigger.runOnce"/>
+                                            </div>
+                                        </div>
                                     </li>
                                 </ul>
                             </div>

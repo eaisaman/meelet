@@ -1,7 +1,7 @@
 define(
-    ["angular-lib", "jquery-lib", "hammer-lib"],
+    ["angular-lib", "jquery-lib", "hammer-lib", "velocity-lib", "snap-svg-lib"],
     function () {
-        var utilService = function ($rootScope, $log, $parse, $timeout, $q, $exceptionHandler, angularConstants, serviceRegistry, animationService) {
+        var utilService = function ($rootScope, $log, $parse, $timeout, $q, $exceptionHandler, angularConstants, serviceRegistry) {
             this.$rootScope = $rootScope;
             this.$log = $log;
             this.$parse = $parse;
@@ -10,10 +10,242 @@ define(
             this.$exceptionHandler = $exceptionHandler;
             this.angularConstants = angularConstants;
             this.serviceRegistry = serviceRegistry;
-            this.animationService = animationService;
+
+            _.extend(utilService.prototype, SketchAnimation.prototype);
+            _.extend(utilService.prototype, SVGAnimation.prototype);
         };
 
-        utilService.$inject = ["$rootScope", "$log", "$parse", "$timeout", "$q", "$exceptionHandler", "angularConstants", "serviceRegistry", "animationService"];
+        utilService.$inject = ["$rootScope", "$log", "$parse", "$timeout", "$q", "$exceptionHandler", "angularConstants", "serviceRegistry"];
+
+        //Animation service based on velocity.js
+        var SketchAnimation = function () {
+        };
+
+        SketchAnimation.prototype.moveWidget = function ($element, routes, action, completeCallback) {
+            function moveOneStop(coord, callback) {
+                var currentStop = coord.currentStop,
+                    nextStop;
+
+                if (!currentStop) {
+                    nextStop = coord;
+                } else {
+                    nextStop = currentStop.nextStop;
+                }
+
+                coord.currentStop = nextStop;
+
+                if (nextStop) {
+                    var v = {
+                        complete: function ($el) {
+                            try {
+                                if (!nextStop.nextStop) {
+                                    coord.currentStop = null;
+                                }
+                                callback && callback($el, !nextStop.nextStop);
+                            } catch (err) {
+                                self.$exceptionHandler(err);
+                            }
+                        }
+                    };
+                    _.each(settings, function (s) {
+                        v[s.key] = s.pickedValue;
+                    });
+                    Velocity.animate.apply($element, [{
+                        left: nextStop.left + "px",
+                        top: nextStop.top + "px"
+                    }, v]);
+                }
+            }
+
+            function moveStops(coord, callback) {
+                moveOneStop(coord, function ($el, isCompleted) {
+                    if (isCompleted) {
+                        try {
+                            callback && callback();
+                        } catch (err) {
+                            self.$exceptionHandler(err);
+                        }
+                    } else {
+                        self.$timeout(function () {
+                            moveStops(coord, callback);
+                        });
+                    }
+                })
+            }
+
+            var self = this,
+                routeIndex = parseInt(action.routeIndex),
+                settings = action.settings,
+                runThrough = action.runThrough;
+
+            if (routes && routeIndex < routes.length) {
+                if ($element && $element[0].nodeType == 1 && $element.parent().length) {
+                    var coord = routes[routeIndex],
+                        defer = self.$q.defer();
+                    if (runThrough) {
+                        moveStops(coord, function () {
+                            try {
+                                completeCallback && completeCallback();
+                            } catch (err) {
+                                self.$exceptionHandler(err);
+                            }
+                            defer.resolve();
+                        });
+
+                        return defer.promise;
+                    } else {
+                        moveOneStop(coord, function ($el, isCompleted) {
+                            if (isCompleted) {
+                                try {
+                                    completeCallback && completeCallback();
+                                } catch (err) {
+                                    self.$exceptionHandler(err);
+                                }
+                            }
+                            defer.resolve();
+                        })
+                    }
+                }
+            }
+
+            return self.getResolveDefer();
+        };
+
+        SketchAnimation.prototype.restoreAnimationWidget = function ($element, action, routes) {
+            delete routes[action.routeIndex].currentStop;
+        };
+
+        SketchAnimation.prototype.doAnimation = function ($element, effect) {
+            var self = this;
+
+            if ($element && $element[0].nodeType == 1 && $element.parent().length) {
+                var defer = self.$q.defer();
+
+                $element.velocity(effect, {
+                    complete: function () {
+                        defer.resolve();
+                    }
+                });
+
+                return defer.promise;
+            }
+
+            return self.getResolveDefer();
+        };
+
+        SketchAnimation.prototype.doAnimationWithCallback = function ($element, effect, start, complete) {
+            if ($element && $element[0].nodeType == 1 && $element.parent().length) {
+                $element.velocity(effect, {
+                    start: start,
+                    complete: complete
+                });
+
+                return defer.promise;
+            }
+        };
+
+        //SVG animation service basedon snap.js
+        var SVGAnimation = function () {
+            },
+            defaults = {
+                speedIn: 500,
+                speedOut: 500,
+                easingIn: mina.linear,
+                easingOut: mina.linear
+            };
+
+        SVGAnimation.prototype.init = function (element, options, openingSteps, closingSteps) {
+            if (element) {
+                var $el;
+
+                if (element.jquery) {
+                    $el = element;
+                } else if (typeof element === "string" || angular.isElement(element)) {
+                    $el = $(element);
+                }
+
+                if ($el.length) {
+                    var animationPath = $el.data("animationPath");
+                    if (!animationPath) {
+                        var s = Snap($el.find("svg").get(0)),
+                            animationPath = _.extend(s.select("path"), {attachedObj: {}});
+
+                        animationPath.attachedObj.initialPath = animationPath.attr('d');
+                        $el.data("animationPath", animationPath);
+                    }
+                    options = _.extend({}, defaults, animationPath.attachedObj.options, options);
+                    animationPath.attachedObj.options = options;
+                    animationPath.attachedObj.openingSteps = openingSteps || animationPath.openingSteps;
+                    animationPath.attachedObj.closingSteps = closingSteps || animationPath.closingSteps || [animationPath.attachedObj.initialPath];
+
+                    return animationPath;
+                }
+            }
+        };
+
+        SVGAnimation.prototype.show = function (element, options, openingSteps) {
+            var self = this;
+
+            if (element) {
+                var animationPath = self.init(element, options, openingSteps, null);
+
+                if (animationPath) {
+                    var steps = animationPath.attachedObj.openingSteps,
+                        speed = animationPath.attachedObj.options.speedIn,
+                        easing = animationPath.attachedObj.options.easingIn,
+                        stepsTotal = steps && steps.length || 0,
+                        defer = self.$q.defer();
+
+                    (function nextStep(pos) {
+                        if (pos <= stepsTotal - 1) {
+                            animationPath.animate({'path': steps[pos]}, speed, easing, function () {
+                                nextStep(pos);
+                            });
+                            pos++;
+                        } else {
+                            defer.resolve();
+                        }
+                    })(0);
+
+                    return defer.promise;
+                }
+            }
+
+            return self.getResolveDefer();
+        };
+
+        SVGAnimation.prototype.hide = function (element, options, closingSteps) {
+            var self = this;
+
+            if (element) {
+                var animationPath = self.init(element, options, null, closingSteps);
+
+                if (animationPath) {
+                    var steps = animationPath.attachedObj.closingSteps,
+                        speed = animationPath.attachedObj.options.speedOut,
+                        easing = animationPath.attachedObj.options.easingOut,
+                        stepsTotal = steps && steps.length || 0,
+                        defer = self.$q.defer();
+
+                    (function nextStep(pos) {
+                        if (pos <= stepsTotal - 1) {
+                            animationPath.animate({'path': steps[pos]}, speed, easing, function () {
+                                nextStep(pos);
+                            });
+                            pos++;
+                        } else {
+                            animationPath.attr('d', animationPath.attachedObj.initialPath);
+
+                            defer.resolve();
+                        }
+                    })(0);
+
+                    return defer.promise;
+                }
+            }
+
+            return self.getResolveDefer();
+        };
 
         var _keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
 
@@ -96,7 +328,7 @@ define(
                     _keyStr.charAt(enc3) + _keyStr.charAt(enc4);
             }
             return output;
-        }
+        };
 
         utilService.prototype.decode = function (input) {
             var output = "";
@@ -122,7 +354,7 @@ define(
             }
             output = _utf8_decode(output);
             return output;
-        }
+        };
 
         utilService.prototype.listOmit = function (list) {
             var self = this,
@@ -140,7 +372,7 @@ define(
             });
 
             return arr;
-        }
+        };
 
         utilService.prototype.arrayOmit = function (objects) {
             var keys = Array.prototype.concat.apply(Array.prototype, Array.prototype.slice.call(arguments, 1)),
@@ -151,7 +383,7 @@ define(
             });
 
             return arr;
-        }
+        };
 
         utilService.prototype.arrayPick = function (objects) {
             var keys = Array.prototype.concat.apply(Array.prototype, Array.prototype.slice.call(arguments, 1)),
@@ -162,7 +394,7 @@ define(
             });
 
             return arr;
-        }
+        };
 
         utilService.prototype.calculateTop = function ($element) {
             var self = this,
@@ -174,7 +406,7 @@ define(
                 top = Math.floor(($element.offset().top - $element.parent().offset().top) * self.angularConstants.precision) / self.angularConstants.precision;
 
             return top;
-        }
+        };
 
         utilService.prototype.calculateLeft = function ($element) {
             var self = this,
@@ -186,7 +418,7 @@ define(
                 left = Math.floor(($element.offset().left - $element.parent().offset().left) * self.angularConstants.precision) / self.angularConstants.precision;
 
             return left;
-        }
+        };
 
         utilService.prototype.calculateHeight = function ($element) {
             var self = this,
@@ -198,7 +430,7 @@ define(
                 height = Math.floor($element.height() * self.angularConstants.precision) / self.angularConstants.precision;
 
             return height;
-        }
+        };
 
         utilService.prototype.calculateWidth = function ($element) {
             var self = this,
@@ -210,7 +442,7 @@ define(
                 width = Math.floor($element.height() * self.angularConstants.precision) / self.angularConstants.precision;
 
             return width;
-        }
+        };
 
         utilService.prototype.isVisible = function (element) {
             if (element) {
@@ -220,7 +452,7 @@ define(
             }
 
             return false;
-        }
+        };
 
         utilService.prototype.rgba = function (hex, alpha) {
             var rgb;
@@ -244,7 +476,7 @@ define(
                 return hex;
             else
                 return "rgba({0}, {1}, {2}, {3})".format(rgb[0], rgb[1], rgb[2], alpha);
-        }
+        };
 
         utilService.prototype.rgbToHsl = function (r, g, b) {
             r /= 255, g /= 255, b /= 255;
@@ -271,7 +503,7 @@ define(
             }
 
             return [h, s, l];
-        }
+        };
 
         utilService.prototype.hue2rgb = function (p, q, t) {
             if (t < 0) t += 1;
@@ -280,7 +512,7 @@ define(
             if (t < 1 / 2) return q;
             if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
             return p;
-        }
+        };
 
         utilService.prototype.hslToRgb = function (h, s, l) {
             var self = this,
@@ -297,14 +529,14 @@ define(
             }
 
             return [r * 255, g * 255, b * 255];
-        }
+        };
 
         utilService.prototype.toHex = function (decimal) {
             var code = Math.round(decimal).toString(16);
 
             (code.length > 1) || (code = '0' + code);
             return code;
-        }
+        };
 
         utilService.prototype.contrastColor = function (hex) {
             if (hex) {
@@ -317,7 +549,7 @@ define(
             }
 
             return "";
-        }
+        };
 
         utilService.prototype.lighterColor = function (rgb, percent) {
             var self = this,
@@ -342,7 +574,7 @@ define(
                 + self.toHex(newRGB[0])
                 + self.toHex(newRGB[1])
                 + self.toHex(newRGB[2]);
-        }
+        };
 
         utilService.prototype.hexTorgb = function (hex) {
             hex = hex.replace(/#/, '');
@@ -353,13 +585,13 @@ define(
                 g = (rgbval & 65280) >> 8,
                 b = rgbval & 255;
             return [r, g, b];
-        }
+        };
 
         utilService.prototype.hexTohsl = function (hex) {
             var self = this;
 
             return self.rgbToHsl.apply(self, self.hexTorgb(hex));
-        }
+        };
 
         utilService.prototype.formalizeHex = function (hex) {
             hex = hex.replace(/#/, '');
@@ -367,7 +599,7 @@ define(
                 hex = hex + hex;
 
             return "#" + hex;
-        }
+        };
 
         utilService.prototype.rgbToHex = function (r, g, b) {
             var self = this;
@@ -394,13 +626,13 @@ define(
                 + self.toHex(r)
                 + self.toHex(g)
                 + self.toHex(b);
-        }
+        };
 
         utilService.prototype.hslToHex = function (h, s, l) {
             var self = this;
 
             return self.rgbToHex.apply(self, self.hslToRgb(h, s, l));
-        }
+        };
 
         utilService.prototype.prefixedStyleValue = function (styleValueFormat, val) {
             //styleValueFormat {0}linear-gradient(top, #888888 0%, rgba(132, 132, 132, 0.8) 100%);
@@ -415,7 +647,7 @@ define(
             });
 
             return styleValues;
-        }
+        };
 
         utilService.prototype.prefixedStyle = function (style, format) {
             var styleObj = {};
@@ -430,7 +662,7 @@ define(
             }
 
             return styleObj;
-        }
+        };
 
         utilService.prototype.getTextMetrics = function (element, size) {
             var $el = element.jquery && element || $(element),
@@ -479,7 +711,7 @@ define(
             $temp.remove();
 
             return {rows: rows, cols: maxCols};
-        }
+        };
 
         utilService.prototype.formalizePixelLength = function (value) {
             if (typeof value === "string") {
@@ -492,7 +724,7 @@ define(
             }
 
             return "0px";
-        }
+        };
 
         utilService.prototype.formalParameterList = function (fn) {
             var FN_ARGS = /^function\s*[^\(]*\(\s*([^\)]*)\)/m;
@@ -513,7 +745,7 @@ define(
                 });
             }
             return args;
-        }
+        };
 
         //Some control may need additional initialization process after scope variable is updated,
         //initMap contains this kind of init function
@@ -526,7 +758,7 @@ define(
             }
 
             return boundMap;
-        }
+        };
 
         utilService.prototype.tailorCssPrefix = function (styleObj, style) {
             if (style && styleObj) {
@@ -536,7 +768,7 @@ define(
                     delete styleObj[prefix + style];
                 });
             }
-        }
+        };
 
         utilService.prototype.composeCssStyle = function (styleName, styleValue) {
             var self = this,
@@ -548,7 +780,7 @@ define(
 
                 if (styleValue != null) {
                     if (toString.call(styleValue) === '[object Object]')
-                        arr = [styleValue]
+                        arr = [styleValue];
                     else if (toString.call(styleValue) === '[object Array]')
                         arr = styleValue;
                 }
@@ -685,7 +917,7 @@ define(
             }
 
             return styleObj;
-        }
+        };
 
         utilService.prototype.hasParentClass = function (element, classname) {
             var self = this;
@@ -693,7 +925,7 @@ define(
             if (element === document) return false;
 
             return $(element).hasClass(classname) || (element.parentNode && self.hasParentClass(element.parentNode, classname));
-        }
+        };
 
         utilService.prototype.mobileCheck = function () {
             var check = false;
@@ -701,11 +933,11 @@ define(
                 if (/(android|ipad|playbook|silk|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(a) || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0, 4)))check = true
             })(navigator.userAgent || navigator.vendor || window.opera);
             return check;
-        }
+        };
 
         utilService.prototype.eventType = function () {
             return this.mobileCheck() ? 'touchstart' : 'click';
-        }
+        };
 
         utilService.prototype.onAnimationStart = function (target) {
             var animEndEventNames = {
@@ -724,7 +956,7 @@ define(
             });
 
             return defer.promise;
-        }
+        };
 
         utilService.prototype.onAnimationEnd = function (target) {
             var animEndEventNames = {
@@ -743,7 +975,7 @@ define(
             });
 
             return defer.promise;
-        }
+        };
 
         utilService.prototype.onTransitionEnd = function (target) {
             var tranEndEventNames = {
@@ -762,7 +994,7 @@ define(
             });
 
             return defer.promise;
-        }
+        };
 
         utilService.prototype.markSelection = function (target, source, props) {
             if (toString.call(target) === '[object Array]' && target.length) {
@@ -796,7 +1028,7 @@ define(
             }
 
             return target;
-        }
+        };
 
         utilService.prototype.filterSelection = function (target, source, props) {
             var arr = [];
@@ -829,7 +1061,7 @@ define(
             }
 
             return arr;
-        }
+        };
 
         utilService.prototype.uniqueIdGen = function (prefix, uid) {
             uid = uid || ['0', '0', '0'];
@@ -855,7 +1087,7 @@ define(
                 uid.unshift('0');
                 return [prefix || "", "-", uid.join('')].join("");
             }
-        }
+        };
 
         utilService.prototype.createObjectClass = function () {
             var self = this;
@@ -898,7 +1130,7 @@ define(
 
                 return C;
             }
-        }
+        };
 
         utilService.prototype.findObjectClass = function () {
             var self = this;
@@ -906,7 +1138,7 @@ define(
             return function (className) {
                 return (self.classMap = self.classMap || {})[className];
             }
-        }
+        };
 
         utilService.prototype.NOOP = function () {
             var self = this,
@@ -917,7 +1149,7 @@ define(
             });
 
             return defer.promise;
-        }
+        };
 
         utilService.prototype.getResolveDefer = function (result) {
             var self = this,
@@ -928,7 +1160,7 @@ define(
             });
 
             return defer.promise;
-        }
+        };
 
         utilService.prototype.getRejectDefer = function (err) {
             var self = this,
@@ -939,7 +1171,7 @@ define(
             });
 
             return errorDefer.promise;
-        }
+        };
 
         //The root may not be set to the scope when part of the scope initialization program is executed.
         utilService.prototype.broadcast = function (scope, eventName, boundObj) {
@@ -951,14 +1183,14 @@ define(
                     err || scope.$root.$broadcast(eventName, boundObj);
                 }, self.angularConstants.checkInterval,
                 "utilService.broadcast.{0}-{1}".format(eventName, _.now()))
-        }
+        };
 
         utilService.prototype.timeout = function (callback, timeoutId, timeout) {
             var self = this;
 
             timeoutId = timeoutId || "timeout_" + _.now();
             self.timeoutMap = self.timeoutMap || {};
-            self.timeoutMap[timeoutId] = self.timeoutMap[timeoutId] || {}
+            self.timeoutMap[timeoutId] = self.timeoutMap[timeoutId] || {};
             self.timeoutMap[timeoutId].defer = self.timeoutMap[timeoutId].defer || self.$q.defer();
 
             var t = timeout > 0 && self.$timeout(function () {
@@ -985,14 +1217,14 @@ define(
             });
 
             return self.timeoutMap[timeoutId].defer.promise;
-        }
+        };
 
         utilService.prototype.whilst = function (test, callback, interval, whilstId, timeout) {
             var self = this;
 
             whilstId = whilstId || "whilst_" + _.now();
             self.whilstMap = self.whilstMap || {};
-            self.whilstMap[whilstId] = self.whilstMap[whilstId] || {}
+            self.whilstMap[whilstId] = self.whilstMap[whilstId] || {};
             self.whilstMap[whilstId].defer = self.whilstMap[whilstId].defer || self.$q.defer();
             var t = timeout > 0 && self.$timeout(function () {
                     if (self.whilstMap[whilstId]) {
@@ -1031,9 +1263,9 @@ define(
             }, interval);
 
             return self.whilstMap[whilstId].defer.promise;
-        }
+        };
 
-        utilService.prototype.chain = function (arr, chainId, timeout, stopOnEach) {
+        utilService.prototype.chain = function (arr, chainId, timeout, stopOnEach, callback) {
             var self = this;
 
             function chainHandler() {
@@ -1068,6 +1300,12 @@ define(
                             }
                         );
                     } else {
+                        try {
+                            callback && callback();
+                        } catch (e) {
+                            self.$exceptionHandler();
+                        }
+
                         self.chainMap[chainId].t && self.$timeout.cancel(self.chainMap[chainId].t);
 
                         if (self.chainMap[chainId]) {
@@ -1075,7 +1313,7 @@ define(
                             delete self.chainMap[chainId];
                         }
 
-                        eachDefer && eachDefer.resolve("ENOENT");
+                        eachDefer && eachDefer.resolve();
                     }
                 } else {
                     eachDefer && eachDefer.resolve("ENOENT");
@@ -1087,7 +1325,7 @@ define(
             chainId = chainId || "chain_" + _.now();
             self.chainMap = self.chainMap || {};
             if (!self.chainMap[chainId]) {
-                self.chainMap[chainId] = {}
+                self.chainMap[chainId] = {};
                 self.chainMap[chainId].defer = self.chainMap[chainId].defer || self.$q.defer();
                 self.chainMap[chainId].currentIndex = 0;
                 self.chainMap[chainId].arr = arr;
@@ -1132,7 +1370,7 @@ define(
                         return !self.chainMap[chainId];
                     }
                 });
-        }
+        };
 
         utilService.prototype.once = function (fn, callback, interval, onceId) {
             var self = this;
@@ -1183,7 +1421,7 @@ define(
                     }
                 );
             }
-        }
+        };
 
         utilService.prototype.onceWrapper = function (bindObj) {
             var self = this,
@@ -1214,7 +1452,7 @@ define(
                     return defer.promise;
                 }
             });
-        }
+        };
 
         utilService.prototype.latestOnce = function (fn, callback, errorCallback, interval, onceId) {
             var self = this;
@@ -1298,7 +1536,7 @@ define(
                     latestOnceHandler(onceId);
                 }
             };
-        }
+        };
 
         utilService.prototype.setState = function (id, state) {
             var fn = this.$rootScope[id] && this.$rootScope[id].setState;
@@ -1307,7 +1545,7 @@ define(
             } else {
                 return this.setStateOnWidget(id, state);
             }
-        }
+        };
 
         utilService.prototype.setStateOnWidget = function (id, state) {
             var self = this,
@@ -1371,7 +1609,7 @@ define(
                 self.angularConstants.renderTimeout);
 
             return defer.promise;
-        }
+        };
 
         utilService.prototype.handleEventOnce = function (widgetId, fn) {
             var self = this;
@@ -1381,182 +1619,236 @@ define(
 
                 return result.then && result || self.getResolveDefer();
             }, null, self.angularConstants.eventThrottleInterval, "handleEventOnce.{0}".format(widgetId));
-        }
+        };
 
-        utilService.prototype.doAction = function (action) {
-            return this.actionHandler(action);
-        }
-
-        utilService.prototype.actionHandler = function (action) {
+        utilService.prototype.doAction = function (action, runOnce) {
             var self = this,
-                $widgetElement = $("#" + action.widgetObj),
-                widgetScope = angular.element($widgetElement).scope();
+                $widgetElement = $("#" + action.widgetObj);
 
+            if (runOnce == null) runOnce = false;
             if ($widgetElement.length) {
-                if (action.actionType === "Sequence") {
-                    var arr = [],
-                        chainId = "utilService.doAction." + action.id;
+                var widgetScope = angular.element($widgetElement).scope(),
+                    mark = self.setActionMark($widgetElement, action, runOnce);
 
-                    if (action.stopOnEach) {
-                        if (action.chainObject && action.chainObject.isComplete()) action.chainObject = null;
-
-                        if (!action.chainObject) {
-                            action.childActions && action.childActions.forEach(function (childAction) {
-                                arr.push(function () {
-                                    return self.doAction(childAction);
-                                });
-                            });
-
-                            //FIXME Need code review on releasing resource after scope destroyed.
-                            action.scopeDestroyWatcher && action.scopeDestroyWatcher();
-
-                            var chainObject = self.chain(arr,
-                                chainId,
-                                null,
-                                action.stopOnEach
-                            );
-                            action.chainObject = chainObject;
-
-                            if (widgetScope) {
-                                action.scopeDestroyWatcher = widgetScope.$on('$destroy', function () {
-                                    chainObject.cancel();
-                                });
+                if (!mark.isComplete || !runOnce) {
+                    if (action.actionType === "Sequence") {
+                        mark.setRestoreHandler(function () {
+                            if (action.chainObject) {
+                                action.chainObject.cancel();
+                                action.chainObject = null;
                             }
-                        }
 
-                        return action.chainObject.next();
-                    } else {
-                        action.childActions && action.childActions.forEach(function (childAction) {
-                            arr.push(function () {
-                                return self.doAction(childAction);
+                            action.childActions.forEach(function (actionObj) {
+                                self.restoreWidget(actionObj);
                             });
                         });
 
-                        action.scopeDestroyWatcher && action.scopeDestroyWatcher();
+                        var arr = [],
+                            chainId = "utilService.doAction." + action.id;
 
-                        var promise = self.chain(arr,
-                            chainId);
+                        if (action.stopOnEach) {
+                            if (action.chainObject && action.chainObject.isComplete()) action.chainObject = null;
 
-                        if (widgetScope && promise.cancel) {
-                            action.scopeDestroyWatcher = widgetScope.$on('$destroy', function () {
-                                promise.cancel();
-                            });
-                        }
-
-                        return promise;
-                    }
-                } else if (action.actionType === "Effect") {
-                    var defer = self.$q.defer(),
-                        fullName = action.artifactSpec.directiveName;
-                    if (action.artifactSpec.version) {
-                        fullName = fullName + "-" + action.artifactSpec.version.replace(/\./g, "-")
-                    }
-                    $widgetElement.attr(fullName, "");
-                    $widgetElement.attr("effect", action.effect.name);
-
-                    if (action.effect.type === "Animation") {
-                        var cssAnimation = {};
-
-                        if (action.effect.options.duration) {
-                            _.extend(
-                                cssAnimation, self.prefixedStyle("animation-duration", "{0}s", action.effect.options.duration)
-                            );
-                        }
-                        if (action.effect.options.timing) {
-                            _.extend(
-                                cssAnimation, self.prefixedStyle("timing-function", "{0}", action.effect.options.timing)
-                            );
-                        }
-
-                        $widgetElement.css(cssAnimation);
-
-                        if (action.runAfterComplete) {
-                            self.onAnimationEnd($widgetElement).then(function () {
-                                $widgetElement.removeAttr(fullName);
-                                $widgetElement.removeAttr("effect");
-
-                                for (var key in cssAnimation) {
-                                    $widgetElement.css(key, "");
-                                }
-
-                                defer.resolve();
-                            });
-                        } else {
-                            self.onAnimationStart($widgetElement).then(function () {
-                                defer.resolve();
-                            });
-
-                            self.onAnimationEnd($widgetElement).then(function () {
-                                $widgetElement.removeAttr(fullName);
-                                $widgetElement.removeAttr("effect");
-
-                                for (var key in cssAnimation) {
-                                    $widgetElement.css(key, "");
-                                }
-                            });
-                        }
-                    } else {
-                        self.$timeout(function () {
-                            defer.resolve();
-                        });
-                    }
-
-                    return defer.promise;
-                } else if (action.actionType === "State") {
-                    //TODO setState is moved to servie.js
-                    return self.setState(action.widgetObj, action.newState);
-                } else if (action.actionType === "Configuration") {
-                    var defer = self.$q.defer();
-
-                    self.whilst(function () {
-                            var scope = angular.element($widgetElement.find("[widget-container]:nth-of-type(1)").first().children()[0]).scope();
-                            return !scope;
-                        }, function (err) {
-                            if (!err) {
-                                var scope = angular.element($widgetElement.find("[widget-container]:nth-of-type(1)").first().children()[0]).scope();
-
-                                action.configuration && action.configuration.forEach(function (item) {
-                                    if (item.type === "size") {
-                                        var m = (item.pickedValue || "").match(/([-\d\.]+)(px|em|%)+$/)
-                                        if (m && m.length == 3) {
-                                            scope[item.key] = item.pickedValue;
+                            if (!action.chainObject) {
+                                action.childActions && action.childActions.forEach(function (childAction) {
+                                    if (childAction.runThrough != null && !childAction.runThrough && childAction.stepCount > 1) {
+                                        for (var i = 0; i < childAction.stepCount; i++) {
+                                            arr.push(function () {
+                                                return self.doAction(childAction, runOnce);
+                                            });
                                         }
                                     } else {
-                                        scopeSetterHandler(scope, item.key, item.pickedValue);
+                                        arr.push(function () {
+                                            return self.doAction(childAction, runOnce);
+                                        });
                                     }
                                 });
 
-                                defer.resolve();
-                            } else {
-                                defer.reject(err);
-                            }
-                        },
-                        self.angularConstants.checkInterval,
-                        "utilService.doAction.setScopedValue." + $widgetElement.attr("id"),
-                        self.angularConstants.renderTimeout
-                    )
+                                //FIXME Need code review on releasing resource after scope destroyed.
+                                action.scopeDestroyWatcher && action.scopeDestroyWatcher();
 
-                    return defer.promise;
-                } else if (action.actionType === "Movement") {
-                    return self.animationService.moveWidget($widgetElement, self.$rootScope[$widgetElement.attr("id")].routes, action.routeIndex, action.settings, action.runThrough);
-                } else if (action.actionType === "Sound") {
-                    return action.resourceName && self.serviceRegistry.invoke("BaseService", "playSound")("resource/audio/{0}".format(action.resourceName))|| self.getResolveDefer();
-                } else if (action.actionType === "Include") {
-                    if (action.edge) {
-                        widgetScope && widgetScope.$on('$destroy', function () {
-                            self.unloadAnimation(action.edge);
+                                var chainObject = self.chain(arr,
+                                    chainId,
+                                    null,
+                                    action.stopOnEach,
+                                    function () {
+                                        mark.markComplete();
+                                    }
+                                );
+                                action.chainObject = chainObject;
+
+                                if (widgetScope) {
+                                    action.scopeDestroyWatcher = widgetScope.$on('$destroy', function () {
+                                        chainObject.cancel();
+                                    });
+                                }
+                            }
+
+                            return action.chainObject.next();
+                        } else {
+                            action.childActions && action.childActions.forEach(function (childAction) {
+                                arr.push(function () {
+                                    return self.doAction(childAction, runOnce);
+                                });
+                            });
+
+                            action.scopeDestroyWatcher && action.scopeDestroyWatcher();
+
+                            var promise = self.chain(arr,
+                                chainId);
+
+                            if (widgetScope) {
+                                action.scopeDestroyWatcher = widgetScope.$on('$destroy', function () {
+                                    promise.cancel && promise.cancel();
+                                });
+                            }
+
+                            return promise;
+                        }
+                    }
+                    else if (action.actionType === "Effect") {
+                        var defer = self.$q.defer(),
+                            fullName = action.artifactSpec.directiveName;
+
+                        mark.markComplete();
+
+                        if (action.artifactSpec.version) {
+                            fullName = fullName + "-" + action.artifactSpec.version.replace(/\./g, "-")
+                        }
+                        $widgetElement.attr(fullName, "");
+                        $widgetElement.attr("effect", action.effect.name);
+
+                        if (action.effect.type === "Animation") {
+                            var cssAnimation = {};
+
+                            if (action.effect.options.duration) {
+                                _.extend(
+                                    cssAnimation, self.prefixedStyle("animation-duration", "{0}s", action.effect.options.duration)
+                                );
+                            }
+                            if (action.effect.options.timing) {
+                                _.extend(
+                                    cssAnimation, self.prefixedStyle("timing-function", "{0}", action.effect.options.timing)
+                                );
+                            }
+
+                            $widgetElement.css(cssAnimation);
+
+                            if (action.runAfterComplete) {
+                                self.onAnimationEnd($widgetElement).then(function () {
+                                    $widgetElement.removeAttr(fullName);
+                                    $widgetElement.removeAttr("effect");
+
+                                    for (var key in cssAnimation) {
+                                        $widgetElement.css(key, "");
+                                    }
+
+                                    defer.resolve();
+                                });
+                            } else {
+                                self.onAnimationStart($widgetElement).then(function () {
+                                    defer.resolve();
+                                });
+
+                                self.onAnimationEnd($widgetElement).then(function () {
+                                    $widgetElement.removeAttr(fullName);
+                                    $widgetElement.removeAttr("effect");
+
+                                    for (var key in cssAnimation) {
+                                        $widgetElement.css(key, "");
+                                    }
+                                });
+                            }
+                        } else {
+                            self.$timeout(function () {
+                                defer.resolve();
+                            });
+                        }
+
+                        return defer.promise;
+                    }
+                    else if (action.actionType === "State") {
+                        mark.markComplete();
+
+                        return self.setState(action.widgetObj, action.newState);
+                    }
+                    else if (action.actionType === "Configuration") {
+                        var defer = self.$q.defer();
+
+                        mark.markComplete();
+
+                        self.whilst(function () {
+                                var scope = angular.element($widgetElement.find("[widget-container]:nth-of-type(1)").first().children()[0]).scope();
+                                return !scope;
+                            }, function (err) {
+                                if (!err) {
+                                    var scope = angular.element($widgetElement.find("[widget-container]:nth-of-type(1)").first().children()[0]).scope();
+
+                                    action.configuration && action.configuration.forEach(function (item) {
+                                        if (item.type === "size") {
+                                            var m = (item.pickedValue || "").match(/([-\d\.]+)(px|em|%)+$/);
+                                            if (m && m.length == 3) {
+                                                scope[item.key] = item.pickedValue;
+                                            }
+                                        } else {
+                                            scopeSetterHandler(scope, item.key, item.pickedValue);
+                                        }
+                                    });
+
+                                    defer.resolve();
+                                } else {
+                                    defer.reject(err);
+                                }
+                            },
+                            self.angularConstants.checkInterval,
+                            "utilService.doAction.setScopedValue." + $widgetElement.attr("id"),
+                            self.angularConstants.renderTimeout
+                        );
+
+                        return defer.promise;
+                    }
+                    else if (action.actionType === "Movement") {
+                        var styleObj = {left: $widgetElement.css("left"), top: $widgetElement.css("top")};
+                        mark.setRestoreHandler(function () {
+                            $widgetElement.css(styleObj);
+                            self.restoreAnimationWidget($widgetElement, action, self.$rootScope[$widgetElement.attr("id")].routes);
                         });
 
-                        return self.loadAnimation(action.edge);
+                        return self.moveWidget(
+                            $widgetElement,
+                            self.$rootScope[$widgetElement.attr("id")].routes,
+                            action,
+                            function () {
+                                mark.markComplete();
+                            });
                     }
-                    return self.getResolveDefer();
+                    else if (action.actionType === "Sound") {
+                        mark.markComplete();
+
+                        return action.resourceName && self.serviceRegistry.invoke("BaseService", "playSound")("resource/audio/{0}".format(action.resourceName)) || self.getResolveDefer();
+                    }
+                    else if (action.actionType === "Include") {
+                        mark.markComplete();
+
+                        if (action.edge) {
+                            widgetScope && widgetScope.$on('$destroy', function () {
+                                self.unloadAnimation(action.edge);
+                            });
+
+                            return self.loadAnimation(action.edge);
+                        }
+
+                        return self.getResolveDefer();
+                    }
                 }
             }
-        }
+
+            return self.getResolveDefer();
+        };
 
         utilService.prototype.handleStateAction = function (stateAction) {
-            return this.actionHandler(stateAction);
-        }
+            return this.doAction(stateAction);
+        };
 
         utilService.prototype.registerTrigger = function (id, eventMap) {
             var self = this,
@@ -1584,9 +1876,28 @@ define(
                     self.angularConstants.renderTimeout);
             }
 
-            function createActionCallback(actions) {
+            function createActionCallback(actions, runOnce) {
                 if (actions && actions.length) {
                     var actionObj = actions[0].actionObj;
+
+                    if (self.$rootScope.pickedPage) {
+                        var m = self.$rootScope.pickedPage.match(/Widget_\d+/);
+                        if (m && m.length) {
+                            var widgetId = m[0],
+                                $container = $("#main"),
+                                $page = $container.children("#" + widgetId);
+
+                            if ($page.length) {
+                                var pageScope = angular.element($page).scope();
+
+                                (pageScope.restoreHandlers = pageScope.restoreHandlers || []).push(
+                                    function () {
+                                        self.restoreWidget(actionObj);
+                                    }
+                                );
+                            }
+                        }
+                    }
 
                     //Some widget may be triggered by hammer gesture and ng mouse event at the same time, which is
                     //to be prevented. A widget object with handleEventOnce function can stop widget event handling if
@@ -1599,10 +1910,10 @@ define(
                         }
 
                         if (actionObj.stopOnEach && actionObj.chainObject) {
-                            self.doAction(actionObj);
+                            self.doAction(actionObj, runOnce);
                         } else {
                             self.handleEventOnce(actionObj.widgetObj, function () {
-                                return self.doAction(actionObj);
+                                return self.doAction(actionObj, runOnce);
                             })();
                         }
                     }
@@ -1671,10 +1982,10 @@ define(
                                         if (handlerConfig) {
                                             handlerConfig.handlers.push({
                                                 event: eventType,
-                                                callback: createActionCallback(eventConfig.actions)
+                                                callback: createActionCallback(eventConfig.actions, eventConfig.runOnce)
                                             });
                                         }
-                                    })
+                                    });
 
                                     var recognizers = [], events = [];
                                     _.each(handlerMap, function (handlerConfig) {
@@ -1689,7 +2000,7 @@ define(
                                                 }
                                             );
                                         }
-                                    })
+                                    });
 
                                     if (recognizers.length && events.length) {
                                         $(element).data("hammer", mc);
@@ -1716,7 +2027,54 @@ define(
             );
 
             return defer.promise;
-        }
+        };
+
+        utilService.prototype.setActionMark = function ($widgetElement, action, runOnce) {
+            var ActionMark = function (action, runOnce) {
+                this.action = action;
+                this.runOnce = runOnce;
+                this.count = 0;
+                this.isComplete = false;
+            };
+
+            ActionMark.prototype.markComplete = function () {
+                this.count++;
+                if (this.runOnce) {
+                    this.isComplete = true;
+                }
+            };
+
+            ActionMark.prototype.setRestoreHandler = function (restoreHandler) {
+                if (!restoreHandler || (restoreHandler && !this.restoreHandler)) {
+                    this.restoreHandler = restoreHandler;
+                }
+            };
+
+            ActionMark.prototype.restoreWidget = function () {
+                if (this.restoreHandler) {
+                    this.restoreHandler();
+                    this.restoreHandler = null;
+                }
+
+                this.count = 0;
+                this.isComplete = false;
+            };
+
+            var actionMarks = $widgetElement.data("actionMarks");
+            if (!actionMarks) {
+                $widgetElement.data("actionMarks", actionMarks = {});
+            }
+            return actionMarks[action.id] = actionMarks[action.id] || new ActionMark(action, runOnce);
+        };
+
+        utilService.prototype.restoreWidget = function (action) {
+            var $widgetElement = $("#" + action.widgetObj),
+                actionMarks = $widgetElement.data("actionMarks");
+            if (actionMarks) {
+                var actionMark = actionMarks[action.id];
+                actionMark.restoreWidget();
+            }
+        };
 
         return function (appModule) {
             appModule.

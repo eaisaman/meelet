@@ -23,11 +23,11 @@ define(
 
             BookService.prototype.registerService = function () {
                 this.serviceRegistry && this.serviceRegistry.register(this, FEATURE, PLATFORM);
-            }
+            };
 
             BookService.prototype.unregisterService = function () {
                 this.serviceRegistry && this.serviceRegistry.unregister(FEATURE, PLATFORM);
-            }
+            };
 
             appModule.
                 config(["$provide", function ($provide) {

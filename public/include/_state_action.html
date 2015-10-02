@@ -212,6 +212,16 @@
                     </div>
                 </div>
 
+                <div class="movementPane">
+                    <div class="input-group col-as-12 fs-x-smaller">
+                        <label class="col-as-5 no-padding control-label">Run Through</label>
+
+                        <div class="no-padding col-as-7" ng-click="$event.stopPropagation()">
+                            <input type="checkbox" class="form-control no-padding fs-x-smaller" ng-model="item.runThrough"/>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="movementPane" ng-repeat="settingItem in item.settings">
                     <div class="input-group col-as-12 fs-x-smaller">
                         <label class="col-as-5 no-padding control-label fs-x-smaller">{{settingItem.name}}</label>

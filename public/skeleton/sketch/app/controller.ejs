@@ -58,7 +58,7 @@ self["<%=id%>"].set<%=context||"State"%> = function(name) {
     self["<%=id%>"].setState = self["<%=id%>"].set<%=context%>;
 <%}%>
     var arr = [];
-    arr.push(function () { return appService.setStateOnWidget("<%=id%>", name);});
+    arr.push(function () { return utilService.setStateOnWidget("<%=id%>", name);});
     switch (name) {<%
         for(var i = 0;i < stateNames.length;i++) {
             var name = stateNames[i], value = stateTree[name], transition = value.transition, stateAction = value.stateAction, offspring = value.offspring;%>
@@ -146,24 +146,24 @@ define(
 
                 $scope.nextPage = function(event) {
                     event && event.stopPropagation();
-                    appService.nextPage();
+                    serviceRegistry.invoke("BaseService", "nextPage")();
                 }
                 $scope.prevPage = function(event) {
                     event && event.stopPropagation();
-                    appService.prevPage();
+                    serviceRegistry.invoke("BaseService", "prevPage")();
                 }
                 $scope.exitPage = function(event) {
                     event && event.stopPropagation();
-                    appService.exitPage();
+                    serviceRegistry.invoke("BaseService", "exitPage")();
                 }
-                appService.loadPage(urlService.locations[0], true);
                 appService.registerService();
+                serviceRegistry.invoke("BaseService", "loadPage")(urlService.locations[0], true);
             }
 <%if (pages && pages.length) {
     pages.forEach(function(page) {
 %>
             function <%= page.id %>_Controller($scope, $rootScope, $q, $timeout, appService, serviceRegistry, urlService, utilService, sketchUtilService) {
-                appService.setState("<%= page.id %>", "*");
+                serviceRegistry.invoke("BaseService", "setState")("<%= page.id %>", "*");
             }
 <%
     });

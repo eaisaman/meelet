@@ -16,7 +16,7 @@ define(
 
             serviceRegistry.prototype.makeGlobal = function () {
                 window.serviceRegistry = this;
-            }
+            };
 
             /**
              * @description
@@ -94,13 +94,13 @@ define(
                                 case "one-way":
                                     featureClassTmpl[serviceItem.name] = function () {
                                         fn.apply(this.delegate, Array.prototype.slice.call(arguments));
-                                    }
+                                    };
                                     break;
                                 case "callback":
                                     featureClassTmpl[serviceItem.name] = function () {
                                         //Promise.then
                                         return fn.apply(this.delegate, Array.prototype.slice.call(arguments));
-                                    }
+                                    };
                                     break;
                                 case "event":
                                     featureClassTmpl[serviceItem.name] = function (eventHandler, eventId) {
@@ -122,7 +122,7 @@ define(
                                         });
 
                                         fn.apply(instance.delegate, Array.prototype.concat.apply([eventId], Array.prototype.slice.call(arguments, 1, arguments.length)));
-                                    }
+                                    };
                                     break;
                             }
                         }
@@ -136,7 +136,7 @@ define(
 
                     featureItem.impl = new featureClass(serviceImpl, platform);
                 }
-            }
+            };
 
             serviceRegistry.prototype.unregister = function (feature, platform) {
                 var self = this,
@@ -145,7 +145,7 @@ define(
                 if (featureItem && featureItem.impl) {
                     featureItem.impl.unregister(platform);
                 }
-            }
+            };
 
             serviceRegistry.prototype.invoke = function (feature, serviceName) {
                 var self = this,
@@ -165,7 +165,7 @@ define(
                 }
 
                 return angular.noop;
-            }
+            };
 
             appModule.
                 config(["$provide", function ($provide) {
