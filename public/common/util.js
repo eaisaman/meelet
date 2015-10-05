@@ -1539,12 +1539,46 @@ define(
         };
 
         utilService.prototype.setState = function (id, state) {
-            var fn = this.$rootScope[id] && this.$rootScope[id].setState;
-            if (fn) {
-                return fn(state);
-            } else {
-                return this.setStateOnWidget(id, state);
+            var self = this,
+                defer = self.$q.defer(),
+                widgetName;
+
+            //Accept widget name
+            if (!/Widget_\d+$/.test(id)) {
+                widgetName = id;
+                id = null;
             }
+
+            self.whilst(function () {
+                    return widgetName ? !document.getElementsByName(widgetName).length : !document.getElementById(id);
+                },
+                function (err) {
+                    if (!err) {
+                        if (widgetName) {
+                            var element = document.getElementsByName(widgetName)[0];
+                            id = element.id;
+                        }
+
+                        var fn = self.$rootScope[id] && self.$rootScope[id].setState,
+                            ret;
+                        if (fn) {
+                            ret = fn(state);
+                        } else {
+                            ret = self.setStateOnWidget(id, state)
+                        }
+
+                        ret.then(function () {
+                            defer.resolve();
+                        });
+                    } else {
+                        defer.reject(err);
+                    }
+                },
+                self.angularConstants.checkInterval,
+                "utilService.setState.{0}({1})".format(id || "", widgetName || ""),
+                self.angularConstants.renderTimeout);
+
+            return defer.promise;
         };
 
         utilService.prototype.setStateOnWidget = function (id, state) {
@@ -1605,7 +1639,7 @@ define(
                     }
                 },
                 self.angularConstants.checkInterval,
-                "utilService.setState.{0}({1})".format(id || "", widgetName || ""),
+                "utilService.setStateOnWidget.{0}({1})".format(id || "", widgetName || ""),
                 self.angularConstants.renderTimeout);
 
             return defer.promise;
@@ -1827,6 +1861,38 @@ define(
 
                         return action.resourceName && self.serviceRegistry.invoke("BaseService", "playSound")("resource/audio/{0}".format(action.resourceName)) || self.getResolveDefer();
                     }
+                    else if (action.actionType === "Service") {
+                        mark.markComplete();
+
+                        var fn = self.serviceRegistry.invoke(action.feature, action.serviceName);
+
+                        if (fn) {
+                            var arr = [];
+                            if (action.communicationType === "event") {
+                                //Set eventHandler, eventId as null
+                                arr.splice(0, 0, null, null);
+                            }
+                            action.parameters.forEach(function (param) {
+                                var val = null;
+                                action.input.every(function (inputItem) {
+                                    if (inputItem.name === param) {
+                                        if (inputItem.expression != null) {
+                                            val = widgetScope.$eval(inputItem.expression);
+                                        }
+                                        return false;
+                                    }
+
+                                    return true;
+                                });
+                                arr.push(val);
+                            });
+
+                            var ret = fn.apply(null, arr);
+                            if (ret && ret.then) return ret;
+                        }
+
+                        return self.getResolveDefer();
+                    }
                     else if (action.actionType === "Include") {
                         mark.markComplete();
 
@@ -1881,7 +1947,7 @@ define(
                     var actionObj = actions[0].actionObj;
 
                     if (self.$rootScope.pickedPage) {
-                        var m = self.$rootScope.pickedPage.match(/Widget_\d+/);
+                        var m = self.$rootScope.pickedPage.match(/[^page-].+$/);
                         if (m && m.length) {
                             var widgetId = m[0],
                                 $container = $("#main"),
@@ -2073,6 +2139,38 @@ define(
             if (actionMarks) {
                 var actionMark = actionMarks[action.id];
                 actionMark.restoreWidget();
+            }
+        };
+
+        utilService.prototype.loadAnimation = function (edgeClass) {
+            var self = this;
+
+            return self.whilst(function () {
+                    return !document.getElementsByClassName(edgeClass).length;
+                }, function (err) {
+                    if (!err) {
+                        try {
+                            var fn = globalEdges && globalEdges[edgeClass].load;
+                            fn && fn();
+                        } catch (e) {
+                            self.$exceptionHandler(e);
+                        }
+                    }
+                },
+                self.angularConstants.checkInterval,
+                "utilService.loadAnimation." + edgeClass,
+                self.angularConstants.renderTimeout
+            )
+        };
+
+        utilService.prototype.unloadAnimation = function (edgeClass) {
+            var self = this;
+
+            try {
+                var fn = globalEdges && globalEdges[edgeClass].unload;
+                fn && fn();
+            } catch (e) {
+                self.$exceptionHandler(e);
             }
         };
 

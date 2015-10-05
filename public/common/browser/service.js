@@ -960,7 +960,7 @@ define(
 
             /* Services managed by registry are visible to designer, serving generated app. */
             function findPageElement(location) {
-                var widgetId = location.match(/Widget_\d+/)[0],
+                var widgetId = location.match(/[^page-].+$/)[0],
                     $container = $("#main"),
                     $page = $container.children("#" + widgetId);
 
@@ -1254,11 +1254,24 @@ define(
                     return true;
                 });
 
+                if (typeof pageNum === "string") {
+                    var pageLoc = pageNum;
+                    pageNum = null;
+                    self.meta.locations.every(function (loc, i) {
+                        if (loc === pageLoc) {
+                            pageNum = i;
+                            return false;
+                        }
+
+                        return true;
+                    });
+                }
+
                 if (pageNum < self.meta.locations.length && locationIndex !== pageNum) {
                     var gotoLocation = self.meta.locations[pageNum];
 
-                    var m = gotoLocation.match(/Widget_\d+/),
-                        c = currentLocation.match(/Widget_\d+/);
+                    var m = gotoLocation.match(/[^page-].+$/),
+                        c = currentLocation.match(/[^page-].+$/);
                     if (m && m.length && c && c.length) {
                         var widgetId = m[0],
                             currentWidgetId = c[0],
@@ -1426,7 +1439,7 @@ define(
                     pageCount = $pages.length,
                     currentLocation = self.$rootScope.pickedPage;
 
-                var m = location.match(/Widget_\d+/);
+                var m = location.match(/[^page-].+$/);
                 if (m && m.length) {
                     var widgetId = m[0];
                     if (!$container.children("#" + widgetId).length) {
@@ -1434,7 +1447,7 @@ define(
                             var $unloaded;
 
                             if (currentLocation) {
-                                m = currentLocation.match(/Widget_\d+/);
+                                m = currentLocation.match(/[^page-].+$/);
                                 if (m && m.length) {
                                     var currentWidgetId = m[0];
                                     $unloaded = $container.children("." + self.angularConstants.widgetClasses.holderClass + ":not(#" + currentWidgetId + ")").eq(0);
@@ -1468,7 +1481,7 @@ define(
                                 var prevLocation, prevWidgetId;
 
                                 do {
-                                    prevLocation = self.meta.locations[locationIndex - 1], prevWidgetId = prevLocation.match(/Widget_\d+/)[0];
+                                    prevLocation = self.meta.locations[locationIndex - 1], prevWidgetId = prevLocation.match(/[^page-].+$/)[0];
                                     locationIndex--;
                                 } while (locationIndex >= 1 && !$container.children("#" + prevWidgetId).length);
 

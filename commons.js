@@ -38,7 +38,7 @@ Commons.prototype.mkdirsSync = function (dirpath) {
     } catch (err) {
         return err;
     }
-}
+};
 
 Commons.prototype.spawn = function (cmd, args, opts, done) {
 
@@ -72,7 +72,7 @@ Commons.prototype.spawn = function (cmd, args, opts, done) {
     });
 
     return child;
-}
+};
 
 Commons.prototype.arrayOmit = function (objects) {
     var keys = Array.prototype.concat.apply(Array.prototype, Array.prototype.slice.call(arguments, 1)),
@@ -83,7 +83,7 @@ Commons.prototype.arrayOmit = function (objects) {
     });
 
     return arr;
-}
+};
 
 Commons.prototype.arrayPick = function (objects) {
     var keys = Array.prototype.concat.apply(Array.prototype, Array.prototype.slice.call(arguments, 1)),
@@ -94,7 +94,7 @@ Commons.prototype.arrayPick = function (objects) {
     });
 
     return arr;
-}
+};
 
 Commons.prototype.walkdir = function (dirpath, base, callback, options) {
     var self = this,
@@ -184,7 +184,7 @@ Commons.prototype.batchLimit = function (arr, batchSize, concurrentLimit, iterat
         },
         final
     );
-}
+};
 
 Commons.prototype.multipart = function () {
     function checkMultipart(req) {
@@ -237,7 +237,7 @@ Commons.prototype.multipart = function () {
         }
     }
 
-}
+};
 
 Commons.prototype.allowXDomain = function () {
     return function addXDomainHeaders(req, res, next) {
@@ -250,7 +250,7 @@ Commons.prototype.allowXDomain = function () {
 
         next();
     }
-}
+};
 
 Commons.prototype.static = function (options) {
     var folder = options.localFolder,
@@ -259,7 +259,7 @@ Commons.prototype.static = function (options) {
         folder = path.join(__dirname, folder);
     }
     return express.static(folder);
-}
+};
 
 Commons.prototype.filter = function (options) {
     var paths = options.paths || [];
@@ -279,7 +279,7 @@ Commons.prototype.filter = function (options) {
             next(err);
         }
     }
-}
+};
 
 Commons.prototype.instantiateMongooseDb = function (options, resourceName, callback) {
     var mongoose = require('mongoose'),
@@ -299,7 +299,7 @@ Commons.prototype.instantiateMongooseDb = function (options, resourceName, callb
 
             callback(err, resource);
         });
-}
+};
 
 Commons.prototype.instantiateMongoDb = function (options, resourceName, callback) {
     var defaultOptions = {
@@ -366,7 +366,7 @@ Commons.prototype.instantiateMongoDb = function (options, resourceName, callback
             callback(err, resource);
         }
     });
-}
+};
 
 /**
  * Initialize session's MongoStore with the given `options`.
@@ -402,14 +402,14 @@ Commons.prototype.session = function (options) {
     } else {
         return session(options);
     }
-}
+};
 
 Commons.prototype.encryptPassword = function (plain, salt) {
     var self = this;
 
     salt = salt || self.config.settings.salt;
     return crypto.createHmac('sha1', salt).update(plain).digest('hex');
-}
+};
 
 Commons.prototype.authenticate = function (options) {
     var self = this;
@@ -474,7 +474,7 @@ Commons.prototype.authenticate = function (options) {
             });
         }
     };
-}
+};
 
 Commons.prototype.addConfigurableArtifact = function (projectId, widgetId, libraryName, artifactId, type, version, callback) {
     var self = this;
@@ -612,7 +612,7 @@ Commons.prototype.addConfigurableArtifact = function (projectId, widgetId, libra
     } else {
         callback(new Error("Empty project id"));
     }
-}
+};
 
 Commons.prototype.removeConfigurableArtifact = function (projectId, widgetId, artifactId, callback) {
     var self = this;
@@ -713,7 +713,7 @@ Commons.prototype.removeConfigurableArtifact = function (projectId, widgetId, ar
             callback(err);
         });
     }
-}
+};
 
 Commons.prototype.updateConfigurableArtifact = function (projectId, widgetId, artifactId, configuration, callback) {
     var self = this;
@@ -797,7 +797,7 @@ Commons.prototype.updateConfigurableArtifact = function (projectId, widgetId, ar
             }
         );
     }
-}
+};
 
 Commons.prototype.convertToHtml = function (projectType, projectPath, artifactList, callback) {
     var self = this,
@@ -1098,7 +1098,6 @@ Commons.prototype.convertToHtml = function (projectType, projectPath, artifactLi
                                                 } catch (err2) {
                                                     cb(err2);
                                                 }
-                                                ;
                                             } else {
                                                 window.close();
                                                 cb(errors[0]);
@@ -1173,8 +1172,55 @@ Commons.prototype.convertToHtml = function (projectType, projectPath, artifactLi
                     }
                 },
                 function (pages, meta, next) {
-                    //Generate controller code
+                    //Read presets in meta.json
+                    var metaFile = path.join(skeletonPath, self.config.settings.meeletMetaFile);
 
+                    if (fs.existsSync(metaFile)) {
+                        var rs = fs.createReadStream(metaFile),
+                            ms = require('memorystream').createWriteStream();
+
+                        rs.on('end', function () {
+                            var str = ms.toString();
+                            ms.destroy();
+
+                            try {
+                                var metaObj = JSON.parse(str);
+                                if (metaObj.locations && metaObj.locations.length) {
+                                    meta.locations = Array.prototype.concat.apply(Array.prototype, [meta.locations, metaObj.locations]);
+
+                                    async.each(metaObj.locations, function (loc, callback) {
+                                        ncp(path.join(skeletonPath, loc + ".html"), path.join(projectPath, loc + ".html"), {
+                                            clobber: true,
+                                            stopOnErr: true,
+                                            dereference: true
+                                        }, function (err) {
+                                            callback(err);
+                                        });
+                                    }, function (err) {
+                                        next(err, pages, meta);
+                                    });
+                                } else {
+                                    next(null, pages, meta);
+                                }
+                            } catch (err) {
+                                next(err);
+                            }
+                        });
+
+                        rs.on('error', function (err) {
+                            ms.destroy();
+                            next(err);
+                        });
+
+                        rs.pipe(ms);
+                    } else {
+                        process.nextTick(function () {
+                            next(null, pages, meta);
+                        });
+                    }
+                },
+                function (pages, meta, next) {
+                    //Generate controller code
                     if (pages && pages.length) {
                         try {
                             var templatePath = path.join(skeletonPath, "app", "controller.ejs"),
@@ -1195,7 +1241,7 @@ Commons.prototype.convertToHtml = function (projectType, projectPath, artifactLi
                                     next(err);
                                 } else {
                                     try {
-                                        var jsContent = fn({pages: pages});
+                                        var jsContent = fn({pages: pages, meta: meta});
                                         jsContent = jsContent.replace(/&quot;/g, "\"");
                                         fs.writeFile(
                                             controllerPath,
@@ -1218,7 +1264,6 @@ Commons.prototype.convertToHtml = function (projectType, projectPath, artifactLi
                 },
                 function (pages, meta, next) {
                     //Write meta.json
-
                     if (pages && pages.length) {
                         var metaFile = path.join(projectPath, self.config.settings.meeletMetaFile);
 
@@ -1347,6 +1392,6 @@ Commons.prototype.convertToHtml = function (projectType, projectPath, artifactLi
             }
         );
     }
-}
+};
 
 module.exports = c;

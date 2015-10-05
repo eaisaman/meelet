@@ -1,10 +1,10 @@
-#Widget_0000000000000 {
+#Report {
   position: relative;
   float: left;
   width: 100%;
   height: 100%;
 }
-#Widget_0000000000000 #reportHead {
+#Report #reportHead {
   position: relative;
   float: left;
   width: 100%;
@@ -13,7 +13,7 @@
   text-shadow: 0px 2px 2px #333;
   color: #fff;
 }
-#Widget_0000000000000 #reportHead span {
+#Report #reportHead span {
   position: relative;
   float: left;
   width: 100%;
@@ -21,18 +21,18 @@
   line-height: 3;
   text-align: center;
 }
-#Widget_0000000000000 #reportDetail {
+#Report #reportDetail {
   position: relative;
   float: left;
   width: 100%;
   height: calc(100% - 3em);
 }
-#Widget_0000000000000 #reportDetail #chartContainer {
+#Report #reportDetail #chartContainer {
   position: relative;
   float: left;
   height: 100%;
 }
-#Widget_0000000000000 #reportDetail #chartContainer .chart {
+#Report #reportDetail #chartContainer .chart {
   position: relative;
   float: left;
   width: calc(100% - 10px);
@@ -44,13 +44,13 @@
   background-image: -o-linear-gradient(0deg, #f1f6fa 25%, transparent 25%, transparent 50%, #f1f6fa 50%, #f1f6fa 75%, transparent 75%, transparent);
   background-image: linear-gradient(0deg, #f1f6fa 25%, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0) 50%, #f1f6fa 50%, #f1f6fa 75%, rgba(0, 0, 0, 0) 75%, rgba(0, 0, 0, 0));
 }
-#Widget_0000000000000 #reportDetail #chartContainer .chart.lineChart {
+#Report #reportDetail #chartContainer .chart.lineChart {
   height: 300px;
 }
-#Widget_0000000000000 #reportDetail #chartContainer .chart.barChart {
+#Report #reportDetail #chartContainer .chart.barChart {
   height: 300px;
 }
-#Widget_0000000000000 #reportDetail #chartContainer .chart span {
+#Report #reportDetail #chartContainer .chart span {
   position: relative;
   float: left;
   width: 100%;
@@ -58,18 +58,18 @@
   line-height: 3;
   text-align: center;
 }
-#Widget_0000000000000 #reportDetail #chartContainer .chart canvas {
+#Report #reportDetail #chartContainer .chart canvas {
   position: relative;
   float: left;
   width: 100%;
   height: calc(100% - 3em);
 }
-#Widget_0000000000000 #reportDetail #summaryContainer {
+#Report #reportDetail #summaryContainer {
   position: relative;
   float: left;
   height: 100%;
 }
-#Widget_0000000000000 #reportDetail #summaryContainer .summary {
+#Report #reportDetail #summaryContainer .summary {
   position: relative;
   float: left;
   margin: 10px 5px;
@@ -82,7 +82,7 @@
   background: -webkit-linear-gradient(top, rgba(138, 186, 107, 0.7), #8aba6b);
   background: linear-gradient(to bottom, rgba(138, 186, 107, 0.7), #8aba6b);
 }
-#Widget_0000000000000 #reportDetail #summaryContainer .summary .summaryHead {
+#Report #reportDetail #summaryContainer .summary .summaryHead {
   position: relative;
   float: left;
   width: 100%;
@@ -91,39 +91,39 @@
   font-weight: 900;
   text-shadow: 0px 2px 2px #333;
 }
-#Widget_0000000000000 #reportDetail #summaryContainer .summary .summaryHead:after {
+#Report #reportDetail #summaryContainer .summary .summaryHead:after {
   width: 100%;
   height: 0px;
   content: '';
   border-top: 1px solid #CACDC0;
   border-bottom: 1px solid #FFF;
 }
-#Widget_0000000000000 #reportDetail #summaryContainer .summary .summaryHead:after {
+#Report #reportDetail #summaryContainer .summary .summaryHead:after {
   position: relative;
   float: left;
 }
-#Widget_0000000000000 #reportDetail #summaryContainer .summary .summaryHead span {
+#Report #reportDetail #summaryContainer .summary .summaryHead span {
   position: relative;
   float: left;
   width: 100%;
   line-height: 3;
   text-align: center;
 }
-#Widget_0000000000000 #reportDetail #summaryContainer .summary .summaryContent {
+#Report #reportDetail #summaryContainer .summary .summaryContent {
   position: relative;
   float: left;
   width: 100%;
 }
-#Widget_0000000000000 #reportDetail #summaryContainer .summary .summaryContent .summaryItem {
+#Report #reportDetail #summaryContainer .summary .summaryContent .summaryItem {
   position: relative;
   float: left;
   width: 100%;
   margin-bottom: 10px;
 }
-#Widget_0000000000000 #reportDetail #summaryContainer .summary .summaryContent .summaryItem .control-label {
+#Report #reportDetail #summaryContainer .summary .summaryContent .summaryItem .control-label {
   line-height: 1;
 }
-#Widget_0000000000000 #reportDetail #summaryContainer .summary .summaryContent .summaryItem span {
+#Report #reportDetail #summaryContainer .summary .summaryContent .summaryItem span {
   position: relative;
   float: left;
   width: 100%;

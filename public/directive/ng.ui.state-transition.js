@@ -135,11 +135,52 @@ define(
                                 };
 
                                 scope.onPickServiceFeature = function (action) {
-                                    scope.pickedServiceFeature = _.findWhere(scope.registry, {feature: action.feature});
+                                    if (action.feature) {
+                                        scope.pickedServiceFeature = _.findWhere(scope.registry, {feature: action.feature});
+                                    }
                                 };
 
                                 scope.onPickService = function (action) {
+                                    scope.pickedServiceFeature && scope.pickedServiceFeature.serviceList.every(function (service) {
+                                        if (action.serviceName === service.name) {
+                                            action.communicationType = service.communicationType;
+                                            action.parameters = _.clone(service.parameters);
+                                            return false;
+                                        }
 
+                                        return true;
+                                    });
+                                };
+
+                                scope.createInputParameter = function (action, parameter, event) {
+                                    event && event.stopPropagation && event.stopPropagation();
+
+                                    action.input = action.input || [];
+                                    if (action.input.every(function (item) {
+                                            return item.name !== parameter;
+                                        })) {
+                                        action.input.push({name: parameter, expression: ""});
+                                    }
+
+                                    return utilService.getResolveDefer();
+                                };
+
+                                scope.deleteInputParameter = function (action, inputItem, event) {
+                                    event && event.stopPropagation && event.stopPropagation();
+
+                                    var index;
+                                    if (action.input && !action.input.every(function (item, i) {
+                                            if (item.name === inputItem.name) {
+                                                index = i;
+                                                return false;
+                                            }
+
+                                            return true;
+                                        })) {
+                                        action.input.splice(index, 1);
+                                    }
+
+                                    return utilService.getResolveDefer();
                                 };
 
                                 function createConfigurationItemAssign(name) {
@@ -147,6 +188,7 @@ define(
                                         assign = fn.assign;
 
                                     if (!fn.assign.customized) {
+                                        f;
                                         fn.assign = function ($scope, value) {
                                             function itemHandler() {
                                                 var defer = $q.defer();

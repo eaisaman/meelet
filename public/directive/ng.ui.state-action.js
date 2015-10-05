@@ -56,7 +56,7 @@ define(
                                         });
 
                                     });
-                                }
+                                };
 
                                 scope.initEffectList = function (action) {
                                     scope.effectList.splice();
@@ -79,14 +79,14 @@ define(
 
                                         });
                                     }
-                                }
+                                };
 
                                 scope.filterLibraryList = function (libraryList, xrefList) {
                                     return utilService.filterSelection(libraryList, xrefList, [{
                                         target: '_id',
                                         source: 'libraryId'
                                     }]);
-                                }
+                                };
 
                                 scope.filterArtifactList = function (effectLibrary, xrefList) {
                                     var artifactList = (_.findWhere(xrefList, {libraryId: effectLibrary._id}) || {}).artifactList;
@@ -95,14 +95,14 @@ define(
                                         target: '_id',
                                         source: 'artifactId'
                                     }]);
-                                }
+                                };
 
                                 scope.markLibrarySelection = function (libraryList, xrefList) {
                                     return utilService.markSelection(libraryList, xrefList, [{
                                         target: '_id',
                                         source: 'libraryId'
                                     }]);
-                                }
+                                };
 
                                 scope.markArtifactSelection = function (effectLibrary, xrefList) {
                                     var xref = _.findWhere(xrefList, {libraryId: effectLibrary._id}) || {},
@@ -112,14 +112,14 @@ define(
                                         target: '_id',
                                         source: 'artifactId'
                                     }]);
-                                }
+                                };
 
                                 scope.isPartialSelection = function (effectLibrary, xrefList) {
                                     var xref = _.findWhere(xrefList, {libraryId: effectLibrary._id}),
                                         artifactList = effectLibrary.artifactList;
 
                                     return xref && artifactList && artifactList.length > xref.artifactList.length;
-                                }
+                                };
 
                                 scope.onMovementActionRouteIndexChange = function (routeIndex) {
                                     if (!$rootScope.sketchWidgetSetting.isDefingRoute) {
@@ -131,15 +131,56 @@ define(
                                     }
 
                                     $rootScope.$broadcast(angularEventTypes.markWidgetRouteEvent, routeIndex);
-                                }
+                                };
 
                                 scope.onPickServiceFeature = function (action) {
-                                    scope.pickedServiceFeature = _.findWhere(scope.registry, {feature: action.feature});
-                                }
+                                    if (action.feature) {
+                                        scope.pickedServiceFeature = _.findWhere(scope.registry, {feature: action.feature});
+                                    }
+                                };
 
                                 scope.onPickService = function (action) {
+                                    scope.pickedServiceFeature && scope.pickedServiceFeature.serviceList.every(function (service) {
+                                        if (action.serviceName === service.name) {
+                                            action.communicationType = service.communicationType;
+                                            action.parameters = _.clone(service.parameters);
+                                            return false;
+                                        }
 
-                                }
+                                        return true;
+                                    });
+                                };
+
+                                scope.createInputParameter = function (action, parameter, event) {
+                                    event && event.stopPropagation && event.stopPropagation();
+
+                                    action.input = action.input || [];
+                                    if (action.input.every(function (item) {
+                                            return item.name !== parameter;
+                                        })) {
+                                        action.input.push({name: parameter, expression: ""});
+                                    }
+
+                                    return utilService.getResolveDefer();
+                                };
+
+                                scope.deleteInputParameter = function (action, inputItem, event) {
+                                    event && event.stopPropagation && event.stopPropagation();
+
+                                    var index;
+                                    if (action.input && !action.input.every(function (item, i) {
+                                            if (item.name === inputItem.name) {
+                                                index = i;
+                                                return false;
+                                            }
+
+                                            return true;
+                                        })) {
+                                        action.input.splice(index, 1);
+                                    }
+
+                                    return utilService.getResolveDefer();
+                                };
 
                                 function createConfigurationItemAssign(name) {
                                     var fn = $parse(name),
@@ -172,7 +213,7 @@ define(
 
                                                 return result;
                                             }
-                                        }
+                                        };
 
                                         fn.assign.customized = true;
                                     }
@@ -204,7 +245,7 @@ define(
 
                                         return utilService.getResolveDefer();
                                     });
-                                }
+                                };
 
                                 scope.createAction = function (parentAction, event) {
                                     event && event.stopPropagation && event.stopPropagation();
@@ -215,7 +256,7 @@ define(
                                     }
 
                                     return utilService.getResolveDefer();
-                                }
+                                };
 
                                 scope.deleteAction = function (parentAction, action, event) {
                                     event && event.stopPropagation && event.stopPropagation();
@@ -234,7 +275,7 @@ define(
                                     }
 
                                     return utilService.getResolveDefer();
-                                }
+                                };
 
                                 scope.createEffectObj = function (effectValue) {
                                     return {
@@ -242,7 +283,7 @@ define(
                                         type: effectValue.replace(/^.+\+/g, ''),
                                         options: {}
                                     };
-                                }
+                                };
 
                                 scope.toggleSelectLibraryList = function (event) {
                                     event && event.stopPropagation && event.stopPropagation();
@@ -256,7 +297,7 @@ define(
 
                                         return utilService.getResolveDefer();
                                     });
-                                }
+                                };
 
                                 scope.toggleArtifactSelection = function (repoArtifact, effectLibrary, event) {
                                     event && event.stopPropagation && event.stopPropagation();
@@ -320,7 +361,7 @@ define(
                                     }
 
                                     return utilService.getResolveDefer();
-                                }
+                                };
 
                                 scope.toggleLibrarySelection = function (effectLibrary, event) {
                                     event && event.stopPropagation && event.stopPropagation();
@@ -366,7 +407,7 @@ define(
                                     }
 
                                     return utilService.getResolveDefer();
-                                }
+                                };
 
                                 scope.effectList = [];
                                 scope.effectLibraryList = $rootScope.effectLibraryList;

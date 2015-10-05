@@ -22,7 +22,7 @@ define(
                         $rootScope.alertList.splice(0, 0, alertObj);
 
                         return $scope.toggleDisplay("#alertBar", null, true);
-                    }
+                    };
 
                     $rootScope.hideAlert = function (id, event) {
                         $scope.toggleDisplay("#alertBar", null, false).then(function () {
@@ -38,7 +38,7 @@ define(
                                 $rootScope.alertList.splice(index, 1);
                             }
                         });
-                    }
+                    };
 
                     return $q.all([
                         appService.getRepoLibrary().then(
@@ -179,7 +179,7 @@ define(
                     $(event.currentTarget).parent().toggleClass("select");
 
                     return utilService.getResolveDefer();
-                }
+                };
 
                 $scope.removeWidget = function (event) {
                     var widgetObj = $rootScope.sketchObject.pickedWidget;
@@ -193,7 +193,7 @@ define(
                     }
 
                     return utilService.getResolveDefer();
-                }
+                };
 
                 $scope.enableAddWidget = function (event) {
                     function addWidgetHandler(event) {
@@ -281,7 +281,7 @@ define(
                     }
 
                     return utilService.getResolveDefer();
-                }
+                };
 
                 $scope.configureWidget = function (event) {
                     var widgetObj = $rootScope.sketchObject.pickedWidget;
@@ -293,7 +293,7 @@ define(
                     }
 
                     return utilService.getResolveDefer();
-                }
+                };
 
                 $scope.locateWidget = function (event) {
                     var widgetObj = $rootScope.sketchObject.pickedWidget;
@@ -309,7 +309,7 @@ define(
                     uiService.hidePopupMenu();
 
                     return utilService.getResolveDefer();
-                }
+                };
 
                 $scope.duplicateWidget = function (event) {
                     var widgetObj = $rootScope.sketchObject.pickedWidget;
@@ -335,7 +335,7 @@ define(
                     uiService.hidePopupMenu();
 
                     return utilService.getResolveDefer();
-                }
+                };
 
                 $scope.setSelectedButton = function (event) {
                     var $el = $(event.target),
@@ -347,11 +347,11 @@ define(
                     $compile($sel)($scope);
 
                     return utilService.getResolveDefer();
-                }
+                };
 
                 $scope.setSelectedConrol = function (controlId) {
                     controlId && $scope.toggleExclusiveDisplay("#" + controlId, null, true);
-                }
+                };
 
                 $scope.zoomIn = function (event) {
                     var $container = $("#frameSketchContainer"),
@@ -370,7 +370,7 @@ define(
                     }
 
                     return utilService.getResolveDefer();
-                }
+                };
 
                 $scope.zoomOut = function (event) {
                     var $container = $("#frameSketchContainer"),
@@ -389,7 +389,7 @@ define(
                     }
 
                     return utilService.getResolveDefer();
-                }
+                };
 
                 $scope.alignLeft = function (event) {
                     var widgetObj = $rootScope.sketchObject.pickedWidget;
@@ -400,7 +400,7 @@ define(
                     }
 
                     return utilService.getResolveDefer();
-                }
+                };
 
                 $scope.alignHorizontalCenter = function (event) {
                     var widgetObj = $rootScope.sketchObject.pickedWidget;
@@ -411,7 +411,7 @@ define(
                     }
 
                     return utilService.getResolveDefer();
-                }
+                };
 
                 $scope.alignRight = function (event) {
                     var widgetObj = $rootScope.sketchObject.pickedWidget;
@@ -422,7 +422,7 @@ define(
                     }
 
                     return utilService.getResolveDefer();
-                }
+                };
 
                 $scope.alignTop = function (event) {
                     var widgetObj = $rootScope.sketchObject.pickedWidget;
@@ -433,7 +433,7 @@ define(
                     }
 
                     return utilService.getResolveDefer();
-                }
+                };
 
                 $scope.alignVerticalCenter = function (event) {
                     var widgetObj = $rootScope.sketchObject.pickedWidget;
@@ -444,7 +444,7 @@ define(
                     }
 
                     return utilService.getResolveDefer();
-                }
+                };
 
                 $scope.alignBottom = function (event) {
                     var widgetObj = $rootScope.sketchObject.pickedWidget;
@@ -455,7 +455,7 @@ define(
                     }
 
                     return utilService.getResolveDefer();
-                }
+                };
 
                 $scope.fillParent = function (event) {
                     var widgetObj = $rootScope.sketchObject.pickedWidget;
@@ -465,7 +465,7 @@ define(
                     }
 
                     return utilService.getResolveDefer();
-                }
+                };
 
                 $scope.fillVertical = function (event) {
                     var widgetObj = $rootScope.sketchObject.pickedWidget;
@@ -475,7 +475,7 @@ define(
                     }
 
                     return utilService.getResolveDefer();
-                }
+                };
 
                 $scope.fillHorizontal = function (event) {
                     var widgetObj = $rootScope.sketchObject.pickedWidget;
@@ -485,7 +485,7 @@ define(
                     }
 
                     return utilService.getResolveDefer();
-                }
+                };
 
                 $scope.spanVertical = function (event) {
                     var widgetObj = $rootScope.sketchObject.pickedWidget;
@@ -497,7 +497,7 @@ define(
                     }
 
                     return utilService.getResolveDefer();
-                }
+                };
 
                 $scope.spanHorizontal = function (event) {
                     var widgetObj = $rootScope.sketchObject.pickedWidget;
@@ -509,7 +509,7 @@ define(
                     }
 
                     return utilService.getResolveDefer();
-                }
+                };
 
                 $scope.spaceVertical = function (event) {
                     var widgetObj = $rootScope.sketchObject.pickedWidget;
@@ -520,7 +520,7 @@ define(
                     }
 
                     return utilService.getResolveDefer();
-                }
+                };
 
                 $scope.spaceHorizontal = function (event) {
                     var widgetObj = $rootScope.sketchObject.pickedWidget;
@@ -531,7 +531,7 @@ define(
                     }
 
                     return utilService.getResolveDefer();
-                }
+                };
 
                 $scope.groupWidget = function (event) {
                     var widgetObj = $rootScope.sketchObject.pickedWidget;
@@ -543,7 +543,7 @@ define(
                     uiService.hidePopupMenu();
 
                     return utilService.getResolveDefer();
-                }
+                };
 
                 $scope.ungroupWidget = function (event) {
                     var widgetObj = $rootScope.sketchObject.pickedWidget;
@@ -555,7 +555,7 @@ define(
                     uiService.hidePopupMenu();
 
                     return utilService.getResolveDefer();
-                }
+                };
 
                 $scope.pickParentWidget = function (event) {
                     var widgetObj = $rootScope.sketchObject.pickedWidget;
@@ -591,7 +591,7 @@ define(
                     uiService.hidePopupMenu();
 
                     return utilService.getResolveDefer();
-                }
+                };
 
                 $scope.moveUpWidget = function (event) {
                     var widgetObj = $rootScope.sketchObject.pickedWidget;
@@ -599,7 +599,7 @@ define(
                     widgetObj && widgetObj.moveAfter();
 
                     uiService.hidePopupMenu();
-                }
+                };
 
                 $scope.moveDownWidget = function (event) {
                     var widgetObj = $rootScope.sketchObject.pickedWidget;
@@ -609,17 +609,17 @@ define(
                     uiService.hidePopupMenu();
 
                     return utilService.getResolveDefer();
-                }
+                };
 
                 $scope.toggleRuler = function (event) {
                     $rootScope.sketchWidgetSetting.showRuler = !$rootScope.sketchWidgetSetting.showRuler;
 
                     return utilService.getResolveDefer();
-                }
+                };
 
                 $scope.canPositionWidget = function (widgetObj) {
                     return widgetObj && widgetObj.isElement;
-                }
+                };
 
                 $scope.toggleResize = function (event) {
                     event && event.stopPropagation && event.stopPropagation();
@@ -630,7 +630,7 @@ define(
                     }
 
                     return utilService.getResolveDefer();
-                }
+                };
 
                 $scope.initWidgetPosition = function () {
                     var widgetObj = $rootScope.sketchObject.pickedWidget;
@@ -648,7 +648,7 @@ define(
                             $scope.pickedWidgetHeight = widgetObj.css("height");
                         });
                     }
-                }
+                };
 
                 $scope.togglePlayWidget = function (event) {
                     $rootScope.sketchWidgetSetting.isPlaying = !$rootScope.sketchWidgetSetting.isPlaying;
@@ -656,11 +656,11 @@ define(
                     $rootScope.$broadcast(angularEventTypes.playProjectEvent, $rootScope.sketchWidgetSetting.isPlaying);
 
                     return utilService.getResolveDefer();
-                }
+                };
 
                 $scope.saveProject = function (event) {
                     return $rootScope.loadedProject.save();
-                }
+                };
 
                 $scope.loadProject = function (event) {
                     $rootScope.loadedProject.unload();
@@ -675,7 +675,7 @@ define(
                             }
                         ]
                     );
-                }
+                };
 
                 $scope.renderProject = function () {
                     return utilService.whilst(
@@ -706,7 +706,7 @@ define(
                         "FrameSketchController.renderProject",
                         angularConstants.renderTimeout
                     );
-                }
+                };
 
                 $scope.toggleLockProject = function (event) {
                     if ($rootScope.loadedProject.projectRecord.lock) {
@@ -714,11 +714,11 @@ define(
                     } else {
                         return $rootScope.loadedProject.tryLock($rootScope.loginUser._id);
                     }
-                }
+                };
 
                 $scope.convertToHtml = function (event) {
                     return $rootScope.loadedProject.convertToHtml($rootScope.loginUser._id);
-                }
+                };
 
                 $scope.toggleDisplayRoute = function (event) {
                     event && event.stopPropagation && event.stopPropagation();
@@ -753,7 +753,7 @@ define(
 
                         return utilService.getResolveDefer();
                     }
-                }
+                };
 
                 $scope.toggleDefineRoute = function (event) {
                     event && event.stopPropagation && event.stopPropagation();
@@ -764,7 +764,7 @@ define(
                     $canvasContainer.toggleClass("select"), $editButton.toggleClass("select");
 
                     return utilService.getResolveDefer();
-                }
+                };
 
                 $scope.startLink = function (event) {
                     event && event.stopPropagation && event.stopPropagation();
@@ -774,7 +774,7 @@ define(
                     uiCanvasService.startLink(event.clientX - offset.left, event.clientY - offset.top), uiCanvasService.hideMenu();
 
                     return utilService.getResolveDefer();
-                }
+                };
 
                 $scope.removePoint = function (event) {
                     event && event.stopPropagation && event.stopPropagation();
@@ -782,7 +782,7 @@ define(
                     uiCanvasService.removePoint(), uiCanvasService.hideMenu();
 
                     return utilService.getResolveDefer();
-                }
+                };
 
                 $scope.showDemo = function (event) {
                     event && event.stopPropagation && event.stopPropagation();
@@ -792,7 +792,7 @@ define(
                         var scope = angular.element($("#frameSketchContainer > .modalWindowContainer > .md-modal")).scope();
                         scope.toggleModalWindow();
                     });
-                }
+                };
 
                 $scope.showWidgetName = function (callback, event) {
                     event && event.stopPropagation && event.stopPropagation();
@@ -807,7 +807,7 @@ define(
                     var scope = angular.element($("#frameSketchContainer > .modalWindowContainer > .md-modal")).scope();
 
                     return scope.toggleModalWindow();
-                }
+                };
 
                 $scope.showWidgetConfiguration = function (event) {
                     event && event.stopPropagation && event.stopPropagation();
@@ -820,7 +820,7 @@ define(
                         var configurationScope = angular.element($("#widget-configurator-control .configurationContent")).scope();
                         return configurationScope.init();
                     });
-                }
+                };
 
                 $scope.showResourceEditor = function (el, event) {
                     event && event.stopPropagation && event.stopPropagation();
@@ -845,7 +845,7 @@ define(
                     return scope.toggleModalWindow().then(function () {
                         return utilService.getResolveDefer($el);
                     });
-                }
+                };
 
                 $scope.hideModal = function (event) {
                     event && event.stopPropagation && event.stopPropagation();
@@ -861,7 +861,7 @@ define(
 
                         return utilService.getResolveDefer();
                     });
-                }
+                };
 
                 $scope.confirmWidgetName = function (event) {
                     event && event.stopPropagation && event.stopPropagation();
@@ -877,27 +877,27 @@ define(
 
                         return utilService.getResolveDefer();
                     });
-                }
+                };
 
                 $scope.isConfigurable = function (widgetObj) {
                     return uiService.isConfigurable(widgetObj);
-                }
+                };
 
                 $scope.nextPage = function (event) {
                     event && event.stopPropagation && event.stopPropagation();
 
                     return uiService.nextPage($rootScope.sketchObject.pickedPage);
-                }
+                };
 
                 $scope.prevPage = function (event) {
                     event && event.stopPropagation && event.stopPropagation();
 
                     return uiService.prevPage($rootScope.sketchObject.pickedPage);
-                }
+                };
 
                 $scope.onPseudoChange = function (pseudo) {
                     $rootScope.$broadcast(angularEventTypes.widgetPseudoChangeEvent, pseudo);
-                }
+                };
 
                 function setterFactory(obj, name, source) {
                     return function (to) {
@@ -975,7 +975,7 @@ define(
 
                                     return result;
                                 }
-                            }
+                            };
 
                             fn.assign.customized = true;
                         }
@@ -1192,7 +1192,7 @@ define(
                     scope.toggleModalWindow();
 
                     return true;
-                }
+                };
 
                 $scope.displayProjectEdit = function (project, event) {
                     event && event.stopPropagation && event.stopPropagation();
@@ -1202,14 +1202,14 @@ define(
 
                     var scope = angular.element($(".projectContainer .md-modal")).scope();
                     return scope.toggleModalWindow();
-                }
+                };
 
                 $scope.hideProjectModal = function (event) {
                     event && event.stopPropagation && event.stopPropagation();
 
                     var scope = angular.element($(".projectContainer .md-modal")).scope();
                     return scope.toggleModalWindow();
-                }
+                };
 
                 $scope.toggleProjectButton = function (event) {
                     event && event.stopPropagation && event.stopPropagation();
@@ -1219,7 +1219,7 @@ define(
                     $el.toggleClass("select");
                     $scope.toggleCheckMode = $el.hasClass("select");
                     $scope.toggleEditMode = false;
-                }
+                };
 
                 $scope.toggleProjectEditButton = function (event) {
                     event && event.stopPropagation && event.stopPropagation();
@@ -1229,21 +1229,21 @@ define(
                     $el.toggleClass("select");
                     $scope.toggleCheckMode = false;
                     $scope.toggleEditMode = !$scope.toggleEditMode;
-                }
+                };
 
                 $scope.toggleCheck = function (projectItem, event) {
                     event && event.stopPropagation && event.stopPropagation();
 
                     projectItem.checked = !projectItem.checked;
                     !projectItem.checked && delete projectItem.checked;
-                }
+                };
 
                 $scope.toggleQrCode = function (projectItem, event) {
                     event && event.stopPropagation && event.stopPropagation();
 
 
                     $scope.toggleDisplay("#{0} .projectItemQrCode".format(projectItem.id));
-                }
+                };
 
                 $scope.addProject = function (project, event) {
                     event && event.stopPropagation && event.stopPropagation();
@@ -1279,7 +1279,7 @@ define(
                     );
 
                     return true;
-                }
+                };
 
                 $scope.modifyProject = function (project, event) {
                     event && event.stopPropagation && event.stopPropagation();
@@ -1310,7 +1310,7 @@ define(
                     );
 
                     return true;
-                }
+                };
 
                 $scope.removeProject = function (projectItem, event) {
                     event && event.stopPropagation && event.stopPropagation();
@@ -1345,7 +1345,7 @@ define(
                             );
                         }
                     );
-                }
+                };
 
                 $scope.selectProject = function (projectItem, event) {
                     event && event.stopPropagation && event.stopPropagation();
@@ -1373,7 +1373,7 @@ define(
                             });
                             break;
                     }
-                }
+                };
 
                 function initMaster() {
                     var urlParams = $rootScope.urlParams && $rootScope.urlParams["project"] || null,
@@ -1405,7 +1405,7 @@ define(
                     }
 
                     delete repoArtifact._version;
-                }
+                };
 
                 $scope.toggleRepoArtifactSelection = function (repoArtifact, event) {
                     event && event.stopPropagation && event.stopPropagation();
@@ -1447,7 +1447,7 @@ define(
                     }
 
                     return true;
-                }
+                };
 
                 $scope.showDemo = function (repoArtifact, event) {
                     event && event.stopPropagation && event.stopPropagation();
@@ -1456,14 +1456,14 @@ define(
                         var scope = angular.element($(".repoLibContainer .md-modal")).scope();
                         scope.toggleModalWindow();
                     });
-                }
+                };
 
                 $scope.hideDemo = function (repoArtifact, event) {
                     event && event.stopPropagation && event.stopPropagation();
 
                     var scope = angular.element($(".repoLibContainer .md-modal")).scope();
                     scope.toggleModalWindow();
-                }
+                };
 
                 function initMaster() {
                     var urlParams = $rootScope.urlParams && $rootScope.urlParams["repoLib"] || null,
@@ -1506,8 +1506,7 @@ define(
                             }
                         });
                     }
-                };
-
+                }
                 $scope.$on("$routeChangeSuccess", function (scope, next, current) {
                     current && initMaster();
                 });
@@ -1530,7 +1529,7 @@ define(
                     appService.getRepoLibrary(repoTypeValue && {type: repoTypeValue} || {}).then(function (result) {
                         $rootScope.repoLibraryList = result.data.result == "OK" && result.data.resultValue || [];
                     });
-                }
+                };
 
                 $scope.toggleRepoLibSelection = function (repoLib, event) {
                     event && event.stopPropagation && event.stopPropagation();
@@ -1567,7 +1566,7 @@ define(
                     }
 
                     return true;
-                }
+                };
 
                 function initMaster() {
                 }
@@ -1605,13 +1604,13 @@ define(
                     }
 
                     return utilService.getResolveDefer();
-                }
+                };
 
                 $scope.saveProject = function (event) {
                     event && event.stopPropagation && event.stopPropagation();
 
                     return $rootScope.loadedProject.save();
-                }
+                };
 
                 $scope.loadProject = function (event) {
                     event && event.stopPropagation && event.stopPropagation();
@@ -1625,7 +1624,7 @@ define(
                             }
                         ]
                     );
-                }
+                };
 
                 $scope.toggleLockProject = function (event) {
                     event && event.stopPropagation && event.stopPropagation();
@@ -1635,7 +1634,7 @@ define(
                     } else {
                         return $rootScope.loadedProject.tryLock($rootScope.loginUser._id);
                     }
-                }
+                };
 
                 $scope.clearSelection = function (event) {
                     event && event.stopPropagation && event.stopPropagation();
@@ -1646,24 +1645,24 @@ define(
                     $("#flowStepTree [ui-tree-handle].edit").removeClass("edit");
 
                     return utilService.getResolveDefer();
-                }
+                };
 
                 $scope.deactivateNameEdit = function () {
                     $("#flowStepTree [ui-tree-handle].edit").removeClass("edit");
-                }
+                };
 
                 $scope.activateNameEdit = function (event) {
                     event && event.stopPropagation && event.stopPropagation();
 
                     var $el = $(event.currentTarget);
                     $el.addClass("edit");
-                }
+                };
 
                 $scope.getSelectedFlowItem = function () {
                     var scope = angular.element(document.querySelector("#flowStepTree [ui-tree-node].selected")).scope();
 
                     return scope && scope.item;
-                }
+                };
 
                 $scope.getParentFlowItem = function () {
                     var el = document.querySelector("#flowStepTree [ui-tree-node].selected");
@@ -1674,7 +1673,7 @@ define(
                             return scope && scope.item;
                         }
                     }
-                }
+                };
 
                 $scope.insertAfterFlow = function () {
                     var item = $scope.getSelectedFlowItem();
@@ -1690,7 +1689,7 @@ define(
                     }
 
                     return utilService.getResolveDefer();
-                }
+                };
 
                 $scope.insertAfterFlowStep = function (step) {
                     var item = $scope.getSelectedFlowItem();
@@ -1709,41 +1708,41 @@ define(
                     }
 
                     return utilService.getResolveDefer();
-                }
+                };
 
                 $scope.insertAfterInvokeFlowStep = function (event) {
                     return $scope.insertAfterFlowStep("InvokeFlowStep");
-                }
+                };
 
                 $scope.insertAfterMapFlowStep = function (event) {
                     event && event.stopPropagation && event.stopPropagation();
 
                     return $scope.insertAfterFlowStep("MapFlowStep");
-                }
+                };
 
                 $scope.insertAfterSwitchFlowStep = function (event) {
                     event && event.stopPropagation && event.stopPropagation();
 
                     return $scope.insertAfterFlowStep("SwitchFlowStep");
-                }
+                };
 
                 $scope.insertAfterRepeatFlowStep = function (event) {
                     event && event.stopPropagation && event.stopPropagation();
 
                     return $scope.insertAfterFlowStep("RepeatFlowStep");
-                }
+                };
 
                 $scope.insertAfterSequenceFlowStep = function (event) {
                     event && event.stopPropagation && event.stopPropagation();
 
                     return $scope.insertAfterFlowStep("SequenceFlowStep");
-                }
+                };
 
                 $scope.insertAfterExitFlowStep = function (event) {
                     event && event.stopPropagation && event.stopPropagation();
 
                     return $scope.insertAfterFlowStep("ExitFlowStep");
-                }
+                };
 
                 $scope.removeFlowStep = function (event) {
                     event && event.stopPropagation && event.stopPropagation();
@@ -1769,7 +1768,7 @@ define(
                     }
 
                     return utilService.getResolveDefer();
-                }
+                };
 
                 $scope.moveFlowStepUp = function (event) {
                     event && event.stopPropagation && event.stopPropagation();
@@ -1786,7 +1785,7 @@ define(
                     }
 
                     return utilService.getResolveDefer();
-                }
+                };
 
                 $scope.moveFlowStepDown = function (event) {
                     event && event.stopPropagation && event.stopPropagation();
@@ -1803,7 +1802,7 @@ define(
                     }
 
                     return utilService.getResolveDefer();
-                }
+                };
 
                 $scope.moveFlowStepLeft = function (event) {
                     event && event.stopPropagation && event.stopPropagation();
@@ -1836,7 +1835,7 @@ define(
                     }
 
                     return utilService.getResolveDefer();
-                }
+                };
 
                 $scope.moveFlowStepRight = function (event) {
                     event && event.stopPropagation && event.stopPropagation();
@@ -1869,7 +1868,7 @@ define(
                     }
 
                     return utilService.getResolveDefer();
-                }
+                };
 
                 function initMaster() {
                     flowService.registerService();
@@ -1915,7 +1914,7 @@ define(
 
                         $("#newBookWidgetName").val("");
                         if (callback) {
-                            $scope.onModalClose = function () {
+                            extensionScope.onModalClose = function () {
                                 if (extensionScope.pickedExternalBook && extensionScope.pickedExternalBookPage) {
                                     var pageFile = "",
                                         edge = "";
@@ -1937,7 +1936,7 @@ define(
                         var scope = angular.element($("#frameSketchContainer > .modalWindowContainer > .md-modal")).scope();
 
                         return scope.toggleModalWindow();
-                    }
+                    };
 
                     extensionScope.enableAddPageWidget = function (event) {
                         function addBookWidgetHandler(event) {
@@ -2027,13 +2026,13 @@ define(
                         }
 
                         return utilService.getResolveDefer();
-                    }
+                    };
 
                     extensionScope.onPickedExternalBook = function (externalBookScope, externalBookName) {
                         externalBookScope.pickedExternalBook = _.findWhere($rootScope.loadedProject.externalList, {name: externalBookName});
                         externalBookScope.pickedExternalBookPages = externalBookScope.pickedExternalBook && externalBookScope.pickedExternalBook.pages || null;
                         externalBookScope.pickedExternalBookPage = null;
-                    }
+                    };
 
                     extensionScope.confirmBookWidgetName = function (event, externalBookObj, externalBookPage) {
                         event && event.stopPropagation && event.stopPropagation();
@@ -2046,7 +2045,7 @@ define(
                         }
 
                         return utilService.getResolveDefer();
-                    }
+                    };
 
                     extensionScope.$on('$destroy', function () {
                         if ($scope.beforeBookWidgetCreationWatcher) {

@@ -1,7 +1,6 @@
 requirejs.config(
     {
         paths: {
-            "sketch-util": APP_LIB_PATH + "sketch-util",
             "app-filter": APP_LIB_PATH + "filter",
             "app-controller": APP_LIB_PATH + "controller"
         },
@@ -10,7 +9,7 @@ requirejs.config(
 );
 
 define(
-    ["app-extension", "sketch-util", "app-filter", "app-controller"],
+    ["app-extension", "app-filter", "app-controller"],
     function (extension) {
         var appConfigs = Array.prototype.slice.call(arguments, 1);
 

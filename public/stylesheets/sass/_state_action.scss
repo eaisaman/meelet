@@ -137,14 +137,14 @@ $maxNumOfConfigurationItems: 100;
 
                             @include transition(transform 0.3s);
 
-                            > .animationOptions, .configurationBody, .movementBody, .soundBody, .serviceBody {
+                            > .animationOptions, .configurationBody, .movementBody, .soundBody, .serviceBody, .includeBody {
                                 opacity: 0;
                                 pointer-events: none;
                                 height: 0px;
                                 overflow: hidden;
                             }
 
-                            .configurationPane, .movementPane, .soundPane, .servicePane {
+                            .configurationPane, .movementPane, .soundPane, .servicePane, .includePane {
                                 position: relative;
                                 float: left;
                                 width: 100%;
@@ -159,11 +159,45 @@ $maxNumOfConfigurationItems: 100;
                                     $i: $i - 1;
                                 }
 
-                                .input-group {
+                                > .input-group {
                                     position: relative;
                                     float: left;
                                     width: calc(100% - 5px);
                                     padding-left: 5px;
+                                }
+                            }
+
+                            .servicePane {
+                                .serviceInputPanel {
+                                    position: relative;
+                                    float: left;
+                                    height: auto;
+
+                                    .inputParameter {
+                                        position: relative;
+                                        float: left;
+                                        width: 100%;
+                                        height: 2em;
+                                        margin: 0.5em 0;
+
+                                        @include emboss-title(":before", false);
+
+                                        &:before {
+                                            position: relative;
+                                            float: left;
+                                            width: 2em;
+                                            line-height: 1;
+                                            text-align: center;
+                                            color: #555;
+                                        }
+
+                                        > span {
+                                            line-height: 2;
+                                            font-weight: 600;
+                                            text-align: right;
+                                            margin-right: 5px;
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -174,7 +208,7 @@ $maxNumOfConfigurationItems: 100;
 
                                 @include box-shadow(inset 0 0 6px #555);
 
-                                > .animationOptions, .configurationBody, .movementBody, .soundBody, .serviceBody {
+                                > .animationOptions, .configurationBody, .movementBody, .soundBody, .serviceBody, .includeBody {
                                     opacity: 1;
                                     pointer-events: auto;
                                     height: auto;

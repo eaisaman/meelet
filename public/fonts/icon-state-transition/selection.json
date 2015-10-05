@@ -11,10 +11,7 @@
 				"tags": [
 					"keyboard"
 				],
-				"grid": 0,
-				"colorPermutations": {
-					"12552552551": []
-				}
+				"grid": 16
 			},
 			"attrs": [],
 			"properties": {
@@ -25,7 +22,7 @@
 				"code": 58880
 			},
 			"setIdx": 0,
-			"setId": 101,
+			"setId": 122,
 			"iconIdx": 0
 		},
 		{
@@ -40,7 +37,7 @@
 				"tags": [
 					"Library"
 				],
-				"grid": 0
+				"grid": 16
 			},
 			"attrs": [
 				{}
@@ -53,7 +50,7 @@
 				"name": "library"
 			},
 			"setIdx": 0,
-			"setId": 101,
+			"setId": 122,
 			"iconIdx": 1
 		},
 		{
@@ -68,7 +65,7 @@
 				"tags": [
 					"Open_Door-128"
 				],
-				"grid": 0
+				"grid": 16
 			},
 			"attrs": [
 				{}
@@ -81,7 +78,7 @@
 				"name": "exit"
 			},
 			"setIdx": 0,
-			"setId": 101,
+			"setId": 122,
 			"iconIdx": 2
 		},
 		{
@@ -98,7 +95,7 @@
 				"tags": [
 					"ok-64"
 				],
-				"grid": 0
+				"grid": 16
 			},
 			"attrs": [
 				{
@@ -113,8 +110,60 @@
 				"name": "option"
 			},
 			"setIdx": 0,
-			"setId": 101,
+			"setId": 122,
 			"iconIdx": 3
+		},
+		{
+			"icon": {
+				"width": 768,
+				"paths": [
+					"M320 576h448v-128h-448v128zM320 832h448v-128h-448v128zM320 192v128h448v-128h-448zM79 448h78v-256h-36l-85 23v50l43-2v185zM189 654c0-36-12-78-96-78-33 0-64 6-83 16l1 66c21-10 42-15 67-15s32 11 32 28c0 26-30 58-110 112v50h192v-67l-91 2c49-30 87-66 87-113l1-1z"
+				],
+				"attrs": [],
+				"isMulticolor": false,
+				"tags": [
+					"list-ordered"
+				],
+				"defaultCode": 61538,
+				"grid": 16
+			},
+			"attrs": [],
+			"properties": {
+				"id": 97,
+				"order": 24,
+				"prevSize": 32,
+				"code": 58884,
+				"name": "sequence"
+			},
+			"setIdx": 0,
+			"setId": 122,
+			"iconIdx": 21
+		},
+		{
+			"icon": {
+				"width": 896,
+				"paths": [
+					"M832 722s0-306 0-402-96-192-192-192c-64 0-64 0-64 0v-128l-192 192 192 192v-128s32 0 64 0 64 32 64 64 0 402 0 402c-38 22-64 63-64 110 0 71 57 128 128 128s128-57 128-128c0-47-26-88-64-110zM768 896c-35 0-64-29-64-64s29-64 64-64 64 29 64 64-29 64-64 64zM320 768s-32 0-64 0-64-32-64-64 0-402 0-402c38-22 64-63 64-110 0-71-57-128-128-128s-128 57-128 128c0 47 26 88 64 110 0 0 0 306 0 402s96 192 192 192c64 0 64 0 64 0v128l192-192-192-192v128zM128 256c-35 0-64-29-64-64s29-64 64-64 64 29 64 64-29 64-64 64z"
+				],
+				"attrs": [],
+				"isMulticolor": false,
+				"tags": [
+					"git-compare"
+				],
+				"defaultCode": 61612,
+				"grid": 16
+			},
+			"attrs": [],
+			"properties": {
+				"id": 70,
+				"order": 25,
+				"prevSize": 32,
+				"code": 58885,
+				"name": "set-state"
+			},
+			"setIdx": 0,
+			"setId": 122,
+			"iconIdx": 22
 		},
 		{
 			"icon": {
@@ -126,22 +175,19 @@
 				"tags": [
 					"math"
 				],
-				"grid": 32,
-				"colorPermutations": {
-					"12552552551": []
-				}
+				"grid": 32
 			},
 			"attrs": [],
 			"properties": {
 				"id": 349,
 				"order": 47,
 				"prevSize": 32,
-				"code": 58884,
+				"code": 58886,
 				"name": "math",
 				"ligatures": ""
 			},
 			"setIdx": 0,
-			"setId": 101,
+			"setId": 122,
 			"iconIdx": 4
 		},
 		{
@@ -199,12 +245,12 @@
 				"order": 48,
 				"id": 0,
 				"prevSize": 32,
-				"code": 58885,
+				"code": 58887,
 				"name": "running-man",
 				"ligatures": ""
 			},
 			"setIdx": 0,
-			"setId": 101,
+			"setId": 122,
 			"iconIdx": 5
 		},
 		{
@@ -220,22 +266,19 @@
 					"flame",
 					"hot"
 				],
-				"grid": 32,
-				"colorPermutations": {
-					"12552552551": []
-				}
+				"grid": 32
 			},
 			"attrs": [],
 			"properties": {
 				"id": 40,
 				"order": 49,
 				"prevSize": 32,
-				"code": 58886,
+				"code": 58888,
 				"name": "fire",
 				"ligatures": ""
 			},
 			"setIdx": 0,
-			"setId": 101,
+			"setId": 122,
 			"iconIdx": 6
 		},
 		{
@@ -249,21 +292,18 @@
 					"square-check"
 				],
 				"defaultCode": 57414,
-				"grid": 24,
-				"colorPermutations": {
-					"12552552551": []
-				}
+				"grid": 24
 			},
 			"attrs": [],
 			"properties": {
 				"id": 46,
 				"order": 53,
 				"prevSize": 24,
-				"code": 58887,
+				"code": 58889,
 				"name": "square-check"
 			},
 			"setIdx": 0,
-			"setId": 101,
+			"setId": 122,
 			"iconIdx": 7
 		},
 		{
@@ -277,21 +317,18 @@
 					"stop"
 				],
 				"defaultCode": 57428,
-				"grid": 24,
-				"colorPermutations": {
-					"12552552551": []
-				}
+				"grid": 24
 			},
 			"attrs": [],
 			"properties": {
 				"id": 54,
 				"order": 52,
 				"prevSize": 24,
-				"code": 58888,
+				"code": 58890,
 				"name": "square"
 			},
 			"setIdx": 0,
-			"setId": 101,
+			"setId": 122,
 			"iconIdx": 8
 		},
 		{
@@ -319,11 +356,11 @@
 				"order": 26,
 				"id": 0,
 				"prevSize": 24,
-				"code": 58889,
+				"code": 58891,
 				"name": "current-state"
 			},
 			"setIdx": 0,
-			"setId": 101,
+			"setId": 122,
 			"iconIdx": 9
 		},
 		{
@@ -353,12 +390,12 @@
 				"order": 27,
 				"id": 233,
 				"prevSize": 24,
-				"code": 58890,
+				"code": 58892,
 				"name": "slide",
 				"ligatures": ""
 			},
 			"setIdx": 0,
-			"setId": 101,
+			"setId": 122,
 			"iconIdx": 10
 		},
 		{
@@ -372,22 +409,19 @@
 					"rotate"
 				],
 				"defaultCode": 57432,
-				"grid": 24,
-				"colorPermutations": {
-					"12552552551": []
-				}
+				"grid": 24
 			},
 			"attrs": [],
 			"properties": {
 				"id": 58,
 				"order": 28,
 				"prevSize": 24,
-				"code": 58891,
+				"code": 58893,
 				"name": "rotate",
 				"ligatures": ""
 			},
 			"setIdx": 0,
-			"setId": 101,
+			"setId": 122,
 			"iconIdx": 11
 		},
 		{
@@ -401,22 +435,19 @@
 					"tin"
 				],
 				"defaultCode": 57605,
-				"grid": 24,
-				"colorPermutations": {
-					"12552552551": []
-				}
+				"grid": 24
 			},
 			"attrs": [],
 			"properties": {
 				"id": 105,
 				"order": 29,
 				"prevSize": 24,
-				"code": 58892,
+				"code": 58894,
 				"name": "bling",
 				"ligatures": ""
 			},
 			"setIdx": 0,
-			"setId": 101,
+			"setId": 122,
 			"iconIdx": 12
 		},
 		{
@@ -446,12 +477,12 @@
 				"order": 30,
 				"id": 0,
 				"prevSize": 24,
-				"code": 58893,
+				"code": 58895,
 				"name": "animation",
 				"ligatures": ""
 			},
 			"setIdx": 0,
-			"setId": 101,
+			"setId": 122,
 			"iconIdx": 13
 		},
 		{
@@ -476,12 +507,12 @@
 				"order": 31,
 				"id": 96,
 				"prevSize": 24,
-				"code": 58894,
+				"code": 58896,
 				"name": "arrow-right-plus",
 				"ligatures": ""
 			},
 			"setIdx": 0,
-			"setId": 101,
+			"setId": 122,
 			"iconIdx": 14
 		},
 		{
@@ -495,22 +526,19 @@
 					"cross"
 				],
 				"defaultCode": 57623,
-				"grid": 24,
-				"colorPermutations": {
-					"12552552551": []
-				}
+				"grid": 24
 			},
 			"attrs": [],
 			"properties": {
 				"id": 117,
 				"order": 32,
 				"prevSize": 24,
-				"code": 58895,
+				"code": 58897,
 				"name": "cross",
 				"ligatures": ""
 			},
 			"setIdx": 0,
-			"setId": 101,
+			"setId": 122,
 			"iconIdx": 15
 		},
 		{
@@ -524,22 +552,19 @@
 					"arrow-right"
 				],
 				"defaultCode": 57493,
-				"grid": 24,
-				"colorPermutations": {
-					"12552552551": []
-				}
+				"grid": 24
 			},
 			"attrs": [],
 			"properties": {
 				"order": 33,
 				"id": 231,
 				"prevSize": 24,
-				"code": 58896,
+				"code": 58898,
 				"name": "arrow-right",
 				"ligatures": ""
 			},
 			"setIdx": 0,
-			"setId": 101,
+			"setId": 122,
 			"iconIdx": 16
 		},
 		{
@@ -553,22 +578,19 @@
 					"plus"
 				],
 				"defaultCode": 57620,
-				"grid": 24,
-				"colorPermutations": {
-					"12552552551": []
-				}
+				"grid": 24
 			},
 			"attrs": [],
 			"properties": {
 				"id": 114,
 				"order": 34,
 				"prevSize": 24,
-				"code": 58897,
+				"code": 58899,
 				"name": "plus",
 				"ligatures": ""
 			},
 			"setIdx": 0,
-			"setId": 101,
+			"setId": 122,
 			"iconIdx": 17
 		},
 		{
@@ -582,21 +604,18 @@
 					"cog"
 				],
 				"defaultCode": 57379,
-				"grid": 24,
-				"colorPermutations": {
-					"12552552551": []
-				}
+				"grid": 24
 			},
 			"attrs": [],
 			"properties": {
 				"id": 23,
 				"order": 35,
 				"prevSize": 24,
-				"code": 58898,
+				"code": 58900,
 				"name": "configuration"
 			},
 			"setIdx": 0,
-			"setId": 101,
+			"setId": 122,
 			"iconIdx": 18
 		},
 		{
@@ -614,22 +633,19 @@
 					"note"
 				],
 				"defaultCode": 57404,
-				"grid": 24,
-				"colorPermutations": {
-					"12552552551": []
-				}
+				"grid": 24
 			},
 			"attrs": [],
 			"properties": {
 				"id": 114,
 				"order": 42,
 				"prevSize": 24,
-				"code": 58899,
+				"code": 58901,
 				"ligatures": "music, song",
 				"name": "sound"
 			},
 			"setIdx": 0,
-			"setId": 101,
+			"setId": 122,
 			"iconIdx": 19
 		},
 		{
@@ -644,81 +660,20 @@
 					"popout",
 					"new window"
 				],
-				"grid": 20,
-				"colorPermutations": {
-					"12552552551": []
-				}
+				"grid": 20
 			},
 			"attrs": [],
 			"properties": {
 				"id": 35,
 				"order": 50,
 				"prevSize": 20,
-				"code": 58900,
+				"code": 58902,
 				"name": "perspective",
 				"ligatures": ""
 			},
 			"setIdx": 0,
-			"setId": 101,
+			"setId": 122,
 			"iconIdx": 20
-		},
-		{
-			"icon": {
-				"width": 768,
-				"paths": [
-					"M320 576h448v-128h-448v128zM320 832h448v-128h-448v128zM320 192v128h448v-128h-448zM79 448h78v-256h-36l-85 23v50l43-2v185zM189 654c0-36-12-78-96-78-33 0-64 6-83 16l1 66c21-10 42-15 67-15s32 11 32 28c0 26-30 58-110 112v50h192v-67l-91 2c49-30 87-66 87-113l1-1z"
-				],
-				"attrs": [],
-				"isMulticolor": false,
-				"tags": [
-					"list-ordered"
-				],
-				"defaultCode": 61538,
-				"grid": 16,
-				"colorPermutations": {
-					"12552552551": []
-				}
-			},
-			"attrs": [],
-			"properties": {
-				"id": 97,
-				"order": 24,
-				"prevSize": 32,
-				"code": 58901,
-				"name": "sequence"
-			},
-			"setIdx": 0,
-			"setId": 101,
-			"iconIdx": 21
-		},
-		{
-			"icon": {
-				"width": 896,
-				"paths": [
-					"M832 722s0-306 0-402-96-192-192-192c-64 0-64 0-64 0v-128l-192 192 192 192v-128s32 0 64 0 64 32 64 64 0 402 0 402c-38 22-64 63-64 110 0 71 57 128 128 128s128-57 128-128c0-47-26-88-64-110zM768 896c-35 0-64-29-64-64s29-64 64-64 64 29 64 64-29 64-64 64zM320 768s-32 0-64 0-64-32-64-64 0-402 0-402c38-22 64-63 64-110 0-71-57-128-128-128s-128 57-128 128c0 47 26 88 64 110 0 0 0 306 0 402s96 192 192 192c64 0 64 0 64 0v128l192-192-192-192v128zM128 256c-35 0-64-29-64-64s29-64 64-64 64 29 64 64-29 64-64 64z"
-				],
-				"attrs": [],
-				"isMulticolor": false,
-				"tags": [
-					"git-compare"
-				],
-				"defaultCode": 61612,
-				"grid": 16,
-				"colorPermutations": {
-					"12552552551": []
-				}
-			},
-			"attrs": [],
-			"properties": {
-				"id": 70,
-				"order": 25,
-				"prevSize": 32,
-				"code": 58902,
-				"name": "set-state"
-			},
-			"setIdx": 0,
-			"setId": 101,
-			"iconIdx": 22
 		},
 		{
 			"icon": {
@@ -732,10 +687,7 @@
 					"angle-double-up"
 				],
 				"defaultCode": 61698,
-				"grid": 14,
-				"colorPermutations": {
-					"12552552551": []
-				}
+				"grid": 14
 			},
 			"attrs": [],
 			"properties": {
@@ -747,7 +699,7 @@
 				"ligatures": ""
 			},
 			"setIdx": 0,
-			"setId": 101,
+			"setId": 122,
 			"iconIdx": 23
 		},
 		{
@@ -782,7 +734,7 @@
 				"ligatures": ""
 			},
 			"setIdx": 0,
-			"setId": 101,
+			"setId": 122,
 			"iconIdx": 24
 		},
 		{
@@ -817,7 +769,7 @@
 				"ligatures": ""
 			},
 			"setIdx": 0,
-			"setId": 101,
+			"setId": 122,
 			"iconIdx": 25
 		},
 		{
@@ -852,7 +804,7 @@
 				"ligatures": ""
 			},
 			"setIdx": 0,
-			"setId": 101,
+			"setId": 122,
 			"iconIdx": 26
 		},
 		{
@@ -887,7 +839,7 @@
 				"ligatures": ""
 			},
 			"setIdx": 0,
-			"setId": 101,
+			"setId": 122,
 			"iconIdx": 27
 		},
 		{
@@ -922,7 +874,7 @@
 				"ligatures": ""
 			},
 			"setIdx": 0,
-			"setId": 101,
+			"setId": 122,
 			"iconIdx": 28
 		},
 		{
@@ -957,7 +909,7 @@
 				"ligatures": ""
 			},
 			"setIdx": 0,
-			"setId": 101,
+			"setId": 122,
 			"iconIdx": 29
 		},
 		{
@@ -972,10 +924,7 @@
 					"static-effects-out"
 				],
 				"defaultCode": 61731,
-				"grid": 14,
-				"colorPermutations": {
-					"12552552551": []
-				}
+				"grid": 14
 			},
 			"attrs": [],
 			"properties": {
@@ -987,7 +936,7 @@
 				"ligatures": ""
 			},
 			"setIdx": 0,
-			"setId": 101,
+			"setId": 122,
 			"iconIdx": 30
 		},
 		{
@@ -1022,7 +971,7 @@
 				"ligatures": ""
 			},
 			"setIdx": 0,
-			"setId": 101,
+			"setId": 122,
 			"iconIdx": 31
 		},
 		{
@@ -1057,7 +1006,7 @@
 				"ligatures": ""
 			},
 			"setIdx": 0,
-			"setId": 101,
+			"setId": 122,
 			"iconIdx": 32
 		},
 		{
@@ -1072,10 +1021,7 @@
 					"star-o"
 				],
 				"defaultCode": 61446,
-				"grid": 14,
-				"colorPermutations": {
-					"12552552551": []
-				}
+				"grid": 14
 			},
 			"attrs": [],
 			"properties": {
@@ -1087,8 +1033,34 @@
 				"ligatures": ""
 			},
 			"setIdx": 0,
-			"setId": 101,
+			"setId": 122,
 			"iconIdx": 33
+		},
+		{
+			"icon": {
+				"width": 877.7142857142858,
+				"paths": [
+					"M512.571 782.286v95.429h-141.714l-90.857-144-13.714-24q-4.571-5.143-6.286-12h-1.714l-5.143 12q-5.714 11.429-14.286 25.143l-88.571 142.857h-147.429v-95.429h73.143l112.571-166.286-105.714-155.429h-78.286v-96h157.714l79.429 130.286q1.143 2.286 13.143 24 4.571 5.143 6.286 12h1.714q1.714-5.143 6.286-12l14.286-24 80-130.286h146.857v96h-71.429l-105.143 152.571 116.571 169.143h62.286zM876.571 394.286v117.714h-293.714l-1.714-15.429q-2.286-16-2.286-26.286 0-36.571 14.857-66.857t37.143-49.429 48-37.143 48-31.143 37.143-30.857 14.857-36.571q0-21.714-16.857-35.714t-40.286-14q-29.143 0-55.429 22.286-8 6.286-20.571 21.714l-60-52.571q14.857-21.143 36-37.714 47.429-37.143 107.429-37.143 62.857 0 101.714 34t38.857 90.571q0 32-14 58.857t-35.429 43.714-46.571 33.429-46.857 28.857-37.429 29.429-17.429 36h132.571v-45.714h72z"
+				],
+				"attrs": [],
+				"isMulticolor": false,
+				"tags": [
+					"superscript"
+				],
+				"defaultCode": 61739,
+				"grid": 14
+			},
+			"attrs": [],
+			"properties": {
+				"id": 267,
+				"order": 11,
+				"prevSize": 28,
+				"code": 58914,
+				"name": "superscript"
+			},
+			"setIdx": 0,
+			"setId": 122,
+			"iconIdx": 34
 		}
 	],
 	"height": 1024,

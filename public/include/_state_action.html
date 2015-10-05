@@ -59,7 +59,8 @@
                     <label class="col-as-5 no-padding-right control-label fs-x-smaller">Run After Complete</label>
 
                     <div class="col-as-7 no-padding-left">
-                        <input type="checkbox" class="form-control no-padding fs-x-smaller" ng-model="item.runAfterComplete"/>
+                        <input type="checkbox" class="form-control no-padding fs-x-smaller"
+                               ng-model="item.runAfterComplete"/>
                     </div>
                 </div>
             </div>
@@ -147,9 +148,9 @@
         </div>
     </div>
     <div class="accordianGroup" ng-if="item.actionType == 'Service'"
-         ng-click="once(this, $event, 'toggleSelect', $event)">
-        <div class="accordianTitle col-as-12 icon-state-transition-before icon-state-transition-keyboard-before">
-            <div class="deleteButton fs-x-tiny icon-state-transition-before icon-state-transition-cross-before"
+         ng-click="once(this, $event, 'toggleSelect', $event)" ng-init="onPickServiceFeature(item)">
+        <div class="accordianTitle col-as-12 icon-state-action-before icon-state-action-keyboard-before">
+            <div class="deleteButton fs-x-tiny icon-state-action-before icon-state-action-cross-before"
                  ng-click="once(this, $event, 'deleteAction', parentAction, item, $event)"></div>
             <span class="col-as-offset-1 col-as-4 no-padding">Service</span>
         </div>
@@ -159,29 +160,77 @@
                     <div class="input-group col-as-12 fs-x-smaller">
                         <label class="col-as-3 no-padding control-label">Feature</label>
 
-                        <select class="col-as-8 no-padding form-control" ng-model="item.feature"
-                                ng-change="onPickServiceFeature(item)">
-                            <option value="{{featureItem.feature}}"
-                                    ng-attr-selected="{{item.feature === featureItem.name}}"
-                                    ng-repeat="featureItem in registry" title="{{featureItem.description}}">
-                                {{featureItem.feature}}
-                            </option>
-                        </select>
+                        <div class="col-as-9 no-padding">
+                            <select class="form-control" ng-model="item.feature"
+                                    ng-change="onPickServiceFeature(item)">
+                                <option value="{{featureItem.feature}}"
+                                        ng-attr-selected="{{item.feature === featureItem.name}}"
+                                        ng-repeat="featureItem in registry" title="{{featureItem.description}}">
+                                    {{featureItem.feature}}
+                                </option>
+                            </select>
+                        </div>
                     </div>
                 </div>
                 <div class="servicePane">
                     <div class="input-group col-as-12 fs-x-smaller">
                         <label class="col-as-3 no-padding control-label">Invoke</label>
 
-                        <select class="col-as-8 no-padding form-control" ng-model="item.serviceName"
-                                ng-change="onPickService(item)">
-                            <option value="{{service.name}}"
-                                    ng-attr-selected="{{item.serviceName === service.name}}"
-                                    ng-repeat="service in pickedServiceFeature.serviceList"
-                                    title="{{service.description}}">
-                                {{service.name}}
-                            </option>
-                        </select>
+                        <div class="col-as-9 no-padding">
+                            <select class="form-control" ng-model="item.serviceName"
+                                    ng-change="onPickService(item)">
+                                <option value="{{service.name}}"
+                                        ng-attr-selected="{{item.serviceName === service.name}}"
+                                        ng-repeat="service in pickedServiceFeature.serviceList"
+                                        title="{{service.description}}">
+                                    {{service.name}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="servicePane">
+                    <div class="input-group col-as-12 fs-x-smaller">
+                        <label class="col-as-3 no-padding control-label">Input</label>
+
+                        <div class="col-as-9 no-padding input-group">
+                            <select class="form-control" ng-model="pickedInputParameter">
+                                <option value="{{parameter}}"
+                                        ng-repeat="parameter in item.parameters">
+                                    {{parameter}}
+                                </option>
+                            </select>
+                            <span class="input-group-addon fs-x-smaller-before icon-state-action-before icon-state-action-plus-before"
+                                  ng-click="once(this, $event, 'createInputParameter', item, pickedInputParameter, $event)"></span>
+                        </div>
+
+                        <div class="serviceInputPanel col-as-12 no-padding">
+                            <div class="inputParameter fs-x-smaller icon-state-action-before icon-state-action-superscript-before"
+                                 ng-repeat="i in item.input" ng-click="$event.stopPropagation()">
+
+                                <span class="col-as-3 no-padding" title="{{i.name}}">{{i.name}}</span>
+
+                                <div class="col-as-6 no-padding">
+                                    <input type="text"
+                                           class="form-control no-padding fs-x-smaller"
+                                           ng-model="i.expression"/>
+                                </div>
+
+                                <div class="deleteButton fs-x-tiny icon-state-action-before icon-state-action-cross-before"
+                                     ng-click="once(this, $event, 'deleteInputParameter', item, i, $event)"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="servicePane">
+                    <div class="input-group col-as-12 fs-x-smaller">
+                        <label class="col-as-3 no-padding control-label">Timeout</label>
+
+                        <div class="col-as-9 no-padding">
+                            <input type="number" min="0"
+                                   class="form-control no-padding fs-x-smaller"
+                                   ng-model="item.timeout"/>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -217,7 +266,8 @@
                         <label class="col-as-5 no-padding control-label">Run Through</label>
 
                         <div class="no-padding col-as-7" ng-click="$event.stopPropagation()">
-                            <input type="checkbox" class="form-control no-padding fs-x-smaller" ng-model="item.runThrough"/>
+                            <input type="checkbox" class="form-control no-padding fs-x-smaller"
+                                   ng-model="item.runThrough"/>
                         </div>
                     </div>
                 </div>
@@ -279,6 +329,27 @@
                                     {{resourceName}}
                                 </option>
                             </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="accordianGroup" ng-if="item.actionType == 'Include'"
+         ng-click="once(this, $event, 'toggleSelect', $event)">
+        <div class="accordianTitle col-as-12 icon-state-action-before icon-state-action-cloud-download-before">
+            <span class="col-as-offset-1 col-as-4 no-padding">Include</span>
+        </div>
+        <div class="accordianBody col-as-12 no-padding">
+            <div class="includeBody" ng-click="$event.stopPropagation()">
+                <div class="includePane">
+                    <div class="input-group col-as-12 fs-x-smaller">
+                        <label class="col-as-3 no-padding control-label">url</label>
+
+                        <div class="no-padding col-as-9" ng-click="$event.stopPropagation()">
+                            <input type="text" readonly
+                                   class="form-control no-padding fs-x-smaller"
+                                   ng-model="item.url"/>
                         </div>
                     </div>
                 </div>

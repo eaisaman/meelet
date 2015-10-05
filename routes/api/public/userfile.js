@@ -6,7 +6,7 @@ var async = require('async');
 var _ = require('underscore');
 var bson = require('bson');
 var qr = require('qr-image');
-var FFmpeg = require('fluent-ffmpeg')
+var FFmpeg = require('fluent-ffmpeg');
 _.string = require('underscore.string');
 _.mixin(_.string.exports());
 var zipCtor = function () {
@@ -108,7 +108,7 @@ UserFileController.prototype.postConfiguration = function (projectId, artifactId
     } else {
         fail("Empty project id");
     }
-}
+};
 
 /**
  * @description
@@ -280,7 +280,7 @@ UserFileController.prototype.postSketch = function (projectId, sketchWorks, stag
                                     var orphanFileList = [];
                                     _.each(results, function (result) {
                                         result && orphanFileList.push(result);
-                                    })
+                                    });
                                     orphanFileList = Array.prototype.concat.apply(Array.prototype, [orphanFileList, orphanLinkList]);
 
                                     wCallback(null, orphanFileList);
@@ -324,7 +324,7 @@ UserFileController.prototype.postSketch = function (projectId, sketchWorks, stag
     } else {
         fail("Empty project id");
     }
-}
+};
 
 UserFileController.prototype.postFlow = function (projectId, flowWorks, request, success, fail) {
     var self = this;
@@ -366,7 +366,7 @@ UserFileController.prototype.postFlow = function (projectId, flowWorks, request,
     } else {
         fail("Empty project id");
     }
-}
+};
 
 UserFileController.prototype.postConfigurableArtifact = function (projectId, widgetId, libraryName, artifactId, type, version, success, fail) {
     if (projectId) {
@@ -380,7 +380,7 @@ UserFileController.prototype.postConfigurableArtifact = function (projectId, wid
     } else {
         fail("Empty project id");
     }
-}
+};
 
 UserFileController.prototype.deleteConfigurableArtifact = function (projectId, widgetId, artifactId, success, fail) {
     if (projectId) {
@@ -394,7 +394,7 @@ UserFileController.prototype.deleteConfigurableArtifact = function (projectId, w
     } else {
         fail("Empty project id");
     }
-}
+};
 
 UserFileController.prototype.putConfigurableArtifact = function (projectId, widgetId, artifactId, configuration, success, fail) {
     if (projectId) {
@@ -409,7 +409,7 @@ UserFileController.prototype.putConfigurableArtifact = function (projectId, widg
     } else {
         fail("Empty project id");
     }
-}
+};
 
 UserFileController.prototype.getSketch = function (projectId, success, fail) {
     var self = this;
@@ -442,7 +442,7 @@ UserFileController.prototype.getSketch = function (projectId, success, fail) {
     } else {
         fail("Empty project id");
     }
-}
+};
 
 UserFileController.prototype.getFlow = function (projectId, success, fail) {
     var self = this;
@@ -475,7 +475,7 @@ UserFileController.prototype.getFlow = function (projectId, success, fail) {
     } else {
         fail("Empty project id");
     }
-}
+};
 
 UserFileController.prototype.getExternal = function (projectId, success, fail) {
     var self = this;
@@ -483,32 +483,48 @@ UserFileController.prototype.getExternal = function (projectId, success, fail) {
     if (projectId) {
         var projectPath = path.join(self.config.userFile.sketchFolder, projectId);
 
-        fs.mkdir(projectPath, 0777, function (fsError) {
-            if (!fsError || fsError.code === "EEXIST") {
-                var filePath = path.join(projectPath, "external.json"),
-                    rs = fs.createReadStream(filePath),
-                    ms = require('memorystream').createWriteStream();
-
-                rs.on('end', function () {
-                    var ret = ms.toString();
-                    ms.destroy();
-                    success(ret);
+        async.waterfall([
+            function (next) {
+                fs.mkdir(projectPath, 0777, function (fsError) {
+                    if (!fsError || fsError.code === "EEXIST") {
+                        next(null);
+                    } else {
+                        next(fsError);
+                    }
                 });
+            },
+            function (next) {
+                var filePath = path.join(projectPath, "external.json");
 
-                rs.on('error', function (err) {
-                    ms.destroy();
-                    fail(err);
-                });
+                if (fs.existsSync(filePath)) {
+                    var rs = fs.createReadStream(filePath),
+                        ms = require('memorystream').createWriteStream();
 
-                rs.pipe(ms);
-            } else {
-                fail(fsError);
+                    rs.on('end', function () {
+                        var ret = ms.toString();
+                        ms.destroy();
+                        next(null, ret);
+                    });
+
+                    rs.on('error', function (err) {
+                        ms.destroy();
+                        next(err);
+                    });
+
+                    rs.pipe(ms);
+                } else {
+                    fs.writeFile(filePath, "[]", function (err) {
+                        next(err, "[]");
+                    });
+                }
             }
+        ], function (err, result) {
+            err && fail(err) || success(result);
         });
     } else {
         fail("Empty project id");
     }
-}
+};
 
 UserFileController.prototype.getProjectImageChunk = function (request, projectId, flowChunkNumber, flowFilename, success, fail) {
     var self = this;
@@ -547,7 +563,7 @@ UserFileController.prototype.getProjectImageChunk = function (request, projectId
     } else {
         fail(new Error('Empty project id'), {statusCode: 500});
     }
-}
+};
 
 UserFileController.prototype.postProjectImageChunk = function (request, projectId, flowFilename, flowChunkNumber, flowTotalChunks, flowCurrentChunkSize, flowTotalSize, success, fail) {
     var self = this;
@@ -714,7 +730,7 @@ UserFileController.prototype.postProjectImageChunk = function (request, projectI
     } else {
         fail("Empty project id", {statusCode: 500});
     }
-}
+};
 
 UserFileController.prototype.deleteProjectImage = function (projectId, fileName, success, fail) {
     var self = this;
@@ -732,7 +748,7 @@ UserFileController.prototype.deleteProjectImage = function (projectId, fileName,
     } else {
         fail("Empty project id or file name", {statusCode: 500});
     }
-}
+};
 
 UserFileController.prototype.getProjectResource = function (projectId, success, fail) {
     var self = this;
@@ -815,7 +831,7 @@ UserFileController.prototype.getProjectResource = function (projectId, success, 
     } else {
         fail("Empty project id", {statusCode: 500});
     }
-}
+};
 
 UserFileController.prototype.postProjectResourceChunk = function (request, projectId, resourceType, flowFilename, flowChunkNumber, flowTotalChunks, flowCurrentChunkSize, flowTotalSize, success, fail) {
     var self = this;
@@ -1177,7 +1193,7 @@ UserFileController.prototype.postProjectResourceChunk = function (request, proje
     } else {
         fail("Empty project id or resource type", {statusCode: 500});
     }
-}
+};
 
 UserFileController.prototype.deleteProjectResource = function (projectId, resourceType, fileName, success, fail) {
     var self = this;
@@ -1314,7 +1330,7 @@ UserFileController.prototype.deleteProjectResource = function (projectId, resour
     } else {
         fail("Empty project id or resource type or file name", {statusCode: 500});
     }
-}
+};
 
 UserFileController.prototype.getRepoLibrary = function (libraryFilter, success, fail) {
     var self = this;
@@ -1338,7 +1354,7 @@ UserFileController.prototype.getRepoLibrary = function (libraryFilter, success, 
                 fail(err);
             }
         });
-}
+};
 
 UserFileController.prototype.getRepoArtifact = function (artifactFilter, success, fail) {
     var self = this;
@@ -1365,7 +1381,7 @@ UserFileController.prototype.getRepoArtifact = function (artifactFilter, success
                 fail(err);
             }
         });
-}
+};
 
 UserFileController.prototype.getProject = function (projectFilter, success, fail) {
     var self = this;
@@ -1401,7 +1417,7 @@ UserFileController.prototype.getProject = function (projectFilter, success, fail
                 fail(err);
             }
         });
-}
+};
 
 UserFileController.prototype.postProject = function (project, sketchWorks, success, fail) {
     var self = this;
@@ -1489,7 +1505,7 @@ UserFileController.prototype.postProject = function (project, sketchWorks, succe
                 fail(err);
             }
         });
-}
+};
 
 UserFileController.prototype.putProject = function (projectFilter, project, success, fail) {
     var self = this;
@@ -1527,7 +1543,7 @@ UserFileController.prototype.putProject = function (projectFilter, project, succ
             fail(err);
         }
     });
-}
+};
 
 UserFileController.prototype.deleteProject = function (projectFilter, success, fail) {
     var self = this;
@@ -1653,7 +1669,7 @@ UserFileController.prototype.deleteProject = function (projectFilter, success, f
             }
         }
     );
-}
+};
 
 UserFileController.prototype.getProjectArtifactXref = function (xrefFilter, success, fail) {
     var self = this;
@@ -1680,7 +1696,7 @@ UserFileController.prototype.getProjectArtifactXref = function (xrefFilter, succ
                 fail(err);
             }
         });
-}
+};
 
 UserFileController.prototype.postProjectArtifactXref = function (projectId, libraryId, artifactList, success, fail) {
     var self = this,
@@ -1764,7 +1780,7 @@ UserFileController.prototype.postProjectArtifactXref = function (projectId, libr
             fail(err);
         }
     });
-}
+};
 
 UserFileController.prototype.deleteProjectArtifactXref = function (xrefFilter, success, fail) {
     var self = this;
@@ -1786,7 +1802,7 @@ UserFileController.prototype.deleteProjectArtifactXref = function (xrefFilter, s
                 fail(err);
             }
         });
-}
+};
 
 UserFileController.prototype.postConvertToHtml = function (userId, projectId, success, fail) {
     var self = this;
@@ -1851,7 +1867,7 @@ UserFileController.prototype.postConvertToHtml = function (userId, projectId, su
     } else {
         fail("Empty project id");
     }
-}
+};
 
 UserFileController.prototype.getProjectFile = function (projectId, request, success, fail) {
     var self = this;
@@ -1893,7 +1909,7 @@ UserFileController.prototype.getProjectFile = function (projectId, request, succ
                                     pCallback(null, stat.mtime.getTime());
                                 }
                             });
-                        }
+                        };
 
                         async.parallel(pObj, function (err, results) {
                             if (err) next(err);
@@ -1971,7 +1987,7 @@ UserFileController.prototype.getProjectFile = function (projectId, request, succ
     } else {
         fail("Empty project id");
     }
-}
+};
 
 UserFileController.prototype.getModuleFile = function (request, success, fail) {
     var self = this,
@@ -2070,6 +2086,6 @@ UserFileController.prototype.getModuleFile = function (request, success, fail) {
             }
         }
     );
-}
+};
 
 module.exports = UserFileController;

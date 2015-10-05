@@ -244,7 +244,7 @@ var State = Class({
 
             SequenceTransitionAction.prototype.__proto__.fromObject.apply(ret, [obj, context]);
 
-            var classes = ["EffectTransitionAction", "StateTransitionAction", "ConfigurationTransitionAction", "MovementTransitionAction", "SoundTransitionAction", "IncludeTransitionAction"];
+            var classes = ["EffectTransitionAction", "StateTransitionAction", "ConfigurationTransitionAction", "MovementTransitionAction", "SoundTransitionAction", "ServiceInvokeTransitionAction", "IncludeTransitionAction"];
             obj.childActions && obj.childActions.forEach(function (action) {
                 var className = action.CLASS_NAME,
                     actionObj;
@@ -454,6 +454,45 @@ var State = Class({
             if (obj.resourceName != null) ret.resourceName = obj.resourceName;
 
             SoundTransitionAction.prototype.__proto__.fromObject.apply(ret, [obj, context]);
+
+            return ret;
+        }
+    }), ServiceInvokeTransitionAction = Class(BaseTransitionAction, {
+        CLASS_NAME: "ServiceInvokeTransitionAction",
+        MEMBERS: {
+            actionType: "Service",
+            feature: "",
+            serviceName: "",
+            communicationType: "",
+            parameters: [],
+            input: [],
+            timeout: 0
+        },
+        initialize: function (widgetObj, id) {
+            ServiceInvokeTransitionAction.prototype.__proto__.initialize.apply(this, [widgetObj, id]);
+            var MEMBERS = arguments.callee.prototype.MEMBERS;
+
+            for (var member in MEMBERS) {
+                this[member] = _.clone(MEMBERS[member]);
+            }
+        },
+        toJSON: function () {
+            var jsonObj = ServiceInvokeTransitionAction.prototype.__proto__.toJSON.apply(this);
+
+            _.extend(jsonObj, _.pick(this, ["feature", "serviceName", "communicationType", "input", "parameters", "timeout", "CLASS_NAME"]));
+
+            return jsonObj;
+        },
+        fromObject: function (obj, context) {
+            var ret = new ServiceInvokeTransitionAction(null, obj.id);
+            if (obj.feature != null) ret.feature = obj.feature;
+            if (obj.serviceName != null) ret.serviceName = obj.serviceName;
+            if (obj.communicationType != null) ret.communicationType = obj.communicationType;
+            if (obj.parameters != null) ret.parameters = obj.parameters;
+            if (obj.input != null) ret.input = obj.input;
+            if (obj.timeout != null) ret.timeout = obj.timeout;
+
+            ServiceInvokeTransitionAction.prototype.__proto__.fromObject.apply(ret, [obj, context]);
 
             return ret;
         }

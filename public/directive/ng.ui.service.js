@@ -1518,7 +1518,8 @@ define(
 
                         if (routes && routes.length && routeIndex < routes.length) {
                             var stepCount = 0;
-                            for(var stop = routes[routeIndex];stop;stop = stop.nextStop, stepCount++) {}
+                            for (var stop = routes[routeIndex]; stop; stop = stop.nextStop, stepCount++) {
+                            }
 
                             return stepCount;
                         }
@@ -1576,7 +1577,7 @@ define(
                         serviceName: "",
                         communicationType: "",
                         parameters: [],
-                        input: {},
+                        input: [],
                         timeout: 0
                     },
                     initialize: function (widgetObj, id) {
@@ -1589,9 +1590,8 @@ define(
                     },
                     toJSON: function () {
                         var jsonObj = ServiceInvokeTransitionAction.prototype.__proto__.toJSON.apply(this);
-                        _.extend(jsonObj, _.pick(this, ["feature", "serviceName", "communicationType", "input", "timeout", "CLASS_NAME"]),
-                            {parameters: $inject.utilService.arrayOmit(this.parameters, "$$hashKey")}
-                        );
+                        _.extend(jsonObj, _.pick(this, ["feature", "serviceName", "communicationType", "parameters", "timeout", "CLASS_NAME"]),
+                            {input: $inject.utilService.arrayOmit(this.input, "$$hashKey")});
 
                         return jsonObj;
                     },
