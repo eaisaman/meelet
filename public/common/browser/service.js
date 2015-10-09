@@ -1602,7 +1602,7 @@ define(
             appService.prototype.stopPlaySound = function () {
                 this.soundDelegate && this.soundDelegate.stop();
 
-                return self.utilService.getResolveDefer();
+                return this.utilService.getResolveDefer();
             };
 
             appService.prototype.toggleSound = function (url, playLoop) {
@@ -1617,8 +1617,16 @@ define(
                 var self = this,
                     arr = [];
 
+                //Accept widget name
+                if (!/Widget_\d+$/.test(widgetId)) {
+                    var element = document.getElementsByName(widgetId)[0];
+                    widgetId = element.id;
+                }
+
                 arr.push(function () {
-                    return self.playSound(url, playLoop);
+                    self.playSound(url, playLoop);
+
+                    return self.utilService.getResolveDefer();
                 });
 
                 if (widgetId) {
@@ -1626,7 +1634,7 @@ define(
                         function () {
                             //If sound file is local, it may take a while to load the file and change state to 'playing', or unload it
                             //and change to 'stopped'.
-                            return $timeout(function () {
+                            return self.$timeout(function () {
                                 return self.isPlayingSound().then(function (isPlaying) {
                                     if (isPlaying) {
                                         self.setState(widgetId, "*");
@@ -1646,6 +1654,12 @@ define(
                 var self = this,
                     arr = [];
 
+                //Accept widget name
+                if (!/Widget_\d+$/.test(widgetId)) {
+                    var element = document.getElementsByName(widgetId)[0];
+                    widgetId = element.id;
+                }
+
                 arr.push(function () {
                     return self.stopPlaySound();
                 });
@@ -1655,7 +1669,7 @@ define(
                         function () {
                             //If sound file is local, it may take a while to load the file and change state to 'playing', or unload it
                             //and change to 'stopped'.
-                            return $timeout(function () {
+                            return self.$timeout(function () {
                                 return self.isPlayingSound().then(function (isPlaying) {
                                     if (isPlaying) {
                                         self.setState(widgetId, "*");
@@ -1675,8 +1689,16 @@ define(
                 var self = this,
                     arr = [];
 
+                //Accept widget name
+                if (!/Widget_\d+$/.test(widgetId)) {
+                    var element = document.getElementsByName(widgetId)[0];
+                    widgetId = element.id;
+                }
+
                 arr.push(function () {
-                    return self.toggleSound(url, playLoop);
+                    self.toggleSound(url, playLoop);
+
+                    return self.utilService.getResolveDefer();
                 });
 
                 if (widgetId) {
@@ -1684,7 +1706,7 @@ define(
                         function () {
                             //If sound file is local, it may take a while to load the file and change state to 'playing', or unload it
                             //and change to 'stopped'.
-                            return $timeout(function () {
+                            return self.$timeout(function () {
                                 return self.isPlayingSound().then(function (isPlaying) {
                                     if (isPlaying) {
                                         self.setState(widgetId, "*");
@@ -1713,6 +1735,9 @@ define(
                     appService.prototype.$controllerProvider = $controllerProvider;
                     appService.prototype.$compileProvider = $compileProvider;
                     appService.prototype.$injector = $injector;
+
+                    var instance = $injector.get('appServiceProvider').$get();
+                    instance.registerService();
                 }]);
         }
     }

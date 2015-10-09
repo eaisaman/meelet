@@ -33,6 +33,7 @@
   height: 100%;
   overflow: hidden;
   color: #000;
+  background: #fff;
   visibility: hidden;
   -moz-backface-visibility: hidden;
   -webkit-backface-visibility: hidden;

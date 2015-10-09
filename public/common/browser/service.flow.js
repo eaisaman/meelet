@@ -32,6 +32,9 @@ define(
             appModule.
                 config(["$provide", function ($provide) {
                     $provide.service('flowService', FlowService);
+
+                    var instance = $injector.get('flowServiceProvider').$get();
+                    instance.registerService();
                 }]);
         };
     }

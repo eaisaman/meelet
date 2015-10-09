@@ -1729,7 +1729,13 @@ define(
                             action.scopeDestroyWatcher && action.scopeDestroyWatcher();
 
                             var promise = self.chain(arr,
-                                chainId);
+                                chainId,
+                                null,
+                                action.stopOnEach,
+                                function () {
+                                    mark.markComplete();
+                                }
+                            );
 
                             if (widgetScope) {
                                 action.scopeDestroyWatcher = widgetScope.$on('$destroy', function () {
