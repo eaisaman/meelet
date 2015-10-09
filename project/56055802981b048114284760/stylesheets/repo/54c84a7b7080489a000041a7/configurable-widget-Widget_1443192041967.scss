@@ -1,8 +1,0 @@
-@import "sass/creative-link";
-
-@import "configuration-Widget_1443192041967";
-$configuration-Widget_1443192041967: map-merge($default-creative-link-value-map, $configuration-Widget_1443192041967);
-#Widget_1443192041967
-{
-@include creative-link($configuration-Widget_1443192041967...);
-}
