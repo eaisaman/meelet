@@ -1,0 +1,112 @@
+* {
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+*:not(input), *:not(textarea) {
+  -webkit-user-select: none;
+}
+
+#rootBody #bg {
+  position: relative;
+  float: left;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+#rootBody #bg #main {
+  position: relative;
+  float: left;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  -moz-perspective: 1200px;
+  -webkit-perspective: 1200px;
+  perspective: 1200px;
+}
+#rootBody #bg #main .pageHolder {
+  z-index: 0;
+  position: absolute;
+  top: 0px !important;
+  left: 0px !important;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  color: #000;
+  visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -moz-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  -moz-transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+#rootBody #bg #main .pageHolder.currentPage {
+  visibility: visible;
+}
+#rootBody #bg #main .pageHolder .sketchWidget {
+  position: absolute;
+}
+#rootBody #bg #main .pageHolder .sketchWidget.widgetHover {
+  -moz-box-shadow: 3px 3px 5px 6px rgba(0, 0, 0, 0.4);
+  -webkit-box-shadow: 3px 3px 5px 6px rgba(0, 0, 0, 0.4);
+  box-shadow: 3px 3px 5px 6px rgba(0, 0, 0, 0.4);
+}
+#rootBody #bg #main .pageHolder .sketchWidget.widgetIncludeAnchor .widgetContainer {
+  position: absolute;
+  width: 100% !important;
+  height: 100% !important;
+  background: transparent !important;
+}
+#rootBody #bg #main .pageHolder .sketchWidget.widgetIncludeAnchor .widgetContainer > div {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+#rootBody #bg #main .pageHolder .sketchWidget .widgetText {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: transparent;
+  color: inherit;
+}
+#rootBody #bg #pageNavigationControl {
+  z-index: 1;
+  position: absolute;
+  right: 0px;
+  bottom: 0.25em;
+  width: 6.5em;
+  height: 2em;
+  line-height: 2;
+  overflow: hidden;
+  background: transparent;
+}
+#rootBody #bg #pageNavigationControl > div {
+  position: relative;
+  float: left;
+  height: 100%;
+  width: 30%;
+  color: #ecf0f1;
+}
+#rootBody #bg #pageNavigationControl > div:before {
+  position: absolute;
+  width: 2em;
+  height: 2em;
+  line-height: 2;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 100%;
+  font-weight: 600;
+}
+#rootBody #bg #pageNavigationControl > div:active:before {
+  color: rgba(0, 0, 0, 0.3);
+  background: #ecf0f1;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+}

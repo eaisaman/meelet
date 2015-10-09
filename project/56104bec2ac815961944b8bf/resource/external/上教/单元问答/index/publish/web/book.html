@@ -1,0 +1,33 @@
+<style>
+.edgeLoad-EDGE-14201750 { visibility:hidden; }
+</style>
+<script>
+EDGE_14201750_BASE_URL = "resource/external/上教/单元问答/index/publish/web/";
+window.globalEdges = window.globalEdges || {};
+window.globalEdges['EDGE-14201750'] = window.globalEdges['EDGE-14201750'] || {};
+window.globalEdges['EDGE-14201750'].load = function() {
+    var elements = document.head.getElementsByTagName("script");
+    for(var i = 0;i < elements.length;i++) {
+        if (elements[i].getAttribute("src").indexOf(EDGE_14201750_BASE_URL) >= 0) {
+            elements[i].remove();
+        }
+    }
+    var scriptElement = document.createElement("script");
+    scriptElement.setAttribute("src", EDGE_14201750_BASE_URL + 'index_edge.js');
+    document.head.appendChild(scriptElement);
+
+   AdobeEdge.loadComposition(EDGE_14201750_BASE_URL + 'index', 'EDGE-14201750', {
+    scaleToFit: "none",
+    centerStage: "none",
+    minW: "0px",
+    maxW: "undefined",
+    width: "1024px",
+    height: "768px"
+}, {"dom":{}}, {"dom":{}});
+}
+window.globalEdges['EDGE-14201750'].unload = function() {
+    delete AdobeEdge.compositions['EDGE-14201750'];
+}
+</script>
+<div id="Stage" class="EDGE-14201750">
+</div>

@@ -1,0 +1,33 @@
+<style>
+.edgeLoad-EDGE-16665010 { visibility:hidden; }
+</style>
+<script>
+EDGE_16665010_BASE_URL = "resource/external/上教/首页/index/publish/web/";
+window.globalEdges = window.globalEdges || {};
+window.globalEdges['EDGE-16665010'] = window.globalEdges['EDGE-16665010'] || {};
+window.globalEdges['EDGE-16665010'].load = function load() {
+	var elements = document.head.getElementsByTagName("script");
+	for(var i = 0;i < elements.length;i++) {
+		if (elements[i].getAttribute("src").indexOf(EDGE_16665010_BASE_URL) >= 0) {
+			elements[i].remove();
+		}
+	}
+	var scriptElement = document.createElement("script");
+	scriptElement.setAttribute("src", EDGE_16665010_BASE_URL + 'index_edge.js');
+	document.head.appendChild(scriptElement);
+
+   AdobeEdge.loadComposition(EDGE_16665010_BASE_URL + 'index', 'EDGE-16665010', {
+    scaleToFit: "none",
+    centerStage: "both",
+    minW: "0px",
+    maxW: "undefined",
+    width: "1024px",
+    height: "768px"
+}, {"dom":{}}, {"style":{"${symbolSelector}":{"isStage":"true","rect":["undefined","undefined","1024px","768px"],"fill":["rgba(255,255,255,1)"]}},"dom":{}});
+}
+window.globalEdges['EDGE-16665010'].unload = function() {
+	delete AdobeEdge.compositions['EDGE-16665010'];
+}
+</script>
+<div id="Stage" class="EDGE-16665010">
+</div>

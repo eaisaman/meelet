@@ -1,0 +1,1676 @@
+{
+  "pageTransition": {
+    "artifactSpec": {
+      "type": "effect",
+      "directiveName": "ui-effect-page-transition",
+      "libraryName": "pageTransition",
+      "artifactName": "Page Transition",
+      "artifactId": "55759ea5708048bb000041a7",
+      "version": "1.0.0"
+    },
+    "effect": {
+      "name": "foldLeftMoveFromRight",
+      "type": "Animation",
+      "options": {}
+    }
+  },
+  "pages": [
+    {
+      "id": "Widget_1443910040698",
+      "name": "NO NAME",
+      "anchor": "",
+      "attr": {
+        "ui-sketch-widget": "",
+        "ng-class": "{'isPlaying': $root.sketchWidgetSetting.isPlaying}"
+      },
+      "styleManager": {
+        "CLASS_NAME": "StyleManager",
+        "omniClasses": [
+          "pageHolder"
+        ],
+        "stateMaps": {
+          "?": {
+            "*": {
+              "style": {},
+              "beforeStyle": {},
+              "afterStyle": {},
+              "styleSource": []
+            }
+          }
+        }
+      },
+      "state": "State_1443910040699",
+      "stateContext": "",
+      "childWidgets": [
+        {
+          "id": "Widget_1443941967700",
+          "name": "Prelude Side Bar",
+          "attr": {
+            "ui-sketch-widget": "",
+            "ng-class": "{'isPlaying': $root.sketchWidgetSetting.isPlaying}"
+          },
+          "styleManager": {
+            "CLASS_NAME": "StyleManager",
+            "omniClasses": [
+              "sketchWidget"
+            ],
+            "stateMaps": {
+              "State_1443910040699": {
+                "*": {
+                  "style": {
+                    "width": "1024px",
+                    "height": "768px",
+                    "linearGradientColor": {
+                      "colorStopList": [
+                        {
+                          "color": {
+                            "color": "#ffffff",
+                            "alpha": 1
+                          },
+                          "angle": 0
+                        }
+                      ]
+                    },
+                    "left": "0px",
+                    "top": "0px"
+                  },
+                  "beforeStyle": {},
+                  "afterStyle": {},
+                  "styleSource": []
+                },
+                "select": {
+                  "style": {},
+                  "beforeStyle": {},
+                  "afterStyle": {},
+                  "styleSource": []
+                }
+              }
+            }
+          },
+          "state": "State_1443941967707",
+          "stateContext": "State_1443910040699",
+          "childWidgets": [
+            {
+              "id": "Widget_1443941970185",
+              "name": "Side Bar Container Widget",
+              "attr": {
+                "ui-sketch-widget": "",
+                "ng-class": "{'isPlaying': $root.sketchWidgetSetting.isPlaying}"
+              },
+              "styleManager": {
+                "CLASS_NAME": "StyleManager",
+                "omniClasses": [
+                  "sketchWidget",
+                  "widgetContainer"
+                ],
+                "stateMaps": {
+                  "State_1443941967701": {
+                    "*": {
+                      "style": {
+                        "width": "1024px",
+                        "height": "768px",
+                        "linearGradientColor": {
+                          "colorStopList": [
+                            {
+                              "color": {
+                                "color": "#ffffff",
+                                "alpha": 1
+                              },
+                              "angle": 0
+                            }
+                          ]
+                        },
+                        "left": "0px",
+                        "top": "0px"
+                      },
+                      "beforeStyle": {},
+                      "afterStyle": {},
+                      "styleSource": []
+                    }
+                  },
+                  "State_1443941967707": {
+                    "*": {
+                      "style": {},
+                      "beforeStyle": {},
+                      "afterStyle": {},
+                      "styleSource": []
+                    }
+                  }
+                }
+              },
+              "state": "State_1443942155097",
+              "stateContext": "State_1443941967707",
+              "childWidgets": [
+                {
+                  "id": "Widget_1443941986903",
+                  "name": "Prelude Main",
+                  "anchor": "80694DA6-8AA6-47D4-A9B0-368900098A97",
+                  "attr": {
+                    "ui-sketch-widget": "",
+                    "ng-class": "{'isPlaying': $root.sketchWidgetSetting.isPlaying}"
+                  },
+                  "styleManager": {
+                    "CLASS_NAME": "StyleManager",
+                    "omniClasses": [
+                      "sketchWidget"
+                    ],
+                    "stateMaps": {
+                      "State_1443941970185": {
+                        "*": {
+                          "style": {
+                            "width": "1024px",
+                            "height": "768px",
+                            "left": "0px",
+                            "top": "0px",
+                            "linearGradientColor": {
+                              "angle": 0,
+                              "colorStopList": [
+                                {
+                                  "percent": 0,
+                                  "color": {
+                                    "color": "#2ecc71",
+                                    "alpha": 1,
+                                    "alphaColor": "#2ecc71"
+                                  },
+                                  "minPercent": 0,
+                                  "maxPercent": 100,
+                                  "backgroundColor": "#91e6b5",
+                                  "$$hashKey": "object:9013"
+                                }
+                              ]
+                            }
+                          },
+                          "beforeStyle": {},
+                          "afterStyle": {},
+                          "styleSource": [
+                            {
+                              "source": "uiGradientEditor",
+                              "style": {
+                                "linearGradientColor": {
+                                  "angle": 0,
+                                  "colorStopList": [
+                                    {
+                                      "percent": 0,
+                                      "color": {
+                                        "color": "#2ecc71",
+                                        "alpha": 1,
+                                        "alphaColor": "#2ecc71"
+                                      },
+                                      "minPercent": 0,
+                                      "maxPercent": 100,
+                                      "backgroundColor": "#91e6b5",
+                                      "$$hashKey": "object:9013"
+                                    }
+                                  ]
+                                }
+                              },
+                              "beforeStyle": {},
+                              "afterStyle": {},
+                              "classList": []
+                            }
+                          ]
+                        }
+                      },
+                      "State_1443942155097": {
+                        "*": {
+                          "style": {},
+                          "beforeStyle": {},
+                          "afterStyle": {},
+                          "styleSource": []
+                        }
+                      }
+                    }
+                  },
+                  "state": "State_1443942155097",
+                  "stateContext": "State_1443942155097",
+                  "childWidgets": [
+                    {
+                      "id": "Widget_1443944870957",
+                      "name": "首页",
+                      "attr": {
+                        "ui-sketch-widget": "",
+                        "ng-class": "{'isPlaying': $root.sketchWidgetSetting.isPlaying}"
+                      },
+                      "styleManager": {
+                        "CLASS_NAME": "StyleManager",
+                        "omniClasses": [
+                          "sketchWidget"
+                        ],
+                        "stateMaps": {
+                          "State_1443941986903": {
+                            "*": {
+                              "style": {
+                                "width": "1024px",
+                                "height": "768px",
+                                "linearGradientColor": {
+                                  "colorStopList": [
+                                    {
+                                      "color": {
+                                        "color": "#ffffff",
+                                        "alpha": 1
+                                      },
+                                      "angle": 0
+                                    }
+                                  ]
+                                },
+                                "left": "0px",
+                                "top": "0px"
+                              },
+                              "beforeStyle": {},
+                              "afterStyle": {},
+                              "styleSource": []
+                            }
+                          },
+                          "State_1443942155097": {
+                            "*": {
+                              "style": {},
+                              "beforeStyle": {},
+                              "afterStyle": {},
+                              "styleSource": []
+                            }
+                          }
+                        }
+                      },
+                      "state": "State_1443968318907",
+                      "stateContext": "State_1443942155097",
+                      "childWidgets": [],
+                      "states": [
+                        {
+                          "id": "State_1443944870957",
+                          "node": "Widget_1443944870957",
+                          "name": "*",
+                          "actionObj": {
+                            "id": "TransitionAction_1443944870957",
+                            "actionType": "Sequence",
+                            "CLASS_NAME": "SequenceTransitionAction",
+                            "widgetObj": "Widget_1443944870957",
+                            "stopOnEach": false,
+                            "childActions": [
+                              {
+                                "id": "TransitionAction_1443944870959",
+                                "actionType": "Include",
+                                "CLASS_NAME": "IncludeTransitionAction",
+                                "widgetObj": "Widget_1443944870957",
+                                "url": "resource/external/上教/首页/index/publish/web/book.html",
+                                "edge": "EDGE-16665010"
+                              }
+                            ]
+                          },
+                          "CLASS_NAME": "State",
+                          "transitions": [],
+                          "context": "State_1443941986903"
+                        },
+                        {
+                          "id": "State_1443968318907",
+                          "node": "Widget_1443944870957",
+                          "name": "*",
+                          "actionObj": {
+                            "id": "TransitionAction_1443968318907",
+                            "actionType": "Sequence",
+                            "CLASS_NAME": "SequenceTransitionAction",
+                            "widgetObj": "Widget_1443944870957",
+                            "stopOnEach": false,
+                            "childActions": [
+                              {
+                                "id": "TransitionAction_1443968318908",
+                                "actionType": "Include",
+                                "CLASS_NAME": "IncludeTransitionAction",
+                                "widgetObj": "Widget_1443944870957",
+                                "url": "resource/external/上教/首页/index/publish/web/book.html",
+                                "edge": "EDGE-16665010"
+                              }
+                            ]
+                          },
+                          "CLASS_NAME": "State",
+                          "transitions": [],
+                          "context": "State_1443942155097"
+                        }
+                      ],
+                      "stateOptions": [],
+                      "CLASS_NAME": "BookIncludeSketchWidget",
+                      "html": "",
+                      "markdown": "",
+                      "routes": [],
+                      "externalBook": "上教",
+                      "externalPage": "首页",
+                      "externalFile": "index/publish/web/book.html",
+                      "edge": "EDGE-16665010"
+                    }
+                  ],
+                  "states": [
+                    {
+                      "id": "State_1443941986903",
+                      "node": "Widget_1443941986903",
+                      "name": "*",
+                      "actionObj": {
+                        "id": "TransitionAction_1443941986903",
+                        "actionType": "Sequence",
+                        "CLASS_NAME": "SequenceTransitionAction",
+                        "widgetObj": "Widget_1443941986903",
+                        "stopOnEach": false,
+                        "childActions": []
+                      },
+                      "CLASS_NAME": "State",
+                      "transitions": [],
+                      "context": "State_1443941970185"
+                    },
+                    {
+                      "id": "State_1443942155097",
+                      "node": "Widget_1443941986903",
+                      "name": "*",
+                      "actionObj": {
+                        "id": "TransitionAction_1443942155097",
+                        "actionType": "Sequence",
+                        "CLASS_NAME": "SequenceTransitionAction",
+                        "widgetObj": "Widget_1443941986903",
+                        "stopOnEach": false,
+                        "childActions": []
+                      },
+                      "CLASS_NAME": "State",
+                      "transitions": [],
+                      "context": "State_1443942155097"
+                    }
+                  ],
+                  "stateOptions": [],
+                  "CLASS_NAME": "ElementSketchWidget",
+                  "html": "",
+                  "markdown": "",
+                  "routes": []
+                },
+                {
+                  "id": "Widget_1443942239926",
+                  "name": "Prelude Side",
+                  "anchor": "986F8450-9E40-4DEF-9C2F-05B1547B7A38",
+                  "attr": {
+                    "ui-sketch-widget": "",
+                    "ng-class": "{'isPlaying': $root.sketchWidgetSetting.isPlaying}"
+                  },
+                  "styleManager": {
+                    "CLASS_NAME": "StyleManager",
+                    "omniClasses": [
+                      "sketchWidget"
+                    ],
+                    "stateMaps": {
+                      "State_1443942155097": {
+                        "*": {
+                          "style": {
+                            "width": "60px",
+                            "height": "768px",
+                            "left": "0px",
+                            "top": "0px",
+                            "linearGradientColor": {
+                              "angle": 10,
+                              "colorStopList": [
+                                {
+                                  "percent": 0,
+                                  "color": {
+                                    "color": "#f1c40f",
+                                    "alpha": 1,
+                                    "alphaColor": "#f1c40f"
+                                  },
+                                  "minPercent": 0,
+                                  "maxPercent": 99,
+                                  "backgroundColor": "#796207",
+                                  "$$hashKey": "object:11953"
+                                },
+                                {
+                                  "percent": 100,
+                                  "color": {
+                                    "color": "#2ecc71",
+                                    "alpha": 1,
+                                    "alphaColor": "#2ecc71"
+                                  },
+                                  "minPercent": 1,
+                                  "maxPercent": 100,
+                                  "backgroundColor": "#91e6b5",
+                                  "$$hashKey": "object:11954"
+                                }
+                              ]
+                            },
+                            "background-position": {
+                              "x": 0,
+                              "y": 0,
+                              "unit": "%"
+                            }
+                          },
+                          "beforeStyle": {},
+                          "afterStyle": {},
+                          "styleSource": [
+                            {
+                              "source": "uiGradientEditor",
+                              "style": {
+                                "linearGradientColor": {
+                                  "angle": 10,
+                                  "colorStopList": [
+                                    {
+                                      "percent": 0,
+                                      "color": {
+                                        "color": "#f1c40f",
+                                        "alpha": 1,
+                                        "alphaColor": "#f1c40f"
+                                      },
+                                      "minPercent": 0,
+                                      "maxPercent": 99,
+                                      "backgroundColor": "#796207",
+                                      "$$hashKey": "object:11953"
+                                    },
+                                    {
+                                      "percent": 100,
+                                      "color": {
+                                        "color": "#2ecc71",
+                                        "alpha": 1,
+                                        "alphaColor": "#2ecc71"
+                                      },
+                                      "minPercent": 1,
+                                      "maxPercent": 100,
+                                      "backgroundColor": "#91e6b5",
+                                      "$$hashKey": "object:11954"
+                                    }
+                                  ]
+                                }
+                              },
+                              "beforeStyle": {},
+                              "afterStyle": {},
+                              "classList": []
+                            },
+                            {
+                              "source": "uiBackgroundImage",
+                              "style": {
+                                "background-position": {
+                                  "x": 0,
+                                  "y": 0,
+                                  "unit": "%"
+                                }
+                              },
+                              "beforeStyle": {},
+                              "afterStyle": {},
+                              "classList": []
+                            }
+                          ]
+                        }
+                      },
+                      "State_1443941970185": {
+                        "*": {
+                          "style": {},
+                          "beforeStyle": {},
+                          "afterStyle": {},
+                          "styleSource": []
+                        }
+                      }
+                    }
+                  },
+                  "state": "State_1443942239926",
+                  "stateContext": "State_1443942155097",
+                  "childWidgets": [
+                    {
+                      "id": "Widget_1443942353613",
+                      "name": "Sound",
+                      "attr": {
+                        "ui-sketch-widget": "",
+                        "ng-class": "{'isPlaying': $root.sketchWidgetSetting.isPlaying}"
+                      },
+                      "styleManager": {
+                        "CLASS_NAME": "StyleManager",
+                        "omniClasses": [
+                          "sketchWidget"
+                        ],
+                        "stateMaps": {
+                          "State_1443942239926": {
+                            "*": {
+                              "style": {
+                                "width": "40px",
+                                "height": "40px",
+                                "left": "10px",
+                                "top": "10px",
+                                "background-image": "project/56104bec2ac815961944b8bf/resource/image/speaker_up_.svg",
+                                "background-position": {
+                                  "x": 0,
+                                  "y": 0,
+                                  "unit": "%"
+                                },
+                                "background-repeat": "no-repeat",
+                                "background-size": "contain"
+                              },
+                              "beforeStyle": {},
+                              "afterStyle": {},
+                              "styleSource": [
+                                {
+                                  "source": "uiBackgroundImage",
+                                  "style": {
+                                    "background-image": "project/56104bec2ac815961944b8bf/resource/image/speaker_up_.svg",
+                                    "background-position": {
+                                      "x": 0,
+                                      "y": 0,
+                                      "unit": "%"
+                                    },
+                                    "background-repeat": "no-repeat",
+                                    "background-size": "contain"
+                                  },
+                                  "beforeStyle": {},
+                                  "afterStyle": {},
+                                  "classList": []
+                                }
+                              ]
+                            },
+                            "mute": {
+                              "style": {
+                                "background-image": "project/56104bec2ac815961944b8bf/resource/image/speaker_mute_.svg",
+                                "background-position": {
+                                  "x": 0,
+                                  "y": 0,
+                                  "unit": "%"
+                                },
+                                "background-repeat": "no-repeat",
+                                "background-size": "contain"
+                              },
+                              "beforeStyle": {},
+                              "afterStyle": {},
+                              "styleSource": [
+                                {
+                                  "source": "uiBackgroundImage",
+                                  "style": {
+                                    "background-image": "project/56104bec2ac815961944b8bf/resource/image/speaker_mute_.svg",
+                                    "background-position": {
+                                      "x": 0,
+                                      "y": 0,
+                                      "unit": "%"
+                                    },
+                                    "background-repeat": "no-repeat",
+                                    "background-size": "contain"
+                                  },
+                                  "beforeStyle": {},
+                                  "afterStyle": {},
+                                  "classList": []
+                                }
+                              ]
+                            }
+                          },
+                          "State_1443944821850": {
+                            "*": {
+                              "style": {},
+                              "beforeStyle": {},
+                              "afterStyle": {},
+                              "styleSource": []
+                            }
+                          }
+                        }
+                      },
+                      "state": "State_1443942353613",
+                      "stateContext": "State_1443942239926",
+                      "childWidgets": [],
+                      "states": [
+                        {
+                          "id": "State_1443942353613",
+                          "node": "Widget_1443942353613",
+                          "name": "*",
+                          "actionObj": {
+                            "id": "TransitionAction_1443942353613",
+                            "actionType": "Sequence",
+                            "CLASS_NAME": "SequenceTransitionAction",
+                            "widgetObj": "Widget_1443942353613",
+                            "stopOnEach": false,
+                            "childActions": []
+                          },
+                          "CLASS_NAME": "State",
+                          "transitions": [
+                            {
+                              "name": "Toggle Sound",
+                              "id": "Transition_1444040978397",
+                              "trigger": {
+                                "id": "D54B8BC4-4655-4D34-82F1-0B94BBDC5C90",
+                                "triggerType": "Gesture",
+                                "eventName": "tap",
+                                "options": {},
+                                "runOnce": false,
+                                "CLASS_NAME": "GestureTrigger"
+                              },
+                              "actionObj": {
+                                "id": "TransitionAction_1444040978397",
+                                "actionType": "Sequence",
+                                "CLASS_NAME": "SequenceTransitionAction",
+                                "widgetObj": "Widget_1443942353613",
+                                "stopOnEach": false,
+                                "childActions": [
+                                  {
+                                    "id": "TransitionAction_1444040987612",
+                                    "actionType": "Service",
+                                    "CLASS_NAME": "ServiceInvokeTransitionAction",
+                                    "widgetObj": "Widget_1443942353613",
+                                    "feature": "BaseService",
+                                    "serviceName": "toggleWidgetSound",
+                                    "communicationType": "callback",
+                                    "parameters": [
+                                      "widgetId",
+                                      "url",
+                                      "playLoop"
+                                    ],
+                                    "timeout": 0,
+                                    "input": [
+                                      {
+                                        "name": "widgetId",
+                                        "expression": "'Sound'"
+                                      },
+                                      {
+                                        "name": "url",
+                                        "expression": "'resource/audio/background.mp3'"
+                                      },
+                                      {
+                                        "name": "playLoop",
+                                        "expression": "true"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              "CLASS_NAME": "Transition",
+                              "state": "State_1443942353613"
+                            }
+                          ],
+                          "context": "State_1443942239926"
+                        },
+                        {
+                          "id": "State_1443944821850",
+                          "node": "Widget_1443942353613",
+                          "name": "*",
+                          "actionObj": {
+                            "id": "TransitionAction_1443944821850",
+                            "actionType": "Sequence",
+                            "CLASS_NAME": "SequenceTransitionAction",
+                            "widgetObj": "Widget_1443942353613",
+                            "stopOnEach": false,
+                            "childActions": []
+                          },
+                          "CLASS_NAME": "State",
+                          "transitions": [],
+                          "context": "State_1443944821850"
+                        },
+                        {
+                          "id": "State_1444041193076",
+                          "node": "Widget_1443942353613",
+                          "name": "mute",
+                          "actionObj": {
+                            "id": "TransitionAction_1444041193076",
+                            "actionType": "Sequence",
+                            "CLASS_NAME": "SequenceTransitionAction",
+                            "widgetObj": "Widget_1443942353613",
+                            "stopOnEach": false,
+                            "childActions": []
+                          },
+                          "CLASS_NAME": "State",
+                          "transitions": [],
+                          "context": "State_1443942239926"
+                        }
+                      ],
+                      "stateOptions": [
+                        {
+                          "name": "mute"
+                        }
+                      ],
+                      "CLASS_NAME": "ElementSketchWidget",
+                      "html": "",
+                      "markdown": "",
+                      "routes": []
+                    },
+                    {
+                      "id": "Widget_1443942366208",
+                      "name": "Help",
+                      "attr": {
+                        "ui-sketch-widget": "",
+                        "ng-class": "{'isPlaying': $root.sketchWidgetSetting.isPlaying}"
+                      },
+                      "styleManager": {
+                        "CLASS_NAME": "StyleManager",
+                        "omniClasses": [
+                          "sketchWidget"
+                        ],
+                        "stateMaps": {
+                          "State_1443942239926": {
+                            "*": {
+                              "style": {
+                                "width": "40px",
+                                "height": "40px",
+                                "left": "10px",
+                                "top": "70px",
+                                "background-position": {
+                                  "x": "50",
+                                  "y": 50,
+                                  "unit": "%"
+                                },
+                                "background-image": "project/56104bec2ac815961944b8bf/resource/image/help.svg",
+                                "background-repeat": "no-repeat",
+                                "background-size": "contain"
+                              },
+                              "beforeStyle": {},
+                              "afterStyle": {},
+                              "styleSource": [
+                                {
+                                  "source": "uiBackgroundImage",
+                                  "style": {
+                                    "background-position": {
+                                      "x": "50",
+                                      "y": 50,
+                                      "unit": "%"
+                                    },
+                                    "background-image": "project/56104bec2ac815961944b8bf/resource/image/help.svg",
+                                    "background-repeat": "no-repeat",
+                                    "background-size": "contain"
+                                  },
+                                  "beforeStyle": {},
+                                  "afterStyle": {},
+                                  "classList": []
+                                }
+                              ]
+                            }
+                          },
+                          "State_1443944821850": {
+                            "*": {
+                              "style": {},
+                              "beforeStyle": {},
+                              "afterStyle": {},
+                              "styleSource": []
+                            }
+                          }
+                        }
+                      },
+                      "state": "State_1443942366208",
+                      "stateContext": "State_1443942239926",
+                      "childWidgets": [],
+                      "states": [
+                        {
+                          "id": "State_1443942366208",
+                          "node": "Widget_1443942366208",
+                          "name": "*",
+                          "actionObj": {
+                            "id": "TransitionAction_1443942366208",
+                            "actionType": "Sequence",
+                            "CLASS_NAME": "SequenceTransitionAction",
+                            "widgetObj": "Widget_1443942366208",
+                            "stopOnEach": false,
+                            "childActions": []
+                          },
+                          "CLASS_NAME": "State",
+                          "transitions": [],
+                          "context": "State_1443942239926"
+                        },
+                        {
+                          "id": "State_1443944821850",
+                          "node": "Widget_1443942366208",
+                          "name": "*",
+                          "actionObj": {
+                            "id": "TransitionAction_1443944821850",
+                            "actionType": "Sequence",
+                            "CLASS_NAME": "SequenceTransitionAction",
+                            "widgetObj": "Widget_1443942366208",
+                            "stopOnEach": false,
+                            "childActions": []
+                          },
+                          "CLASS_NAME": "State",
+                          "transitions": [],
+                          "context": "State_1443944821850"
+                        }
+                      ],
+                      "stateOptions": [],
+                      "CLASS_NAME": "ElementSketchWidget",
+                      "html": "",
+                      "markdown": "",
+                      "routes": []
+                    },
+                    {
+                      "id": "Widget_1443942372680",
+                      "name": "Setting",
+                      "attr": {
+                        "ui-sketch-widget": "",
+                        "ng-class": "{'isPlaying': $root.sketchWidgetSetting.isPlaying}"
+                      },
+                      "styleManager": {
+                        "CLASS_NAME": "StyleManager",
+                        "omniClasses": [
+                          "sketchWidget"
+                        ],
+                        "stateMaps": {
+                          "State_1443942239926": {
+                            "*": {
+                              "style": {
+                                "width": "40px",
+                                "height": "40px",
+                                "left": "10px",
+                                "top": "130px",
+                                "background-position": {
+                                  "x": 0,
+                                  "y": 0,
+                                  "unit": "%"
+                                },
+                                "background-image": "project/56104bec2ac815961944b8bf/resource/image/setting.svg",
+                                "background-repeat": "no-repeat",
+                                "background-size": "contain"
+                              },
+                              "beforeStyle": {},
+                              "afterStyle": {},
+                              "styleSource": [
+                                {
+                                  "source": "uiBackgroundImage",
+                                  "style": {
+                                    "background-position": {
+                                      "x": 0,
+                                      "y": 0,
+                                      "unit": "%"
+                                    },
+                                    "background-image": "project/56104bec2ac815961944b8bf/resource/image/setting.svg",
+                                    "background-repeat": "no-repeat",
+                                    "background-size": "contain"
+                                  },
+                                  "beforeStyle": {},
+                                  "afterStyle": {},
+                                  "classList": []
+                                }
+                              ]
+                            }
+                          },
+                          "State_1443944821850": {
+                            "*": {
+                              "style": {},
+                              "beforeStyle": {},
+                              "afterStyle": {},
+                              "styleSource": []
+                            }
+                          }
+                        }
+                      },
+                      "state": "State_1443942372680",
+                      "stateContext": "State_1443942239926",
+                      "childWidgets": [],
+                      "states": [
+                        {
+                          "id": "State_1443942372680",
+                          "node": "Widget_1443942372680",
+                          "name": "*",
+                          "actionObj": {
+                            "id": "TransitionAction_1443942372680",
+                            "actionType": "Sequence",
+                            "CLASS_NAME": "SequenceTransitionAction",
+                            "widgetObj": "Widget_1443942372680",
+                            "stopOnEach": false,
+                            "childActions": []
+                          },
+                          "CLASS_NAME": "State",
+                          "transitions": [
+                            {
+                              "name": "Goto Settings",
+                              "id": "Transition_1443968395683",
+                              "trigger": {
+                                "id": "D54B8BC4-4655-4D34-82F1-0B94BBDC5C90",
+                                "triggerType": "Gesture",
+                                "eventName": "tap",
+                                "options": {},
+                                "runOnce": false,
+                                "CLASS_NAME": "GestureTrigger"
+                              },
+                              "actionObj": {
+                                "id": "TransitionAction_1443968395683",
+                                "actionType": "Sequence",
+                                "CLASS_NAME": "SequenceTransitionAction",
+                                "widgetObj": "Widget_1443942372680",
+                                "stopOnEach": false,
+                                "childActions": [
+                                  {
+                                    "id": "TransitionAction_1444027299197",
+                                    "actionType": "Service",
+                                    "CLASS_NAME": "ServiceInvokeTransitionAction",
+                                    "widgetObj": "Widget_1443942372680",
+                                    "feature": "BaseService",
+                                    "serviceName": "gotoPage",
+                                    "communicationType": "callback",
+                                    "parameters": [
+                                      "pageNum"
+                                    ],
+                                    "timeout": 0,
+                                    "input": [
+                                      {
+                                        "name": "pageNum",
+                                        "expression": "'page-Settings'"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              "CLASS_NAME": "Transition",
+                              "state": "State_1443942372680"
+                            }
+                          ],
+                          "context": "State_1443942239926"
+                        },
+                        {
+                          "id": "State_1443944821850",
+                          "node": "Widget_1443942372680",
+                          "name": "*",
+                          "actionObj": {
+                            "id": "TransitionAction_1443944821850",
+                            "actionType": "Sequence",
+                            "CLASS_NAME": "SequenceTransitionAction",
+                            "widgetObj": "Widget_1443942372680",
+                            "stopOnEach": false,
+                            "childActions": []
+                          },
+                          "CLASS_NAME": "State",
+                          "transitions": [],
+                          "context": "State_1443944821850"
+                        }
+                      ],
+                      "stateOptions": [],
+                      "CLASS_NAME": "ElementSketchWidget",
+                      "html": "",
+                      "markdown": "",
+                      "routes": []
+                    },
+                    {
+                      "id": "Widget_1443942382209",
+                      "name": "Report",
+                      "attr": {
+                        "ui-sketch-widget": "",
+                        "ng-class": "{'isPlaying': $root.sketchWidgetSetting.isPlaying}"
+                      },
+                      "styleManager": {
+                        "CLASS_NAME": "StyleManager",
+                        "omniClasses": [
+                          "sketchWidget"
+                        ],
+                        "stateMaps": {
+                          "State_1443942239926": {
+                            "*": {
+                              "style": {
+                                "width": "40px",
+                                "height": "40px",
+                                "left": "10px",
+                                "top": "190px",
+                                "background-position": {
+                                  "x": "50",
+                                  "y": 50,
+                                  "unit": "%"
+                                },
+                                "background-image": "project/56104bec2ac815961944b8bf/resource/image/report.svg",
+                                "background-repeat": "no-repeat",
+                                "background-size": "contain"
+                              },
+                              "beforeStyle": {},
+                              "afterStyle": {},
+                              "styleSource": [
+                                {
+                                  "source": "uiBackgroundImage",
+                                  "style": {
+                                    "background-position": {
+                                      "x": 0,
+                                      "y": 0,
+                                      "unit": "%"
+                                    },
+                                    "background-image": "project/56104bec2ac815961944b8bf/resource/image/report.svg",
+                                    "background-repeat": "no-repeat",
+                                    "background-size": "contain"
+                                  },
+                                  "beforeStyle": {},
+                                  "afterStyle": {},
+                                  "classList": []
+                                }
+                              ]
+                            }
+                          },
+                          "State_1443944821850": {
+                            "*": {
+                              "style": {},
+                              "beforeStyle": {},
+                              "afterStyle": {},
+                              "styleSource": []
+                            }
+                          }
+                        }
+                      },
+                      "state": "State_1443942382209",
+                      "stateContext": "State_1443942239926",
+                      "childWidgets": [],
+                      "states": [
+                        {
+                          "id": "State_1443942382209",
+                          "node": "Widget_1443942382209",
+                          "name": "*",
+                          "actionObj": {
+                            "id": "TransitionAction_1443942382209",
+                            "actionType": "Sequence",
+                            "CLASS_NAME": "SequenceTransitionAction",
+                            "widgetObj": "Widget_1443942382209",
+                            "stopOnEach": false,
+                            "childActions": []
+                          },
+                          "CLASS_NAME": "State",
+                          "transitions": [
+                            {
+                              "name": "Goto Report",
+                              "id": "Transition_1443968350108",
+                              "trigger": {
+                                "id": "D54B8BC4-4655-4D34-82F1-0B94BBDC5C90",
+                                "triggerType": "Gesture",
+                                "eventName": "tap",
+                                "options": {},
+                                "runOnce": false,
+                                "CLASS_NAME": "GestureTrigger"
+                              },
+                              "actionObj": {
+                                "id": "TransitionAction_1443968350108",
+                                "actionType": "Sequence",
+                                "CLASS_NAME": "SequenceTransitionAction",
+                                "widgetObj": "Widget_1443942382209",
+                                "stopOnEach": false,
+                                "childActions": [
+                                  {
+                                    "id": "TransitionAction_1443968365123",
+                                    "actionType": "Service",
+                                    "CLASS_NAME": "ServiceInvokeTransitionAction",
+                                    "widgetObj": "Widget_1443942382209",
+                                    "feature": "BaseService",
+                                    "serviceName": "gotoPage",
+                                    "communicationType": "callback",
+                                    "parameters": [
+                                      "pageNum"
+                                    ],
+                                    "timeout": 0,
+                                    "input": [
+                                      {
+                                        "name": "pageNum",
+                                        "expression": "'page-Report'"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              "CLASS_NAME": "Transition",
+                              "state": "State_1443942382209"
+                            }
+                          ],
+                          "context": "State_1443942239926"
+                        },
+                        {
+                          "id": "State_1443944821850",
+                          "node": "Widget_1443942382209",
+                          "name": "*",
+                          "actionObj": {
+                            "id": "TransitionAction_1443944821850",
+                            "actionType": "Sequence",
+                            "CLASS_NAME": "SequenceTransitionAction",
+                            "widgetObj": "Widget_1443942382209",
+                            "stopOnEach": false,
+                            "childActions": []
+                          },
+                          "CLASS_NAME": "State",
+                          "transitions": [],
+                          "context": "State_1443944821850"
+                        }
+                      ],
+                      "stateOptions": [],
+                      "CLASS_NAME": "ElementSketchWidget",
+                      "html": "",
+                      "markdown": "",
+                      "routes": []
+                    }
+                  ],
+                  "states": [
+                    {
+                      "id": "State_1443942239926",
+                      "node": "Widget_1443942239926",
+                      "name": "*",
+                      "actionObj": {
+                        "id": "TransitionAction_1443942239926",
+                        "actionType": "Sequence",
+                        "CLASS_NAME": "SequenceTransitionAction",
+                        "widgetObj": "Widget_1443942239926",
+                        "stopOnEach": false,
+                        "childActions": []
+                      },
+                      "CLASS_NAME": "State",
+                      "transitions": [],
+                      "context": "State_1443942155097"
+                    },
+                    {
+                      "id": "State_1443944821850",
+                      "node": "Widget_1443942239926",
+                      "name": "*",
+                      "actionObj": {
+                        "id": "TransitionAction_1443944821850",
+                        "actionType": "Sequence",
+                        "CLASS_NAME": "SequenceTransitionAction",
+                        "widgetObj": "Widget_1443942239926",
+                        "stopOnEach": false,
+                        "childActions": []
+                      },
+                      "CLASS_NAME": "State",
+                      "transitions": [],
+                      "context": "State_1443941970185"
+                    }
+                  ],
+                  "stateOptions": [],
+                  "CLASS_NAME": "ElementSketchWidget",
+                  "html": "",
+                  "markdown": "",
+                  "routes": []
+                }
+              ],
+              "states": [
+                {
+                  "id": "State_1443941970185",
+                  "node": "Widget_1443941970185",
+                  "name": "*",
+                  "actionObj": {
+                    "id": "TransitionAction_1443941970185",
+                    "actionType": "Sequence",
+                    "CLASS_NAME": "SequenceTransitionAction",
+                    "widgetObj": "Widget_1443941970185",
+                    "stopOnEach": false,
+                    "childActions": []
+                  },
+                  "CLASS_NAME": "State",
+                  "transitions": [],
+                  "context": "State_1443941967701"
+                },
+                {
+                  "id": "State_1443942155097",
+                  "node": "Widget_1443941970185",
+                  "name": "*",
+                  "actionObj": {
+                    "id": "TransitionAction_1443942155097",
+                    "actionType": "Sequence",
+                    "CLASS_NAME": "SequenceTransitionAction",
+                    "widgetObj": "Widget_1443941970185",
+                    "stopOnEach": false,
+                    "childActions": []
+                  },
+                  "CLASS_NAME": "State",
+                  "transitions": [],
+                  "context": "State_1443941967707"
+                }
+              ],
+              "stateOptions": [],
+              "CLASS_NAME": "ElementSketchWidget",
+              "html": "",
+              "markdown": "",
+              "routes": []
+            }
+          ],
+          "states": [
+            {
+              "id": "State_1443941967701",
+              "node": "Widget_1443941967700",
+              "name": "*",
+              "actionObj": {
+                "id": "TransitionAction_1443941967700",
+                "actionType": "Sequence",
+                "CLASS_NAME": "SequenceTransitionAction",
+                "widgetObj": "Widget_1443941967700",
+                "stopOnEach": false,
+                "childActions": []
+              },
+              "CLASS_NAME": "State",
+              "transitions": [],
+              "context": "State_1443910040699"
+            },
+            {
+              "id": "State_1443941967707",
+              "node": "Widget_1443941967700",
+              "name": "select",
+              "actionObj": {
+                "id": "TransitionAction_1443941967707",
+                "actionType": "Sequence",
+                "CLASS_NAME": "SequenceTransitionAction",
+                "widgetObj": "Widget_1443941967700",
+                "stopOnEach": false,
+                "childActions": []
+              },
+              "CLASS_NAME": "State",
+              "transitions": [],
+              "context": "State_1443910040699"
+            }
+          ],
+          "stateOptions": [
+            {
+              "name": "select"
+            }
+          ],
+          "CLASS_NAME": "RepoSketchWidget",
+          "template": "repo/widget/standard/548e48d1708048063a0041a8/1.0.0/app/widget.html",
+          "widgetSpec": {
+            "libraryId": "548e4788708048023a0041a7",
+            "libraryName": "standard",
+            "artifactId": "548e48d1708048063a0041a8",
+            "name": "Side Bar",
+            "version": "1.0.0",
+            "type": "widget",
+            "projectId": "56104bec2ac815961944b8bf",
+            "configuration": {
+              "handDownConfiguration": {
+                "barContentWidth": {
+                  "pickedValue": "60px"
+                },
+                "overlayColor": {
+                  "pickedValue": {
+                    "color": "#ecf0f1",
+                    "alpha": 1,
+                    "alphaColor": "#ecf0f1"
+                  }
+                },
+                "overlayOpacity": {
+                  "pickedValue": 0.3
+                }
+              },
+              "transition": {
+                "pickedValue": "reverseSlideOut"
+              },
+              "side": {
+                "pickedValue": "rightSide"
+              }
+            }
+          }
+        }
+      ],
+      "states": [
+        {
+          "id": "State_1443910040699",
+          "node": "Widget_1443910040698",
+          "name": "*",
+          "actionObj": {
+            "id": "TransitionAction_1443910040699",
+            "actionType": "Sequence",
+            "CLASS_NAME": "SequenceTransitionAction",
+            "widgetObj": "Widget_1443910040698",
+            "stopOnEach": false,
+            "childActions": []
+          },
+          "CLASS_NAME": "State",
+          "transitions": [],
+          "context": ""
+        }
+      ],
+      "stateOptions": [],
+      "CLASS_NAME": "PageSketchWidget"
+    },
+    {
+      "id": "Widget_1443912337267",
+      "name": "Page-2",
+      "anchor": "",
+      "attr": {
+        "ui-sketch-widget": "",
+        "ng-class": "{'isPlaying': $root.sketchWidgetSetting.isPlaying}"
+      },
+      "styleManager": {
+        "CLASS_NAME": "StyleManager",
+        "omniClasses": [
+          "pageHolder"
+        ],
+        "stateMaps": {
+          "?": {
+            "*": {
+              "style": {},
+              "beforeStyle": {},
+              "afterStyle": {},
+              "styleSource": []
+            }
+          }
+        }
+      },
+      "state": "State_1443912337267",
+      "stateContext": "",
+      "childWidgets": [
+        {
+          "id": "Widget_1443944908812",
+          "name": "子目录",
+          "attr": {
+            "ui-sketch-widget": "",
+            "ng-class": "{'isPlaying': $root.sketchWidgetSetting.isPlaying}"
+          },
+          "styleManager": {
+            "CLASS_NAME": "StyleManager",
+            "omniClasses": [
+              "sketchWidget"
+            ],
+            "stateMaps": {
+              "State_1443912337267": {
+                "*": {
+                  "style": {
+                    "width": "1024px",
+                    "height": "768px",
+                    "linearGradientColor": {
+                      "colorStopList": [
+                        {
+                          "color": {
+                            "color": "#ffffff",
+                            "alpha": 1
+                          },
+                          "angle": 0
+                        }
+                      ]
+                    },
+                    "left": "0px",
+                    "top": "0px"
+                  },
+                  "beforeStyle": {},
+                  "afterStyle": {},
+                  "styleSource": []
+                }
+              }
+            }
+          },
+          "state": "State_1443944908813",
+          "stateContext": "State_1443912337267",
+          "childWidgets": [],
+          "states": [
+            {
+              "id": "State_1443944908813",
+              "node": "Widget_1443944908812",
+              "name": "*",
+              "actionObj": {
+                "id": "TransitionAction_1443944908813",
+                "actionType": "Sequence",
+                "CLASS_NAME": "SequenceTransitionAction",
+                "widgetObj": "Widget_1443944908812",
+                "stopOnEach": false,
+                "childActions": [
+                  {
+                    "id": "TransitionAction_1443944908814",
+                    "actionType": "Include",
+                    "CLASS_NAME": "IncludeTransitionAction",
+                    "widgetObj": "Widget_1443944908812",
+                    "url": "resource/external/上教/子目录/index/publish/web/book.html",
+                    "edge": "EDGE-635559"
+                  }
+                ]
+              },
+              "CLASS_NAME": "State",
+              "transitions": [],
+              "context": "State_1443912337267"
+            }
+          ],
+          "stateOptions": [],
+          "CLASS_NAME": "BookIncludeSketchWidget",
+          "html": "",
+          "markdown": "",
+          "routes": [],
+          "externalBook": "上教",
+          "externalPage": "子目录",
+          "externalFile": "index/publish/web/book.html",
+          "edge": "EDGE-635559"
+        }
+      ],
+      "states": [
+        {
+          "id": "State_1443912337267",
+          "node": "Widget_1443912337267",
+          "name": "*",
+          "actionObj": {
+            "id": "TransitionAction_1443912337267",
+            "actionType": "Sequence",
+            "CLASS_NAME": "SequenceTransitionAction",
+            "widgetObj": "Widget_1443912337267",
+            "stopOnEach": false,
+            "childActions": []
+          },
+          "CLASS_NAME": "State",
+          "transitions": [],
+          "context": ""
+        }
+      ],
+      "stateOptions": [],
+      "CLASS_NAME": "PageSketchWidget"
+    },
+    {
+      "id": "Widget_1443912347128",
+      "name": "Page-3",
+      "anchor": "",
+      "attr": {
+        "ui-sketch-widget": "",
+        "ng-class": "{'isPlaying': $root.sketchWidgetSetting.isPlaying}"
+      },
+      "styleManager": {
+        "CLASS_NAME": "StyleManager",
+        "omniClasses": [
+          "pageHolder"
+        ],
+        "stateMaps": {
+          "?": {
+            "*": {
+              "style": {},
+              "beforeStyle": {},
+              "afterStyle": {},
+              "styleSource": []
+            }
+          }
+        }
+      },
+      "state": "State_1443912347128",
+      "stateContext": "",
+      "childWidgets": [
+        {
+          "id": "Widget_1443944922169",
+          "name": "单元内容",
+          "attr": {
+            "ui-sketch-widget": "",
+            "ng-class": "{'isPlaying': $root.sketchWidgetSetting.isPlaying}"
+          },
+          "styleManager": {
+            "CLASS_NAME": "StyleManager",
+            "omniClasses": [
+              "sketchWidget"
+            ],
+            "stateMaps": {
+              "State_1443912347128": {
+                "*": {
+                  "style": {
+                    "width": "1024px",
+                    "height": "768px",
+                    "linearGradientColor": {
+                      "colorStopList": [
+                        {
+                          "color": {
+                            "color": "#ffffff",
+                            "alpha": 1
+                          },
+                          "angle": 0
+                        }
+                      ]
+                    },
+                    "left": "0px",
+                    "top": "0px"
+                  },
+                  "beforeStyle": {},
+                  "afterStyle": {},
+                  "styleSource": []
+                }
+              }
+            }
+          },
+          "state": "State_1443944922170",
+          "stateContext": "State_1443912347128",
+          "childWidgets": [],
+          "states": [
+            {
+              "id": "State_1443944922170",
+              "node": "Widget_1443944922169",
+              "name": "*",
+              "actionObj": {
+                "id": "TransitionAction_1443944922170",
+                "actionType": "Sequence",
+                "CLASS_NAME": "SequenceTransitionAction",
+                "widgetObj": "Widget_1443944922169",
+                "stopOnEach": false,
+                "childActions": [
+                  {
+                    "id": "TransitionAction_1443944922171",
+                    "actionType": "Include",
+                    "CLASS_NAME": "IncludeTransitionAction",
+                    "widgetObj": "Widget_1443944922169",
+                    "url": "resource/external/上教/单元内容/index/publish/web/book.html",
+                    "edge": "EDGE-14551220"
+                  }
+                ]
+              },
+              "CLASS_NAME": "State",
+              "transitions": [],
+              "context": "State_1443912347128"
+            }
+          ],
+          "stateOptions": [],
+          "CLASS_NAME": "BookIncludeSketchWidget",
+          "html": "",
+          "markdown": "",
+          "routes": [],
+          "externalBook": "上教",
+          "externalPage": "单元内容",
+          "externalFile": "index/publish/web/book.html",
+          "edge": "EDGE-14551220"
+        }
+      ],
+      "states": [
+        {
+          "id": "State_1443912347128",
+          "node": "Widget_1443912347128",
+          "name": "*",
+          "actionObj": {
+            "id": "TransitionAction_1443912347128",
+            "actionType": "Sequence",
+            "CLASS_NAME": "SequenceTransitionAction",
+            "widgetObj": "Widget_1443912347128",
+            "stopOnEach": false,
+            "childActions": []
+          },
+          "CLASS_NAME": "State",
+          "transitions": [],
+          "context": ""
+        }
+      ],
+      "stateOptions": [],
+      "CLASS_NAME": "PageSketchWidget"
+    },
+    {
+      "id": "Widget_1443912352836",
+      "name": "Page-4",
+      "anchor": "",
+      "attr": {
+        "ui-sketch-widget": "",
+        "ng-class": "{'isPlaying': $root.sketchWidgetSetting.isPlaying}"
+      },
+      "styleManager": {
+        "CLASS_NAME": "StyleManager",
+        "omniClasses": [
+          "pageHolder"
+        ],
+        "stateMaps": {
+          "?": {
+            "*": {
+              "style": {},
+              "beforeStyle": {},
+              "afterStyle": {},
+              "styleSource": []
+            }
+          }
+        }
+      },
+      "state": "State_1443912352836",
+      "stateContext": "",
+      "childWidgets": [
+        {
+          "id": "Widget_1443944936081",
+          "name": "单元问答",
+          "attr": {
+            "ui-sketch-widget": "",
+            "ng-class": "{'isPlaying': $root.sketchWidgetSetting.isPlaying}"
+          },
+          "styleManager": {
+            "CLASS_NAME": "StyleManager",
+            "omniClasses": [
+              "sketchWidget"
+            ],
+            "stateMaps": {
+              "State_1443912352836": {
+                "*": {
+                  "style": {
+                    "width": "1024px",
+                    "height": "768px",
+                    "linearGradientColor": {
+                      "colorStopList": [
+                        {
+                          "color": {
+                            "color": "#ffffff",
+                            "alpha": 1
+                          },
+                          "angle": 0
+                        }
+                      ]
+                    },
+                    "left": "0px",
+                    "top": "0px"
+                  },
+                  "beforeStyle": {},
+                  "afterStyle": {},
+                  "styleSource": []
+                }
+              }
+            }
+          },
+          "state": "State_1443944936081",
+          "stateContext": "State_1443912352836",
+          "childWidgets": [],
+          "states": [
+            {
+              "id": "State_1443944936081",
+              "node": "Widget_1443944936081",
+              "name": "*",
+              "actionObj": {
+                "id": "TransitionAction_1443944936081",
+                "actionType": "Sequence",
+                "CLASS_NAME": "SequenceTransitionAction",
+                "widgetObj": "Widget_1443944936081",
+                "stopOnEach": false,
+                "childActions": [
+                  {
+                    "id": "TransitionAction_1443944936082",
+                    "actionType": "Include",
+                    "CLASS_NAME": "IncludeTransitionAction",
+                    "widgetObj": "Widget_1443944936081",
+                    "url": "resource/external/上教/单元问答/index/publish/web/book.html",
+                    "edge": "EDGE-14201750"
+                  }
+                ]
+              },
+              "CLASS_NAME": "State",
+              "transitions": [],
+              "context": "State_1443912352836"
+            }
+          ],
+          "stateOptions": [],
+          "CLASS_NAME": "BookIncludeSketchWidget",
+          "html": "",
+          "markdown": "",
+          "routes": [],
+          "externalBook": "上教",
+          "externalPage": "单元问答",
+          "externalFile": "index/publish/web/book.html",
+          "edge": "EDGE-14201750"
+        }
+      ],
+      "states": [
+        {
+          "id": "State_1443912352836",
+          "node": "Widget_1443912352836",
+          "name": "*",
+          "actionObj": {
+            "id": "TransitionAction_1443912352836",
+            "actionType": "Sequence",
+            "CLASS_NAME": "SequenceTransitionAction",
+            "widgetObj": "Widget_1443912352836",
+            "stopOnEach": false,
+            "childActions": []
+          },
+          "CLASS_NAME": "State",
+          "transitions": [],
+          "context": ""
+        }
+      ],
+      "stateOptions": [],
+      "CLASS_NAME": "PageSketchWidget"
+    }
+  ]
+}

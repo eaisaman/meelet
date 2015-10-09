@@ -1,0 +1,8 @@
+@import "sass/sidebar";
+
+@import "configuration-Widget_1443190945025";
+$configuration-Widget_1443190945025: map-merge($default-sidebar-value-map, $configuration-Widget_1443190945025);
+#Widget_1443190945025
+{
+@include sidebar($configuration-Widget_1443190945025...);
+}

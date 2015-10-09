@@ -1,0 +1,1786 @@
+{
+  "pageTransition": {},
+  "pages": [
+    {
+      "id": "Widget_1443190895844",
+      "name": "NO NAME",
+      "anchor": "",
+      "attr": {
+        "ui-sketch-widget": "",
+        "ng-class": "{'isPlaying': $root.sketchWidgetSetting.isPlaying}"
+      },
+      "styleManager": {
+        "CLASS_NAME": "StyleManager",
+        "omniClasses": [
+          "pageHolder"
+        ],
+        "stateMaps": {
+          "?": {
+            "*": {
+              "style": {},
+              "beforeStyle": {},
+              "afterStyle": {},
+              "styleSource": []
+            }
+          }
+        }
+      },
+      "state": "State_1443190895845",
+      "stateContext": "",
+      "childWidgets": [
+        {
+          "id": "Widget_1443190945025",
+          "name": "Main SideBar",
+          "attr": {
+            "ui-sketch-widget": "",
+            "ng-class": "{'isPlaying': $root.sketchWidgetSetting.isPlaying}"
+          },
+          "styleManager": {
+            "CLASS_NAME": "StyleManager",
+            "omniClasses": [
+              "sketchWidget"
+            ],
+            "stateMaps": {
+              "State_1443190895845": {
+                "*": {
+                  "style": {
+                    "width": "1024px",
+                    "height": "768px",
+                    "linearGradientColor": {
+                      "colorStopList": [
+                        {
+                          "color": {
+                            "color": "#ffffff",
+                            "alpha": 1
+                          },
+                          "angle": 0
+                        }
+                      ]
+                    },
+                    "left": "0px",
+                    "top": "0px"
+                  },
+                  "beforeStyle": {},
+                  "afterStyle": {},
+                  "styleSource": []
+                }
+              }
+            }
+          },
+          "state": "State_1443190945025",
+          "stateContext": "State_1443190895845",
+          "childWidgets": [
+            {
+              "id": "Widget_1443190951219",
+              "name": "Side Bar Container Widget",
+              "attr": {
+                "ui-sketch-widget": "",
+                "ng-class": "{'isPlaying': $root.sketchWidgetSetting.isPlaying}"
+              },
+              "styleManager": {
+                "CLASS_NAME": "StyleManager",
+                "omniClasses": [
+                  "sketchWidget",
+                  "widgetContainer"
+                ],
+                "stateMaps": {
+                  "State_1443190945025": {
+                    "*": {
+                      "style": {
+                        "width": "1024px",
+                        "height": "768px",
+                        "linearGradientColor": {
+                          "colorStopList": [
+                            {
+                              "color": {
+                                "color": "#ffffff",
+                                "alpha": 1
+                              },
+                              "angle": 0
+                            }
+                          ]
+                        },
+                        "left": "0px",
+                        "top": "0px"
+                      },
+                      "beforeStyle": {},
+                      "afterStyle": {},
+                      "styleSource": []
+                    }
+                  }
+                }
+              },
+              "state": "State_1443190951220",
+              "stateContext": "State_1443190945025",
+              "childWidgets": [
+                {
+                  "id": "Widget_1443191028335",
+                  "name": "Tab Title Holder",
+                  "anchor": "80694DA6-8AA6-47D4-A9B0-368900098A97",
+                  "attr": {
+                    "ui-sketch-widget": "",
+                    "ng-class": "{'isPlaying': $root.sketchWidgetSetting.isPlaying}"
+                  },
+                  "styleManager": {
+                    "CLASS_NAME": "StyleManager",
+                    "omniClasses": [
+                      "sketchWidget"
+                    ],
+                    "stateMaps": {
+                      "State_1443190951220": {
+                        "*": {
+                          "style": {
+                            "width": "1024px",
+                            "height": "100px",
+                            "left": "0px",
+                            "top": "0px",
+                            "linearGradientColor": {
+                              "angle": 0,
+                              "colorStopList": [
+                                {
+                                  "percent": 0,
+                                  "color": {
+                                    "color": "#f2f3f3",
+                                    "alpha": 1,
+                                    "alphaColor": "#f2f3f3"
+                                  },
+                                  "minPercent": 0,
+                                  "maxPercent": 100,
+                                  "backgroundColor": "#747e7e"
+                                }
+                              ]
+                            }
+                          },
+                          "beforeStyle": {},
+                          "afterStyle": {},
+                          "styleSource": [
+                            {
+                              "source": "uiGradientEditor",
+                              "style": {
+                                "linearGradientColor": {
+                                  "angle": 0,
+                                  "colorStopList": [
+                                    {
+                                      "percent": 0,
+                                      "color": {
+                                        "color": "#f2f3f3",
+                                        "alpha": 1,
+                                        "alphaColor": "#f2f3f3"
+                                      },
+                                      "minPercent": 0,
+                                      "maxPercent": 100,
+                                      "backgroundColor": "#747e7e"
+                                    }
+                                  ]
+                                }
+                              },
+                              "beforeStyle": {},
+                              "afterStyle": {},
+                              "classList": []
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  "state": "State_1443191028335",
+                  "stateContext": "State_1443190951220",
+                  "childWidgets": [
+                    {
+                      "id": "Widget_1443191715536",
+                      "name": "Streams Tab Title",
+                      "attr": {
+                        "ui-sketch-widget": "",
+                        "ng-class": "{'isPlaying': $root.sketchWidgetSetting.isPlaying}"
+                      },
+                      "styleManager": {
+                        "CLASS_NAME": "StyleManager",
+                        "omniClasses": [
+                          "sketchWidget"
+                        ],
+                        "stateMaps": {
+                          "State_1443191028335": {
+                            "*": {
+                              "style": {
+                                "width": "180px",
+                                "height": "100px",
+                                "linearGradientColor": {
+                                  "colorStopList": [
+                                    {
+                                      "color": {
+                                        "color": "#ffffff",
+                                        "alpha": 1
+                                      },
+                                      "angle": 0
+                                    }
+                                  ]
+                                },
+                                "left": "0px",
+                                "top": "0px"
+                              },
+                              "beforeStyle": {},
+                              "afterStyle": {},
+                              "styleSource": []
+                            }
+                          }
+                        }
+                      },
+                      "state": "State_1443191715536",
+                      "stateContext": "State_1443191028335",
+                      "childWidgets": [
+                        {
+                          "id": "Widget_1443191716685",
+                          "name": "Creative Link Container Widget",
+                          "attr": {
+                            "ui-sketch-widget": "",
+                            "ng-class": "{'isPlaying': $root.sketchWidgetSetting.isPlaying}"
+                          },
+                          "styleManager": {
+                            "CLASS_NAME": "StyleManager",
+                            "omniClasses": [
+                              "sketchWidget",
+                              "widgetContainer"
+                            ],
+                            "stateMaps": {
+                              "State_1443191715536": {
+                                "*": {
+                                  "style": {
+                                    "width": "180px",
+                                    "height": "100px",
+                                    "linearGradientColor": {
+                                      "colorStopList": [
+                                        {
+                                          "color": {
+                                            "color": "#ffffff",
+                                            "alpha": 1
+                                          },
+                                          "angle": 0
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "beforeStyle": {},
+                                  "afterStyle": {},
+                                  "styleSource": []
+                                }
+                              }
+                            }
+                          },
+                          "state": "State_1443191716685",
+                          "stateContext": "State_1443191715536",
+                          "childWidgets": [],
+                          "states": [
+                            {
+                              "id": "State_1443191716685",
+                              "node": "Widget_1443191716685",
+                              "name": "*",
+                              "actionObj": {
+                                "id": "TransitionAction_1443191716685",
+                                "actionType": "Sequence",
+                                "CLASS_NAME": "SequenceTransitionAction",
+                                "widgetObj": "Widget_1443191716685",
+                                "stopOnEach": false,
+                                "childActions": []
+                              },
+                              "CLASS_NAME": "State",
+                              "transitions": [],
+                              "context": "State_1443191715536"
+                            }
+                          ],
+                          "stateOptions": [],
+                          "CLASS_NAME": "ElementSketchWidget",
+                          "html": "",
+                          "markdown": "",
+                          "routes": []
+                        }
+                      ],
+                      "states": [
+                        {
+                          "id": "State_1443191715536",
+                          "node": "Widget_1443191715536",
+                          "name": "*",
+                          "actionObj": {
+                            "id": "TransitionAction_1443191715536",
+                            "actionType": "Sequence",
+                            "CLASS_NAME": "SequenceTransitionAction",
+                            "widgetObj": "Widget_1443191715536",
+                            "stopOnEach": false,
+                            "childActions": []
+                          },
+                          "CLASS_NAME": "State",
+                          "transitions": [
+                            {
+                              "name": "Select Streams",
+                              "id": "Transition_1443361497247",
+                              "trigger": {
+                                "id": "D54B8BC4-4655-4D34-82F1-0B94BBDC5C90",
+                                "triggerType": "Gesture",
+                                "eventName": "tap",
+                                "options": {},
+                                "CLASS_NAME": "GestureTrigger"
+                              },
+                              "actionObj": {
+                                "id": "TransitionAction_1443361497247",
+                                "actionType": "Sequence",
+                                "CLASS_NAME": "SequenceTransitionAction",
+                                "widgetObj": "Widget_1443191715536",
+                                "stopOnEach": false,
+                                "childActions": [
+                                  {
+                                    "id": "TransitionAction_1443361506991",
+                                    "actionType": "Configuration",
+                                    "CLASS_NAME": "ConfigurationTransitionAction",
+                                    "widgetObj": "Widget_1443191255036",
+                                    "configuration": [
+                                      {
+                                        "key": "pickedTabTitle",
+                                        "pickedValue": "Streams"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              "CLASS_NAME": "Transition",
+                              "state": "State_1443191715536"
+                            }
+                          ],
+                          "context": "State_1443191028335"
+                        }
+                      ],
+                      "stateOptions": [],
+                      "CLASS_NAME": "RepoSketchWidget",
+                      "template": "repo/widget/standard/54c84a7b7080489a000041a7/1.0.0/app/widget.html",
+                      "widgetSpec": {
+                        "libraryId": "548e4788708048023a0041a7",
+                        "libraryName": "standard",
+                        "artifactId": "54c84a7b7080489a000041a7",
+                        "name": "Creative Link",
+                        "version": "1.0.0",
+                        "type": "widget",
+                        "projectId": "56055802981b048114284760",
+                        "configuration": {
+                          "handDownConfiguration": {
+                            "color": {
+                              "pickedValue": {
+                                "color": "#d15800",
+                                "alpha": 1,
+                                "alphaColor": "#d15800"
+                              }
+                            },
+                            "inactiveColor": {
+                              "pickedValue": {
+                                "color": "#95a5a6",
+                                "alpha": 1,
+                                "alphaColor": "#95a5a6"
+                              }
+                            },
+                            "backgroundColor": {
+                              "pickedValue": {
+                                "color": "#f2f3f3",
+                                "alpha": 1,
+                                "alphaColor": "#f2f3f3"
+                              }
+                            },
+                            "lineColor": {
+                              "pickedValue": {
+                                "color": "#999966",
+                                "alpha": 1,
+                                "alphaColor": "#999966"
+                              }
+                            }
+                          },
+                          "effect": {
+                            "pickedValue": "fadeOut"
+                          },
+                          "linkTitle": {
+                            "pickedValue": "Streams"
+                          },
+                          "stateGroup": {
+                            "pickedValue": "Tab Titles"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "id": "Widget_1443192041967",
+                      "name": "Collections Tab Title",
+                      "attr": {
+                        "ui-sketch-widget": "",
+                        "ng-class": "{'isPlaying': $root.sketchWidgetSetting.isPlaying}"
+                      },
+                      "styleManager": {
+                        "CLASS_NAME": "StyleManager",
+                        "omniClasses": [
+                          "sketchWidget"
+                        ],
+                        "stateMaps": {
+                          "State_1443191028335": {
+                            "*": {
+                              "style": {
+                                "width": "180px",
+                                "height": "100px",
+                                "linearGradientColor": {
+                                  "colorStopList": [
+                                    {
+                                      "color": {
+                                        "color": "#ffffff",
+                                        "alpha": 1
+                                      },
+                                      "angle": 0
+                                    }
+                                  ]
+                                },
+                                "left": "255px",
+                                "top": "0px"
+                              },
+                              "beforeStyle": {},
+                              "afterStyle": {},
+                              "styleSource": []
+                            }
+                          }
+                        }
+                      },
+                      "state": "State_1443192041967",
+                      "stateContext": "State_1443191028335",
+                      "childWidgets": [
+                        {
+                          "id": "Widget_1443192043278",
+                          "name": "Creative Link Container Widget",
+                          "attr": {
+                            "ui-sketch-widget": "",
+                            "ng-class": "{'isPlaying': $root.sketchWidgetSetting.isPlaying}"
+                          },
+                          "styleManager": {
+                            "CLASS_NAME": "StyleManager",
+                            "omniClasses": [
+                              "sketchWidget",
+                              "widgetContainer"
+                            ],
+                            "stateMaps": {
+                              "State_1443192041967": {
+                                "*": {
+                                  "style": {
+                                    "width": "180px",
+                                    "height": "100px",
+                                    "linearGradientColor": {
+                                      "colorStopList": [
+                                        {
+                                          "color": {
+                                            "color": "#ffffff",
+                                            "alpha": 1
+                                          },
+                                          "angle": 0
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "beforeStyle": {},
+                                  "afterStyle": {},
+                                  "styleSource": []
+                                }
+                              }
+                            }
+                          },
+                          "state": "State_1443192043278",
+                          "stateContext": "State_1443192041967",
+                          "childWidgets": [],
+                          "states": [
+                            {
+                              "id": "State_1443192043278",
+                              "node": "Widget_1443192043278",
+                              "name": "*",
+                              "actionObj": {
+                                "id": "TransitionAction_1443192043278",
+                                "actionType": "Sequence",
+                                "CLASS_NAME": "SequenceTransitionAction",
+                                "widgetObj": "Widget_1443192043278",
+                                "stopOnEach": false,
+                                "childActions": []
+                              },
+                              "CLASS_NAME": "State",
+                              "transitions": [],
+                              "context": "State_1443192041967"
+                            }
+                          ],
+                          "stateOptions": [],
+                          "CLASS_NAME": "ElementSketchWidget",
+                          "html": "",
+                          "markdown": "",
+                          "routes": []
+                        }
+                      ],
+                      "states": [
+                        {
+                          "id": "State_1443192041967",
+                          "node": "Widget_1443192041967",
+                          "name": "*",
+                          "actionObj": {
+                            "id": "TransitionAction_1443192041967",
+                            "actionType": "Sequence",
+                            "CLASS_NAME": "SequenceTransitionAction",
+                            "widgetObj": "Widget_1443192041967",
+                            "stopOnEach": false,
+                            "childActions": []
+                          },
+                          "CLASS_NAME": "State",
+                          "transitions": [
+                            {
+                              "name": "Select Collections",
+                              "id": "Transition_1443361540905",
+                              "trigger": {
+                                "id": "D54B8BC4-4655-4D34-82F1-0B94BBDC5C90",
+                                "triggerType": "Gesture",
+                                "eventName": "tap",
+                                "options": {},
+                                "CLASS_NAME": "GestureTrigger"
+                              },
+                              "actionObj": {
+                                "id": "TransitionAction_1443361540905",
+                                "actionType": "Sequence",
+                                "CLASS_NAME": "SequenceTransitionAction",
+                                "widgetObj": "Widget_1443192041967",
+                                "stopOnEach": false,
+                                "childActions": [
+                                  {
+                                    "id": "TransitionAction_1443361548801",
+                                    "actionType": "Configuration",
+                                    "CLASS_NAME": "ConfigurationTransitionAction",
+                                    "widgetObj": "Widget_1443191255036",
+                                    "configuration": [
+                                      {
+                                        "key": "pickedTabTitle",
+                                        "pickedValue": "Collections"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              "CLASS_NAME": "Transition",
+                              "state": "State_1443192041967"
+                            }
+                          ],
+                          "context": "State_1443191028335"
+                        }
+                      ],
+                      "stateOptions": [],
+                      "CLASS_NAME": "RepoSketchWidget",
+                      "template": "repo/widget/standard/54c84a7b7080489a000041a7/1.0.0/app/widget.html",
+                      "widgetSpec": {
+                        "libraryId": "548e4788708048023a0041a7",
+                        "libraryName": "standard",
+                        "artifactId": "54c84a7b7080489a000041a7",
+                        "name": "Creative Link",
+                        "version": "1.0.0",
+                        "type": "widget",
+                        "projectId": "56055802981b048114284760",
+                        "configuration": {
+                          "handDownConfiguration": {
+                            "color": {
+                              "pickedValue": {
+                                "color": "#28c190",
+                                "alpha": 1,
+                                "alphaColor": "#28c190"
+                              }
+                            },
+                            "backgroundColor": {
+                              "pickedValue": {
+                                "color": "#f2f3f3",
+                                "alpha": 1,
+                                "alphaColor": "#f2f3f3"
+                              }
+                            },
+                            "lineColor": {
+                              "pickedValue": {
+                                "color": "#28c190",
+                                "alpha": 1,
+                                "alphaColor": "#28c190"
+                              }
+                            }
+                          },
+                          "effect": {
+                            "pickedValue": "fadeOut"
+                          },
+                          "linkTitle": {
+                            "pickedValue": "Collections"
+                          },
+                          "stateGroup": {
+                            "pickedValue": "Tab Titles"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "id": "Widget_1443192103380",
+                      "name": "Check-ins Tab Title",
+                      "attr": {
+                        "ui-sketch-widget": "",
+                        "ng-class": "{'isPlaying': $root.sketchWidgetSetting.isPlaying}"
+                      },
+                      "styleManager": {
+                        "CLASS_NAME": "StyleManager",
+                        "omniClasses": [
+                          "sketchWidget"
+                        ],
+                        "stateMaps": {
+                          "State_1443191028335": {
+                            "*": {
+                              "style": {
+                                "width": "180px",
+                                "height": "100px",
+                                "linearGradientColor": {
+                                  "colorStopList": [
+                                    {
+                                      "color": {
+                                        "color": "#ffffff",
+                                        "alpha": 1
+                                      },
+                                      "angle": 0
+                                    }
+                                  ]
+                                },
+                                "left": "510px",
+                                "top": "0px"
+                              },
+                              "beforeStyle": {},
+                              "afterStyle": {},
+                              "styleSource": []
+                            }
+                          }
+                        }
+                      },
+                      "state": "State_1443192103381",
+                      "stateContext": "State_1443191028335",
+                      "childWidgets": [
+                        {
+                          "id": "Widget_1443192104651",
+                          "name": "Creative Link Container Widget",
+                          "attr": {
+                            "ui-sketch-widget": "",
+                            "ng-class": "{'isPlaying': $root.sketchWidgetSetting.isPlaying}"
+                          },
+                          "styleManager": {
+                            "CLASS_NAME": "StyleManager",
+                            "omniClasses": [
+                              "sketchWidget",
+                              "widgetContainer"
+                            ],
+                            "stateMaps": {
+                              "State_1443192103381": {
+                                "*": {
+                                  "style": {
+                                    "width": "180px",
+                                    "height": "100px",
+                                    "linearGradientColor": {
+                                      "colorStopList": [
+                                        {
+                                          "color": {
+                                            "color": "#ffffff",
+                                            "alpha": 1
+                                          },
+                                          "angle": 0
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "beforeStyle": {},
+                                  "afterStyle": {},
+                                  "styleSource": []
+                                }
+                              }
+                            }
+                          },
+                          "state": "State_1443192104651",
+                          "stateContext": "State_1443192103381",
+                          "childWidgets": [],
+                          "states": [
+                            {
+                              "id": "State_1443192104651",
+                              "node": "Widget_1443192104651",
+                              "name": "*",
+                              "actionObj": {
+                                "id": "TransitionAction_1443192104651",
+                                "actionType": "Sequence",
+                                "CLASS_NAME": "SequenceTransitionAction",
+                                "widgetObj": "Widget_1443192104651",
+                                "stopOnEach": false,
+                                "childActions": []
+                              },
+                              "CLASS_NAME": "State",
+                              "transitions": [],
+                              "context": "State_1443192103381"
+                            }
+                          ],
+                          "stateOptions": [],
+                          "CLASS_NAME": "ElementSketchWidget",
+                          "html": "",
+                          "markdown": "",
+                          "routes": []
+                        }
+                      ],
+                      "states": [
+                        {
+                          "id": "State_1443192103381",
+                          "node": "Widget_1443192103380",
+                          "name": "*",
+                          "actionObj": {
+                            "id": "TransitionAction_1443192103381",
+                            "actionType": "Sequence",
+                            "CLASS_NAME": "SequenceTransitionAction",
+                            "widgetObj": "Widget_1443192103380",
+                            "stopOnEach": false,
+                            "childActions": []
+                          },
+                          "CLASS_NAME": "State",
+                          "transitions": [
+                            {
+                              "name": "Select Check-ins",
+                              "id": "Transition_1443361571519",
+                              "trigger": {
+                                "id": "D54B8BC4-4655-4D34-82F1-0B94BBDC5C90",
+                                "triggerType": "Gesture",
+                                "eventName": "tap",
+                                "options": {},
+                                "CLASS_NAME": "GestureTrigger"
+                              },
+                              "actionObj": {
+                                "id": "TransitionAction_1443361571520",
+                                "actionType": "Sequence",
+                                "CLASS_NAME": "SequenceTransitionAction",
+                                "widgetObj": "Widget_1443192103380",
+                                "stopOnEach": false,
+                                "childActions": [
+                                  {
+                                    "id": "TransitionAction_1443361579856",
+                                    "actionType": "Configuration",
+                                    "CLASS_NAME": "ConfigurationTransitionAction",
+                                    "widgetObj": "Widget_1443191255036",
+                                    "configuration": [
+                                      {
+                                        "key": "pickedTabTitle",
+                                        "pickedValue": "Check-ins"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              "CLASS_NAME": "Transition",
+                              "state": "State_1443192103381"
+                            }
+                          ],
+                          "context": "State_1443191028335"
+                        }
+                      ],
+                      "stateOptions": [],
+                      "CLASS_NAME": "RepoSketchWidget",
+                      "template": "repo/widget/standard/54c84a7b7080489a000041a7/1.0.0/app/widget.html",
+                      "widgetSpec": {
+                        "libraryId": "548e4788708048023a0041a7",
+                        "libraryName": "standard",
+                        "artifactId": "54c84a7b7080489a000041a7",
+                        "name": "Creative Link",
+                        "version": "1.0.0",
+                        "type": "widget",
+                        "projectId": "56055802981b048114284760",
+                        "configuration": {
+                          "handDownConfiguration": {
+                            "color": {
+                              "pickedValue": {
+                                "color": "#28c190",
+                                "alpha": 1,
+                                "alphaColor": "#28c190"
+                              }
+                            },
+                            "backgroundColor": {
+                              "pickedValue": {
+                                "color": "#f2f3f3",
+                                "alpha": 1,
+                                "alphaColor": "#f2f3f3"
+                              }
+                            },
+                            "lineColor": {
+                              "pickedValue": {
+                                "color": "#28c190",
+                                "alpha": 1,
+                                "alphaColor": "#28c190"
+                              }
+                            }
+                          },
+                          "effect": {
+                            "pickedValue": "fadeOut"
+                          },
+                          "linkTitle": {
+                            "pickedValue": "Check-ins"
+                          },
+                          "stateGroup": {
+                            "pickedValue": "Tab Titles"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "id": "Widget_1443341283349",
+                      "name": "FFF",
+                      "attr": {
+                        "ui-sketch-widget": "",
+                        "ng-class": "{'isPlaying': $root.sketchWidgetSetting.isPlaying}"
+                      },
+                      "styleManager": {
+                        "CLASS_NAME": "StyleManager",
+                        "omniClasses": [
+                          "sketchWidget"
+                        ],
+                        "stateMaps": {
+                          "State_1443191028335": {
+                            "*": {
+                              "style": {
+                                "width": "180px",
+                                "height": "100px",
+                                "linearGradientColor": {
+                                  "colorStopList": [
+                                    {
+                                      "color": {
+                                        "color": "#ffffff",
+                                        "alpha": 1
+                                      },
+                                      "angle": 0
+                                    }
+                                  ]
+                                },
+                                "left": "768px",
+                                "top": "0px"
+                              },
+                              "beforeStyle": {},
+                              "afterStyle": {},
+                              "styleSource": []
+                            }
+                          }
+                        }
+                      },
+                      "state": "State_1443341283350",
+                      "stateContext": "State_1443191028335",
+                      "childWidgets": [
+                        {
+                          "id": "Widget_1443341284727",
+                          "name": "Creative Link Container Widget",
+                          "attr": {
+                            "ui-sketch-widget": "",
+                            "ng-class": "{'isPlaying': $root.sketchWidgetSetting.isPlaying}"
+                          },
+                          "styleManager": {
+                            "CLASS_NAME": "StyleManager",
+                            "omniClasses": [
+                              "sketchWidget",
+                              "widgetContainer"
+                            ],
+                            "stateMaps": {
+                              "State_1443341283350": {
+                                "*": {
+                                  "style": {
+                                    "width": "180px",
+                                    "height": "100px",
+                                    "linearGradientColor": {
+                                      "colorStopList": [
+                                        {
+                                          "color": {
+                                            "color": "#ffffff",
+                                            "alpha": 1
+                                          },
+                                          "angle": 0
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "beforeStyle": {},
+                                  "afterStyle": {},
+                                  "styleSource": []
+                                }
+                              }
+                            }
+                          },
+                          "state": "State_1443341284728",
+                          "stateContext": "State_1443341283350",
+                          "childWidgets": [],
+                          "states": [
+                            {
+                              "id": "State_1443341284728",
+                              "node": "Widget_1443341284727",
+                              "name": "*",
+                              "actionObj": {
+                                "id": "TransitionAction_1443341284728",
+                                "actionType": "Sequence",
+                                "CLASS_NAME": "SequenceTransitionAction",
+                                "widgetObj": "Widget_1443341284727",
+                                "stopOnEach": false,
+                                "childActions": []
+                              },
+                              "CLASS_NAME": "State",
+                              "transitions": [],
+                              "context": "State_1443341283350"
+                            }
+                          ],
+                          "stateOptions": [],
+                          "CLASS_NAME": "ElementSketchWidget",
+                          "html": "",
+                          "markdown": "",
+                          "routes": []
+                        }
+                      ],
+                      "states": [
+                        {
+                          "id": "State_1443341283350",
+                          "node": "Widget_1443341283349",
+                          "name": "*",
+                          "actionObj": {
+                            "id": "TransitionAction_1443341283350",
+                            "actionType": "Sequence",
+                            "CLASS_NAME": "SequenceTransitionAction",
+                            "widgetObj": "Widget_1443341283349",
+                            "stopOnEach": false,
+                            "childActions": []
+                          },
+                          "CLASS_NAME": "State",
+                          "transitions": [
+                            {
+                              "name": "Select Friends",
+                              "id": "Transition_1443361601274",
+                              "trigger": {
+                                "id": "D54B8BC4-4655-4D34-82F1-0B94BBDC5C90",
+                                "triggerType": "Gesture",
+                                "eventName": "tap",
+                                "options": {},
+                                "CLASS_NAME": "GestureTrigger"
+                              },
+                              "actionObj": {
+                                "id": "TransitionAction_1443361601274",
+                                "actionType": "Sequence",
+                                "CLASS_NAME": "SequenceTransitionAction",
+                                "widgetObj": "Widget_1443341283349",
+                                "stopOnEach": false,
+                                "childActions": [
+                                  {
+                                    "id": "TransitionAction_1443361608270",
+                                    "actionType": "Configuration",
+                                    "CLASS_NAME": "ConfigurationTransitionAction",
+                                    "widgetObj": "Widget_1443191255036",
+                                    "configuration": [
+                                      {
+                                        "key": "pickedTabTitle",
+                                        "pickedValue": "Friends"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              "CLASS_NAME": "Transition",
+                              "state": "State_1443341283350"
+                            }
+                          ],
+                          "context": "State_1443191028335"
+                        }
+                      ],
+                      "stateOptions": [],
+                      "CLASS_NAME": "RepoSketchWidget",
+                      "template": "repo/widget/standard/54c84a7b7080489a000041a7/1.0.0/app/widget.html",
+                      "widgetSpec": {
+                        "libraryId": "548e4788708048023a0041a7",
+                        "libraryName": "standard",
+                        "artifactId": "54c84a7b7080489a000041a7",
+                        "name": "Creative Link",
+                        "version": "1.0.0",
+                        "type": "widget",
+                        "projectId": "56055802981b048114284760",
+                        "configuration": {
+                          "handDownConfiguration": {
+                            "color": {
+                              "pickedValue": {
+                                "color": "#28c190",
+                                "alpha": 1,
+                                "alphaColor": "#28c190"
+                              }
+                            },
+                            "backgroundColor": {
+                              "pickedValue": {
+                                "color": "#f2f3f3",
+                                "alpha": 1,
+                                "alphaColor": "#f2f3f3"
+                              }
+                            },
+                            "lineColor": {
+                              "pickedValue": {
+                                "color": "#28c190",
+                                "alpha": 1,
+                                "alphaColor": "#28c190"
+                              }
+                            }
+                          },
+                          "effect": {
+                            "pickedValue": "fadeOut"
+                          },
+                          "linkTitle": {
+                            "pickedValue": "Friends"
+                          },
+                          "stateGroup": {
+                            "pickedValue": "Tab Titles"
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "states": [
+                    {
+                      "id": "State_1443191028335",
+                      "node": "Widget_1443191028335",
+                      "name": "*",
+                      "actionObj": {
+                        "id": "TransitionAction_1443191028335",
+                        "actionType": "Sequence",
+                        "CLASS_NAME": "SequenceTransitionAction",
+                        "widgetObj": "Widget_1443191028335",
+                        "stopOnEach": false,
+                        "childActions": []
+                      },
+                      "CLASS_NAME": "State",
+                      "transitions": [],
+                      "context": "State_1443190951220"
+                    }
+                  ],
+                  "stateOptions": [],
+                  "CLASS_NAME": "ElementSketchWidget",
+                  "html": "",
+                  "markdown": "",
+                  "routes": []
+                },
+                {
+                  "id": "Widget_1443191116316",
+                  "name": "Tab Holder",
+                  "anchor": "80694DA6-8AA6-47D4-A9B0-368900098A97",
+                  "attr": {
+                    "ui-sketch-widget": "",
+                    "ng-class": "{'isPlaying': $root.sketchWidgetSetting.isPlaying}"
+                  },
+                  "styleManager": {
+                    "CLASS_NAME": "StyleManager",
+                    "omniClasses": [
+                      "sketchWidget"
+                    ],
+                    "stateMaps": {
+                      "State_1443190951220": {
+                        "*": {
+                          "style": {
+                            "width": "1024px",
+                            "height": "637px",
+                            "linearGradientColor": {
+                              "colorStopList": [
+                                {
+                                  "color": {
+                                    "color": "#ffffff",
+                                    "alpha": 1
+                                  },
+                                  "angle": 0
+                                }
+                              ]
+                            },
+                            "left": "0px",
+                            "top": "128px"
+                          },
+                          "beforeStyle": {},
+                          "afterStyle": {},
+                          "styleSource": []
+                        }
+                      }
+                    }
+                  },
+                  "state": "State_1443191116316",
+                  "stateContext": "State_1443190951220",
+                  "childWidgets": [
+                    {
+                      "id": "Widget_1443191255036",
+                      "name": "Tab",
+                      "attr": {
+                        "ui-sketch-widget": "",
+                        "ng-class": "{'isPlaying': $root.sketchWidgetSetting.isPlaying}"
+                      },
+                      "styleManager": {
+                        "CLASS_NAME": "StyleManager",
+                        "omniClasses": [
+                          "sketchWidget"
+                        ],
+                        "stateMaps": {
+                          "State_1443191116316": {
+                            "*": {
+                              "style": {
+                                "width": "1024px",
+                                "height": "637px",
+                                "linearGradientColor": {
+                                  "colorStopList": [
+                                    {
+                                      "color": {
+                                        "color": "#ffffff",
+                                        "alpha": 1
+                                      },
+                                      "angle": 0
+                                    }
+                                  ]
+                                },
+                                "left": "0px",
+                                "top": "0px"
+                              },
+                              "beforeStyle": {},
+                              "afterStyle": {},
+                              "styleSource": []
+                            }
+                          }
+                        }
+                      },
+                      "state": "State_1443191255036",
+                      "stateContext": "State_1443191116316",
+                      "childWidgets": [
+                        {
+                          "id": "Widget_1443191262201",
+                          "name": "Tab Container Widget",
+                          "attr": {
+                            "ui-sketch-widget": "",
+                            "ng-class": "{'isPlaying': $root.sketchWidgetSetting.isPlaying}"
+                          },
+                          "styleManager": {
+                            "CLASS_NAME": "StyleManager",
+                            "omniClasses": [
+                              "sketchWidget",
+                              "widgetContainer"
+                            ],
+                            "stateMaps": {
+                              "State_1443191255036": {
+                                "*": {
+                                  "style": {
+                                    "width": "1024px",
+                                    "height": "637px",
+                                    "linearGradientColor": {
+                                      "colorStopList": [
+                                        {
+                                          "color": {
+                                            "color": "#ffffff",
+                                            "alpha": 1
+                                          },
+                                          "angle": 0
+                                        }
+                                      ]
+                                    },
+                                    "left": "0px",
+                                    "top": "0px"
+                                  },
+                                  "beforeStyle": {},
+                                  "afterStyle": {},
+                                  "styleSource": []
+                                }
+                              }
+                            }
+                          },
+                          "state": "State_1443191262201",
+                          "stateContext": "State_1443191255036",
+                          "childWidgets": [
+                            {
+                              "id": "Widget_1443361058759",
+                              "name": "Streams Tab Content",
+                              "anchor": "ACD77ACC-BAB4-4198-901E-F219FA2A2641[Streams]",
+                              "attr": {
+                                "ui-sketch-widget": "",
+                                "ng-class": "{'isPlaying': $root.sketchWidgetSetting.isPlaying}"
+                              },
+                              "styleManager": {
+                                "CLASS_NAME": "StyleManager",
+                                "omniClasses": [
+                                  "sketchWidget"
+                                ],
+                                "stateMaps": {
+                                  "State_1443191262201": {
+                                    "*": {
+                                      "style": {
+                                        "width": "1024px",
+                                        "height": "637px",
+                                        "left": "0px",
+                                        "top": "0px",
+                                        "linearGradientColor": {
+                                          "angle": 0,
+                                          "colorStopList": [
+                                            {
+                                              "percent": 0,
+                                              "color": {
+                                                "color": "#3498db",
+                                                "alpha": 1,
+                                                "alphaColor": "#3498db"
+                                              },
+                                              "minPercent": 0,
+                                              "maxPercent": 100,
+                                              "backgroundColor": "#a7d2ef"
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "beforeStyle": {},
+                                      "afterStyle": {},
+                                      "styleSource": [
+                                        {
+                                          "source": "uiGradientEditor",
+                                          "style": {
+                                            "linearGradientColor": {
+                                              "angle": 0,
+                                              "colorStopList": [
+                                                {
+                                                  "percent": 0,
+                                                  "color": {
+                                                    "color": "#3498db",
+                                                    "alpha": 1,
+                                                    "alphaColor": "#3498db"
+                                                  },
+                                                  "minPercent": 0,
+                                                  "maxPercent": 100,
+                                                  "backgroundColor": "#a7d2ef"
+                                                }
+                                              ]
+                                            }
+                                          },
+                                          "beforeStyle": {},
+                                          "afterStyle": {},
+                                          "classList": []
+                                        }
+                                      ]
+                                    }
+                                  }
+                                }
+                              },
+                              "state": "State_1443361058760",
+                              "stateContext": "State_1443191262201",
+                              "childWidgets": [],
+                              "states": [
+                                {
+                                  "id": "State_1443361058760",
+                                  "node": "Widget_1443361058759",
+                                  "name": "*",
+                                  "actionObj": {
+                                    "id": "TransitionAction_1443361058760",
+                                    "actionType": "Sequence",
+                                    "CLASS_NAME": "SequenceTransitionAction",
+                                    "widgetObj": "Widget_1443361058759",
+                                    "stopOnEach": false,
+                                    "childActions": []
+                                  },
+                                  "CLASS_NAME": "State",
+                                  "transitions": [],
+                                  "context": "State_1443191262201"
+                                }
+                              ],
+                              "stateOptions": [],
+                              "CLASS_NAME": "ElementSketchWidget",
+                              "html": "",
+                              "markdown": "",
+                              "routes": []
+                            },
+                            {
+                              "id": "Widget_1443361118230",
+                              "name": "Collections Tab Content",
+                              "anchor": "ACD77ACC-BAB4-4198-901E-F219FA2A2641[Collections]",
+                              "attr": {
+                                "ui-sketch-widget": "",
+                                "ng-class": "{'isPlaying': $root.sketchWidgetSetting.isPlaying}"
+                              },
+                              "styleManager": {
+                                "CLASS_NAME": "StyleManager",
+                                "omniClasses": [
+                                  "sketchWidget"
+                                ],
+                                "stateMaps": {
+                                  "State_1443191262201": {
+                                    "*": {
+                                      "style": {
+                                        "width": "1024px",
+                                        "height": "637px",
+                                        "left": "0px",
+                                        "top": "0px",
+                                        "linearGradientColor": {
+                                          "angle": 0,
+                                          "colorStopList": [
+                                            {
+                                              "percent": 0,
+                                              "color": {
+                                                "color": "#cc0000",
+                                                "alpha": 1,
+                                                "alphaColor": "#cc0000"
+                                              },
+                                              "minPercent": 0,
+                                              "maxPercent": 100,
+                                              "backgroundColor": "#ff3333"
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "beforeStyle": {},
+                                      "afterStyle": {},
+                                      "styleSource": [
+                                        {
+                                          "source": "uiGradientEditor",
+                                          "style": {
+                                            "linearGradientColor": {
+                                              "angle": 0,
+                                              "colorStopList": [
+                                                {
+                                                  "percent": 0,
+                                                  "color": {
+                                                    "color": "#cc0000",
+                                                    "alpha": 1,
+                                                    "alphaColor": "#cc0000"
+                                                  },
+                                                  "minPercent": 0,
+                                                  "maxPercent": 100,
+                                                  "backgroundColor": "#ff3333"
+                                                }
+                                              ]
+                                            }
+                                          },
+                                          "beforeStyle": {},
+                                          "afterStyle": {},
+                                          "classList": []
+                                        }
+                                      ]
+                                    }
+                                  }
+                                }
+                              },
+                              "state": "State_1443361118231",
+                              "stateContext": "State_1443191262201",
+                              "childWidgets": [],
+                              "states": [
+                                {
+                                  "id": "State_1443361118231",
+                                  "node": "Widget_1443361118230",
+                                  "name": "*",
+                                  "actionObj": {
+                                    "id": "TransitionAction_1443361118231",
+                                    "actionType": "Sequence",
+                                    "CLASS_NAME": "SequenceTransitionAction",
+                                    "widgetObj": "Widget_1443361118230",
+                                    "stopOnEach": false,
+                                    "childActions": []
+                                  },
+                                  "CLASS_NAME": "State",
+                                  "transitions": [],
+                                  "context": "State_1443191262201"
+                                }
+                              ],
+                              "stateOptions": [],
+                              "CLASS_NAME": "ElementSketchWidget",
+                              "html": "",
+                              "markdown": "",
+                              "routes": []
+                            },
+                            {
+                              "id": "Widget_1443361168773",
+                              "name": "Check-ins Tab Content",
+                              "anchor": "ACD77ACC-BAB4-4198-901E-F219FA2A2641[Check-ins]",
+                              "attr": {
+                                "ui-sketch-widget": "",
+                                "ng-class": "{'isPlaying': $root.sketchWidgetSetting.isPlaying}"
+                              },
+                              "styleManager": {
+                                "CLASS_NAME": "StyleManager",
+                                "omniClasses": [
+                                  "sketchWidget"
+                                ],
+                                "stateMaps": {
+                                  "State_1443191262201": {
+                                    "*": {
+                                      "style": {
+                                        "width": "1024px",
+                                        "height": "637px",
+                                        "left": "0px",
+                                        "top": "0px",
+                                        "linearGradientColor": {
+                                          "angle": 0,
+                                          "colorStopList": [
+                                            {
+                                              "percent": 0,
+                                              "color": {
+                                                "color": "#ffcc66",
+                                                "alpha": 1,
+                                                "alphaColor": "#ffcc66"
+                                              },
+                                              "minPercent": 0,
+                                              "maxPercent": 100,
+                                              "backgroundColor": "#b37700"
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "beforeStyle": {},
+                                      "afterStyle": {},
+                                      "styleSource": [
+                                        {
+                                          "source": "uiGradientEditor",
+                                          "style": {
+                                            "linearGradientColor": {
+                                              "angle": 0,
+                                              "colorStopList": [
+                                                {
+                                                  "percent": 0,
+                                                  "color": {
+                                                    "color": "#ffcc66",
+                                                    "alpha": 1,
+                                                    "alphaColor": "#ffcc66"
+                                                  },
+                                                  "minPercent": 0,
+                                                  "maxPercent": 100,
+                                                  "backgroundColor": "#b37700"
+                                                }
+                                              ]
+                                            }
+                                          },
+                                          "beforeStyle": {},
+                                          "afterStyle": {},
+                                          "classList": []
+                                        }
+                                      ]
+                                    }
+                                  }
+                                }
+                              },
+                              "state": "State_1443361168773",
+                              "stateContext": "State_1443191262201",
+                              "childWidgets": [],
+                              "states": [
+                                {
+                                  "id": "State_1443361168773",
+                                  "node": "Widget_1443361168773",
+                                  "name": "*",
+                                  "actionObj": {
+                                    "id": "TransitionAction_1443361168773",
+                                    "actionType": "Sequence",
+                                    "CLASS_NAME": "SequenceTransitionAction",
+                                    "widgetObj": "Widget_1443361168773",
+                                    "stopOnEach": false,
+                                    "childActions": []
+                                  },
+                                  "CLASS_NAME": "State",
+                                  "transitions": [],
+                                  "context": "State_1443191262201"
+                                }
+                              ],
+                              "stateOptions": [],
+                              "CLASS_NAME": "ElementSketchWidget",
+                              "html": "",
+                              "markdown": "",
+                              "routes": []
+                            },
+                            {
+                              "id": "Widget_1443361204458",
+                              "name": "Friends Tab Content",
+                              "anchor": "ACD77ACC-BAB4-4198-901E-F219FA2A2641[Friends]",
+                              "attr": {
+                                "ui-sketch-widget": "",
+                                "ng-class": "{'isPlaying': $root.sketchWidgetSetting.isPlaying}"
+                              },
+                              "styleManager": {
+                                "CLASS_NAME": "StyleManager",
+                                "omniClasses": [
+                                  "sketchWidget"
+                                ],
+                                "stateMaps": {
+                                  "State_1443191262201": {
+                                    "*": {
+                                      "style": {
+                                        "width": "1024px",
+                                        "height": "637px",
+                                        "left": "0px",
+                                        "top": "0px",
+                                        "linearGradientColor": {
+                                          "angle": 0,
+                                          "colorStopList": [
+                                            {
+                                              "percent": 0,
+                                              "color": {
+                                                "color": "#2ecc71",
+                                                "alpha": 1,
+                                                "alphaColor": "#2ecc71"
+                                              },
+                                              "minPercent": 0,
+                                              "maxPercent": 100,
+                                              "backgroundColor": "#91e6b5"
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "beforeStyle": {},
+                                      "afterStyle": {},
+                                      "styleSource": [
+                                        {
+                                          "source": "uiGradientEditor",
+                                          "style": {
+                                            "linearGradientColor": {
+                                              "angle": 0,
+                                              "colorStopList": [
+                                                {
+                                                  "percent": 0,
+                                                  "color": {
+                                                    "color": "#2ecc71",
+                                                    "alpha": 1,
+                                                    "alphaColor": "#2ecc71"
+                                                  },
+                                                  "minPercent": 0,
+                                                  "maxPercent": 100,
+                                                  "backgroundColor": "#91e6b5"
+                                                }
+                                              ]
+                                            }
+                                          },
+                                          "beforeStyle": {},
+                                          "afterStyle": {},
+                                          "classList": []
+                                        }
+                                      ]
+                                    }
+                                  }
+                                }
+                              },
+                              "state": "State_1443361204459",
+                              "stateContext": "State_1443191262201",
+                              "childWidgets": [],
+                              "states": [
+                                {
+                                  "id": "State_1443361204459",
+                                  "node": "Widget_1443361204458",
+                                  "name": "*",
+                                  "actionObj": {
+                                    "id": "TransitionAction_1443361204458",
+                                    "actionType": "Sequence",
+                                    "CLASS_NAME": "SequenceTransitionAction",
+                                    "widgetObj": "Widget_1443361204458",
+                                    "stopOnEach": false,
+                                    "childActions": []
+                                  },
+                                  "CLASS_NAME": "State",
+                                  "transitions": [],
+                                  "context": "State_1443191262201"
+                                }
+                              ],
+                              "stateOptions": [],
+                              "CLASS_NAME": "ElementSketchWidget",
+                              "html": "",
+                              "markdown": "",
+                              "routes": []
+                            }
+                          ],
+                          "states": [
+                            {
+                              "id": "State_1443191262201",
+                              "node": "Widget_1443191262201",
+                              "name": "*",
+                              "actionObj": {
+                                "id": "TransitionAction_1443191262201",
+                                "actionType": "Sequence",
+                                "CLASS_NAME": "SequenceTransitionAction",
+                                "widgetObj": "Widget_1443191262201",
+                                "stopOnEach": false,
+                                "childActions": []
+                              },
+                              "CLASS_NAME": "State",
+                              "transitions": [],
+                              "context": "State_1443191255036"
+                            }
+                          ],
+                          "stateOptions": [],
+                          "CLASS_NAME": "ElementSketchWidget",
+                          "html": "",
+                          "markdown": "",
+                          "routes": []
+                        }
+                      ],
+                      "states": [
+                        {
+                          "id": "State_1443191255036",
+                          "node": "Widget_1443191255036",
+                          "name": "*",
+                          "actionObj": {
+                            "id": "TransitionAction_1443191255036",
+                            "actionType": "Sequence",
+                            "CLASS_NAME": "SequenceTransitionAction",
+                            "widgetObj": "Widget_1443191255036",
+                            "stopOnEach": false,
+                            "childActions": []
+                          },
+                          "CLASS_NAME": "State",
+                          "transitions": [],
+                          "context": "State_1443191116316"
+                        }
+                      ],
+                      "stateOptions": [],
+                      "CLASS_NAME": "RepoSketchWidget",
+                      "template": "repo/widget/standard/54c1f7ff708048a2060041a7/1.0.0/app/widget.html",
+                      "widgetSpec": {
+                        "libraryId": "548e4788708048023a0041a7",
+                        "libraryName": "standard",
+                        "artifactId": "54c1f7ff708048a2060041a7",
+                        "name": "Content Tab",
+                        "version": "1.0.0",
+                        "type": "widget",
+                        "projectId": "56055802981b048114284760",
+                        "configuration": {
+                          "handDownConfiguration": {
+                            "tabHeaderWidth": {
+                              "pickedValue": "7em"
+                            },
+                            "tabHeaderHeight": {
+                              "pickedValue": "0em"
+                            }
+                          },
+                          "tabTitles": {
+                            "pickedValue": [
+                              {
+                                "name": "Streams"
+                              },
+                              {
+                                "name": "Collections"
+                              },
+                              {
+                                "name": "Check-ins"
+                              },
+                              {
+                                "name": "Friends"
+                              }
+                            ]
+                          },
+                          "pickedTabTitle": {
+                            "pickedValue": "Friends"
+                          },
+                          "transition": {
+                            "pickedValue": "carouselToLeft"
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "states": [
+                    {
+                      "id": "State_1443191116316",
+                      "node": "Widget_1443191116316",
+                      "name": "*",
+                      "actionObj": {
+                        "id": "TransitionAction_1443191116316",
+                        "actionType": "Sequence",
+                        "CLASS_NAME": "SequenceTransitionAction",
+                        "widgetObj": "Widget_1443191116316",
+                        "stopOnEach": false,
+                        "childActions": []
+                      },
+                      "CLASS_NAME": "State",
+                      "transitions": [],
+                      "context": "State_1443190951220"
+                    }
+                  ],
+                  "stateOptions": [],
+                  "CLASS_NAME": "ElementSketchWidget",
+                  "html": "",
+                  "markdown": "",
+                  "routes": []
+                }
+              ],
+              "states": [
+                {
+                  "id": "State_1443190951220",
+                  "node": "Widget_1443190951219",
+                  "name": "*",
+                  "actionObj": {
+                    "id": "TransitionAction_1443190951220",
+                    "actionType": "Sequence",
+                    "CLASS_NAME": "SequenceTransitionAction",
+                    "widgetObj": "Widget_1443190951219",
+                    "stopOnEach": false,
+                    "childActions": []
+                  },
+                  "CLASS_NAME": "State",
+                  "transitions": [],
+                  "context": "State_1443190945025"
+                }
+              ],
+              "stateOptions": [],
+              "CLASS_NAME": "ElementSketchWidget",
+              "html": "",
+              "markdown": "",
+              "routes": []
+            }
+          ],
+          "states": [
+            {
+              "id": "State_1443190945025",
+              "node": "Widget_1443190945025",
+              "name": "*",
+              "actionObj": {
+                "id": "TransitionAction_1443190945025",
+                "actionType": "Sequence",
+                "CLASS_NAME": "SequenceTransitionAction",
+                "widgetObj": "Widget_1443190945025",
+                "stopOnEach": false,
+                "childActions": []
+              },
+              "CLASS_NAME": "State",
+              "transitions": [],
+              "context": "State_1443190895845"
+            },
+            {
+              "id": "State_1443190945075",
+              "node": "Widget_1443190945025",
+              "name": "select",
+              "actionObj": {
+                "id": "TransitionAction_1443190945075",
+                "actionType": "Sequence",
+                "CLASS_NAME": "SequenceTransitionAction",
+                "widgetObj": "Widget_1443190945025",
+                "stopOnEach": false,
+                "childActions": []
+              },
+              "CLASS_NAME": "State",
+              "transitions": [],
+              "context": "State_1443190895845"
+            }
+          ],
+          "stateOptions": [
+            {
+              "name": "select"
+            }
+          ],
+          "CLASS_NAME": "RepoSketchWidget",
+          "template": "repo/widget/standard/548e48d1708048063a0041a8/1.0.0/app/widget.html",
+          "widgetSpec": {
+            "libraryId": "548e4788708048023a0041a7",
+            "libraryName": "standard",
+            "artifactId": "548e48d1708048063a0041a8",
+            "name": "Side Bar",
+            "version": "1.0.0",
+            "type": "widget",
+            "projectId": "56055802981b048114284760",
+            "configuration": {
+              "handDownConfiguration": {}
+            }
+          }
+        }
+      ],
+      "states": [
+        {
+          "id": "State_1443190895845",
+          "node": "Widget_1443190895844",
+          "name": "*",
+          "actionObj": {
+            "id": "TransitionAction_1443190895845",
+            "actionType": "Sequence",
+            "CLASS_NAME": "SequenceTransitionAction",
+            "widgetObj": "Widget_1443190895844",
+            "stopOnEach": false,
+            "childActions": []
+          },
+          "CLASS_NAME": "State",
+          "transitions": [],
+          "context": ""
+        }
+      ],
+      "stateOptions": [],
+      "CLASS_NAME": "PageSketchWidget"
+    }
+  ]
+}

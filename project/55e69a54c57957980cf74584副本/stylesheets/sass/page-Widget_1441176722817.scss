@@ -1,0 +1,127 @@
+@import "compass/css3";
+
+#Widget_1441176722817 {
+    & {
+        @include background(linear-gradient(0deg, #2ecc71 0%, rgba(46, 204, 113, 0.70) 50%, #2ecc71 100%));
+        #Widget_1441177272848 {
+            & {
+                width: 1024px;
+                height: 767px;
+                background: #ffffff;
+                left: 0px;
+                top: 0px;
+                #Widget_1441177278067 {
+                    & {
+                        width: 1024px;
+                        height: 767px;
+                        background: #ffffff;
+                        left: 0px;
+                        top: 0px;
+                        #Widget_1441179877213 {
+                            & {
+                                #Widget_1441180700147 {
+                                    & {
+                                    }
+                                }
+                                #Widget_1441181327406 {
+                                    & {
+                                    }
+                                }
+                                #Widget_1441181507595 {
+                                    & {
+                                    }
+                                }
+                                #Widget_1441182225803 {
+                                    & {
+                                    }
+                                }
+                            }
+                        }
+                        #Widget_1441258496323 {
+                            & {
+                                width: 1024px;
+                                height: 767px;
+                                background: #ffffff;
+                                left: 0px;
+                                top: 0px;
+                            }
+                        }
+                    }
+                }
+            }
+            &[state='select'] {
+                #Widget_1441177278067 {
+                    & {
+                        #Widget_1441179877213 {
+                            & {
+                                width: 60px;
+                                height: 767px;
+                                left: 0px;
+                                top: 0px;
+                                @include background(linear-gradient(45deg, #2ecc71 0%, #ffcc66 100%));
+                                #Widget_1441180700147 {
+                                    & {
+                                        width: 40px;
+                                        height: 40px;
+                                        left: 10px;
+                                        top: 10px;
+                                        background-image: url(../resource/image/speaker_up_.svg);
+                                        background-position: 50% 50%;
+                                        background-size: contain;
+                                        background-repeat: no-repeat;
+                                    }
+                                    &[state='mute'] {
+                                        background-image: url(../resource/image/speaker_mute_.svg);
+                                        background-position: 50% 50%;
+                                        background-size: contain;
+                                        background-repeat: no-repeat;
+                                    }
+                                }
+                                #Widget_1441181327406 {
+                                    & {
+                                        width: 40px;
+                                        height: 40px;
+                                        left: 10px;
+                                        top: 70px;
+                                        background-image: url(../resource/image/help.svg);
+                                        background-position: 50% 50%;
+                                        background-size: contain;
+                                        background-repeat: no-repeat;
+                                    }
+                                }
+                                #Widget_1441181507595 {
+                                    & {
+                                        width: 40px;
+                                        height: 40px;
+                                        left: 10px;
+                                        top: 130px;
+                                        background-image: url(../resource/image/report.svg);
+                                        background-position: 50% 50%;
+                                        background-repeat: no-repeat;
+                                        background-size: contain;
+                                    }
+                                }
+                                #Widget_1441182225803 {
+                                    & {
+                                        width: 40px;
+                                        height: 40px;
+                                        left: 10px;
+                                        top: 190px;
+                                        background-image: url(../resource/image/setting.svg);
+                                        background-position: 50% 50%;
+                                        background-repeat: no-repeat;
+                                        background-size: contain;
+                                    }
+                                }
+                            }
+                        }
+                        #Widget_1441258496323 {
+                            & {
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,8 @@
+@import "sass/tab";
+
+@import "configuration-Widget_1443191255036";
+$configuration-Widget_1443191255036: map-merge($default-tab-value-map, $configuration-Widget_1443191255036);
+#Widget_1443191255036
+{
+@include tab($configuration-Widget_1443191255036...);
+}

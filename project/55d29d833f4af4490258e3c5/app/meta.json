@@ -1,0 +1,32 @@
+{
+  "artifacts": [
+    {
+      "type": "widget",
+      "libraryName": "standard",
+      "artifactId": "548e499a708048053a0041a7",
+      "version": "1.0.0"
+    },
+    {
+      "type": "widget",
+      "libraryName": "standard",
+      "artifactId": "548e48d1708048063a0041a8",
+      "version": "1.0.0"
+    },
+    {
+      "type": "widget",
+      "libraryName": "standard",
+      "artifactId": "54c1f7ff708048a2060041a7",
+      "version": "1.0.0"
+    },
+    {
+      "type": "widget",
+      "libraryName": "standard",
+      "artifactId": "54c84a7b7080489a000041a7",
+      "version": "1.0.0"
+    }
+  ],
+  "locations": [
+    "page-Widget_1439866248491"
+  ],
+  "pageTransition": {}
+}

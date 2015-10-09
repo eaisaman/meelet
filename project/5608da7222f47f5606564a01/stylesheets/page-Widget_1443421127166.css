@@ -1,0 +1,41 @@
+#Widget_1443421127166 {
+  background-position: 0% 0%;
+  background-image: url(../resource/image/bg-2.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+#Widget_1443421127166 #Widget_1443495442385 {
+  width: 100px;
+  height: 100px;
+  left: 765.664px;
+  top: 616.664px;
+  background-image: url(../resource/image/little-bird.png);
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+#Widget_1443421127166 #Widget_1443495588915 {
+  width: 846.863px;
+  height: 80px;
+  left: 91.625px;
+  top: 232.646px;
+  background-position: 0% 0%;
+}
+#Widget_1443421127166 #Widget_1443495667095 {
+  width: 846.863px;
+  height: 240px;
+  left: 91.625px;
+  top: 388.64599999999996px;
+  border-color: #2ecc71;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 0px;
+  background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuMCIgeTE9IjAuNSIgeDI9IjEuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2VjZjBmMSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzJlY2M3MSIgc3RvcC1vcGFjaXR5PSIwLjciLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyYWQpIiAvPjwvc3ZnPiA=');
+  background: -moz-linear-gradient(0deg, #ecf0f1 0%, rgba(46, 204, 113, 0.7) 100%);
+  background: -webkit-linear-gradient(0deg, #ecf0f1 0%, rgba(46, 204, 113, 0.7) 100%);
+  background: linear-gradient(90deg, #ecf0f1 0%, rgba(46, 204, 113, 0.7) 100%);
+  opacity: 0;
+}
+#Widget_1443421127166 #Widget_1443495667095[state='Display'] {
+  opacity: 1;
+}
