@@ -30,7 +30,7 @@ define(
             };
 
             appModule.
-                config(["$provide", function ($provide) {
+                config(["$provide", "$injector", function ($provide, $injector) {
                     $provide.service('bookService', BookService);
 
                     var instance = $injector.get('bookServiceProvider').$get();

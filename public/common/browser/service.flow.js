@@ -30,7 +30,7 @@ define(
             };
 
             appModule.
-                config(["$provide", function ($provide) {
+                config(["$provide", "$injector", function ($provide, $injector) {
                     $provide.service('flowService', FlowService);
 
                     var instance = $injector.get('flowServiceProvider').$get();
