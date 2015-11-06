@@ -2,9 +2,9 @@ define(
     ["angular", "jquery"],
     function () {
         return function (appModule) {
-            var inject = ["angularConstants", "uiUtilService"];
+            var inject = [];
 
-            appModule.directive("uiIncludeReplace", _.union(inject, [function (angularConstants, uiUtilService) {
+            appModule.directive("uiIncludeReplace", _.union(inject, [function () {
                 'use strict';
 
                 return {

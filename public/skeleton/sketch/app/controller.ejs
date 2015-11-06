@@ -114,10 +114,10 @@ function handleEventMap(eventMap) {
 }%>
 
 define(
-    ["angular", "jquery", "app-route", "app-service", "app-service-registry", "app-util"],
+    ["angular", "jquery", "app-service", "app-service-registry", "app-util"],
     function () {
         return function (appModule, extension) {
-            function RootController($scope, $rootScope, $q, $timeout, appService, serviceRegistry, urlService, utilService) {
+            function ProjectRootController($scope, $rootScope, $q, $timeout, appService, serviceRegistry, utilService) {
                 $rootScope.initFns = [];
                 $rootScope.stateFns = [];
 <%if (pages && pages.length) {
@@ -161,7 +161,8 @@ define(
 
                 window.serviceRegistry = serviceRegistry;
                 appService.registerService();
-                serviceRegistry.invoke("BaseService", "loadPage")(urlService.locations[0], true);
+                serviceRegistry.invoke("BaseService", "loadPage")(0, true);
+                $rootScope.APP_PROJECT_PATH=window.APP_PROJECT_PATH||"";
             }
 <%if (pages && pages.length) {
     var locations = [];
@@ -173,7 +174,7 @@ define(
         var index;
         if(!locations.every(function(loc, i) { if (loc.replace("page-","") === page.id) {index = i;return false;} return true;})) {locations.splice(index, 1);}
 %>
-            function <%= page.id %>_Controller($scope, $rootScope, $q, $timeout, appService, serviceRegistry, urlService, utilService) {
+            function <%= page.id %>_Controller($scope, $rootScope, $q, $timeout, appService, serviceRegistry, utilService) {
                 serviceRegistry.invoke("BaseService", "setState")("<%= page.id %>", "*");
             }
 <%
@@ -182,7 +183,7 @@ define(
 
     locations.forEach(function(location) {
 %>
-            function <%= location.replace("page-","") %>_Controller($scope, $rootScope, $q, $timeout, appService, serviceRegistry, urlService, utilService) {
+            function <%= location.replace("page-","") %>_Controller($scope, $rootScope, $q, $timeout, appService, serviceRegistry, utilService) {
             }
 <%
     });
@@ -190,12 +191,12 @@ define(
 
             if (isBrowser) {
                 appModule.
-                    controller('RootController', ["$scope", "$rootScope", "$q", "$timeout", "appService", "serviceRegistry", "urlService", "utilService", RootController]);
+                    controller('ProjectRootController', ["$scope", "$rootScope", "$q", "$timeout", "appService", "serviceRegistry", "utilService", ProjectRootController]);
 <%if (meta && meta.locations.length) {
     meta.locations.forEach(function(location) {
 %>
                 appModule.
-                    controller('<%= location.replace("page-","") %>_Controller', ["$scope", "$rootScope", "$q", "$timeout", "appService", "serviceRegistry", "urlService", "utilService", <%= location.replace("page-","") %>_Controller]);
+                    controller('<%= location.replace("page-","") %>_Controller', ["$scope", "$rootScope", "$q", "$timeout", "appService", "serviceRegistry", "utilService", <%= location.replace("page-","") %>_Controller]);
 <%
     });
 %>

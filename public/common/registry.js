@@ -81,6 +81,13 @@ define(
                                 } else {
                                     clazz.prototype.__proto__.unregister(platform, this);
                                 }
+                            },
+                            set: function (attrs) {
+                                var self = this;
+
+                                _.each(attrs, function (value, key) {
+                                    self.delegate[key] = _.clone(value);
+                                });
                             }
                         },
                         serviceList = featureItem.serviceList,
@@ -154,8 +161,8 @@ define(
                 if (featureItem && featureItem.impl) {
                     var fn = featureItem.impl[serviceName];
                     if (fn) {
-                        return function() {
-                            fn.apply(featureItem.impl, Array.prototype.slice.call(arguments));
+                        return function () {
+                            return fn.apply(featureItem.impl, Array.prototype.slice.call(arguments));
                         };
                     } else {
                         self.$log.warn("Function {0} not found on implementation of feature {1}".format(serviceName, feature));
@@ -166,6 +173,15 @@ define(
 
                 return angular.noop;
             };
+
+            serviceRegistry.prototype.setServiceAttribute = function (feature, attrs) {
+                var self = this,
+                    featureItem = _.findWhere(self.registry, {feature: feature});
+
+                if (featureItem && featureItem.impl) {
+                    featureItem.impl.set(attrs);
+                }
+            }
 
             appModule.
                 config(["$provide", function ($provide) {

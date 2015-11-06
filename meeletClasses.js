@@ -1225,7 +1225,7 @@ var State = Class({
 
             //Add configurable stylesheet link
             var $link = $("<link />").prependTo($document);
-            $link.attr("type", "text/css").attr("rel", "stylesheet").attr("href", _.string.sprintf("stylesheets/configurable-widget-%s.css", self.id));
+            $link.attr("type", "text/css").attr("rel", "stylesheet").attr("base", "{{APP_PROJECT_PATH}}").attr("ui-link", _.string.sprintf("'stylesheets/configurable-widget-%s.css'", self.id));
 
             if (!self.$ngTemplate.children().length) {
                 self.$ngTemplate.remove();
@@ -1266,7 +1266,7 @@ var State = Class({
             var self = this;
 
             if (self.externalBook && self.externalPage && self.externalFile) {
-                var $includeDiv = $("<div></div>").attr("ng-include", _.sprintf("'resource/external/%s/%s/%s'", self.externalBook, self.externalPage, self.externalFile));
+                var $includeDiv = $("<div></div>").attr("base", "{{APP_PROJECT_PATH}}").attr("ui-include", _.sprintf("'resource/external/%s/%s/%s'", self.externalBook, self.externalPage, self.externalFile));
                 self.$element.append($includeDiv);
             }
         }
@@ -1307,7 +1307,7 @@ var State = Class({
 
             //Add stylesheet link
             var $link = $("<link />").prependTo($document);
-            $link.attr("type", "text/css").attr("rel", "stylesheet").attr("href", _.string.sprintf("stylesheets/page-%s.css", self.id));
+            $link.attr("type", "text/css").attr("rel", "stylesheet").attr("base", "{{APP_PROJECT_PATH}}").attr("ui-link", _.string.sprintf("'stylesheets/page-%s.css'", self.id));
 
             //Array 'artifactList' used to retrieve artifact modules when generating html files.
             self.artifactList = self.context.artifactList;

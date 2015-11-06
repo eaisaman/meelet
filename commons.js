@@ -803,16 +803,19 @@ Commons.prototype.convertToHtml = function (projectType, projectPath, artifactLi
     var self = this,
         skeletonModuleFolder = "javascripts",
         skeletonHtml = "meelet.skeleton.html",
+        mobileSkeletonHtml = "mobile.skeleton.html",
         skeletonPath = path.join(self.config.userFile.skeletonFolder, projectType),
         skeletonModulePath = path.join(skeletonPath, skeletonModuleFolder),
         projectModulePath = self.config.userFile.projectModuleFolder,
         skeletonHtmlPath = path.join(skeletonPath, skeletonHtml),
+        mobileSkeletonHtmlPath = path.join(skeletonPath, mobileSkeletonHtml),
         skeletonLibLoadTimeout = self.config.settings.skeletonLibLoadTimeout,
         meeletPath = path.join(projectPath, self.config.settings.meeletFile);
 
     var nonExistentPath = (!fs.existsSync(projectPath) && projectPath)
         || (!fs.existsSync(skeletonPath) && skeletonPath)
         || (!fs.existsSync(skeletonHtmlPath) && skeletonHtmlPath)
+        || (!fs.existsSync(mobileSkeletonHtmlPath) && mobileSkeletonHtmlPath)
         || (!fs.existsSync(meeletPath) && meeletPath)
         || (!fs.existsSync(skeletonModulePath) && skeletonModulePath);
 
@@ -1053,6 +1056,16 @@ Commons.prototype.convertToHtml = function (projectType, projectPath, artifactLi
                         //Copy skeleton html file to project path if not exists;
                         fnArr.push(function (cb) {
                             ncp(skeletonHtmlPath, path.join(projectPath, "index.html"), {
+                                clobber: true,
+                                stopOnErr: true
+                            }, function (err) {
+                                cb(err);
+                            });
+                        });
+
+                        //Copy mobile skeleton html file to project path if not exists;
+                        fnArr.push(function (cb) {
+                            ncp(mobileSkeletonHtmlPath, path.join(projectPath, "mobile-index.html"), {
                                 clobber: true,
                                 stopOnErr: true
                             }, function (err) {
