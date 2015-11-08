@@ -28,7 +28,26 @@ function printJSON(obj) {
         }
 %>]<%
     } else if (typeof obj === "string") {
-%>"<%- obj.replace(/"/g, "\\\"") %>"<%
+        //Support pattern '{{expression1}}xxxx{{expression2}}'
+        var exprArr = obj.match(/{{[^}}]+}}/g), literalArr = obj.split(/{{[^}}]+}}/g), str = "";
+
+        literalArr && literalArr.forEach(function (literal) {
+
+            if (!literal) {
+                var expr = exprArr.shift();
+                str += ("+" + expr.replace(/{{|}}/g, ""));
+            } else {
+                literal = literal.replace(/"/g, "\\\"");
+                str += ("+" + "\"" + literal +  "\"");
+            }
+        });
+
+        exprArr && exprArr.forEach(function (expr) {
+            str += ("+" + expr.replace(/[{{|}}]/g, ""));
+        });
+
+        str = str.replace(/^\+/g, "");
+%><%- str %><%
     } else {
 %><%= obj %><%
     }
@@ -116,7 +135,7 @@ function handleEventMap(eventMap) {
 define(
     ["angular", "jquery", "app-service", "app-service-registry", "app-util"],
     function () {
-        return function (appModule, extension) {
+        return function (appModule, extension, inject) {
             function ProjectRootController($scope, $rootScope, $q, $timeout, appService, serviceRegistry, utilService) {
                 $rootScope.initFns = [];
                 $rootScope.stateFns = [];
@@ -190,17 +209,32 @@ define(
 }%>
 
             if (isBrowser) {
-                appModule.
-                    controller('ProjectRootController', ["$scope", "$rootScope", "$q", "$timeout", "appService", "serviceRegistry", "utilService", ProjectRootController]);
+                if (inject && inject.$controllerProvider) {
+inject.$controllerProvider.
+register('ProjectRootController', ["$scope", "$rootScope", "$q", "$timeout", "appService", "serviceRegistry", "utilService", ProjectRootController]);
 <%if (meta && meta.locations.length) {
-    meta.locations.forEach(function(location) {
+        meta.locations.forEach(function(location) {
 %>
-                appModule.
-                    controller('<%= location.replace("page-","") %>_Controller', ["$scope", "$rootScope", "$q", "$timeout", "appService", "serviceRegistry", "utilService", <%= location.replace("page-","") %>_Controller]);
+inject.$controllerProvider.
+register('<%= location.replace("page-","") %>_Controller', ["$scope", "$rootScope", "$q", "$timeout", "appService", "serviceRegistry", "utilService", <%= location.replace("page-","") %>_Controller]);
 <%
-    });
+});
 %>
 <%}%>
+
+                } else {
+appModule.
+controller('ProjectRootController', ["$scope", "$rootScope", "$q", "$timeout", "appService", "serviceRegistry", "utilService", ProjectRootController]);
+<%if (meta && meta.locations.length) {
+        meta.locations.forEach(function(location) {
+%>
+appModule.
+controller('<%= location.replace("page-","") %>_Controller', ["$scope", "$rootScope", "$q", "$timeout", "appService", "serviceRegistry", "utilService", <%= location.replace("page-","") %>_Controller]);
+<%
+});
+%>
+<%}%>
+                }
             }
         }
     }

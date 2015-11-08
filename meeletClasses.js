@@ -516,7 +516,7 @@ var State = Class({
         toJSON: function () {
             var jsonObj = IncludeTransitionAction.prototype.__proto__.toJSON.apply(this);
 
-            _.extend(jsonObj, _.pick(this, ["CLASS_NAME", "url", "edge"]));
+            _.extend(jsonObj, _.pick(this, ["CLASS_NAME", "edge"]), {"url":"{{(window.APP_PROJECT_PATH || '')}}" + this.url});
 
             return jsonObj;
         },

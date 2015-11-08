@@ -2,6 +2,7 @@ define(
     ["angular", "jquery", "jquery-ui", "app-util", "app-route", "app-filter", "app-service"],
     function () {
         return function (appModule, extension) {
+
             function RootController($scope, $rootScope, $q, $timeout, angularEventTypes, angularConstants, appService, serviceRegistry, urlService, utilService) {
                 //For development convenience, we do fake login or restore user info if already authenticated.
 
@@ -1081,11 +1082,7 @@ define(
                         $scope.renderProject();
                     }
 
-                    appService.registerService();
-
                     $scope.$on('$destroy', function () {
-                        appService.unregisterService();
-
                         if ($scope.pickedPageWatcher) {
                             $scope.pickedPageWatcher();
                             $scope.pickedPageWatcher = null;
@@ -1507,6 +1504,7 @@ define(
                         });
                     }
                 }
+
                 $scope.$on("$routeChangeSuccess", function (scope, next, current) {
                     current && initMaster();
                 });
@@ -1871,10 +1869,7 @@ define(
                 };
 
                 function initMaster() {
-                    flowService.registerService();
-
                     $scope.$on('$destroy', function () {
-                        flowService.unregisterService();
                     });
                 }
 
@@ -2100,11 +2095,44 @@ define(
                 function initMaster() {
                     addExtensionSnippet();
 
-                    bookService.registerService();
-
                     $scope.$on('$destroy', function () {
-                        bookService.unregisterService();
                     });
+                }
+
+                initMaster();
+            }
+
+            function ChatController($scope, $rootScope, $timeout, $q, $log, $exceptionHandler, $compile, $parse, $templateCache, angularEventTypes, angularConstants, appService, uiService, utilService) {
+                extension && extension.attach && extension.attach($scope, {
+                    "$timeout": $timeout,
+                    "$q": $q,
+                    "angularConstants": angularConstants,
+                    "utilService": utilService,
+                    "element": $(".chatContainer"),
+                    "scope": $scope
+                });
+
+                $scope.pomelo = window.pomelo;
+                $scope.pomeloHost = document.location.host.match(/[^:]+/)[0];
+                $scope.pomeloPort = "3010"
+
+                $scope.sendMessage = function (message) {
+                    $scope.pomelo.init(
+                        {
+                            host: $scope.pomeloHost,
+                            port: $scope.pomeloPort,
+                            log: true
+                        }, function () {
+                            $scope.pomelo.request("connector.entryHandler.entry", message, function (data) {
+                                alert(data.msg);
+                            });
+                        }
+                    );
+
+                    return utilService.getResolveDefer();
+                }
+
+                function initMaster() {
                 }
 
                 initMaster();
@@ -2117,6 +2145,7 @@ define(
                 controller('FlowController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "uiService", "uiFlowService", "flowService", "urlService", "utilService", FlowController]).
                 controller('ProjectController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "uiService", "uiFlowService", "uiBookService", "urlService", "utilService", ProjectController]).
                 controller('RepoController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "urlService", "utilService", RepoController]).
-                controller('RepoLibController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "urlService", RepoLibController]);
+                controller('RepoLibController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "urlService", RepoLibController]).
+                controller('ChatController', ["$scope", "$rootScope", "$timeout", "$q", "$log", "$exceptionHandler", "$compile", "$parse", "$templateCache", "angularEventTypes", "angularConstants", "appService", "uiService", "utilService", ChatController]);
         }
     });

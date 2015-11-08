@@ -1,0 +1,9 @@
+<link rel="stylesheet" type="text/css" href="stylesheets/chat.css"/>
+<link rel="stylesheet" type="text/css" href="fonts/icon-chat/style.css"/>
+<script type="text/javascript" src="pomelo/socket.io.js"></script>
+<script type="text/javascript" src="pomelo/pomeloclient.js"></script>
+
+<div class="chatContainer fs-x-medium" ng-controller="ChatController">
+    <div class="chatButton fs-x-small icon-chat-before icon-chat-textsms-before"
+         ng-click="once(this, $event, 'sendMessage', 'Hello Pomelo')"></div>
+</div>

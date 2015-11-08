@@ -804,6 +804,7 @@ Commons.prototype.convertToHtml = function (projectType, projectPath, artifactLi
         skeletonModuleFolder = "javascripts",
         skeletonHtml = "meelet.skeleton.html",
         mobileSkeletonHtml = "mobile.skeleton.html",
+        mobileSkeletonJs = ["mobile-main.js", "app/mobile-main.js", "common/mobile-main.js"],
         skeletonPath = path.join(self.config.userFile.skeletonFolder, projectType),
         skeletonModulePath = path.join(skeletonPath, skeletonModuleFolder),
         projectModulePath = self.config.userFile.projectModuleFolder,
@@ -1071,6 +1072,24 @@ Commons.prototype.convertToHtml = function (projectType, projectPath, artifactLi
                             }, function (err) {
                                 cb(err);
                             });
+                        });
+
+                        //Copy mobile skeleton js file to project path;
+                        mobileSkeletonJs.forEach(function (mobileJs) {
+                            var jsPath = path.join(skeletonPath, mobileJs);
+
+                            if (fs.existsSync(jsPath)) {
+                                var relativeJsFolderPath = mobileJs.replace(/\/?[^\/]+$/, "");
+
+                                fnArr.push(function (cb) {
+                                    ncp(jsPath, path.join(projectPath, relativeJsFolderPath, path.basename(mobileJs)), {
+                                        clobber: true,
+                                        stopOnErr: true
+                                    }, function (err) {
+                                        cb(err);
+                                    });
+                                });
+                            }
                         });
 
                         //Regenerate scrap html for each page json object
