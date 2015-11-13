@@ -1,9 +1,128 @@
 <link rel="stylesheet" type="text/css" href="stylesheets/chat.css"/>
 <link rel="stylesheet" type="text/css" href="fonts/icon-chat/style.css"/>
-<script type="text/javascript" src="pomelo/socket.io.js"></script>
-<script type="text/javascript" src="pomelo/pomeloclient.js"></script>
 
 <div class="chatContainer fs-x-medium" ng-controller="ChatController">
-    <div class="chatButton fs-x-small icon-chat-before icon-chat-textsms-before"
-         ng-click="once(this, $event, 'sendMessage', 'Hello Pomelo')"></div>
+    <div class="chatTopBar">
+        <div class="input-group col-as-3 fs-x-smaller">
+            <label class="col-as-5 no-padding control-label fs-x-smaller">User Id</label>
+
+            <div class="col-as-7 no-padding">
+                <input type="text"
+                       class="form-control no-padding fs-x-smaller" ng-model="userId"/>
+            </div>
+        </div>
+        <div class="input-group col-as-3 fs-x-smaller">
+            <label class="col-as-5 no-padding control-label fs-x-smaller">Project Id</label>
+
+            <div class="col-as-7 no-padding">
+                <input type="text"
+                       class="form-control no-padding fs-x-smaller" ng-model="projectId"/>
+            </div>
+        </div>
+        <div class="input-group col-as-3 fs-x-smaller">
+            <label class="col-as-5 no-padding control-label fs-x-smaller">Chat Id</label>
+
+            <div class="col-as-7 no-padding">
+                <input type="text"
+                       class="form-control no-padding fs-x-smaller" ng-model="chatId"/>
+            </div>
+        </div>
+        <div class="input-group col-as-3 fs-x-smaller">
+            <label class="col-as-5 no-padding control-label fs-x-smaller">Topic Id</label>
+
+            <div class="col-as-7 no-padding">
+                <input type="text"
+                       class="form-control no-padding fs-x-smaller" ng-model="topicId"/>
+            </div>
+        </div>
+        <div class="input-group col-as-3 fs-x-smaller">
+            <label class="col-as-5 no-padding control-label fs-x-smaller">Invitee Id</label>
+
+            <div class="col-as-7 no-padding">
+                <input type="text"
+                       class="form-control no-padding fs-x-smaller" ng-model="inviteeId"/>
+            </div>
+        </div>
+        <div class="input-group col-as-3 fs-x-smaller">
+            <label class="col-as-5 no-padding control-label fs-x-smaller">Chat state</label>
+
+            <div class="col-as-7 no-padding">
+                <input type="text"
+                       class="form-control no-padding fs-x-smaller" ng-model="chatState"/>
+            </div>
+        </div>
+        <div class="input-group col-as-3 fs-x-smaller">
+            <label class="col-as-5 no-padding control-label fs-x-smaller">Topic state</label>
+
+            <div class="col-as-7 no-padding">
+                <input type="text"
+                       class="form-control no-padding fs-x-smaller" ng-model="topicState"/>
+            </div>
+        </div>
+    </div>
+
+    <div class="chatPanel">
+        <div class="chatButton fs-x-small"
+             ng-click="once(this, $event, 'createChat')">Create chat
+        </div>
+        <div class="chatButton fs-x-small"
+             ng-click="once(this, $event, 'startChat')">Start chat
+        </div>
+        <div class="chatButton fs-x-small"
+             ng-click="once(this, $event, 'connectChat')">Connect chat
+        </div>
+        <div class="chatButton fs-x-small"
+             ng-click="once(this, $event, 'inviteChat')">Invite chat
+        </div>
+        <div class="chatButton fs-x-small"
+             ng-click="once(this, $event, 'pauseChat')">Pause chat
+        </div>
+        <div class="chatButton fs-x-small"
+             ng-click="once(this, $event, 'resumeChat')">Resume chat
+        </div>
+        <div class="chatButton fs-x-small"
+             ng-click="once(this, $event, 'closeChat')">Close chat
+        </div>
+        <div class="chatButton fs-x-small"
+             ng-click="once(this, $event, 'sendChatMessage')">Push chat
+        </div>
+    </div>
+
+    <div class="chatPanel">
+        <div class="chatButton fs-x-small"
+             ng-click="once(this, $event, 'createTopic')">Create topic
+        </div>
+        <div class="chatButton fs-x-small"
+             ng-click="once(this, $event, 'inviteTopic')">Invite topic
+        </div>
+        <div class="chatButton fs-x-small"
+             ng-click="once(this, $event, 'pauseTopic')">Pause topic
+        </div>
+        <div class="chatButton fs-x-small"
+             ng-click="once(this, $event, 'resumeTopic')">Resume topic
+        </div>
+        <div class="chatButton fs-x-small"
+             ng-click="once(this, $event, 'closeTopic')">Close topic
+        </div>
+        <div class="chatButton fs-x-small"
+             ng-click="once(this, $event, 'sendTopicMessage')">Push topic
+        </div>
+    </div>
+
+    <div class="chatPanel">
+        <div class="input-group col-as-12 fs-x-smaller">
+            <label class="col-as-2 no-padding control-label fs-x-smaller">Message</label>
+
+            <div class="col-as-7 no-padding">
+                <input type="text"
+                       class="form-control no-padding fs-x-smaller" ng-model="message"/>
+            </div>
+        </div>
+    </div>
+
+    <div class="chatList">
+        <div class="chatItem" ng-repeat="item in chatList">
+            {{item.message}}
+        </div>
+    </div>
 </div>

@@ -14,8 +14,12 @@
     "sequence": "number",
     "name": "string",
     "parentId": "ObjectId",
-    "childGroupList": ["object"],
-    "userList": ["object"]
+    "childGroupList": [
+      "object"
+    ],
+    "userList": [
+      "object"
+    ]
   },
   "UserGroupXref": {
     "updateTime": "date",
@@ -54,7 +58,9 @@
     "desc": "string",
     "type": "string",
     "version": "string",
-    "versionList": ["object"]
+    "versionList": [
+      "object"
+    ]
   },
   "ProjectArtifactXref": {
     "updateTime": "date",
@@ -63,6 +69,51 @@
     "libraryId": "ObjectId",
     "libraryName": "string",
     "type": "string",
-    "artifactList": ["object"]
+    "artifactList": [
+      "object"
+    ]
+  },
+  "Chat": {
+    "updateTime": "date",
+    "createTime": "date",
+    "startTime": "date",
+    "endTime": "date",
+    "expectEndTime": "date",
+    "projectId": "ObjectId",
+    "creatorId": "ObjectId",
+    "route": "string",
+    "state": "number"
+  },
+  "Topic": {
+    "updateTime": "date",
+    "createTime": "date",
+    "startTime": "date",
+    "endTime": "date",
+    "expectEndTime": "date",
+    "chatId": "ObjectId",
+    "creatorId": "ObjectId",
+    "route": "string",
+    "state": "number"
+  },
+  "Invitation": {
+    "updateTime": "date",
+    "createTime": "date",
+    "route": "string",
+    "chatId": "ObjectId",
+    "userId": "ObjectId",
+    "inviteeId": "ObjectId",
+    "accepted": "boolean",
+    "expires": "date"
+  },
+  "TopicInvitation": {
+    "updateTime": "date",
+    "createTime": "date",
+    "route": "string",
+    "chatId": "ObjectId",
+    "topicId": "ObjectId",
+    "userId": "ObjectId",
+    "inviteeId": "ObjectId",
+    "accepted": "boolean",
+    "expires": "date"
   }
 }

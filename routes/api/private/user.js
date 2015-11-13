@@ -329,4 +329,40 @@ UserController.prototype.getUserDetail = function (userFilter, success, fail) {
     });
 };
 
+UserController.prototype.postUser = function (loginName, plainPassword, nickName, success, fail) {
+}
+
+UserController.prototype.postAvatar = function (request, success, fail) {
+}
+
+UserController.prototype.getFriends = function (userId, success, fail) {
+}
+
+UserController.prototype.postRequestAddFriends = function (userId, friendIdList, success, fail) {
+}
+
+UserController.prototype.postConfirmAddFriends = function (userId, friendIdList, success, fail) {
+}
+
+UserController.prototype.getGroups = function (userId, success, fail) {
+}
+
+UserController.prototype.postRequestJoinGroup = function (userId, groupId, success, fail) {
+}
+
+UserController.prototype.getDiscussGroups = function (userId, success, fail) {
+}
+
+UserController.prototype.postDiscussGroup = function (userId, groupName, memberIdList, memberGroupIdList, success, fail) {
+}
+
+UserController.prototype.getFavorites = function (userId, success, fail) {
+}
+
+UserController.prototype.deleteFavorites = function (userId, favoriteIdList, success, fail) {
+}
+
+UserController.prototype.getFavorites = function (userId, success, fail) {
+}
+
 module.exports = UserController;

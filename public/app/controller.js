@@ -159,7 +159,7 @@ define(
 
                 initMaster().then(
                     function () {
-                        urlService.project();
+                        urlService.chat();
                     }
                 );
             }
@@ -1373,7 +1373,7 @@ define(
                 };
 
                 function initMaster() {
-                    var urlParams = $rootScope.urlParams && $rootScope.urlParams["project"] || null,
+                    var urlParams = $rootScope.urlParams && $rootScode.urlParams["project"] || null,
                         projectAction = urlParams && urlParams.projectAction || "";
 
                     if (projectAction === "create") {
@@ -2112,27 +2112,235 @@ define(
                     "scope": $scope
                 });
 
-                $scope.pomelo = window.pomelo;
-                $scope.pomeloHost = document.location.host.match(/[^:]+/)[0];
-                $scope.pomeloPort = "3010"
+                $scope.createChat = function () {
+                    return appService.createChat($scope.userId, $scope.projectId).then(function (chatId) {
+                        $scope.chatId = chatId;
+                        $scope.chatState = undefined;
+                        return utilService.getResolveDefer();
+                    }, function (err) {
+                        alert(err);
+                        return utilService.getRejectDefer(err);
+                    });
+                }
 
-                $scope.sendMessage = function (message) {
-                    $scope.pomelo.init(
-                        {
-                            host: $scope.pomeloHost,
-                            port: $scope.pomeloPort,
-                            log: true
-                        }, function () {
-                            $scope.pomelo.request("connector.entryHandler.entry", message, function (data) {
-                                alert(data.msg);
-                            });
+                $scope.startChat = function () {
+                    return appService.startChat($scope.userId, $scope.chatId).then(function () {
+                        window.pomeloContext.chatId = $scope.chatId;
+
+                        $scope.chatState = angularConstants.pomeloState.chatOpenState;
+                        $scope.registerPomeloListeners();
+                        return utilService.getResolveDefer();
+                    }, function (err) {
+                        alert(err);
+                        return utilService.getRejectDefer(err);
+                    });
+                }
+
+                $scope.connectChat = function () {
+                    var chatId = $scope.chatId || angularConstants.pomeloChannel.loginChannel;
+
+                    return appService.connectChat($scope.userId, chatId).then(function () {
+                        $scope.registerPomeloListeners();
+
+                        return utilService.getResolveDefer();
+                    }, function (err) {
+                        alert(err);
+                        return utilService.getRejectDefer(err);
+                    });
+                }
+
+                $scope.pauseChat = function () {
+                    return appService.pauseChat($scope.userId, $scope.chatId).then(function () {
+                        $scope.chatState = angularConstants.pomeloState.chatPauseState;
+                        return utilService.getResolveDefer();
+                    }, function (err) {
+                        alert(err);
+                        return utilService.getRejectDefer(err);
+                    });
+                }
+
+                $scope.resumeChat = function () {
+                    return appService.resumeChat($scope.userId, $scope.chatId).then(function () {
+                        $scope.chatState = angularConstants.pomeloState.chatOpenState;
+                        return utilService.getResolveDefer();
+                    }, function (err) {
+                        alert(err);
+                        return utilService.getRejectDefer(err);
+                    });
+                }
+
+                $scope.inviteChat = function () {
+                    return appService.inviteChat($scope.userId, $scope.chatId, [$scope.inviteeId]).then(function () {
+                        return utilService.getResolveDefer();
+                    }, function (err) {
+                        alert(err);
+                        return utilService.getRejectDefer(err);
+                    });
+                }
+
+                $scope.closeChat = function () {
+                    return appService.closeChat($scope.userId, $scope.chatId).then(function () {
+                        delete window.pomeloContext.chatId;
+                        $scope.unregisterPomeloListeners();
+
+                        $scope.chatState = angularConstants.pomeloState.chatDestroyState;
+                        return utilService.getResolveDefer();
+                    }, function (err) {
+                        alert(err);
+                        return utilService.getRejectDefer(err);
+                    });
+                }
+
+                $scope.createTopic = function () {
+                    return appService.createTopic($scope.userId, $scope.chatId).then(function (result) {
+                        $scope.topicId = result.topicId;
+                        $scope.topicState = result.topicState;
+                        return utilService.getResolveDefer();
+                    }, function (err) {
+                        alert(err);
+                        return utilService.getRejectDefer(err);
+                    });
+                }
+
+                $scope.pauseTopic = function () {
+                    return appService.pauseTopic($scope.userId, $scope.chatId, {chatId:$scope.chatId}).then(function () {
+                        $scope.topicState = angularConstants.pomeloState.topicPauseState;
+                        return utilService.getResolveDefer();
+                    }, function (err) {
+                        alert(err);
+                        return utilService.getRejectDefer(err);
+                    });
+                }
+
+                $scope.resumeTopic = function () {
+                    return appService.resumeTopic($scope.userId, $scope.chatId, {chatId:$scope.chatId}).then(function () {
+                        $scope.topicState = angularConstants.pomeloState.topicOpenState;
+                        return utilService.getResolveDefer();
+                    }, function (err) {
+                        alert(err);
+                        return utilService.getRejectDefer(err);
+                    });
+                }
+
+                $scope.inviteTopic = function () {
+                    return appService.inviteTopic($scope.userId, $scope.chatId, $scope.topicId, [$scope.inviteeId]).then(function () {
+                        return utilService.getResolveDefer();
+                    }, function (err) {
+                        alert(err);
+                        return utilService.getRejectDefer(err);
+                    });
+                }
+
+                $scope.closeTopic = function () {
+                    return appService.closeTopic($scope.userId, $scope.chatId, $scope.topicId).then(function () {
+                        $scope.topicState = angularConstants.pomeloState.topicDestroyState;
+                        return utilService.getResolveDefer();
+                    }, function (err) {
+                        alert(err);
+                        return utilService.getRejectDefer(err);
+                    });
+                }
+
+                $scope.sendChatMessage = function () {
+                    return appService.sendChatMessage($scope.userId, $scope.chatId, null, $scope.message).then(function () {
+                        return utilService.getResolveDefer();
+                    }, function (err) {
+                        alert(err);
+                        return utilService.getRejectDefer(err);
+                    });
+                }
+
+                $scope.sendTopicMessage = function () {
+                    return appService.sendTopicMessage($scope.userId, $scope.chatId, $scope.topicId, $scope.message).then(function () {
+                        return utilService.getResolveDefer();
+                    }, function (err) {
+                        alert(err);
+                        return utilService.getRejectDefer(err);
+                    });
+                }
+
+                $scope.registerPomeloListeners = function() {
+                    pomelo.on(window.pomeloContext.route, function (data) {
+                        var userId = data.userId, chatId = data.chatId, signal = data.signal;
+                        switch(signal) {
+                            case angularConstants.pomeloSignal.inviteSignal:
+                                $scope.chatList.push({order:$scope.chatList.length, message:"Invite"});
+                                break;
+                            case angularConstants.pomeloSignal.connectSignal:
+                                $scope.chatList.push({order:$scope.chatList.length, message:"Chat Connect"});
+                                break;
+                            case angularConstants.pomeloSignal.disconnectSignal:
+                                $scope.chatList.push({order:$scope.chatList.length, message:"Chat Disconnect"});
+                                break;
+                            case angularConstants.pomeloSignal.pauseSignal:
+                                $scope.chatList.push({order:$scope.chatList.length, message:"Chat Pause"});
+                                break;
+                            case angularConstants.pomeloSignal.resumeSignal:
+                                $scope.chatList.push({order:$scope.chatList.length, message:"Chat Resume"});
+                                break;
+                            case angularConstants.pomeloSignal.messageSignal:
+                                $scope.chatList.push({order:$scope.chatList.length, message:"Chat Message" + data.payload});
+                                break;
+                            case angularConstants.pomeloSignal.topicInviteSignal:
+                                $scope.chatList.push({order:$scope.chatList.length, message:"Topic Invite"});
+                                break;
+                            case angularConstants.pomeloSignal.topicPauseSignal:
+                                $scope.chatList.push({order:$scope.chatList.length, message:"Topic Pause"});
+                                break;
+                            case angularConstants.pomeloSignal.topicResumeSignal:
+                                $scope.chatList.push({order:$scope.chatList.length, message:"Topic Resume"});
+                                break;
+                            case angularConstants.pomeloSignal.topicMessageSignal:
+                                $scope.chatList.push({order:$scope.chatList.length, message:"Topic Message"});
+                                break;
+                            case angularConstants.pomeloSignal.topicCloseSignal:
+                                $scope.chatList.push({order:$scope.chatList.length, message:"Topic Close"});
+                                break;
+                            case angularConstants.pomeloSignal.topicDisconnectSignal:
+                                $scope.chatList.push({order:$scope.chatList.length, message:"Topic Disconnect"});
+                                break;
                         }
-                    );
 
-                    return utilService.getResolveDefer();
+                        $scope.$apply();
+                    });
+                    pomelo.on('disconnect', function (reason) {
+                        console.log('disconnect' + reason);
+                        $scope.chatList.push({order:$scope.chatList.length, message:"Disconnect"});
+                        $scope.$apply();
+                    });
+                    pomelo.on('closed', function (reason) {
+                        console.log('closed' + reason);
+                        $scope.chatList.push({order:$scope.chatList.length, message:"Closed"});
+                        $scope.$apply();
+                    });
+                }
+
+                $scope.unregisterPomeloListeners = function() {
+                    pomelo.removeAllListeners(window.pomeloContext.route);
+                    pomelo.removeAllListeners('disconnect');
+                    pomelo.removeAllListeners('closed');
                 }
 
                 function initMaster() {
+                    $scope.userId = "52591a12c763d5e4585563d0";
+                    $scope.projectId = "56104bec2ac815961944b8bf";
+                    $scope.inviteeId = "52591a12c763d5e4585563ce";
+                    $scope.chatList = [];
+
+                    return $q.all([
+                        appService.getServerUrl(),
+                        appService.getChatServerHost(),
+                        appService.getChatServerPort(),
+                        appService.getDeviceId()
+                    ]).then(function (result) {
+                        window.serverUrl = result[0].data.result == "OK" && result[0].data.resultValue || "";
+                        var chatServerHost = result[1].data.result == "OK" && result[1].data.resultValue || "";
+                        var chatServerPort = result[2].data.result == "OK" && result[2].data.resultValue || "";
+                        var deviceId = result[3].data.result == "OK" && result[3].data.resultValue || "";
+
+                        window.pomeloContext = {deviceId: deviceId, host: chatServerHost, port: chatServerPort, route: angularConstants.pomeloRoute.defaultChatRoute};
+                        return utilService.getResolveDefer();
+                    });
                 }
 
                 initMaster();
