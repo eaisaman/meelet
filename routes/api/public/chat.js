@@ -36,21 +36,21 @@ ChatController.prototype.getJoinItems = function (userId, success, fail) {
                 async.parallel(
                     {
                         project: function (callback) {
-                            self.scheme.UserProject.find({userId: userId}).sort({createTime: -1}).exec(function (err, data) {
+                            self.schema.UserProject.find({userId: userId}).sort({createTime: -1}).exec(function (err, data) {
                                 callback(err, data);
                             });
                         },
                         chat: function (callback) {
                             async.waterfall([
                                 function (next) {
-                                    self.scheme.Chat.find({creatorId: userId}).sort({createTime: -1}).exec(function (err, data) {
+                                    self.schema.Chat.find({creatorId: userId}).sort({createTime: -1}).exec(function (err, data) {
                                         next(err, data);
                                     });
                                 },
                                 function (chatList, next) {
                                     if (chatList && chatList.length) {
                                         async.eachLimit(chatList, 2, function (item, cb) {
-                                            self.scheme.UserProject.find({_id: item.projectId}, function (err, data) {
+                                            self.schema.UserProject.find({_id: item.projectId}, function (err, data) {
                                                 if (!err) {
                                                     if (data && data.length) {
                                                         item.projectName = data[0].name;
@@ -76,7 +76,7 @@ ChatController.prototype.getJoinItems = function (userId, success, fail) {
                         invitation: function (callback) {
                             async.waterfall([
                                 function (next) {
-                                    self.scheme.Invitation.find({inviteeId: userId}).sort({createTime: -1}).exec(function (err, data) {
+                                    self.schema.Invitation.find({inviteeId: userId}).sort({createTime: -1}).exec(function (err, data) {
                                         if (!err) {
                                             next(null, data);
                                         } else {
@@ -117,7 +117,7 @@ ChatController.prototype.getJoinItems = function (userId, success, fail) {
                                     if (invitationList && invitationList.length) {
                                         async.eachLimit(invitationList, 2, function (item, cb) {
                                             //Invitation item's projectId is set during checking chat validity before
-                                            self.scheme.UserProject.find({_id: item.projectId}, function (err, data) {
+                                            self.schema.UserProject.find({_id: item.projectId}, function (err, data) {
                                                 if (!err) {
                                                     if (data && data.length) {
                                                         item.projectName = data[0].name;
@@ -198,14 +198,14 @@ ChatController.prototype.getJoinItems = function (userId, success, fail) {
             function (itemList, wCallback) {
                 if (itemList && itemList.length) {
                     async.eachLimit(itemList, 2, function (item, cb) {
-                        self.scheme.User.find({_id: item.userId}, function (err, data) {
+                        self.schema.User.find({_id: item.userId}, function (err, data) {
                             if (!err) {
                                 if (data && data.length) {
                                     item.userName = data[0].name;
                                 }
-                            } else {
-                                cb(err);
                             }
+
+                            cb(err);
                         });
                     }, function (err) {
                         wCallback(err, itemList);
@@ -426,7 +426,7 @@ ChatController.prototype.putInviteChat = function (userId, chatId, uids, route, 
             },
             function (chatObj, next) {
                 //Won't send invitation if already accepted
-                self.scheme.Invitation.find({
+                self.schema.Invitation.find({
                     chatId: chatObj._id,
                     accepted: true,
                     inviteeId: {$in: uids}
@@ -453,7 +453,7 @@ ChatController.prototype.putInviteChat = function (userId, chatId, uids, route, 
                         expires = now.clone().adjust(Date.DAY, 1);
 
                     async.each(inviteeIdList, function (inviteeId, cb) {
-                        self.scheme.Invitation.create(
+                        self.schema.Invitation.create(
                             {
                                 updateTime: now,
                                 createTime: now,
@@ -478,7 +478,7 @@ ChatController.prototype.putInviteChat = function (userId, chatId, uids, route, 
             function (inviteeIdList, createTime, next) {
                 //Remote old invitation for the same invitee
                 if (inviteeIdList && inviteeIdList.length) {
-                    self.scheme.Invitation.remove({
+                    self.schema.Invitation.remove({
                         _id: {$in: inviteeIdList},
                         createTime: {$lt: createTime}
                     }, function (err) {
@@ -504,7 +504,7 @@ ChatController.prototype.putAcceptInvite = function (inviteeId, chatId, success,
     inviteeId = new self.db.Types.ObjectId(inviteeId);
     chatId = new self.db.Types.ObjectId(chatId);
 
-    (!self.isDBReady && fail(new Error('DB not initialized'))) || self.scheme.Invitation.update({
+    (!self.isDBReady && fail(new Error('DB not initialized'))) || self.schema.Invitation.update({
         inviteeId: inviteeId,
         chatId: chatId
     }, {"$set": {updateTime: now, accepted: true}, "$unset": {expires: 1}}, function (err) {
@@ -616,7 +616,7 @@ ChatController.prototype.putInviteTopic = function (userId, topicId, uids, succe
             },
             function (topicObj, next) {
                 //Won't send invitation if already accepted
-                self.scheme.TopicInvitation.find({
+                self.schema.TopicInvitation.find({
                     topicId: topicObj._id,
                     accepted: true,
                     inviteeId: {$in: uids}
@@ -643,7 +643,7 @@ ChatController.prototype.putInviteTopic = function (userId, topicId, uids, succe
                         expires = now.clone().adjust(Date.DAY, 1);
 
                     async.each(inviteeIdList, function (inviteeId, cb) {
-                        self.scheme.Invitation.create(
+                        self.schema.Invitation.create(
                             {
                                 updateTime: now,
                                 createTime: now,
@@ -669,7 +669,7 @@ ChatController.prototype.putInviteTopic = function (userId, topicId, uids, succe
             function (inviteeIdList, createTime, next) {
                 //Remote old invitation for the same invitee
                 if (inviteeIdList && inviteeIdList.length) {
-                    self.scheme.TopicInvitation.remove({
+                    self.schema.TopicInvitation.remove({
                         _id: {$in: inviteeIdList},
                         createTime: {$lt: createTime}
                     }, function (err) {
@@ -695,7 +695,7 @@ ChatController.prototype.putAcceptInviteTopic = function (inviteeId, topicId, su
     inviteeId = new self.db.Types.ObjectId(inviteeId);
     topicId = new self.db.Types.ObjectId(topicId);
 
-    (!self.isDBReady && fail(new Error('DB not initialized'))) || self.scheme.TopicInvitation.update({
+    (!self.isDBReady && fail(new Error('DB not initialized'))) || self.schema.TopicInvitation.update({
         inviteeId: inviteeId,
         topicId: topicId
     }, {"$set": {updateTime: now, accepted: true}, "$unset": {expires: 1}}, function (err) {
