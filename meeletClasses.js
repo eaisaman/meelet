@@ -244,7 +244,7 @@ var State = Class({
 
             SequenceTransitionAction.prototype.__proto__.fromObject.apply(ret, [obj, context]);
 
-            var classes = ["EffectTransitionAction", "StateTransitionAction", "ConfigurationTransitionAction", "MovementTransitionAction", "SoundTransitionAction", "ServiceInvokeTransitionAction", "IncludeTransitionAction"];
+            var classes = ["EffectTransitionAction", "StateTransitionAction", "ConfigurationTransitionAction", "MovementTransitionAction", "SoundTransitionAction", "ServiceInvokeTransitionAction", "IncludeVideoTransitionAction", "IncludeTransitionAction"];
             obj.childActions && obj.childActions.forEach(function (action) {
                 var className = action.CLASS_NAME,
                     actionObj;
@@ -496,6 +496,35 @@ var State = Class({
 
             return ret;
         }
+    }), IncludeVideoTransitionAction = Class(BaseTransitionAction, {
+        CLASS_NAME: "IncludeVideoTransitionAction",
+        MEMBERS: {
+            actionType: "IncludeVideo",
+            resourceName: ""
+        },
+        initialize: function (widgetObj, resourceName, id) {
+            IncludeVideoTransitionAction.prototype.__proto__.initialize.apply(this, [widgetObj, id]);
+            var MEMBERS = arguments.callee.prototype.MEMBERS;
+
+            for (var member in MEMBERS) {
+                this[member] = _.clone(MEMBERS[member]);
+            }
+            this.resourceName = resourceName || this.resourceName;
+        },
+        toJSON: function () {
+            var jsonObj = IncludeVideoTransitionAction.prototype.__proto__.toJSON.apply(this);
+
+            _.extend(jsonObj, _.pick(this, ["CLASS_NAME"]), {"url": "{{(window.APP_PROJECT_PATH || '')}}" + "resource/video/" + this.resourceName});
+
+            return jsonObj;
+        },
+        fromObject: function (obj, context) {
+            var ret = new IncludeVideoTransitionAction(null, obj.resourceName);
+
+            IncludeVideoTransitionAction.prototype.__proto__.fromObject.apply(ret, [obj, context]);
+
+            return ret;
+        }
     }), IncludeTransitionAction = Class(BaseTransitionAction, {
         CLASS_NAME: "IncludeTransitionAction",
         MEMBERS: {
@@ -516,7 +545,7 @@ var State = Class({
         toJSON: function () {
             var jsonObj = IncludeTransitionAction.prototype.__proto__.toJSON.apply(this);
 
-            _.extend(jsonObj, _.pick(this, ["CLASS_NAME", "edge"]), {"url":"{{(window.APP_PROJECT_PATH || '')}}" + this.url});
+            _.extend(jsonObj, _.pick(this, ["CLASS_NAME", "edge"]), {"url": "{{(window.APP_PROJECT_PATH || '')}}" + this.url});
 
             return jsonObj;
         },
@@ -871,7 +900,7 @@ var State = Class({
                 }
             });
 
-            var classes = ["ElementSketchWidgetClass", "RepoSketchWidgetClass", "BookIncludeSketchWidgetClass"];
+            var classes = ["ElementSketchWidgetClass", "RepoSketchWidgetClass", "VideoIncludeSketchWidgetClass", "BookIncludeSketchWidgetClass"];
             obj.childWidgets.forEach(function (c) {
                 var className = c.CLASS_NAME,
                     childWidget;
@@ -1267,6 +1296,39 @@ var State = Class({
 
             if (self.externalBook && self.externalPage && self.externalFile) {
                 var $includeDiv = $("<div></div>").attr("base", "{{APP_PROJECT_PATH}}").attr("ui-include", _.sprintf("'resource/external/%s/%s/%s'", self.externalBook, self.externalPage, self.externalFile));
+                self.$element.append($includeDiv);
+            }
+        }
+    }), VideoIncludeSketchWidgetClass = Class(ElementSketchWidgetClass, {
+        CLASS_NAME: "VideoIncludeSketchWidget",
+        MEMBERS: {
+            resourceName: null
+        },
+        initialize: function (id, resourceName) {
+            VideoIncludeSketchWidgetClass.prototype.__proto__.initialize.apply(this, [id]);
+            var self = this,
+                MEMBERS = arguments.callee.prototype.MEMBERS;
+
+            for (var member in MEMBERS) {
+                this[member] = _.clone(MEMBERS[member]);
+            }
+            this.resourceName = resourceName;
+        },
+        fromObject: function (obj, context) {
+            var ret = new VideoIncludeSketchWidgetClass(obj.id, obj.resourceName);
+
+            VideoIncludeSketchWidgetClass.prototype.__proto__.fromObject.apply(ret, [obj, context]);
+            ret.context = context;
+
+            return ret;
+        },
+        appendTo: function ($, $document, $container, $template, $ngTemplate) {
+            VideoIncludeSketchWidgetClass.prototype.__proto__.appendTo.apply(this, [$, $document, $container, $template, $ngTemplate]);
+
+            var self = this;
+
+            if (self.resourceName) {
+                var $includeDiv = $("<div></div>").attr("base", "{{APP_PROJECT_PATH}}").attr("ui-video-include", _.sprintf("'resource/video/%s'", self.resourceName));
                 self.$element.append($includeDiv);
             }
         }

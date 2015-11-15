@@ -2,6 +2,7 @@ requirejs.config(
     {
         paths: {
             "widget.anchor": DIRECTIVE_LIB_PATH + "widget.anchor",
+            "ng.ui.video.include": DIRECTIVE_LIB_PATH + "ng.ui.video.include",
             "ng.ui.include": DIRECTIVE_LIB_PATH + "ng.ui.include",
             "ng.ui.include.replace": DIRECTIVE_LIB_PATH + "ng.ui.include.replace",
             "ng.ui.link": DIRECTIVE_LIB_PATH + "ng.ui.link",
@@ -13,6 +14,7 @@ requirejs.config(
 define([
         "app-extension",
         "widget.anchor",
+        "ng.ui.video.include",
         "ng.ui.include",
         "ng.ui.include.replace",
         "ng.ui.link",
@@ -29,14 +31,17 @@ define([
             //Include Base directive
             directiveConfigs[1](appModule);
 
-            //Include Replace directive
+            //Include Video Base directive
             directiveConfigs[2](appModule);
 
-            //Link Base directive
+            //Include Replace directive
             directiveConfigs[3](appModule);
 
+            //Link Base directive
+            directiveConfigs[4](appModule);
+
             //Data directive
-            directiveConfigs[4](appModule, extension);
+            directiveConfigs[5](appModule, extension);
         }
     }
 );

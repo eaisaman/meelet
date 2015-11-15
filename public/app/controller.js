@@ -284,6 +284,96 @@ define(
                     return utilService.getResolveDefer();
                 };
 
+                $scope.enableAddVideoWidget = function (event) {
+                    function addWidgetHandler(event) {
+                        var touchX = $widgetElement && $widgetElement.data("touchX") || 0,
+                            touchY = $widgetElement && $widgetElement.data("touchY") || 0,
+                            $container = $("." + angularConstants.widgetClasses.containerClass);
+
+                        if (event.type === "panstart") {
+                            $widgetElement = $("<div />");
+                            $widgetElement.addClass("pickerPaneShape squarePane icon-frame-sketch-before icon-frame-sketch-add-widget-before")
+                                .css("z-index", angularConstants.draggingShapeZIndex);
+                            $widgetElement.appendTo($container);
+
+                            touchX = event.srcEvent.offsetX;
+                            touchY = event.srcEvent.offsetY;
+                            $widgetElement.data("touchX", touchX);
+                            $widgetElement.data("touchY", touchY);
+                        } else if (event.type === "panmove") {
+                            var left = event.srcEvent.clientX - $widgetElement.parent().offset().left + touchX,
+                                top = event.srcEvent.clientY - $widgetElement.parent().offset().top + touchY;
+
+                            $widgetElement.css("left", left + "px");
+                            $widgetElement.css("top", top + "px");
+
+                            var $to = $(event.srcEvent.toElement);
+                            if ($to.hasClass(angularConstants.widgetClasses.widgetClass)) {
+                                if (!$to.hasClass(angularConstants.widgetClasses.hoverClass)) {
+                                    $("." + angularConstants.widgetClasses.holderClass).find("." + angularConstants.widgetClasses.hoverClass).removeClass(angularConstants.widgetClasses.hoverClass);
+                                    $to.addClass(angularConstants.widgetClasses.hoverClass);
+                                }
+                            } else if ($to.hasClass(angularConstants.widgetClasses.holderClass)) {
+                                $("." + angularConstants.widgetClasses.holderClass).find("." + angularConstants.widgetClasses.hoverClass).removeClass(angularConstants.widgetClasses.hoverClass);
+                            }
+
+                            if (angularConstants.VERBOSE) {
+                                $log.debug("left:" + left);
+                                $log.debug("touchX:" + touchX);
+                            }
+                        } else if ($widgetElement && event.type === "panend") {
+                            $widgetElement.remove();
+                            $widgetElement = null;
+                            $("." + angularConstants.widgetClasses.holderClass).find("." + angularConstants.widgetClasses.hoverClass).removeClass(angularConstants.widgetClasses.hoverClass);
+
+                            var $to = $(event.srcEvent.toElement);
+
+                            if (!$rootScope.sketchWidgetSetting.isPlaying && ($to.hasClass(angularConstants.widgetClasses.widgetClass) || $to.hasClass(angularConstants.widgetClasses.holderClass) || $to.attr(angularConstants.anchorAttr))) {
+                                var x = event.srcEvent.clientX - $to.offset().left,
+                                    y = event.srcEvent.clientY - $to.offset().top;
+
+                                x = Math.floor(x * angularConstants.precision) / angularConstants.precision;
+                                y = Math.floor(y * angularConstants.precision) / angularConstants.precision;
+
+
+                                utilService.broadcast($scope,
+                                    angularEventTypes.beforeVideoWidgetCreationEvent,
+                                    function (name, resourceName) {
+                                        if (name && resourceName) {
+                                            var widgetObj = uiService.createVideoWidget($to, resourceName);
+                                            widgetObj.name = name;
+                                            widgetObj.resourceName = resourceName;
+
+                                            if (widgetObj) {
+                                                widgetObj.css("left", x + "px");
+                                                widgetObj.css("top", y + "px");
+                                            }
+                                        }
+                                    }
+                                );
+                            }
+                        }
+                    }
+
+                    var $el = $(event.target),
+                        mc = $el.data("hammer"),
+                        $widgetElement;
+
+                    if (!mc) {
+                        mc = new Hammer.Manager(event.target);
+                        mc.add(new Hammer.Press());
+                        mc.add(new Hammer.Pan());
+                        mc.on("panstart panmove panend", addWidgetHandler);
+                        $el.data("hammer", mc);
+
+                        $scope.$on('$destroy', function () {
+                            mc.off("panstart panmove panend", addWidgetHandler);
+                        });
+                    }
+
+                    return utilService.getResolveDefer();
+                };
+
                 $scope.configureWidget = function (event) {
                     var widgetObj = $rootScope.sketchObject.pickedWidget;
 
@@ -810,6 +900,22 @@ define(
                     return scope.toggleModalWindow();
                 };
 
+                $scope.showVideoWidgetName = function (callback) {
+                    event && event.stopPropagation && event.stopPropagation();
+
+                    $scope.modalUsage = "VideoWidgetName";
+
+                    $("#newVideoWidgetName").val("");
+                    if (callback) {
+                        $scope.onModalClose = function () {
+                            callback($("#newVideoWidgetName").val(), $(".widgetVideoContent select").val());
+                        };
+                    }
+                    var scope = angular.element($("#frameSketchContainer > .modalWindowContainer > .md-modal")).scope();
+
+                    return scope.toggleModalWindow();
+                };
+
                 $scope.showWidgetConfiguration = function (event) {
                     event && event.stopPropagation && event.stopPropagation();
 
@@ -1060,6 +1166,12 @@ define(
                         }, null, angularConstants.unresponsiveInterval, "FrameSketchController.initMaster.beforeWidgetCreation")(fn);
                     });
 
+                    $scope.beforeVideoWidgetCreationWatcher = $scope.$on(angularEventTypes.beforeVideoWidgetCreationEvent, function (event, fn) {
+                        utilService.once(function (fn) {
+                            return $scope.showVideoWidgetName(fn);
+                        }, null, angularConstants.unresponsiveInterval, "FrameSketchController.initMaster.beforeVideoWidgetCreationWatcher")(fn);
+                    });
+
                     $scope.resourceEditWatcher = $scope.$on(angularEventTypes.resourceEditEvent, function (event, obj) {
                         utilService.once(function (obj) {
                             return $scope.showResourceEditor(obj.editor).then(function ($editorEl) {
@@ -1102,6 +1214,10 @@ define(
                         if ($scope.beforeWidgetCreationWatcher) {
                             $scope.beforeWidgetCreationWatcher();
                             $scope.beforeWidgetCreationWatcher = null;
+                        }
+                        if ($scope.beforeVideoWidgetCreationWatcher) {
+                            $scope.beforeVideoWidgetCreationWatcher();
+                            $scope.beforeVideoWidgetCreationWatcher = null;
                         }
                         if ($scope.resourceEditWatcher) {
                             $scope.resourceEditWatcher();

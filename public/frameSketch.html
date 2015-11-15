@@ -25,6 +25,9 @@
                     <div ng-mouseenter="once(this, $event, 'enableAddWidget', $event)"
                          class="topbarButton icon-frame-sketch-before icon-frame-sketch-add-widget-before"
                          extensionPoint="extraButtonExtensionPoint" title="Add Widget"></div>
+                    <div ng-mouseenter="once(this, $event, 'enableAddVideoWidget', $event)"
+                         class="topbarButton icon-frame-sketch-before icon-frame-sketch-ondemand_video-before"
+                         extensionPoint="extraButtonExtensionPoint" title="Add Video"></div>
                     <div class="topbarButtonGroup"
                          ng-click="once(this, $event, 'toggleSelect', $event)" title="Zoom">
                         <div class="selectedButton" ng-click="$event.stopPropagation()">
@@ -442,6 +445,42 @@
                      ng-click="once(this, $event, 'hideModal', $event)"></div>
                 <div class="frameSketchDemoContainer">
                     <div id="frameSketchWidgetDemoArea"></div>
+                </div>
+            </div>
+            <div id="videoWidgetNameModal" ng-show="modalUsage === 'VideoWidgetName'" ng-click="$event.stopPropagation()">
+                <div class="widgetNameContent">
+                    <div class="input-group col-as-12 fs-x-medium">
+                        <label class="col-as-4 no-padding control-label">Widget Name</label>
+
+                        <div class="col-as-8 no-padding">
+                            <input id="newVideoWidgetName" type="text"
+                                   class="form-control no-padding fs-x-medium"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="widgetVideoContent">
+                    <div class="input-group col-as-12 fs-x-medium">
+                        <label class="col-as-4 no-padding control-label">Include Video</label>
+
+                        <div class="col-as-8 no-padding">
+                            <select class="form-control fs-x-medium">
+                                <option value="{{videoName}}"
+                                        ng-repeat="videoName in $root.loadedProject.resources.video">
+                                    {{videoName}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="widgetNameConfirmBar">
+                    <div class="widgetNameButton col-as-6 no-padding"
+                         ng-click="once(this, $event, 'confirmWidgetName', $event)">
+                        <span class="icon-frame-sketch-before icon-frame-sketch-confirm-before">Confirm</span>
+                    </div>
+                    <div class="widgetNameButton col-as-6 no-padding"
+                         ng-click="once(this, $event, 'hideModal', $event)">
+                        <span class="icon-frame-sketch-before icon-frame-sketch-cancel-before">Cancel</span>
+                    </div>
                 </div>
             </div>
             <div id="widgetNameModal" ng-show="modalUsage === 'WidgetName'" ng-click="$event.stopPropagation()"

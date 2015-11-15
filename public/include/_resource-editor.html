@@ -21,14 +21,46 @@
 
         <div class="accordianBody fs-x-smaller col-as-12 no-padding">
             <div class="resourcePane col-as-12 no-padding"
-                 ng-click="$event.stopPropagation()" ng-repeat="resourceItem in $root.loadedProject.resources['audio']">
-                <span ng-click="once(this, $event, 'displayResourceEditor', 'audio', resourceItem, $event)">{{resourceItem}}</span>
+                 ng-click="$event.stopPropagation()" ng-repeat="audioName in $root.loadedProject.resources['audio']">
+                <span ng-click="once(this, $event, 'displayResourceEditor', 'audio', audioName, $event)">{{audioName}}</span>
 
                 <div class="resourceDeleteButton fs-x-medium-before icon-resource-editor icon-resource-editor-circle-minus-before"
-                     ng-click="once(this, $event, 'deleteResource', 'audio', resourceItem, $event)"></div>
+                     ng-click="once(this, $event, 'deleteResource', 'audio', audioName, $event)"></div>
             </div>
         </div>
     </div>
+
+    <div class="accordianGroup" ng-click="once(this, $event, 'toggleSelect', $event)">
+        <div class="accordianTitle col-as-12 fs-x-small fs-x-medium-before icon-resource-editor-before icon-resource-editor-angle-double-up-before">
+            <span class="col-as-12 no-padding icon-resource-editor-after icon-resource-editor-ondemand_video-after">Video</span>
+        </div>
+
+        <div class="accordianSubTitle fs-x-smaller col-as-12 no-padding" ng-click="$event.stopPropagation()">
+            <div class="uploadContent fs-x-smaller"
+                 flow-init="{'target':'api/public/projectResourceChunk', 'simultaneousUploads':1, 'query':{'projectId':$root.loadedProject.projectRecord._id, 'resourceType':'video'}}"
+                 flow-file-success="onUploadSuccess('video', $file, $message)" flow-files-submitted="$flow.upload()">
+                <div class="uploadButton form-control fs-x-smaller-before icon-resource-editor-before icon-resource-editor-circle-plus-before"
+                     flow-btn>
+                    <input type="file" style="visibility: hidden; position: absolute;">
+                </div>
+                <div class="uploadDock" flow-drop ng-class="dropClass" flow-drag-enter="dropClass='drag-over'"
+                     flow-drag-leave="dropClass=''">
+                    OR Drag And Drop file here
+                </div>
+            </div>
+        </div>
+
+        <div class="accordianBody fs-x-smaller col-as-12 no-padding">
+            <div class="resourcePane col-as-12 no-padding"
+                 ng-click="$event.stopPropagation()" ng-repeat="videoName in $root.loadedProject.resources['video']">
+                <span>{{videoName}}</span>
+
+                <div class="resourceDeleteButton fs-x-medium-before icon-resource-editor icon-resource-editor-circle-minus-before"
+                     ng-click="once(this, $event, 'deleteResource', 'video', videoName, $event)"></div>
+            </div>
+        </div>
+    </div>
+
     <div class="accordianGroup" ng-click="once(this, $event, 'toggleSelect', $event)">
         <div class="accordianTitle col-as-12 fs-x-small fs-x-medium-before icon-resource-editor-before icon-resource-editor-angle-double-up-before">
             <span class="col-as-12 no-padding icon-resource-editor-after icon-resource-editor-image-after">Image</span>
@@ -51,11 +83,11 @@
 
         <div class="accordianBody fs-x-smaller col-as-12 no-padding">
             <div class="resourcePane col-as-12 no-padding"
-                 ng-click="$event.stopPropagation()" ng-repeat="resourceItem in $root.loadedProject.resources['image']">
-                <span>{{resourceItem}}</span>
+                 ng-click="$event.stopPropagation()" ng-repeat="imageName in $root.loadedProject.resources['image']">
+                <span>{{imageName}}</span>
 
                 <div class="resourceDeleteButton fs-x-medium-before icon-resource-editor icon-resource-editor-circle-minus-before"
-                     ng-click="once(this, $event, 'deleteResource', 'image', resourceItem, $event)"></div>
+                     ng-click="once(this, $event, 'deleteResource', 'image', imageName, $event)"></div>
             </div>
         </div>
     </div>

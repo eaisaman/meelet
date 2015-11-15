@@ -27,8 +27,8 @@ define(
         function defineWidgetClass(Class, FindClass) {
             var Project = Class({
                     CLASS_NAME: "Project",
-                    WIDGET_CLASSES: ["ElementSketchWidget", "RepoSketchWidget"],
-                    ACTION_CLASSES: ["EffectTransitionAction", "StateTransitionAction", "ConfigurationTransitionAction", "MovementTransitionAction", "SoundTransitionAction", "ServiceInvokeTransitionAction"],
+                    WIDGET_CLASSES: ["ElementSketchWidget", "RepoSketchWidget", "VideoIncludeSketchWidget"],
+                    ACTION_CLASSES: ["EffectTransitionAction", "StateTransitionAction", "ConfigurationTransitionAction", "MovementTransitionAction", "SoundTransitionAction", "ServiceInvokeTransitionAction", "IncludeVideoTransitionAction"],
                     MEMBERS: {
                         projectRecord: {},
                         xrefRecord: [],
@@ -39,6 +39,7 @@ define(
                         },
                         externalList: [],
                         resources: {
+                            video: [],
                             audio: [],
                             image: [],
                             external: []
@@ -635,6 +636,30 @@ define(
                             $element.children(".{0}, .{1}".format($inject.angularConstants.widgetClasses.loadExternalSuccessClass, $inject.angularConstants.widgetClasses.loadExternalFailClass)).remove();
 
                             $inject.appService.validateUrl("project/{0}/resource/external/{1}".format(self.projectRecord._id, url)).then(
+                                function () {
+                                    $element.append("<div class='fs-x-small icon-frame-sketch-before icon-frame-sketch-happy-before {0}'><span>Resource found, please check after converting to html.</span></div>".format($inject.angularConstants.widgetClasses.loadExternalSuccessClass));
+                                },
+                                function (err) {
+                                    $element.append("<div class='fs-x-small icon-frame-sketch-before icon-frame-sketch-baffled-before {1}'><span>Fail to load resource.</span></div>".format($inject.angularConstants.widgetClasses.loadExternalFailClass));
+                                }
+                            );
+                        }
+
+                        return $inject.utilService.getResolveDefer();
+                    },
+                    validateIncludeVideo: function (element, url) {
+                        var self = this,
+                            $element;
+
+                        if (self.projectRecord._id) {
+                            if (element.jquery) {
+                                $element = element;
+                            } else if (typeof element === "string" || angular.isElement(element)) {
+                                $element = $(element);
+                            }
+                            $element.children(".{0}, .{1}".format($inject.angularConstants.widgetClasses.loadExternalSuccessClass, $inject.angularConstants.widgetClasses.loadExternalFailClass)).remove();
+
+                            $inject.appService.validateUrl("project/{0}/resource/video/{1}".format(self.projectRecord._id, url)).then(
                                 function () {
                                     $element.append("<div class='fs-x-small icon-frame-sketch-before icon-frame-sketch-happy-before {0}'><span>Resource found, please check after converting to html.</span></div>".format($inject.angularConstants.widgetClasses.loadExternalSuccessClass));
                                 },
@@ -1679,6 +1704,47 @@ define(
                         }
 
                         return $inject.utilService.getRejectDefer("Function {0} not found on implementation of feature {1}".format(self.serviceName, self.feature));
+                    }
+                }),
+                IncludeVideoTransitionAction = Class(BaseTransitionAction, {
+                    CLASS_NAME: "IncludeVideoTransitionAction",
+                    MEMBERS: {
+                        actionType: "IncludeVideo",
+                        resourceName: ""
+                    },
+                    initialize: function (widgetObj, resourceName, id) {
+                        IncludeVideoTransitionAction.prototype.__proto__.initialize.apply(this, [widgetObj, id]);
+                        var MEMBERS = arguments.callee.prototype.MEMBERS;
+
+                        for (var member in MEMBERS) {
+                            this[member] = angular.copy(MEMBERS[member]);
+                        }
+                        this.resourceName = resourceName || this.resourceName;
+                    },
+                    toJSON: function () {
+                        var jsonObj = IncludeVideoTransitionAction.prototype.__proto__.toJSON.apply(this);
+                        _.extend(jsonObj, _.pick(this, ["resourceName", "CLASS_NAME"]));
+
+                        return jsonObj;
+                    },
+                    fromObject: function (obj) {
+                        var ret = new IncludeVideoTransitionAction(null, obj.resourceName, obj.id);
+
+                        IncludeVideoTransitionAction.prototype.__proto__.fromObject.apply(ret, [obj]);
+
+                        return ret;
+                    },
+                    clone: function (cloneObj, MEMBERS) {
+                        cloneObj = cloneObj || new IncludeVideoTransitionAction(this.widgetObj, this.resourceName);
+
+                        _.extend(MEMBERS = MEMBERS || {}, IncludeVideoTransitionAction.prototype.MEMBERS);
+
+                        IncludeVideoTransitionAction.prototype.__proto__.clone.apply(this, [cloneObj, MEMBERS]);
+
+                        return cloneObj;
+                    },
+                    doAction: function () {
+                        return $inject.utilService.getResolveDefer();
                     }
                 }),
                 BaseTrigger = Class({
@@ -5092,6 +5158,126 @@ define(
 
                         return self.$element && self.$element[0].nodeType == 1 && self.$element.parent() || null;
                     }
+                }),
+                VideoIncludeSketchWidgetClass = Class(FindClass("ElementSketchWidget"), {
+                    CLASS_NAME: "VideoIncludeSketchWidget",
+                    DEFAULT_STYLE: {
+                        "width": "100px",
+                        "height": "100px",
+                        "linearGradientColor": {colorStopList: [{color: {color: "#ffffff", alpha: 1}, angle: 0}]}
+                    },
+                    MEMBERS: {
+                        resourceName: null
+                    },
+                    initialize: function (id, resourceName) {
+                        VideoIncludeSketchWidgetClass.prototype.__proto__.initialize.apply(this, [id]);
+                        var MEMBERS = arguments.callee.prototype.MEMBERS;
+
+                        for (var member in MEMBERS) {
+                            this[member] = angular.copy(MEMBERS[member]);
+                        }
+
+                        this.resizable = false;
+                        this.resourceName = resourceName;
+
+                        var self = this;
+                        _.each(VideoIncludeSketchWidgetClass.prototype.DEFAULT_STYLE, function (styleValue, styleName) {
+                            !self.css(styleName) && self.css(styleName, angular.copy(styleValue));
+                        });
+
+                        //Not called by inheriting class
+                        if (this.CLASS_NAME == arguments.callee.prototype.CLASS_NAME) {
+                            $inject.utilService.onceWrapper(this, "appendTo");
+                        }
+                    },
+                    toJSON: function () {
+                        var jsonObj = VideoIncludeSketchWidgetClass.prototype.__proto__.toJSON.apply(this);
+                        _.extend(jsonObj, _.pick(this, ["CLASS_NAME", "resourceName"]));
+
+                        return jsonObj;
+                    },
+                    fromObject: function (obj) {
+                        var ret = new VideoIncludeSketchWidgetClass(obj.id, obj.resourceName);
+
+                        VideoIncludeSketchWidgetClass.prototype.__proto__.fromObject.apply(ret, [obj]);
+
+                        return ret;
+                    },
+                    isKindOf: function (className) {
+                        var self = this;
+
+                        return VideoIncludeSketchWidgetClass.prototype.CLASS_NAME == className || VideoIncludeSketchWidgetClass.prototype.__proto__.isKindOf.apply(self, [className]);
+                    },
+                    clone: function (cloneObj, MEMBERS) {
+                        cloneObj = cloneObj || new VideoIncludeSketchWidgetClass(null, this.resourceName);
+                        _.extend(MEMBERS = MEMBERS || {}, VideoIncludeSketchWidgetClass.prototype.MEMBERS);
+
+                        VideoIncludeSketchWidgetClass.prototype.__proto__.clone.apply(this, [cloneObj, MEMBERS]);
+
+                        return cloneObj;
+                    },
+                    addState: function () {
+                    },
+                    removeState: function () {
+                    },
+                    addStateOption: function () {
+                    },
+                    removeStateOption: function () {
+                    },
+                    setState: function (value) {
+                        var self = this,
+                            ret = VideoIncludeSketchWidgetClass.prototype.__proto__.setState.apply(this, [value]),
+                            stateName = typeof value === "string" && value || value.name;
+
+                        if (ret && ret.then) {
+                            ret.then(function () {
+                                var state = self.getState(stateName);
+
+                                if (state.actionObj.isEmpty()) {
+                                    var action = state.actionObj.addAction("IncludeVideo");
+                                    action.resourceName = self.resourceName;
+                                }
+                            });
+                        } else {
+                            var state = self.getState(stateName);
+
+                            if (state.actionObj.isEmpty()) {
+                                    var action = state.actionObj.addAction("IncludeVideo");
+                                    action.resourceName = self.resourceName;
+                            }
+                        }
+                    },
+                    setStateContext: function (value) {
+                        var self = this;
+
+                        if (value) {
+                            VideoIncludeSketchWidgetClass.prototype.__proto__.setStateContext.apply(self, [value]);
+
+                            if (self.state.actionObj.isEmpty()) {
+                                var action = state.actionObj.addAction("IncludeVideo");
+                                action.resourceName = self.resourceName;
+                            }
+                        }
+                    },
+                    appendTo: function (container) {
+                        var self = this;
+
+                        return VideoIncludeSketchWidgetClass.prototype.__proto__.appendTo.apply(self, [container]).then(
+                            function () {
+                                if (self.$element && self.$element[0].nodeType == 1 && self.$element.parent().length) {
+                                    if (self.resourceName) {
+                                        $inject.$rootScope.loadedProject.validateIncludeVideo(self.$element, self.resourceName);
+                                    }
+
+                                    return $inject.utilService.getResolveDefer(self);
+                                } else {
+                                    return $inject.utilService.getRejectDefer("Invalid Element {0}".format(self.id));
+                                }
+                            }, function (err) {
+                                return $inject.utilService.getRejectDefer(err);
+                            }
+                        );
+                    }
                 });
 
             Service.prototype.nextPage = function (pageObj) {
@@ -5457,6 +5643,44 @@ define(
 
                 return self.utilService.getRejectDefer();
             };
+
+            Service.prototype.createVideoWidget = function (containerElement, resourceName) {
+                var self = this,
+                    $container;
+
+                if (containerElement.jquery) {
+                    $container = containerElement;
+                } else if (typeof containerElement === "string" || angular.isElement(containerElement)) {
+                    $container = $(containerElement);
+                }
+
+                if ($container) {
+                    var $parent,
+                        anchor;
+
+                    if ($container.hasClass(self.angularConstants.widgetClasses.holderClass) || $container.hasClass(self.angularConstants.widgetClasses.widgetClass)) {
+                        $parent = $container;
+                    } else if ($container.attr(self.angularConstants.anchorAttr) != null) {
+                        $parent = $container.closest("[ui-sketch-widget]");
+                        anchor = $container.attr(self.angularConstants.anchorAttr);
+                    }
+
+                    if ($parent) {
+                        var widgetObj = new VideoIncludeSketchWidgetClass(null, resourceName);
+                        widgetObj.anchor = anchor;
+                        widgetObj.attr["ui-sketch-widget"] = "";
+                        widgetObj.attr["ng-class"] = "{'isPlaying': $root.sketchWidgetSetting.isPlaying}";
+                        widgetObj.addOmniClass(self.angularConstants.widgetClasses.widgetClass);
+
+                        widgetObj.appendTo($parent).then(function () {
+                            var parentScope = angular.element($parent).scope();
+                            self.$compile(widgetObj.$element)(parentScope);
+                        });
+
+                        return widgetObj;
+                    }
+                }
+            }
 
             Service.prototype.copyWidget = function (widgetObj, containerElement) {
                 var self = this,

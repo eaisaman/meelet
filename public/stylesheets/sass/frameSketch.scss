@@ -210,6 +210,89 @@ $waveMarkerActiveColor: rgb(221, 125, 0);
                 }
             }
 
+            #videoWidgetNameModal {
+                position: absolute;
+                left: 30%;
+                top: 20%;
+                width: 40%;
+                height: 60%;
+                background: #1abc9c;
+
+                .widgetNameContent {
+                    top: 1em;
+                }
+                .widgetVideoContent {
+                    top: 5em;
+                }
+
+                .widgetNameContent, .widgetVideoContent {
+                    position: absolute;
+                    width: calc(100% - 1em);
+                    height: 2em;
+                    margin: 0 0.5em;
+
+                    @include display-flex;
+                    @include flex-direction(row);
+                    @include justify-content(center);
+                    @include align-items(center);
+
+                    .input-group {
+                        height: 2em;
+                        line-height: 2;
+
+                        @include flex(1);
+
+                        input, select {
+                            height: 2em;
+                            line-height: 2;
+                        }
+                    }
+                }
+
+                .widgetNameConfirmBar {
+                    position: absolute;
+                    bottom: 0;
+                    width: 100%;
+                    height: 3em;
+
+                    .widgetNameButton {
+                        position: relative;
+                        float: left;
+                        height: 2em;
+                        margin: 0.5em 0;
+
+                        span {
+                            position: relative;
+                            float: left;
+                            width: 8em;
+                            height: 100%;
+                            line-height: 2;
+                            left: calc(50% - 4em);
+                            display: inline-block;
+                            background-color: #ddd;
+                            box-shadow: inset 0 -2px 0 rgba(0, 0, 0, .135);
+                            border-radius: 0.2em;
+                            text-align: center;
+
+                            &:before {
+                                position: absolute;
+                                left: 0px;
+                                width: 2em;
+                                height: 2em;
+                                line-height: 2;
+                                text-align: center;
+                            }
+
+                            &:active {
+                                background-color: #555;
+                                color: $activeColor;
+                                box-shadow: none;
+                            }
+                        }
+                    }
+                }
+            }
+
             #frameSketchConfigureModal {
                 position: absolute;
                 left: calc(50% - 10em);

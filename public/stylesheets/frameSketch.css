@@ -22580,6 +22580,82 @@
   color: #669933;
   box-shadow: none;
 }
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #videoWidgetNameModal {
+  position: absolute;
+  left: 30%;
+  top: 20%;
+  width: 40%;
+  height: 60%;
+  background: #1abc9c;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #videoWidgetNameModal .widgetNameContent {
+  top: 1em;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #videoWidgetNameModal .widgetVideoContent {
+  top: 5em;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #videoWidgetNameModal .widgetNameContent, #frameSketchContainer > .modalWindowContainer .frameSketchModalContent #videoWidgetNameModal .widgetVideoContent {
+  position: absolute;
+  width: calc(100% - 1em);
+  height: 2em;
+  margin: 0 0.5em;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #videoWidgetNameModal .widgetNameContent .input-group, #frameSketchContainer > .modalWindowContainer .frameSketchModalContent #videoWidgetNameModal .widgetVideoContent .input-group {
+  height: 2em;
+  line-height: 2;
+  -webkit-flex: 1;
+  flex: 1;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #videoWidgetNameModal .widgetNameContent .input-group input, #frameSketchContainer > .modalWindowContainer .frameSketchModalContent #videoWidgetNameModal .widgetNameContent .input-group select, #frameSketchContainer > .modalWindowContainer .frameSketchModalContent #videoWidgetNameModal .widgetVideoContent .input-group input, #frameSketchContainer > .modalWindowContainer .frameSketchModalContent #videoWidgetNameModal .widgetVideoContent .input-group select {
+  height: 2em;
+  line-height: 2;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #videoWidgetNameModal .widgetNameConfirmBar {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 3em;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #videoWidgetNameModal .widgetNameConfirmBar .widgetNameButton {
+  position: relative;
+  float: left;
+  height: 2em;
+  margin: 0.5em 0;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #videoWidgetNameModal .widgetNameConfirmBar .widgetNameButton span {
+  position: relative;
+  float: left;
+  width: 8em;
+  height: 100%;
+  line-height: 2;
+  left: calc(50% - 4em);
+  display: inline-block;
+  background-color: #ddd;
+  box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.135);
+  border-radius: 0.2em;
+  text-align: center;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #videoWidgetNameModal .widgetNameConfirmBar .widgetNameButton span:before {
+  position: absolute;
+  left: 0px;
+  width: 2em;
+  height: 2em;
+  line-height: 2;
+  text-align: center;
+}
+#frameSketchContainer > .modalWindowContainer .frameSketchModalContent #videoWidgetNameModal .widgetNameConfirmBar .widgetNameButton span:active {
+  background-color: #555;
+  color: #669933;
+  box-shadow: none;
+}
 #frameSketchContainer > .modalWindowContainer .frameSketchModalContent #frameSketchConfigureModal {
   position: absolute;
   left: calc(50% - 10em);

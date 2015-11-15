@@ -78,6 +78,7 @@ requirejs(["jquery-lib", "jquery-plugins-lib", "hammer-lib", "jquery-ui-lib", "j
             boundPropertiesEvent: "boundPropertiesEvent",
             beforeWidgetCreationEvent: "beforeWidgetCreationEvent",
             beforeBookWidgetCreationEvent: "beforeBookWidgetCreationEvent",
+            beforeVideoWidgetCreationEvent: "beforeVideokWidgetCreationEvent",
             resourceEditEvent: "resourceEditEvent",
             resourceEditEndEvent: "resourceEditEndEvent",
             switchProjectEvent: "switchProjectEvent",
