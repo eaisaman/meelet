@@ -188,7 +188,6 @@ define(
                                         assign = fn.assign;
 
                                     if (!fn.assign.customized) {
-                                        f;
                                         fn.assign = function ($scope, value) {
                                             function itemHandler() {
                                                 var defer = $q.defer();

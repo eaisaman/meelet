@@ -159,7 +159,7 @@ define(
 
                 initMaster().then(
                     function () {
-                        urlService.chat();
+                        urlService.project();
                     }
                 );
             }
@@ -1373,7 +1373,7 @@ define(
                 };
 
                 function initMaster() {
-                    var urlParams = $rootScope.urlParams && $rootScode.urlParams["project"] || null,
+                    var urlParams = $rootScope.urlParams && $rootScope.urlParams["project"] || null,
                         projectAction = urlParams && urlParams.projectAction || "";
 
                     if (projectAction === "create") {

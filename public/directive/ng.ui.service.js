@@ -530,6 +530,8 @@ define(
                                     }
                                 );
 
+                                promiseArr.push($inject.appService.modifyProject(self.projectRecord));
+
                                 return promiseArr.length && $inject.$q.all(promiseArr) || $inject.utilService.getResolveDefer();
                             }, function (err) {
                                 return $inject.utilService.getRejectDefer(err);
@@ -4950,7 +4952,10 @@ define(
                 }),
                 PageSketchWidgetClass = Class(BaseSketchWidgetClass, {
                     CLASS_NAME: "PageSketchWidget",
-                    MEMBERS: {},
+                    MEMBERS: {
+                        thumbnail: "",
+                        hasDisplayControl: false
+                    },
                     initialize: function (id) {
                         PageSketchWidgetClass.prototype.__proto__.initialize.apply(this, [id]);
                         var MEMBERS = arguments.callee.prototype.MEMBERS;
@@ -4968,7 +4973,7 @@ define(
                     },
                     toJSON: function () {
                         var jsonObj = PageSketchWidgetClass.prototype.__proto__.toJSON.apply(this);
-                        _.extend(jsonObj, _.pick(this, ["CLASS_NAME"]));
+                        _.extend(jsonObj, _.pick(this, ["CLASS_NAME", "thumbnail", "hasDisplayControl"]));
 
                         return jsonObj;
                     },
@@ -4978,6 +4983,8 @@ define(
                         PageSketchWidgetClass.prototype.__proto__.startMatchReference.apply(null);
 
                         var ret = new PageSketchWidgetClass(obj.id);
+                        ret.thumbnail = obj.thumbnail;
+                        ret.hasDisplayControl = obj.hasDisplayControl;
                         PageSketchWidgetClass.prototype.__proto__.fromObject.apply(ret, [obj]);
 
                         PageSketchWidgetClass.prototype.__proto__.endMatchReference.apply(null);

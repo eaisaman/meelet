@@ -76,6 +76,55 @@
         <div class="tabContents">
             <div tab-sel="tab-content-page-details-1" class="select">
                 <div class="effectArtifactTitle fs-x-small">
+                    <span class="fs-x-medium-before icon-page-before icon-page-transition-before">Project Information</span>
+                </div>
+
+                <div class="effectArtifactContainer fs-x-small">
+                    <div class="input-group col-as-12 fs-x-smaller">
+                        <label class="col-as-5 no-padding control-label">Thumbnail</label>
+
+                        <div class="no-padding col-as-7" ng-click="$event.stopPropagation()">
+                            <select class="form-control" ng-model="$root.loadedProject.projectRecord.thumbnail">
+                                <option value="{{resourceName}}"
+                                        ng-attr-selected="{{$root.loadedProject.projectRecord.thumbnail === resourceName}}"
+                                        ng-repeat="resourceName in $root.loadedProject.resources.image">
+                                    {{resourceName}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="effectArtifactTitle fs-x-small">
+                    <span class="fs-x-medium-before icon-page-before icon-page-transition-before">Page Genernal Information</span>
+                </div>
+
+                <div class="effectArtifactContainer fs-x-small">
+                    <div class="input-group col-as-12 fs-x-smaller">
+                        <label class="col-as-5 no-padding control-label">Thumbnail</label>
+
+                        <div class="no-padding col-as-7" ng-click="$event.stopPropagation()">
+                            <select class="form-control" ng-model="$root.sketchObject.pickedPage.thumbnail">
+                                <option value="{{resourceName}}"
+                                        ng-attr-selected="{{$root.sketchObject.pickedPage.thumbnail === resourceName}}"
+                                        ng-repeat="resourceName in $root.loadedProject.resources.image">
+                                    {{resourceName}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="input-group col-as-12 fs-x-smaller">
+                        <label class="col-as-5 no-padding control-label">Control Display</label>
+
+                        <div class="no-padding col-as-7" ng-click="$event.stopPropagation()">
+                            <input type="checkbox" class="form-control no-padding fs-x-smaller"
+                                   ng-model="$root.sketchObject.pickedPage.hasDisplayControl"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="effectArtifactTitle fs-x-small">
                     <span class="fs-x-medium-before icon-page-before icon-page-transition-before">Page Transition Effect</span>
                 </div>
 
@@ -85,7 +134,8 @@
                          ui-multilevel-menu-opts="{dataField:'_id', labelField:'name', listField:'artifactList', listFilter:{_selected:true}, zIndex:100}"
                          picked-menu-item="pickedEffectArtifactId"
                          on-menu-select="pickEffectArtifact(pickedEffectArtifactId)">
-                        {{$root.loadedProject.sketchWorks.pageTransition.artifactSpec && $root.loadedProject.sketchWorks.pageTransition.artifactSpec.artifactName || "Choose an Artifact"}}
+                        {{$root.loadedProject.sketchWorks.pageTransition.artifactSpec &&
+                        $root.loadedProject.sketchWorks.pageTransition.artifactSpec.artifactName || "Choose an Artifact"}}
                     </div>
                     <div class="toggleLibraryButton col-as-3 no-padding-right">
                     <span class="fs-x-medium-before icon-page-before icon-page-library-before"
@@ -98,7 +148,8 @@
                      ui-multilevel-menu-opts="{dataField:'value', labelField:'name', zIndex:101}"
                      picked-menu-item="pickedEffect"
                      on-menu-select="$root.loadedProject.sketchWorks.pageTransition.effect = createEffectObj(pickedEffect)">
-                    {{$root.loadedProject.sketchWorks.pageTransition.effect && $root.loadedProject.sketchWorks.pageTransition.effect.name || 'Choose an Effect'}}
+                    {{$root.loadedProject.sketchWorks.pageTransition.effect &&
+                    $root.loadedProject.sketchWorks.pageTransition.effect.name || 'Choose an Effect'}}
                 </div>
 
                 <div class="effectLibraryList">
