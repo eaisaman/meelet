@@ -981,6 +981,7 @@ Commons.prototype.convertToHtml = function (projectType, projectPath, artifactLi
                                         cb(null, pages, {
                                             artifacts: [],
                                             locations: [],
+                                            thumbnails: [],
                                             pageTransition: obj.pageTransition || {}
                                         });
                                     } catch (err2) {
@@ -1145,10 +1146,15 @@ Commons.prototype.convertToHtml = function (projectType, projectPath, artifactLi
                                 if (err) {
                                     next(err);
                                 } else {
-                                    //Write app/route.json
                                     meta.locations = _.pluck(pages, "id");
+                                    meta.thumbnails = [];
+                                    meta.displayControlLocations = [];
                                     for (var i = 0; i < meta.locations.length; i++) {
                                         meta.locations[i] = _.string.sprintf("page-%s", meta.locations[i]);
+                                        meta.thumbnails.push(pages[i].thumbnail || "");
+                                        if (pages[i].hasDisplayControl) {
+                                            meta.displayControlLocations.push(meta.locations[i]);
+                                        }
                                     }
                                     next(null, pages, meta);
                                 }

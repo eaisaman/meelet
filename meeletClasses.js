@@ -1272,7 +1272,10 @@ var State = Class({
         }
     }), PageSketchWidgetClass = Class(BaseSketchWidgetClass, {
         CLASS_NAME: "PageSketchWidget",
-        MEMBERS: {},
+        MEMBERS: {
+            "thumbnail": "",
+            "hasDisplayControl": false
+        },
         initialize: function (id) {
             PageSketchWidgetClass.prototype.__proto__.initialize.apply(this, [id]);
             var MEMBERS = arguments.callee.prototype.MEMBERS;
@@ -1291,6 +1294,8 @@ var State = Class({
 
             var ret = new PageSketchWidgetClass(obj.id);
             ret.lastModified = obj.lastModified;
+            ret.thumbnail = obj.thumbnail;
+            ret.hasDisplayControl = obj.hasDisplayControl;
             PageSketchWidgetClass.prototype.__proto__.fromObject.apply(ret, [obj, context]);
             ret.context = context;
 

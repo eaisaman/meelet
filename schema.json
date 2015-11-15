@@ -36,7 +36,8 @@
     "userId": "ObjectId",
     "forbidden": "boolean",
     "lock": "boolean",
-    "lockUser": "ObjectId"
+    "lockUser": "ObjectId",
+    "thumbnail": "string"
   },
   "RepoLibrary": {
     "updateTime": "date",
