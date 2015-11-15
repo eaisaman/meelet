@@ -30,154 +30,194 @@ ChatController.prototype.getJoinItems = function (userId, success, fail) {
 
     userId = new self.db.Types.ObjectId(userId);
 
-    (!self.isDBReady && fail(new Error('DB not initialized'))) || async.parallel(
-        {
-            project: function (callback) {
-                self.scheme.UserProject.find({userId: userId}).sort({createTime: -1}).exec(function (err, data) {
-                    callback(err, data);
-                });
-            },
-            chat: function (callback) {
-                async.waterfall([
-                    function (next) {
-                        self.scheme.Chat.find({creatorId: userId}).sort({createTime: -1}).exec(function (err, data) {
-                            next(err, data);
-                        });
-                    },
-                    function (chatList, next) {
-                        if (chatList && chatList.length) {
-                            async.eachLimit(chatList, 2, function (item, cb) {
-                                self.scheme.UserProject.find({_id: item.projectId}, function (err, data) {
-                                    if (!err) {
-                                        if (data && data.length) {
-                                            item.projectName = data[0].name;
-                                        }
-                                    } else {
-                                        cb(err);
-                                    }
-                                });
-                            }, function (err) {
-                                next(err, _.filter(chatList, function (chat) {
-                                    return chat.projectName != null;
-                                }))
+    (!self.isDBReady && fail(new Error('DB not initialized'))) || async.waterfall(
+        [
+            function (wCallback) {
+                async.parallel(
+                    {
+                        project: function (callback) {
+                            self.scheme.UserProject.find({userId: userId}).sort({createTime: -1}).exec(function (err, data) {
+                                callback(err, data);
                             });
+                        },
+                        chat: function (callback) {
+                            async.waterfall([
+                                function (next) {
+                                    self.scheme.Chat.find({creatorId: userId}).sort({createTime: -1}).exec(function (err, data) {
+                                        next(err, data);
+                                    });
+                                },
+                                function (chatList, next) {
+                                    if (chatList && chatList.length) {
+                                        async.eachLimit(chatList, 2, function (item, cb) {
+                                            self.scheme.UserProject.find({_id: item.projectId}, function (err, data) {
+                                                if (!err) {
+                                                    if (data && data.length) {
+                                                        item.projectName = data[0].name;
+                                                        item.thumbnail = data[0].thumbnail;
+                                                    }
+                                                } else {
+                                                    cb(err);
+                                                }
+                                            });
+                                        }, function (err) {
+                                            next(err, _.filter(chatList, function (chat) {
+                                                return chat.projectName != null;
+                                            }))
+                                        });
+                                    } else {
+                                        next(null, null);
+                                    }
+                                }
+                            ], function (err, data) {
+                                callback(err, data);
+                            });
+                        },
+                        invitation: function (callback) {
+                            async.waterfall([
+                                function (next) {
+                                    self.scheme.Invitation.find({inviteeId: userId}).sort({createTime: -1}).exec(function (err, data) {
+                                        if (!err) {
+                                            next(null, data);
+                                        } else {
+                                            next(err);
+                                        }
+                                    });
+                                },
+                                function (invitationList, next) {
+                                    var chatIdList = _.pluck(invitationList, "chatId");
+                                    if (chatIdList && chatIdList.length) {
+                                        var now = new Date();
+                                        self.schema.Chat.find({
+                                            state: {$ne: 3},
+                                            endTime: null,
+                                            expectEndTime: {$lt: now},
+                                            _id: {$in: chatIdList}
+                                        }, function (err, data) {
+                                            if (!err) {
+                                                next(null, _.filter(invitationList, function (invitation) {
+                                                    return !data.every(function (chat) {
+                                                        if (chat._id.toString() === invitation.chatId.toString()) {
+                                                            invitation.projectId = chat.projectId;
+                                                            return false;
+                                                        }
+
+                                                        return true;
+                                                    });
+                                                }));
+                                            } else {
+                                                next(err);
+                                            }
+                                        });
+                                    } else {
+                                        next(null, null);
+                                    }
+                                },
+                                function (invitationList, next) {
+                                    if (invitationList && invitationList.length) {
+                                        async.eachLimit(invitationList, 2, function (item, cb) {
+                                            //Invitation item's projectId is set during checking chat validity before
+                                            self.scheme.UserProject.find({_id: item.projectId}, function (err, data) {
+                                                if (!err) {
+                                                    if (data && data.length) {
+                                                        item.projectName = data[0].name;
+                                                        item.thumbnail = data[0].thumbnail;
+                                                    }
+                                                } else {
+                                                    cb(err);
+                                                }
+                                            });
+                                        }, function (err) {
+                                            next(err, _.filter(invitationList, function (invitation) {
+                                                return invitation.projectName != null;
+                                            }))
+                                        });
+                                    } else {
+                                        next(null, null);
+                                    }
+                                }
+                            ], function (err, data) {
+                                callback(err, data);
+                            })
+                        }
+                    }, function (err, results) {
+                        if (!err) {
+                            var arr = [];
+
+                            if (results.project && results.project.length) {
+                                results.project.forEach(function (item) {
+                                    arr.push({
+                                        projectId: item._id,
+                                        projectName: item.name,
+                                        time: item.createTime,
+                                        userId: item.userId,
+                                        joinType: "project",
+                                        thumbnail: item.thumbnail
+                                    });
+                                });
+                            }
+
+                            if (results.chat && results.chat.length) {
+                                results.chat.forEach(function (item) {
+                                    arr.push({
+                                        projectId: item.projectId,
+                                        projectName: item.projectName,
+                                        time: item.createTime,
+                                        userId: item.creatorId,
+                                        chatId: item.chatId,
+                                        joinType: "chat",
+                                        route: item.route,
+                                        chatState: item.state,
+                                        thumbnail: item.thumbnail
+                                    });
+                                });
+                            }
+
+                            if (results.invitation && results.invitation.length) {
+                                results.invitation.forEach(function (item) {
+                                    arr.push({
+                                        projectId: item.projectId,
+                                        projectName: item.projectName,
+                                        time: item.createTime,
+                                        userId: item.userId,
+                                        chatId: item.chatId,
+                                        joinType: "invitation",
+                                        route: item.route,
+                                        thumbnail: item.thumbnail
+                                    });
+                                });
+                            }
+
+                            wCallback(null, arr);
                         } else {
-                            next(null, null);
+                            wCallback(err);
                         }
                     }
-                ], function (err, data) {
-                    callback(err, data);
-                });
+                );
             },
-            invitation: function (callback) {
-                async.waterfall([
-                    function (next) {
-                        self.scheme.Invitation.find({inviteeId: userId}).sort({createTime: -1}).exec(function (err, data) {
+            function (itemList, wCallback) {
+                if (itemList && itemList.length) {
+                    async.eachLimit(itemList, 2, function (item, cb) {
+                        self.scheme.User.find({_id: item.userId}, function (err, data) {
                             if (!err) {
-                                next(null, data);
+                                if (data && data.length) {
+                                    item.userName = data[0].name;
+                                }
                             } else {
-                                next(err);
+                                cb(err);
                             }
                         });
-                    },
-                    function (invitationList, next) {
-                        var chatIdList = _.pluck(invitationList, "chatId");
-                        if (chatIdList && chatIdList.length) {
-                            var now = new Date();
-                            self.schema.Chat.find({
-                                state: {$ne: 3},
-                                endTime: null,
-                                expectEndTime: {$lt: now},
-                                _id: {$in: chatIdList}
-                            }, function (err, data) {
-                                if (!err) {
-                                    next(null, _.filter(invitationList, function (invitation) {
-                                        return !data.every(function (chat) {
-                                            if (chat._id.toString() === invitation.chatId.toString()) {
-                                                invitation.projectId = chat.projectId;
-                                                return false;
-                                            }
-
-                                            return true;
-                                        });
-                                    }));
-                                } else {
-                                    next(err);
-                                }
-                            });
-                        } else {
-                            next(null, null);
-                        }
-                    },
-                    function (invitationList, next) {
-                        if (invitationList && invitationList.length) {
-                            async.eachLimit(invitationList, 2, function (item, cb) {
-                                //Invitation item's projectId is set during checking chat validity before
-                                self.scheme.UserProject.find({_id: item.projectId}, function (err, data) {
-                                    if (!err) {
-                                        if (data && data.length) {
-                                            item.projectName = data[0].name;
-                                        }
-                                    } else {
-                                        cb(err);
-                                    }
-                                });
-                            }, function (err) {
-                                next(err, _.filter(invitationList, function (invitation) {
-                                    return invitation.projectName != null;
-                                }))
-                            });
-                        } else {
-                            next(null, null);
-                        }
-                    }
-                ], function (err, data) {
-                    callback(err, data);
-                })
+                    }, function (err) {
+                        wCallback(err, itemList);
+                    });
+                } else {
+                    wCallback(null);
+                }
             }
-        }, function (err, results) {
+        ],
+        function (err, data) {
             if (!err) {
-                var arr = [];
-
-                if (results.project && results.project.length) {
-                    results.project.forEach(function (item) {
-                        arr.push({
-                            projectId: item._id,
-                            projectName: item.name,
-                            time: item.createTime,
-                            userId: item.userId,
-                            joinType: "project"
-                        });
-                    });
-                }
-
-                if (results.chat && results.chat.length) {
-                    results.chat.forEach(function (item) {
-                        arr.push({
-                            projectId: item.projectId,
-                            projectName: item.projectName,
-                            time: item.createTime,
-                            userId: item.creatorId,
-                            joinType: "chat",
-                            route: item.route
-                        });
-                    });
-                }
-
-                if (results.topic && results.topic.length) {
-                    results.topic.forEach(function (item) {
-                        arr.push({
-                            projectId: item.projectId,
-                            projectName: item.projectName,
-                            time: item.createTime,
-                            userId: item.userId,
-                            joinType: "invitation",
-                            route: item.route
-                        });
-                    });
-                }
-
-                success(arr);
+                success(data);
             } else {
                 fail(err);
             }
