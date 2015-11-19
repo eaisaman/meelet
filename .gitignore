@@ -1,0 +1,10 @@
+node_modules
+Common
+.idea
+.sass-cache
+project
+tmp
+download
+upload
+staging
+release
