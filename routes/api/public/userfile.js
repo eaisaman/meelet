@@ -2088,4 +2088,70 @@ UserFileController.prototype.getModuleFile = function (request, success, fail) {
     );
 };
 
+UserFileController.prototype.getSameGroupUsers = function (userId, success, fail) {
+    var self = this;
+
+    userId = new self.db.Types.ObjectId(userId);
+
+    (!self.isDBReady && fail(new Error('DB not initialized'))) || async.waterfall([
+            function (next) {
+                try {
+                    self.schema.UserGroupXref.find({userId: userId}, function (err, data) {
+                        if (!err) {
+                            next(null, _.pluck(data, "groupId"));
+                        } else {
+                            next(err);
+                        }
+                    });
+                } catch (e) {
+                    next(e);
+                }
+            },
+            function (groupIdList, next) {
+                if (groupIdList && groupIdList.length) {
+                    self.schema.UserGroupXref.find({groupId: {"$in": groupIdList}}, function (err, data) {
+                        if (!err) {
+                            var arr = _.pluck(data, "userId").map(function (oid) {
+                                return oid.toString();
+                            });
+
+                            arr = _.without(_.uniq(arr), userId.toString()).map(function (strId) {
+                                return new self.db.Types.ObjectId(strId);
+                            })
+                        }
+
+                        next(err, arr);
+                    });
+                } else {
+                    next(null);
+                }
+            },
+            function (userIdList, next) {
+                if (userIdList && userIdList.length) {
+                    self.schema.User.find({_id: {"$in": userIdList}}, function (err, data) {
+                        if (!err) {
+                            data.forEach(function (item) {
+                                delete item.password;
+                                delete item.plainPassword;
+                            });
+                            next(null, data);
+                        } else {
+                            next(err);
+                        }
+                    })
+                } else {
+                    next(null);
+                }
+            }
+        ], function (err, result) {
+            if (err) {
+                self.config.logger.error(err);
+                fail(err);
+            } else {
+                success(result);
+            }
+        }
+    );
+};
+
 module.exports = UserFileController;
