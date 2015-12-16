@@ -73,6 +73,7 @@ var UserFileController = function (fields) {
     }
 
     self.config = require('../../../config');
+    self.__ = self.config.i18n;
     self.config.on(self.config.ApplicationDBConnectedEvent, function (resource) {
         self.db = resource.instance;
         self.schema = resource.schema;
@@ -80,38 +81,10 @@ var UserFileController = function (fields) {
     });
 };
 
-UserFileController.prototype.postConfiguration = function (projectId, artifactId, widgetId, configuration, success, fail) {
-    var self = this;
-
-    if (projectId) {
-        var projectPath = path.join(self.config.userFile.sketchFolder, projectId);
-
-        fs.mkdir(projectPath, 0777, function (fsError) {
-            if (!fsError || fsError.code === "EEXIST") {
-                var filePath = path.join(projectPath, "meelet.json"),
-                    out = fs.createWriteStream(filePath);
-
-                out.on('finish', function () {
-                    success();
-                });
-
-                out.on('error', function (err) {
-                    fail(err);
-                });
-
-                out.write(sketchWorks);
-                out.end();
-            } else {
-                fail(fsError);
-            }
-        });
-    } else {
-        fail("Empty project id");
-    }
-};
-
 /**
  * @description
+ *
+ * Save sketch project and its json content. Parameter stagingContent contains field widgetList and removeWidgetList.
  * When user adds a configurable widget to his page, a record will be added to staging widget list. When he removes a
  * configurable widget, record will be removed from staging widget list and added to removing widget list. The final
  * staging widget list stores widgets used in page, removing list stores those not used. The server side folder stores
@@ -326,6 +299,17 @@ UserFileController.prototype.postSketch = function (projectId, sketchWorks, stag
     }
 };
 
+/**
+ * @description
+ *
+ * Save flow project and its json content.
+ *
+ * @param projectId
+ * @param flowWorks
+ * @param request
+ * @param success
+ * @param fail
+ */
 UserFileController.prototype.postFlow = function (projectId, flowWorks, request, success, fail) {
     var self = this;
 
@@ -368,6 +352,21 @@ UserFileController.prototype.postFlow = function (projectId, flowWorks, request,
     }
 };
 
+/**
+ * @description
+ *
+ * Add new configurable widget to project. Return its css name.
+ *
+ *
+ * @param projectId
+ * @param widgetId
+ * @param libraryName
+ * @param artifactId
+ * @param type
+ * @param version
+ * @param success
+ * @param fail
+ */
 UserFileController.prototype.postConfigurableArtifact = function (projectId, widgetId, libraryName, artifactId, type, version, success, fail) {
     if (projectId) {
         commons.addConfigurableArtifact(projectId, widgetId, libraryName, artifactId, type, version, function (err, cssName) {
@@ -382,6 +381,17 @@ UserFileController.prototype.postConfigurableArtifact = function (projectId, wid
     }
 };
 
+/**
+ * @description
+ *
+ * Remove configurable widget from project.
+ *
+ * @param projectId
+ * @param widgetId
+ * @param artifactId
+ * @param success
+ * @param fail
+ */
 UserFileController.prototype.deleteConfigurableArtifact = function (projectId, widgetId, artifactId, success, fail) {
     if (projectId) {
         commons.removeConfigurableArtifact(projectId, widgetId, artifactId, function (err) {
@@ -396,6 +406,18 @@ UserFileController.prototype.deleteConfigurableArtifact = function (projectId, w
     }
 };
 
+/**
+ * @description
+ *
+ * Modify configuration of configurable widget.
+ *
+ * @param projectId
+ * @param widgetId
+ * @param artifactId
+ * @param configuration
+ * @param success
+ * @param fail
+ */
 UserFileController.prototype.putConfigurableArtifact = function (projectId, widgetId, artifactId, configuration, success, fail) {
     if (projectId) {
         configuration = (configuration && JSON.parse(configuration)) || {};
@@ -411,6 +433,16 @@ UserFileController.prototype.putConfigurableArtifact = function (projectId, widg
     }
 };
 
+/**
+ * @description
+ *
+ * Return sketch project's json content.
+ *
+ *
+ * @param projectId
+ * @param success
+ * @param fail
+ */
 UserFileController.prototype.getSketch = function (projectId, success, fail) {
     var self = this;
 
@@ -444,6 +476,15 @@ UserFileController.prototype.getSketch = function (projectId, success, fail) {
     }
 };
 
+/**
+ * @description
+ *
+ * Return flow project's json content.
+ *
+ * @param projectId
+ * @param success
+ * @param fail
+ */
 UserFileController.prototype.getFlow = function (projectId, success, fail) {
     var self = this;
 
@@ -477,6 +518,15 @@ UserFileController.prototype.getFlow = function (projectId, success, fail) {
     }
 };
 
+/**
+ * @description
+ *
+ * Get project's json content of external file information.
+ *
+ * @param projectId
+ * @param success
+ * @param fail
+ */
 UserFileController.prototype.getExternal = function (projectId, success, fail) {
     var self = this;
 
@@ -526,6 +576,18 @@ UserFileController.prototype.getExternal = function (projectId, success, fail) {
     }
 };
 
+/**
+ * @description
+ *
+ * Download project's image by chunks.
+ *
+ * @param request
+ * @param projectId
+ * @param flowChunkNumber
+ * @param flowFilename
+ * @param success
+ * @param fail
+ */
 UserFileController.prototype.getProjectImageChunk = function (request, projectId, flowChunkNumber, flowFilename, success, fail) {
     var self = this;
 
@@ -561,10 +623,25 @@ UserFileController.prototype.getProjectImageChunk = function (request, projectId
             }
         );
     } else {
-        fail(new Error('Empty project id'), {statusCode: 500});
+        fail(new Error(self.__('Empty Project Id')), {statusCode: 500});
     }
 };
 
+/**
+ * @description
+ *
+ * Upload project's image by chunks.
+ *
+ * @param request
+ * @param projectId
+ * @param flowFilename
+ * @param flowChunkNumber
+ * @param flowTotalChunks
+ * @param flowCurrentChunkSize
+ * @param flowTotalSize
+ * @param success
+ * @param fail
+ */
 UserFileController.prototype.postProjectImageChunk = function (request, projectId, flowFilename, flowChunkNumber, flowTotalChunks, flowCurrentChunkSize, flowTotalSize, success, fail) {
     var self = this;
 
@@ -732,6 +809,14 @@ UserFileController.prototype.postProjectImageChunk = function (request, projectI
     }
 };
 
+/**
+ * @description
+ *
+ * @param projectId
+ * @param fileName
+ * @param success
+ * @param fail
+ */
 UserFileController.prototype.deleteProjectImage = function (projectId, fileName, success, fail) {
     var self = this;
 
@@ -750,6 +835,15 @@ UserFileController.prototype.deleteProjectImage = function (projectId, fileName,
     }
 };
 
+/**
+ * @description
+ *
+ * Get json contetn listing project's resources.
+ *
+ * @param projectId
+ * @param success
+ * @param fail
+ */
 UserFileController.prototype.getProjectResource = function (projectId, success, fail) {
     var self = this;
 
@@ -833,6 +927,22 @@ UserFileController.prototype.getProjectResource = function (projectId, success, 
     }
 };
 
+/**
+ * @description
+ *
+ * Upload project's resource in chunks.
+ *
+ * @param request
+ * @param projectId
+ * @param resourceType
+ * @param flowFilename
+ * @param flowChunkNumber
+ * @param flowTotalChunks
+ * @param flowCurrentChunkSize
+ * @param flowTotalSize
+ * @param success
+ * @param fail
+ */
 UserFileController.prototype.postProjectResourceChunk = function (request, projectId, resourceType, flowFilename, flowChunkNumber, flowTotalChunks, flowCurrentChunkSize, flowTotalSize, success, fail) {
     var self = this;
 
@@ -1195,6 +1305,15 @@ UserFileController.prototype.postProjectResourceChunk = function (request, proje
     }
 };
 
+/**
+ * @description
+ *
+ * @param projectId
+ * @param resourceType
+ * @param fileName
+ * @param success
+ * @param fail
+ */
 UserFileController.prototype.deleteProjectResource = function (projectId, resourceType, fileName, success, fail) {
     var self = this;
 
@@ -1332,6 +1451,13 @@ UserFileController.prototype.deleteProjectResource = function (projectId, resour
     }
 };
 
+/**
+ * @description
+ *
+ * @param libraryFilter
+ * @param success
+ * @param fail
+ */
 UserFileController.prototype.getRepoLibrary = function (libraryFilter, success, fail) {
     var self = this;
 
@@ -1356,6 +1482,13 @@ UserFileController.prototype.getRepoLibrary = function (libraryFilter, success, 
         });
 };
 
+/**
+ * @description
+ *
+ * @param artifactFilter
+ * @param success
+ * @param fail
+ */
 UserFileController.prototype.getRepoArtifact = function (artifactFilter, success, fail) {
     var self = this;
 
@@ -1383,6 +1516,13 @@ UserFileController.prototype.getRepoArtifact = function (artifactFilter, success
         });
 };
 
+/**
+ * @description
+ *
+ * @param projectFilter
+ * @param success
+ * @param fail
+ */
 UserFileController.prototype.getProject = function (projectFilter, success, fail) {
     var self = this;
 
@@ -1419,6 +1559,18 @@ UserFileController.prototype.getProject = function (projectFilter, success, fail
         });
 };
 
+/**
+ * @description
+ *
+ * Create new project and save its sketch json content. Generate qr svg file for the project.
+ * Create project folder and its staging folder.
+ *
+ *
+ * @param project
+ * @param sketchWorks
+ * @param success
+ * @param fail
+ */
 UserFileController.prototype.postProject = function (project, sketchWorks, success, fail) {
     var self = this;
 
@@ -1507,6 +1659,16 @@ UserFileController.prototype.postProject = function (project, sketchWorks, succe
         });
 };
 
+/**
+ * @description
+ *
+ * Update project record in db.
+ *
+ * @param projectFilter
+ * @param project
+ * @param success
+ * @param fail
+ */
 UserFileController.prototype.putProject = function (projectFilter, project, success, fail) {
     var self = this;
 
@@ -1545,6 +1707,15 @@ UserFileController.prototype.putProject = function (projectFilter, project, succ
     });
 };
 
+/**
+ * @description
+ *
+ * Delete project's record and its folder.
+ *
+ * @param projectFilter
+ * @param success
+ * @param fail
+ */
 UserFileController.prototype.deleteProject = function (projectFilter, success, fail) {
     var self = this;
 
@@ -1579,7 +1750,7 @@ UserFileController.prototype.deleteProject = function (projectFilter, success, f
                     if (!data.every(function (item) {
                             return !item.lock;
                         })) {
-                        fail("Only unlocked project can be deleted.");
+                        fail(self.__('Delete Locked Project'));
                     } else {
                         self.schema.UserProject.remove(projectFilter, function (err) {
                             next(err, data);
@@ -1671,6 +1842,13 @@ UserFileController.prototype.deleteProject = function (projectFilter, success, f
     );
 };
 
+/**
+ * @description
+ *
+ * @param xrefFilter
+ * @param success
+ * @param fail
+ */
 UserFileController.prototype.getProjectArtifactXref = function (xrefFilter, success, fail) {
     var self = this;
 
@@ -1698,6 +1876,15 @@ UserFileController.prototype.getProjectArtifactXref = function (xrefFilter, succ
         });
 };
 
+/**
+ * @description
+ *
+ * @param projectId
+ * @param libraryId
+ * @param artifactList
+ * @param success
+ * @param fail
+ */
 UserFileController.prototype.postProjectArtifactXref = function (projectId, libraryId, artifactList, success, fail) {
     var self = this,
         now = new Date();
@@ -1739,9 +1926,9 @@ UserFileController.prototype.postProjectArtifactXref = function (projectId, libr
                 function (err, selectionDetail) {
                     if (!err) {
                         if (!selectionDetail.project.length) {
-                            next(new Error(_.string.sprintf("Cannot find project with id %s", projectId)));
+                            next(new Error(self.__('Cannot Find Project', projectId)));
                         } else if (!selectionDetail.library.length) {
-                            next(new Error(_.string.sprintf("Cannot find repo library with id %s", libraryId)));
+                            next(new Error(self.__('Cannot Find Repo', libraryId)));
                         } else {
                             next(null, selectionDetail.xref, selectionDetail.library);
                         }
@@ -1782,6 +1969,13 @@ UserFileController.prototype.postProjectArtifactXref = function (projectId, libr
     });
 };
 
+/**
+ * @description
+ *
+ * @param xrefFilter
+ * @param success
+ * @param fail
+ */
 UserFileController.prototype.deleteProjectArtifactXref = function (xrefFilter, success, fail) {
     var self = this;
 
@@ -1804,6 +1998,16 @@ UserFileController.prototype.deleteProjectArtifactXref = function (xrefFilter, s
         });
 };
 
+/**
+ * @description
+ *
+ * Generate html content for locked project.
+ *
+ * @param userId
+ * @param projectId
+ * @param success
+ * @param fail
+ */
 UserFileController.prototype.postConvertToHtml = function (userId, projectId, success, fail) {
     var self = this;
 
@@ -1822,7 +2026,7 @@ UserFileController.prototype.postConvertToHtml = function (userId, projectId, su
                             if (data && data.length) {
                                 wCallback(null, data[0]);
                             } else {
-                                wCallback("Cannot find project record");
+                                wCallback(self.__('Cannot Find Project', projectId));
                             }
                         }
                     });
@@ -1869,6 +2073,16 @@ UserFileController.prototype.postConvertToHtml = function (userId, projectId, su
     }
 };
 
+/**
+ * @description
+ *
+ * Download project zipped content. If the project json content is newer than zipped file, recreate the zipped file.
+ *
+ * @param projectId
+ * @param request
+ * @param success
+ * @param fail
+ */
 UserFileController.prototype.getProjectFile = function (projectId, request, success, fail) {
     var self = this;
 
@@ -1989,11 +2203,22 @@ UserFileController.prototype.getProjectFile = function (projectId, request, succ
     }
 };
 
+/**
+ * @description
+ *
+ * Compare the mtime of module zip file and module source folder. If the former older, regenerate zip file.
+ * Then download the result zip file if it's newer than the date set in 'if-modified-since' header.
+ *
+ * @param request
+ * @param success
+ * @param fail
+ */
 UserFileController.prototype.getModuleFile = function (request, success, fail) {
     var self = this,
         projectModulePath = self.config.userFile.projectModuleFolder,
         zipPath = path.join(self.config.settings.download.folder, "modules.zip");
 
+    //FIXME Generate zip file and copy to download folder should be synchronized.
     async.waterfall(
         [
             function (next) {
@@ -2083,72 +2308,6 @@ UserFileController.prototype.getModuleFile = function (request, success, fail) {
                 fail(err);
             } else {
                 self.fileController.getFile(fileName, request.headers, success, fail);
-            }
-        }
-    );
-};
-
-UserFileController.prototype.getSameGroupUsers = function (userId, success, fail) {
-    var self = this;
-
-    userId = new self.db.Types.ObjectId(userId);
-
-    (!self.isDBReady && fail(new Error('DB not initialized'))) || async.waterfall([
-            function (next) {
-                try {
-                    self.schema.UserGroupXref.find({userId: userId}, function (err, data) {
-                        if (!err) {
-                            next(null, _.pluck(data, "groupId"));
-                        } else {
-                            next(err);
-                        }
-                    });
-                } catch (e) {
-                    next(e);
-                }
-            },
-            function (groupIdList, next) {
-                if (groupIdList && groupIdList.length) {
-                    self.schema.UserGroupXref.find({groupId: {"$in": groupIdList}}, function (err, data) {
-                        if (!err) {
-                            var arr = _.pluck(data, "userId").map(function (oid) {
-                                return oid.toString();
-                            });
-
-                            arr = _.without(_.uniq(arr), userId.toString()).map(function (strId) {
-                                return new self.db.Types.ObjectId(strId);
-                            })
-                        }
-
-                        next(err, arr);
-                    });
-                } else {
-                    next(null);
-                }
-            },
-            function (userIdList, next) {
-                if (userIdList && userIdList.length) {
-                    self.schema.User.find({_id: {"$in": userIdList}}, function (err, data) {
-                        if (!err) {
-                            data.forEach(function (item) {
-                                delete item.password;
-                                delete item.plainPassword;
-                            });
-                            next(null, data);
-                        } else {
-                            next(err);
-                        }
-                    })
-                } else {
-                    next(null);
-                }
-            }
-        ], function (err, result) {
-            if (err) {
-                self.config.logger.error(err);
-                fail(err);
-            } else {
-                success(result);
             }
         }
     );

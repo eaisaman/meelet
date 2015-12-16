@@ -1,11 +1,24 @@
+require('useful-date');
 var async = require('async');
 var _ = require('underscore');
 var commons = require('../../../commons');
+var chatCommons = require('../../../chatCommons');
+commons.mixin(commons, chatCommons);
 
 var UserController = function () {
     var self = this;
 
+    if (typeof fields == "object") {
+        for (var fieldName in fields) {
+            var field = fields[fieldName];
+            if (field) {
+                self[fieldName] = field;
+            }
+        }
+    }
+
     self.config = require('../../../config');
+    self.__ = self.config.i18n;
     self.config.on(self.config.ApplicationDBConnectedEvent, function (resource) {
         self.db = resource.instance;
         self.schema = resource.schema;
@@ -13,6 +26,15 @@ var UserController = function () {
     });
 };
 
+/**
+ * @description
+ *
+ * Query user collection.
+ *
+ * @param userFilter
+ * @param success
+ * @param fail
+ */
 UserController.prototype.getUser = function (userFilter, success, fail) {
     var self = this;
 
@@ -21,9 +43,9 @@ UserController.prototype.getUser = function (userFilter, success, fail) {
         userFilter._id = new self.db.Types.ObjectId(userFilter._id);
     }
     if (userFilter.plainPassword) {
-        userFilter.password = commons.encryptPassword(userFilter.plainPassword);
         delete userFilter.plainPassword;
     }
+
     for (var key in userFilter) {
         var value = userFilter[key];
         if (value != null && typeof value === "string" && value.match(/^\/.+\/$/)) {
@@ -36,10 +58,7 @@ UserController.prototype.getUser = function (userFilter, success, fail) {
             function (next) {
                 self.schema.User.find(userFilter, function (err, data) {
                     if (!err) {
-                        data.forEach(function (item) {
-                            delete item.password;
-                            delete item.plainPassword;
-                        });
+                        commons.arrayPurge(data, "password");
                         next(null, data);
                     } else {
                         next(err);
@@ -55,12 +74,33 @@ UserController.prototype.getUser = function (userFilter, success, fail) {
         });
 };
 
-UserController.prototype.getUserGroups = function (groupFilter, sort, success, fail) {
+/**
+ * @description
+ *
+ * Query group list, return group user list as well.
+ *
+ * @param {string} groupFilter
+ * @param {string} sort
+ * @param {string} userId To query the user groups user belongs to.
+ * @param {string} updateTime Compare with group record's updateTime to filter most recent change.
+ * @param success
+ * @param fail
+ *
+ * @return {Void}
+ *
+ **/
+UserController.prototype.getUserGroup = function (groupFilter, sort, userId, updateTime, success, fail) {
     var self = this;
 
     groupFilter = (groupFilter && JSON.parse(groupFilter)) || {};
     if (groupFilter._id) {
         groupFilter._id = new self.db.Types.ObjectId(groupFilter._id);
+    }
+    if (userId) {
+        userId = new self.db.Types.ObjectId(userId);
+    }
+    if (updateTime) {
+        groupFilter.updateTime = {$gt: new Date(updateTime)};
     }
     for (var key in groupFilter) {
         var value = groupFilter[key];
@@ -70,203 +110,153 @@ UserController.prototype.getUserGroups = function (groupFilter, sort, success, f
     }
     sort = (sort && JSON.parse(sort)) || {};
 
-    (!self.isDBReady && fail(new Error('DB not initialized'))) || self.schema.UserGroup.find(groupFilter).sort(sort).exec(function (err, data) {
-        if (!err) {
-            success(data);
-        } else {
-            fail(err);
-        }
-    });
-};
-
-UserController.prototype.getGroupUsers = function (groupId, userFilter, success, fail) {
-    var self = this,
-        groupIds = [new self.db.Types.ObjectId(groupId)],
-        userList = [];
-
-    userFilter = (userFilter && JSON.parse(userFilter)) || {};
-    if (userFilter._id) {
-        userFilter._id = new self.db.Types.ObjectId(userFilter._id);
-    }
-    if (userFilter.plainPassword) {
-        userFilter.password = commons.encryptPassword(userFilter.plainPassword);
-        delete userFilter.plainPassword;
-    }
-    for (var key in userFilter) {
-        var value = userFilter[key];
-        if (value != null && typeof value === "string" && value.match(/^\/.+\/$/)) {
-            userFilter[key] = new RegExp(value.substr(1, value.length - 2));
-        }
-    }
-
-    (!self.isDBReady && fail(new Error('DB not initialized'))) || async.whilst(function () {
-        return groupIds.length;
-    }, function (wCallback) {
-        var gid = groupIds.pop();
-
-        async.parallel({
-            directGroupUsers: function (pCallback) {
-                async.waterfall([
-                        function (next) {
-                            try {
-                                self.schema.UserGroupXref.find({groupId: gid}, function (err, data) {
-                                    if (!err) {
-                                        var userIdList = [];
-
-                                        data.forEach(function (xref) {
-                                            userIdList.push(xref.userId);
-                                        });
-
-                                        next(null, userIdList);
-                                    } else {
-                                        next(err);
-                                    }
-                                });
-                            } catch (e) {
-                                next(e);
-                            }
-                        },
-                        function (userIdList, next) {
-                            try {
-                                //Two concurrent threads to query, 10 ids to include in the query every time.
-                                commons.batchLimit(userIdList, 10, 2, function (arr, callback) {
-                                        self.schema.User.find(_.extend({
-                                            forbidden: false,
-                                            _id: {$in: arr}
-                                        }, userFilter), function (err, data) {
-                                            if (!err) {
-                                                userList.push(data);
-                                                callback(null);
-                                            } else {
-                                                callback(err);
-                                            }
-                                        });
-                                    },
-                                    function (err) {
-                                        if (!err) {
-                                            userList = _.flatten(userList);
-                                            next(null, userList);
-                                        } else {
-                                            next(err);
-                                        }
-                                    }
-                                )
-                            } catch (e) {
-                                next(e);
-                            }
-                        }], function (err) {
-                        pCallback(err);
-                    }
-                );
-            }, childGroups: function (pCallback) {
-                try {
-                    self.schema.UserGroup.find({parentId: gid}, function (err, data) {
-                        if (!err) {
-                            data.forEach(function (group) {
-                                groupIds.push(group._id);
-                            });
-
-                            pCallback(null);
-                        } else {
-                            pCallback(err);
-                        }
-                    });
-                } catch (e) {
-                    pCallback(e);
-                }
-            }
-        }, function (err) {
-            wCallback(err);
-        });
-    }, function (err) {
-        if (err) {
-            self.config.logger.error(err);
-            fail(err);
-        } else {
-            success(userList);
-        }
-    });
-};
-
-UserController.prototype.getDirectGroupUsers = function (groupId, userFilter, success, fail) {
-    var self = this;
-
-    userFilter = (userFilter && JSON.parse(userFilter)) || {};
-    if (userFilter._id) {
-        userFilter._id = new self.db.Types.ObjectId(userFilter._id);
-    }
-    if (userFilter.plainPassword) {
-        userFilter.password = commons.encryptPassword(userFilter.plainPassword);
-        delete userFilter.plainPassword;
-    }
-    for (var key in userFilter) {
-        var value = userFilter[key];
-        if (value != null && typeof value === "string" && value.match(/^\/.+\/$/)) {
-            userFilter[key] = new RegExp(value.substr(1, value.length - 2));
-        }
-    }
-
-    (!self.isDBReady && fail(new Error('DB not initialized'))) || async.waterfall([
+    (!self.isDBReady && fail(new Error('DB not initialized'))) || async.waterfall(
+        [
             function (next) {
-                try {
-                    self.schema.UserGroupXref.find({groupId: new self.db.Types.ObjectId(groupId)}, function (err, data) {
+                var xrefFilter = null;
+                if (userId) {
+                    xrefFilter = {userId: userId, active: 1};
+                }
+
+                if (xrefFilter) {
+                    self.schema.UserGroupXref.find(xrefFilter, function (err, data) {
                         if (!err) {
-                            var userIdList = [];
-
-                            data.forEach(function (xref) {
-                                userIdList.push(xref.userId);
-                            });
-
-                            next(null, userIdList);
+                            next(null, data);
                         } else {
                             next(err);
                         }
                     });
-                } catch (e) {
-                    next(e);
+                } else {
+                    next(null);
                 }
             },
-            function (userIdList, next) {
-                try {
-                    var userList = [];
-
-                    //Two concurrent threads to query, 10 ids to include in the query every time.
-                    commons.batchLimit(userIdList, 10, 2, function (arr, callback) {
-                            self.schema.User.find(_.extend({
-                                forbidden: false,
-                                _id: {$in: arr}
-                            }, userFilter), function (err, data) {
-                                if (!err) {
-                                    userList.push(data);
-                                    callback(null);
-                                } else {
-                                    callback(err);
-                                }
-                            });
-                        },
-                        function (err) {
-                            if (!err) {
-                                next(null, _.flatten(userList));
-                            } else {
-                                next(err);
-                            }
+            function (xrefList, next) {
+                if (!xrefList || xrefList.length) {
+                    if (xrefList) {
+                        groupFilter._id = {$in: _.pluck(xrefList, "groupId")};
+                    }
+                    self.schema.UserGroup.find(groupFilter).sort(sort).exec(function (err, data) {
+                        if (!err) {
+                            next(null, data);
+                        } else {
+                            next(err);
                         }
-                    )
-                } catch (e) {
-                    next(e);
+                    });
+                } else {
+                    next(null);
                 }
-            }], function (err, result) {
-            if (err) {
-                self.config.logger.error(err);
-                fail(err);
+            }
+        ], function (err, data) {
+            if (!err) {
+                success(data);
             } else {
-                success(result);
+                fail(err);
             }
         }
     );
 };
 
-UserController.prototype.getUserDetail = function (userFilter, success, fail) {
+/**
+ * Query group's user list, providing user's id.
+ *
+ * @param {string} userId To query the user groups user belongs to.
+ * @param {number} userUpdateTime Compare with xref record's updateTime to filter most recent change. The updateTime will be
+ * renewed if associated user record is modified, or the user leaves group and active set 0 on xref.
+ *
+ * @return {Void}
+ *
+ **/
+UserController.prototype.getGroupUser = function (userId, userUpdateTime, success, fail) {
+    var self = this;
+
+    if (userUpdateTime) {
+        userUpdateTime = {$gt: new Date(userUpdateTime)};
+    }
+
+    (!self.isDBReady && fail(new Error('DB not initialized'))) || async.waterfall(
+        [
+            function (next) {
+                var xrefFilter = {userId: userId, active: 1};
+
+                self.schema.UserGroupXref.find(xrefFilter, function (err, data) {
+                    next(err, data);
+                });
+            },
+            function (xrefList, next) {
+                if (xrefList && xrefList.length) {
+                    var xrefFilter = {_id: {$in: _.pluck(xrefList, "groupId")}};
+                    if (userUpdateTime) {
+                        xrefFilter.updateTime = userUpdateTime;
+                    }
+
+                    self.schema.UserGroupXref.find(xrefFilter, function (err, data) {
+                        next(err, data);
+                    });
+                } else {
+                    next(null);
+                }
+            },
+            function (xrefList, next) {
+                if (xrefList && xrefList.length) {
+                    var map = {}, refreshUserMap = {};
+                    xrefList.forEach(function (xref) {
+                        var groupItem = (map[xref.groupId] = map[xref.groupId] || {_id: xref.groupId, userList: []});
+                        if (xref.active) {
+                            groupItem.userList.push(refreshUserMap[xref.userId] = refreshUserMap[xref.userId] || {
+                                    _id: xref.userId,
+                                    active: xref.active,
+                                    updateTime: xref.updateTime
+                                });
+                        } else {
+                            groupItem.userList.push({_id: xref.userId, active: 0});
+                        }
+                    });
+                    next(null, _.values(map), _.values(refreshUserMap));
+                } else {
+                    next(null);
+                }
+            },
+            function (groupList, refreshUserList, next) {
+                if (refreshUserList && refreshUserList.length) {
+                    async.each(refreshUserList, function (userItem, cb) {
+                        self.schema.User.find({_id: userItem._id}, function (err, data) {
+                            if (data && data.length) {
+                                _.extend(userItem, _.pick(data[0], "name", "sex", "avatar", "tel"));
+                            }
+
+                            cb(err);
+                        })
+                    }, function (err) {
+                        next(err, groupList);
+                    });
+                } else {
+                    next(null);
+                }
+            }
+        ],
+        function (err, data) {
+            if (!err) {
+                success(data);
+            } else {
+                fail(err);
+            }
+        }
+    );
+}
+
+/**
+ * @description
+ *
+ * Query user and project created by him.
+ *
+ * @param {userFilter} userFilter
+ * @param success
+ * @param fail
+ *
+ * @return {Void}
+ *
+ **/
+UserController.prototype.getUserProjectDetail = function (userFilter, success, fail) {
     var self = this;
 
     userFilter = (userFilter && JSON.parse(userFilter)) || {};
@@ -274,7 +264,10 @@ UserController.prototype.getUserDetail = function (userFilter, success, fail) {
         userFilter._id = new self.db.Types.ObjectId(userFilter._id);
     }
     if (userFilter.plainPassword) {
-        userFilter.password = commons.encryptPassword(userFilter.plainPassword);
+        delete userFilter.plainPassword;
+    }
+    if (userFilter.updateTime && typeof userFilter.updateTime === "number") {
+        userFilter.updateTime = new Date(userFilter.updateTime);
     }
     for (var key in userFilter) {
         var value = userFilter[key];
@@ -329,22 +322,10 @@ UserController.prototype.getUserDetail = function (userFilter, success, fail) {
     });
 };
 
-UserController.prototype.postUser = function (loginName, plainPassword, nickName, success, fail) {
-}
-
-UserController.prototype.postAvatar = function (request, success, fail) {
-}
-
-UserController.prototype.getFriends = function (userId, success, fail) {
-}
-
-UserController.prototype.postRequestAddFriends = function (userId, friendIdList, success, fail) {
+UserController.prototype.postAvatar = function (userId, request, success, fail) {
 }
 
 UserController.prototype.postConfirmAddFriends = function (userId, friendIdList, success, fail) {
-}
-
-UserController.prototype.getGroups = function (userId, success, fail) {
 }
 
 UserController.prototype.postRequestJoinGroup = function (userId, groupId, success, fail) {

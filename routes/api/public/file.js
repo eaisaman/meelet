@@ -11,13 +11,25 @@ var FileController = function () {
     var self = this;
 
     self.config = require('../../../config');
+    self.__ = self.config.i18n;
     self.config.on(self.config.ApplicationDBConnectedEvent, function (resource) {
         self.db = resource.instance;
         self.schema = resource.schema;
         self.isDBReady = true;
     });
 };
-
+/**
+ * @description
+ *
+ * Download file. If file's mtime is older than the date set in 'if-modified-since' header, return 304.
+ * If gz or zip format set in 'accept-encoding' header, compress the file accordingly. Header 'Range' is
+ * used in express download.
+ *
+ * @param fileName
+ * @param requestHeader
+ * @param success
+ * @param fail
+ */
 FileController.prototype.getFile = function (fileName, requestHeader, success, fail) {
     var self = this,
         filePath = (_(fileName).startsWith(path.sep) || _(fileName).include(":")) ?
@@ -32,7 +44,7 @@ FileController.prototype.getFile = function (fileName, requestHeader, success, f
                         if (ifModifiedSince) {
                             ifModifiedSince = Date.parse(ifModifiedSince);
                             if (isNaN(ifModifiedSince)) {
-                                next(new Error("Invalid date string " + requestHeader["if-modified-since"]), {statusCode: 400});
+                                next(new Error(self.__('Invalidate Date String', requestHeader["if-modified-since"])), {statusCode: 400});
                             } else {
                                 fs.stat(filePath, function (err, stat) {
                                     if (err) {
@@ -44,7 +56,7 @@ FileController.prototype.getFile = function (fileName, requestHeader, success, f
                                     } else {
                                         var lastModified = stat.mtime;
                                         if (lastModified.getTime() <= ifModifiedSince) {
-                                            next(new Error("Not modified"), {
+                                            next(new Error(""), {
                                                 statusCode: 304,
                                                 headers: {"Last-Modified": lastModified}
                                             });
@@ -58,7 +70,7 @@ FileController.prototype.getFile = function (fileName, requestHeader, success, f
                             next(null);
                         }
                     } else {
-                        next(new Error("File " + filePath + " does not exist"), {statusCode: 404});
+                        next(new Error(self.__('File Not Exist', filePath)), {statusCode: 404});
                     }
                 });
             },
@@ -141,6 +153,16 @@ FileController.prototype.getFile = function (fileName, requestHeader, success, f
     );
 }
 
+/**
+ * @description
+ *
+ * Upload file.
+ *
+ * @param request
+ * @param uploadFolder
+ * @param success
+ * @param fail
+ */
 FileController.prototype.postFile = function (request, uploadFolder, success, fail) {
     var self = this,
         files = [],

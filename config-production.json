@@ -8,7 +8,9 @@
     {
       "/": {
         "module": "morgan",
-        "parameters": ["dev"]
+        "parameters": [
+          "dev"
+        ]
       }
     },
     {
@@ -45,7 +47,9 @@
         "function": "filter",
         "parameters": [
           {
-            "paths": ["/api/"]
+            "paths": [
+              "/api/"
+            ]
           }
         ]
       }

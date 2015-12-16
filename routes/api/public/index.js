@@ -4,10 +4,10 @@ var RouteHandler = require('../../../routeHandler'),
     handler = new RouteHandler(router);
 var fileController = require('./file'),
     userFileController = require('./userfile'),
-    chatController = require('./chat');
+    userController = require('./user');
 
 handler.routeOnFunctionName(new fileController());
 handler.routeOnFunctionName(new userFileController({fileController: new fileController()}));
-handler.routeOnFunctionName(new chatController());
+handler.routeOnFunctionName(new userController({fileController: new fileController()}));
 
 module.exports = router;

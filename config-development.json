@@ -1,176 +1,198 @@
 {
-    "routes": [
-        {
-            "/": {
-                "module": "static-favicon"
-            }
-        },
-        {
-            "/": {
-                "module": "morgan",
-                "parameters": ["dev"]
-            }
-        },
-        {
-            "/": {
-                "module": "body-parser",
-                "function": "json"
-            }
-        },
-        {
-            "/": {
-                "module": "body-parser",
-                "function": "urlencoded",
-                "parameters": [
-                    {
-                        "limit": 20480000
-                    }
-                ]
-            }
-        },
-        {
-            "/": {
-                "module": "./commons",
-                "function": "multipart"
-            }
-        },
-        {
-            "/": {
-                "module": "cookie-parser"
-            }
-        },
-        {
-            "/": {
-                "module": "./commons",
-                "function": "filter",
-                "parameters": [
-                    {
-                        "paths": ["/api/"]
-                    }
-                ]
-            }
-        },
-        {
-            "/": {
-                "module": "./commons",
-                "function": "allowXDomain"
-            }
-        },
-        {
-            "/api/public/": {
-                "module": "./routes/api/public"
-            }
-        },
-        {
-            "/": {
-                "module": "./commons",
-                "function": "session",
-                "parameters": [
-                    {
-                        "cookie": {
-                            "maxAge": 6000000,
-                            "httpOnly": false
-                        },
-
-                        "secret": "djikstra",
-
-                        "store": {
-                            "resource": "securityDb"
-                        }
-                    }
-                ]
-            }
-        },
-        {
-            "/": {
-                "module": "passport",
-                "function": "initialize"
-            }
-        },
-        {
-            "/": {
-                "module": "passport",
-                "function": "session"
-            }
-        },
-        {
-            "/api/private/": {
-                "module": "./commons",
-                "function": "authenticate",
-                "parameters": [
-                    {
-                        "resource": "securityDb",
-                        "collectionName": "User"
-                    }
-                ]
-            }
-        },
-        {
-            "/api/private/": {
-                "module": "./routes/api/private"
-            }
-        }
-    ],
-    "staticResources": [
-        {
-            "/": "public",
-            "/repo": "repo",
-            "/project": "project"
-        }
-    ],
-    "applicationResources": [
-        {
-            "resource": "mongooseDb",
-            "module": "./commons",
-            "function": "instantiateMongooseDb",
-            "parameters": [
-                {
-                    "url": "mongodb://meelet:meelet@localhost/meelet",
-                    "dbSchema": "./schema.json"
-                }
+  "routes": [
+    {
+      "/": {
+        "module": "static-favicon"
+      }
+    },
+    {
+      "/": {
+        "module": "morgan",
+        "parameters": [
+          "dev"
+        ]
+      }
+    },
+    {
+      "/": {
+        "module": "body-parser",
+        "function": "json"
+      }
+    },
+    {
+      "/": {
+        "module": "body-parser",
+        "function": "urlencoded",
+        "parameters": [
+          {
+            "limit": 20480000
+          }
+        ]
+      }
+    },
+    {
+      "/": {
+        "module": "./commons",
+        "function": "multipart"
+      }
+    },
+    {
+      "/": {
+        "module": "cookie-parser"
+      }
+    },
+    {
+      "/": {
+        "module": "./commons",
+        "function": "filter",
+        "parameters": [
+          {
+            "paths": [
+              "/api/"
             ]
-        },
-        {
+          }
+        ]
+      }
+    },
+    {
+      "/": {
+        "module": "./commons",
+        "function": "allowXDomain",
+        "parameters": [
+          {
+            "host": "*"
+          }
+        ]
+      }
+    },
+    {
+      "/api/public/": {
+        "module": "./routes/api/public"
+      }
+    },
+    {
+      "/": {
+        "module": "./commons",
+        "function": "session",
+        "parameters": [
+          {
+            "cookie": {
+              "maxAge": 6000000,
+              "httpOnly": false
+            },
+            "secret": "djikstra",
+            "store": {
+              "resource": "securityDb"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "/": {
+        "module": "passport",
+        "function": "initialize"
+      }
+    },
+    {
+      "/": {
+        "module": "passport",
+        "function": "session"
+      }
+    },
+    {
+      "/api/private/": {
+        "module": "./commons",
+        "function": "authenticate",
+        "parameters": [
+          {
             "resource": "securityDb",
-            "module": "./commons",
-            "function": "instantiateMongoDb",
-            "parameters": [
-                {
-                    "url": "mongodb://meelet:meelet@localhost/meelet",
-                    "auto_reconnect": true
-                }
-            ]
-        }
-    ],
-    "settings": {
-        "views": "views",
-        "view engine": "jade",
-        "salt": "d21xMzQ6Kg==",
-        "applicationDb": "mongooseDb",
-        "download": {
-            "folder": "download"
-        },
-        "upload": {
-            "folder": "upload"
-        },
-        "userFile": {
-            "tmpFolder": "tmp",
-            "sketchFolder": "project",
-            "stagingFolder": "staging",
-            "repoFolder": "repo",
-            "skeletonFolder": "public/skeleton",
-            "projectModuleFolder": "project/modules"
-        },
-        "skeletonLibLoadTimeout": 30,
-        "meeletFile": "meelet.json",
-        "meeletMetaFile": "meta.json",
-        "logging": {
-            "appenders": [
-                {
-                    "type": "console"
-                }
-            ],
-            "replaceConsole": true
-        }
+            "collectionName": "User"
+          }
+        ]
+      }
+    },
+    {
+      "/api/private/": {
+        "module": "./routes/api/private"
+      }
     }
+  ],
+  "staticResources": [
+    {
+      "/": "public",
+      "/repo": "repo",
+      "/project": "project"
+    }
+  ],
+  "applicationResources": [
+    {
+      "resource": "mongooseDb",
+      "module": "./commons",
+      "function": "instantiateMongooseDb",
+      "parameters": [
+        {
+          "url": "mongodb://meelet:meelet@localhost/meelet",
+          "dbSchema": "./schema.json"
+        }
+      ]
+    },
+    {
+      "resource": "securityDb",
+      "module": "./commons",
+      "function": "instantiateMongoDb",
+      "parameters": [
+        {
+          "url": "mongodb://meelet:meelet@localhost/meelet",
+          "auto_reconnect": true
+        }
+      ]
+    }
+  ],
+  "settings": {
+    "views": "views",
+    "view engine": "jade",
+    "salt": "d21xMzQ6Kg==",
+    "applicationDb": "mongooseDb",
+    "download": {
+      "folder": "download"
+    },
+    "upload": {
+      "folder": "upload"
+    },
+    "userFile": {
+      "tmpFolder": "tmp",
+      "sketchFolder": "project",
+      "stagingFolder": "staging",
+      "repoFolder": "repo",
+      "skeletonFolder": "public/skeleton",
+      "projectModuleFolder": "project/modules",
+      "userContentPath": "userSpace"
+    },
+    "skeletonLibLoadTimeout": 30,
+    "chatConstants": {
+      "chatRoute": "SIRIUS_CHAT_ROUTE",
+      "expectEndInterval": 7,
+      "recordTTL": 10,
+      "chatCreateState": 0,
+      "chatOpenState": 1,
+      "chatPauseState": 2,
+      "chatCloseState": 3,
+      "chatDestroyState": 4,
+      "topicOpenState": 11,
+      "topicPauseState": 12,
+      "topicCloseState": 13,
+      "topicDestroyState": 14
+    },
+    "meeletFile": "meelet.json",
+    "meeletMetaFile": "meta.json",
+    "logging": {
+      "appenders": [
+        {
+          "type": "console"
+        }
+      ],
+      "replaceConsole": true
+    }
+  }
 }

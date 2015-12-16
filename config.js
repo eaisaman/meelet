@@ -10,6 +10,7 @@ var Configuration = function () {
         this.settings = {};
         this.em = new (require('events').EventEmitter)();
         this.cache = require('cache-manager').caching({store: 'memory', max: 100, ttl: 10/*43200seconds*/});
+        this.i18n = require('i18n');
     },
     config = new Configuration();
 
@@ -42,6 +43,7 @@ Configuration.prototype.configure = function (app) {
             }
         });
     }
+
     var routes = nconf.get("routes");
     if (routes) {
         routes.forEach(function (r) {
@@ -74,6 +76,12 @@ Configuration.prototype.configure = function (app) {
             }
         });
     }
+
+    i18n.configure({
+        locales: ['en', 'zh'],
+        directory: __dirname + '/locales',
+        defaultLocale: "zh"
+    });
 
     this.postConfigure();
 }
@@ -109,8 +117,8 @@ Configuration.prototype.postConfigure = function () {
             folder = path.join(__dirname, folder);
         }
         self.download = {folder: folder};
-        fs.exists(self.download.folder, function(exist) {
-            if(!exist){
+        fs.exists(self.download.folder, function (exist) {
+            if (!exist) {
                 fs.mkdir(self.download.folder);
             }
         })
@@ -124,8 +132,8 @@ Configuration.prototype.postConfigure = function () {
             folder = path.join(__dirname, folder);
         }
         self.upload = {folder: folder};
-        fs.exists(self.upload.folder, function(exist) {
-            if(!exist){
+        fs.exists(self.upload.folder, function (exist) {
+            if (!exist) {
                 fs.mkdir(self.upload.folder);
             }
         })

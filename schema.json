@@ -2,30 +2,28 @@
   "User": {
     "updateTime": "date",
     "createTime": "date",
-    "expireTime": "date",
     "forbidden": "boolean",
     "loginName": "string",
+    "password": "string",
+    "friendGroupId": "ObjectId",
     "name": "string",
-    "password": "string"
+    "sex": "string",
+    "avatar": "string",
+    "tel": "string",
+    "active": "number"
   },
   "UserGroup": {
     "updateTime": "date",
     "createTime": "date",
-    "sequence": "number",
     "name": "string",
-    "parentId": "ObjectId",
-    "childGroupList": [
-      "object"
-    ],
-    "userList": [
-      "object"
-    ]
+    "active": "number"
   },
   "UserGroupXref": {
     "updateTime": "date",
     "createTime": "date",
     "userId": "ObjectId",
-    "groupId": "ObjectId"
+    "groupId": "ObjectId",
+    "active": "number"
   },
   "UserProject": {
     "updateTime": "date",
@@ -80,41 +78,75 @@
     "startTime": "date",
     "endTime": "date",
     "expectEndTime": "date",
-    "projectId": "ObjectId",
     "creatorId": "ObjectId",
     "route": "string",
-    "state": "number"
+    "state": "number",
+    "payload": "object",
+    "thumbnail": "string",
+    "active": "number"
   },
   "Topic": {
     "updateTime": "date",
     "createTime": "date",
     "startTime": "date",
     "endTime": "date",
-    "expectEndTime": "date",
     "chatId": "ObjectId",
     "creatorId": "ObjectId",
     "route": "string",
-    "state": "number"
+    "state": "number",
+    "payload": "object",
+    "thumbnail": "string",
+    "active": "number"
+  },
+  "Conversation": {
+    "updateTime": "date",
+    "createTime": "date",
+    "chatId": "ObjectId",
+    "topicId": "ObjectId",
+    "senderId": "ObjectId",
+    "receiverId": "ObjectId",
+    "route": "string",
+    "type": "number",
+    "message": "string",
+    "payload": "object",
+    "delivered": "number",
+    "active": "number"
   },
   "Invitation": {
     "updateTime": "date",
     "createTime": "date",
+    "creatorId": "ObjectId",
+    "inviteeId": "ObjectId",
     "route": "string",
+    "accepted": "number",
+    "processed": "number",
+    "expires": "date",
+    "active": "number"
+  },
+  "ChatInvitation": {
+    "updateTime": "date",
+    "chatUpdateTime": "date",
+    "createTime": "date",
     "chatId": "ObjectId",
     "userId": "ObjectId",
     "inviteeId": "ObjectId",
-    "accepted": "boolean",
-    "expires": "date"
+    "route": "string",
+    "accepted": "number",
+    "processed": "number",
+    "expires": "date",
+    "active": "number"
   },
   "TopicInvitation": {
     "updateTime": "date",
     "createTime": "date",
-    "route": "string",
     "chatId": "ObjectId",
     "topicId": "ObjectId",
     "userId": "ObjectId",
+    "route": "string",
     "inviteeId": "ObjectId",
-    "accepted": "boolean",
-    "expires": "date"
+    "accepted": "number",
+    "processed": "number",
+    "expires": "date",
+    "active": "number"
   }
 }

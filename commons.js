@@ -23,8 +23,31 @@ var Commons = function () {
     var self = this;
 
     self.config = require('./config');
+    self.__ = self.config.i18n;
 }, c = new Commons();
 
+/**
+ * @description
+ *
+ * @param src
+ * @param dest
+ */
+Commons.prototype.mixin = function (src, dest) {
+    for (var prop in dest) {
+        if (!dest.hasOwnProperty(prop)) continue;
+        var func = dest[prop];
+        if (typeof func === "function") {
+            src[prop] = func;
+        }
+    }
+}
+
+/**
+ * @description
+ *
+ * @param dirpath
+ * @returns {*}
+ */
 Commons.prototype.mkdirsSync = function (dirpath) {
     try {
         dirpath.split(path.sep).reduce(function (parts, part) {
@@ -40,6 +63,14 @@ Commons.prototype.mkdirsSync = function (dirpath) {
     }
 };
 
+/**
+ * @description
+ *
+ * @param cmd
+ * @param args
+ * @param opts
+ * @param done
+ */
 Commons.prototype.spawn = function (cmd, args, opts, done) {
 
     var child = spawn(cmd, args || [], opts);
@@ -74,6 +105,31 @@ Commons.prototype.spawn = function (cmd, args, opts, done) {
     return child;
 };
 
+/**
+ * Get scale type based on given size value. Scale types include tiny, small, medium, large scale size(16, 32, 48, 128),
+ * Return medium as default.
+ *
+ * @param size
+ */
+Commons.prototype.getScale = function (size) {
+    var scale = "medium";
+
+    size = parseInt(size);
+    if (size > 0) {
+        if (size <= 16) scale = "tiny";
+        else if (size <= 32) scale = "small";
+        else if (size <= 48) scale = "medium";
+        else scale = "large";
+    }
+
+    return scale;
+}
+
+/**
+ * @description
+ *
+ * @param objects
+ */
 Commons.prototype.arrayOmit = function (objects) {
     var keys = Array.prototype.concat.apply(Array.prototype, Array.prototype.slice.call(arguments, 1)),
         arr = [];
@@ -85,6 +141,11 @@ Commons.prototype.arrayOmit = function (objects) {
     return arr;
 };
 
+/**
+ * @description
+ *
+ * @param objects
+ */
 Commons.prototype.arrayPick = function (objects) {
     var keys = Array.prototype.concat.apply(Array.prototype, Array.prototype.slice.call(arguments, 1)),
         arr = [];
@@ -96,6 +157,27 @@ Commons.prototype.arrayPick = function (objects) {
     return arr;
 };
 
+/**
+ * @description
+ *
+ * @param objects
+ */
+Commons.prototype.arrayPurge = function (objects) {
+    var keys = Array.prototype.concat.apply(Array.prototype, Array.prototype.slice.call(arguments, 1));
+
+    objects && objects.forEach(function (obj) {
+        for (var key in keys) delete obj[key];
+    });
+};
+
+/**
+ * @description
+ *
+ * @param dirpath
+ * @param base
+ * @param callback
+ * @param options
+ */
 Commons.prototype.walkdir = function (dirpath, base, callback, options) {
     var self = this,
         results = [];
@@ -173,19 +255,11 @@ Commons.prototype.walkdir = function (dirpath, base, callback, options) {
     });
 };
 
-Commons.prototype.batchLimit = function (arr, batchSize, concurrentLimit, iterator, final) {
-    async.eachLimit(
-        _.toArray(_.groupBy(arr, function (value, index) {
-            return Math.floor(index / batchSize);
-        })),
-        concurrentLimit,
-        function (items, callback) {
-            iterator(items, callback);
-        },
-        final
-    );
-};
-
+/**
+ * @description
+ *
+ * @returns {Function}
+ */
 Commons.prototype.multipart = function () {
     function checkMultipart(req) {
         var contentType = req.headers['content-type'] || '',
@@ -239,19 +313,38 @@ Commons.prototype.multipart = function () {
 
 };
 
-Commons.prototype.allowXDomain = function () {
-    return function addXDomainHeaders(req, res, next) {
-        if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-            res.setHeader("Access-Control-Allow-Origin", "http://localhost");
-            res.setHeader("Access-Control-Allow-Methods", "OPTIONS,GET,POST,PUT,DELETE");
-            res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-            res.setHeader("Access-Control-Allow-Credentials", true);
-        }
+/**
+ * @description
+ *
+ * @returns {Function}
+ */
+Commons.prototype.allowXDomain = function (options) {
+    var host = options && options.host;
 
-        next();
+    if (host) {
+        return function addXDomainHeaders(req, res, next) {
+            if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+                res.setHeader("Access-Control-Allow-Origin", host);
+                res.setHeader("Access-Control-Allow-Methods", "OPTIONS,GET,POST,PUT,DELETE");
+                res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+                res.setHeader("Access-Control-Allow-Credentials", true);
+            }
+
+            next();
+        }
+    } else {
+        return function (req, res, next) {
+            next();
+        }
     }
 };
 
+/**
+ * @description
+ *
+ * @param options
+ * @returns {*}
+ */
 Commons.prototype.static = function (options) {
     var folder = options.localFolder,
         _folder = _(folder);
@@ -261,8 +354,14 @@ Commons.prototype.static = function (options) {
     return express.static(folder);
 };
 
+/**
+ * @description
+ *
+ * @param options
+ * @returns {Function}
+ */
 Commons.prototype.filter = function (options) {
-    var paths = options.paths || [];
+    var paths = options && options.paths || [];
 
     return function (req, res, next) {
         var originalUrl = url.parse(req.originalUrl),
@@ -281,6 +380,13 @@ Commons.prototype.filter = function (options) {
     }
 };
 
+/**
+ * @description
+ *
+ * @param options
+ * @param resourceName
+ * @param callback
+ */
 Commons.prototype.instantiateMongooseDb = function (options, resourceName, callback) {
     var mongoose = require('mongoose'),
         db = mongoose.connect(options.url, {}, function (err) {
@@ -301,6 +407,13 @@ Commons.prototype.instantiateMongooseDb = function (options, resourceName, callb
         });
 };
 
+/**
+ * @description
+ *
+ * @param options
+ * @param resourceName
+ * @param callback
+ */
 Commons.prototype.instantiateMongoDb = function (options, resourceName, callback) {
     var defaultOptions = {
         host: '127.0.0.1',
@@ -404,6 +517,13 @@ Commons.prototype.session = function (options) {
     }
 };
 
+/**
+ * @description
+ *
+ * @param plain
+ * @param salt
+ * @returns {*}
+ */
 Commons.prototype.encryptPassword = function (plain, salt) {
     var self = this;
 
@@ -411,6 +531,14 @@ Commons.prototype.encryptPassword = function (plain, salt) {
     return crypto.createHmac('sha1', salt).update(plain).digest('hex');
 };
 
+/**
+ * @description
+ *
+ * Generate account authentication handler.
+ *
+ * @param options
+ * @returns {Function}
+ */
 Commons.prototype.authenticate = function (options) {
     var self = this;
 
@@ -476,6 +604,24 @@ Commons.prototype.authenticate = function (options) {
     };
 };
 
+/**
+ * @description
+ *
+ * Add configurable widget to project. The widget's scss file, which is to be compiled to css, and
+ * and its empty configuration scss file are generated. The configuration inherits from that of the artifact.
+ * All these files' soft links are saved in project's staging folder.
+ *
+ * The structure of folder saving widget's scss stylesheet content is as follows:
+ * stylesheets(compiled widget css)--repo--[widget folder]--[soft link to artifact sass folder]
+ *
+ * @param projectId
+ * @param widgetId
+ * @param libraryName
+ * @param artifactId
+ * @param type
+ * @param version
+ * @param callback
+ */
 Commons.prototype.addConfigurableArtifact = function (projectId, widgetId, libraryName, artifactId, type, version, callback) {
     var self = this;
 
@@ -505,7 +651,7 @@ Commons.prototype.addConfigurableArtifact = function (projectId, widgetId, libra
                                             if (exist) {
                                                 callback(null);
                                             } else {
-                                                callback(new Error(_.string.sprintf("Path %s not exist.", ejsPath)));
+                                                callback(new Error(self.__('File Not Exist', ejsPath)));
                                             }
                                         });
                                     },
@@ -543,13 +689,12 @@ Commons.prototype.addConfigurableArtifact = function (projectId, widgetId, libra
                         function (next) {
                             //ejs render
                             try {
-                                var templateStr = fs.readFileSync(path.join(configPath, "sass", "configurable-widget.ejs"), "utf8"),
-                                    options = {debug: false, client: true},
-                                    ejsCompileCacheKey = path.join(self.config.userFile.repoFolder, type, libraryName, artifactId, version);
+                                var ejsCompileCacheKey = path.join(self.config.userFile.repoFolder, type, libraryName, artifactId, version);
 
                                 self.config.cache.wrap(ejsCompileCacheKey, function (cacheCb) {
                                     try {
-                                        var fn = ejs.compile(templateStr, options);
+                                        var templateStr = fs.readFileSync(path.join(configPath, "sass", "configurable-widget.ejs"), "utf8"),
+                                            fn = ejs.compile(templateStr, {debug: false, client: true});
                                         cacheCb(null, fn);
                                     } catch (compileErr) {
                                         cacheCb(compileErr);
@@ -614,6 +759,17 @@ Commons.prototype.addConfigurableArtifact = function (projectId, widgetId, libra
     }
 };
 
+/**
+ * @description
+ *
+ * Remove configurable widget from project. Remove widget's scss stylesheet folder.
+ * Remove widget's css, scss and configuration scss files' soft links from staging folder.
+ *
+ * @param projectId
+ * @param widgetId
+ * @param artifactId
+ * @param callback
+ */
 Commons.prototype.removeConfigurableArtifact = function (projectId, widgetId, artifactId, callback) {
     var self = this;
 
@@ -715,6 +871,18 @@ Commons.prototype.removeConfigurableArtifact = function (projectId, widgetId, ar
     }
 };
 
+/**
+ *
+ * @description
+ *
+ * Update widget's configuration to its configuration scss file and compile the result to css.
+ *
+ * @param projectId
+ * @param widgetId
+ * @param artifactId
+ * @param configuration
+ * @param callback
+ */
 Commons.prototype.updateConfigurableArtifact = function (projectId, widgetId, artifactId, configuration, callback) {
     var self = this;
 
@@ -799,6 +967,17 @@ Commons.prototype.updateConfigurableArtifact = function (projectId, widgetId, ar
     }
 };
 
+/**
+ * @description
+ *
+ * Generate html content for project of different types, 'book', 'flow', or 'sketch'. The skeleton files
+ * are saved in 'public/skeleton' folder.
+ *
+ * @param projectType
+ * @param projectPath
+ * @param artifactList
+ * @param callback
+ */
 Commons.prototype.convertToHtml = function (projectType, projectPath, artifactList, callback) {
     var self = this,
         skeletonModuleFolder = "javascripts",
