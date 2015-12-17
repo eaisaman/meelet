@@ -77,7 +77,7 @@ Configuration.prototype.configure = function (app) {
         });
     }
 
-    i18n.configure({
+    this.i18n.configure({
         locales: ['en', 'zh'],
         directory: __dirname + '/locales',
         defaultLocale: "zh"
