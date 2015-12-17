@@ -2,6 +2,7 @@ node_modules
 Common
 .idea
 .sass-cache
+.results.txt
 project
 tmp
 download
