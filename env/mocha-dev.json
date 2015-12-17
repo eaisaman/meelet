@@ -1,0 +1,5 @@
+{
+  "mocha.scheme": "http",
+  "mocha.server": "",
+  "mocha.port": 3000
+}

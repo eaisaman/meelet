@@ -4,6 +4,18 @@ var path = require('path');
 module.exports = function (grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
+        env: {
+            options: {
+                //Shared Options Hash
+            },
+            dev: {
+                NODE_ENV: 'development',
+                src: 'env/mocha-dev.json'
+            },
+            prod: {
+                NODE_ENV: 'production'
+            }
+        },
         uglify: {
             release: {
                 files: [
@@ -138,6 +150,17 @@ module.exports = function (grunt) {
                     spawn: false // for grunt-contrib-watch v0.5.0+, "nospawn: true" for lower versions. Without this option specified express won't be reloaded
                 }
             }
+        },
+        mochaTest: {
+            test: {
+                options: {
+                    reporter: 'spec',
+                    captureFile: 'results.txt', // Optionally capture the reporter output to a file
+                    quiet: false, // Optionally suppress output to standard out (defaults to false)
+                    clearRequireCache: false // Optionally clear the require cache before running tests (defaults to false)
+                },
+                src: ['test/**/*.js']
+            }
         }
 //,
 //        concat : {
@@ -159,14 +182,16 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-concat');
-    grunt.loadNpmTasks('grunt-contrib-qunit');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-env');
+    grunt.loadNpmTasks('grunt-mocha-test');
 //    grunt.loadNpmTasks('grunt-contrib-concat');
 //    grunt.loadNpmTasks('grunt-css');
 
     // 自定义任务
     grunt.registerTask('default', ['express:dev', 'watch'])
+    grunt.registerTask('test', ['env:dev', 'mochaTest'])
     grunt.registerTask('prod', ['express:prod', 'watch'])
     grunt.registerTask('release', ['copy:release', 'uglify:release'])
 //    grunt.registerTask('default', [ 'express:dev', 'watch', 'concat','cssmin' ])

@@ -2,6 +2,13 @@ var ChatCommons = function () {
     var self = this;
 
     self.config = require('./config');
+    self.__ = self.config.i18n;
+    self.chatConstants = self.config.settings.chatConstants;
+    self.config.on(self.config.ApplicationDBConnectedEvent, function (resource) {
+        self.db = resource.instance;
+        self.schema = resource.schema;
+        self.isDBReady = true;
+    });
 }, c = new ChatCommons();
 
 ChatCommons.prototype.sendInvitation = function (userId, inviteeId, next) {
