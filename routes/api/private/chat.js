@@ -11,7 +11,7 @@ var ChatController = function () {
     var self = this;
 
     self.config = require('../../../config');
-    self.__ = self.config.i18n;
+    self.__ = self.config.i18n.__;
     self.chatConstants = self.config.settings.chatConstants;
     self.config.on(self.config.ApplicationDBConnectedEvent, function (resource) {
         self.db = resource.instance;
@@ -795,7 +795,7 @@ ChatController.prototype.putChangeChatState = function (chatId, state, success, 
                 "$set": {
                     "chatUpdateTime": now
                 }
-            }, function (err) {
+            }, {multi: true}, function (err) {
                 callback(err);
             });
     });
@@ -1084,7 +1084,7 @@ ChatController.prototype.putAcceptChatInvitation = function (inviteeId, chatId, 
                 inviteeId: inviteeId,
                 chatId: chatId,
                 active: 1
-            }, {"$set": {updateTime: now, accepted: 1}, "$unset": {expires: 1}}, function (err) {
+            }, {"$set": {updateTime: now, accepted: 1}, "$unset": {expires: 1}}, {multi: true}, function (err) {
                 next(err);
             });
         },
@@ -1092,7 +1092,7 @@ ChatController.prototype.putAcceptChatInvitation = function (inviteeId, chatId, 
             self.schema.ChatInvitation.update({
                 chatId: chatId,
                 active: 1
-            }, {"$set": {chatUpdateTime: now}}, function (err) {
+            }, {"$set": {chatUpdateTime: now}}, {multi: true}, function (err) {
                 next(err);
             });
         },
@@ -1358,7 +1358,7 @@ ChatController.prototype.putAcceptTopicInvitation = function (inviteeId, topicId
                 inviteeId: inviteeId,
                 topicId: topicId,
                 active: 1
-            }, {"$set": {updateTime: now, accepted: 1}, "$unset": {expires: 1}}, function (err) {
+            }, {"$set": {updateTime: now, accepted: 1}, "$unset": {expires: 1}}, {multi: true}, function (err) {
                 next(err, topicObj);
             });
         },

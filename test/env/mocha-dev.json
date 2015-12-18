@@ -1,0 +1,10 @@
+{
+  "mocha.scheme": "http",
+  "mocha.server": "localhost",
+  "mocha.port": 3000,
+  "mocha.mongohost": "localhost",
+  "mocha.mongoport": 27017,
+  "mocha.mongouser": "meelet",
+  "mocha.mongopwd": "meelet",
+  "mocha.mongodb": "meelet"
+}

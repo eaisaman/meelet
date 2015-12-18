@@ -23,7 +23,7 @@ var Commons = function () {
     var self = this;
 
     self.config = require('./config');
-    self.__ = self.config.i18n;
+    self.__ = self.config.i18n.__;
 }, c = new Commons();
 
 /**
@@ -566,13 +566,13 @@ Commons.prototype.authenticate = function (options) {
                         initPassport.collection = collection;
 
                         passport.use(new httpStrategies.BasicStrategy(function (username, password, done) {
-                            initPassport.collection.findOne({loginName: username}, function (err, data) {
+                            initPassport.collection.findOne({loginName: username, forbidden: 0}, function (err, data) {
                                 return done(err, !err && data && checkPassword(password, data.password, data.salt || options.salt || self.config.settings.salt) && data);
                             });
                         }));
 
                         passport.use(new httpStrategies.DigestStrategy(function (username, password, done) {
-                            initPassport.collection.findOne({loginName: username}, function (err, data) {
+                            initPassport.collection.findOne({loginName: username, forbidden: 0}, function (err, data) {
                                 return done(err, !err && data != null && checkPassword(password, data.password, data.salt || options.salt || self.config.settings.salt) && data);
                             });
                         }));

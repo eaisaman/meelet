@@ -73,7 +73,7 @@ var UserFileController = function (fields) {
     }
 
     self.config = require('../../../config');
-    self.__ = self.config.i18n;
+    self.__ = self.config.i18n.__;
     self.config.on(self.config.ApplicationDBConnectedEvent, function (resource) {
         self.db = resource.instance;
         self.schema = resource.schema;
@@ -1698,7 +1698,7 @@ UserFileController.prototype.putProject = function (projectFilter, project, succ
     }
     project.updateTime = new Date();
 
-    (!self.isDBReady && fail(new Error('DB not initialized'))) || self.schema.UserProject.findOneAndUpdate(projectFilter, {$set: _.omit(project, "_id")}, function (err, data) {
+    (!self.isDBReady && fail(new Error('DB not initialized'))) || self.schema.UserProject.findOneAndUpdate(projectFilter, {$set: _.omit(project, "_id")}, {multi: true}, function (err, data) {
         if (!err) {
             success(data ? 1 : 0);
         } else {
@@ -1943,7 +1943,7 @@ UserFileController.prototype.postProjectArtifactXref = function (projectId, libr
                 self.schema.ProjectArtifactXref.update({
                     libraryId: libraryId,
                     projectId: projectId
-                }, {$set: {artifactList: artifactList, updateTime: now}}, function (err) {
+                }, {$set: {artifactList: artifactList, updateTime: now}}, {multi: true}, function (err) {
                     next(err);
                 });
             } else {

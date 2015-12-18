@@ -1,6 +1,9 @@
 {
   "Empty User": "用户对象必须赋值.",
+  "Empty UserGroup": "用户组对象必须赋值.",
+  "Empty Filter": "查询条件必须赋值.",
   "Account Used": "帐号已被注册.",
+  "Group Exists": "用户组已存在.",
   "Account Not Found": "帐号不存在.",
   "Chat Not Found": "讨论不存在.",
   "Topic Not Found": "讨论标题不存在.",
@@ -9,5 +12,6 @@
   "Delete Locked Project": "只有解锁项目可以删除.",
   "Cannot Find Project": "项目(%s)不存在.",
   "Cannot Find Repo": "组件库(%s)不存在.",
-  "Empty Project Id": "项目id必须赋值."
+  "Empty Project Id": "项目id必须赋值.",
+  "Provide Creator": "必须提供创建者信息."
 }

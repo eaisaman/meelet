@@ -1,6 +1,9 @@
 {
   "Empty User": "Empty user object is not allowed.",
+  "Empty UserGroup": "Empty user group object is not allowed.",
+  "Empty Filter": "Empty filter object is not allowed.",
   "Account Used": "The account has already been used.",
+  "Group Exists": "User group already exists.",
   "Account Not Found": "Cannot find account.",
   "Chat Not Found": "Cannot find chat.",
   "Topic Not Found": "Cannot find topic.",
@@ -9,5 +12,6 @@
   "Delete Locked Project": "Only unlocked project can be deleted.",
   "Cannot Find Project": "Cannot find project with id %s",
   "Cannot Find Repo": "Cannot find repo library with id %s",
-  "Empty Project Id": "Empty project id"
+  "Empty Project Id": "Empty project id",
+  "Provide Creator": "Must provide creator info."
 }

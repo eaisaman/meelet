@@ -2,27 +2,31 @@
   "User": {
     "updateTime": "date",
     "createTime": "date",
-    "forbidden": "boolean",
+    "forbidden": "number",
     "loginName": "string",
     "password": "string",
     "friendGroupId": "ObjectId",
     "name": "string",
     "sex": "string",
-    "avatar": "string",
     "tel": "string",
     "active": "number"
   },
   "UserGroup": {
     "updateTime": "date",
     "createTime": "date",
+    "forbidden": "number",
+    "creatorId": "ObjectId",
     "name": "string",
+    "type": "number",
     "active": "number"
   },
   "UserGroupXref": {
+    "groupUpdateTime": "date",
     "updateTime": "date",
     "createTime": "date",
     "userId": "ObjectId",
     "groupId": "ObjectId",
+    "groupType": "number",
     "active": "number"
   },
   "UserProject": {

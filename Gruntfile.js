@@ -10,7 +10,7 @@ module.exports = function (grunt) {
             },
             dev: {
                 NODE_ENV: 'development',
-                src: 'env/mocha-dev.json'
+                src: 'test/env/mocha-dev.json'
             },
             prod: {
                 NODE_ENV: 'production'
@@ -157,7 +157,8 @@ module.exports = function (grunt) {
                     reporter: 'spec',
                     captureFile: 'results.txt', // Optionally capture the reporter output to a file
                     quiet: false, // Optionally suppress output to standard out (defaults to false)
-                    clearRequireCache: false // Optionally clear the require cache before running tests (defaults to false)
+                    clearRequireCache: false, // Optionally clear the require cache before running tests (defaults to false)
+                    timeout: 30000
                 },
                 src: ['test/**/*.js']
             }

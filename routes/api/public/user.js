@@ -1,5 +1,8 @@
 var express = require('express');
 var async = require('async');
+var path = require('path');
+var fs = require('fs');
+var mime = require('mime');
 var _ = require('underscore');
 _.string = require('underscore.string');
 var commons = require('../../../commons');
@@ -18,7 +21,7 @@ var UserController = function (fields) {
     }
 
     self.config = require('../../../config');
-    self.__ = self.config.i18n;
+    self.__ = self.config.i18n.__;
     self.config.on(self.config.ApplicationDBConnectedEvent, function (resource) {
         self.db = resource.instance;
         self.schema = resource.schema;
@@ -49,6 +52,7 @@ UserController.prototype.postUser = function (request, userObj, success, fail) {
 
     if (_.isEmpty(userObj)) {
         fail(self.__('Empty User'));
+        return;
     }
 
     (!self.isDBReady && fail(new Error('DB not initialized'))) || async.waterfall(
@@ -66,7 +70,7 @@ UserController.prototype.postUser = function (request, userObj, success, fail) {
                     _.extend(userObj, {
                         updateTime: now,
                         createTime: now,
-                        forbidden: false,
+                        forbidden: 0,
                         active: 1
                     }),
                     function (err, data) {
@@ -80,6 +84,9 @@ UserController.prototype.postUser = function (request, userObj, success, fail) {
                         updateTime: now,
                         createTime: now,
                         name: "Friend Group",
+                        creatorId: userObj._id,
+                        forbidden: 0,
+                        type: 1,
                         active: 1
                     },
                     function (err, data) {
@@ -92,12 +99,19 @@ UserController.prototype.postUser = function (request, userObj, success, fail) {
                 );
             },
             function (userObj, next) {
+                self.schema.User.update({_id: userObj._id}, {"$set": {friendGroupId: userObj.friendGroupId}}, function (err) {
+                    next(err, userObj);
+                });
+            },
+            function (userObj, next) {
                 self.schema.UserGroupXref.create(
                     {
+                        groupUpdateTime: now,
                         updateTime: now,
                         createTime: now,
                         userId: userObj._id,
                         groupId: userObj.friendGroupId,
+                        groupType: 1,
                         active: 1
                     },
                     function (err) {
@@ -147,15 +161,15 @@ UserController.prototype.postUser = function (request, userObj, success, fail) {
             function (userObj, userContentPath, next) {
                 //Ignore error in uploading avatar file, return created user record anyway.
                 self.fileController.postFile(request, userContentPath, function (result) {
-                    if (result && result.length) {
-                        fs.rename(result[0], path.join(userContentPath, "avatar.png"), function (err) {
-                            next(null, userObj);
-                        })
+                    if (result && result.length && path.basename(result[0]) !== "avatar.jpg") {
+                        fs.rename(result[0], path.join(userContentPath, "avatar.jpg"), function (err) {
+                            next(err, userObj);
+                        });
                     } else {
                         next(null, userObj);
                     }
-                }, function () {
-                    next(null, userObj);
+                }, function (err) {
+                    next(err);
                 });
             }
         ], function (err, data) {
@@ -248,15 +262,31 @@ UserController.prototype.getSameGroupUsers = function (userId, success, fail) {
 UserController.prototype.getAvatar = function (userId, success, fail) {
     var self = this,
         userContentPath = path.join(self.config.userFile.userContentPath, userId),
-        dir = path.join(userContentPath, "avatar.png");
+        dir = path.join(userContentPath, "avatar.jpg");
 
-    fs.exists(dir, function (exists) {
-        if (exists) {
-            success(express.static(dir));
-        } else {
-            fail(self.__('File Not Exist', dir), {statusCode: 500});
+    async.waterfall(
+        [
+            function (next) {
+                fs.exists(dir, function (exists) {
+                    if (exists) {
+                        next(null, dir);
+                    } else {
+                        next(self.__('File Not Exist', dir));
+                    }
+                });
+            },
+            function (dir, next) {
+                success(function (req, res) {
+                    res.setHeader("Content-type", mime.lookup(dir));
+                    res.download(dir, next);
+                });
+            }
+        ], function (err, result) {
+            if (err) {
+                fail(err, result);
+            }
         }
-    });
+    );
 }
 
 /**
@@ -273,13 +303,29 @@ UserController.prototype.getThumbnail = function (userId, fileName, size, succes
         scale = commons.getScale(size),
         dir = path.join(self.config.userFile.userContentPath, userId, "image", fileName.replace(/([^\.]+)(\.)?(\w*)$/, "$1@" + scale + "$2$3"));
 
-    fs.exists(dir, function (exists) {
-        if (exists) {
-            success(express.static(dir));
-        } else {
-            fail(self.__('File Not Exist', dir), {statusCode: 500});
+    async.waterfall(
+        [
+            function (next) {
+                fs.exists(dir, function (exists) {
+                    if (exists) {
+                        next(null, dir);
+                    } else {
+                        next(self.__('File Not Exist', dir));
+                    }
+                });
+            },
+            function (dir, next) {
+                success(function (req, res) {
+                    res.setHeader("Content-type", mime.lookup(dir));
+                    res.download(dir, next);
+                });
+            }
+        ], function (err, result) {
+            if (err) {
+                fail(err, result);
+            }
         }
-    });
+    );
 }
 
 module.exports = UserController;

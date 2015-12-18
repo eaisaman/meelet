@@ -1,11 +1,14 @@
 require('useful-date');
 var async = require('async');
+var path = require('path');
+var fs = require('fs');
+var rimraf = require('rimraf');
 var _ = require('underscore');
 var commons = require('../../../commons');
 var chatCommons = require('../../../chatCommons');
 commons.mixin(commons, chatCommons);
 
-var UserController = function () {
+var UserController = function (fields) {
     var self = this;
 
     if (typeof fields == "object") {
@@ -18,7 +21,7 @@ var UserController = function () {
     }
 
     self.config = require('../../../config');
-    self.__ = self.config.i18n;
+    self.__ = self.config.i18n.__;
     self.config.on(self.config.ApplicationDBConnectedEvent, function (resource) {
         self.db = resource.instance;
         self.schema = resource.schema;
@@ -77,7 +80,7 @@ UserController.prototype.getUser = function (userFilter, success, fail) {
 /**
  * @description
  *
- * Query group list, return group user list as well.
+ * Query list of group restricted by filter, or the user belongs to.
  *
  * @param {string} groupFilter
  * @param {string} sort
@@ -116,6 +119,8 @@ UserController.prototype.getUserGroup = function (groupFilter, sort, userId, upd
                 var xrefFilter = null;
                 if (userId) {
                     xrefFilter = {userId: userId, active: 1};
+                    if (groupFilter.updateTime)
+                        xrefFilter.groupUpdateTime = groupFilter.updateTime;
                 }
 
                 if (xrefFilter) {
@@ -169,6 +174,8 @@ UserController.prototype.getUserGroup = function (groupFilter, sort, userId, upd
 UserController.prototype.getGroupUser = function (userId, userUpdateTime, success, fail) {
     var self = this;
 
+    userId = new self.db.Types.ObjectId(userId);
+
     if (userUpdateTime) {
         userUpdateTime = {$gt: new Date(userUpdateTime)};
     }
@@ -184,7 +191,7 @@ UserController.prototype.getGroupUser = function (userId, userUpdateTime, succes
             },
             function (xrefList, next) {
                 if (xrefList && xrefList.length) {
-                    var xrefFilter = {_id: {$in: _.pluck(xrefList, "groupId")}};
+                    var xrefFilter = {groupId: {$in: _.pluck(xrefList, "groupId")}};
                     if (userUpdateTime) {
                         xrefFilter.updateTime = userUpdateTime;
                     }
@@ -213,7 +220,7 @@ UserController.prototype.getGroupUser = function (userId, userUpdateTime, succes
                     });
                     next(null, _.values(map), _.values(refreshUserMap));
                 } else {
-                    next(null);
+                    next(null, null, null);
                 }
             },
             function (groupList, refreshUserList, next) {
@@ -322,7 +329,544 @@ UserController.prototype.getUserProjectDetail = function (userFilter, success, f
     });
 };
 
-UserController.prototype.postAvatar = function (userId, request, success, fail) {
+/**
+ * @description
+ *
+ * Create user group record. The cross reference between group and its creator is saved. Add cross references
+ * if other group member's id given.
+ *
+ * Group type: 0. Normal Group, 1. Friend Group
+ *
+ * @param groupObj
+ * @param uids
+ * @param success
+ * @param fail
+ */
+UserController.prototype.postUserGroup = function (groupObj, uids, success, fail) {
+    var self = this,
+        now = new Date();
+
+    groupObj = (groupObj && JSON.parse(groupObj)) || {};
+
+    if (_.isEmpty(groupObj)) {
+        fail(self.__('Empty UserGroup'));
+        return;
+    }
+    if (groupObj.creatorId == null) {
+        fail(self.__('Provide Creator'));
+        return;
+    }
+    uids = JSON.parse(uids) || [];
+    if (uids.every(function (userId) {
+            return userId !== groupObj.creatorId;
+        })) {
+        uids.push(groupObj.creatorId);
+    }
+
+    groupObj.type = 0;
+    groupObj.forbidden = 0;
+    groupObj.creatorId = new self.db.Types.ObjectId(groupObj.creatorId);
+    uids = uids.map(function (userId) {
+        return new self.db.Types.ObjectId(userId);
+    });
+
+    (!self.isDBReady && fail(new Error('DB not initialized'))) || async.waterfall([
+        function (next) {
+            self.schema.UserGroup.find({creatorId: groupObj.creatorId, name: groupObj.name}, function (err, data) {
+                if (!err && data && data.length) {
+                    err = new Error(self.__('Group Exists'));
+                }
+                next(err);
+            });
+        },
+        function (next) {
+            self.schema.UserGroup.create(
+                _.extend(groupObj, {
+                    updateTime: now,
+                    createTime: now,
+                    forbidden: 0,
+                    active: 1
+                }),
+                function (err, data) {
+                    next(err, data);
+                }
+            );
+        },
+        function (groupObj, next) {
+            if (uids && uids.length) {
+                async.each(uids, function (userId, cb) {
+                    self.schema.UserGroupXref.create(
+                        {
+                            updateTime: now,
+                            createTime: now,
+                            userId: userId,
+                            groupId: groupObj._id,
+                            groupType: 0,
+                            active: 1
+                        },
+                        function (err) {
+                            cb(err);
+                        }
+                    );
+                }, function (err) {
+                    next(err, groupObj);
+                })
+            } else {
+                next(null, groupObj)
+            }
+        }
+    ], function (err, data) {
+        if (!err) {
+            success(data);
+        } else {
+            fail(err);
+        }
+    });
+}
+
+UserController.prototype.putAvatar = function (userId, request, success, fail) {
+    var self = this,
+        now = new Date();
+
+    if (toString.call(userId) === '[object Array]') {
+        userId = userId[0];
+    }
+
+    (!self.isDBReady && fail(new Error('DB not initialized'))) || async.parallel([
+        function (next) {
+            var userContentPath = path.join(self.config.userFile.userContentPath, userId);
+
+            self.fileController.postFile(request, userContentPath, function (result) {
+                if (result && result.length && path.basename(result[0]) !== "avatar.jpg") {
+                    fs.rename(result[0], path.join(userContentPath, "avatar.jpg"), function (err) {
+                        next(err);
+                    });
+                } else {
+                    next(null);
+                }
+            }, function (err) {
+                next(err);
+            });
+        },
+        function (next) {
+            self.schema.User.update({_id: new self.db.Types.ObjectId(userId)}, {"$set": {updateTime: now}}, function (err) {
+                next(err);
+            });
+        },
+        function (next) {
+            self.schema.UserGroupXref.update({userId: new self.db.Types.ObjectId(userId)}, {"$set": {updateTime: now}}, {multi: true}, function (err) {
+                next(err);
+            });
+        }
+    ], function (err) {
+        if (!err) {
+            success();
+        } else {
+            fail(err);
+        }
+    });
+}
+
+/**
+ * @description
+ *
+ * Mark user record inactive. If the user information needs to be removed, his record
+ * will be marked inactive(active=0) first, so that other app clients refresh the change and update locally.
+ * The final deletion will be performed in a periodical job which examines records older than recordTTL value.
+ *
+ * @param userFilter
+ * @param success
+ * @param fail
+ */
+UserController.prototype.putInactivateUser = function (userFilter, success, fail) {
+    var self = this,
+        now = new Date();
+
+    userFilter = (userFilter && JSON.parse(userFilter)) || {};
+    if (_.isEmpty(userFilter)) {
+        fail(self.__('Empty Filter'));
+        return;
+    }
+    if (userFilter._id) {
+        userFilter._id = new self.db.Types.ObjectId(userFilter._id);
+    }
+    if (userFilter.updateTime && typeof userFilter.updateTime === "number") {
+        userFilter.updateTime = {$gt: new Date(userFilter.updateTime)};
+    }
+    userFilter.active = 1;
+
+    (!self.isDBReady && fail(new Error('DB not initialized'))) || async.waterfall([
+        function (next) {
+            self.schema.User.find(userFilter, function (err, data) {
+                next(err, data);
+            });
+        },
+        function (userList, next) {
+            if (userList && userList.length) {
+                async.each(userList, function (userObj, callback) {
+                    async.waterfall([
+                        function (cb) {
+                            //Check if user has created some items
+                            async.parallel(
+                                [
+                                    function (pCallback) {
+                                        self.schema.UserProject.find({userId: userObj._id}, function (err, data) {
+                                            pCallback(err, data);
+                                        });
+                                    },
+                                    function (pCallback) {
+                                        self.schema.Chat.find({
+                                            creatorId: userObj._id,
+                                            active: 1
+                                        }, function (err, data) {
+                                            pCallback(err, data);
+                                        });
+                                    },
+                                    function (pCallback) {
+                                        self.schema.UserGroupXref.find({
+                                            userId: userObj._id,
+                                            active: 1,
+                                            groupType: 0
+                                        }, function (err, data) {
+                                            pCallback(err, data);
+                                        });
+                                    }
+                                ],
+                                function (err, results) {
+                                    if (!err) {
+                                        var markForbidden = !results.every(function (result) {
+                                            if (result && result.length) {
+                                                return false;
+                                            }
+                                            return true;
+                                        });
+                                        cb(null, markForbidden);
+                                    } else {
+                                        cb(err);
+                                    }
+                                }
+                            );
+                        },
+                        function (markForbidden, cb) {
+                            var setObj = {updateTime: now},
+                                arr = [];
+
+                            //The user has left some operation records, make his info forbidden instead of inactive.
+                            if (markForbidden) {
+                                setObj.forbidden = 1;
+
+                                //Forbid friend group
+                                arr.push(function (pCallback) {
+                                    self.schema.UserGroup.update({_id: userObj.friendGroupId}, {
+                                        forbidden: 1,
+                                        updateTime: now
+                                    }, function (err) {
+                                        pCallback(err);
+                                    });
+                                });
+                                arr.push(function (pCallback) {
+                                    self.schema.UserGroupXref.update({groupId: userObj.friendGroupId}, {
+                                        groupUpdateTime: now
+                                    }, {multi: true}, function (err) {
+                                        pCallback(err);
+                                    });
+                                });
+
+                                arr.push(function (pCallback) {
+                                    self.schema.UserGroupXref.update({userId: userObj._id}, {updateTime: now}, {multi: true}, function (err) {
+                                        pCallback(err);
+                                    });
+                                });
+                            } else {
+                                setObj.active = 0;
+
+                                //Inactivate friend group
+                                arr.push(function (pCallback) {
+                                    self.schema.UserGroup.update({_id: userObj.friendGroupId}, {
+                                        active: 0,
+                                        updateTime: now
+                                    }, function (err) {
+                                        pCallback(err);
+                                    });
+                                });
+                                arr.push(function (pCallback) {
+                                    self.schema.UserGroupXref.update({groupId: userObj.friendGroupId}, {
+                                        active: 0,
+                                        groupUpdateTime: now,
+                                        updateTime: now
+                                    }, {multi: true}, function (err) {
+                                        pCallback(err);
+                                    });
+                                });
+
+                                arr.push(function (pCallback) {
+                                    self.schema.UserGroupXref.update({userId: userObj._id}, {
+                                        active: 0,
+                                        updateTime: now
+                                    }, {multi: true}, function (err) {
+                                        pCallback(err);
+                                    });
+                                });
+                            }
+                            arr.push(function (pCallback) {
+                                self.schema.User.update({_id: userObj._id}, {"$set": setObj}, function (err) {
+                                    pCallback(err);
+                                });
+                            });
+
+                            async.parallel(arr, function (err) {
+                                cb(err);
+                            })
+                        }
+                    ], function (err) {
+                        callback(err);
+                    });
+                }, function (err) {
+                    next(err);
+                })
+            } else {
+                next(null);
+            }
+        }
+    ], function (err) {
+        if (!err) {
+            success();
+        } else {
+            fail(err);
+        }
+    });
+}
+
+/**
+ * @description
+ *
+ * Delete user record and his content folder.
+ *
+ * @param userFilter
+ * @param success
+ * @param fail
+ */
+UserController.prototype.deleteUser = function (userFilter, success, fail) {
+    var self = this;
+
+    userFilter = (userFilter && JSON.parse(userFilter)) || {};
+    if (_.isEmpty(userFilter)) {
+        fail(self.__('Empty Filter'));
+        return;
+    }
+    if (userFilter._id) {
+        userFilter._id = new self.db.Types.ObjectId(userFilter._id);
+    }
+    if (userFilter.updateTime && typeof userFilter.updateTime === "number") {
+        userFilter.updateTime = {$gt: new Date(userFilter.updateTime)};
+    }
+    userFilter.active = 0;
+
+    (!self.isDBReady && fail(new Error('DB not initialized'))) || async.waterfall([
+        function (next) {
+            self.schema.User.find(userFilter, function (err, data) {
+                next(err, data);
+            });
+        },
+        function (userList, next) {
+            if (userList && userList.length) {
+                async.each(userList, function (userObj, callback) {
+                    async.waterfall([
+                        function (cb) {
+                            self.schema.UserGroupXref.remove({groupId: userObj.friendGroupId}, function (err) {
+                                cb(err)
+                            });
+                        },
+                        function (cb) {
+                            self.schema.UserGroup.remove({_id: userObj.friendGroupId}, function (err) {
+                                cb(err)
+                            });
+                        },
+                        function (cb) {
+                            self.schema.User.remove({_id: userObj._id}, function (err) {
+                                cb(err)
+                            });
+                        },
+                        function (cb) {
+                            var userContentPath = path.join(self.config.userFile.userContentPath, userObj._id.toString());
+
+                            rimraf(userContentPath, function (err) {
+                                if (err) {
+                                    if (err.code !== "ENOENT") //Not Found
+                                    {
+                                        self.config.logger.error(err);
+                                        cb(err);
+                                    }
+                                    else {
+                                        self.config.logger.warn(err);
+                                        cb(null);
+                                    }
+                                } else {
+                                    cb(null);
+                                }
+                            });
+                        }
+                    ], function (err) {
+                        callback(err);
+                    });
+                }, function (err) {
+                    next(err);
+                })
+            } else {
+                next(null);
+            }
+        }
+    ], function (err) {
+        if (!err) {
+            success();
+        } else {
+            fail(err);
+        }
+    });
+}
+
+/**
+ * @description
+ *
+ * Mark user group record inactive. This function excludes friend group. If the group information needs to be removed,
+ * group record will be marked inactive(active=0) first, so that other app clients refresh the change and update locally.
+ * The final deletion will be performed in a periodical job which examines records older than recordTTL value.
+ *
+ * @param groupFilter
+ * @param success
+ * @param fail
+ */
+UserController.prototype.putInactivateUserGroup = function (groupFilter, success, fail) {
+    var self = this,
+        now = new Date();
+
+    groupFilter = (groupFilter && JSON.parse(groupFilter)) || {};
+    if (_.isEmpty(groupFilter)) {
+        fail(self.__('Empty Filter'));
+        return;
+    }
+    if (groupFilter._id) {
+        groupFilter._id = new self.db.Types.ObjectId(groupFilter._id);
+    }
+    if (groupFilter.updateTime && typeof groupFilter.updateTime === "number") {
+        groupFilter.updateTime = {$gt: new Date(groupFilter.updateTime)};
+    }
+    groupFilter.active = 1;
+    groupFilter.type = 0;
+
+    (!self.isDBReady && fail(new Error('DB not initialized'))) || async.waterfall([
+        function (next) {
+            self.schema.UserGroup.find(groupFilter, function (err, data) {
+                next(err, data);
+            });
+        },
+        function (groupList, next) {
+            if (groupList && groupList.length) {
+                async.parallel(
+                    [
+                        function (pCallback) {
+                            self.schema.UserGroup.update(groupFilter, {
+                                active: 0,
+                                updateTime: now
+                            }, {multi: true}, function (err) {
+                                pCallback(err);
+                            });
+                        },
+                        function (pCallback) {
+                            async.each(groupList, function (groupObj, callback) {
+                                self.schema.UserGroupXref.update({groupId: groupObj._id}, {
+                                    active: 0,
+                                    groupUpdateTime: now,
+                                    updateTime: now
+                                }, {multi: true}, function (err) {
+                                    callback(err);
+                                });
+                            }, function (err) {
+                                pCallback(err);
+                            });
+                        }
+                    ], function (err) {
+                        next(err);
+                    }
+                );
+            } else {
+                next(null);
+            }
+        }
+    ], function (err) {
+        if (!err) {
+            success();
+        } else {
+            fail(err);
+        }
+    });
+}
+
+/**
+ * @description
+ *
+ * Delete user group record and cross reference records marked inactive.
+ *
+ * @param groupFilter
+ * @param success
+ * @param fail
+ */
+UserController.prototype.deleteUserGroup = function (groupFilter, success, fail) {
+    var self = this;
+
+    groupFilter = (groupFilter && JSON.parse(groupFilter)) || {};
+    if (_.isEmpty(groupFilter)) {
+        fail(self.__('Empty Filter'));
+        return;
+    }
+    if (groupFilter._id) {
+        groupFilter._id = new self.db.Types.ObjectId(groupFilter._id);
+    }
+    if (groupFilter.updateTime && typeof groupFilter.updateTime === "number") {
+        groupFilter.updateTime = {$gt: new Date(groupFilter.updateTime)};
+    }
+    groupFilter.active = 0;
+    groupFilter.type = 0;
+
+    (!self.isDBReady && fail(new Error('DB not initialized'))) || async.waterfall([
+        function (next) {
+            self.schema.UserGroup.find(groupFilter, function (err, data) {
+                next(err, data);
+            });
+        },
+        function (groupList, next) {
+            if (groupList && groupList.length) {
+                async.parallel(
+                    [
+                        function (pCallback) {
+                            self.schema.UserGroup.remove(groupFilter, function (err) {
+                                pCallback(err);
+                            });
+                        },
+                        function (pCallback) {
+                            async.each(groupList, function (groupObj, callback) {
+                                self.schema.UserGroupXref.remove({groupId: groupObj._id, active: 0}, function (err) {
+                                    callback(err);
+                                });
+                            }, function (err) {
+                                pCallback(err);
+                            });
+                        }
+                    ], function (err) {
+                        next(err);
+                    }
+                );
+            } else {
+                next(null);
+            }
+        }
+    ], function (err) {
+        if (!err) {
+            success();
+        } else {
+            fail(err);
+        }
+    });
 }
 
 UserController.prototype.postConfirmAddFriends = function (userId, friendIdList, success, fail) {
