@@ -176,44 +176,48 @@ FileController.prototype.postFile = function (request, uploadFolder, success, fa
     }
 
     uploadFolder = uploadFolder || self.config.upload.folder;
-    async.each(files, function (file, next) {
-        var filePath = path.join(uploadFolder, file.originalFilename);
-        try {
-            var ws = null,
-                rs = fs.createReadStream(file.path);
+    if (files && files.length) {
+        async.each(files, function (file, next) {
+            var filePath = path.join(uploadFolder, file.originalFilename);
+            try {
+                var ws = null,
+                    rs = fs.createReadStream(file.path);
 
-            if (file.range) {
-                if (file.range.start) {
-                    ws = fs.createWriteStream(filePath, {flags: 'r+', start: file.range.start});
+                if (file.range) {
+                    if (file.range.start) {
+                        ws = fs.createWriteStream(filePath, {flags: 'r+', start: file.range.start});
+                    }
                 }
+
+                ws = ws || fs.createWriteStream(filePath);
+
+                ws.on('finish', function () {
+                    destFiles.push(filePath);
+                    next(null);
+                });
+
+                rs.on('error', function (err) {
+                    next(err);
+                });
+
+                ws.on('error', function (err) {
+                    next(err);
+                });
+
+                rs.pipe(ws);
+            } catch (e) {
+                next(e);
             }
-
-            ws = ws || fs.createWriteStream(filePath);
-
-            ws.on('finish', function () {
-                destFiles.push(filePath);
-                next(null);
-            });
-
-            rs.on('error', function (err) {
-                next(err);
-            });
-
-            ws.on('error', function (err) {
-                next(err);
-            });
-
-            rs.pipe(ws);
-        } catch (e) {
-            next(e);
-        }
-    }, function (err) {
-        if (err) {
-            fail(err, {statusCode: 500});
-        } else {
-            success(destFiles);
-        }
-    });
+        }, function (err) {
+            if (err) {
+                fail(err, {statusCode: 500});
+            } else {
+                success(destFiles);
+            }
+        });
+    } else {
+        success();
+    }
 }
 
 module.exports = FileController;
