@@ -439,8 +439,9 @@ Commons.prototype.instantiateMongooseDb = function (options, resourceName, callb
                         resource.schema[collection] = mongoose.model(collection, new mongoose.Schema(raw[collection], {versionKey: ""}), collection);
 
                         //tree[key] map to schema data type
-                        var keys = [], tree = resource.schema[collection].tree;
-                        for (var key in tree) if (_.has(tree, key) && tree[key] === 'string') keys.push(key);
+                        var keys = [], tree = resource.schema[collection].schema.tree;
+                        for (var key in tree) if (_.has(tree, key) && typeof tree[key] === 'string') keys.push(key);
+                        if (keys.indexOf("_id") < 0) keys.push("_id");
                         resource.schema[collection].fields = keys;
                     }
                 }
