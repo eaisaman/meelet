@@ -174,7 +174,7 @@ UserController.prototype.postUser = function (request, userObj, success, fail) {
             }
         ], function (err, data) {
             if (!err) {
-                success(_.omit(data, "password", "createTime", "forbidden", "active"));
+                success(_.pick(data, _.without(self.schema.User.fields, "password", "createTime")));
             } else {
                 fail(err);
             }
@@ -224,7 +224,7 @@ UserController.prototype.getSameGroupUsers = function (userId, success, fail) {
                 if (userIdList && userIdList.length) {
                     self.schema.User.find({_id: {"$in": userIdList}}, function (err, data) {
                         if (!err) {
-                            next(null, commons.arrayOmit(data, "password", "plainPassword", "createTime", "loginName"));
+                            next(null, commons.arrayPick(data, _.without(self.schema.User.fields, "password", "createTime")));
                         } else {
                             next(err);
                         }

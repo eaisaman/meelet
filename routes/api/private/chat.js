@@ -253,7 +253,7 @@ ChatController.prototype.getInvitation = function (invitationFilter, success, fa
 
     (!self.isDBReady && fail(new Error('DB not initialized'))) || self.schema.Invitation.find(invitationFilter, function (err, data) {
         if (!err) {
-            success(commons.arrayOmit(data, "createTime"));
+            success(commons.arrayPick(data, _.without(self.schema.Invitation.fields, "createTime")));
         } else {
             fail(err);
         }
@@ -431,17 +431,16 @@ ChatController.prototype.getChatHistory = function (chatHistoryFilter, success, 
                                     chatItem.topic = results.topic;
                                     chatItem.topicInvitation = results.topicInvitation;
 
-                                    chatItem.chatInvitation = commons.arrayOmit(chatItem.chatInvitation, "createTime");
-                                    chatItem.conversation = commons.arrayOmit(chatItem.conversation, "createTime");
-                                    chatItem.topic = commons.arrayOmit(chatItem.topic, "createTime");
-                                    chatItem.topicInvitation = commons.arrayOmit(chatItem.topicInvitation, "createTime");
-                                    chatItem.chatInvitation = commons.arrayOmit(chatItem.chatInvitation, "chatUser");
+                                    chatItem.chatInvitation = commons.arrayPick(chatItem.chatInvitation, _.without(self.schema.ChatInvitation.fields, "createTime"));
+                                    chatItem.conversation = commons.arrayPick(chatItem.conversation, _.without(self.schema.Conversation.fields, "createTime"));
+                                    chatItem.topic = commons.arrayPick(chatItem.topic, _.without(self.schema.Topic.fields, "createTime"));
+                                    chatItem.topicInvitation = commons.arrayPick(chatItem.topicInvitation, _.without(self.schema.TopicInvitation.fields, "createTime", "expires"));
                                 }
                                 cb(err);
                             }
                         );
                     }, function (err) {
-                        next(err, commons.arrayOmit(chatList, "createTime"));
+                        next(err, commons.arrayPick(chatList, ["chatUser", "chatInvitation", "conversation", "topic", "topicInvitation"], _.without(self.schema.Chat.fields, "createTime")));
                     })
                 } else {
                     next(null);
@@ -503,13 +502,13 @@ ChatController.prototype.getChatUser = function (chatId, chatUserTime, succcess,
                     });
                 }, function (err) {
                     if (!err) {
-                        success(commons.arrayOmit(data, "createTime"));
+                        success(commons.arrayPick(data, "chatUser"));
                     } else {
                         fail(err);
                     }
                 });
             } else {
-                success(commons.arrayOmit(data, "createTime"));
+                success(commons.arrayPick(data, "chatUser"));
             }
         } else {
             fail(err);
@@ -544,7 +543,7 @@ ChatController.prototype.getConversation = function (conversationFilter, success
 
     (!self.isDBReady && fail(new Error('DB not initialized'))) || self.schema.Conversation.find(conversationFilter, function (err, data) {
         if (!err) {
-            success(commons.arrayOmit(data, "createTime"));
+            success(commons.arrayPick(data, _.without(self.schema.Conversation.fields, "createTime")));
         } else {
             fail(err);
         }
@@ -643,7 +642,7 @@ ChatController.prototype.postInvitation = function (userId, inviteeIdList, succe
     if (arr.length) {
         (!self.isDBReady && fail(new Error('DB not initialized'))) || async.parallel(arr, function (err, results) {
             if (!err) {
-                success(commons.arrayOmit(results, "createTime"));
+                success(commons.arrayPick(results, _.without(self.schema.Invitation.fields, "createTime")));
             } else {
                 fail(err);
             }
@@ -755,7 +754,7 @@ ChatController.prototype.postChat = function (userId, name, uids, route, payload
                             cb(err);
                         });
                 }, function (err) {
-                    chatObj.invitationList = commons.arrayOmit(chatObj.invitationList, "createTime", "expires");
+                    chatObj.invitationList = commons.arrayPick(chatObj.invitationList, _.without(self.schema.ChatInvitation.fields, "createTime", "expires"));
 
                     next(err, chatObj);
                 });
@@ -765,7 +764,7 @@ ChatController.prototype.postChat = function (userId, name, uids, route, payload
         }
     ], function (err, data) {
         if (!err) {
-            success(_.omit(data, "createTime"));
+            success(_.pick(data, "invitationList", _.without(self.schema.Chat.fields, "createTime")));
         } else {
             fail(err);
         }
@@ -1092,7 +1091,10 @@ ChatController.prototype.postChatInvitation = function (userId, chatId, uids, ro
             },
             function (inviteeIdList, next) {
                 if (inviteeIdList && inviteeIdList.length) {
-                    self.schema.ChatInvitation.find({chatId: chatId, inviteeId: {"$in": inviteeIdList}}, function (err, data) {
+                    self.schema.ChatInvitation.find({
+                        chatId: chatId,
+                        inviteeId: {"$in": inviteeIdList}
+                    }, function (err, data) {
                         next(err, data);
                     });
                 } else {
@@ -1102,7 +1104,7 @@ ChatController.prototype.postChatInvitation = function (userId, chatId, uids, ro
         ],
         function (err, data) {
             if (!err) {
-                success(commons.arrayOmit(data, "createTime", "expires"));
+                success(commons.arrayPick(data, _.without(self.schema.ChatInvitation.fields, "createTime", "expires")));
             } else {
                 fail(err);
             }
@@ -1238,7 +1240,7 @@ ChatController.prototype.postTopic = function (chatId, topicObj, success, fail) 
                                     "topicId": topicObj._id,
                                     "userId": topicObj.creatorId,
                                     "route": topicObj.route,
-                                    "inviteeId":inviteeId,
+                                    "inviteeId": inviteeId,
                                     "accepted": 0,
                                     "processed": 0,
                                     "expires": expires,
@@ -1257,7 +1259,7 @@ ChatController.prototype.postTopic = function (chatId, topicObj, success, fail) 
                     })
                 }, function (err) {
                     if (!err) {
-                        topicObj.invitationList = commons.arrayOmit(topicObj.invitationList, "createTime", "expires");
+                        topicObj.invitationList = commons.arrayPick(topicObj.invitationList, _.without(self.schema.TopicInvitation.fields, "createTime", "expires"));
                     }
                     next(err, topicObj);
                 });
@@ -1267,7 +1269,7 @@ ChatController.prototype.postTopic = function (chatId, topicObj, success, fail) 
         }
     ], function (err, data) {
         if (!err) {
-            success(_.omit(data, "createTime"));
+            success(_.pick(data, "invitationList", _.without(self.schema.Topic.fields, "createTime")));
         } else {
             fail(err);
         }
@@ -1400,7 +1402,10 @@ ChatController.prototype.postTopicInvitation = function (topicId, uids, success,
             },
             function (inviteeIdList, next) {
                 if (inviteeIdList && inviteeIdList.length) {
-                    self.schema.TopicInvitation.find({topicId: topicId, inviteeId: {"$in": inviteeIdList}}, function (err, data) {
+                    self.schema.TopicInvitation.find({
+                        topicId: topicId,
+                        inviteeId: {"$in": inviteeIdList}
+                    }, function (err, data) {
                         next(err, data);
                     });
                 } else {
@@ -1409,7 +1414,7 @@ ChatController.prototype.postTopicInvitation = function (topicId, uids, success,
             }
         ], function (err, data) {
             if (!err) {
-                success(commons.arrayOmit(data, "createTime", "expires"));
+                success(commons.arrayPick(data, _.without(self.schema.TopicInvitation.fields, "createTime", "expires")));
             } else {
                 fail(err);
             }

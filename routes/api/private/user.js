@@ -61,7 +61,7 @@ UserController.prototype.getUser = function (userFilter, success, fail) {
             function (next) {
                 self.schema.User.find(userFilter, function (err, data) {
                     if (!err) {
-                        next(null, commons.arrayOmit(data, "password", "createTime"));
+                        next(null, commons.arrayPick(data, _.without(self.schema.User.fields, "password", "createTime")));
                     } else {
                         next(err);
                     }
@@ -141,7 +141,7 @@ UserController.prototype.getUserGroup = function (groupFilter, sort, userId, upd
                     }
                     self.schema.UserGroup.find(groupFilter).sort(sort).exec(function (err, data) {
                         if (!err) {
-                            next(null, commons.arrayOmit(data, "createTime"));
+                            next(null, data);
                         } else {
                             next(err);
                         }
@@ -152,7 +152,7 @@ UserController.prototype.getUserGroup = function (groupFilter, sort, userId, upd
             }
         ], function (err, data) {
             if (!err) {
-                success(data);
+                success(commons.arrayPick(data, _.without(self.schema.UserGroup.fields, "createTime")));
             } else {
                 fail(err);
             }
@@ -227,7 +227,7 @@ UserController.prototype.getGroupUser = function (userId, userUpdateTime, succes
                     async.each(refreshUserList, function (userItem, cb) {
                         self.schema.User.find({_id: userItem._id}, function (err, data) {
                             if (data && data.length) {
-                                _.extend(userItem, _.pick(data[0], "name", "sex", "avatar", "tel"));
+                                _.extend(userItem, _.pick(data[0], "updateTime", "forbidden", "name", "sex", "tel", "active"));
                             }
 
                             cb(err);
@@ -300,7 +300,7 @@ UserController.prototype.getUserProjectDetail = function (userFilter, success, f
                             self.schema.UserProject.find({
                                 userId: user._id
                             }, function (err, data) {
-                                pCallback(err, commons.arrayOmit(data, "createTime"));
+                                pCallback(err, commons.arrayPick(data, _.without(self.schema.UserProject.fields, "createTime")));
                             });
                         }
                     }, function (err, userDetail) {
@@ -416,7 +416,7 @@ UserController.prototype.postUserGroup = function (groupObj, uids, success, fail
         }
     ], function (err, data) {
         if (!err) {
-            success(_.omit(data, "createTime"));
+            success(_.pick(data, _.without(self.schema.UserGroup.fields, "createTime")));
         } else {
             fail(err);
         }

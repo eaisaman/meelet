@@ -437,6 +437,11 @@ Commons.prototype.instantiateMongooseDb = function (options, resourceName, callb
                     var raw = require(options.dbSchema);
                     for (var collection in raw) {
                         resource.schema[collection] = mongoose.model(collection, new mongoose.Schema(raw[collection], {versionKey: ""}), collection);
+
+                        //tree[key] map to schema data type
+                        var keys = [], tree = resource.schema[collection].tree;
+                        for (var key in tree) if (_.has(tree, key) && tree[key] === 'string') keys.push(key);
+                        resource.schema[collection].fields = keys;
                     }
                 }
             }
