@@ -174,12 +174,7 @@ UserController.prototype.postUser = function (request, userObj, success, fail) {
             }
         ], function (err, data) {
             if (!err) {
-                delete data.password;
-                delete data.createTime;
-                delete data.forbidden;
-                delete data.active;
-
-                success(data);
+                success(_.omit(data, "password", "createTime", "forbidden", "active"));
             } else {
                 fail(err);
             }

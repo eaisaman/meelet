@@ -61,8 +61,7 @@ UserController.prototype.getUser = function (userFilter, success, fail) {
             function (next) {
                 self.schema.User.find(userFilter, function (err, data) {
                     if (!err) {
-                        commons.arrayPurge(data, "password", "createTime");
-                        next(null, data);
+                        next(null, commons.arrayOmit(data, "password", "createTime"));
                     } else {
                         next(err);
                     }
@@ -301,7 +300,7 @@ UserController.prototype.getUserProjectDetail = function (userFilter, success, f
                             self.schema.UserProject.find({
                                 userId: user._id
                             }, function (err, data) {
-                                pCallback(err, commons.arrayPurge(data, "createTime"));
+                                pCallback(err, commons.arrayOmit(data, "createTime"));
                             });
                         }
                     }, function (err, userDetail) {
