@@ -61,7 +61,7 @@ UserController.prototype.getUser = function (userFilter, success, fail) {
             function (next) {
                 self.schema.User.find(userFilter, function (err, data) {
                     if (!err) {
-                        commons.arrayPurge(data, "password");
+                        commons.arrayPurge(data, "password", "createTime");
                         next(null, data);
                     } else {
                         next(err);
@@ -103,7 +103,7 @@ UserController.prototype.getUserGroup = function (groupFilter, sort, userId, upd
         userId = new self.db.Types.ObjectId(userId);
     }
     if (updateTime) {
-        groupFilter.updateTime = {$gt: new Date(updateTime)};
+        groupFilter.updateTime = {$gt: updateTime};
     }
     for (var key in groupFilter) {
         var value = groupFilter[key];
@@ -142,7 +142,7 @@ UserController.prototype.getUserGroup = function (groupFilter, sort, userId, upd
                     }
                     self.schema.UserGroup.find(groupFilter).sort(sort).exec(function (err, data) {
                         if (!err) {
-                            next(null, data);
+                            next(null, commons.arrayOmit(data, "createTime"));
                         } else {
                             next(err);
                         }
@@ -177,7 +177,7 @@ UserController.prototype.getGroupUser = function (userId, userUpdateTime, succes
     userId = new self.db.Types.ObjectId(userId);
 
     if (userUpdateTime) {
-        userUpdateTime = {$gt: new Date(userUpdateTime)};
+        userUpdateTime = {$gt: userUpdateTime};
     }
 
     (!self.isDBReady && fail(new Error('DB not initialized'))) || async.waterfall(
@@ -274,7 +274,7 @@ UserController.prototype.getUserProjectDetail = function (userFilter, success, f
         delete userFilter.plainPassword;
     }
     if (userFilter.updateTime && typeof userFilter.updateTime === "number") {
-        userFilter.updateTime = new Date(userFilter.updateTime);
+        userFilter.updateTime = userFilter.updateTime;
     }
     for (var key in userFilter) {
         var value = userFilter[key];
@@ -301,7 +301,7 @@ UserController.prototype.getUserProjectDetail = function (userFilter, success, f
                             self.schema.UserProject.find({
                                 userId: user._id
                             }, function (err, data) {
-                                pCallback(err, data);
+                                pCallback(err, commons.arrayPurge(data, "createTime"));
                             });
                         }
                     }, function (err, userDetail) {
@@ -382,8 +382,8 @@ UserController.prototype.postUserGroup = function (groupObj, uids, success, fail
         function (next) {
             self.schema.UserGroup.create(
                 _.extend(groupObj, {
-                    updateTime: now,
-                    createTime: now,
+                    updateTime: now.getTime(),
+                    createTime: now.getTime(),
                     forbidden: 0,
                     active: 1
                 }),
@@ -397,8 +397,8 @@ UserController.prototype.postUserGroup = function (groupObj, uids, success, fail
                 async.each(uids, function (userId, cb) {
                     self.schema.UserGroupXref.create(
                         {
-                            updateTime: now,
-                            createTime: now,
+                            updateTime: now.getTime(),
+                            createTime: now.getTime(),
                             userId: userId,
                             groupId: groupObj._id,
                             groupType: 0,
@@ -417,7 +417,7 @@ UserController.prototype.postUserGroup = function (groupObj, uids, success, fail
         }
     ], function (err, data) {
         if (!err) {
-            success(data);
+            success(_.omit(data, "createTime"));
         } else {
             fail(err);
         }
@@ -449,12 +449,12 @@ UserController.prototype.putAvatar = function (userId, request, success, fail) {
             });
         },
         function (next) {
-            self.schema.User.update({_id: new self.db.Types.ObjectId(userId)}, {"$set": {updateTime: now}}, function (err) {
+            self.schema.User.update({_id: new self.db.Types.ObjectId(userId)}, {"$set": {updateTime: now.getTime()}}, function (err) {
                 next(err);
             });
         },
         function (next) {
-            self.schema.UserGroupXref.update({userId: new self.db.Types.ObjectId(userId)}, {"$set": {updateTime: now}}, {multi: true}, function (err) {
+            self.schema.UserGroupXref.update({userId: new self.db.Types.ObjectId(userId)}, {"$set": {updateTime: now.getTime()}}, {multi: true}, function (err) {
                 next(err);
             });
         }
@@ -491,7 +491,7 @@ UserController.prototype.putInactivateUser = function (userFilter, success, fail
         userFilter._id = new self.db.Types.ObjectId(userFilter._id);
     }
     if (userFilter.updateTime && typeof userFilter.updateTime === "number") {
-        userFilter.updateTime = {$gt: new Date(userFilter.updateTime)};
+        userFilter.updateTime = {$gt: userFilter.updateTime};
     }
     userFilter.active = 1;
 
@@ -548,7 +548,7 @@ UserController.prototype.putInactivateUser = function (userFilter, success, fail
                             );
                         },
                         function (markForbidden, cb) {
-                            var setObj = {updateTime: now},
+                            var setObj = {updateTime: now.getTime()},
                                 arr = [];
 
                             //The user has left some operation records, make his info forbidden instead of inactive.
@@ -559,21 +559,21 @@ UserController.prototype.putInactivateUser = function (userFilter, success, fail
                                 arr.push(function (pCallback) {
                                     self.schema.UserGroup.update({_id: userObj.friendGroupId}, {
                                         forbidden: 1,
-                                        updateTime: now
+                                        updateTime: now.getTime()
                                     }, function (err) {
                                         pCallback(err);
                                     });
                                 });
                                 arr.push(function (pCallback) {
                                     self.schema.UserGroupXref.update({groupId: userObj.friendGroupId}, {
-                                        groupUpdateTime: now
+                                        groupUpdateTime: now.getTime()
                                     }, {multi: true}, function (err) {
                                         pCallback(err);
                                     });
                                 });
 
                                 arr.push(function (pCallback) {
-                                    self.schema.UserGroupXref.update({userId: userObj._id}, {updateTime: now}, {multi: true}, function (err) {
+                                    self.schema.UserGroupXref.update({userId: userObj._id}, {updateTime: now.getTime()}, {multi: true}, function (err) {
                                         pCallback(err);
                                     });
                                 });
@@ -584,7 +584,7 @@ UserController.prototype.putInactivateUser = function (userFilter, success, fail
                                 arr.push(function (pCallback) {
                                     self.schema.UserGroup.update({_id: userObj.friendGroupId}, {
                                         active: 0,
-                                        updateTime: now
+                                        updateTime: now.getTime()
                                     }, function (err) {
                                         pCallback(err);
                                     });
@@ -592,8 +592,8 @@ UserController.prototype.putInactivateUser = function (userFilter, success, fail
                                 arr.push(function (pCallback) {
                                     self.schema.UserGroupXref.update({groupId: userObj.friendGroupId}, {
                                         active: 0,
-                                        groupUpdateTime: now,
-                                        updateTime: now
+                                        groupUpdateTime: now.getTime(),
+                                        updateTime: now.getTime()
                                     }, {multi: true}, function (err) {
                                         pCallback(err);
                                     });
@@ -602,7 +602,7 @@ UserController.prototype.putInactivateUser = function (userFilter, success, fail
                                 arr.push(function (pCallback) {
                                     self.schema.UserGroupXref.update({userId: userObj._id}, {
                                         active: 0,
-                                        updateTime: now
+                                        updateTime: now.getTime()
                                     }, {multi: true}, function (err) {
                                         pCallback(err);
                                     });
@@ -658,7 +658,7 @@ UserController.prototype.deleteUser = function (userFilter, success, fail) {
         userFilter._id = new self.db.Types.ObjectId(userFilter._id);
     }
     if (userFilter.updateTime && typeof userFilter.updateTime === "number") {
-        userFilter.updateTime = {$gt: new Date(userFilter.updateTime)};
+        userFilter.updateTime = {$gt: userFilter.updateTime};
     }
     userFilter.active = 0;
 
@@ -749,7 +749,7 @@ UserController.prototype.putInactivateUserGroup = function (groupFilter, success
         groupFilter._id = new self.db.Types.ObjectId(groupFilter._id);
     }
     if (groupFilter.updateTime && typeof groupFilter.updateTime === "number") {
-        groupFilter.updateTime = {$gt: new Date(groupFilter.updateTime)};
+        groupFilter.updateTime = {$gt: groupFilter.updateTime};
     }
     groupFilter.active = 1;
     groupFilter.type = 0;
@@ -767,7 +767,7 @@ UserController.prototype.putInactivateUserGroup = function (groupFilter, success
                         function (pCallback) {
                             self.schema.UserGroup.update(groupFilter, {
                                 active: 0,
-                                updateTime: now
+                                updateTime: now.getTime()
                             }, {multi: true}, function (err) {
                                 pCallback(err);
                             });
@@ -776,8 +776,8 @@ UserController.prototype.putInactivateUserGroup = function (groupFilter, success
                             async.each(groupList, function (groupObj, callback) {
                                 self.schema.UserGroupXref.update({groupId: groupObj._id}, {
                                     active: 0,
-                                    groupUpdateTime: now,
-                                    updateTime: now
+                                    groupUpdateTime: now.getTime(),
+                                    updateTime: now.getTime()
                                 }, {multi: true}, function (err) {
                                     callback(err);
                                 });
@@ -823,7 +823,7 @@ UserController.prototype.deleteUserGroup = function (groupFilter, success, fail)
         groupFilter._id = new self.db.Types.ObjectId(groupFilter._id);
     }
     if (groupFilter.updateTime && typeof groupFilter.updateTime === "number") {
-        groupFilter.updateTime = {$gt: new Date(groupFilter.updateTime)};
+        groupFilter.updateTime = {$gt: groupFilter.updateTime};
     }
     groupFilter.active = 0;
     groupFilter.type = 0;

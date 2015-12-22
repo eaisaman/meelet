@@ -1953,8 +1953,8 @@ UserFileController.prototype.postProjectArtifactXref = function (projectId, libr
                     libraryName: library[0].name,
                     type: library[0].type,
                     artifactList: artifactList,
-                    createTime: now,
-                    updateTime: now
+                    createTime: now.getTime(),
+                    updateTime: now.getTime()
                 }, function (err) {
                     next(err);
                 });

@@ -1,7 +1,7 @@
 {
   "User": {
-    "updateTime": "date",
-    "createTime": "date",
+    "updateTime": "number",
+    "createTime": "number",
     "forbidden": "number",
     "loginName": "string",
     "password": "string",
@@ -12,8 +12,8 @@
     "active": "number"
   },
   "UserGroup": {
-    "updateTime": "date",
-    "createTime": "date",
+    "updateTime": "number",
+    "createTime": "number",
     "forbidden": "number",
     "creatorId": "ObjectId",
     "name": "string",
@@ -21,17 +21,17 @@
     "active": "number"
   },
   "UserGroupXref": {
-    "groupUpdateTime": "date",
-    "updateTime": "date",
-    "createTime": "date",
+    "groupUpdateTime": "number",
+    "updateTime": "number",
+    "createTime": "number",
     "userId": "ObjectId",
     "groupId": "ObjectId",
     "groupType": "number",
     "active": "number"
   },
   "UserProject": {
-    "updateTime": "date",
-    "createTime": "date",
+    "updateTime": "number",
+    "createTime": "number",
     "name": "string",
     "desc": "string",
     "type": "string",
@@ -42,8 +42,8 @@
     "thumbnail": "string"
   },
   "RepoLibrary": {
-    "updateTime": "date",
-    "createTime": "date",
+    "updateTime": "number",
+    "createTime": "number",
     "name": "string",
     "desc": "string",
     "creator": "string",
@@ -52,8 +52,8 @@
     "uiControl": "string"
   },
   "RepoArtifact": {
-    "updateTime": "date",
-    "createTime": "date",
+    "updateTime": "number",
+    "createTime": "number",
     "library": "ObjectId",
     "forbidden": "boolean",
     "name": "string",
@@ -66,8 +66,8 @@
     ]
   },
   "ProjectArtifactXref": {
-    "updateTime": "date",
-    "createTime": "date",
+    "updateTime": "number",
+    "createTime": "number",
     "projectId": "ObjectId",
     "libraryId": "ObjectId",
     "libraryName": "string",
@@ -77,11 +77,11 @@
     ]
   },
   "Chat": {
-    "updateTime": "date",
-    "createTime": "date",
-    "startTime": "date",
-    "endTime": "date",
-    "expectEndTime": "date",
+    "updateTime": "number",
+    "createTime": "number",
+    "startTime": "number",
+    "endTime": "number",
+    "expectEndTime": "number",
     "creatorId": "ObjectId",
     "route": "string",
     "state": "number",
@@ -90,10 +90,10 @@
     "active": "number"
   },
   "Topic": {
-    "updateTime": "date",
-    "createTime": "date",
-    "startTime": "date",
-    "endTime": "date",
+    "updateTime": "number",
+    "createTime": "number",
+    "startTime": "number",
+    "endTime": "number",
     "chatId": "ObjectId",
     "creatorId": "ObjectId",
     "route": "string",
@@ -103,8 +103,8 @@
     "active": "number"
   },
   "Conversation": {
-    "updateTime": "date",
-    "createTime": "date",
+    "updateTime": "number",
+    "createTime": "number",
     "chatId": "ObjectId",
     "topicId": "ObjectId",
     "senderId": "ObjectId",
@@ -117,8 +117,8 @@
     "active": "number"
   },
   "Invitation": {
-    "updateTime": "date",
-    "createTime": "date",
+    "updateTime": "number",
+    "createTime": "number",
     "creatorId": "ObjectId",
     "inviteeId": "ObjectId",
     "route": "string",
@@ -128,9 +128,9 @@
     "active": "number"
   },
   "ChatInvitation": {
-    "updateTime": "date",
-    "chatUpdateTime": "date",
-    "createTime": "date",
+    "updateTime": "number",
+    "chatUpdateTime": "number",
+    "createTime": "number",
     "chatId": "ObjectId",
     "userId": "ObjectId",
     "inviteeId": "ObjectId",
@@ -141,8 +141,8 @@
     "active": "number"
   },
   "TopicInvitation": {
-    "updateTime": "date",
-    "createTime": "date",
+    "updateTime": "number",
+    "createTime": "number",
     "chatId": "ObjectId",
     "topicId": "ObjectId",
     "userId": "ObjectId",

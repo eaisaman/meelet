@@ -68,8 +68,8 @@ UserController.prototype.postUser = function (request, userObj, success, fail) {
             function (next) {
                 self.schema.User.create(
                     _.extend(userObj, {
-                        updateTime: now,
-                        createTime: now,
+                        updateTime: now.getTime(),
+                        createTime: now.getTime(),
                         forbidden: 0,
                         active: 1
                     }),
@@ -81,8 +81,8 @@ UserController.prototype.postUser = function (request, userObj, success, fail) {
             function (userObj, next) {
                 self.schema.UserGroup.create(
                     {
-                        updateTime: now,
-                        createTime: now,
+                        updateTime: now.getTime(),
+                        createTime: now.getTime(),
                         name: "Friend Group",
                         creatorId: userObj._id,
                         forbidden: 0,
@@ -106,9 +106,9 @@ UserController.prototype.postUser = function (request, userObj, success, fail) {
             function (userObj, next) {
                 self.schema.UserGroupXref.create(
                     {
-                        groupUpdateTime: now,
-                        updateTime: now,
-                        createTime: now,
+                        groupUpdateTime: now.getTime(),
+                        updateTime: now.getTime(),
+                        createTime: now.getTime(),
                         userId: userObj._id,
                         groupId: userObj.friendGroupId,
                         groupType: 1,
@@ -175,6 +175,9 @@ UserController.prototype.postUser = function (request, userObj, success, fail) {
         ], function (err, data) {
             if (!err) {
                 delete data.password;
+                delete data.createTime;
+                delete data.forbidden;
+                delete data.active;
 
                 success(data);
             } else {
@@ -226,11 +229,7 @@ UserController.prototype.getSameGroupUsers = function (userId, success, fail) {
                 if (userIdList && userIdList.length) {
                     self.schema.User.find({_id: {"$in": userIdList}}, function (err, data) {
                         if (!err) {
-                            data.forEach(function (item) {
-                                delete item.password;
-                                delete item.plainPassword;
-                            });
-                            next(null, data);
+                            next(null, commons.arrayOmit(data, "password", "plainPassword", "createTime", "loginName"));
                         } else {
                             next(err);
                         }

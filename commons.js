@@ -127,6 +127,42 @@ Commons.prototype.getScale = function (size) {
 
 /**
  * @description
+ * 
+ * Convert date to timestamp for object array.
+ *
+ * @param objects
+ */
+Commons.prototype.arrayConvertDate = function (objects) {
+    var keys = Array.prototype.concat.apply(Array.prototype, Array.prototype.slice.call(arguments, 1));
+
+    objects && objects.forEach(function (obj) {
+        for(var key in keys) {
+            if (obj[key]) obj[key] = obj[key].getTime();
+        }
+    });
+
+    return objects;
+};
+
+/**
+ * @description
+ * 
+ * Convert date to timestamp for object.
+ *
+ * @param objects
+ */
+Commons.prototype.convertDate = function (obj) {
+    var keys = Array.prototype.concat.apply(Array.prototype, Array.prototype.slice.call(arguments, 1));
+
+    for(var key in keys) {
+        if (obj[key]) obj[key] = obj[key].getTime();
+    }
+
+    return obj;
+};
+
+/**
+ * @description
  *
  * @param objects
  */
@@ -168,6 +204,8 @@ Commons.prototype.arrayPurge = function (objects) {
     objects && objects.forEach(function (obj) {
         for (var key in keys) delete obj[key];
     });
+
+    return objects;
 };
 
 /**
