@@ -389,7 +389,7 @@ ChatController.prototype.getChatHistory = function (chatHistoryFilter, success, 
                                                     self.schema.User.find({_id: chatInvitation.inviteeId}, function (err, data) {
                                                         if (!err) {
                                                             var user = data[0];
-                                                            chatInvitation.chatUser = _.pick(user, "_id", "name", "sex", "avatar", "tel");
+                                                            chatInvitation.chatUser = _.pick(user, _.without(self.schema.User.fields, "password", "createTime"));
                                                             chatInvitation.chatUser.chatId = chatInvitation.chatId;
                                                             chatInvitation.chatUser.active = 1;
                                                             chatInvitation.chatUser.updateTime = chatInvitation.updateTime;
@@ -492,7 +492,7 @@ ChatController.prototype.getChatUser = function (chatId, chatUserTime, succcess,
                     self.schema.User.find({_id: chatInvitation.inviteeId}, function (err, data) {
                         if (!err) {
                             var user = data[0];
-                            chatInvitation.chatUser = _.pick(user, "_id", "name", "sex", "avatar", "tel");
+                            chatInvitation.chatUser = _.pick(user, _.without(self.schema.User.fields, "password", "createTime"));
                             chatInvitation.chatUser.chatId = chatInvitation.chatId;
                             chatInvitation.chatUser.active = 1;
                             chatInvitation.chatUser.updateTime = chatInvitation.updateTime;
@@ -517,7 +517,7 @@ ChatController.prototype.getChatUser = function (chatId, chatUserTime, succcess,
 }
 
 /**
- * Get recent change to free conversation(not belonging to any chat).
+ * Get recent change to conversation.
  * Conversation Type: 1:text, 2:image, 3:video, 4:location, 5:voice, 6:file
  *
  * @param {string} conversationFilter The filter contains userId(sender or receiver's id),
@@ -529,17 +529,35 @@ ChatController.prototype.getConversation = function (conversationFilter, success
     var self = this;
 
     conversationFilter = (conversationFilter && JSON.parse(conversationFilter)) || {};
+    var sendFilter = {}, receiveFilter = {};
+
     if (conversationFilter.userId) {
         var userId = new self.db.Types.ObjectId(conversationFilter.userId);
-        conversationFilter.$or = [{
-            senderId: userId,
-            receiverId: userId
-        }];
+        sendFilter.senderId = userId;
+        receiveFilter.receiverId = userId;
         delete conversationFilter.userId;
+    }
+    if (conversationFilter.chatUserId) {
+        var chatUserId = new self.db.Types.ObjectId(conversationFilter.chatUserId);
+        sendFilter.receiverId = chatUserId;
+        receiveFilter.senderId = chatUserId;
+        delete conversationFilter.chatUserId;
+    }
+    if (_.isEmpty(sendFilter) && _.isEmpty(receiveFilter)) {
+        conversationFilter.$or = [
+            sendFilter,
+            receiveFilter
+        ];
+    } else if (_.isEmpty(sendFilter)) {
+        _.extend(conversationFilter, sendFilter);
+    } else if (_.isEmpty(receiveFilter)) {
+        _.extend(conversationFilter, receiveFilter);
+    }
+    if (conversationFilter.chatId) {
+        conversationFilter.chatId = new self.db.Types.ObjectId(conversationFilter.chatId);
     }
     if (conversationFilter.updateTime != null)
         conversationFilter.updateTime = {$gt: conversationFilter.updateTime};
-    conversationFilter.chatId = {$exists: false};
 
     (!self.isDBReady && fail(new Error('DB not initialized'))) || self.schema.Conversation.find(conversationFilter, function (err, data) {
         if (!err) {
@@ -570,77 +588,135 @@ ChatController.prototype.postInvitation = function (userId, inviteeIdList, succe
     inviteeIdList = (inviteeIdList && JSON.parse(inviteeIdList)) || {};
 
     inviteeIdList.forEach(function (inviteeId) {
-        inviteeId = new self.db.Types.ObjectId(inviteeId);
+        arr.push(function (next) {
+            inviteeId = new self.db.Types.ObjectId(inviteeId);
 
-        arr.push(
-            function (cb) {
-                async.waterfall(
-                    [
-                        function (next) {
-                            self.schema.Invitation.find({
-                                inviteeId: inviteeId,
-                                creatorId: userId
-                            }, function (err, data) {
-                                next(err, data && data.length && data[0]);
-                            });
-                        },
-                        function (invitation, next) {
-                            var expires = now.adjust(Date.DAY, self.chatConstants.recordTTL);
+            async.waterfall(
+                [
+                    function (callback) {
+                        async.parallel({
+                            userObj: function (cb) {
+                                self.schema.User.find({_id: inviteeId}, function (err, data) {
+                                    if (!err) {
+                                        if (data && data.length) {
+                                            cb(null, data[0]);
+                                            return;
+                                        } else {
+                                            err = self.__('Account Not Found');
+                                        }
+                                    }
 
-                            if (invitation) {
-                                _.extend(invitation, {
-                                    updateTime: now.getTime(),
-                                    route: self.chatConstants.chatRoute,
-                                    accepted: 0,
-                                    processed: 0,
-                                    expires: expires,
-                                    active: 1
+                                    cb(err);
+                                });
+                            },
+                            invitationObj: function (cb) {
+                                self.schema.Invitation.find({
+                                    inviteeId: inviteeId,
+                                    creatorId: userId
+                                }, function (err, data) {
+                                    cb(err, data && data.length && data[0]);
                                 });
 
-                                self.schema.Invitation.update(
-                                    {
-                                        _id: invitation._id
-                                    },
-                                    {
-                                        "$set": _.pick(invitation, ["updateTime", "route", "accepted", "processed", "expires", "active"])
-                                    }, function (err) {
-                                        next(err, invitation);
-                                    }
-                                );
-                            } else {
-                                self.schema.Invitation.create(
-                                    {
-                                        updateTime: now.getTime(),
-                                        createTime: now.getTime(),
-                                        creatorId: userId,
-                                        inviteeId: inviteeId,
-                                        route: self.chatConstants.chatRoute,
-                                        accepted: 0,
-                                        processed: 0,
-                                        expires: expires,
-                                        active: 1
-                                    }, function (err, data) {
-                                        next(err, data);
-                                    }
-                                );
                             }
-                        },
-                        function (invitation, next) {
-                            commons.sendInvitation(userId, inviteeId, function (err) {
-                                next(err, invitation);
+                        }, function (err, results) {
+                            if (!err) {
+                                callback(null, results.userObj, results.invitationObj);
+                            } else {
+                                callback(err);
+                            }
+                        });
+                    },
+                    function (userObj, invitationObj, callback) {
+                        var expires = now.adjust(Date.DAY, self.chatConstants.recordTTL);
+
+                        if (invitationObj) {
+                            _.extend(invitationObj, {
+                                updateTime: now.getTime(),
+                                route: self.chatConstants.chatRoute,
+                                accepted: 0,
+                                processed: 0,
+                                expires: expires,
+                                active: 1
+                            });
+
+                            self.schema.Invitation.update(
+                                {
+                                    _id: invitationObj._id
+                                },
+                                {
+                                    "$set": _.pick(invitationObj, ["updateTime", "route", "accepted", "processed", "expires", "active"])
+                                }, function (err) {
+                                    callback(err, userObj, invitationObj);
+                                }
+                            );
+                        } else {
+                            async.waterfall([
+                                function (cb) {
+                                    self.schema.User.find({_id: userId}, function (err, data) {
+                                        if (!err) {
+                                            if (data && data.length) {
+                                                cb(null, data[0]);
+                                                return;
+                                            } else {
+                                                err = self.__('Account Not Found');
+                                            }
+                                        }
+
+                                        cb(err);
+                                    });
+                                },
+                                function (creatorObj, cb) {
+                                    self.schema.Invitation.create(
+                                        {
+                                            updateTime: now.getTime(),
+                                            createTime: now.getTime(),
+                                            creatorId: userId,
+                                            creatorName: creatorObj.name,
+                                            inviteeId: inviteeId,
+                                            route: self.chatConstants.chatRoute,
+                                            accepted: 0,
+                                            processed: 0,
+                                            expires: expires,
+                                            active: 1
+                                        }, function (err, data) {
+                                            cb(err, data);
+                                        }
+                                    );
+                                }
+                            ], function (err, data) {
+                                callback(err, userObj, data);
                             });
                         }
-                    ],
-                    function (err, data) {
-                        cb(err, data);
                     }
-                );
-            }
-        );
+                ], function (err, userObj, invitationObj) {
+                    next(err, {userObj: userObj, invitationObj: invitationObj});
+                }
+            );
+        });
     });
 
     if (arr.length) {
-        (!self.isDBReady && fail(new Error('DB not initialized'))) || async.parallel(arr, function (err, results) {
+        (!self.isDBReady && fail(new Error('DB not initialized'))) || async.waterfall([
+            function (next) {
+                async.parallel(arr, function (err, results) {
+                    next(err, results);
+                });
+            },
+            function (results, next) {
+                var userArr = _.pluck(results, "userObj"), invitationArr = _.pluck(results, "invitationObj");
+                if (userArr.length) {
+                    var uids = commons.arrayPick(userArr, "_id", "loginChannel");
+                    uids = uids.map(function (item) {
+                        return {uid: item._id.toString(), loginChannel: item.loginChannel}
+                    });
+                    commons.sendInvitation(userId, uids, function (err) {
+                        next(err, invitationArr);
+                    });
+                } else {
+                    next(null, invitationArr);
+                }
+            }
+        ], function (err, results) {
             if (!err) {
                 success(commons.arrayPick(results, _.without(self.schema.Invitation.fields, "createTime")));
             } else {
@@ -857,7 +933,7 @@ ChatController.prototype.putChangeChatState = function (chatId, state, success, 
 
     (!self.isDBReady && fail(new Error('DB not initialized'))) || async.waterfall(arr, function (err) {
         if (!err) {
-            success();
+            success({updateTime: now.getTime()});
         } else {
             fail(err);
         }
@@ -950,7 +1026,7 @@ ChatController.prototype.putCloseChat = function (chatId, success, fail) {
             }
         ], function (err) {
             if (!err) {
-                success();
+                success({updateTime: now.getTime()});
             } else {
                 fail(err);
             }
@@ -1157,7 +1233,7 @@ ChatController.prototype.putAcceptChatInvitation = function (inviteeId, chatId, 
         }
     ], function (err) {
         if (!err) {
-            success();
+            success({updateTime: now.getTime()});
         } else {
             fail(err);
         }
@@ -1473,7 +1549,7 @@ ChatController.prototype.putAcceptTopicInvitation = function (inviteeId, topicId
         }
     ], function (err) {
         if (!err) {
-            success();
+            success({updateTime: now.getTime()});
         } else {
             fail(err);
         }
@@ -1576,7 +1652,7 @@ ChatController.prototype.putChangeTopicState = function (topicFilter, state, suc
         ],
         function (err) {
             if (!err) {
-                success();
+                success({updateTime: now.getTime()});
             } else {
                 fail(err);
             }
@@ -1642,7 +1718,7 @@ ChatController.prototype.putCloseTopic = function (topicId, success, fail) {
             }
         ], function (err) {
             if (!err) {
-                success();
+                success({updateTime: now.getTime()});
             } else {
                 fail(err);
             }

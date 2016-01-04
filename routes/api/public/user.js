@@ -3,6 +3,7 @@ var async = require('async');
 var path = require('path');
 var fs = require('fs');
 var mime = require('mime');
+var qr = require('qr-image');
 var _ = require('underscore');
 _.string = require('underscore.string');
 var commons = require('../../../commons');
@@ -66,6 +67,8 @@ UserController.prototype.postUser = function (request, userObj, success, fail) {
                 });
             },
             function (next) {
+                userObj.loginChannel = commons.findLoginChannel(userObj.loginName);
+
                 self.schema.User.create(
                     _.extend(userObj, {
                         updateTime: now.getTime(),
@@ -138,14 +141,14 @@ UserController.prototype.postUser = function (request, userObj, success, fail) {
                                 path.join(userContentPath, "video"),
                                 path.join(userContentPath, "file")
                             ].forEach(function (folder) {
-                                    arr.push(
-                                        function (pCallback) {
-                                            mkdirp(folder, 0755, function (err) {
-                                                pCallback(err);
-                                            });
-                                        }
-                                    );
-                                });
+                                arr.push(
+                                    function (pCallback) {
+                                        mkdirp(folder, 0755, function (err) {
+                                            pCallback(err);
+                                        });
+                                    }
+                                );
+                            });
 
                             async.parallel(
                                 arr, function (err) {
@@ -163,13 +166,59 @@ UserController.prototype.postUser = function (request, userObj, success, fail) {
                 self.fileController.postFile(request, userContentPath, function (result) {
                     if (result && result.length && path.basename(result[0]) !== "avatar.jpg") {
                         fs.rename(result[0], path.join(userContentPath, "avatar.jpg"), function (err) {
-                            next(err, userObj);
+                            next(err, userObj, userContentPath);
                         });
                     } else {
-                        next(null, userObj);
+                        next(null, userObj, userContentPath);
                     }
                 }, function (err) {
                     next(err);
+                });
+            },
+            function (userObj, userContentPath, next) {
+                async.parallel([
+                    function (cb) {
+                        var filePath = path.join(userContentPath, "qrcode.svg");
+
+                        try {
+                            var out = fs.createWriteStream(filePath),
+                                qr_svg = qr.image("Id:" + userObj._id.toString(), {type: 'svg'});
+
+                            out.on('finish', function () {
+                                cb(null);
+                            });
+
+                            out.on('error', function (err) {
+                                cb(err);
+                            });
+
+                            qr_svg.pipe(out);
+                        } catch (err2) {
+                            cb(err2);
+                        }
+                    },
+                    function (cb) {
+                        var filePath = path.join(userContentPath, "qrcode.png");
+
+                        try {
+                            var out = fs.createWriteStream(filePath),
+                                qr_png = qr.image("Id:" + userObj._id.toString(), {type: 'png'});
+
+                            out.on('finish', function () {
+                                cb(null);
+                            });
+
+                            out.on('error', function (err) {
+                                cb(err);
+                            });
+
+                            qr_png.pipe(out);
+                        } catch (err2) {
+                            cb(err2);
+                        }
+                    }
+                ], function (err) {
+                    next(err, userObj);
                 });
             }
         ], function (err, data) {

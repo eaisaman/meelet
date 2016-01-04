@@ -160,7 +160,7 @@ module.exports = function (grunt) {
                     clearRequireCache: false, // Optionally clear the require cache before running tests (defaults to false)
                     timeout: 30000
                 },
-                src: ['test/**/*.js']
+                src: [grunt.option('mochaFile') || 'test/**/*.js']
             }
         }
 //,

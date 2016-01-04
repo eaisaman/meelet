@@ -5,8 +5,6 @@ var fs = require('fs');
 var rimraf = require('rimraf');
 var _ = require('underscore');
 var commons = require('../../../commons');
-var chatCommons = require('../../../chatCommons');
-commons.mixin(commons, chatCommons);
 
 var UserController = function (fields) {
     var self = this;
@@ -75,6 +73,46 @@ UserController.prototype.getUser = function (userFilter, success, fail) {
             }
         });
 };
+
+/**
+ * @description
+ *
+ * Return file in user content if exists, or 500 status code if not.
+ *
+ * @param userId
+ * @param fileName
+ * @param success
+ * @param fail
+ */
+UserController.prototype.getUserContent = function (userId, fileName, success, fail) {
+    var self = this,
+        userContentPath = path.join(self.config.userFile.userContentPath, userId),
+        dir = path.join(userContentPath, fileName);
+
+    async.waterfall(
+        [
+            function (next) {
+                fs.exists(dir, function (exists) {
+                    if (exists) {
+                        next(null, dir);
+                    } else {
+                        next(self.__('File Not Exist', dir));
+                    }
+                });
+            },
+            function (dir, next) {
+                success(function (req, res) {
+                    res.setHeader("Content-type", mime.lookup(dir));
+                    res.download(dir, next);
+                });
+            }
+        ], function (err, result) {
+            if (err) {
+                fail(err, result);
+            }
+        }
+    );
+}
 
 /**
  * @description
@@ -227,7 +265,7 @@ UserController.prototype.getGroupUser = function (userId, userUpdateTime, succes
                     async.each(refreshUserList, function (userItem, cb) {
                         self.schema.User.find({_id: userItem._id}, function (err, data) {
                             if (data && data.length) {
-                                _.extend(userItem, _.pick(data[0], "updateTime", "forbidden", "name", "sex", "tel", "active"));
+                                _.extend(userItem, _.pick(data[0], _.without(self.schema.User.fields, "password", "createTime")));
                             }
 
                             cb(err);
@@ -459,7 +497,231 @@ UserController.prototype.putAvatar = function (userId, request, success, fail) {
         }
     ], function (err) {
         if (!err) {
-            success();
+            success({updateTime: now.getTime()});
+        } else {
+            fail(err);
+        }
+    });
+}
+
+/**
+ * @description
+ *
+ * Accept 'Become Friend' invitation from the invitation creator. Will update invitation record, send invitation accept
+ * message to creator, and add xref records for both creator and invitee if not exist.
+ *
+ * @param creatorId
+ * @param inviteeId
+ * @param success
+ * @param fail
+ */
+UserController.prototype.putAcceptInvitation = function (creatorId, inviteeId, success, fail) {
+    var self = this,
+        now = new Date();
+
+    creatorId = new self.db.Types.ObjectId(creatorId);
+    inviteeId = new self.db.Types.ObjectId(inviteeId);
+
+    (!self.isDBReady && fail(new Error('DB not initialized'))) || async.waterfall([
+        function (next) {
+            self.schema.Invitation.update({
+                creatorId: creatorId,
+                inviteeId: inviteeId,
+                active: 1
+            }, {accepted: 1, processed: 1, updateTime: now.getTime()}, {multi: true}, function (err) {
+                next(err);
+            });
+        },
+        function (next) {
+            commons.acceptInvitation(creatorId, inviteeId, next);
+        },
+        function (next) {
+            async.parallel([
+                function (callback) {
+                    async.waterfall([
+                        function (cb) {
+                            self.schema.User.find({_id: creatorId}, function (err, data) {
+                                if (!err) {
+                                    if (data && data.length) {
+                                        cb(null, data[0]);
+                                        return;
+                                    } else {
+                                        err = self.__('Account Not Found');
+                                    }
+                                }
+
+                                cb(err);
+                            });
+                        },
+                        function (userObj, cb) {
+                            self.schema.UserGroup.update({_id: userObj.friendGroupId}, {
+                                    updateTime: now.getTime()
+                                },
+                                function (err) {
+                                    cb(err, userObj);
+                                });
+                        },
+                        function (userObj, cb) {
+                            self.schema.UserGroupXref.update(
+                                {
+                                    groupId: userObj.friendGroupId,
+                                    userId: inviteeId
+                                },
+                                {
+                                    $set: {
+                                        groupUpdateTime: now.getTime(),
+                                        updateTime: now.getTime(),
+                                        createTime: now.getTime(),
+                                        userId: inviteeId,
+                                        groupId: userObj.friendGroupId,
+                                        groupType: 1,
+                                        active: 1
+                                    }
+                                },
+                                {upsert: true},
+                                function (err) {
+                                    cb(err);
+                                }
+                            );
+                        }
+                    ], function (err) {
+                        callback(err);
+                    });
+                },
+                function (callback) {
+                    async.waterfall([
+                        function (cb) {
+                            self.schema.User.find({_id: inviteeId}, function (err, data) {
+                                if (!err) {
+                                    if (data && data.length) {
+                                        cb(null, data[0]);
+                                        return;
+                                    } else {
+                                        err = self.__('Account Not Found');
+                                    }
+                                }
+
+                                cb(err);
+                            });
+                        },
+                        function (userObj, cb) {
+                            self.schema.UserGroup.update({_id: userObj.friendGroupId}, {
+                                    updateTime: now.getTime()
+                                },
+                                function (err) {
+                                    cb(err, userObj);
+                                });
+                        },
+                        function (userObj, cb) {
+                            self.schema.UserGroupXref.update(
+                                {
+                                    groupId: userObj.friendGroupId,
+                                    userId: creatorId
+                                },
+                                {
+                                    $set: {
+                                        groupUpdateTime: now.getTime(),
+                                        updateTime: now.getTime(),
+                                        createTime: now.getTime(),
+                                        userId: creatorId,
+                                        groupId: userObj.friendGroupId,
+                                        groupType: 1,
+                                        active: 1
+                                    }
+                                },
+                                {upsert: true},
+                                function (err) {
+                                    cb(err);
+                                }
+                            );
+                        }
+                    ], function (err) {
+                        callback(err);
+                    });
+                }
+            ], function (err) {
+                next(err);
+            });
+        }
+    ], function (err) {
+        if (!err) {
+            success({updateTime: now.getTime()});
+        } else {
+            fail(err);
+        }
+    });
+}
+
+/**
+ * @description
+ *
+ * Update user information, except for 'active' field.
+ *
+ * @param userFilter
+ * @param userObj
+ * @param success
+ * @param fail
+ */
+UserController.prototype.putUser = function (userFilter, userObj, success, fail) {
+    var self = this,
+        now = new Date();
+
+    userFilter = (userFilter && JSON.parse(userFilter)) || {};
+    userObj = (userObj && JSON.parse(userObj)) || {};
+    //putInactivateUser is defined for updating 'active' field
+    delete userObj.active;
+
+    if (_.isEmpty(userFilter)) {
+        fail(self.__('Empty Filter'));
+        return;
+    }
+    if (_.isEmpty(userObj)) {
+        fail(self.__('Empty User'));
+        return;
+    }
+    if (userFilter._id) {
+        userFilter._id = new self.db.Types.ObjectId(userFilter._id);
+    }
+    if (userFilter.updateTime && typeof userFilter.updateTime === "number") {
+        userFilter.updateTime = {$gt: userFilter.updateTime};
+    }
+    userFilter.active = 1;
+    userObj.updateTime = now.getTime();
+
+    (!self.isDBReady && fail(new Error('DB not initialized'))) || async.waterfall([
+        function (next) {
+            self.schema.User.find(userFilter, function (err, data) {
+                next(err, data);
+            });
+        },
+        function (userList, next) {
+            if (userList && userList.length) {
+                var userIdList = _.pluck(userList, "_id");
+
+                async.parallel([
+                    function (cb) {
+                        self.schema.UserGroupXref.update({
+                            userId: {"$in": userIdList},
+                            active: 1
+                        }, {updateTime: now.getTime()}, {multi: true}, function (err) {
+                            cb(err);
+                        });
+                    },
+                    function (cb) {
+                        self.schema.User.update(userFilter, userObj, {multi: true}, function (err) {
+                            cb(err);
+                        });
+                    }
+                ], function (err) {
+                    next(err);
+                });
+            } else {
+                next(null);
+            }
+        }
+    ], function (err) {
+        if (!err) {
+            success({updateTime: now.getTime()});
         } else {
             fail(err);
         }
@@ -629,7 +891,7 @@ UserController.prototype.putInactivateUser = function (userFilter, success, fail
         }
     ], function (err) {
         if (!err) {
-            success();
+            success({updateTime: now.getTime()});
         } else {
             fail(err);
         }
@@ -794,7 +1056,7 @@ UserController.prototype.putInactivateUserGroup = function (groupFilter, success
         }
     ], function (err) {
         if (!err) {
-            success();
+            success({updateTime: now.getTime()});
         } else {
             fail(err);
         }

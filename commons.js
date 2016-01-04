@@ -18,6 +18,7 @@ var ejs = require("ejs");
 var jsdom = require('jsdom');
 var ncp = require('ncp').ncp;
 var classes = require('./meeletClasses');
+var chatCommons = require('./chatCommons');
 
 var Commons = function () {
     var self = this;
@@ -33,13 +34,7 @@ var Commons = function () {
  * @param dest
  */
 Commons.prototype.mixin = function (src, dest) {
-    for (var prop in dest) {
-        if (!dest.hasOwnProperty(prop)) continue;
-        var func = dest[prop];
-        if (typeof func === "function") {
-            src[prop] = func;
-        }
-    }
+    src.constructor.prototype.__proto__ = dest;
 }
 
 /**
@@ -1654,5 +1649,7 @@ Commons.prototype.convertToHtml = function (projectType, projectPath, artifactLi
         );
     }
 };
+
+c.mixin(c, chatCommons);
 
 module.exports = c;

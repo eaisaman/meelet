@@ -64,8 +64,6 @@ describe('User', function () {
                 done();
             });
         });
-
-
     });
 
     it('Create user with attached avatar, his friend user group should be created as well.', function (done) {
@@ -89,7 +87,7 @@ describe('User', function () {
                 else {
                     var ret = JSON.parse(body);
                     if (ret.result === "OK") {
-                        ret.resultValue.should.have.enumerables(['_id', 'forbidden', 'loginName', 'name', 'sex', 'tel', 'friendGroupId']);
+                        ret.resultValue.should.have.enumerables(['_id', 'forbidden', 'loginName', 'name', 'loginChannel', 'sex', 'tel', 'friendGroupId']);
                         userObj._id = ret.resultValue._id;
                         done();
                     } else {

@@ -423,7 +423,7 @@ UserFileController.prototype.putConfigurableArtifact = function (projectId, widg
         configuration = (configuration && JSON.parse(configuration)) || {};
         commons.updateConfigurableArtifact(projectId, widgetId, artifactId, configuration, function (err, cssName) {
             if (!err) {
-                success({css: cssName});
+                success({css: cssName, updateTime: new Date().getTime()});
             } else {
                 fail(err);
             }
@@ -1572,14 +1572,15 @@ UserFileController.prototype.getProject = function (projectFilter, success, fail
  * @param fail
  */
 UserFileController.prototype.postProject = function (project, sketchWorks, success, fail) {
-    var self = this;
+    var self = this,
+        now = new Date();
 
     project = (project && JSON.parse(project)) || {};
     if (project.userId) {
         project.userId = new self.db.Types.ObjectId(project.userId);
     }
     if (!project.createTime) {
-        project.updateTime = project.createTime = new Date();
+        project.updateTime = project.createTime = now.getTime();
     }
     project.lock = false;
     project.lockUser = null;
@@ -1630,25 +1631,52 @@ UserFileController.prototype.postProject = function (project, sketchWorks, succe
             },
             function (data, next) {
                 var projectId = data._id.toString(),
-                    projectPath = path.join(self.config.userFile.sketchFolder, projectId),
-                    filePath = path.join(projectPath, "qrcode.svg");
+                    projectPath = path.join(self.config.userFile.sketchFolder, projectId);
 
-                try {
-                    var out = fs.createWriteStream(filePath),
-                        qr_svg = qr.image(projectId, {type: 'svg'});
+                async.parallel([
+                    function (cb) {
+                        var filePath = path.join(projectPath, "qrcode.svg");
 
-                    out.on('finish', function () {
-                        next(null, data);
-                    });
+                        try {
+                            var out = fs.createWriteStream(filePath),
+                                qr_svg = qr.image("Id:" + projectId, {type: 'svg'});
 
-                    out.on('error', function (err) {
-                        next(err);
-                    });
+                            out.on('finish', function () {
+                                cb(null);
+                            });
 
-                    qr_svg.pipe(out);
-                } catch (err2) {
-                    next(err2);
-                }
+                            out.on('error', function (err) {
+                                cb(err);
+                            });
+
+                            qr_svg.pipe(out);
+                        } catch (err2) {
+                            cb(err2);
+                        }
+                    },
+                    function (cb) {
+                        var filePath = path.join(projectPath, "qrcode.png");
+
+                        try {
+                            var out = fs.createWriteStream(filePath),
+                                qr_png = qr.image("Id:" + projectId, {type: 'png'});
+
+                            out.on('finish', function () {
+                                cb(null);
+                            });
+
+                            out.on('error', function (err) {
+                                cb(err);
+                            });
+
+                            qr_png.pipe(out);
+                        } catch (err2) {
+                            cb(err2);
+                        }
+                    }
+                ], function (err) {
+                    next(err, data);
+                });
             }
         ], function (err, data) {
             if (!err) {
@@ -1670,7 +1698,8 @@ UserFileController.prototype.postProject = function (project, sketchWorks, succe
  * @param fail
  */
 UserFileController.prototype.putProject = function (projectFilter, project, success, fail) {
-    var self = this;
+    var self = this,
+        now = new Date();
 
     projectFilter = (projectFilter && JSON.parse(projectFilter)) || {};
     if (projectFilter._id) {
@@ -1696,11 +1725,11 @@ UserFileController.prototype.putProject = function (projectFilter, project, succ
     if (project.lockUser) {
         project.lockUser = new self.db.Types.ObjectId(project.lockUser);
     }
-    project.updateTime = new Date();
+    project.updateTime = now.getTime();
 
     (!self.isDBReady && fail(new Error('DB not initialized'))) || self.schema.UserProject.findOneAndUpdate(projectFilter, {$set: _.omit(project, "_id")}, {multi: true}, function (err, data) {
         if (!err) {
-            success(data ? 1 : 0);
+            success({updateTime: now.getTime()});
         } else {
             fail(err);
         }

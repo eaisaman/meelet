@@ -159,7 +159,7 @@ define(
 
                 initMaster().then(
                     function () {
-                        urlService.project();
+                        urlService.chat();
                     }
                 );
             }

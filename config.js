@@ -15,6 +15,7 @@ var Configuration = function () {
     config = new Configuration();
 
 Configuration.prototype.ApplicationDBConnectedEvent = "applicationDBConnected";
+Configuration.prototype.ChatServerConnectedEvent = "chatServerConnected";
 Configuration.prototype.ResourceReadyEvent = "resourceReady";
 
 Configuration.prototype.configure = function (app) {
@@ -105,6 +106,15 @@ Configuration.prototype.postConfigure = function () {
         });
     }
 
+    if (self.settings["applicationChatServer"]) {
+        self.on(self.ResourceReadyEvent, function (resource) {
+            //Chat server connection established
+            if (resource.name == self.settings["applicationChatServer"]) {
+                self.em.emit(self.ChatServerConnectedEvent);
+            }
+        });
+    }
+
     if (self.settings["enumType"]) {
         self.enumType = require(self.settings["enumType"]);
     }
@@ -163,14 +173,14 @@ Configuration.prototype.postConfigure = function () {
                 f = moduleInfo["function"],
                 params = moduleInfo["parameters"] || [];
 
-            var mod = require(m),
-                func = mod;
+            var func = require(m), owner = null;
 
             if (f) {
-                func = mod[f];
+                owner = func;
+                func = owner[f];
             }
 
-            func.apply(null, params.concat(
+            func.apply(owner, params.concat(
                 [moduleInfo.resource, function (err, resource) {
                     if (err) {
                         self.logger.error(err);
