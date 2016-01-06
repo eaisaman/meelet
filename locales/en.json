@@ -13,5 +13,6 @@
   "Cannot Find Project": "Cannot find project with id %s",
   "Cannot Find Repo": "Cannot find repo library with id %s",
   "Empty Project Id": "Empty project id",
-  "Provide Creator": "Must provide creator info."
+  "Provide Creator": "Must provide creator info.",
+  "Receiver Empty": "Must provide receiver for conversation to send to."
 }

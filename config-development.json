@@ -147,6 +147,17 @@
           "auto_reconnect": true
         }
       ]
+    },
+    {
+      "resource": "chatServer",
+      "module": "./commons",
+      "function": "initServer",
+      "parameters": [
+        {
+          "host": "localhost",
+          "port": 3010
+        }
+      ]
     }
   ],
   "settings": {
@@ -154,6 +165,7 @@
     "view engine": "jade",
     "salt": "d21xMzQ6Kg==",
     "applicationDb": "mongooseDb",
+    "applicationChatServer": "chatServer",
     "download": {
       "folder": "download"
     },
@@ -172,6 +184,8 @@
     "skeletonLibLoadTimeout": 30,
     "chatConstants": {
       "chatRoute": "SIRIUS_CHAT_ROUTE",
+      "loginChannel": "SIRIUS_LOGIN_CHANNEL",
+      "loginChannelBuckets": 20,
       "expectEndInterval": 7,
       "recordTTL": 10,
       "chatCreateState": 0,
@@ -182,7 +196,13 @@
       "topicOpenState": 11,
       "topicPauseState": 12,
       "topicCloseState": 13,
-      "topicDestroyState": 14
+      "topicDestroyState": 14,
+      "TextConversation": 1,
+      "ImageConversation": 2,
+      "VideoConversation": 3,
+      "LocationConversation": 4,
+      "VoiceConversation": 5,
+      "FileConversation": 6
     },
     "meeletFile": "meelet.json",
     "meeletMetaFile": "meta.json",

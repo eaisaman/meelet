@@ -100,6 +100,24 @@ Commons.prototype.spawn = function (cmd, args, opts, done) {
     return child;
 };
 
+Commons.prototype.getFormString = function (value) {
+    if (typeof value === 'string') {
+        return value;
+    } else if (toString.call(value) === '[object Array]') {
+        return value[0] || "";
+    }
+    return "";
+}
+
+Commons.prototype.getFormInt = function (value) {
+    if (typeof value === 'number') {
+        return value;
+    } else if (toString.call(value) === '[object Array]') {
+        return parseInt(value[0]);
+    }
+    return NaN;
+}
+
 /**
  * Get scale type based on given size value. Scale types include tiny, small, medium, large scale size(16, 32, 48, 128),
  * Return medium as default.
@@ -122,7 +140,7 @@ Commons.prototype.getScale = function (size) {
 
 /**
  * @description
- * 
+ *
  * Convert date to timestamp for object array.
  *
  * @param objects
@@ -131,7 +149,7 @@ Commons.prototype.arrayConvertDate = function (objects) {
     var keys = Array.prototype.concat.apply(Array.prototype, Array.prototype.slice.call(arguments, 1));
 
     objects && objects.forEach(function (obj) {
-        for(var key in keys) {
+        for (var key in keys) {
             if (obj[key]) obj[key] = obj[key].getTime();
         }
     });
@@ -141,7 +159,7 @@ Commons.prototype.arrayConvertDate = function (objects) {
 
 /**
  * @description
- * 
+ *
  * Convert date to timestamp for object.
  *
  * @param objects
@@ -149,7 +167,7 @@ Commons.prototype.arrayConvertDate = function (objects) {
 Commons.prototype.convertDate = function (obj) {
     var keys = Array.prototype.concat.apply(Array.prototype, Array.prototype.slice.call(arguments, 1));
 
-    for(var key in keys) {
+    for (var key in keys) {
         if (obj[key]) obj[key] = obj[key].getTime();
     }
 
@@ -503,10 +521,10 @@ Commons.prototype.instantiateMongoDb = function (options, resourceName, callback
     serverOptions.ssl = serverOptions.ssl || options.ssl || defaultOptions.ssl;
 
     var db = new mongo.Db(options.db,
-            new mongo.Server(options.host || defaultOptions.host,
-                options.port || defaultOptions.port,
-                serverOptions),
-            {w: options.w || defaultOptions.w}),
+        new mongo.Server(options.host || defaultOptions.host,
+            options.port || defaultOptions.port,
+            serverOptions),
+        {w: options.w || defaultOptions.w}),
         resource = {name: resourceName, instance: db, schema: {}};
 
     db.open(function (err) {

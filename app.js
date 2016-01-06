@@ -1,3 +1,6 @@
+require('useful-date');
+require( 'useful-date/locale/en-US.js' );
+
 var express = require('express');
 var app = express();
 

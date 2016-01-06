@@ -110,7 +110,7 @@ Configuration.prototype.postConfigure = function () {
         self.on(self.ResourceReadyEvent, function (resource) {
             //Chat server connection established
             if (resource.name == self.settings["applicationChatServer"]) {
-                self.em.emit(self.ChatServerConnectedEvent);
+                self.em.emit(self.ChatServerConnectedEvent, resource);
             }
         });
     }

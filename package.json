@@ -35,6 +35,7 @@
     "multiparty": "~3.2.4",
     "nconf": "~0.6.9",
     "ncp": "~2.0.0",
+    "node-uuid": "^1.4.7",
     "oauth2orize": "~1.0.1",
     "passport": "~0.2.0",
     "passport-http": "~0.2.2",

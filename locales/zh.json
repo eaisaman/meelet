@@ -13,5 +13,6 @@
   "Cannot Find Project": "项目(%s)不存在.",
   "Cannot Find Repo": "组件库(%s)不存在.",
   "Empty Project Id": "项目id必须赋值.",
-  "Provide Creator": "必须提供创建者信息."
+  "Provide Creator": "必须提供创建者信息.",
+  "Receiver Empty": "必须提供消息接受者."
 }

@@ -98,6 +98,7 @@
     "endTime": "number",
     "chatId": "ObjectId",
     "creatorId": "ObjectId",
+    "name": "string",
     "route": "string",
     "state": "number",
     "payload": "object",
@@ -115,7 +116,6 @@
     "type": "number",
     "message": "string",
     "payload": "object",
-    "delivered": "number",
     "active": "number"
   },
   "Invitation": {

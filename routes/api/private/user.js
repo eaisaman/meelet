@@ -1,4 +1,3 @@
-require('useful-date');
 var async = require('async');
 var path = require('path');
 var fs = require('fs');
@@ -20,6 +19,7 @@ var UserController = function (fields) {
 
     self.config = require('../../../config');
     self.__ = self.config.i18n.__;
+    self.chatConstants = self.config.settings.chatConstants;
     self.config.on(self.config.ApplicationDBConnectedEvent, function (resource) {
         self.db = resource.instance;
         self.schema = resource.schema;
@@ -383,7 +383,7 @@ UserController.prototype.postUserGroup = function (groupObj, uids, success, fail
     var self = this,
         now = new Date();
 
-    groupObj = (groupObj && JSON.parse(groupObj)) || {};
+    groupObj = (groupObj && JSON.parse(commons.getFormString(groupObj))) || {};
 
     if (_.isEmpty(groupObj)) {
         fail(self.__('Empty UserGroup'));
@@ -393,7 +393,7 @@ UserController.prototype.postUserGroup = function (groupObj, uids, success, fail
         fail(self.__('Provide Creator'));
         return;
     }
-    uids = JSON.parse(uids) || [];
+    uids = uids && JSON.parse(uids) || [];
     if (uids.every(function (userId) {
             return userId !== groupObj.creatorId;
         })) {
@@ -461,47 +461,136 @@ UserController.prototype.postUserGroup = function (groupObj, uids, success, fail
     });
 }
 
-UserController.prototype.putAvatar = function (userId, request, success, fail) {
+/**
+ * @description
+ *
+ * Send friend invitation to invitees. Invitation will be persisted first and sent as message to invitees' connected
+ * client app or browser. If invitation already sent and marked inactive or rejected previously, update the record.
+ *
+ * @param userId{string}
+ * @param inviteeList{array} Array of object containing _id&loginChannel
+ * @param route{string}
+ * @param success{function}
+ * @param fail{function}
+ */
+UserController.prototype.postInvitation = function (userId, inviteeList, route, success, fail) {
     var self = this,
-        now = new Date();
+        now = new Date(),
+        arr = [];
 
-    if (toString.call(userId) === '[object Array]') {
-        userId = userId[0];
-    }
+    userId = new self.db.Types.ObjectId(commons.getFormString(userId));
+    inviteeList = (inviteeList && JSON.parse(inviteeList)) || [];
+    route = commons.getFormString(route) || self.chatConstants.chatRoute;
 
-    (!self.isDBReady && fail(new Error('DB not initialized'))) || async.parallel([
-        function (next) {
-            var userContentPath = path.join(self.config.userFile.userContentPath, userId);
+    inviteeList.forEach(function (invitee) {
+        var inviteeId = new self.db.Types.ObjectId(invitee._id);
 
-            self.fileController.postFile(request, userContentPath, function (result) {
-                if (result && result.length && path.basename(result[0]) !== "avatar.jpg") {
-                    fs.rename(result[0], path.join(userContentPath, "avatar.jpg"), function (err) {
-                        next(err);
-                    });
-                } else {
-                    next(null);
+        arr.push(function (next) {
+            async.waterfall(
+                [
+                    function (callback) {
+                        self.schema.Invitation.find({
+                            inviteeId: inviteeId,
+                            creatorId: userId
+                        }, function (err, data) {
+                            callback(err, data && data.length && data[0]);
+                        });
+                    },
+                    function (invitationObj, callback) {
+                        var expires = now.adjust(Date.DAY, self.chatConstants.recordTTL);
+
+                        if (invitationObj) {
+                            _.extend(invitationObj, {
+                                updateTime: now.getTime(),
+                                route: self.chatConstants.chatRoute,
+                                accepted: 0,
+                                processed: 0,
+                                expires: expires,
+                                active: 1
+                            });
+
+                            self.schema.Invitation.update(
+                                {
+                                    _id: invitationObj._id
+                                },
+                                {
+                                    "$set": _.pick(invitationObj, ["updateTime", "route", "accepted", "processed", "expires", "active"])
+                                }, function (err) {
+                                    callback(err, invitationObj);
+                                }
+                            );
+                        } else {
+                            async.waterfall([
+                                function (cb) {
+                                    self.schema.User.find({_id: userId}, function (err, data) {
+                                        if (!err) {
+                                            if (data && data.length) {
+                                                cb(null, data[0]);
+                                                return;
+                                            } else {
+                                                err = self.__('Account Not Found');
+                                            }
+                                        }
+
+                                        cb(err);
+                                    });
+                                },
+                                function (creatorObj, cb) {
+                                    self.schema.Invitation.create(
+                                        {
+                                            updateTime: now.getTime(),
+                                            createTime: now.getTime(),
+                                            creatorId: userId,
+                                            creatorName: creatorObj.name,
+                                            inviteeId: inviteeId,
+                                            route: self.chatConstants.chatRoute,
+                                            accepted: 0,
+                                            processed: 0,
+                                            expires: expires,
+                                            active: 1
+                                        }, function (err, data) {
+                                            cb(err, data);
+                                        }
+                                    );
+                                }
+                            ], function (err, data) {
+                                callback(err, data);
+                            });
+                        }
+                    }
+                ], function (err, invitationObj) {
+                    next(err, invitationObj);
                 }
-            }, function (err) {
-                next(err);
-            });
-        },
-        function (next) {
-            self.schema.User.update({_id: new self.db.Types.ObjectId(userId)}, {"$set": {updateTime: now.getTime()}}, function (err) {
-                next(err);
-            });
-        },
-        function (next) {
-            self.schema.UserGroupXref.update({userId: new self.db.Types.ObjectId(userId)}, {"$set": {updateTime: now.getTime()}}, {multi: true}, function (err) {
-                next(err);
-            });
-        }
-    ], function (err) {
-        if (!err) {
-            success({updateTime: now.getTime()});
-        } else {
-            fail(err);
-        }
+            );
+        });
     });
+
+    if (arr.length) {
+        (!self.isDBReady && fail(new Error('DB not initialized'))) || async.waterfall([
+            function (next) {
+                async.parallel(arr, function (err, results) {
+                    next(err, results);
+                });
+            },
+            function (invitationArr, next) {
+                var uids = inviteeList.map(function (invitee) {
+                        return {uid: invitee._id, loginChannel: invitee.loginChannel}
+                    });
+
+                commons.sendInvitation(userId.toString(), uids, route, function (err) {
+                    next(err, invitationArr);
+                });
+            }
+        ], function (err, results) {
+            if (!err) {
+                success(commons.arrayPick(results, _.without(self.schema.Invitation.fields, "createTime")));
+            } else {
+                fail(err);
+            }
+        });
+    } else {
+        success();
+    }
 }
 
 /**
@@ -510,61 +599,70 @@ UserController.prototype.putAvatar = function (userId, request, success, fail) {
  * Accept 'Become Friend' invitation from the invitation creator. Will update invitation record, send invitation accept
  * message to creator, and add xref records for both creator and invitee if not exist.
  *
- * @param creatorId
- * @param inviteeId
- * @param success
- * @param fail
+ * @param creatorId{string}
+ * @param inviteeId{string}
+ * @param route{string}
+ * @param success{function}
+ * @param fail{function}
  */
-UserController.prototype.putAcceptInvitation = function (creatorId, inviteeId, success, fail) {
+UserController.prototype.putAcceptInvitation = function (creatorId, inviteeId, route, success, fail) {
     var self = this,
         now = new Date();
 
-    creatorId = new self.db.Types.ObjectId(creatorId);
-    inviteeId = new self.db.Types.ObjectId(inviteeId);
+    creatorId = new self.db.Types.ObjectId(commons.getFormString(creatorId));
+    inviteeId = new self.db.Types.ObjectId(commons.getFormString(inviteeId));
+    route = commons.getFormString(route) || self.chatConstants.chatRoute;
 
     (!self.isDBReady && fail(new Error('DB not initialized'))) || async.waterfall([
         function (next) {
+            self.schema.User.find({_id: creatorId}, function (err, data) {
+                if (!err) {
+                    if (data && data.length) {
+                        next(null, data[0]);
+                        return;
+                    } else {
+                        err = self.__('Account Not Found');
+                    }
+                }
+
+                next(err);
+            });
+        },
+        function (creatorObj, next) {
             self.schema.Invitation.update({
                 creatorId: creatorId,
                 inviteeId: inviteeId,
                 active: 1
             }, {accepted: 1, processed: 1, updateTime: now.getTime()}, {multi: true}, function (err) {
-                next(err);
+                next(err, creatorObj);
             });
         },
-        function (next) {
-            commons.acceptInvitation(creatorId, inviteeId, next);
+        function (creatorObj, next) {
+            commons.acceptInvitation(creatorId.toString(), creatorObj.loginChannel, inviteeId.toString(), route, function (err) {
+                //Although fail to send accept signal on socket, new friend info can still be fetched by db query
+                if (err) {
+                    self.config.logger.error(err);
+                }
+
+                next(null, creatorObj);
+            });
         },
-        function (next) {
+        function (creatorObj, next) {
             async.parallel([
                 function (callback) {
                     async.waterfall([
                         function (cb) {
-                            self.schema.User.find({_id: creatorId}, function (err, data) {
-                                if (!err) {
-                                    if (data && data.length) {
-                                        cb(null, data[0]);
-                                        return;
-                                    } else {
-                                        err = self.__('Account Not Found');
-                                    }
-                                }
-
-                                cb(err);
-                            });
-                        },
-                        function (userObj, cb) {
-                            self.schema.UserGroup.update({_id: userObj.friendGroupId}, {
+                            self.schema.UserGroup.update({_id: creatorObj.friendGroupId}, {
                                     updateTime: now.getTime()
                                 },
                                 function (err) {
-                                    cb(err, userObj);
+                                    cb(err);
                                 });
                         },
-                        function (userObj, cb) {
+                        function (cb) {
                             self.schema.UserGroupXref.update(
                                 {
-                                    groupId: userObj.friendGroupId,
+                                    groupId: creatorObj.friendGroupId,
                                     userId: inviteeId
                                 },
                                 {
@@ -573,7 +671,7 @@ UserController.prototype.putAcceptInvitation = function (creatorId, inviteeId, s
                                         updateTime: now.getTime(),
                                         createTime: now.getTime(),
                                         userId: inviteeId,
-                                        groupId: userObj.friendGroupId,
+                                        groupId: creatorObj.friendGroupId,
                                         groupType: 1,
                                         active: 1
                                     }
@@ -640,6 +738,47 @@ UserController.prototype.putAcceptInvitation = function (creatorId, inviteeId, s
                     });
                 }
             ], function (err) {
+                next(err);
+            });
+        }
+    ], function (err) {
+        if (!err) {
+            success({updateTime: now.getTime()});
+        } else {
+            fail(err);
+        }
+    });
+}
+
+UserController.prototype.putAvatar = function (userId, request, success, fail) {
+    var self = this,
+        now = new Date();
+
+    userId = commons.getFormString(userId);
+
+    (!self.isDBReady && fail(new Error('DB not initialized'))) || async.parallel([
+        function (next) {
+            var userContentPath = path.join(self.config.userFile.userContentPath, userId);
+
+            self.fileController.postFile(request, userContentPath, function (result) {
+                if (result && result.length && path.basename(result[0]) !== "avatar.jpg") {
+                    fs.rename(result[0], path.join(userContentPath, "avatar.jpg"), function (err) {
+                        next(err);
+                    });
+                } else {
+                    next(null);
+                }
+            }, function (err) {
+                next(err);
+            });
+        },
+        function (next) {
+            self.schema.User.update({_id: new self.db.Types.ObjectId(userId)}, {"$set": {updateTime: now.getTime()}}, function (err) {
+                next(err);
+            });
+        },
+        function (next) {
+            self.schema.UserGroupXref.update({userId: new self.db.Types.ObjectId(userId)}, {"$set": {updateTime: now.getTime()}}, {multi: true}, function (err) {
                 next(err);
             });
         }
@@ -743,7 +882,7 @@ UserController.prototype.putInactivateUser = function (userFilter, success, fail
     var self = this,
         now = new Date();
 
-    userFilter = (userFilter && JSON.parse(userFilter)) || {};
+    userFilter = (userFilter && JSON.parse(commons.getFormString(userFilter))) || {};
     if (_.isEmpty(userFilter)) {
         fail(self.__('Empty Filter'));
         return;
@@ -910,7 +1049,7 @@ UserController.prototype.putInactivateUser = function (userFilter, success, fail
 UserController.prototype.deleteUser = function (userFilter, success, fail) {
     var self = this;
 
-    userFilter = (userFilter && JSON.parse(userFilter)) || {};
+    userFilter = (userFilter && JSON.parse(commons.getFormString(userFilter))) || {};
     if (_.isEmpty(userFilter)) {
         fail(self.__('Empty Filter'));
         return;
@@ -934,21 +1073,6 @@ UserController.prototype.deleteUser = function (userFilter, success, fail) {
                 async.each(userList, function (userObj, callback) {
                     async.waterfall([
                         function (cb) {
-                            self.schema.UserGroupXref.remove({groupId: userObj.friendGroupId}, function (err) {
-                                cb(err)
-                            });
-                        },
-                        function (cb) {
-                            self.schema.UserGroup.remove({_id: userObj.friendGroupId}, function (err) {
-                                cb(err)
-                            });
-                        },
-                        function (cb) {
-                            self.schema.User.remove({_id: userObj._id}, function (err) {
-                                cb(err)
-                            });
-                        },
-                        function (cb) {
                             var userContentPath = path.join(self.config.userFile.userContentPath, userObj._id.toString());
 
                             rimraf(userContentPath, function (err) {
@@ -965,6 +1089,21 @@ UserController.prototype.deleteUser = function (userFilter, success, fail) {
                                 } else {
                                     cb(null);
                                 }
+                            });
+                        },
+                        function (cb) {
+                            self.schema.UserGroupXref.remove({groupId: userObj.friendGroupId}, function (err) {
+                                cb(err)
+                            });
+                        },
+                        function (cb) {
+                            self.schema.UserGroup.remove({_id: userObj.friendGroupId}, function (err) {
+                                cb(err)
+                            });
+                        },
+                        function (cb) {
+                            self.schema.User.remove({_id: userObj._id}, function (err) {
+                                cb(err)
                             });
                         }
                     ], function (err) {
@@ -1001,7 +1140,7 @@ UserController.prototype.putInactivateUserGroup = function (groupFilter, success
     var self = this,
         now = new Date();
 
-    groupFilter = (groupFilter && JSON.parse(groupFilter)) || {};
+    groupFilter = (groupFilter && JSON.parse(commons.getFormString(groupFilter))) || {};
     if (_.isEmpty(groupFilter)) {
         fail(self.__('Empty Filter'));
         return;
@@ -1075,7 +1214,7 @@ UserController.prototype.putInactivateUserGroup = function (groupFilter, success
 UserController.prototype.deleteUserGroup = function (groupFilter, success, fail) {
     var self = this;
 
-    groupFilter = (groupFilter && JSON.parse(groupFilter)) || {};
+    groupFilter = (groupFilter && JSON.parse(commons.getFormString(groupFilter))) || {};
     if (_.isEmpty(groupFilter)) {
         fail(self.__('Empty Filter'));
         return;
@@ -1128,18 +1267,6 @@ UserController.prototype.deleteUserGroup = function (groupFilter, success, fail)
             fail(err);
         }
     });
-}
-
-UserController.prototype.postConfirmAddFriends = function (userId, friendIdList, success, fail) {
-}
-
-UserController.prototype.postRequestJoinGroup = function (userId, groupId, success, fail) {
-}
-
-UserController.prototype.getDiscussGroups = function (userId, success, fail) {
-}
-
-UserController.prototype.postDiscussGroup = function (userId, groupName, memberIdList, memberGroupIdList, success, fail) {
 }
 
 UserController.prototype.getFavorites = function (userId, success, fail) {
