@@ -10,6 +10,7 @@ var ANGULAR_LIB_PATH = "javascripts/angular/1.4.5/",
     UNDERSCORE_LIB_PATH = "javascripts/underscore/1.6.0/",
     MODERNIZR_LIB_PATH = "javascripts/modernizr/",
     STRING_LIB_PATH = "javascripts/String/",
+    BOOTSTRAP_LIB_PATH = "javascripts/bootstrap/3.2.0/",
     RAPHAEL_LIB_PATH = "javascripts/raphael/2.1.2/",//Depended by flowchart, sequence-diagram
     FLOWCHART_LIB_PATH = "javascripts/flowchart/1.4.0/", //Depended by editormd
     JQUERY_FLOWCHART_LIB_PATH = "javascripts/jquery.flowchart/1.0.0/", //Depended by editormd
@@ -46,6 +47,7 @@ requirejs.config({
         "underscore-lib": UNDERSCORE_LIB_PATH + "main",
         "modernizr-lib": MODERNIZR_LIB_PATH + "main",
         "string-lib": STRING_LIB_PATH + "main",
+        "bootstrap-lib": BOOTSTRAP_LIB_PATH + "main",
         "raphael-lib": RAPHAEL_LIB_PATH + "main",
         "flowchart-lib": FLOWCHART_LIB_PATH + "main",
         "jquery-flowchart-lib": JQUERY_FLOWCHART_LIB_PATH + "main",
@@ -71,14 +73,14 @@ requirejs.config({
     waitSeconds: 0
 });
 
-requirejs(["jquery-lib", "jquery-plugins-lib", "hammer-lib", "jquery-ui-lib", "jquery-ui-plugins-lib", "angular-lib", "angular-modules-lib", "underscore-lib", "modernizr-lib", "string-lib", "editormd-lib", "snap-svg-lib", "velocity-lib", "wavesurfer-lib", "fabric-lib", "pomelo-lib"], function () {
+requirejs(["jquery-lib", "jquery-plugins-lib", "hammer-lib", "jquery-ui-lib", "jquery-ui-plugins-lib", "angular-lib", "angular-modules-lib", "underscore-lib", "modernizr-lib", "string-lib", "bootstrap-lib", "editormd-lib", "snap-svg-lib", "velocity-lib", "wavesurfer-lib", "fabric-lib", "pomelo-lib"], function () {
     if (isBrowser) {
         window.appModule = angular.module(APP_MODULE_NAME, APP_MODULE_DEPS);
         window.appModule.value("angularEventTypes", {
             boundPropertiesEvent: "boundPropertiesEvent",
             beforeWidgetCreationEvent: "beforeWidgetCreationEvent",
             beforeBookWidgetCreationEvent: "beforeBookWidgetCreationEvent",
-            beforeVideoWidgetCreationEvent: "beforeVideokWidgetCreationEvent",
+            beforeVideoWidgetCreationEvent: "beforeVideoWidgetCreationEvent",
             resourceEditEvent: "resourceEditEvent",
             resourceEditEndEvent: "resourceEditEndEvent",
             switchProjectEvent: "switchProjectEvent",
@@ -111,19 +113,26 @@ requirejs(["jquery-lib", "jquery-plugins-lib", "hammer-lib", "jquery-ui-lib", "j
                 loadExternalSuccessClass: "loadExternalSuccess",
                 loadExternalFailClass: "loadExternalFailClass"
             },
-            pomeloSignal : {
-                inviteSignal: 1001,
-                connectSignal: 1002,
-                disconnectSignal: 1003,
-                pauseSignal: 1004,
-                resumeSignal: 1005,
-                messageSignal: 1006,
-                topicInviteSignal: 2001,
-                topicPauseSignal: 2002,
-                topicResumeSignal: 2003,
-                topicMessageSignal: 2004,
-                topicCloseSignal: 2005,
-                topicDisconnectSignal: 2006
+            pomeloSignal: {
+                'inviteSignal': 901,
+                'messageSignal': 902,
+                'acceptSignal': 903,
+
+                'chatInviteSignal': 1001,
+                'chatConnectSignal': 1002,
+                'chatDisconnectSignal': 1003,
+                'chatPauseSignal': 1004,
+                'chatResumeSignal': 1005,
+                'chatMessageSignal': 1006,
+                'chatAcceptSignal': 1007,
+                'chatCloseSignal': 1008,
+
+                'topicInviteSignal': 2001,
+                'topicPauseSignal': 2002,
+                'topicResumeSignal': 2003,
+                'topicMessageSignal': 2004,
+                'topicCloseSignal': 2005,
+                'topicDisconnectSignal': 2006
             },
             pomeloMemberCategory: {
                 creatorCategory: 1,
@@ -133,13 +142,24 @@ requirejs(["jquery-lib", "jquery-plugins-lib", "hammer-lib", "jquery-ui-lib", "j
                 userMemberType: 1,
                 topicMemberType: 2
             },
+            pomeloConversationType: {
+                textType: 1,
+                imageType: 2,
+                videoType: 3,
+                locationType: 4,
+                voiceType: 5,
+                fileType: 6
+            },
             pomeloState: {
                 chatOpenState: 1,
                 chatPauseState: 2,
-                chatDestroyState: 2,
+                chatCloseState: 3,
+                chatDestroyState: 4,
+
                 topicOpenState: 11,
                 topicPauseState: 12,
-                topicDestroyState: 13
+                topicCloseState: 13,
+                topicDestroyState: 14
             },
             pomeloRoute: {
                 defaultChatRoute: 'SIRIUS_CHAT_ROUTE'

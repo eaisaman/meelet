@@ -4,8 +4,6 @@ define(
         return function (appModule, extension) {
 
             function RootController($scope, $rootScope, $q, $timeout, angularEventTypes, angularConstants, appService, serviceRegistry, urlService, utilService) {
-                //For development convenience, we do fake login or restore user info if already authenticated.
-
                 extension && extension.attach && extension.attach($scope, {
                     "$timeout": $timeout,
                     "$q": $q,
@@ -49,13 +47,20 @@ define(
                                 return utilService.getRejectDefer(err);
                             }
                         ),
+                        //For development convenience, we do fake login or restore user info if already authenticated.
                         appService.restoreUserFromStorage().then(
                             function () {
                                 var arr = [];
                                 if (!$rootScope.loginUser._id) {
                                     arr.push(
                                         function () {
-                                            return appService.doLogin("wangxinyun28", "*").then(
+                                            return appService.createUser({
+                                                plainPassword: "*",
+                                                loginName: "13341692882",
+                                                name: "王强",
+                                                sex: "M",
+                                                tel: "13341692882"
+                                            }).then(
                                                 function (userObj) {
                                                     userObj && _.extend($rootScope.loginUser, userObj);
 
@@ -70,7 +75,7 @@ define(
                                 }
 
                                 arr.push(function () {
-                                    return appService.getUserDetail({"loginName": "wangxinyun28"}).then(
+                                    return appService.getUserDetail({"loginName": $rootScope.loginUser.loginName}).then(
                                         function (result) {
                                             result && result.data.result == "OK" && _.extend($rootScope.userDetail, result.data.resultValue[0]);
 

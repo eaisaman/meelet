@@ -6,27 +6,143 @@
     float: left;
     width: 100%;
     height: 100%;
-    color: $color;
 
-    @include display-flex;
-    @include flex-direction(column);
-    @include justify-content(center);
-    @include align-items(center);
+    .contactPanel {
+        position: relative;
+        float: left;
+        height: 100%;
 
-    .chatTopBar {
-        width: 100%;
-        height: 4em;
+        @include background(linear-gradient(left, (#555 0%, rgba(#555, $activeDarkenPercent) 50%, #555 100%)));
 
-        > div {
+        .userHeader {
             position: relative;
             float: left;
+            width: 100%;
+            height: 3em;
+            line-height: 3;
+
+            @include display-flex;
+            @include flex-direction(row);
+            @include justify-content(center);
+            @include align-items(center);
+
+            .contactAvatar {
+                position: relative;
+                float: left;
+                width: 3em;
+                height: 3em;
+
+                &:before {
+                    position: absolute;
+                    width: 1em;
+                    height: 1em;
+                    left: calc(50% - 0.5em);
+                    top: calc(50% - 0.5em);
+                    color: white;
+                }
+
+                img {
+                    width: calc(100% - 10px);
+                    height: calc(100% - 10px);
+                    margin: 5px;
+                }
+            }
+
+            .userName {
+                @include flex(1);
+                color: white;
+            }
+
+            #chatUserDropdown {
+                position: relative;
+                float: right;
+                width: 3em;
+                height: 3em;
+
+                #chatUserMenu {
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    cursor: pointer;
+
+                    &:after {
+                        position: absolute;
+                        width: 1em;
+                        height: 1em;
+                        left: calc(50% - 0.5em);
+                        top: calc(50% - 0.5em);
+                        color: white;
+                    }
+                }
+            }
+        }
+
+        .contactDetail {
+            position: relative;
+            float: left;
+            width: 100%;
+            height: calc(100% - 3em);
+
+            .contactNav {
+                height: 50px;
+                width: 100%;
+                @include display-flex;
+                @include flex-direction(row);
+                @include justify-content(center);
+                @include align-items(center);
+
+                li {
+                    min-height: 50px;
+
+                    @include flex(1);
+
+                    a {
+                        height: 100%;
+                        &:before {
+                            position: absolute;
+                            width: 1em;
+                            height: 1em;
+                            left: calc(50% - 0.5em);
+                            top: calc(50% - 0.5em);
+                        }
+                    }
+                }
+            }
         }
     }
 
     .chatPanel {
-        width: 100%;
-        height: 4em;
-        overflow: auto;
+        position: relative;
+        float: left;
+        height: 100%;
+        background-image: url('../images/image-chat/chat_bg.jpg');
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: cover;
+
+        .chatHeader {
+            position: relative;
+            float: left;
+            height: 3em;
+            line-height: 3;
+
+            &:after {
+                position: absolute;
+                right: 0;
+                bottom: 0;
+                content: '';
+                width: 100%;
+                height: 2px;
+
+                @include background(linear-gradient(left, $underlineLinearGradient));
+            }
+        }
+
+        .chatContent {
+            position: relative;
+            float: left;
+            height: calc(100% - 3em);
+        }
     }
 
     .chatButton {
@@ -47,21 +163,6 @@
             background-color: #555;
             color: $activeColor;
             box-shadow: none;
-        }
-    }
-
-    .chatList {
-        @include flex(1);
-        width: 100%;
-        background: #ccc;
-        overflow: auto;
-
-        .chatItem {
-            position: relative;
-            float: left;
-            width: 100%;
-            height: 2em;
-            line-height: 2;
         }
     }
 }

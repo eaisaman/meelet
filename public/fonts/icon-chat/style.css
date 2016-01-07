@@ -48,13 +48,75 @@
 }
 
 .icon-chat-textsms:before {
-    content: "\e061";
+    content: "\e900";
+}
+
+.icon-chat-menu:before {
+    content: "\e901";
+}
+
+.icon-chat-close:before {
+    content: "\e902";
+}
+
+.icon-chat-person:before {
+    content: "\e903";
+}
+
+.icon-chat-search:before {
+    content: "\e904";
+}
+
+.icon-chat-portrait:before {
+    content: "\e905";
 }
 
 .icon-chat-textsms-before:before {
-    content: "\e061";
+    content: "\e900";
+}
+
+.icon-chat-menu-before:before {
+    content: "\e901";
+}
+
+.icon-chat-close-before:before {
+    content: "\e902";
+}
+
+.icon-chat-person-before:before {
+    content: "\e903";
+}
+
+.icon-chat-search-before:before {
+    content: "\e904";
+}
+
+.icon-chat-portrait-before:before {
+    content: "\e905";
 }
 
 .icon-chat-textsms-after:after {
-    content: "\e061";
+    content: "\e900";
 }
+
+.icon-chat-menu-after:after {
+    content: "\e901";
+}
+
+.icon-chat-close-after:after {
+    content: "\e902";
+}
+
+.icon-chat-person-after:after {
+    content: "\e903";
+}
+
+.icon-chat-search-after:after {
+    content: "\e904";
+}
+
+.icon-chat-portrait-after:after {
+    content: "\e905";
+}
+
+

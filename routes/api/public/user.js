@@ -62,8 +62,10 @@ UserController.prototype.postUser = function (request, userObj, success, fail) {
                 self.schema.User.find({loginName: userObj.loginName}, function (err, data) {
                     if (!err && data && data.length) {
                         err = new Error(self.__('Account Used'));
+                        next(err, data && data.length && data[0]);
+                    } else {
+                        next(err);
                     }
-                    next(err);
                 });
             },
             function (next) {
@@ -222,7 +224,8 @@ UserController.prototype.postUser = function (request, userObj, success, fail) {
                 });
             }
         ], function (err, data) {
-            if (!err) {
+            //FIXME Duplicate account should be treated as error
+            if (!err || data) {
                 success(_.pick(data, _.without(self.schema.User.fields, "password", "createTime")));
             } else {
                 fail(err);
