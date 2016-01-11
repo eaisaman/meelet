@@ -430,7 +430,7 @@ ChatController.prototype.getChatHistory = function (chatHistoryFilter, success, 
                                     chatItem.topicInvitation = results.topicInvitation;
 
                                     chatItem.chatInvitation = commons.arrayPick(chatItem.chatInvitation, _.without(self.schema.ChatInvitation.fields, "createTime"));
-                                    chatItem.conversation = commons.arrayPick(chatItem.conversation, _.without(self.schema.Conversation.fields, "createTime"));
+                                    chatItem.conversation = commons.arrayPick(chatItem.conversation, _.without(self.schema.Conversation.fields, "_id", "createTime"));
                                     chatItem.topic = commons.arrayPick(chatItem.topic, _.without(self.schema.Topic.fields, "createTime"));
                                     chatItem.topicInvitation = commons.arrayPick(chatItem.topicInvitation, _.without(self.schema.TopicInvitation.fields, "createTime", "expires"));
                                 }
@@ -559,7 +559,7 @@ ChatController.prototype.getConversation = function (conversationFilter, success
 
     (!self.isDBReady && fail(new Error('DB not initialized'))) || self.schema.Conversation.find(conversationFilter, function (err, data) {
         if (!err) {
-            success(commons.arrayPick(data, _.without(self.schema.Conversation.fields, "createTime")));
+            success(commons.arrayPick(data, _.without(self.schema.Conversation.fields, "_id", "createTime")));
         } else {
             fail(err);
         }
@@ -1728,14 +1728,15 @@ ChatController.prototype.postSingleConversation = function (userId, uids, type, 
                 }), {
                     type: type,
                     message: message,
-                    payload: payload
+                    payload: payload,
+                    updateTime: now.getTime()
                 }, route, function (err) {
                     next(err, conversationList);
                 });
         }
     ], function (err, conversationList) {
         if (!err) {
-            success(commons.arrayPick(conversationList, _.without(self.schema.Conversation.fields, "createTime", "chatId", "topicId")));
+            success(commons.arrayPick(conversationList, _.without(self.schema.Conversation.fields, "_id", "createTime", "chatId", "topicId")));
         } else {
             fail(err);
         }
@@ -1795,14 +1796,15 @@ ChatController.prototype.postConversation = function (userId, chatId, uids, type
                 }), {
                     type: type,
                     message: message,
-                    payload: payload
+                    payload: payload,
+                    updateTime: now.getTime()
                 }, route, function (err) {
                     next(err, conversationObj);
                 });
         }
     ], function (err, conversationObj) {
         if (!err) {
-            success(_.pick(conversationObj, _.without(self.schema.Conversation.fields, "createTime", "topicId", "receiverId")));
+            success(_.pick(conversationObj, _.without(self.schema.Conversation.fields, "_id", "createTime", "topicId", "receiverId")));
         } else {
             fail(err);
         }
@@ -1858,14 +1860,15 @@ ChatController.prototype.postTopicConversation = function (userId, chatId, topic
             commons.pushTopic(userId.toString(), chatId.toString(), topicId.toString(), {
                 type: type,
                 message: message,
-                payload: payload
+                payload: payload,
+                updateTime: now.getTime()
             }, route, function (err) {
                 next(err, conversationObj);
             });
         }
     ], function (err, conversationObj) {
         if (!err) {
-            success(_.pick(conversationObj, _.without(self.schema.Conversation.fields, "createTime", "receiverId")));
+            success(_.pick(conversationObj, _.without(self.schema.Conversation.fields, "_id", "createTime", "receiverId")));
         } else {
             fail(err);
         }
