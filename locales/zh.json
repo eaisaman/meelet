@@ -2,6 +2,7 @@
   "Empty User": "用户对象必须赋值.",
   "Empty UserGroup": "用户组对象必须赋值.",
   "Empty Filter": "查询条件必须赋值.",
+  "Wrong format Avatar": "头像必须是jpg或者png格式.",
   "Account Used": "帐号已被注册.",
   "Group Exists": "用户组已存在.",
   "Account Not Found": "帐号不存在.",

@@ -2,6 +2,7 @@
   "Empty User": "Empty user object is not allowed.",
   "Empty UserGroup": "Empty user group object is not allowed.",
   "Empty Filter": "Empty filter object is not allowed.",
+  "Wrong format Avatar": "Avatar must be jpg or png format.",
   "Account Used": "The account has already been used.",
   "Group Exists": "User group already exists.",
   "Account Not Found": "Cannot find account.",
