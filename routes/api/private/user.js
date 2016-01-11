@@ -3,6 +3,7 @@ var path = require('path');
 var fs = require('fs');
 var rimraf = require('rimraf');
 var _ = require('underscore');
+var gm = require('gm');
 var commons = require('../../../commons');
 
 var UserController = function (fields) {
@@ -762,15 +763,47 @@ UserController.prototype.putAvatar = function (userId, request, success, fail) {
 
             self.fileController.postFile(request, userContentPath, function (result) {
                 if (result && result.length && path.basename(result[0]) !== "avatar.jpg") {
-                    fs.rename(result[0], path.join(userContentPath, "avatar.jpg"), function (err) {
-                        next(err);
-                    });
+                    var ext = path.extname(result[0]),
+                        base = path.basename(result[0]);
+
+                    if (ext === 'jpg' || ext === 'png') {
+                        var name = base.substr(0, base.length - 4);
+
+                        if (name !== 'avatar') {
+                            var filePath = path.join(userContentPath, "avatar." + ext);
+
+                            fs.rename(result[0], filePath, function (err) {
+                                next(err, filePath, ext);
+                            });
+                        } else {
+                            next(null, result[0], ext);
+                        }
+                    } else {
+                        next(self.__('Wrong format Avatar'));
+                    }
                 } else {
                     next(null);
                 }
             }, function (err) {
                 next(err);
             });
+        },
+        function (filePath, ext, next) {
+            if (filePath) {
+                if (ext === 'png') {
+                    //Convert to jpg                    
+                    gm(filePath).write(filePath.replace('.png', '.jpg'), function (err) {
+                        next(err);
+                    });
+                } else if (ext === 'jpg') {
+                    //Convert to png
+                    gm(filePath).write(filePath.replace('.jpg', '.png'), function (err) {
+                        next(err);
+                    });
+                }
+            } else {
+                next(null);
+            }
         },
         function (next) {
             self.schema.User.update({_id: new self.db.Types.ObjectId(userId)}, {"$set": {updateTime: now.getTime()}}, function (err) {
