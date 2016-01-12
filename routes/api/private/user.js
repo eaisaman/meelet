@@ -2,6 +2,7 @@ var async = require('async');
 var path = require('path');
 var fs = require('fs');
 var rimraf = require('rimraf');
+var mime = require('mime');
 var _ = require('underscore');
 var gm = require('gm');
 var commons = require('../../../commons');
@@ -757,7 +758,7 @@ UserController.prototype.putAvatar = function (userId, request, success, fail) {
 
     userId = commons.getFormString(userId);
 
-    (!self.isDBReady && fail(new Error('DB not initialized'))) || async.parallel([
+    (!self.isDBReady && fail(new Error('DB not initialized'))) || async.waterfall([
         function (next) {
             var userContentPath = path.join(self.config.userFile.userContentPath, userId);
 

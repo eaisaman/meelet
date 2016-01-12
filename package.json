@@ -45,6 +45,7 @@
     "request": "~2.67.0",
     "requirejs": "~2.1.17",
     "rimraf": "~2.2.8",
+    "send": "^0.3.0",
     "shelljs": "~0.5.3",
     "should": "~8.0.1",
     "socket.io": "^0.9.16",

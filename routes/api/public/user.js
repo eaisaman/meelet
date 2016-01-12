@@ -6,6 +6,7 @@ var mime = require('mime');
 var qr = require('qr-image');
 var _ = require('underscore');
 _.string = require('underscore.string');
+var send = require('send');
 var gm = require('gm');
 var commons = require('../../../commons');
 var mkdirp = require("mkdirp");
@@ -346,14 +347,16 @@ UserController.prototype.getSameGroupUsers = function (userId, success, fail) {
  * Return account qrcode file if exists, or 500 status code if not.
  *
  * @param userId
+ * @param isStatic
  * @param success
  * @param fail
  */
-UserController.prototype.getAccountQr = function (userId, success, fail) {
+UserController.prototype.getAccountQr = function (userId, isStatic, success, fail) {
     var self = this,
         userContentPath = path.join(self.config.userFile.userContentPath, userId),
         dir = path.join(userContentPath, "qrcode.png");
 
+    isStatic = isStatic && isStatic === "true" || true;
     async.waterfall(
         [
             function (next) {
@@ -366,10 +369,19 @@ UserController.prototype.getAccountQr = function (userId, success, fail) {
                 });
             },
             function (dir, next) {
-                success(function (req, res) {
-                    res.setHeader("Content-type", mime.lookup(dir));
-                    res.download(dir, next);
-                });
+                if (isStatic) {
+                    success(function (req, res) {
+                        send(req, dir)
+                            .on('error', next)
+                            .on('end', next)
+                            .pipe(res);
+                    });
+                } else {
+                    success(function (req, res) {
+                        res.setHeader("Content-type", mime.lookup(dir));
+                        res.download(dir, next);
+                    });
+                }
             }
         ], function (err, result) {
             if (err) {
@@ -386,13 +398,15 @@ UserController.prototype.getAccountQr = function (userId, success, fail) {
  *
  * @param userId
  * @param ext
+ * @param isStatic
  * @param success
  * @param fail
  */
-UserController.prototype.getAvatar = function (userId, ext, success, fail) {
+UserController.prototype.getAvatar = function (userId, ext, isStatic, success, fail) {
     var self = this,
         userContentPath = path.join(self.config.userFile.userContentPath, userId);
 
+    isStatic = isStatic && isStatic === "true" || true;
     ext = ext || ".png";
     var dir = path.join(userContentPath, "avatar" + ext);
 
@@ -408,10 +422,19 @@ UserController.prototype.getAvatar = function (userId, ext, success, fail) {
                 });
             },
             function (dir, next) {
-                success(function (req, res) {
-                    res.setHeader("Content-type", mime.lookup(dir));
-                    res.download(dir, next);
-                });
+                if (isStatic) {
+                    success(function (req, res) {
+                        send(req, dir)
+                            .on('error', next)
+                            .on('end', next)
+                            .pipe(res);
+                    });
+                } else {
+                    success(function (req, res) {
+                        res.setHeader("Content-type", mime.lookup(dir));
+                        res.download(dir, next);
+                    });
+                }
             }
         ], function (err, result) {
             if (err) {
@@ -427,13 +450,16 @@ UserController.prototype.getAvatar = function (userId, ext, success, fail) {
  * @param {string} userId
  * @param {string} fileName
  * @param {number} size Larger value of thumbnail's width and height. Compared to value of tiny, small, medium, large scale size(16, 32, 48, 128).
+ * @param {string} isStatic Value of "true" or "false", indicates whether accesssing static resource or downloading.
  * @param success
  * @param fail
  */
-UserController.prototype.getThumbnail = function (userId, fileName, size, success, fail) {
+UserController.prototype.getThumbnail = function (userId, fileName, size, isStatic, success, fail) {
     var self = this,
         scale = commons.getScale(size),
         dir = path.join(self.config.userFile.userContentPath, userId, "image", fileName.replace(/([^\.]+)(\.)?(\w*)$/, "$1@" + scale + "$2$3"));
+
+    isStatic = isStatic && isStatic === "true" || true;
 
     async.waterfall(
         [
@@ -447,10 +473,19 @@ UserController.prototype.getThumbnail = function (userId, fileName, size, succes
                 });
             },
             function (dir, next) {
-                success(function (req, res) {
-                    res.setHeader("Content-type", mime.lookup(dir));
-                    res.download(dir, next);
-                });
+                if (isStatic) {
+                    success(function (req, res) {
+                        send(req, dir)
+                            .on('error', next)
+                            .on('end', next)
+                            .pipe(res);
+                    });
+                } else {
+                    success(function (req, res) {
+                        res.setHeader("Content-type", mime.lookup(dir));
+                        res.download(dir, next);
+                    });
+                }
             }
         ], function (err, result) {
             if (err) {
