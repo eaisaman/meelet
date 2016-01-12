@@ -189,7 +189,7 @@ UserController.prototype.postUser = function (request, userObj, success, fail) {
                                     cb(self.__('Wrong format Avatar'));
                                 }
                             } else {
-                                cb(null);
+                                cb(null, null, null);
                             }
                         }, function (err) {
                             cb(err);
@@ -345,13 +345,16 @@ UserController.prototype.getSameGroupUsers = function (userId, success, fail) {
  * Return avatar file if exists, or 500 status code if not.
  *
  * @param userId
+ * @param ext
  * @param success
  * @param fail
  */
-UserController.prototype.getAvatar = function (userId, success, fail) {
+UserController.prototype.getAvatar = function (userId, ext, success, fail) {
     var self = this,
-        userContentPath = path.join(self.config.userFile.userContentPath, userId),
-        dir = path.join(userContentPath, "avatar.jpg");
+        userContentPath = path.join(self.config.userFile.userContentPath, userId);
+
+    ext = ext || ".png";
+    var dir = path.join(userContentPath, "avatar" + ext);
 
     async.waterfall(
         [
