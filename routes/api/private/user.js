@@ -762,7 +762,7 @@ UserController.prototype.putAvatar = function (userId, request, success, fail) {
             var userContentPath = path.join(self.config.userFile.userContentPath, userId);
 
             self.fileController.postFile(request, userContentPath, function (result) {
-                if (result && result.length && path.basename(result[0]) !== "avatar.jpg") {
+                if (result && result.length) {
                     var ext = path.extname(result[0]),
                         base = path.basename(result[0]);
 
@@ -782,7 +782,7 @@ UserController.prototype.putAvatar = function (userId, request, success, fail) {
                         next(self.__('Wrong format Avatar'));
                     }
                 } else {
-                    next(null);
+                    next(null, null, null);
                 }
             }, function (err) {
                 next(err);

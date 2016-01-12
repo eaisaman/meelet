@@ -79,6 +79,8 @@ RouteHandler.prototype.routeOnFunctionName = function (holder) {
                             }
                         });
 
+                        //TODO count service invoke times and duration, monitor whether there is any ongoing call
+                        //so that the administrator knows the time to apply update
                         fnItem.fn.apply(fnItem.holder, args.concat(function (result) {
                             if ('function' == typeof result) {
                                 result(req, res);

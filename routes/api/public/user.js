@@ -6,6 +6,7 @@ var mime = require('mime');
 var qr = require('qr-image');
 var _ = require('underscore');
 _.string = require('underscore.string');
+var gm = require('gm');
 var commons = require('../../../commons');
 var mkdirp = require("mkdirp");
 
@@ -165,16 +166,58 @@ UserController.prototype.postUser = function (request, userObj, success, fail) {
             },
             function (userObj, userContentPath, next) {
                 //Ignore error in uploading avatar file, return created user record anyway.
-                self.fileController.postFile(request, userContentPath, function (result) {
-                    if (result && result.length && path.basename(result[0]) !== "avatar.jpg") {
-                        fs.rename(result[0], path.join(userContentPath, "avatar.jpg"), function (err) {
-                            next(err, userObj, userContentPath);
+                async.waterfall([
+                    function (cb) {
+                        self.fileController.postFile(request, userContentPath, function (result) {
+                            if (result && result.length) {
+                                var ext = path.extname(result[0]),
+                                    base = path.basename(result[0]);
+
+                                if (ext === 'jpg' || ext === 'png') {
+                                    var name = base.substr(0, base.length - 4);
+
+                                    if (name !== 'avatar') {
+                                        var filePath = path.join(userContentPath, "avatar." + ext);
+
+                                        fs.rename(result[0], filePath, function (err) {
+                                            cb(err, filePath, ext);
+                                        });
+                                    } else {
+                                        cb(null, result[0], ext);
+                                    }
+                                } else {
+                                    cb(self.__('Wrong format Avatar'));
+                                }
+                            } else {
+                                cb(null);
+                            }
+                        }, function (err) {
+                            cb(err);
                         });
-                    } else {
-                        next(null, userObj, userContentPath);
+                    },
+                    function (filePath, ext, cb) {
+                        if (filePath) {
+                            if (ext === 'png') {
+                                //Convert to jpg
+                                gm(filePath).write(filePath.replace('.png', '.jpg'), function (err) {
+                                    cb(err);
+                                });
+                            } else if (ext === 'jpg') {
+                                //Convert to png
+                                gm(filePath).write(filePath.replace('.jpg', '.png'), function (err) {
+                                    cb(err);
+                                });
+                            }
+                        } else {
+                            cb(null);
+                        }
                     }
-                }, function (err) {
-                    next(err);
+                ], function (err) {
+                    if (err) {
+                        self.config.logger.error(err);
+                    }
+
+                    next(null, userObj, userContentPath);
                 });
             },
             function (userObj, userContentPath, next) {
