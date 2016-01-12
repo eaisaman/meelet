@@ -339,6 +339,46 @@ UserController.prototype.getSameGroupUsers = function (userId, success, fail) {
     );
 };
 
+
+/**
+ * @description
+ *
+ * Return account qrcode file if exists, or 500 status code if not.
+ *
+ * @param userId
+ * @param success
+ * @param fail
+ */
+UserController.prototype.getAccountQr = function (userId, success, fail) {
+    var self = this,
+        userContentPath = path.join(self.config.userFile.userContentPath, userId),
+        dir = path.join(userContentPath, "qrcode.png");
+
+    async.waterfall(
+        [
+            function (next) {
+                fs.exists(dir, function (exists) {
+                    if (exists) {
+                        next(null, dir);
+                    } else {
+                        next(self.__('File Not Exist', dir));
+                    }
+                });
+            },
+            function (dir, next) {
+                success(function (req, res) {
+                    res.setHeader("Content-type", mime.lookup(dir));
+                    res.download(dir, next);
+                });
+            }
+        ], function (err, result) {
+            if (err) {
+                fail(err, result);
+            }
+        }
+    );
+}
+
 /**
  * @description
  *
