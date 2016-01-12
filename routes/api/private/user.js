@@ -766,11 +766,11 @@ UserController.prototype.putAvatar = function (userId, request, success, fail) {
                     var ext = path.extname(result[0]),
                         base = path.basename(result[0]);
 
-                    if (ext === 'jpg' || ext === 'png') {
+                    if (ext === '.jpg' || ext === '.png') {
                         var name = base.substr(0, base.length - 4);
 
                         if (name !== 'avatar') {
-                            var filePath = path.join(userContentPath, "avatar." + ext);
+                            var filePath = path.join(userContentPath, "avatar" + ext);
 
                             fs.rename(result[0], filePath, function (err) {
                                 next(err, filePath, ext);
@@ -790,12 +790,12 @@ UserController.prototype.putAvatar = function (userId, request, success, fail) {
         },
         function (filePath, ext, next) {
             if (filePath) {
-                if (ext === 'png') {
+                if (ext === '.png') {
                     //Convert to jpg                    
                     gm(filePath).write(filePath.replace('.png', '.jpg'), function (err) {
                         next(err);
                     });
-                } else if (ext === 'jpg') {
+                } else if (ext === '.jpg') {
                     //Convert to png
                     gm(filePath).write(filePath.replace('.jpg', '.png'), function (err) {
                         next(err);
