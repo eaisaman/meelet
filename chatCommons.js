@@ -2,8 +2,6 @@ var async = require('async');
 var _ = require('underscore');
 _.string = require('underscore.string');
 var crypto = require('crypto');
-global.io = require("socket.io-client");
-var pomeloclient = require('./pomeloclient').pomelo;
 
 var ChatCommons = function () {
     var self = this;
@@ -14,12 +12,12 @@ var ChatCommons = function () {
     self.config.on(self.config.ChatServerConnectedEvent, function (resource) {
         self.isServerReady = true;
         self.pomelo = resource.instance;
-        self.pomelo.on('disconnect', function (reason) {
-            self.config.logger.error('Socket disconnect due to ' + reason);
+        self.pomelo.on('disconnect', function () {
+            self.config.logger.error('Socket disconnect');
             self.isServerReady = false;
         }).on('connect', function () {
             self.isServerReady = true;
-        }).on('reconnect', function (reason) {
+        }).on('reconnect', function () {
             self.isServerReady = true;
         });
 
@@ -30,18 +28,34 @@ var ChatCommons = function () {
 ChatCommons.prototype.initServer = function (options, resourceName, callback) {
     var defaultOptions = {
         host: '127.0.0.1',
-        port: 3010
+        port: 3010,
+        transport: 'websocket'
     };
+    //websocket or sio
 
     _.extend(defaultOptions, options);
 
-    var pomelo = new pomeloclient();
-    pomelo.init({host: defaultOptions.host, port: defaultOptions.port}, function () {
-        callback(null, {name: resourceName, instance: pomelo});
-    }, function (err) {
-        self.config.logger.error(err);
-        callback(err);
-    });
+    var pomeloclient;
+    if (defaultOptions.transport === "websocket") {
+        global.WebSocket = require('ws');
+        //For data exchanging during websocket handshake
+        defaultOptions.deviceId = require('node-uuid').v4();
+        defaultOptions.reconnect = true;
+        pomeloclient = require('./pomelo-websocket-client').pomelo;
+    } else if (defaultOptions.transport === "sio") {
+        global.io = require("socket.io-client");
+        pomeloclient = require('./pomeloclient').pomelo;
+    }
+
+    if (pomeloclient) {
+        var pomelo = new pomeloclient();
+        pomelo.init(defaultOptions, function () {
+            callback(null, {name: resourceName, instance: pomelo});
+        }, function (err) {
+            self.config.logger.error(err);
+            callback(err);
+        });
+    }
 }
 
 ChatCommons.prototype.findLoginChannel = function (loginName) {

@@ -1,4 +1,4 @@
-(function (exports, global) {
+(function (exports, GLOBAL) {
     var isArray = Array.isArray;
 
     var root = exports;
@@ -224,7 +224,7 @@
     }
 })('object' === typeof module ? module.exports : window, this);
 
-(function (exports, global) {
+(function (exports, GLOBAL) {
 
     var Protocol = exports;
 
@@ -298,7 +298,7 @@
 
 })('object' === typeof module ? (module.exports.Protocol = {}) : (this.Protocol = {}), this);
 
-(function (exports, global) {
+(function (exports, GLOBAL) {
     function pomelo() {
 
     }
