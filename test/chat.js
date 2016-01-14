@@ -1,5 +1,17 @@
-global.io = require("socket.io-client");
-var pomeloclient = require('../pomeloclient').pomelo;
+var chathost = process.env['mocha.chathost'];
+var chatport = process.env['mocha.chatport'];
+var chatroute = process.env['mocha.chatroute'];
+var chattransport = process.env['mocha.chattransport'];
+var pomeloclient;
+
+if (chattransport === "websocket") {
+    global.WebSocket = require('ws');
+    pomeloclient = require('../pomelo-websocket-client').pomelo;
+} else if (chattransport === "sio") {
+    global.io = require("socket.io-client");
+    pomeloclient = require('../pomeloclient').pomelo;
+}
+
 var request = require("request");
 var should = require("should");
 var async = require('async');
@@ -11,10 +23,6 @@ var scheme = process.env['mocha.scheme'];
 var server = process.env['mocha.server'];
 var port = process.env['mocha.port'];
 var url = scheme + "://" + server + ":" + port + "/";
-
-var chathost = process.env['mocha.chathost'];
-var chatport = process.env['mocha.chatport'];
-var chatroute = process.env['mocha.chatroute'];
 
 var mongohost = process.env['mocha.mongohost'];
 var mongoport = process.env['mocha.mongoport'];
@@ -264,7 +272,9 @@ describe('Chat', function () {
         async.waterfall([
             function (next) {
                 async.each([userHostObj, userGuest1Obj, userGuest2Obj], function (userObj, cb) {
-                    userObj.pomelo.init({host: chathost, port: chatport}, function () {
+                    userObj.pomelo.init({host: chathost, port: chatport,
+                            deviceId: userObj.deviceId,
+                            reconnect: true}, function () {
                         userObj.pomelo.on(chatroute, onEvent(userObj.emitter));
 
                         cb(null);
