@@ -68,7 +68,7 @@ UserController.prototype.getUser = function (userFilter, success, fail) {
                 })
             }
         ], function (err, data) {
-            if (!err) {
+            if (!err || data) {
                 success(data);
             } else {
                 fail(err);
@@ -214,10 +214,7 @@ UserController.prototype.getGroupUser = function (userId, userUpdateTime, succes
     var self = this;
 
     userId = new self.db.Types.ObjectId(userId);
-
-    if (userUpdateTime) {
-        userUpdateTime = {$gt: userUpdateTime};
-    }
+    userUpdateTime = userUpdateTime && {$gt: userUpdateTime} || {$gt: 0};
 
     (!self.isDBReady && fail(new Error('DB not initialized'))) || async.waterfall(
         [
@@ -230,10 +227,7 @@ UserController.prototype.getGroupUser = function (userId, userUpdateTime, succes
             },
             function (xrefList, next) {
                 if (xrefList && xrefList.length) {
-                    var xrefFilter = {groupId: {$in: _.pluck(xrefList, "groupId")}};
-                    if (userUpdateTime) {
-                        xrefFilter.updateTime = userUpdateTime;
-                    }
+                    var xrefFilter = {groupId: {$in: _.pluck(xrefList, "groupId")}, updateTime: userUpdateTime};
 
                     self.schema.UserGroupXref.find(xrefFilter, function (err, data) {
                         next(err, data);

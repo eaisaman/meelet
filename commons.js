@@ -224,6 +224,30 @@ Commons.prototype.arrayPurge = function (objects) {
 /**
  * @description
  *
+ * @param objects
+ */
+Commons.prototype.arrayExtend = function (objects) {
+    var arr = [],
+        values = Array.prototype.slice.call(arguments, 1);
+
+    objects && objects.forEach(function (obj) {
+        _.each(values, function(source) {
+            if (source) {
+                for (var prop in source) {
+                    obj[prop] = source[prop];
+                }
+            }
+        });
+
+        arr.push(obj);
+    });
+
+    return arr;
+};
+
+/**
+ * @description
+ *
  * @param dirpath
  * @param base
  * @param callback

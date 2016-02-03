@@ -2,8 +2,8 @@
 <link rel="stylesheet" type="text/css" href="fonts/icon-flow/style.css"/>
 
 <script type="text/ng-template" id="_flowSteps.html">
-    <div ui-tree-handle ng-click="$event.stopPropagation();deactivateNameEdit();exclusiveSelect"
-         ng-dblclick="activateNameEdit">
+    <div ui-tree-handle ng-click="$event.stopPropagation();deactivateNameEdit();exclusiveSelect();"
+         ng-dblclick="activateNameEdit($event)">
         <a class="fs-x-small btn btn-xs" nodrag
            ng-click="toggle();$event.stopPropagation()">
             <span ng-if="item.childSteps.length" class="icon-flow-before"
@@ -50,7 +50,7 @@
                         <span>Process</span>
                     </div>
                     <div id="flowServiceTitle" class="flowTitle"
-                         ng-click="once(this, $event, 'selectEditor', 'proservicecess', $event)">
+                         ng-click="once(this, $event, 'selectEditor', 'service', $event)">
                         <image src="images/image-flow/api-code-window.svg"></image>
                         <span>Service</span>
                     </div>
@@ -120,7 +120,7 @@
                         </div>
                         <div class="flowDetails col-as-4 no-padding"></div>
                     </div>
-                    <div id="flowConfigEditor" class="show flowEditor" editor="config">
+                    <div id="flowConfigEditor" class="flowEditor" editor="config">
                         <div class="flowConfigTree fs-x-small col-as-4 no-padding">
                             <div class="treeToolBar"></div>
                             <div class="resizeSplitter"></div>
@@ -132,7 +132,7 @@
                 </div>
             </div>
         </div>
-        <div class="flowModalContent" name="modalContent" ng-click="$event.stopPropagation())">
+        <div class="flowModalContent" name="modalContent" ng-click="$event.stopPropagation()">
         </div>
     </div>
 </div>

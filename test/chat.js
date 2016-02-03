@@ -1,3 +1,9 @@
+//TODO Fill test description
+/**
+ * @description
+ *
+ *
+ */
 var chathost = process.env['mocha.chathost'];
 var chatport = process.env['mocha.chatport'];
 var chatroute = process.env['mocha.chatroute'];

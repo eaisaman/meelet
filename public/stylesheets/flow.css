@@ -4326,6 +4326,45 @@
     transform: scale(1, 1) translateX(-900%);
   }
 }
+/*
+ * Found in chat.html
+ */
+@-webkit-keyframes tab_moveFromLeft {
+  from {
+    -webkit-transform: translateX(-100%);
+  }
+}
+@-moz-keyframes tab_moveFromLeft {
+  from {
+    -moz-transform: translateX(-100%);
+  }
+}
+@keyframes tab_moveFromLeft {
+  from {
+    transform: translateX(-100%);
+  }
+}
+/*
+ * Found in chat.html
+ */
+@-webkit-keyframes tab_moveToRightFade {
+  to {
+    opacity: 0.3;
+    -webkit-transform: translateX(100%);
+  }
+}
+@-moz-keyframes tab_moveToRightFade {
+  to {
+    opacity: 0.3;
+    -moz-transform: translateX(100%);
+  }
+}
+@keyframes tab_moveToRightFade {
+  to {
+    opacity: 0.3;
+    transform: translateX(100%);
+  }
+}
 @-moz-keyframes magic {
   0% {
     opacity: 1;
@@ -7579,6 +7618,12 @@
  */
 /*
  * Found in frameSketch.html
+ */
+/*
+ * Found in chat.html
+ */
+/*
+ * Found in chat.html
  */
 #flowStepTree .angular-ui-tree-empty {
   border: 1px dashed #bbb;

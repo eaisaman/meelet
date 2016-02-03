@@ -1,0 +1,9 @@
+<div class="_creativeLinkContainer" ng-attr-link-effect="{{effect}}"
+     ng-click="once(this, $event, 'toggleSelectLink', true)">
+    <div class="linkContent" ng-transclude></div>
+    <div class="linkContent" ng-transclude></div>
+        <span class="lineBox" ng-if="effect == 'switchLine'">
+            <span class="leftLine"></span>
+            <span class="rightLine"></span>
+        </span>
+</div>

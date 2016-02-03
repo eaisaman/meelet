@@ -28,6 +28,7 @@ requirejs.config(
             "ng.ui.dock": DIRECTIVE_LIB_PATH + "ng.ui.dock",
             "ng.ui.topbar": DIRECTIVE_LIB_PATH + "ng.ui.topbar",
             "ng.ui.modal-window": DIRECTIVE_LIB_PATH + "ng.ui.modal-window",
+            "ng.ui.creative-link": DIRECTIVE_LIB_PATH + "ng.ui.creative-link",
             "ng.ui.sidebar": DIRECTIVE_LIB_PATH + "ng.ui.sidebar",
             "ng.ui.resource.editor": DIRECTIVE_LIB_PATH + "ng.ui.resource-editor",
             "ng.ui.state-transition": DIRECTIVE_LIB_PATH + "ng.ui.state-transition",
@@ -67,6 +68,7 @@ define([
         "ng.ui.dock",
         "ng.ui.topbar",
         "ng.ui.modal-window",
+        "ng.ui.creative-link",
         "ng.ui.sidebar",
         "ng.ui.resource.editor",
         "ng.ui.state-transition",
@@ -164,20 +166,23 @@ define([
             //Modal window
             directiveConfigs[21](appModule, extension);
 
-            //Sidebar
+            //Creative Link
             directiveConfigs[22](appModule, extension);
 
-            //Resource Editor
+            //Sidebar
             directiveConfigs[23](appModule, extension);
 
+            //Resource Editor
+            directiveConfigs[24](appModule, extension);
+
             //State transition
-            directiveConfigs[24](appModule, extension, {
+            directiveConfigs[25](appModule, extension, {
                 triggerJson: "directive/trigger.json",
                 animationJson: "directive/animation.json"
             });
 
             //State action
-            directiveConfigs[25](appModule, extension);
+            directiveConfigs[26](appModule, extension);
         }
     }
 );

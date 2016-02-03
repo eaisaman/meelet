@@ -11033,6 +11033,45 @@ button.close {
     transform: scale(1, 1) translateX(-900%);
   }
 }
+/*
+ * Found in chat.html
+ */
+@-webkit-keyframes tab_moveFromLeft {
+  from {
+    -webkit-transform: translateX(-100%);
+  }
+}
+@-moz-keyframes tab_moveFromLeft {
+  from {
+    -moz-transform: translateX(-100%);
+  }
+}
+@keyframes tab_moveFromLeft {
+  from {
+    transform: translateX(-100%);
+  }
+}
+/*
+ * Found in chat.html
+ */
+@-webkit-keyframes tab_moveToRightFade {
+  to {
+    opacity: 0.3;
+    -webkit-transform: translateX(100%);
+  }
+}
+@-moz-keyframes tab_moveToRightFade {
+  to {
+    opacity: 0.3;
+    -moz-transform: translateX(100%);
+  }
+}
+@keyframes tab_moveToRightFade {
+  to {
+    opacity: 0.3;
+    transform: translateX(100%);
+  }
+}
 #rootBody #alertBar.show, #rootBody #alertBar.hiding, .modalWindowContainer > .md-modal.show.slit3D > [name=modalContent], .modalWindowContainer > .md-modal.show.slideFromRightPerspective ~ .mainContent, .modalWindowContainer > .md-modal.show.slideFromRightPerspective ~ .modalOverlay, .modalWindowContainer > .md-modal.show.slipFromTopPerspective ~ .mainContent, .modalWindowContainer > .md-modal.show.slipFromTopPerspective ~ .modalOverlay {
   -moz-animation-duration: 1s;
   -webkit-animation-duration: 1s;
@@ -14324,6 +14363,12 @@ button.close {
  */
 /*
  * Found in frameSketch.html
+ */
+/*
+ * Found in chat.html
+ */
+/*
+ * Found in chat.html
  */
 #rootBody #alertBar.show, #rootBody #alertBar.hiding, .modalWindowContainer > .md-modal.show.slit3D > [name=modalContent], .modalWindowContainer > .md-modal.show.slideFromRightPerspective ~ .mainContent, .modalWindowContainer > .md-modal.show.slideFromRightPerspective ~ .modalOverlay, .modalWindowContainer > .md-modal.show.slipFromTopPerspective ~ .mainContent, .modalWindowContainer > .md-modal.show.slipFromTopPerspective ~ .modalOverlay {
   -moz-animation-duration: 1s;

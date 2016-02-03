@@ -2233,6 +2233,58 @@ define(
                     "scope": $scope
                 });
 
+                $scope.selectContent = function (content) {
+                    var $content = $(".contactContent").children("[content='" + content + "']");
+
+                    if (!$content.hasClass("select")) {
+                        $content.siblings(".select").removeClass("select");
+                        $content.addClass("select");
+                    }
+
+                    var $siblingNav = $(".contactNav").children("[content='" + content + "']").siblings(".select");
+                    if ($siblingNav.length) {
+                        var siblingScope = angular.element($siblingNav.children(0)).scope();
+                        if (siblingScope) {
+                            siblingScope.toggleSelectLink && siblingScope.toggleSelectLink(false);
+                        }
+                    }
+                }
+
+                $scope.selectFriend = function (event) {
+                    event && event.stopPropagation && event.stopPropagation();
+
+                    var $name = $(event.target).closest(".userName");
+                    $(".contactContent .userName").not($name).removeClass("select");
+                    $name.toggleClass("select");
+
+                    return utilService.getResolveDefer();
+                }
+
+                $scope.selectConversationUser = function (event) {
+                    event && event.stopPropagation && event.stopPropagation();
+
+                    var $name = $(event.target).closest(".userName");
+                    return $scope.toggleExclusiveSelect($name, null);
+                }
+
+                $scope.startAddFriend = function (event) {
+                    event && event.stopPropagation && event.stopPropagation();
+
+                    $scope.modalUsage = "AddFriend";
+                    var scope = angular.element($(".chatContainer > .modalWindowContainer > .md-modal")).scope();
+
+                    return scope.toggleModalWindow();
+                }
+
+                $scope.startCreateDiscussion = function (event) {
+                    event && event.stopPropagation && event.stopPropagation();
+
+                    $scope.modalUsage = "CreateDiscussion";
+                    var scope = angular.element($(".chatContainer > .modalWindowContainer > .md-modal")).scope();
+
+                    return scope.toggleModalWindow();
+                }
+
                 $scope.createChat = function () {
                     return appService.createChat($scope.userId, $scope.projectId).then(function (chatId) {
                         $scope.chatId = chatId;
@@ -2302,7 +2354,6 @@ define(
                 $scope.closeChat = function () {
                     return appService.closeChat($scope.userId, $scope.chatId).then(function () {
                         delete window.pomeloContext.chatId;
-                        $scope.unregisterPomeloListeners();
 
                         $scope.chatState = angularConstants.pomeloState.chatDestroyState;
                         return utilService.getResolveDefer();
@@ -2324,7 +2375,7 @@ define(
                 }
 
                 $scope.pauseTopic = function () {
-                    return appService.pauseTopic($scope.userId, $scope.chatId, {chatId:$scope.chatId}).then(function () {
+                    return appService.pauseTopic($scope.userId, $scope.chatId, {chatId: $scope.chatId}).then(function () {
                         $scope.topicState = angularConstants.pomeloState.topicPauseState;
                         return utilService.getResolveDefer();
                     }, function (err) {
@@ -2334,7 +2385,7 @@ define(
                 }
 
                 $scope.resumeTopic = function () {
-                    return appService.resumeTopic($scope.userId, $scope.chatId, {chatId:$scope.chatId}).then(function () {
+                    return appService.resumeTopic($scope.userId, $scope.chatId, {chatId: $scope.chatId}).then(function () {
                         $scope.topicState = angularConstants.pomeloState.topicOpenState;
                         return utilService.getResolveDefer();
                     }, function (err) {
@@ -2380,87 +2431,196 @@ define(
                     });
                 }
 
-                $scope.registerPomeloListeners = function() {
-                    pomelo.on(window.pomeloContext.route, function (data) {
-                        var userId = data.userId, chatId = data.chatId, signal = data.signal;
-                        switch(signal) {
-                            case angularConstants.pomeloSignal.inviteSignal:
-                                $scope.chatList.push({order:$scope.chatList.length, message:"Invite"});
-                                break;
-                            case angularConstants.pomeloSignal.connectSignal:
-                                $scope.chatList.push({order:$scope.chatList.length, message:"Chat Connect"});
-                                break;
-                            case angularConstants.pomeloSignal.disconnectSignal:
-                                $scope.chatList.push({order:$scope.chatList.length, message:"Chat Disconnect"});
-                                break;
-                            case angularConstants.pomeloSignal.pauseSignal:
-                                $scope.chatList.push({order:$scope.chatList.length, message:"Chat Pause"});
-                                break;
-                            case angularConstants.pomeloSignal.resumeSignal:
-                                $scope.chatList.push({order:$scope.chatList.length, message:"Chat Resume"});
-                                break;
-                            case angularConstants.pomeloSignal.messageSignal:
-                                $scope.chatList.push({order:$scope.chatList.length, message:"Chat Message" + data.payload});
-                                break;
-                            case angularConstants.pomeloSignal.topicInviteSignal:
-                                $scope.chatList.push({order:$scope.chatList.length, message:"Topic Invite"});
-                                break;
-                            case angularConstants.pomeloSignal.topicPauseSignal:
-                                $scope.chatList.push({order:$scope.chatList.length, message:"Topic Pause"});
-                                break;
-                            case angularConstants.pomeloSignal.topicResumeSignal:
-                                $scope.chatList.push({order:$scope.chatList.length, message:"Topic Resume"});
-                                break;
-                            case angularConstants.pomeloSignal.topicMessageSignal:
-                                $scope.chatList.push({order:$scope.chatList.length, message:"Topic Message"});
-                                break;
-                            case angularConstants.pomeloSignal.topicCloseSignal:
-                                $scope.chatList.push({order:$scope.chatList.length, message:"Topic Close"});
-                                break;
-                            case angularConstants.pomeloSignal.topicDisconnectSignal:
-                                $scope.chatList.push({order:$scope.chatList.length, message:"Topic Disconnect"});
-                                break;
-                        }
-
-                        $scope.$apply();
-                    });
-                    pomelo.on('disconnect', function (reason) {
-                        console.log('disconnect' + reason);
-                        $scope.chatList.push({order:$scope.chatList.length, message:"Disconnect"});
-                        $scope.$apply();
-                    });
-                    pomelo.on('closed', function (reason) {
-                        console.log('closed' + reason);
-                        $scope.chatList.push({order:$scope.chatList.length, message:"Closed"});
-                        $scope.$apply();
-                    });
+                function registerPomeloListeners() {
+                    $scope.pomeloListeners = $scope.pomeloListeners || {};
+                    var eventType = angularConstants.pomeloSignal.inviteEvent;
+                    $scope.pomeloListeners[eventType] = $scope.pomeloListeners[eventType] || $scope.$on(eventType, function (event, data) {
+                        });
+                    eventType = angularConstants.pomeloSignal.messageEvent;
+                    $scope.pomeloListeners[eventType] = $scope.pomeloListeners[eventType] || $scope.$on(eventType, function (event, data) {
+                        });
+                    eventType = angularConstants.pomeloSignal.acceptEvent;
+                    $scope.pomeloListeners[eventType] = $scope.pomeloListeners[eventType] || $scope.$on(eventType, function (event, data) {
+                        });
+                    eventType = angularConstants.pomeloSignal.chatInviteEvent;
+                    $scope.pomeloListeners[eventType] = $scope.pomeloListeners[eventType] || $scope.$on(eventType, function (event, data) {
+                        });
+                    eventType = angularConstants.pomeloSignal.chatConnectEvent;
+                    $scope.pomeloListeners[eventType] = $scope.pomeloListeners[eventType] || $scope.$on(eventType, function (event, data) {
+                        });
+                    eventType = angularConstants.pomeloSignal.chatDisconnectEvent;
+                    $scope.pomeloListeners[eventType] = $scope.pomeloListeners[eventType] || $scope.$on(eventType, function (event, data) {
+                        });
+                    eventType = angularConstants.pomeloSignal.chatPauseEvent;
+                    $scope.pomeloListeners[eventType] = $scope.pomeloListeners[eventType] || $scope.$on(eventType, function (event, data) {
+                        });
+                    eventType = angularConstants.pomeloSignal.chatResumeEvent;
+                    $scope.pomeloListeners[eventType] = $scope.pomeloListeners[eventType] || $scope.$on(eventType, function (event, data) {
+                        });
+                    eventType = angularConstants.pomeloSignal.chatMessageEvent;
+                    $scope.pomeloListeners[eventType] = $scope.pomeloListeners[eventType] || $scope.$on(eventType, function (event, data) {
+                        });
+                    eventType = angularConstants.pomeloSignal.chatAcceptEvent;
+                    $scope.pomeloListeners[eventType] = $scope.pomeloListeners[eventType] || $scope.$on(eventType, function (event, data) {
+                        });
+                    eventType = angularConstants.pomeloSignal.chatCloseEvent;
+                    $scope.pomeloListeners[eventType] = $scope.pomeloListeners[eventType] || $scope.$on(eventType, function (event, data) {
+                        });
+                    eventType = angularConstants.pomeloSignal.topicInviteEvent;
+                    $scope.pomeloListeners[eventType] = $scope.pomeloListeners[eventType] || $scope.$on(eventType, function (event, data) {
+                        });
+                    eventType = angularConstants.pomeloSignal.topicPauseEvent;
+                    $scope.pomeloListeners[eventType] = $scope.pomeloListeners[eventType] || $scope.$on(eventType, function (event, data) {
+                        });
+                    eventType = angularConstants.pomeloSignal.topicResumeEvent;
+                    $scope.pomeloListeners[eventType] = $scope.pomeloListeners[eventType] || $scope.$on(eventType, function (event, data) {
+                        });
+                    eventType = angularConstants.pomeloSignal.topicMessageEvent;
+                    $scope.pomeloListeners[eventType] = $scope.pomeloListeners[eventType] || $scope.$on(eventType, function (event, data) {
+                        });
+                    eventType = angularConstants.pomeloSignal.topicCloseEvent;
+                    $scope.pomeloListeners[eventType] = $scope.pomeloListeners[eventType] || $scope.$on(eventType, function (event, data) {
+                        });
+                    eventType = angularConstants.pomeloSignal.topicDisconnectEvent;
+                    $scope.pomeloListeners[eventType] = $scope.pomeloListeners[eventType] || $scope.$on(eventType, function (event, data) {
+                        });
                 }
 
-                $scope.unregisterPomeloListeners = function() {
-                    pomelo.removeAllListeners(window.pomeloContext.route);
-                    pomelo.removeAllListeners('disconnect');
-                    pomelo.removeAllListeners('closed');
+                function unregisterPomeloListeners() {
+                    _.each($scope.pomeloListeners, function (fn) {
+                        fn && fn();
+                    })
+                }
+
+                function onEvent(data) {
+                    var signal = data.signal,
+                        eventType;
+
+                    switch (signal) {
+                        case angularConstants.pomeloSignal.inviteSignal:
+                            eventType = angularConstants.pomeloSignal.inviteEvent;
+                            break;
+                        case angularConstants.pomeloSignal.messageSignal:
+                            eventType = angularConstants.pomeloSignal.messageEvent;
+                            break;
+                        case angularConstants.pomeloSignal.acceptSignal:
+                            eventType = angularConstants.pomeloSignal.acceptEvent;
+                            break;
+                        case angularConstants.pomeloSignal.chatInviteSignal:
+                            eventType = angularConstants.pomeloSignal.chatInviteEvent;
+                            break;
+                        case angularConstants.pomeloSignal.chatConnectSignal:
+                            eventType = angularConstants.pomeloSignal.chatConnectEvent;
+                            break;
+                        case angularConstants.pomeloSignal.chatDisconnectSignal:
+                            eventType = angularConstants.pomeloSignal.chatDisconnectEvent;
+                            break;
+                        case angularConstants.pomeloSignal.chatPauseSignal:
+                            eventType = angularConstants.pomeloSignal.chatPauseEvent;
+                            break;
+                        case angularConstants.pomeloSignal.chatResumeSignal:
+                            eventType = angularConstants.pomeloSignal.chatResumeEvent;
+                            break;
+                        case angularConstants.pomeloSignal.chatMessageSignal:
+                            eventType = angularConstants.pomeloSignal.chatMessageEvent;
+                            break;
+                        case angularConstants.pomeloSignal.chatAcceptSignal:
+                            eventType = angularConstants.pomeloSignal.chatAcceptEvent;
+                            break;
+                        case angularConstants.pomeloSignal.chatCloseSignal:
+                            eventType = angularConstants.pomeloSignal.chatCloseEvent;
+                            break;
+                        case angularConstants.pomeloSignal.topicInviteSignal:
+                            eventType = angularConstants.pomeloSignal.topicInviteEvent;
+                            break;
+                        case angularConstants.pomeloSignal.topicPauseSignal:
+                            eventType = angularConstants.pomeloSignal.topicPauseEvent;
+                            break;
+                        case angularConstants.pomeloSignal.topicResumeSignal:
+                            eventType = angularConstants.pomeloSignal.topicResumeEvent;
+                            break;
+                        case angularConstants.pomeloSignal.topicMessageSignal:
+                            eventType = angularConstants.pomeloSignal.topicMessageEvent;
+                            break;
+                        case angularConstants.pomeloSignal.topicCloseSignal:
+                            eventType = angularConstants.pomeloSignal.topicCloseEvent;
+                            break;
+                        case angularConstants.pomeloSignal.topicDisconnectSignal:
+                            eventType = angularConstants.pomeloSignal.topicDisconnectEvent;
+                            break;
+                    }
+
+                    utilService.broadcast($scope, eventType, data);
                 }
 
                 function initMaster() {
+                    $scope.nameList = {
+                        "A": [{_id: "52591a12c763d5e45855637a", name: "安亦斐"}],
+                        "B": [{_id: "52591a12c763d5e4585563b4", name: "毕嘉利"}],
+                        "C": [{_id: "52591a12c763d5e4585563ba", name: "蔡智先"}, {
+                            _id: "52591a12c763d5e4585563b8",
+                            name: "陈妍文"
+                        }],
+                        "D": [{_id: "52591a12c763d5e458556378", name: "董俊杰"}],
+                        "E": [{_id: "52591a12c763d5e458556380", name: "Edward"}],
+                        "F": [{_id: "52591a12c763d5e4585563bc", name: "冯婷晖"}],
+                        "G": [{_id: "52591a12c763d5e4585563be", name: "管悦欣"}, {
+                            _id: "52591a12c763d5e4585563b2",
+                            name: "葛晟宏"
+                        }],
+                        "H": [{_id: "52591a12c763d5e4585563c0", name: "黄文轩"}],
+                        "I": [{_id: "52591a12c763d5e458556384", name: "Icely"}],
+                        "J": [{_id: "52591a12c763d5e458556382", name: "蒋韵"}],
+                        "K": [{_id: "52591a12c763d5e458556384", name: "孔若凝"}],
+                        "L": [{_id: "52591a12c763d5e4585563a2", name: "林振远"}],
+                        "M": [{_id: "52591a12c763d5e45855638a", name: "马瑞旸"}],
+                        "N": [{_id: "52591a12c763d5e4585563c2", name: "倪晨怡"}],
+                        "P": [{_id: "52591a12c763d5e458556394", name: "潘依璐"}],
+                        "Q": [{_id: "52591a12c763d5e4585563a4", name: "钱辛杰"}],
+                        "R": [{_id: "52591a12c763d5e458556396", name: "Robin"}],
+                        "S": [{_id: "52591a12c763d5e4585563a6", name: "孙越凡"}],
+                        "T": [{_id: "52591a12c763d5e4585563c4", name: "田奕霖"}],
+                        "V": [{_id: "52591a12c763d5e458556398", name: "Victor"}],
+                        "W": [{_id: "52591a12c763d5e4585563d0", name: "王欣芸"}],
+                        "X": [{_id: "52591a12c763d5e4585563ce", name: "许景凯"}],
+                        "Y": [{_id: "52591a12c763d5e4585563ca", name: "殷奕蕊"}, {
+                            _id: "52591a12c763d5e4585563c8",
+                            name: "喻王玮"
+                        }],
+                        "Z": [{_id: "52591a12c763d5e4585563cc", name: "周璎泓"}],
+                    };
+
+                    $scope.conversationList = [
+                        {_id: "52591a12c763d5e45855637a", name: "安亦斐", updateTime: "", conversationArray: []},
+                        {_id: "52591a12c763d5e4585563b2", name: "葛晟宏", updateTime: "", conversationArray: []},
+                        {_id: "52591a12c763d5e4585563a4", name: "钱辛杰", updateTime: "", conversationArray: []},
+                        {_id: "52591a12c763d5e458556398", name: "Victor", updateTime: "", conversationArray: []},
+                        {_id: "52591a12c763d5e4585563b4", name: "毕嘉利", updateTime: "", conversationArray: []}
+                    ];
+
                     $scope.userId = "52591a12c763d5e4585563d0";
                     $scope.projectId = "56104bec2ac815961944b8bf";
                     $scope.inviteeId = "52591a12c763d5e4585563ce";
                     $scope.chatList = [];
+                    $scope.$on('$destroy', function () {
+                        unregisterPomeloListeners();
+                        var pomeloInstance = window.pomeloContext.pomeloInstance;
+                        if (pomeloInstance) {
+                            pomeloInstance.disconnect();
+                            window.pomeloContext.pomeloInstance = null;
+                        }
+                    });
 
-                    return $q.all([
-                        appService.getServerUrl(),
-                        appService.getChatServerHost(),
-                        appService.getChatServerPort(),
-                        appService.getDeviceId()
-                    ]).then(function (result) {
-                        window.serverUrl = result[0].data.result == "OK" && result[0].data.resultValue || "";
-                        var chatServerHost = result[1].data.result == "OK" && result[1].data.resultValue || "";
-                        var chatServerPort = result[2].data.result == "OK" && result[2].data.resultValue || "";
-                        var deviceId = result[3].data.result == "OK" && result[3].data.resultValue || "";
-
-                        window.pomeloContext = {deviceId: deviceId, host: chatServerHost, port: chatServerPort, route: angularConstants.pomeloRoute.defaultChatRoute};
-                        return utilService.getResolveDefer();
+                    return utilService.chain([
+                        appService.loadPomelo.bind(appService),
+                        appService.initPomelo.bind(appService)
+                    ]).then(function (err) {
+                        if (err) {
+                            return utilService.getRejectDefer(err);
+                        } else {
+                            window.pomeloInstance.on(window.pomeloContext.options.chatRoute, onEvent);
+                            return utilService.getResolveDefer();
+                        }
                     });
                 }
 

@@ -24,6 +24,7 @@ var ANGULAR_LIB_PATH = "javascripts/angular/1.4.5/",
     VELOCITY_LIB_PATH = "javascripts/velocity/1.2.2/",
     WAVESURFER_LIB_PATH = "javascripts/wavesurfer/1.0.29/",
     FABRIC_LIB_PATH = "javascripts/fabric/1.5.0/",
+    NODE_UUID_LIB_PATH = "javascripts/node-uuid/1.4.7/",
     POMELO_LIB_PATH = "pomelo/",
     APP_LIB_PATH = "app/",
     APP_COMMON_LIB_PATH = "common/",
@@ -61,6 +62,7 @@ requirejs.config({
         "velocity-lib": VELOCITY_LIB_PATH + "main",
         "wavesurfer-lib": WAVESURFER_LIB_PATH + "main",
         "fabric-lib": FABRIC_LIB_PATH + "main",
+        "node-uuid-lib": NODE_UUID_LIB_PATH + "main",
         "pomelo-lib": POMELO_LIB_PATH + "main",
         "app-common-lib": APP_COMMON_LIB_PATH + "main",
         "app-lib": APP_LIB_PATH + "main",
@@ -73,7 +75,7 @@ requirejs.config({
     waitSeconds: 0
 });
 
-requirejs(["jquery-lib", "jquery-plugins-lib", "hammer-lib", "jquery-ui-lib", "jquery-ui-plugins-lib", "angular-lib", "angular-modules-lib", "underscore-lib", "modernizr-lib", "string-lib", "bootstrap-lib", "editormd-lib", "snap-svg-lib", "velocity-lib", "wavesurfer-lib", "fabric-lib", "pomelo-lib"], function () {
+requirejs(["jquery-lib", "jquery-plugins-lib", "hammer-lib", "jquery-ui-lib", "jquery-ui-plugins-lib", "angular-lib", "angular-modules-lib", "pomelo-lib", "underscore-lib", "modernizr-lib", "string-lib", "bootstrap-lib", "editormd-lib", "snap-svg-lib", "velocity-lib", "wavesurfer-lib", "fabric-lib", "node-uuid-lib"], function () {
     if (isBrowser) {
         window.appModule = angular.module(APP_MODULE_NAME, APP_MODULE_DEPS);
         window.appModule.value("angularEventTypes", {
@@ -133,6 +135,27 @@ requirejs(["jquery-lib", "jquery-plugins-lib", "hammer-lib", "jquery-ui-lib", "j
                 'topicMessageSignal': 2004,
                 'topicCloseSignal': 2005,
                 'topicDisconnectSignal': 2006
+            },
+            pomeloEventType: {
+                'inviteEvent': "invite",
+                'messageEvent': "message",
+                'acceptEvent': "accept",
+
+                'chatInviteEvent': "chatInvite",
+                'chatConnectEvent': "chatConnect",
+                'chatDisconnectEvent': "chatDisconnect",
+                'chatPauseEvent': "chatPause",
+                'chatResumeEvent': "chatResume",
+                'chatMessageEvent': "chatResume",
+                'chatAcceptEvent': "chatAccept",
+                'chatCloseEvent': "chatClose",
+
+                'topicInviteEvent': "topicInvite",
+                'topicPauseEvent': "topicPause",
+                'topicResumeEvent': "topicResume",
+                'topicMessageEvent': "topicMessage",
+                'topicCloseEvent': "topicClose",
+                'topicDisconnectEvent': "topicDisconnect"
             },
             pomeloMemberCategory: {
                 creatorCategory: 1,
@@ -203,6 +226,10 @@ requirejs(["jquery-lib", "jquery-plugins-lib", "hammer-lib", "jquery-ui-lib", "j
 
         //Angular Modules Config
         arguments[6](window.appModule);
+
+        //Pomelo Module Load Function
+        (window.pomeloContext = window.pomeloContext || {}).load = arguments[7];
+        arguments[7](window.appModule);
     }
 
     window.modouleLogger && window.modouleLogger.debug(["angular-plugins-lib", "app-common-lib", "directive-lib", "app-lib"].join(",") + " Loading");

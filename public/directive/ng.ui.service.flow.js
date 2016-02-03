@@ -61,7 +61,7 @@ define(
                         if (self.projectRecord._id) {
                             self.flowWorks.flows.splice(0);
                             self.flowWorks.processes.splice(0);
-                            return $inject.appService.loadFlow(self.projectRecord._id).then(function (flowWorks) {
+                            return $inject.flowService.loadFlow(self.projectRecord._id).then(function (flowWorks) {
                                 var flows = flowWorks.flows,
                                     processes = flowWorks.processes;
 
@@ -91,7 +91,7 @@ define(
                         var self = this;
 
                         if (self.projectRecord._id) {
-                            return $inject.appService.saveFlow(self.projectRecord._id, self.flowWorks);
+                            return $inject.flowService.saveFlow(self.projectRecord._id, self.flowWorks);
                         } else {
                             return $inject.utilService.getResolveDefer();
                         }
@@ -1750,10 +1750,9 @@ define(
         }
 
         return function (appModule) {
-            appModule.
-                config(["$provide", function ($provide) {
-                    $provide.service('uiFlowService', Service);
-                }]);
+            appModule.config(["$provide", function ($provide) {
+                $provide.service('uiFlowService', Service);
+            }]);
         };
     }
 )

@@ -22,18 +22,21 @@ var ChatCommons = function () {
         });
 
     });
+    self.chatOptions = {
+        host: '127.0.0.1',
+        port: 3010,
+        transport: 'websocket',
+        isSecure: false
+    };
+    //websocket or sio
 }, c = new ChatCommons();
 
 //TODO Create a executor pool for concurrent communication
 ChatCommons.prototype.initServer = function (options, resourceName, callback) {
-    var defaultOptions = {
-        host: '127.0.0.1',
-        port: 3010,
-        transport: 'websocket'
-    };
-    //websocket or sio
+    var self = this;
 
-    _.extend(defaultOptions, options);
+    _.extend(self.chatOptions, options);
+    var defaultOptions = _.clone(self.chatOptions);
 
     var pomeloclient;
     if (defaultOptions.transport === "websocket") {

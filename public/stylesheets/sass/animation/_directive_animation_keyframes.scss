@@ -640,6 +640,49 @@
     }
 }
 
+@mixin tab_moveFromLeft($keyframe: tab_moveFromLeft) {
+    @-webkit-keyframes #{$keyframe} {
+        from {
+            -webkit-transform: translateX(-100%);
+        }
+    }
+
+    @-moz-keyframes #{$keyframe} {
+        from {
+            -moz-transform: translateX(-100%);
+        }
+    }
+
+    @keyframes #{$keyframe} {
+        from {
+            transform: translateX(-100%);
+        }
+    }
+}
+
+@mixin tab_moveToRightFade($keyframe: tab_moveToRightFade) {
+    @-webkit-keyframes #{$keyframe} {
+        to {
+            opacity: 0.3;
+            -webkit-transform: translateX(100%);
+        }
+    }
+
+    @-moz-keyframes #{$keyframe} {
+        to {
+            opacity: 0.3;
+            -moz-transform: translateX(100%);
+        }
+    }
+
+    @keyframes #{$keyframe} {
+        to {
+            opacity: 0.3;
+            transform: translateX(100%);
+        }
+    }
+}
+
 /* Slide 100% width from current position to right
  * Used by directive ng.ui.dock, ng.ui-color-editor-palette
  * Found in _dock.html, _color-editor-palette.html
@@ -751,3 +794,13 @@
  * Found in frameSketch.html
  */
 @include tinLeftOutKeyframes(tinLeftOut);
+
+/*
+ * Found in chat.html
+ */
+@include tab_moveFromLeft(tab_moveFromLeft);
+
+/*
+ * Found in chat.html
+ */
+@include tab_moveToRightFade(tab_moveToRightFade);

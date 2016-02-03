@@ -2,40 +2,93 @@
 <link rel="stylesheet" type="text/css" href="fonts/icon-chat/style.css"/>
 
 <div class="chatContainer fs-x-medium" ng-controller="ChatController">
-    <div class="contactPanel no-padding col-as-3">
-        <div class="userHeader">
-            <div class="contactAvatar fs-x-huge-before icon-chat-before icon-chat-portrait-before">
-                <img src="" onerror="this.src='images/image-chat/transparent.png'">
-            </div>
-            <div class="userName">Mark</div>
-            <div id="chatUserDropdown" class="dropdown">
-                <div class="fs-x-huge-after icon-chat-after icon-chat-menu-after dropdown-toggle" id="chatUserMenu"
-                     data-toggle="dropdown"
-                     aria-haspopup="true" aria-expanded="false">
-                </div>
-                <ul class="dropdown-menu" aria-labelledby="chatUserMenu">
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li><a href="#">Something else here</a></li>
-                    <li><a href="#">Separated link</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="contactDetail">
-            <nav class="navbar navbar-inverse">
-                <div class="container-fluid">
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-9">
-                        <ul class="contactNav nav navbar-nav">
-                            <li class="active"><a class="icon-chat-before icon-chat-textsms-before" href="#"></a></li>
-                            <li><a class="icon-chat-before icon-chat-person-before" href="#"></a></li>
+    <div ui-modal-window transition="fadeInScaleUp">
+        <div class="chatMainContent fs-x-medium" name="mainContent">
+            <div class="contactPanel no-padding col-as-3">
+                <div class="userHeader">
+                    <div class="contactAvatar fs-x-huge-before icon-chat-before icon-chat-portrait-before">
+                        <img src="" onerror="this.src='images/image-chat/transparent.png'">
+                    </div>
+                    <div class="userName">Mark</div>
+                    <div id="chatUserDropdown" class="dropdown">
+                        <div class="fs-x-huge-after icon-chat-after icon-chat-menu-after dropdown-toggle"
+                             id="chatUserMenu"
+                             data-toggle="dropdown"
+                             aria-haspopup="true" aria-expanded="false">
+                        </div>
+                        <ul class="dropdown-menu" aria-labelledby="chatUserMenu">
+                            <li class="fs-x-medium-before icon-chat-before icon-chat-person_add-before"
+                                ng-click="once(this, null, 'startAddFriend')"><a
+                                    href="">Add Friend</a></li>
+                            <li class="fs-x-medium-before icon-chat-before icon-chat-group_add-before"
+                                ng-click="once(this, null, 'startCreateDiscussion')"><a
+                                    href="">Create Discussion</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li><a href="#">Separated link</a></li>
                         </ul>
                     </div>
                 </div>
-            </nav>
+                <div class="contactDetail fs-x-medium">
+                    <nav class="contactNav">
+                        <div ui-creative-link effect="reveal" content="message" class="select"
+                             on-select="selectContent('message')"><span
+                                class="icon-chat-before icon-chat-textsms-before">Message</span>
+                        </div>
+                        <div ui-creative-link effect="reveal" content="friend" on-select="selectContent('friend')">
+                            <span class="icon-chat-before icon-chat-person-before">Friend</span>
+                        </div>
+                    </nav>
+                    <div class="contactContent">
+                        <div content="message" class="fs-x-small select">
+                            <div class="userName" ng-repeat="conversationUser in conversationList"
+                                 ng-click="once(this, $event, 'selectConversationUser', $event)">
+                                <div class="userAvatar fs-x-huge-before icon-chat-before icon-chat-portrait-before">
+                                    <img src="" onerror="this.src='images/image-chat/transparent.png'">
+                                </div>
+                                <span>{{conversationUser.name}}</span>
+                            </div>
+                        </div>
+                        <div content="friend" class="fs-x-small" ng-click="once(this, $event, 'selectFriend', $event)">
+                            <div ng-repeat="(key, userList) in nameList">
+                                <span class="initial">{{key}}</span>
+                                <div class="userName" ng-repeat="user in userList">
+                                    <div class="userAvatar fs-x-huge-before icon-chat-before icon-chat-portrait-before">
+                                        <img src="" onerror="this.src='images/image-chat/transparent.png'">
+                                    </div>
+                                    <span>{{user.name}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="chatPanel no-padding col-as-9">
+                <div class="chatHeader col-as-12"></div>
+                <div class="chatContent col-as-12"></div>
+            </div>
         </div>
-    </div>
-    <div class="chatPanel no-padding col-as-9">
-        <div class="chatHeader col-as-12"></div>
-        <div class="chatContent col-as-12"></div>
+
+        <div class="chatModalContent fs-x-large" name="modalContent">
+            <div id="addFriendModal" ng-show="modalUsage === 'AddFriend'"
+                 ng-click="stopEvent($event, '#add-friend-control')">
+                <div id="add-friend-control">
+                    <div class="chatTopBar">
+                        <div class="userDisplayQrCode fs-x-huge icon-chat-before icon-chat-qr-code-before"
+                             ng-click="toggleDisplay('#add-friend-control .userQrCode', $event)"></div>
+                        <div class="userQrCode"
+                             ng-click="toggleDisplay($event)">
+                            <div class="qrCodeImg"
+                                 ng-style="{'background-image':'url(api/public/accountQr?userId={{$root.loginUser._id}})'}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="createDiscussionModal" ng-show="modalUsage === 'CreateDiscussion'"
+                 ng-click="stopEvent($event, '#create-discussion-control')">
+                <div id="create-discussion-control">
+                </div>
+            </div>
+        </div>
     </div>
 </div>

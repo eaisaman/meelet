@@ -3,8 +3,8 @@ var router = express.Router();
 var RouteHandler = require('../../../routeHandler'),
     handler = new RouteHandler(router);
 var fileController = require('../common/file'),
-    userController = require('./user');
-var chatController = require('./chat');
+    userController = require('./user'),
+    chatController = require('./chat');
 
 handler.routeOnFunctionName(new userController({
     chatController: new chatController(),

@@ -9,6 +9,15 @@ $activeColor: #669933;
 $errorColor: #e74c3c;
 $underlineLinearGradient: (rgb(235, 235, 235) 0%, rgb(235, 235, 235) 50%, #fff 100%);
 
+$blue0: #f1f6fa;
+$blue1: #a6c1ce;
+$blue2: #6699a8;
+$blue3: #4f7698;
+$blue4: #1d5b8b;
+$blue5: #114975;
+$blue6: #033865;
+$green: #40bf6c;
+
 @mixin emboss-title($pseudo: "", $onActive:true) {
     &#{$pseudo} {
         margin: 0;

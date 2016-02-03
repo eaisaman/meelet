@@ -22,6 +22,19 @@ var ChatController = function () {
 /**
  * @description
  *
+ * Get configuration of chat host, port, transport and isSecure
+ *
+ * @param name
+ * @param success
+ * @param fail
+ */
+ChatController.prototype.getChatConfiguration = function (success, fail) {
+    success(commons.chatOptions);
+}
+
+/**
+ * @description
+ *
  * Get projects created by user, chat created by user, and chat invitation to user.
  *
  * @param userId
@@ -269,27 +282,18 @@ ChatController.prototype.getInvitation = function (invitationFilter, success, fa
  * @param fail
  */
 ChatController.prototype.getChatHistory = function (chatHistoryFilter, success, fail) {
-    var self = this;
+    var self = this,
+        dummyTime = {$gt: 0};
 
     chatHistoryFilter = (chatHistoryFilter && JSON.parse(chatHistoryFilter)) || {};
     if (chatHistoryFilter.userId) {
         chatHistoryFilter.userId = new self.db.Types.ObjectId(chatHistoryFilter.userId);
     }
-    if (chatHistoryFilter.chatTime) {
-        chatHistoryFilter.chatTime = {$gt: chatHistoryFilter.chatTime};
-    }
-    if (chatHistoryFilter.chatInvitationTime) {
-        chatHistoryFilter.chatInvitationTime = {$gt: chatHistoryFilter.chatInvitationTime};
-    }
-    if (chatHistoryFilter.conversationTime) {
-        chatHistoryFilter.conversationTime = {$gt: chatHistoryFilter.conversationTime};
-    }
-    if (chatHistoryFilter.topicTime) {
-        chatHistoryFilter.topicTime = {$gt: chatHistoryFilter.topicTime};
-    }
-    if (chatHistoryFilter.topicInvitationTime) {
-        chatHistoryFilter.topicInvitationTime = {$gt: chatHistoryFilter.topicInvitationTime};
-    }
+    chatHistoryFilter.chatTime = chatHistoryFilter.chatTime && {$gt: chatHistoryFilter.chatTime} || dummyTime;
+    chatHistoryFilter.chatInvitationTime = chatHistoryFilter.chatInvitationTime && {$gt: chatHistoryFilter.chatInvitationTime} || dummyTime;
+    chatHistoryFilter.conversationTime = chatHistoryFilter.conversationTime && {$gt: chatHistoryFilter.conversationTime} || dummyTime;
+    chatHistoryFilter.topicTime = chatHistoryFilter.topicTime && {$gt: chatHistoryFilter.topicTime} || dummyTime;
+    chatHistoryFilter.topicInvitationTime = chatHistoryFilter.topicInvitationTime && {$gt: chatHistoryFilter.topicInvitationTime} || dummyTime;
 
     (!self.isDBReady && fail(new Error('DB not initialized'))) || async.waterfall(
         [
@@ -467,9 +471,7 @@ ChatController.prototype.getChatUser = function (chatId, chatUserTime, succcess,
     var self = this;
 
     chatId = new self.db.Types.ObjectId(chatId);
-
-    if (chatUserTime != null)
-        chatUserTime = {$gt: chatUserTime};
+    chatUserTime = chatUserTime && {$gt: chatUserTime} || {$gt: 0};
 
     (!self.isDBReady && fail(new Error('DB not initialized'))) || self.schema.ChatInvitation.find({
         chatId: chatId,

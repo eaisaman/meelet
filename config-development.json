@@ -132,7 +132,7 @@
       "function": "instantiateMongooseDb",
       "parameters": [
         {
-          "url": "mongodb://meelet:meelet@localhost/meelet",
+          "url": "mongodb://meelet:meelet@192.168.0.106/meelet",
           "dbSchema": "./schema.json"
         }
       ]
@@ -143,7 +143,7 @@
       "function": "instantiateMongoDb",
       "parameters": [
         {
-          "url": "mongodb://meelet:meelet@localhost/meelet",
+          "url": "mongodb://meelet:meelet@192.168.0.106/meelet",
           "auto_reconnect": true
         }
       ]
@@ -154,9 +154,10 @@
       "function": "initServer",
       "parameters": [
         {
-          "host": "localhost",
+          "host": "192.168.0.106",
           "port": 3010,
-          "transport": "websocket"
+          "transport": "websocket",
+          "isSecure": false
         }
       ]
     }
@@ -204,6 +205,8 @@
       "LocationConversation": 4,
       "VoiceConversation": 5,
       "FileConversation": 6
+    },
+    "stationConstants": {
     },
     "meeletFile": "meelet.json",
     "meeletMetaFile": "meta.json",

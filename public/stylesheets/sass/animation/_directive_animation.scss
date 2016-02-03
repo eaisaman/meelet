@@ -148,3 +148,13 @@
  * Found in frameSketch.html
  */
 @include baseAnimation(tinLeftOut);
+
+/*
+ * Found in chat.html
+ */
+@include baseAnimation(tab_moveFromLeft, 0.6s, ease, null, null, null, both);
+
+/*
+ * Found in chat.html
+ */
+@include baseAnimation(tab_moveToRightFade, 0.7s, ease, null, null, null, both);
