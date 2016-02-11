@@ -47,111 +47,123 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-chat-qr-code:before {
+.icon-chat-exit:before {
     content: "\e600";
+}
+
+.icon-chat-qr-code:before {
+    content: "\e601";
 }
 
 .icon-chat-textsms:before {
-    content: "\e601";
+    content: "\e602";
 }
 
 .icon-chat-menu:before {
-    content: "\e602";
+    content: "\e603";
 }
 
 .icon-chat-close:before {
-    content: "\e603";
+    content: "\e604";
 }
 
 .icon-chat-person:before {
-    content: "\e604";
+    content: "\e605";
 }
 
 .icon-chat-search:before {
-    content: "\e605";
+    content: "\e606";
 }
 
 .icon-chat-portrait:before {
-    content: "\e606";
+    content: "\e607";
 }
 
 .icon-chat-person_add:before {
-    content: "\e607";
+    content: "\e608";
 }
 
 .icon-chat-group_add:before {
-    content: "\e907";
+    content: "\e609";
+}
+
+.icon-chat-exit-before:before {
+    content: "\e600";
 }
 
 .icon-chat-qr-code-before:before {
-    content: "\e600";
+    content: "\e601";
 }
 
 .icon-chat-textsms-before:before {
-    content: "\e601";
+    content: "\e602";
 }
 
 .icon-chat-menu-before:before {
-    content: "\e602";
+    content: "\e603";
 }
 
 .icon-chat-close-before:before {
-    content: "\e603";
+    content: "\e604";
 }
 
 .icon-chat-person-before:before {
-    content: "\e604";
+    content: "\e605";
 }
 
 .icon-chat-search-before:before {
-    content: "\e605";
+    content: "\e606";
 }
 
 .icon-chat-portrait-before:before {
-    content: "\e606";
+    content: "\e607";
 }
 
 .icon-chat-person_add-before:before {
-    content: "\e607";
+    content: "\e608";
 }
 
 .icon-chat-group_add-before:before {
-    content: "\e907";
+    content: "\e609";
 }
 
-.icon-chat-qr-code-after:after {
+.icon-chat-exit-after:after {
     content: "\e600";
 }
 
-.icon-chat-textsms-after:after {
+.icon-chat-qr-code-after:after {
     content: "\e601";
 }
 
-.icon-chat-menu-after:after {
+.icon-chat-textsms-after:after {
     content: "\e602";
 }
 
-.icon-chat-close-after:after {
+.icon-chat-menu-after:after {
     content: "\e603";
 }
 
-.icon-chat-person-after:after {
+.icon-chat-close-after:after {
     content: "\e604";
 }
 
-.icon-chat-search-after:after {
+.icon-chat-person-after:after {
     content: "\e605";
 }
 
-.icon-chat-portrait-after:after {
+.icon-chat-search-after:after {
     content: "\e606";
 }
 
-.icon-chat-person_add-after:after {
+.icon-chat-portrait-after:after {
     content: "\e607";
 }
 
+.icon-chat-person_add-after:after {
+    content: "\e608";
+}
+
 .icon-chat-group_add-after:after {
-    content: "\e907";
+    content: "\e609";
 }
 

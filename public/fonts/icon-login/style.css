@@ -1,0 +1,84 @@
+@font-face {
+    font-family: 'icon-login';
+    src: url('icon-login.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.icon-login:before {
+    font-family: 'icon-login';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-login-before:before {
+    font-family: 'icon-login';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-login-after:after {
+    font-family: 'icon-login';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-login-lamp:before {
+    content: "\e600";
+}
+
+.icon-login-key:before {
+    content: "\e601";
+}
+
+.icon-login-person:before {
+    content: "\e602";
+}
+
+.icon-login-lamp-before:before {
+    content: "\e600";
+}
+
+.icon-login-key-before:before {
+    content: "\e601";
+}
+
+.icon-login-person-before:before {
+    content: "\e602";
+}
+
+.icon-login-lamp-after:after {
+    content: "\e600";
+}
+
+.icon-login-key-after:after {
+    content: "\e601";
+}
+
+.icon-login-person-after:after {
+    content: "\e602";
+}

@@ -27,9 +27,10 @@
                     ng-click="once(this, $event, 'onVisitRepoLibrary', $event)"><a
                         href="">Repo Library</a></li>
                 <li class="icon-topbar-before icon-topbar-showcase-before"><a href="">Show Case</a></li>
+                <li class="icon-topbar-before icon-topbar-chat-before" ng-click="once(this, $event, 'onChat')"><a href="">Chat</a></li>
                 <li class="icon-topbar-before icon-topbar-help-before"><a href="">Help</a></li>
                 <li class="divider"></li>
-                <li class="icon-topbar-before icon-topbar-sign_in-before"><a href="">Sign In/Out</a></li>
+                <li class="icon-topbar-before icon-topbar-sign_in-before" ng-click="once(this, $event, 'logout')"><a href="">Log Out</a></li>
             </ul>
         </div>
     </div>

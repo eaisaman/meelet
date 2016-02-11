@@ -86,10 +86,10 @@ define(
                 );
             }
 
-            appService.prototype.refreshUser = function (loginName) {
+            appService.prototype.refreshUser = function (loginName, rememberMe) {
                 var self = this;
 
-                return self.cordovaPromise("refreshUser").apply(self, [loginName]).then(
+                return self.cordovaPromise("refreshUser").apply(self, [loginName, rememberMe]).then(
                     function () {
                         return self.restoreUserFromStorage();
                     },
@@ -99,10 +99,10 @@ define(
                 );
             };
 
-            appService.prototype.doLogin = function (loginName, password) {
+            appService.prototype.doLogin = function (loginName, password, rememberMe) {
                 var self = this;
 
-                return self.cordovaPromise("doLogin").apply(self, [loginName, password]).then(
+                return self.cordovaPromise("doLogin").apply(self, [loginName, password, rememberMe]).then(
                     function () {
                         return self.restoreUserFromStorage();
                     },
@@ -196,16 +196,15 @@ define(
                 return this.cordovaPromise("getDeviceId").apply(this, []);
             };
 
-            window.cordova && appModule.
-                config(["$provide", "$injector", function ($provide, $injector) {
-                    $provide.decorator("appService", ["$delegate", function ($delegate) {
-                        _.extend($delegate.constructor.prototype, appService.prototype);
-                        return $delegate;
-                    }]);
-                    $provide.service('embeddedAppService', appService);
-                    var svc = $injector.get('embeddedAppServiceProvider').$get();
-                    svc.registerService();
+            window.cordova && appModule.config(["$provide", "$injector", function ($provide, $injector) {
+                $provide.decorator("appService", ["$delegate", function ($delegate) {
+                    _.extend($delegate.constructor.prototype, appService.prototype);
+                    return $delegate;
                 }]);
+                $provide.service('embeddedAppService', appService);
+                var svc = $injector.get('embeddedAppServiceProvider').$get();
+                svc.registerService();
+            }]);
         };
     }
 )

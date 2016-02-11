@@ -1,0 +1,28 @@
+<link rel="stylesheet" type="text/css" href="stylesheets/login.css"/>
+<link rel="stylesheet" type="text/css" href="fonts/icon-login/style.css"/>
+
+<div id="loginContainer" ng-controller="LoginController">
+    <div id="loginPanel" class="fs-x-medium">
+        <div id="loginHeader" class="icon-login-before icon-login-lamp-before"></div>
+        <div id="loginDetail">
+            <div class="input-group col-as-10">
+                <span id="login-person-addon"
+                      class="input-group-addon icon-login-before icon-login-person-before"></span>
+                <input type="text" ng-model="userName" class="form-control" placeholder="User Name" aria-describedby="login-person-addon">
+            </div>
+            <div class="input-group col-as-10">
+                <span id="login-key-addon" class="input-group-addon icon-login-before icon-login-key-before"></span>
+                <input type="text" ng-model="plainPassword" class="form-control" placeholder="Password" aria-describedby="login-key-addon">
+            </div>
+            <div id="loginBar">
+                <div class="toolButton" ng-click="once(this, $event, 'login')">Log in</div>
+                <div class="input-group col-as-6 fs-x-small">
+                    <div class="inputCheckBox no-padding col-as-3">
+                        <input type="checkbox" class="rememberCheckBox no-padding">
+                    </div>
+                    <label class="col-as-8 no-padding control-label">Remember me</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

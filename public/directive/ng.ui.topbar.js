@@ -2,9 +2,9 @@ define(
     ["angular-lib", "jquery-lib"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$rootScope", "$http", "$timeout", "$q", "$exceptionHandler", "$parse", "$compile", "angularConstants", "angularEventTypes", "appService", "utilService", "uiService", "urlService"];
+            var inject = ["$rootScope", "$timeout", "$q", "angularConstants", "angularEventTypes", "appService", "utilService", "uiService", "urlService"];
 
-            appModule.directive("uiTopbar", _.union(inject, [function ($rootScope, $http, $timeout, $q, $exceptionHandler, $parse, $compile, angularConstants, angularEventTypes, appService, utilService, uiService, urlService) {
+            appModule.directive("uiTopbar", _.union(inject, [function ($rootScope, $timeout, $q, angularConstants, angularEventTypes, appService, utilService, uiService, urlService) {
                 'use strict';
 
                 var defaults = {},
@@ -137,12 +137,36 @@ define(
 
                                     if (urlService.currentLocation() !== "repo") {
                                         $timeout(function () {
+                                            //Clean url stack
                                             urlService.home(false);
-                                            urlService.repo(false)
+
+                                            urlService.repo()
                                         })
                                     }
 
                                     return utilService.getResolveDefer();
+                                }
+
+                                scope.onChat = function (event) {
+                                    event && event.stopPropagation && event.stopPropagation();
+
+                                    if (urlService.currentLocation() !== "chat") {
+                                        $timeout(function () {
+                                            //Clean url stack
+                                            urlService.home(false);
+
+                                            urlService.chat()
+                                        })
+                                    }
+
+                                    return utilService.getResolveDefer();
+                                }
+
+                                scope.logout = function () {
+                                    return appService.doLogout().then(function () {
+                                        urlService.login();
+                                        return utilService.getResolveDefer();
+                                    });
                                 }
 
                                 scope.switchProjectWatcher = scope.$on(angularEventTypes.switchProjectEvent, function (event, project) {

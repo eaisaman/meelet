@@ -4,7 +4,7 @@ define(
         return function (appModule, extension, meta) {
             var FEATURE = "BaseService",
                 PLATFORM = "browser",
-                appService = function ($rootScope, $http, $timeout, $q, $exceptionHandler, $compile, $cookies, $cookieStore, utilService, angularConstants, angularEventTypes, serviceRegistry) {
+                appService = function ($rootScope, $http, $timeout, $q, $exceptionHandler, $compile, $cookies, utilService, angularConstants, angularEventTypes, serviceRegistry) {
                     this.$rootScope = $rootScope;
                     this.$http = $http;
                     this.$timeout = $timeout;
@@ -12,7 +12,6 @@ define(
                     this.$exceptionHandler = $exceptionHandler;
                     this.$compile = $compile;
                     this.$cookies = $cookies;
-                    this.$cookieStore = $cookieStore;
                     this.utilService = utilService;
                     this.serviceRegistry = serviceRegistry;
                     this.angularConstants = angularConstants;
@@ -22,7 +21,7 @@ define(
                     _.extend(SoundContructor.prototype, _.pick(this, appService.$inject));
                 };
 
-            appService.$inject = ["$rootScope", "$http", "$timeout", "$q", "$exceptionHandler", "$compile", "$cookies", "$cookieStore", "utilService", "angularConstants", "angularEventTypes", "serviceRegistry"];
+            appService.$inject = ["$rootScope", "$http", "$timeout", "$q", "$exceptionHandler", "$compile", "$cookies", "utilService", "angularConstants", "angularEventTypes", "serviceRegistry"];
 
             var SoundContructor = function () {
                 this.audioSourceNode = null;
@@ -990,7 +989,7 @@ define(
                 });
             }
 
-            appService.prototype.refreshUser = function (loginName) {
+            appService.prototype.refreshUser = function (loginName, rememberMe) {
                 var self = this;
 
                 return self.$http({
@@ -1005,7 +1004,8 @@ define(
 
                     self.$timeout(function () {
                         if (userObj) {
-                            localStorage.loginUser = JSON.stringify(userObj);
+                            if (rememberMe) localStorage.loginUser = JSON.stringify(userObj);
+
                             self.$rootScope.loginUser = self.$rootScope.loginUser || {};
                             for (var key in self.$rootScope.loginUser) {
                                 delete self.$rootScope.loginUser[key];
@@ -1021,17 +1021,17 @@ define(
 
                     return defer.promise;
                 }, function (err) {
-                    return self.utilService.getRejectDefer(err);
+                    return self.utilService.getRejectDefer(err.data);
                 });
             };
 
-            appService.prototype.doLogin = function (loginName, password) {
+            appService.prototype.doLogin = function (loginName, password, rememberMe) {
                 var self = this,
                     encoded = self.utilService.encode(loginName + ':' + password);
 
                 this.$http.defaults.headers.common.Authorization = 'Basic ' + encoded;
 
-                return self.refreshUser(loginName);
+                return self.refreshUser(loginName, rememberMe);
             };
 
             appService.prototype.doLogout = function () {
@@ -1044,7 +1044,7 @@ define(
                     for (var key in self.$rootScope.loginUser) {
                         delete self.$rootScope.loginUser[key];
                     }
-                    self.$cookieStore.remove("connect.sid");
+                    self.$cookies.remove("connect.sid");
                     self.$http.defaults.headers.common.Authorization = "";
 
                     defer.resolve();
@@ -1059,7 +1059,7 @@ define(
 
                 self.$timeout(
                     function () {
-                        var sid = self.$cookies["connect.sid"];
+                        var sid = self.$cookies.get("connect.sid");
 
                         !sid && delete localStorage.loginUser;
 

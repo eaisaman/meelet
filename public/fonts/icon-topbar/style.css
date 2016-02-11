@@ -1,141 +1,181 @@
 @font-face {
-	font-family: 'icon-topbar';
-	src: url('icon-topbar.ttf') format('truetype');
-	font-weight: normal;
-	font-style: normal;
+    font-family: 'icon-topbar';
+    src: url('icon-topbar.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
 }
 
 .icon-topbar:before {
-	font-family: 'icon-topbar';
-	speak: none;
-	font-style: normal;
-	font-weight: normal;
-	font-variant: normal;
-	text-transform: none;
-	line-height: 1;
+    font-family: 'icon-topbar';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
 
-	/* Better Font Rendering =========== */
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 .icon-topbar-before:before {
-	font-family: 'icon-topbar';
-	speak: none;
-	font-style: normal;
-	font-weight: normal;
-	font-variant: normal;
-	text-transform: none;
-	line-height: 1;
+    font-family: 'icon-topbar';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
 
-	/* Better Font Rendering =========== */
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 .icon-topbar-after:after {
-	font-family: 'icon-topbar';
-	speak: none;
-	font-style: normal;
-	font-weight: normal;
-	font-variant: normal;
-	text-transform: none;
-	line-height: 1;
+    font-family: 'icon-topbar';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
 
-	/* Better Font Rendering =========== */
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-topbar-chat:before {
+    content: "\e600";
+}
+
+.icon-topbar-select:before {
+    content: "\e601";
+}
+
+.icon-topbar-sign_out:before {
+    content: "\e602";
+}
+
+.icon-topbar-sign_in:before {
+    content: "\e603";
+}
+
+.icon-topbar-Library:before {
+    content: "\e604";
+}
+
+.icon-topbar-showcase:before {
+    content: "\e605";
+}
+
+.icon-topbar-help:before {
+    content: "\e606";
+}
+
+.icon-topbar-add:before {
+    content: "\e607";
+}
+
+.icon-topbar-menu:before {
+    content: "\e608";
 }
 
 .icon-topbar-back:before {
-	content: "\e600";
+    content: "\e609";
 }
+
 .icon-topbar-home:before {
-	content: "\e601";
+    content: "\e60a";
 }
-.icon-topbar-menu:before {
-	content: "\e602";
+
+.icon-topbar-chat-before:before {
+    content: "\e600";
 }
-.icon-topbar-sign_out:before {
-	content: "\e603";
+
+.icon-topbar-select-before:before {
+    content: "\e601";
 }
-.icon-topbar-sign_in:before {
-	content: "\e604";
+
+.icon-topbar-sign_out-before:before {
+    content: "\e602";
 }
-.icon-topbar-Library:before {
-	content: "\e605";
+
+.icon-topbar-sign_in-before:before {
+    content: "\e603";
 }
-.icon-topbar-showcase:before {
-	content: "\e606";
+
+.icon-topbar-Library-before:before {
+    content: "\e604";
 }
-.icon-topbar-help:before {
-	content: "\e607";
+
+.icon-topbar-showcase-before:before {
+    content: "\e605";
 }
-.icon-topbar-add:before {
-	content: "\e608";
+
+.icon-topbar-help-before:before {
+    content: "\e606";
 }
-.icon-topbar-select:before {
-	content: "\e609";
+
+.icon-topbar-add-before:before {
+    content: "\e607";
+}
+
+.icon-topbar-menu-before:before {
+    content: "\e608";
 }
 
 .icon-topbar-back-before:before {
-	content: "\e600";
+    content: "\e609";
 }
+
 .icon-topbar-home-before:before {
-	content: "\e601";
+    content: "\e60a";
 }
-.icon-topbar-menu-before:before {
-	content: "\e602";
+
+.icon-topbar-chat-after:after {
+    content: "\e600";
 }
-.icon-topbar-sign_out-before:before {
-	content: "\e603";
+
+.icon-topbar-select-after:after {
+    content: "\e601";
 }
-.icon-topbar-sign_in-before:before {
-	content: "\e604";
+
+.icon-topbar-sign_out-after:after {
+    content: "\e602";
 }
-.icon-topbar-Library-before:before {
-	content: "\e605";
+
+.icon-topbar-sign_in-after:after {
+    content: "\e603";
 }
-.icon-topbar-showcase-before:before {
-	content: "\e606";
+
+.icon-topbar-Library-after:after {
+    content: "\e604";
 }
-.icon-topbar-help-before:before {
-	content: "\e607";
+
+.icon-topbar-showcase-after:after {
+    content: "\e605";
 }
-.icon-topbar-add-before:before {
-	content: "\e608";
+
+.icon-topbar-help-after:after {
+    content: "\e606";
 }
-.icon-topbar-select-before:before {
-	content: "\e609";
+
+.icon-topbar-add-after:after {
+    content: "\e607";
+}
+
+.icon-topbar-menu-after:after {
+    content: "\e608";
 }
 
 .icon-topbar-back-after:after {
-	content: "\e600";
+    content: "\e609";
 }
+
 .icon-topbar-home-after:after {
-	content: "\e601";
+    content: "\e60a";
 }
-.icon-topbar-menu-after:after {
-	content: "\e602";
-}
-.icon-topbar-sign_out-after:after {
-	content: "\e603";
-}
-.icon-topbar-sign_in-after:after {
-	content: "\e604";
-}
-.icon-topbar-Library-after:after {
-	content: "\e605";
-}
-.icon-topbar-showcase-after:after {
-	content: "\e606";
-}
-.icon-topbar-help-after:after {
-	content: "\e607";
-}
-.icon-topbar-add-after:after {
-	content: "\e608";
-}
-.icon-topbar-select-after:after {
-	content: "\e609";
-}
+

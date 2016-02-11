@@ -13,7 +13,7 @@ define(
                     "scope": $scope
                 });
 
-                function initMaster() {
+                function init() {
                     serviceRegistry.makeGlobal();
 
                     $rootScope.showAlert = function (alertObj) {
@@ -50,52 +50,20 @@ define(
                         //For development convenience, we do fake login or restore user info if already authenticated.
                         appService.restoreUserFromStorage().then(
                             function () {
-                                var arr = [];
-                                if (!$rootScope.loginUser._id) {
-                                    arr.push(
-                                        function () {
-                                            return appService.createUser({
-                                                plainPassword: "*",
-                                                loginName: "13341692882",
-                                                name: "王强",
-                                                sex: "M",
-                                                tel: "13341692882"
-                                            }).then(
-                                                function (userObj) {
-                                                    userObj && _.extend($rootScope.loginUser, userObj);
-
-                                                    return utilService.getResolveDefer();
-                                                },
-                                                function (err) {
-                                                    return utilService.getRejectDefer(err);
-                                                }
-                                            )
-                                        }
-                                    );
-                                }
-
-                                arr.push(function () {
+                                if ($rootScope.loginUser._id) {
                                     return appService.getUserDetail({"loginName": $rootScope.loginUser.loginName}).then(
                                         function (result) {
                                             result && result.data.result == "OK" && _.extend($rootScope.userDetail, result.data.resultValue[0]);
 
-                                            return utilService.getResolveDefer();
+                                            return utilService.getResolveDefer("project");
                                         },
                                         function (err) {
                                             return utilService.getRejectDefer(err);
                                         }
                                     );
-                                });
-
-                                return utilService.chain(arr).then(
-                                    function (err) {
-                                        if (err) {
-                                            return utilService.getRejectDefer(err);
-                                        } else {
-                                            return utilService.getResolveDefer();
-                                        }
-                                    }
-                                );
+                                } else {
+                                    return utilService.getResolveDefer("login");
+                                }
                             }, function (err) {
                                 return utilService.getRejectDefer(err);
                             }
@@ -162,11 +130,57 @@ define(
                     return target;
                 };
 
-                initMaster().then(
-                    function () {
-                        urlService.chat();
+                init().then(
+                    function (results) {
+                        var url = results[1];
+                        urlService[url]();
                     }
                 );
+            }
+
+            function LoginController($scope, $rootScope, $timeout, $q, angularConstants, appService, urlService, utilService) {
+                extension && extension.attach && extension.attach($scope, {
+                    "$timeout": $timeout,
+                    "$q": $q,
+                    "angularConstants": angularConstants,
+                    "utilService": utilService,
+                    "element": $("#loginContainer"),
+                    "scope": $scope
+                });
+
+
+                $("#loginContainer").find('input.rememberCheckBox').on('ifChanged', function (event) {
+                    $scope.rememberMe = event.target.checked;
+                }).iCheck({
+                    checkboxClass: 'icheckbox_square-custom-green',
+                    increaseArea: '20%'
+                });
+
+                $scope.login = function () {
+                    return appService.doLogin($scope.userName, $scope.plainPassword, !!$scope.rememberMe).then(
+                        function () {
+                            return appService.getUserDetail({"loginName": $rootScope.loginUser.loginName}).then(
+                                function (result) {
+                                    result && result.data.result == "OK" && _.extend($rootScope.userDetail, result.data.resultValue[0]);
+
+                                    urlService.project();
+                                    return utilService.getResolveDefer();
+                                },
+                                function (err) {
+                                    return utilService.getRejectDefer(err);
+                                }
+                            );
+                        },
+                        function (err) {
+                            return $scope.showAlert(
+                                {
+                                    title: err,
+                                    category: 3
+                                }
+                            );
+                        }
+                    );
+                }
             }
 
             function FrameSketchController($scope, $rootScope, $timeout, $q, $log, $exceptionHandler, $compile, $parse, angularEventTypes, angularConstants, appService, uiService, utilService, uiCanvasService) {
@@ -1053,7 +1067,7 @@ define(
                     }
                 }
 
-                function initMaster() {
+                function init() {
                     function createWidgetPositionInputAssign(name, cssName) {
                         var fn = $parse(name),
                             assign = fn.assign;
@@ -1079,7 +1093,7 @@ define(
                                 if (value) {
                                     var m = (value || "").match(/([-\d\.]+)px$/);
                                     if (m && m.length == 2) {
-                                        utilService.once(positionInputHandler, null, angularConstants.unresponsiveInterval, "FrameSketchController.initMaster.createWidgetPositionInputAssign.positionInputHandler." + name)(value);
+                                        utilService.once(positionInputHandler, null, angularConstants.unresponsiveInterval, "FrameSketchController.init.createWidgetPositionInputAssign.positionInputHandler." + name)(value);
                                     }
 
                                     var args = Array.prototype.slice.call(arguments),
@@ -1168,13 +1182,13 @@ define(
                     $scope.beforeWidgetCreationWatcher = $scope.$on(angularEventTypes.beforeWidgetCreationEvent, function (event, fn) {
                         utilService.once(function (fn) {
                             return $scope.showWidgetName(fn);
-                        }, null, angularConstants.unresponsiveInterval, "FrameSketchController.initMaster.beforeWidgetCreation")(fn);
+                        }, null, angularConstants.unresponsiveInterval, "FrameSketchController.init.beforeWidgetCreation")(fn);
                     });
 
                     $scope.beforeVideoWidgetCreationWatcher = $scope.$on(angularEventTypes.beforeVideoWidgetCreationEvent, function (event, fn) {
                         utilService.once(function (fn) {
                             return $scope.showVideoWidgetName(fn);
-                        }, null, angularConstants.unresponsiveInterval, "FrameSketchController.initMaster.beforeVideoWidgetCreationWatcher")(fn);
+                        }, null, angularConstants.unresponsiveInterval, "FrameSketchController.init.beforeVideoWidgetCreationWatcher")(fn);
                     });
 
                     $scope.resourceEditWatcher = $scope.$on(angularEventTypes.resourceEditEvent, function (event, obj) {
@@ -1188,7 +1202,7 @@ define(
 
                                 return utilService.getResolveDefer();
                             })
-                        }, null, angularConstants.unresponsiveInterval, "FrameSketchController.initMaster.resourceEditWatcher")(obj);
+                        }, null, angularConstants.unresponsiveInterval, "FrameSketchController.init.resourceEditWatcher")(obj);
                     });
 
                     $scope.switchProjectWatcher = $scope.$on(angularEventTypes.switchProjectEvent, function () {
@@ -1237,7 +1251,7 @@ define(
                     });
                 }
 
-                initMaster();
+                init();
 
                 var widgetSettingList = [];
 
@@ -1493,7 +1507,7 @@ define(
                     }
                 };
 
-                function initMaster() {
+                function init() {
                     var urlParams = $rootScope.urlParams && $rootScope.urlParams["project"] || null,
                         projectAction = urlParams && urlParams.projectAction || "";
 
@@ -1506,7 +1520,7 @@ define(
                     }
                 }
 
-                initMaster();
+                init();
 
                 $scope._ = _;
             }
@@ -1583,7 +1597,7 @@ define(
                     scope.toggleModalWindow();
                 };
 
-                function initMaster() {
+                function init() {
                     var urlParams = $rootScope.urlParams && $rootScope.urlParams["repoLib"] || null,
                         repoLib = urlParams && urlParams.repoLib || null;
 
@@ -1627,7 +1641,7 @@ define(
                 }
 
                 $scope.$on("$routeChangeSuccess", function (scope, next, current) {
-                    current && initMaster();
+                    current && init();
                 });
 
 
@@ -1687,10 +1701,10 @@ define(
                     return true;
                 };
 
-                function initMaster() {
+                function init() {
                 }
 
-                initMaster();
+                init();
 
                 $scope.repoTypes = angularConstants.repoTypes;
                 $scope._ = _;
@@ -1989,12 +2003,12 @@ define(
                     return utilService.getResolveDefer();
                 };
 
-                function initMaster() {
+                function init() {
                     $scope.$on('$destroy', function () {
                     });
                 }
 
-                initMaster();
+                init();
 
                 $scope._ = _;
                 $scope.activeEditor = "process";
@@ -2213,17 +2227,17 @@ define(
                     );
                 }
 
-                function initMaster() {
+                function init() {
                     addExtensionSnippet();
 
                     $scope.$on('$destroy', function () {
                     });
                 }
 
-                initMaster();
+                init();
             }
 
-            function ChatController($scope, $rootScope, $timeout, $q, $log, $exceptionHandler, $compile, $parse, $templateCache, angularEventTypes, angularConstants, appService, uiService, utilService) {
+            function ChatController($scope, $rootScope, $timeout, $q, $log, $exceptionHandler, $compile, $parse, $templateCache, angularEventTypes, angularConstants, urlService, appService, uiService, utilService) {
                 extension && extension.attach && extension.attach($scope, {
                     "$timeout": $timeout,
                     "$q": $q,
@@ -2232,6 +2246,16 @@ define(
                     "element": $(".chatContainer"),
                     "scope": $scope
                 });
+
+                $scope.exitChat = function (event) {
+                    event && event.stopPropagation && event.stopPropagation();
+
+                    $timeout(function () {
+                        urlService.back()
+                    })
+
+                    return utilService.getResolveDefer();
+                }
 
                 $scope.selectContent = function (content) {
                     var $content = $(".contactContent").children("[content='" + content + "']");
@@ -2553,7 +2577,7 @@ define(
                     utilService.broadcast($scope, eventType, data);
                 }
 
-                function initMaster() {
+                function init() {
                     $scope.nameList = {
                         "A": [{_id: "52591a12c763d5e45855637a", name: "安亦斐"}],
                         "B": [{_id: "52591a12c763d5e4585563b4", name: "毕嘉利"}],
@@ -2624,17 +2648,9 @@ define(
                     });
                 }
 
-                initMaster();
+                init();
             }
 
-            appModule.
-                controller('RootController', ["$scope", "$rootScope", "$q", "$timeout", "angularEventTypes", "angularConstants", "appService", "serviceRegistry", "urlService", "utilService", RootController]).
-                controller('FrameSketchController', ["$scope", "$rootScope", "$timeout", "$q", "$log", "$exceptionHandler", "$compile", "$parse", "angularEventTypes", "angularConstants", "appService", "uiService", "utilService", "uiCanvasService", FrameSketchController]).
-                controller('BookController', ["$scope", "$rootScope", "$timeout", "$q", "$log", "$exceptionHandler", "$compile", "$parse", "$templateCache", "angularEventTypes", "angularConstants", "appService", "uiService", "uiBookService", "bookService", "utilService", "uiCanvasService", BookController]).
-                controller('FlowController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "uiService", "uiFlowService", "flowService", "urlService", "utilService", FlowController]).
-                controller('ProjectController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "uiService", "uiFlowService", "uiBookService", "urlService", "utilService", ProjectController]).
-                controller('RepoController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "urlService", "utilService", RepoController]).
-                controller('RepoLibController', ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "urlService", RepoLibController]).
-                controller('ChatController', ["$scope", "$rootScope", "$timeout", "$q", "$log", "$exceptionHandler", "$compile", "$parse", "$templateCache", "angularEventTypes", "angularConstants", "appService", "uiService", "utilService", ChatController]);
+            appModule.controller("RootController", ["$scope", "$rootScope", "$q", "$timeout", "angularEventTypes", "angularConstants", "appService", "serviceRegistry", "urlService", "utilService", RootController]).controller("LoginController", ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "urlService", "utilService", LoginController]).controller("FrameSketchController", ["$scope", "$rootScope", "$timeout", "$q", "$log", "$exceptionHandler", "$compile", "$parse", "angularEventTypes", "angularConstants", "appService", "uiService", "utilService", "uiCanvasService", FrameSketchController]).controller("BookController", ["$scope", "$rootScope", "$timeout", "$q", "$log", "$exceptionHandler", "$compile", "$parse", "$templateCache", "angularEventTypes", "angularConstants", "appService", "uiService", "uiBookService", "bookService", "utilService", "uiCanvasService", BookController]).controller("FlowController", ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "uiService", "uiFlowService", "flowService", "urlService", "utilService", FlowController]).controller("ProjectController", ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "uiService", "uiFlowService", "uiBookService", "urlService", "utilService", ProjectController]).controller("RepoController", ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "urlService", "utilService", RepoController]).controller("RepoLibController", ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "urlService", RepoLibController]).controller("ChatController", ["$scope", "$rootScope", "$timeout", "$q", "$log", "$exceptionHandler", "$compile", "$parse", "$templateCache", "angularEventTypes", "angularConstants", "urlService", "appService", "uiService", "utilService", ChatController]);
         }
     });

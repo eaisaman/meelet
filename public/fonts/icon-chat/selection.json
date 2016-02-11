@@ -4,6 +4,34 @@
 		{
 			"icon": {
 				"paths": [
+					"M272 65.6c-17.6 8.8-32.8 23.2-35.2 32.8-4 18.4-5.6 156.8-4.8 518.4v205.6l30.4 13.6c16 7.2 76.8 36.8 134.4 65.6 90.4 44.8 108 50.4 122.4 43.2 12-7.2 16.8-16.8 16.8-39.2 4-426.4 0-692.8-9.6-702.4-5.6-5.6-39.2-24.8-74.4-42.4l-64-32h157.6c117.6-0.8 159.2 1.6 164 8.8 3.2 5.6 6.4 140.8 7.2 300.8 0 329.6 6.4 304-71.2 304-25.6 0-48.8 1.6-51.2 4-2.4 3.2-5.6 18.4-7.2 33.6-2.4 36.8 11.2 42.4 91.2 38.4 118.4-4.8 114.4 8.8 114.4-388-0.8-345.6 0-344-42.4-368-13.6-7.2-76.8-10.4-232.8-10.4-196-0.8-217.6 0-245.6 13.6z"
+				],
+				"attrs": [
+					{}
+				],
+				"isMulticolor": false,
+				"tags": [
+					"Open_Door-128"
+				],
+				"grid": 0
+			},
+			"attrs": [
+				{}
+			],
+			"properties": {
+				"order": 2,
+				"id": 1,
+				"prevSize": 32,
+				"code": 58880,
+				"name": "exit"
+			},
+			"setIdx": 0,
+			"setId": 10,
+			"iconIdx": 0
+		},
+		{
+			"icon": {
+				"paths": [
 					"M17.6 29.6c-12 24-6.4 138.4 7.2 147.2 28 17.6 40.8 0 42.4-56l0.8-48.8h41.6c52.8 0 66.4-5.6 66.4-28 0-24-12.8-28-88-28-52.8 0-64.8 2.4-70.4 13.6z",
 					"M853.6 21.6c-10.4 9.6-5.6 40.8 7.2 45.6 7.2 2.4 31.2 4.8 54.4 4.8h41.6l-0.8 44.8c-0.8 56 14.4 77.6 43.2 60 8.8-5.6 12-25.6 12.8-70.4 1.6-89.6 0.8-90.4-83.2-90.4-38.4 0-72.8 2.4-75.2 5.6z",
 					"M190.4 182.4c-10.4 2.4-12 24-12.8 153.6-0.8 138.4 0 152 12.8 152.8 65.6 3.2 284.8 2.4 290.4-1.6 4.8-2.4 6.4-68 5.6-154.4l-2.4-150.4-140.8-1.6c-76.8 0-145.6 0-152.8 1.6zM432.8 241.6c0.8 5.6 1.6 52.8 2.4 104l0.8 93.6h-101.6c-76 0.8-102.4-2.4-103.2-9.6-0.8-12.8-0.8-165.6 0-184 0.8-12 11.2-13.6 100.8-13.6 74.4 0 100 2.4 100.8 9.6z",
@@ -52,15 +80,15 @@
 				{}
 			],
 			"properties": {
-				"order": 15,
-				"id": 2,
+				"order": 3,
+				"id": 0,
 				"prevSize": 32,
-				"code": 58880,
+				"code": 58881,
 				"name": "qr-code"
 			},
-			"setIdx": 1,
-			"setId": 7,
-			"iconIdx": 2
+			"setIdx": 3,
+			"setId": 1,
+			"iconIdx": 0
 		},
 		{
 			"icon": {
@@ -81,16 +109,16 @@
 				{}
 			],
 			"properties": {
-				"order": 14,
-				"id": 0,
+				"order": 4,
+				"id": 1,
 				"prevSize": 32,
-				"code": 58881,
+				"code": 58882,
 				"name": "textsms",
 				"ligatures": "textsms"
 			},
 			"setIdx": 3,
-			"setId": 5,
-			"iconIdx": 0
+			"setId": 1,
+			"iconIdx": 1
 		},
 		{
 			"icon": {
@@ -107,16 +135,16 @@
 			},
 			"attrs": [],
 			"properties": {
-				"order": 13,
+				"order": 5,
 				"ligatures": "playlist_play",
 				"prevSize": 32,
 				"name": "menu",
-				"id": 1,
-				"code": 58882
+				"id": 2,
+				"code": 58883
 			},
 			"setIdx": 3,
-			"setId": 5,
-			"iconIdx": 1
+			"setId": 1,
+			"iconIdx": 2
 		},
 		{
 			"icon": {
@@ -133,16 +161,16 @@
 			},
 			"attrs": [],
 			"properties": {
-				"order": 12,
+				"order": 6,
 				"prevSize": 32,
 				"name": "close",
 				"ligatures": "clear",
-				"id": 2,
-				"code": 58883
+				"id": 3,
+				"code": 58884
 			},
 			"setIdx": 3,
-			"setId": 5,
-			"iconIdx": 2
+			"setId": 1,
+			"iconIdx": 3
 		},
 		{
 			"icon": {
@@ -159,16 +187,16 @@
 			},
 			"attrs": [],
 			"properties": {
-				"order": 11,
+				"order": 7,
 				"ligatures": "person",
 				"prevSize": 32,
 				"name": "person",
-				"id": 3,
-				"code": 58884
+				"id": 4,
+				"code": 58885
 			},
 			"setIdx": 3,
-			"setId": 5,
-			"iconIdx": 3
+			"setId": 1,
+			"iconIdx": 4
 		},
 		{
 			"icon": {
@@ -185,16 +213,16 @@
 			},
 			"attrs": [],
 			"properties": {
-				"order": 10,
+				"order": 8,
 				"ligatures": "search",
 				"prevSize": 32,
 				"name": "search",
-				"id": 4,
-				"code": 58885
+				"id": 5,
+				"code": 58886
 			},
 			"setIdx": 3,
-			"setId": 5,
-			"iconIdx": 4
+			"setId": 1,
+			"iconIdx": 5
 		},
 		{
 			"icon": {
@@ -215,12 +243,12 @@
 				"ligatures": "portrait",
 				"prevSize": 32,
 				"name": "portrait",
-				"id": 5,
-				"code": 58886
+				"id": 6,
+				"code": 58887
 			},
 			"setIdx": 3,
-			"setId": 5,
-			"iconIdx": 5
+			"setId": 1,
+			"iconIdx": 6
 		},
 		{
 			"icon": {
@@ -237,16 +265,16 @@
 			},
 			"attrs": [],
 			"properties": {
-				"order": 8,
+				"order": 10,
 				"ligatures": "person_add",
 				"prevSize": 32,
 				"name": "person_add",
-				"id": 6,
-				"code": 58887
+				"id": 7,
+				"code": 58888
 			},
 			"setIdx": 3,
-			"setId": 5,
-			"iconIdx": 6
+			"setId": 1,
+			"iconIdx": 7
 		},
 		{
 			"icon": {
@@ -263,16 +291,16 @@
 			},
 			"attrs": [],
 			"properties": {
-				"order": 7,
+				"order": 11,
 				"ligatures": "group_add",
 				"prevSize": 32,
 				"name": "group_add",
-				"id": 7,
-				"code": 59655
+				"id": 8,
+				"code": 58889
 			},
 			"setIdx": 3,
-			"setId": 5,
-			"iconIdx": 7
+			"setId": 1,
+			"iconIdx": 8
 		}
 	],
 	"height": 1024,
@@ -300,7 +328,6 @@
 			"showSelector": true,
 			"selector": "class",
 			"classSelector": ".icon-chat",
-			"showMetrics": false,
 			"embed": false
 		},
 		"imagePref": {
@@ -311,7 +338,6 @@
 			"bgColor": 16777215
 		},
 		"historySize": 100,
-		"showCodes": false,
-		"gridSize": 16
+		"showCodes": true
 	}
 }

@@ -15448,6 +15448,10 @@ button.close {
 #appTopBar .topbarMenu .btn-group .dropdown-menu li:not(.divider) a:active {
   color: #669933;
 }
+#appTopBar .topbarMenu .btn-group .dropdown-menu .divider {
+  border-top: 1px solid #CACDC0;
+  border-bottom: 1px solid #FFF;
+}
 #appTopBar .topbarMenu .btn-group .dropdown-menu #topbarProjectDropdown {
   position: absolute;
   width: calc(100% - 3em);
@@ -15603,6 +15607,40 @@ button.close {
   -webkit-user-select: none;
 }
 
+.icheckbox_square-custom-green {
+  display: inline-block;
+  *display: inline;
+  vertical-align: middle;
+  margin: 0;
+  padding: 0;
+  width: 22px;
+  height: 22px;
+  background: url(../images/green.png) no-repeat;
+  background-position: 0 0;
+  border: none;
+  cursor: pointer;
+}
+.icheckbox_square-custom-green.hover {
+  background-position: -24px 0;
+}
+.icheckbox_square-custom-green.checked {
+  background-position: -48px 0;
+}
+.icheckbox_square-custom-green.disabled {
+  background-position: -72px 0;
+  cursor: default;
+}
+.icheckbox_square-custom-green.checked.disabled {
+  background-position: -96px 0;
+}
+
+@media (-o-min-device-pixel-ratio: 5 / 4), (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
+  .icheckbox_square-custom-green {
+    background-image: url(../images/green@2x.png);
+    -webkit-background-size: 240px 24px;
+    background-size: 240px 24px;
+  }
+}
 #rootBody #alertBar {
   z-index: 9999;
   position: fixed;

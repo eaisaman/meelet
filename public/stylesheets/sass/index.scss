@@ -26,6 +26,41 @@ $alertHeight: 4em;
     -webkit-user-select: none;
 }
 
+.icheckbox_square-custom-green {
+    display: inline-block;
+    *display: inline;
+    vertical-align: middle;
+    margin: 0;
+    padding: 0;
+    width: 22px;
+    height: 22px;
+    background: url(../images/green.png) no-repeat;
+    background-position: 0 0;
+    border: none;
+    cursor: pointer;
+    &.hover {
+        background-position: -24px 0;
+    }
+    &.checked {
+        background-position: -48px 0;
+    }
+    &.disabled {
+        background-position: -72px 0;
+        cursor: default;
+    }
+    &.checked.disabled {
+        background-position: -96px 0;
+    }
+}
+
+@media (-o-min-device-pixel-ratio: 5/4), (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
+    .icheckbox_square-custom-green {
+        background-image: url(../images/green@2x.png);
+        -webkit-background-size: 240px 24px;
+        background-size: 240px 24px;
+    }
+}
+
 #rootBody {
     #alertBar {
         z-index: 9999;
