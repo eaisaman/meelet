@@ -20,14 +20,40 @@
 			],
 			"properties": {
 				"order": 2,
-				"id": 1,
+				"id": 0,
 				"prevSize": 32,
 				"code": 58880,
 				"name": "exit"
 			},
 			"setIdx": 0,
-			"setId": 10,
+			"setId": 11,
 			"iconIdx": 0
+		},
+		{
+			"icon": {
+				"paths": [
+					"M960 426c36 0 64 28 64 64v278c0 18-6 34-18 46l-212 210-34-34c-8-8-14-20-14-34 9.903-48.764 20.016-97.317 30-146h-222c-24 0-42-18-42-42v-54c0-8 2-14 4-22l98-226c10-22 32-40 58-40h288zM512 256v54c0 8-2 14-4 22l-98 226c-10 22-32 40-58 40h-288c-36 0-64-28-64-64v-278c0-18 6-34 18-46l212-210 34 34c8 8 14 20 14 34-9.903 48.764-20.016 97.317-30 146h222c24 0 42 18 42 42z"
+				],
+				"attrs": [],
+				"isMulticolor": false,
+				"tags": [
+					"thumbs_up_down"
+				],
+				"defaultCode": 59613,
+				"grid": 24
+			},
+			"attrs": [],
+			"properties": {
+				"order": 12,
+				"ligatures": "thumbs_up_down",
+				"id": 1,
+				"prevSize": 24,
+				"code": 58881,
+				"name": "thumbs_up_down"
+			},
+			"setIdx": 0,
+			"setId": 11,
+			"iconIdx": 1
 		},
 		{
 			"icon": {
@@ -81,14 +107,14 @@
 			],
 			"properties": {
 				"order": 3,
-				"id": 0,
-				"prevSize": 32,
-				"code": 58881,
+				"id": 2,
+				"prevSize": 24,
+				"code": 58882,
 				"name": "qr-code"
 			},
-			"setIdx": 3,
-			"setId": 1,
-			"iconIdx": 0
+			"setIdx": 0,
+			"setId": 11,
+			"iconIdx": 2
 		},
 		{
 			"icon": {
@@ -110,15 +136,15 @@
 			],
 			"properties": {
 				"order": 4,
-				"id": 1,
-				"prevSize": 32,
-				"code": 58882,
+				"id": 3,
+				"prevSize": 24,
+				"code": 58883,
 				"name": "textsms",
 				"ligatures": "textsms"
 			},
-			"setIdx": 3,
-			"setId": 1,
-			"iconIdx": 1
+			"setIdx": 0,
+			"setId": 11,
+			"iconIdx": 3
 		},
 		{
 			"icon": {
@@ -137,14 +163,14 @@
 			"properties": {
 				"order": 5,
 				"ligatures": "playlist_play",
-				"prevSize": 32,
+				"prevSize": 24,
 				"name": "menu",
-				"id": 2,
-				"code": 58883
+				"id": 4,
+				"code": 58884
 			},
-			"setIdx": 3,
-			"setId": 1,
-			"iconIdx": 2
+			"setIdx": 0,
+			"setId": 11,
+			"iconIdx": 4
 		},
 		{
 			"icon": {
@@ -162,15 +188,15 @@
 			"attrs": [],
 			"properties": {
 				"order": 6,
-				"prevSize": 32,
+				"prevSize": 24,
 				"name": "close",
 				"ligatures": "clear",
-				"id": 3,
-				"code": 58884
+				"id": 5,
+				"code": 58885
 			},
-			"setIdx": 3,
-			"setId": 1,
-			"iconIdx": 3
+			"setIdx": 0,
+			"setId": 11,
+			"iconIdx": 5
 		},
 		{
 			"icon": {
@@ -189,14 +215,14 @@
 			"properties": {
 				"order": 7,
 				"ligatures": "person",
-				"prevSize": 32,
+				"prevSize": 24,
 				"name": "person",
-				"id": 4,
-				"code": 58885
+				"id": 6,
+				"code": 58886
 			},
-			"setIdx": 3,
-			"setId": 1,
-			"iconIdx": 4
+			"setIdx": 0,
+			"setId": 11,
+			"iconIdx": 6
 		},
 		{
 			"icon": {
@@ -215,14 +241,14 @@
 			"properties": {
 				"order": 8,
 				"ligatures": "search",
-				"prevSize": 32,
+				"prevSize": 24,
 				"name": "search",
-				"id": 5,
-				"code": 58886
+				"id": 7,
+				"code": 58887
 			},
-			"setIdx": 3,
-			"setId": 1,
-			"iconIdx": 5
+			"setIdx": 0,
+			"setId": 11,
+			"iconIdx": 7
 		},
 		{
 			"icon": {
@@ -241,14 +267,14 @@
 			"properties": {
 				"order": 9,
 				"ligatures": "portrait",
-				"prevSize": 32,
+				"prevSize": 24,
 				"name": "portrait",
-				"id": 6,
-				"code": 58887
+				"id": 8,
+				"code": 58888
 			},
-			"setIdx": 3,
-			"setId": 1,
-			"iconIdx": 6
+			"setIdx": 0,
+			"setId": 11,
+			"iconIdx": 8
 		},
 		{
 			"icon": {
@@ -267,14 +293,14 @@
 			"properties": {
 				"order": 10,
 				"ligatures": "person_add",
-				"prevSize": 32,
+				"prevSize": 24,
 				"name": "person_add",
-				"id": 7,
-				"code": 58888
+				"id": 9,
+				"code": 58889
 			},
-			"setIdx": 3,
-			"setId": 1,
-			"iconIdx": 7
+			"setIdx": 0,
+			"setId": 11,
+			"iconIdx": 9
 		},
 		{
 			"icon": {
@@ -293,14 +319,14 @@
 			"properties": {
 				"order": 11,
 				"ligatures": "group_add",
-				"prevSize": 32,
+				"prevSize": 24,
 				"name": "group_add",
-				"id": 8,
-				"code": 58889
+				"id": 10,
+				"code": 58890
 			},
-			"setIdx": 3,
-			"setId": 1,
-			"iconIdx": 8
+			"setIdx": 0,
+			"setId": 11,
+			"iconIdx": 10
 		}
 	],
 	"height": 1024,
@@ -338,6 +364,7 @@
 			"bgColor": 16777215
 		},
 		"historySize": 100,
-		"showCodes": true
+		"showCodes": true,
+		"gridSize": 16
 	}
 }

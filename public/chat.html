@@ -82,6 +82,9 @@
                                  ng-style="{'background-image':'url(api/public/accountQr?userId={{$root.loginUser._id}})'}">
                             </div>
                         </div>
+                        <div class="chatButton icon-chat-before icon-chat-search-before" ng-click="once(this, $event, 'doSearch')"></div>
+                        <div class="searchInput"><input type="text" ng-model="searchName" placeholder="Name"></div>
+                        <div class="chatButton icon-chat-before icon-chat-thumbs_up_down-before" ng-click="once(this, $event, 'sendInvitation')"></div>
                     </div>
                 </div>
             </div>

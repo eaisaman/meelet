@@ -8551,25 +8551,6 @@
   float: left;
   height: calc(100% - 3em);
 }
-.chatContainer .chatButton {
-  position: relative;
-  float: left;
-  top: 0.5em;
-  width: 8em;
-  height: 2em;
-  background-color: #ddd;
-  box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.135);
-  border-radius: 0.2em;
-  display: inline-block;
-  margin: 0 0.5em;
-  color: rgba(0, 0, 0, 0.4);
-  overflow: hidden;
-}
-.chatContainer .chatButton:active {
-  background-color: #555;
-  color: #669933;
-  box-shadow: none;
-}
 .chatContainer .chatTopBar {
   position: relative;
   width: 100%;
@@ -8584,6 +8565,7 @@
   top: calc(50% - 1em);
   width: 2em;
   height: 2em;
+  color: #666;
 }
 .chatContainer .chatTopBar .userDisplayQrCode:before {
   position: absolute;
@@ -8598,7 +8580,8 @@
 }
 .chatContainer .chatTopBar .userQrCode {
   position: absolute;
-  width: calc(100% - 1em);
+  width: 4em;
+  height: 4em;
   z-index: 1;
   background: rgba(255, 255, 255, 0.7);
   pointer-events: none;
@@ -8617,4 +8600,44 @@
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
+}
+.chatContainer .chatTopBar .chatButton {
+  position: relative;
+  float: right;
+  top: 0.5em;
+  width: 2em;
+  height: 2em;
+  background-color: #ddd;
+  box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.135);
+  border-radius: 0.2em;
+  display: inline-block;
+  margin-right: 0.5em;
+  color: rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+}
+.chatContainer .chatTopBar .chatButton:active {
+  background-color: #555;
+  color: #669933;
+  box-shadow: none;
+}
+.chatContainer .chatTopBar .chatButton:before {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  line-height: 2;
+}
+.chatContainer .chatTopBar .searchInput {
+  position: relative;
+  float: right;
+  top: 0.5em;
+  width: 12em;
+  height: 2em;
+}
+.chatContainer .chatTopBar .searchInput input {
+  position: relative;
+  float: right;
+  line-height: 2;
+  width: 100%;
+  line-height: 2;
 }
