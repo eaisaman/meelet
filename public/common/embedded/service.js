@@ -165,6 +165,10 @@ define(
                 );
             };
 
+            appService.prototype.getUser = function (userFilter) {
+                return this.cordovaPromise("getUser").apply(this, [JSON.stringify(userFilter)]);
+            };
+
             appService.prototype.getUserDetail = function (userFilter) {
                 return this.cordovaPromise("getUserDetail").apply(this, [JSON.stringify(userFilter)]);
             };

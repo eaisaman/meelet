@@ -356,7 +356,10 @@ UserController.prototype.getAccountQr = function (userId, isStatic, success, fai
         userContentPath = path.join(self.config.userFile.userContentPath, userId),
         dir = path.join(userContentPath, "qrcode.png");
 
-    isStatic = isStatic && isStatic === "true" || true;
+    if (isStatic == null) {
+        isStatic = true;
+    }
+
     async.waterfall(
         [
             function (next) {
@@ -406,7 +409,9 @@ UserController.prototype.getAvatar = function (userId, ext, isStatic, success, f
     var self = this,
         userContentPath = path.join(self.config.userFile.userContentPath, userId);
 
-    isStatic = isStatic && isStatic === "true" || true;
+    if (isStatic == null) {
+        isStatic = true;
+    }
     ext = ext || ".png";
     var dir = path.join(userContentPath, "avatar" + ext);
 
@@ -459,7 +464,9 @@ UserController.prototype.getThumbnail = function (userId, fileName, size, isStat
         scale = commons.getScale(size),
         dir = path.join(self.config.userFile.userContentPath, userId, "image", fileName.replace(/([^\.]+)(\.)?(\w*)$/, "$1@" + scale + "$2$3"));
 
-    isStatic = isStatic && isStatic === "true" || true;
+    if (isStatic == null) {
+        isStatic = true;
+    }
 
     async.waterfall(
         [

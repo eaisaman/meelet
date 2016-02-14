@@ -43,6 +43,14 @@
         "communicationType": "callback"
       },
       {
+        "name": "getUser",
+        "description": "Search users",
+        "parameters": [
+          "userFilter"
+        ],
+        "communicationType": "callback"
+      },
+      {
         "name": "getUserDetail",
         "description": "Get user and his projects",
         "parameters": [

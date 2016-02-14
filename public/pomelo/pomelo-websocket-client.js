@@ -332,13 +332,13 @@
             }
         }
 
-        self.socket.onmessage = function (data) {
+        self.socket.onmessage = function (event) {
             // new package arrived, update the heartbeat timeout
             if (self.heartbeatTimeout) {
                 self.nextHeartbeatTimeout = Date.now() + self.heartbeatTimeout;
             }
 
-            var msgs = Package.decode(data);
+            var data = event.data, msgs = Package.decode(data);
 
             if (Array.isArray(msgs)) {
                 for (var i = 0; i < msgs.length; i++) {
@@ -350,10 +350,10 @@
             }
         }
 
-        self.socket.onerror = function (err) {
-            console.log(err);
+        self.socket.onerror = function (event) {
+            console.log(event);
 
-            self.doReconnect(err)
+            self.doReconnect(event)
         }
 
         self.socket.onclose = function () {

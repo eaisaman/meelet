@@ -534,7 +534,7 @@ define(
                         return promiseArr.length && self.$q.all(promiseArr) || self.utilService.getResolveDefer();
                     },
                     function (err) {
-                        return self.utilService.getRejectDefer(err);
+                        return self.utilService.getRejectDefer(typeof err === "object" && err.data || err);
                     }
                 );
             };
@@ -552,7 +552,7 @@ define(
                         return promiseArr.length && self.$q.all(promiseArr) || self.utilService.getResolveDefer();
                     },
                     function (err) {
-                        return self.utilService.getRejectDefer(err);
+                        return self.utilService.getRejectDefer(typeof err === "object" && err.data || err);
                     }
                 );
             };
@@ -647,7 +647,7 @@ define(
                         return self.utilService.getRejectDefer(result.data.reason);
                     }
                 }, function (err) {
-                    return self.utilService.getRejectDefer(err);
+                    return self.utilService.getRejectDefer(typeof err === "object" && err.data || err);
                 });
             };
 
@@ -682,7 +682,7 @@ define(
                         }
                     },
                     function (err) {
-                        return self.utilService.getRejectDefer(err);
+                        return self.utilService.getRejectDefer(typeof err === "object" && err.data || err);
                     }
                 );
             };
@@ -703,7 +703,7 @@ define(
                         }
                     },
                     function (err) {
-                        return self.utilService.getRejectDefer(err);
+                        return self.utilService.getRejectDefer(typeof err === "object" && err.data || err);
                     }
                 );
             };
@@ -728,7 +728,7 @@ define(
                         }
                     },
                     function (err) {
-                        return self.utilService.getRejectDefer(err);
+                        return self.utilService.getRejectDefer(typeof err === "object" && err.data || err);
                     }
                 );
             };
@@ -753,7 +753,7 @@ define(
                         }
                     },
                     function (err) {
-                        return self.utilService.getRejectDefer(err);
+                        return self.utilService.getRejectDefer(typeof err === "object" && err.data || err);
                     }
                 )
             };
@@ -852,7 +852,7 @@ define(
                         }
                     },
                     function (err) {
-                        return self.utilService.getRejectDefer(err);
+                        return self.utilService.getRejectDefer(typeof err === "object" && err.data || err);
                     }
                 )
 
@@ -877,7 +877,7 @@ define(
                         }
                     },
                     function (err) {
-                        return self.utilService.getRejectDefer(err);
+                        return self.utilService.getRejectDefer(typeof err === "object" && err.data || err);
                     }
                 )
 
@@ -899,7 +899,7 @@ define(
                         }
                     },
                     function (err) {
-                        return self.utilService.getRejectDefer(err);
+                        return self.utilService.getRejectDefer(typeof err === "object" && err.data || err);
                     }
                 )
             };
@@ -920,7 +920,7 @@ define(
                         }
                     },
                     function (err) {
-                        return self.utilService.getRejectDefer(err);
+                        return self.utilService.getRejectDefer(typeof err === "object" && err.data || err);
                     }
                 )
             };
@@ -932,7 +932,7 @@ define(
                     function () {
                         return self.utilService.getResolveDefer();
                     }, function (err) {
-                        return self.utilService.getRejectDefer(err);
+                        return self.utilService.getRejectDefer(typeof err === "object" && err.data || err);
                     }
                 )
             };
@@ -985,7 +985,7 @@ define(
                         return self.utilService.getRejectDefer(result.data.reason);
                     }
                 }, function (err) {
-                    return self.utilService.getRejectDefer(err);
+                    return self.utilService.getRejectDefer(typeof err === "object" && err.data || err);
                 });
             }
 
@@ -1021,7 +1021,7 @@ define(
 
                     return defer.promise;
                 }, function (err) {
-                    return self.utilService.getRejectDefer(err.data);
+                    return self.utilService.getRejectDefer(typeof err === "object" && err.data || err);
                 });
             };
 
@@ -1078,6 +1078,15 @@ define(
                 );
 
                 return defer.promise;
+            };
+
+            appService.prototype.getUser = function (userFilter) {
+                return this.$http({
+                    method: 'GET',
+                    url: (window.serverUrl || '') + '/api/private/user',
+                    params: {userFilter: JSON.stringify(userFilter || {})}
+                });
+
             };
 
             appService.prototype.getUserDetail = function (userFilter) {
@@ -1185,7 +1194,7 @@ define(
                             }
                         },
                         function (err) {
-                            return self.utilService.getRejectDefer(err);
+                            return self.utilService.getRejectDefer(typeof err === "object" && err.data || err);
                         }
                     );
                 }
@@ -1280,7 +1289,7 @@ define(
                             }
                         },
                         function (err) {
-                            return self.utilService.getRejectDefer(err);
+                            return self.utilService.getRejectDefer(typeof err === "object" && err.data || err);
                         }
                     );
                 }
@@ -1815,7 +1824,7 @@ define(
                         return self.utilService.getRejectDefer(result.data.reason);
                     }
                 }, function (err) {
-                    return self.utilService.getRejectDefer(err);
+                    return self.utilService.getRejectDefer(typeof err === "object" && err.data || err);
                 });
             }
 
@@ -1834,7 +1843,7 @@ define(
                         return self.utilService.getRejectDefer(result.data.reason);
                     }
                 }, function (err) {
-                    return self.utilService.getRejectDefer(err);
+                    return self.utilService.getRejectDefer(typeof err === "object" && err.data || err);
                 });
             }
 
@@ -1883,7 +1892,7 @@ define(
                             return self.utilService.getRejectDefer("Cannot find pomelo js load function.");
                         }
                     }, function (err) {
-                        return self.utilService.getRejectDefer(err);
+                        return self.utilService.getRejectDefer(typeof err === "object" && err.data || err);
                     });
                 }
             }
@@ -1922,6 +1931,55 @@ define(
                 }
             }
 
+            appService.prototype.sendInvitation = function (userId, inviteeList) {
+                var self = this;
+
+                return self.$http({
+                    method: 'POST',
+                    url: (window.serverUrl || "") + '/api/private/invitation',
+                    params: {
+                        userId: userId,
+                        inviteeList: JSON.stringify(self.utilService.arrayPick(inviteeList, ["_id", "loginChannel"]))
+                    }
+                }).then(function (result) {
+                    if (result.data.result === "OK") {
+                        return self.utilService.getResolveDefer();
+                    } else {
+                        return self.utilService.getRejectDefer(result.data.reason);
+                    }
+                }, function (err) {
+                    return self.utilService.getRejectDefer(typeof err === "object" && err.data || err);
+                });
+            }
+
+            appService.prototype.connectPomelo = function (userId, loginChannel) {
+                var self = this;
+
+                if (window.pomeloContext && window.pomeloContext.pomeloInstance) {
+                    return self.utilService.timeout(function () {
+                        var defer = self.$q.defer();
+                        window.pomeloContext.pomeloInstance.request("chat.chatHandler.connect", {
+                            userId: userId,
+                            deviceId: window.pomeloContext.options.deviceId,
+                            loginChannel: loginChannel
+                        }, function (data) {
+                            switch (data.code) {
+                                case 500:
+                                    defer.reject(data.msg);
+                                    break;
+                                case 200:
+                                    defer.resolve();
+                                    break;
+                            }
+                        });
+
+                        return defer.promise;
+                    }, "chat.chatHandler.connect." + userId, self.angularConstants.pomeloPushTimeout);
+                } else {
+                    return self.utilService.getRejectDefer("Pomelo context not initialized.");
+                }
+            }
+
             appService.prototype.createChat = function (userId, projectId) {
                 var self = this;
 
@@ -1942,7 +2000,7 @@ define(
                         return self.utilService.getRejectDefer(result.data.reason);
                     }
                 }, function (err) {
-                    return self.utilService.getRejectDefer(err);
+                    return self.utilService.getRejectDefer(typeof err === "object" && err.data || err);
                 });
             }
 
@@ -1986,7 +2044,7 @@ define(
                         return self.utilService.getRejectDefer(result.data.reason);
                     }
                 }, function (err) {
-                    return self.utilService.getRejectDefer(err);
+                    return self.utilService.getRejectDefer(typeof err === "object" && err.data || err);
                 });
             }
 
@@ -2056,7 +2114,7 @@ define(
                         return self.utilService.getRejectDefer(result.data.reason);
                     }
                 }, function (err) {
-                    return self.utilService.getRejectDefer(err);
+                    return self.utilService.getRejectDefer(typeof err === "object" && err.data || err);
                 });
             }
 
@@ -2098,7 +2156,7 @@ define(
                         return self.utilService.getRejectDefer(result.data.reason);
                     }
                 }, function (err) {
-                    return self.utilService.getRejectDefer(err);
+                    return self.utilService.getRejectDefer(typeof err === "object" && err.data || err);
                 });
             }
 
@@ -2143,7 +2201,7 @@ define(
                         return self.utilService.getRejectDefer(result.data.reason);
                     }
                 }, function (err) {
-                    return self.utilService.getRejectDefer(err);
+                    return self.utilService.getRejectDefer(typeof err === "object" && err.data || err);
                 });
             }
 
@@ -2164,7 +2222,7 @@ define(
                         return self.utilService.getRejectDefer(result.data.reason);
                     }
                 }, function (err) {
-                    return self.utilService.getRejectDefer(err);
+                    return self.utilService.getRejectDefer(typeof err === "object" && err.data || err);
                 });
             }
 
@@ -2206,7 +2264,7 @@ define(
                         return self.utilService.getRejectDefer(result.data.reason);
                     }
                 }, function (err) {
-                    return self.utilService.getRejectDefer(err);
+                    return self.utilService.getRejectDefer(typeof err === "object" && err.data || err);
                 });
             }
 
@@ -2253,7 +2311,7 @@ define(
                         return self.utilService.getRejectDefer(result.data.reason);
                     }
                 }, function (err) {
-                    return self.utilService.getRejectDefer(err);
+                    return self.utilService.getRejectDefer(typeof err === "object" && err.data || err);
                 });
             }
 
@@ -2309,7 +2367,7 @@ define(
                         return self.utilService.getRejectDefer(result.data.reason);
                     }
                 }, function (err) {
-                    return self.utilService.getRejectDefer(err);
+                    return self.utilService.getRejectDefer(typeof err === "object" && err.data || err);
                 });
             }
 
@@ -2365,7 +2423,7 @@ define(
                         return self.utilService.getRejectDefer(result.data.reason);
                     }
                 }, function (err) {
-                    return self.utilService.getRejectDefer(err);
+                    return self.utilService.getRejectDefer(typeof err === "object" && err.data || err);
                 });
             }
 
@@ -2410,7 +2468,7 @@ define(
                         return self.utilService.getRejectDefer(result.data.reason);
                     }
                 }, function (err) {
-                    return self.utilService.getRejectDefer(err);
+                    return self.utilService.getRejectDefer(typeof err === "object" && err.data || err);
                 });
             }
 
@@ -2466,7 +2524,7 @@ define(
                         return self.utilService.getRejectDefer(result.data.reason);
                     }
                 }, function (err) {
-                    return self.utilService.getRejectDefer(err);
+                    return self.utilService.getRejectDefer(typeof err === "object" && err.data || err);
                 });
             }
 

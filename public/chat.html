@@ -9,7 +9,7 @@
                     <div class="contactAvatar fs-x-huge-before icon-chat-before icon-chat-portrait-before">
                         <img src="" onerror="this.src='images/image-chat/transparent.png'">
                     </div>
-                    <div class="userName">Mark</div>
+                    <div class="userName">{{$root.loginUser.name}}</div>
                     <div id="chatUserDropdown" class="dropdown">
                         <div class="fs-x-huge-after icon-chat-after icon-chat-menu-after dropdown-toggle"
                              id="chatUserMenu"
@@ -69,7 +69,7 @@
             </div>
         </div>
 
-        <div class="chatModalContent fs-x-large" name="modalContent">
+        <div class="chatModalContent fs-x-medium" name="modalContent">
             <div id="addFriendModal" ng-show="modalUsage === 'AddFriend'"
                  ng-click="stopEvent($event, '#add-friend-control')">
                 <div id="add-friend-control">
@@ -82,9 +82,24 @@
                                  ng-style="{'background-image':'url(api/public/accountQr?userId={{$root.loginUser._id}})'}">
                             </div>
                         </div>
-                        <div class="chatButton icon-chat-before icon-chat-search-before" ng-click="once(this, $event, 'doSearch')"></div>
-                        <div class="searchInput"><input type="text" ng-model="searchName" placeholder="Name"></div>
-                        <div class="chatButton icon-chat-before icon-chat-thumbs_up_down-before" ng-click="once(this, $event, 'sendInvitation')"></div>
+                        <div class="chatButton searchButton icon-chat-before icon-chat-search-before"
+                             ng-click="once(this, $event, 'doSearch')"></div>
+                        <div class="searchInput"><input id="searchNameInput" type="text" placeholder="Name"></div>
+                        <div class="chatButton icon-chat-before icon-chat-local_florist-before"
+                             ng-click="once(this, $event, 'sendInvitation')"></div>
+                    </div>
+                    <div class="searchUserContent">
+                        <div class="fs-x-small searchUserItem icon-chat-after icon-chat-local_florist-after"
+                             ng-attr-id="{{item._id}}"
+                             ng-repeat="item in searchUserList"
+                             ng-class="{'selected':item.selected}"
+                             ng-click="once(this, $event, 'toggleSearchUserItem', $event, item)">
+                            <div class="itemAvatar fs-x-huge-before icon-chat-before icon-chat-portrait-before">
+                                <img ng-src="api/public/avatar/userId={{item._id}}"
+                                     onerror="this.src='images/image-chat/transparent.png'">
+                            </div>
+                            <div class="itemName fs-x-smaller"><span>{{item.name}}</span></div>
+                        </div>
                     </div>
                 </div>
             </div>
