@@ -2,9 +2,9 @@ define(
     ["angular-lib", "jquery-lib"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$rootScope", "$http", "$timeout", "$q", "$exceptionHandler", "$parse", "$compile", "angularConstants", "angularEventTypes", "appService", "utilService", "uiService"];
+            var inject = ["$rootScope", "$http", "$timeout", "$interval", "$q", "$exceptionHandler", "$parse", "$compile", "angularConstants", "angularEventTypes", "appService", "utilService", "uiService"];
 
-            appModule.directive("uiSimpleDropdown", _.union(inject, [function ($rootScope, $http, $timeout, $q, $exceptionHandler, $parse, $compile, angularConstants, angularEventTypes, appService, utilService, uiService) {
+            appModule.directive("uiSimpleDropdown", _.union(inject, [function ($rootScope, $http, $timeout, $interval, $q, $exceptionHandler, $parse, $compile, angularConstants, angularEventTypes, appService, utilService, uiService) {
                 'use strict';
 
                 var boundProperties = {
@@ -52,6 +52,7 @@ define(
                             pre: function (scope, element, attrs) {
                                 extension && extension.attach && extension.attach(scope, _.extend(injectObj, {
                                     "$timeout": $timeout,
+                                    "$interval": $interval,
                                     "$q": $q,
                                     "angularConstants": angularConstants,
                                     "utilService": utilService,

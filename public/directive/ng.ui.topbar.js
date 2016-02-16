@@ -2,9 +2,9 @@ define(
     ["angular-lib", "jquery-lib"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$rootScope", "$timeout", "$q", "angularConstants", "angularEventTypes", "appService", "utilService", "uiService", "urlService"];
+            var inject = ["$rootScope", "$timeout", "$interval", "$q", "angularConstants", "angularEventTypes", "appService", "utilService", "uiService", "urlService"];
 
-            appModule.directive("uiTopbar", _.union(inject, [function ($rootScope, $timeout, $q, angularConstants, angularEventTypes, appService, utilService, uiService, urlService) {
+            appModule.directive("uiTopbar", _.union(inject, [function ($rootScope, $timeout, $interval, $q, angularConstants, angularEventTypes, appService, utilService, uiService, urlService) {
                 'use strict';
 
                 var defaults = {},
@@ -25,6 +25,7 @@ define(
                             pre: function (scope, element, attrs) {
                                 extension && extension.attach && extension.attach(scope, _.extend(injectObj, {
                                     "$timeout": $timeout,
+                                    "$interval": $interval,
                                     "$q": $q,
                                     "angularConstants": angularConstants,
                                     "utilService": utilService,

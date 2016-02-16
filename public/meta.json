@@ -1,4 +1,20 @@
 {
+  "animoStyles": {
+    "tadaInfinite": {
+      "animation": "callout.tada",
+      "settings": {
+        "loop": true
+      }
+    },
+    "rotateQuarterArc": {
+      "animation": {
+        "rotateZ": 90
+      },
+      "settings": {
+        "duration": 300
+      }
+    }
+  },
   "locations": [
     "login",
     "frameSketch",

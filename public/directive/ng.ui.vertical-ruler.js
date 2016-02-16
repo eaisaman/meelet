@@ -2,9 +2,9 @@ define(
     ["angular-lib", "jquery-lib", "hammer-lib"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$timeout", "$q", "$exceptionHandler", "$log", "angularEventTypes", "angularConstants", "uiService", "utilService", "appService"];
+            var inject = ["$timeout", "$interval", "$q", "$exceptionHandler", "$log", "angularEventTypes", "angularConstants", "uiService", "utilService", "appService"];
 
-            appModule.directive("uiVerticalRuler", _.union(inject, [function ($timeout, $q, $exceptionHandler, $log, angularEventTypes, angularConstants, uiService, utilService, appService) {
+            appModule.directive("uiVerticalRuler", _.union(inject, [function ($timeout, $interval, $q, $exceptionHandler, $log, angularEventTypes, angularConstants, uiService, utilService, appService) {
                 'use strict';
 
                 var defaults = {
@@ -34,6 +34,7 @@ define(
 
                                 extension && extension.attach && extension.attach(scope, _.extend(injectObj, {
                                     "$timeout": $timeout,
+                                    "$interval": $interval,
                                     "$q": $q,
                                     "angularConstants": angularConstants,
                                     "utilService": utilService,

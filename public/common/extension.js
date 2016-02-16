@@ -5,8 +5,9 @@ define(
             },
             e = new Extension();
 
-        function toggleAnimoState($element, clazz, state, callback) {
+        function toggleAnimoState($interval, $element, clazz, state, callback) {
             var animoData = $element.data("animo"),
+                animoInterval = $element.data("animoInterval"),
                 classAnimo = animoData && animoData[clazz],
                 animoIsSet = false;
 
@@ -17,36 +18,60 @@ define(
                     animoIsSet = /^(callout|transition)\./.test(animation);
 
                     if (animoIsSet) {
-                        if (!$element.hasClass(clazz) && (state == null || $element.hasClass(clazz) ^ state)) {
-                            Velocity.animate.apply($element, [animation, _.extend({
-                                complete: function () {
-                                    callback && callback();
+                        if (state == null || $element.hasClass(clazz) ^ state) {
+                            if ($element.hasClass(clazz)) {
+                                if (classAnimo.settings.loop) {
+                                    if (animoInterval) {
+                                        $interval.cancel(animoInterval);
+                                        $element.removeData("animoInterval");
+                                    }
+                                    Velocity.animate.apply($element, ['stop']);
                                 }
-                            }, classAnimo.settings)]);
+                                callback && callback();
+                            } else {
+                                if (classAnimo.settings.loop) {
+                                    animoInterval = $interval(function () {
+                                        Velocity.animate.apply($element, [animation, _.omit(classAnimo.settings, "loop")]);
+                                    }, 2000);
+                                    $element.data("animoInterval", animoInterval);
+                                    callback && callback();
+                                } else {
+                                    Velocity.animate.apply($element, [animation, _.extend({
+                                        complete: function () {
+                                            callback && callback();
+                                        }
+                                    }, classAnimo.settings)]);
+                                }
+                            }
                             $element.toggleClass(clazz);
                         } else {
-                            $element.toggleClass(clazz);
                             callback && callback();
                         }
                     }
-                } else {
-                    var from = animation.from,
-                        to = animation.to;
+                } else if (typeof animation === "object") {
+                    animoIsSet = true;
 
-                    animoIsSet = from && to;
-
-                    if (animoIsSet) {
-                        if (state == null || $element.hasClass(clazz) ^ state) {
-                            Velocity.animate.apply($element, [$element.hasClass(clazz) && from || to, _.extend({
-                                complete: function () {
-                                    callback && callback();
-                                }
-                            }, classAnimo.settings)]);
-                            $element.toggleClass(clazz);
-                        } else {
-                            $element.toggleClass(clazz);
+                    if (state == null || $element.hasClass(clazz) ^ state) {
+                        if ($element.hasClass(clazz)) {
+                            if (classAnimo.settings.loop) {
+                                Velocity.animate.apply($element, ['stop']);
+                            }
                             callback && callback();
+                        } else {
+                            if (classAnimo.settings.loop) {
+                                Velocity.animate.apply($element, [animation, classAnimo.settings]);
+                                callback && callback();
+                            } else {
+                                Velocity.animate.apply($element, [animation, _.extend({
+                                    complete: function () {
+                                        callback && callback();
+                                    }
+                                }, classAnimo.settings)]);
+                            }
                         }
+                        $element.toggleClass(clazz);
+                    } else {
+                        callback && callback();
                     }
                 }
             }
@@ -101,7 +126,7 @@ define(
             }
         }
 
-        Extension.prototype.toggleExpandService = function (element, $q, $timeout, utilService) {
+        Extension.prototype.toggleExpandService = function (element, $q, $timeout, $interval, utilService) {
             return function (selector, event, state) {
                 event && event.stopPropagation && event.stopPropagation();
 
@@ -121,7 +146,7 @@ define(
                 else
                     $el = element;
 
-                var animoIsSet = toggleAnimoState($el, "expanded", state, function () {
+                var animoIsSet = toggleAnimoState($interval, $el, "expanded", state, function () {
                     $timeout(function () {
                         defer.resolve(selector);
                     });
@@ -385,7 +410,7 @@ define(
             };
         };
 
-        Extension.prototype.toggleSelectService = function (element, $q, $timeout, utilService) {
+        Extension.prototype.toggleSelectService = function (element, $q, $timeout, $interval, utilService) {
             return function (selector, event, state) {
                 event && event.stopPropagation && event.stopPropagation();
 
@@ -404,7 +429,7 @@ define(
                 } else
                     $el = element;
 
-                var animoIsSet = toggleAnimoState($el, "select", state, function () {
+                var animoIsSet = toggleAnimoState($interval, $el, "select", state, function () {
                     $timeout(function () {
                         defer.resolve(selector);
                     });

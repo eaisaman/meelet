@@ -9,7 +9,12 @@
                     <div class="contactAvatar fs-x-huge-before icon-chat-before icon-chat-portrait-before">
                         <img src="" onerror="this.src='images/image-chat/transparent.png'">
                     </div>
-                    <div class="userName">{{$root.loginUser.name}}</div>
+                    <div class="userLabel">
+                        <div class="userLabelContainer">
+                            <span class="userName">{{$root.loginUser.name}}</span>
+                            <div ui-data="animo('select', 'tadaInfinite')"
+                                    class="invitationFlag icon-chat-before icon-chat-local_florist-before"></div></div>
+                        </div>
                     <div id="chatUserDropdown" class="dropdown">
                         <div class="fs-x-huge-after icon-chat-after icon-chat-menu-after dropdown-toggle"
                              id="chatUserMenu"

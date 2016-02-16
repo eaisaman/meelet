@@ -1,0 +1,118 @@
+#loginContainer {
+  position: relative;
+  float: left;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #ffffff;
+  color: rgba(0, 0, 0, 0.4);
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+#loginContainer #loginPanel {
+  -webkit-flex: 1;
+  flex: 1;
+  height: 50%;
+  min-width: 18em;
+  max-width: 18em;
+  overflow: visible;
+  border-radius: 8px;
+  -moz-box-shadow: 0px 2px 3px #666;
+  -webkit-box-shadow: 0px 2px 3px #666;
+  box-shadow: 0px 2px 3px #666;
+  background-image: -webkit-linear-gradient(#E6E6E6, rgba(230, 230, 230, 0.9) 50%, #E6E6E6);
+  background-image: -o-linear-gradient(#E6E6E6, rgba(230, 230, 230, 0.9) 50%, #E6E6E6);
+  background-image: linear-gradient(#e6e6e6, rgba(230, 230, 230, 0.9) 50%, #e6e6e6);
+  background-repeat: no-repeat;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFE6E6E6', endColorstr='#FFE6E6E6', GradientType=0);
+}
+#loginContainer #loginPanel #loginHeader {
+  position: relative;
+  float: left;
+  left: calc(50% - 2.5em);
+  top: -2.5em;
+  width: 5em;
+  height: 5em;
+  color: #40bf6c;
+}
+#loginContainer #loginPanel #loginHeader:before {
+  position: absolute;
+  width: 100%;
+  height: 1em;
+  line-height: 1;
+  top: calc(50% - 0.5em);
+  text-align: center;
+  font-size: 80px;
+}
+#loginContainer #loginPanel #loginDetail {
+  position: relative;
+  float: left;
+  width: 100%;
+  height: calc(100% - 2.5em);
+  margin-top: -2.5em;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+#loginContainer #loginPanel #loginDetail > .input-group {
+  -webkit-flex: 1;
+  flex: 1;
+}
+#loginContainer #loginPanel #loginDetail > .input-group:not(:last-child) {
+  margin-bottom: 1em;
+}
+#loginContainer #loginPanel #loginDetail #loginBar {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 5em;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+#loginContainer #loginPanel #loginDetail #loginBar .toolButton {
+  -webkit-flex: 1;
+  flex: 1;
+  width: 50%;
+  height: 2em;
+  line-height: 2;
+  margin: 0.5em 0;
+  box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.135);
+  border-radius: 0.2em;
+  display: inline-block;
+  overflow: hidden;
+  text-align: center;
+  color: #fff;
+  background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuMCIgeTE9IjAuNSIgeDI9IjEuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzQwYmY2YyIvPjxzdG9wIG9mZnNldD0iNTAlIiBzdG9wLWNvbG9yPSIjNDBiZjZjIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjNDBiZjZjIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g');
+  background: -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, #40bf6c), color-stop(50%, #40bf6c), color-stop(100%, #40bf6c));
+  background: -moz-linear-gradient(left, #40bf6c 0%, #40bf6c 50%, #40bf6c 100%);
+  background: -webkit-linear-gradient(left, #40bf6c 0%, #40bf6c 50%, #40bf6c 100%);
+  background: linear-gradient(to right, #40bf6c 0%, #40bf6c 50%, #40bf6c 100%);
+}
+#loginContainer #loginPanel #loginDetail #loginBar .toolButton:active {
+  opacity: 0.4;
+}
+#loginContainer #loginPanel #loginDetail #loginBar > .input-group {
+  -webkit-flex: 1;
+  flex: 1;
+  line-height: 2;
+}
+#loginContainer #loginPanel #loginDetail #loginBar > .input-group .inputCheckBox {
+  top: 8px;
+}

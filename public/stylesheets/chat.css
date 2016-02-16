@@ -7800,10 +7800,40 @@
   height: calc(100% - 10px);
   margin: 5px;
 }
-.chatContainer .contactPanel .userHeader .userName {
+.chatContainer .contactPanel .userHeader .userLabel {
   -webkit-flex: 1;
   flex: 1;
+}
+.chatContainer .contactPanel .userHeader .userLabel .userLabelContainer {
+  position: relative;
+  float: left;
+  width: 100%;
+  height: 100%;
+}
+.chatContainer .contactPanel .userHeader .userLabel .userLabelContainer .userName {
+  position: relative;
+  float: left;
+  width: 100%;
+  height: 100%;
   color: white;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  text-overflow: ellipsis;
+  text-align: left;
+  overflow: hidden;
+}
+.chatContainer .contactPanel .userHeader .userLabel .userLabelContainer .invitationFlag {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 1em;
+  height: 1em;
+  margin-bottom: 5px;
+  color: #033865;
+}
+.chatContainer .contactPanel .userHeader .userLabel .userLabelContainer .invitationFlag.select {
+  color: #a6c1ce;
 }
 .chatContainer .contactPanel .userHeader #chatUserDropdown {
   position: relative;

@@ -3,9 +3,10 @@ define(
     function () {
         return function (appModule, extension) {
 
-            function RootController($scope, $rootScope, $q, $timeout, angularEventTypes, angularConstants, appService, serviceRegistry, urlService, utilService) {
+            function RootController($scope, $rootScope, $q, $timeout, $interval, angularEventTypes, angularConstants, appService, serviceRegistry, urlService, utilService) {
                 extension && extension.attach && extension.attach($scope, {
                     "$timeout": $timeout,
+                    "$interval": $interval,
                     "$q": $q,
                     "angularConstants": angularConstants,
                     "utilService": utilService,
@@ -138,9 +139,10 @@ define(
                 );
             }
 
-            function LoginController($scope, $rootScope, $timeout, $q, angularConstants, appService, urlService, utilService) {
+            function LoginController($scope, $rootScope, $timeout, $interval, $q, angularConstants, appService, urlService, utilService) {
                 extension && extension.attach && extension.attach($scope, {
                     "$timeout": $timeout,
+                    "$interval": $interval,
                     "$q": $q,
                     "angularConstants": angularConstants,
                     "utilService": utilService,
@@ -183,9 +185,10 @@ define(
                 }
             }
 
-            function FrameSketchController($scope, $rootScope, $timeout, $q, $log, $exceptionHandler, $compile, $parse, angularEventTypes, angularConstants, appService, uiService, utilService, uiCanvasService) {
+            function FrameSketchController($scope, $rootScope, $timeout, $interval, $q, $log, $exceptionHandler, $compile, $parse, angularEventTypes, angularConstants, appService, uiService, utilService, uiCanvasService) {
                 extension && extension.attach && extension.attach($scope, {
                     "$timeout": $timeout,
+                    "$interval": $interval,
                     "$q": $q,
                     "angularConstants": angularConstants,
                     "utilService": utilService,
@@ -1301,9 +1304,10 @@ define(
                 $scope.pickedControl = "background-image-control";
             }
 
-            function ProjectController($scope, $rootScope, $timeout, $q, angularConstants, appService, uiService, uiFlowService, uiBookService, urlService, utilService) {
+            function ProjectController($scope, $rootScope, $timeout, $interval, $q, angularConstants, appService, uiService, uiFlowService, uiBookService, urlService, utilService) {
                 extension && extension.attach && extension.attach($scope, {
                     "$timeout": $timeout,
+                    "$interval": $interval,
                     "$q": $q,
                     "angularConstants": angularConstants,
                     "utilService": utilService,
@@ -1525,7 +1529,7 @@ define(
                 $scope._ = _;
             }
 
-            function RepoLibController($scope, $rootScope, $timeout, $q, angularConstants, appService, urlService) {
+            function RepoLibController($scope, $rootScope, $timeout, $interval, $q, angularConstants, appService, urlService) {
                 $scope.getCurrentVersion = function (repoArtifact) {
                     if ($scope.dependencyRecord) {
                         var artifact = _.findWhere($scope.dependencyRecord.artifactList, {artifactId: repoArtifact._id});
@@ -1648,9 +1652,10 @@ define(
                 $scope._ = _;
             }
 
-            function RepoController($scope, $rootScope, $timeout, $q, angularConstants, appService, urlService, utilService) {
+            function RepoController($scope, $rootScope, $timeout, $interval, $q, angularConstants, appService, urlService, utilService) {
                 extension && extension.attach && extension.attach($scope, {
                     "$timeout": $timeout,
+                    "$interval": $interval,
                     "$q": $q,
                     "angularConstants": angularConstants,
                     "utilService": utilService,
@@ -1710,9 +1715,10 @@ define(
                 $scope._ = _;
             }
 
-            function FlowController($scope, $rootScope, $timeout, $q, angularConstants, appService, uiService, uiFlowService, flowService, urlService, utilService) {
+            function FlowController($scope, $rootScope, $timeout, $interval, $q, angularConstants, appService, uiService, uiFlowService, flowService, urlService, utilService) {
                 extension && extension.attach && extension.attach($scope, {
                     "$timeout": $timeout,
+                    "$interval": $interval,
                     "$q": $q,
                     "angularConstants": angularConstants,
                     "utilService": utilService,
@@ -2014,9 +2020,10 @@ define(
                 $scope.activeEditor = "process";
             }
 
-            function BookController($scope, $rootScope, $timeout, $q, $log, $exceptionHandler, $compile, $parse, $templateCache, angularEventTypes, angularConstants, appService, uiService, uiBookService, bookService, utilService, uiCanvasService) {
+            function BookController($scope, $rootScope, $timeout, $interval, $q, $log, $exceptionHandler, $compile, $parse, $templateCache, angularEventTypes, angularConstants, appService, uiService, uiBookService, bookService, utilService, uiCanvasService) {
                 extension && extension.attach && extension.attach($scope, {
                     "$timeout": $timeout,
+                    "$interval": $interval,
                     "$q": $q,
                     "angularConstants": angularConstants,
                     "utilService": utilService,
@@ -2237,9 +2244,10 @@ define(
                 init();
             }
 
-            function ChatController($scope, $rootScope, $timeout, $q, $log, $exceptionHandler, $compile, $parse, $templateCache, angularEventTypes, angularConstants, urlService, appService, uiService, utilService) {
+            function ChatController($scope, $rootScope, $timeout, $interval, $q, $log, $exceptionHandler, $compile, $parse, $templateCache, angularEventTypes, angularConstants, urlService, appService, uiService, utilService) {
                 extension && extension.attach && extension.attach($scope, {
                     "$timeout": $timeout,
+                    "$interval": $interval,
                     "$q": $q,
                     "angularConstants": angularConstants,
                     "utilService": utilService,
@@ -2738,6 +2746,6 @@ define(
                 init();
             }
 
-            appModule.controller("RootController", ["$scope", "$rootScope", "$q", "$timeout", "angularEventTypes", "angularConstants", "appService", "serviceRegistry", "urlService", "utilService", RootController]).controller("LoginController", ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "urlService", "utilService", LoginController]).controller("FrameSketchController", ["$scope", "$rootScope", "$timeout", "$q", "$log", "$exceptionHandler", "$compile", "$parse", "angularEventTypes", "angularConstants", "appService", "uiService", "utilService", "uiCanvasService", FrameSketchController]).controller("BookController", ["$scope", "$rootScope", "$timeout", "$q", "$log", "$exceptionHandler", "$compile", "$parse", "$templateCache", "angularEventTypes", "angularConstants", "appService", "uiService", "uiBookService", "bookService", "utilService", "uiCanvasService", BookController]).controller("FlowController", ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "uiService", "uiFlowService", "flowService", "urlService", "utilService", FlowController]).controller("ProjectController", ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "uiService", "uiFlowService", "uiBookService", "urlService", "utilService", ProjectController]).controller("RepoController", ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "urlService", "utilService", RepoController]).controller("RepoLibController", ["$scope", "$rootScope", "$timeout", "$q", "angularConstants", "appService", "urlService", RepoLibController]).controller("ChatController", ["$scope", "$rootScope", "$timeout", "$q", "$log", "$exceptionHandler", "$compile", "$parse", "$templateCache", "angularEventTypes", "angularConstants", "urlService", "appService", "uiService", "utilService", ChatController]);
+            appModule.controller("RootController", ["$scope", "$rootScope", "$q", "$timeout", "$interval", "angularEventTypes", "angularConstants", "appService", "serviceRegistry", "urlService", "utilService", RootController]).controller("LoginController", ["$scope", "$rootScope", "$timeout", "$interval", "$q", "angularConstants", "appService", "urlService", "utilService", LoginController]).controller("FrameSketchController", ["$scope", "$rootScope", "$timeout", "$interval", "$q", "$log", "$exceptionHandler", "$compile", "$parse", "angularEventTypes", "angularConstants", "appService", "uiService", "utilService", "uiCanvasService", FrameSketchController]).controller("BookController", ["$scope", "$rootScope", "$timeout", "$interval", "$q", "$log", "$exceptionHandler", "$compile", "$parse", "$templateCache", "angularEventTypes", "angularConstants", "appService", "uiService", "uiBookService", "bookService", "utilService", "uiCanvasService", BookController]).controller("FlowController", ["$scope", "$rootScope", "$timeout", "$interval", "$q", "angularConstants", "appService", "uiService", "uiFlowService", "flowService", "urlService", "utilService", FlowController]).controller("ProjectController", ["$scope", "$rootScope", "$timeout", "$interval", "$q", "angularConstants", "appService", "uiService", "uiFlowService", "uiBookService", "urlService", "utilService", ProjectController]).controller("RepoController", ["$scope", "$rootScope", "$timeout", "$interval", "$q", "angularConstants", "appService", "urlService", "utilService", RepoController]).controller("RepoLibController", ["$scope", "$rootScope", "$timeout", "$interval", "$q", "angularConstants", "appService", "urlService", RepoLibController]).controller("ChatController", ["$scope", "$rootScope", "$timeout", "$interval", "$q", "$log", "$exceptionHandler", "$compile", "$parse", "$templateCache", "angularEventTypes", "angularConstants", "urlService", "appService", "uiService", "utilService", ChatController]);
         }
     });

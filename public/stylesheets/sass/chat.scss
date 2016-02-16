@@ -97,9 +97,43 @@ $chatColor: #666;
                 }
             }
 
-            .userName {
+            .userLabel {
                 @include flex(1);
-                color: white;
+
+                .userLabelContainer {
+                    position: relative;
+                    float: left;
+                    width: 100%;
+                    height: 100%;
+
+                    .userName {
+                        position: relative;
+                        float: left;
+                        width: 100%;
+                        height: 100%;
+                        color: white;
+                        display: -webkit-box;
+                        -webkit-box-orient: vertical;
+                        -webkit-line-clamp: 1;
+                        text-overflow: ellipsis;
+                        text-align: left;
+                        overflow: hidden;
+                    }
+
+                    .invitationFlag {
+                        position: absolute;
+                        bottom: 0;
+                        right: 0;
+                        width: 1em;
+                        height: 1em;
+                        margin-bottom: 5px;
+                        color: $blue6;
+
+                        &.select {
+                            color: $blue1;
+                        }
+                    }
+                }
             }
 
             #chatUserDropdown {

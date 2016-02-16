@@ -2,9 +2,9 @@ define(
     ["angular-lib", "jquery-lib"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$http", "$timeout", "$q", "$exceptionHandler", "angularEventTypes", "angularConstants", "utilService"];
+            var inject = ["$http", "$timeout", "$interval", "$q", "$exceptionHandler", "angularEventTypes", "angularConstants", "utilService"];
 
-            appModule.directive("uiSimpleStyleEditor", _.union(inject, [function ($http, $timeout, $q, $exceptionHandler, angularEventTypes, angularConstants, utilService) {
+            appModule.directive("uiSimpleStyleEditor", _.union(inject, [function ($http, $timeout, $interval, $q, $exceptionHandler, angularEventTypes, angularConstants, utilService) {
                 'use strict';
 
                 var boundProperties = {simpleStyle: "="},
@@ -28,6 +28,7 @@ define(
                             pre: function (scope, element, attrs) {
                                 extension && extension.attach && extension.attach(scope, _.extend(injectObj, {
                                     "$timeout": $timeout,
+                                    "$interval": $interval,
                                     "$q": $q,
                                     "angularConstants": angularConstants,
                                     "utilService": utilService,
