@@ -1,6 +1,24 @@
 <link rel="stylesheet" type="text/css" href="stylesheets/chat.css"/>
 <link rel="stylesheet" type="text/css" href="fonts/icon-chat/style.css"/>
 
+<script type="text/ng-template" id="_chatConversation.html">
+    <div class="chatConversation fs-x-small" ui-data="animo('select', 'tinRightIn')">
+        <div ng-class="{'sender':item.userId != $root.loginUser._id}"
+             class="conversationAvatar fs-x-huge-before icon-chat-before icon-chat-portrait-before">
+            <img ng-src="api/public/avatar/userId={{item.userId}}"
+                 onerror="this.src='images/image-chat/transparent.png'">
+        </div>
+
+        <div ng-class="{'sender':item.userId == $root.loginUser._id}"
+             class="conversationAvatar fs-x-huge-before icon-chat-before icon-chat-portrait-before">
+            <img ng-src="api/public/avatar/userId={{item.userId}}"
+                 onerror="this.src='images/image-chat/transparent.png'">
+        </div>
+
+        <p>{{item.message}}</p>
+
+    </div>
+</script>
 <div class="chatContainer fs-x-medium" ng-controller="ChatController">
     <div ui-modal-window transition="fadeInScaleUp">
         <div class="chatMainContent fs-x-medium" name="mainContent">
@@ -13,8 +31,9 @@
                         <div class="userLabelContainer">
                             <span class="userName">{{$root.loginUser.name}}</span>
                             <div ui-data="animo('select', 'tadaInfinite')"
-                                    class="invitationFlag icon-chat-before icon-chat-local_florist-before"></div></div>
+                                 class="invitationFlag icon-chat-before icon-chat-local_florist-before"></div>
                         </div>
+                    </div>
                     <div id="chatUserDropdown" class="dropdown">
                         <div class="fs-x-huge-after icon-chat-after icon-chat-menu-after dropdown-toggle"
                              id="chatUserMenu"
@@ -68,9 +87,18 @@
                     </div>
                 </div>
             </div>
-            <div class="chatPanel no-padding col-as-9">
-                <div class="chatHeader col-as-12"></div>
-                <div class="chatContent col-as-12"></div>
+            <div id="chatPanel" class="no-padding col-as-9">
+                <div id="chatHeader" class="col-as-12"></div>
+                <div id="chatContent" class="col-as-12 no-padding">
+                    <div id="chatListContainer">
+                        <div id="conversationItems"></div>
+                    </div>
+                    <div id="chatInputContainer">
+                        <textarea id="chatTextArea" class="fs-x-small" cols="1" rows="2"></textarea>
+                        <div id="sendButton" ng-click="once(this, $event, 'sendMessage')"
+                             class="icon-chat-before icon-chat-send-before"></div>
+                    </div>
+                </div>
             </div>
         </div>
 

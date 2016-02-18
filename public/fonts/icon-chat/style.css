@@ -91,6 +91,10 @@
     content: "\e60a";
 }
 
+.icon-chat-send:before {
+    content: "\e60b";
+}
+
 .icon-chat-exit-before:before {
     content: "\e600";
 }
@@ -135,6 +139,10 @@
     content: "\e60a";
 }
 
+.icon-chat-send-before:before {
+    content: "\e60b";
+}
+
 .icon-chat-exit-after:after {
     content: "\e600";
 }
@@ -177,5 +185,9 @@
 
 .icon-chat-local_florist-after:after {
     content: "\e60a";
+}
+
+.icon-chat-send-after:after {
+    content: "\e60b";
 }
 

@@ -2399,6 +2399,10 @@ define(
                     return utilService.getResolveDefer();
                 }
 
+                $scope.sendMessage = function () {
+                    return utilService.getResolveDefer();
+                }
+
                 $scope.createChat = function () {
                     return appService.createChat($scope.userId, $scope.projectId).then(function (chatId) {
                         $scope.chatId = chatId;
@@ -2608,6 +2612,25 @@ define(
                     })
                 }
 
+                function addConversation(conversationObj) {
+                    var $items = $('#conversationItems');
+
+                    var containerScope = angular.element($items).scope();
+                    if (containerScope) {
+                        var templateHtml = $templateCache.get("_chatConversation.html"),
+                            $html = $(templateHtml);
+
+                        $items.append($html);
+
+                        $compile($html)(containerScope);
+
+                        var childScope = angular.element($html).scope();
+                        childScope.item = conversationObj;
+
+                        containerScope.toggleSelect($html);
+                    }
+                }
+
                 function onEvent(data) {
                     var signal = data.signal,
                         eventType;
@@ -2670,6 +2693,41 @@ define(
                 }
 
                 function init() {
+                    function initControl() {
+                        var $container = $('#chatListContainer');
+
+                        $container.sly({
+                            smart: 1,
+                            activateOn: 'click',
+                            mouseDragging: 1,
+                            touchDragging: 1,
+                            releaseSwing: 1,
+                            scrollBar: null,
+                            scrollBy: 10,
+                            pagesBar: null,
+                            activatePageOn: 'click',
+                            speed: 300,
+                            elasticBounds: 1,
+                            easing: 'easeOutExpo',
+                            dragHandle: 1,
+                            dynamicHandle: 1,
+                            clickBar: 1
+                        });
+
+                        addConversation({message: "ABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABC", userId: $rootScope.loginUser._id});
+                        addConversation({message: "ABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABC", userId: $rootScope.loginUser._id});
+                        addConversation({message: "ABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABC", userId: $rootScope.loginUser._id});
+                        addConversation({message: "ABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABC", userId: $rootScope.loginUser._id});
+                        addConversation({message: "ABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABC", userId: $rootScope.loginUser._id});
+                        addConversation({message: "ABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABC", userId: $rootScope.loginUser._id});
+                        addConversation({message: "ABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABC", userId: $rootScope.loginUser._id});
+                        addConversation({message: "ABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABC", userId: $rootScope.loginUser._id});
+                        addConversation({message: "ABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABC", userId: $rootScope.loginUser._id});
+                        addConversation({message: "ABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABC", userId: $rootScope.loginUser._id});
+                        addConversation({message: "ABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABC", userId: $rootScope.loginUser._id});
+                        addConversation({message: "ABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABC", userId: $rootScope.loginUser._id});
+                    }
+
                     $scope.nameList = {
                         "A": [{_id: "52591a12c763d5e45855637a", name: "安亦斐"}],
                         "B": [{_id: "52591a12c763d5e4585563b4", name: "毕嘉利"}],
@@ -2719,6 +2777,7 @@ define(
                     $scope.inviteeId = "52591a12c763d5e4585563ce";
                     $scope.chatList = [];
                     $scope.inviteeList = [];
+
                     $scope.$on('$destroy', function () {
                         unregisterPomeloListeners();
                         var pomeloInstance = window.pomeloContext.pomeloInstance;
@@ -2738,6 +2797,9 @@ define(
                         } else {
                             window.pomeloContext.pomeloInstance.on(window.pomeloContext.options.chatRoute, onEvent);
                             registerPomeloListeners();
+
+                            initControl();
+
                             return utilService.getResolveDefer();
                         }
                     });

@@ -121,6 +121,9 @@ define(
             return function (state, animationName) {
                 var animationValue = meta.animoStyles && meta.animoStyles[animationName];
                 if (animationValue && animationValue.animation) {
+                    if (animationValue.calls) {
+                        Velocity.RegisterEffect(animationValue.animation, _.extend({calls: animationValue.calls}, animationValue.settings));
+                    }
                     return {'animo': _.object([state], [animationValue])};
                 }
             }
