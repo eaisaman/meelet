@@ -200,6 +200,28 @@ define(
                 return this.cordovaPromise("getDeviceId").apply(this, []);
             };
 
+            appService.prototype.getGroupUser = function (userId, isFriend) {
+                var args = [userId];
+                if (isFriend != null) args.push(isFriend);
+                return this.cordovaPromise("getGroupUser").apply(this, args);
+            }
+
+            appService.prototype.sendInvitation = function (userId, inviteeList) {
+                return this.cordovaPromise("sendInvitation").apply(this, [userId, JSON.stringify(inviteeList)]);
+            }
+
+            appService.prototype.getInvitation = function (inviteeId) {
+                return this.cordovaPromise("getInvitation").apply(this, [inviteeId]);
+            }
+
+            appService.prototype.getChatInvitation = function (inviteeId) {
+                return this.cordovaPromise("getChatInvitation").apply(this, [inviteeId]);
+            }
+
+            appService.prototype.getChat = function (userId) {
+                return this.cordovaPromise("getChat").apply(this, [userId]);
+            }
+
             window.cordova && appModule.config(["$provide", "$injector", function ($provide, $injector) {
                 $provide.decorator("appService", ["$delegate", function ($delegate) {
                     _.extend($delegate.constructor.prototype, appService.prototype);

@@ -210,7 +210,7 @@ UserController.prototype.getUserGroup = function (groupFilter, sort, userId, upd
  * @return {Void}
  *
  **/
-UserController.prototype.getGroupUser = function (userId, userUpdateTime, success, fail) {
+UserController.prototype.getGroupUser = function (userId, userUpdateTime, isFriend, success, fail) {
     var self = this;
 
     userId = new self.db.Types.ObjectId(userId);
@@ -220,6 +220,7 @@ UserController.prototype.getGroupUser = function (userId, userUpdateTime, succes
         [
             function (next) {
                 var xrefFilter = {userId: userId, active: 1};
+                if (isFriend != null) xrefFilter.groupType = isFriend ? 1 : 0;
 
                 self.schema.UserGroupXref.find(xrefFilter, function (err, data) {
                     next(err, data);
@@ -275,8 +276,9 @@ UserController.prototype.getGroupUser = function (userId, userUpdateTime, succes
             }
         ],
         function (err, data) {
+            fail("Fake error");
             if (!err) {
-                success(data);
+                //success(data);
             } else {
                 fail(err);
             }
@@ -570,8 +572,8 @@ UserController.prototype.postInvitation = function (userId, inviteeList, route, 
             },
             function (invitationArr, next) {
                 var uids = inviteeList.map(function (invitee) {
-                        return {uid: invitee._id, loginChannel: invitee.loginChannel}
-                    });
+                    return {uid: invitee._id, loginChannel: invitee.loginChannel}
+                });
 
                 commons.sendInvitation(userId.toString(), uids, route, function (err) {
                     next(err, invitationArr);

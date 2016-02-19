@@ -258,6 +258,9 @@ ChatController.prototype.getInvitation = function (invitationFilter, success, fa
     if (invitationFilter.creatorId) {
         invitationFilter.creatorId = new self.db.Types.ObjectId(invitationFilter.creatorId);
     }
+    if (invitationFilter.inviteeId) {
+        invitationFilter.inviteeId = new self.db.Types.ObjectId(invitationFilter.inviteeId);
+    }
     if (invitationFilter.updateTime) {
         invitationFilter.updateTime = {$gt: invitationFilter.updateTime};
     }
@@ -269,7 +272,133 @@ ChatController.prototype.getInvitation = function (invitationFilter, success, fa
             fail(err);
         }
     });
-    ;
+}
+
+/**
+ * @description Get chat invitation.
+ *
+ * @param invitationFilter{object} The filter contains query conditions on ChatInvitation collection's fields,
+ * @param success{function}
+ * @param fail{function}
+ */
+ChatController.prototype.getChatInvitation = function (invitationFilter, success, fail) {
+    var self = this;
+
+    invitationFilter = (invitationFilter && JSON.parse(invitationFilter)) || {};
+    if (invitationFilter.userId) {
+        invitationFilter.userId = new self.db.Types.ObjectId(invitationFilter.userId);
+    }
+    if (invitationFilter.inviteeId) {
+        invitationFilter.inviteeId = new self.db.Types.ObjectId(invitationFilter.inviteeId);
+    }
+    if (invitationFilter.chatId) {
+        invitationFilter.chatId = new self.db.Types.ObjectId(invitationFilter.chatId);
+    }
+    if (invitationFilter.chatUpdateTime) {
+        invitationFilter.chatUpdateTime = {$gt: invitationFilter.chatUpdateTime};
+    }
+    if (invitationFilter.updateTime) {
+        invitationFilter.updateTime = {$gt: invitationFilter.updateTime};
+    }
+
+    (!self.isDBReady && fail(new Error('DB not initialized'))) || self.schema.ChatInvitation.find(invitationFilter, function (err, data) {
+        if (!err) {
+            success(commons.arrayPick(data, _.without(self.schema.Invitation.fields, "createTime")));
+        } else {
+            fail(err);
+        }
+    });
+}
+
+/**
+ * @description Get chat the user resides in, along with the belonging user list.
+ *
+ * @param userId{string}
+ * @param success{function}
+ * @param fail{function}
+ */
+ChatController.prototype.getChat = function (userId, success, fail) {
+    var self = this;
+
+    userId = new self.db.Types.ObjectId(userId);
+
+    (!self.isDBReady && fail(new Error('DB not initialized'))) || async.waterfall([
+        function (next) {
+            var invitationFilter = {active: 1, accepted: 1, $or: [{userId: userId}, {inviteeId: userId}]};
+
+            self.schema.ChatInvitation.find(invitationFilter, function (err, data) {
+                next(err, data);
+            });
+        },
+        function (invitationList, next) {
+            if (invitationList && invitationList.length) {
+                var userMap = {}, arr = invitationList.map(function (invitationObj) {
+                    return function (callback) {
+                        async.waterfall([
+                            function (cb) {
+                                self.schema.Chat.find({_id: invitationObj.chatId}, function (err, data) {
+                                    cb(err, data && data.length && data[0]);
+                                });
+                            }, function (chatObj, cb) {
+                                if (chatObj) {
+                                    chatObj.userList = [];
+                                    self.schema.ChatInvitation.find({chatId: chatObj._id}, function (err, data) {
+                                        if (!err) {
+                                            _.each(data, function (item) {
+                                                chatObj.userList.push(userMap[item.inviteeId] = userMap[item.inviteeId] || {_id: item.inviteeId});
+                                            })
+                                        }
+
+                                        cb(null, chatObj);
+                                    });
+                                } else {
+                                    cb(null, null);
+                                }
+                            }
+                        ], function (err, data) {
+                            callback(err, data);
+                        });
+                    }
+                });
+
+                async.waterfall([
+                    function (wCallback) {
+                        async.parallel(arr, function (err, results) {
+                            //Reject null values in results
+                            wCallback(err, _.reject(results, function (result) {
+                                if (result) {
+                                    result = _.omit(result, "createTime", "active");
+                                }
+                                return result;
+                            }));
+                        })
+                    },
+                    function (chatList, wCallback) {
+                        async.each(_.values(userMap), function (userObj, eCallback) {
+                            self.schema.User.find({_id: userObj._id}, function (err, data) {
+                                if (!err && data && data.length) {
+                                    _.extend(userObj, _.pick(data[0], ["loginChannel", "name", "sex", "tel"]));
+                                }
+                                eCallback(err, data);
+                            })
+                        }, function (err) {
+                            wCallback(err, chatList);
+                        });
+                    }
+                ], function (err, data) {
+                    next(err, data);
+                });
+            } else {
+                next(null, null);
+            }
+        }
+    ], function (err, data) {
+        if (!err) {
+            success(data);
+        } else {
+            fail(err);
+        }
+    });
 }
 
 /**

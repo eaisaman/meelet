@@ -2714,18 +2714,54 @@ define(
                             clickBar: 1
                         });
 
-                        addConversation({message: "ABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABC", userId: $rootScope.loginUser._id});
-                        addConversation({message: "ABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABC", userId: $rootScope.loginUser._id});
-                        addConversation({message: "ABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABC", userId: $rootScope.loginUser._id});
-                        addConversation({message: "ABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABC", userId: $rootScope.loginUser._id});
-                        addConversation({message: "ABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABC", userId: $rootScope.loginUser._id});
-                        addConversation({message: "ABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABC", userId: $rootScope.loginUser._id});
-                        addConversation({message: "ABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABC", userId: $rootScope.loginUser._id});
-                        addConversation({message: "ABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABC", userId: $rootScope.loginUser._id});
-                        addConversation({message: "ABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABC", userId: $rootScope.loginUser._id});
-                        addConversation({message: "ABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABC", userId: $rootScope.loginUser._id});
-                        addConversation({message: "ABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABC", userId: $rootScope.loginUser._id});
-                        addConversation({message: "ABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABC", userId: $rootScope.loginUser._id});
+                        addConversation({
+                            message: "ABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABC",
+                            userId: $rootScope.loginUser._id
+                        });
+                        addConversation({
+                            message: "ABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABC",
+                            userId: $rootScope.loginUser._id
+                        });
+                        addConversation({
+                            message: "ABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABC",
+                            userId: $rootScope.loginUser._id
+                        });
+                        addConversation({
+                            message: "ABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABC",
+                            userId: $rootScope.loginUser._id
+                        });
+                        addConversation({
+                            message: "ABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABC",
+                            userId: $rootScope.loginUser._id
+                        });
+                        addConversation({
+                            message: "ABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABC",
+                            userId: $rootScope.loginUser._id
+                        });
+                        addConversation({
+                            message: "ABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABC",
+                            userId: $rootScope.loginUser._id
+                        });
+                        addConversation({
+                            message: "ABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABC",
+                            userId: $rootScope.loginUser._id
+                        });
+                        addConversation({
+                            message: "ABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABC",
+                            userId: $rootScope.loginUser._id
+                        });
+                        addConversation({
+                            message: "ABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABC",
+                            userId: $rootScope.loginUser._id
+                        });
+                        addConversation({
+                            message: "ABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABC",
+                            userId: $rootScope.loginUser._id
+                        });
+                        addConversation({
+                            message: "ABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABC",
+                            userId: $rootScope.loginUser._id
+                        });
                     }
 
                     $scope.nameList = {
@@ -2787,21 +2823,42 @@ define(
                         }
                     });
 
-                    return utilService.chain([
-                        appService.loadPomelo.bind(appService),
-                        appService.initPomelo.bind(appService),
-                        appService.connectPomelo.bind(appService, $rootScope.loginUser._id, $rootScope.loginUser.loginChannel)
-                    ]).then(function (err) {
-                        if (err) {
-                            return utilService.getRejectDefer(err);
-                        } else {
-                            window.pomeloContext.pomeloInstance.on(window.pomeloContext.options.chatRoute, onEvent);
-                            registerPomeloListeners();
+                    return $q.all([
+                        appService.getGroupUser($rootScope.loginUser._id, true),
+                        appService.getInvitation($rootScope.loginUser._id),
+                        appService.getChat($rootScope.loginUser._id),
+                        appService.getChatInvitation($rootScope.loginUser._id),
+                        utilService.chain([
+                            appService.loadPomelo.bind(appService),
+                            appService.initPomelo.bind(appService),
+                            appService.connectPomelo.bind(appService, $rootScope.loginUser._id, $rootScope.loginUser.loginChannel)
+                        ]).then(function (err) {
+                            if (err) {
+                                return utilService.getRejectDefer(err);
+                            } else {
+                                window.pomeloContext.pomeloInstance.on(window.pomeloContext.options.chatRoute, onEvent);
+                                registerPomeloListeners();
 
-                            initControl();
+                                initControl();
 
-                            return utilService.getResolveDefer();
-                        }
+                                return utilService.getResolveDefer();
+                            }
+                        })
+                    ]).then(function (results) {
+                        var friendList = results[0] || [],
+                            invitationList = results[1] || [],
+                            chatList = results[1] || [],
+                            chatInvitationList = results[1] || [];
+
+                        return utilService.getResolveDefer();
+                    }, function (err) {
+                        if (typeof err === "object") err = err.data || "Unknow error";
+                        return $scope.showAlert(
+                            {
+                                title: err,
+                                category: 3
+                            }
+                        );
                     });
                 }
 

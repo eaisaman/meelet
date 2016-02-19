@@ -1980,6 +1980,93 @@ define(
                 }
             }
 
+            appService.prototype.getGroupUser = function (userId, isFriend) {
+                var self = this,
+                    params = {
+                        userId: userId
+                    };
+
+                if (isFriend != null) params.isFriend = isFriend;
+
+                return self.$http({
+                    method: 'GET',
+                    url: (window.serverUrl || "") + '/api/private/groupUser',
+                    params: params
+                }).then(function (result) {
+                    if (result.data.result === "OK") {
+                        return self.utilService.getResolveDefer(result.data.resultValue);
+                    } else {
+                        return self.utilService.getRejectDefer(result.data.reason);
+                    }
+                }, function (err) {
+                    return self.utilService.getRejectDefer(typeof err === "object" && err.data || err);
+                });
+            }
+
+            appService.prototype.getInvitation = function (inviteeId) {
+                var self = this;
+
+                return self.$http({
+                    method: 'GET',
+                    url: (window.serverUrl || "") + '/api/private/invitation',
+                    params: {
+                        inviteeId: inviteeId,
+                        processed: 0,
+                        active: 1
+                    }
+                }).then(function (result) {
+                    if (result.data.result === "OK") {
+                        return self.utilService.getResolveDefer(result.data.resultValue);
+                    } else {
+                        return self.utilService.getRejectDefer(result.data.reason);
+                    }
+                }, function (err) {
+                    return self.utilService.getRejectDefer(typeof err === "object" && err.data || err);
+                });
+            }
+
+            appService.prototype.getChatInvitation = function (inviteeId) {
+                var self = this;
+
+                return self.$http({
+                    method: 'GET',
+                    url: (window.serverUrl || "") + '/api/private/chatInvitation',
+                    params: {
+                        inviteeId: inviteeId,
+                        processed: 0,
+                        active: 1
+                    }
+                }).then(function (result) {
+                    if (result.data.result === "OK") {
+                        return self.utilService.getResolveDefer(result.data.resultValue);
+                    } else {
+                        return self.utilService.getRejectDefer(result.data.reason);
+                    }
+                }, function (err) {
+                    return self.utilService.getRejectDefer(typeof err === "object" && err.data || err);
+                });
+            }
+
+            appService.prototype.getChat = function (userId) {
+                var self = this;
+
+                return self.$http({
+                    method: 'GET',
+                    url: (window.serverUrl || "") + '/api/private/chat',
+                    params: {
+                        inviteeId: userId
+                    }
+                }).then(function (result) {
+                    if (result.data.result === "OK") {
+                        return self.utilService.getResolveDefer(result.data.resultValue);
+                    } else {
+                        return self.utilService.getRejectDefer(result.data.reason);
+                    }
+                }, function (err) {
+                    return self.utilService.getRejectDefer(typeof err === "object" && err.data || err);
+                });
+            }
+
             appService.prototype.createChat = function (userId, projectId) {
                 var self = this;
 
