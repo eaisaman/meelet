@@ -314,17 +314,24 @@ ChatController.prototype.getChatInvitation = function (invitationFilter, success
  * @description Get chat the user resides in, along with the belonging user list.
  *
  * @param userId{string}
+ * @param chatId{string}
  * @param success{function}
  * @param fail{function}
  */
-ChatController.prototype.getChat = function (userId, success, fail) {
+ChatController.prototype.getChat = function (userId, chatId, success, fail) {
     var self = this;
 
     userId = new self.db.Types.ObjectId(userId);
+    if (chatId != null) {
+        chatId = new self.db.Types.ObjectId(chatId);
+    }
 
     (!self.isDBReady && fail(new Error('DB not initialized'))) || async.waterfall([
         function (next) {
             var invitationFilter = {active: 1, accepted: 1, $or: [{userId: userId}, {inviteeId: userId}]};
+            if (chatId != null) {
+                invitationFilter.chatId = chatId;
+            }
 
             self.schema.ChatInvitation.find(invitationFilter, function (err, data) {
                 next(err, data);
@@ -731,6 +738,17 @@ ChatController.prototype.postChat = function (userId, deviceId, name, uids, rout
 
     (!self.isDBReady && fail(new Error('DB not initialized'))) || async.waterfall([
         function (next) {
+            self.schema.User.find({_id: userId}, function (err, data) {
+                if (!err) {
+                    if (!data || !data.length) {
+                        err = self.__('Account Not Found');
+                    }
+                }
+
+                next(err, data && data.length && data[0]);
+            });
+        },
+        function (userObj, next) {
             self.schema.Chat.create({
                 "createTime": now.getTime(),
                 "updateTime": now.getTime(),
@@ -741,6 +759,8 @@ ChatController.prototype.postChat = function (userId, deviceId, name, uids, rout
                 "payload": payload,
                 "thumbnail": "",
                 "creatorId": userId,
+                "creatorName": userObj.name,
+                "name": name,
                 "state": self.chatConstants.chatCreateState,
                 "active": 1
             }, function (err, data) {
@@ -791,6 +811,8 @@ ChatController.prototype.postChat = function (userId, deviceId, name, uids, rout
                                         "chatUpdateTime": now.getTime(),
                                         "chatId": chatObj._id,
                                         "userId": userId,
+                                        "creatorName": chatObj.creatorName,
+                                        "chatName": chatObj.name,
                                         'inviteeId': inviteeId,
                                         'route': route,
                                         "accepted": 0,
@@ -862,6 +884,18 @@ ChatController.prototype.putStartChat = function (userId, deviceId, chatId, uids
 
             async.waterfall([
                 function (callback) {
+                    self.schema.Chat.find({_id: chatId}, function (err, data) {
+                        if (!err) {
+                            if (!data || !data.length) {
+                                err = self.__('Chat Not Found');
+                            }
+                        }
+
+                        callback(err, data && data.length && data[0]);
+                    });
+
+                },
+                function (chatObj, callback) {
                     commons.sendChatInvitation(userId.toString(),
                         uids.map(function (item) {
                             return {uid: item._id, loginChannel: item.loginChannel}
@@ -870,10 +904,10 @@ ChatController.prototype.putStartChat = function (userId, deviceId, chatId, uids
                                 self.config.logger.error(err);
                             }
 
-                            callback(null);
+                            callback(null, chatObj);
                         });
                 },
-                function (callback) {
+                function (chatObj, callback) {
                     var arr = [];
 
                     uids.forEach(function (item) {
@@ -887,6 +921,8 @@ ChatController.prototype.putStartChat = function (userId, deviceId, chatId, uids
                                     "chatUpdateTime": now.getTime(),
                                     "chatId": chatId,
                                     "userId": userId,
+                                    "chatName": chatObj.name,
+                                    "creatorName": chatObj.creatorName,
                                     'inviteeId': inviteeId,
                                     'route': route,
                                     "accepted": 0,
@@ -1260,10 +1296,11 @@ ChatController.prototype.postChatInvitation = function (userId, chatId, uids, ro
  * @param userId
  * @param chatId
  * @param deviceId
+ * @param accepted
  * @param success
  * @param fail
  */
-ChatController.prototype.putAcceptChatInvitation = function (chatId, userId, deviceId, route, success, fail) {
+ChatController.prototype.putAcceptChatInvitation = function (chatId, userId, deviceId, route, accepted, success, fail) {
     var self = this,
         now = new Date();
 
@@ -1271,6 +1308,7 @@ ChatController.prototype.putAcceptChatInvitation = function (chatId, userId, dev
     deviceId = commons.getFormString(deviceId);
     chatId = new self.db.Types.ObjectId(commons.getFormString(chatId));
     route = commons.getFormString(route) || self.chatConstants.chatRoute;
+    accepted = commons.getFormInt(accepted);
 
     (!self.isDBReady && fail(new Error('DB not initialized'))) || async.waterfall([
         function (next) {
@@ -1279,28 +1317,36 @@ ChatController.prototype.putAcceptChatInvitation = function (chatId, userId, dev
                 chatId: chatId,
                 active: 1
             }, {
-                "$set": {updateTime: now.getTime(), accepted: 1},
+                "$set": {updateTime: now.getTime(), accepted: accepted},
                 "$unset": {expires: 1}
             }, {multi: true}, function (err) {
                 next(err);
             });
         },
         function (next) {
-            self.schema.ChatInvitation.update({
-                chatId: chatId,
-                active: 1
-            }, {"$set": {chatUpdateTime: now.getTime()}}, {multi: true}, function (err) {
-                next(err);
-            });
+            if (accepted) {
+                self.schema.ChatInvitation.update({
+                    chatId: chatId,
+                    active: 1
+                }, {"$set": {chatUpdateTime: now.getTime()}}, {multi: true}, function (err) {
+                    next(err);
+                });
+            } else {
+                next(null);
+            }
         },
         function (next) {
-            commons.acceptChatInvitation(userId.toString(), deviceId, chatId.toString(), route, function (err) {
-                if (err) {
-                    self.config.logger.error(err);
-                }
+            if (accepted) {
+                commons.acceptChatInvitation(userId.toString(), deviceId, chatId.toString(), route, function (err) {
+                    if (err) {
+                        self.config.logger.error(err);
+                    }
 
+                    next(null);
+                });
+            } else {
                 next(null);
-            });
+            }
         }
     ], function (err) {
         if (!err) {
@@ -1356,6 +1402,7 @@ ChatController.prototype.postTopic = function (chatId, deviceId, topicObj, route
                 "endTime": null,
                 "chatId": chatId,
                 "creatorId": chatObj.creatorId,
+                "creatorName": chatObj.creatorName,
                 "route": route,
                 "state": self.chatConstants.topicOpenState,
                 "active": 1
@@ -1394,6 +1441,8 @@ ChatController.prototype.postTopic = function (chatId, deviceId, topicObj, route
                                 "chatId": chatId,
                                 "topicId": topicObj._id,
                                 "userId": topicObj.creatorId,
+                                "topicName": topicObj.name,
+                                "creatorName": topicObj.creatorName,
                                 "route": topicObj.route,
                                 "inviteeId": inviteeId,
                                 "accepted": 0,
@@ -1588,15 +1637,17 @@ ChatController.prototype.postTopicInvitation = function (topicId, uids, success,
  *
  * @param inviteeId
  * @param topicId
+ * @param accepted
  * @param success
  * @param fail
  */
-ChatController.prototype.putAcceptTopicInvitation = function (inviteeId, topicId, success, fail) {
+ChatController.prototype.putAcceptTopicInvitation = function (inviteeId, topicId, accepted, success, fail) {
     var self = this,
         now = new Date();
 
     inviteeId = new self.db.Types.ObjectId(commons.getFormString(inviteeId));
     topicId = new self.db.Types.ObjectId(commons.getFormString(topicId));
+    accepted = commons.getFormInt(accepted);
 
     (!self.isDBReady && fail(new Error('DB not initialized'))) || async.waterfall([
         function (next) {
@@ -1606,14 +1657,11 @@ ChatController.prototype.putAcceptTopicInvitation = function (inviteeId, topicId
                 endTime: null
             }, function (err, data) {
                 if (!err) {
-                    if (data && data.length) {
-                        next(null, data[0]);
-                    } else {
-                        next(self.__('Topic Not Found'));
+                    if (!data || !data.length) {
+                        err = self.__('Topic Not Found');
                     }
-                } else {
-                    next(err);
                 }
+                next(err, data && data.length && data[0]);
             });
         },
         function (topicObj, next) {
@@ -1622,7 +1670,7 @@ ChatController.prototype.putAcceptTopicInvitation = function (inviteeId, topicId
                 topicId: topicId,
                 active: 1
             }, {
-                "$set": {updateTime: now.getTime(), accepted: 1},
+                "$set": {updateTime: now.getTime(), accepted: accepted},
                 "$unset": {expires: 1}
             }, {multi: true}, function (err) {
                 next(err, topicObj);
@@ -1753,7 +1801,7 @@ ChatController.prototype.putResumeTopic = function (topicFilter, route, success,
 /**
  * @description
  *
- * Close topic, remove unaccepted topic invitaion so that user won't see them before they expire and get removed.
+ * Close topic, remove unaccepted topic invitation so that user won't see them before they expire and get removed.
  *
  * @param topicId
  * @param route

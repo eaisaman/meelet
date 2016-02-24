@@ -31,6 +31,7 @@
                         <div class="userLabelContainer">
                             <span class="userName">{{$root.loginUser.name}}</span>
                             <div ui-data="animo('select', 'tadaInfinite')"
+                                 ng-click="once(this, null, 'displayInvitation')"
                                  class="invitationFlag icon-chat-before icon-chat-local_florist-before"></div>
                         </div>
                     </div>
@@ -65,6 +66,12 @@
                     </nav>
                     <div class="contactContent">
                         <div content="message" class="fs-x-small select">
+                            <div class="chat" ng-repeat="chat in chatList"
+                                 ng-click="once(this, $event, 'selectChat', $event)">
+                                <div class="chatThumbnail fs-x-huge-before icon-chat-before icon-chat-talk-before">
+                                </div>
+                                <span>{{chat.name}}</span>
+                            </div>
                             <div class="userName" ng-repeat="conversationUser in conversationList"
                                  ng-click="once(this, $event, 'selectConversationUser', $event)">
                                 <div class="userAvatar fs-x-huge-before icon-chat-before icon-chat-portrait-before">
@@ -139,6 +146,52 @@
             <div id="createDiscussionModal" ng-show="modalUsage === 'CreateDiscussion'"
                  ng-click="stopEvent($event, '#create-discussion-control')">
                 <div id="create-discussion-control">
+                </div>
+            </div>
+            <div id="invitationModal" ng-show="modalUsage === 'DisplayInvitation'">
+                <div id="invitation-control">
+                    <div class="invitationTopBar">
+                        <div ui-creative-link effect="fallDown" content="invitation" class="select"
+                             on-select="selectInvitationContent('invitation')"><span
+                                class="icon-chat-before icon-chat-textsms-before">Invitation</span>
+                        </div>
+                        <div ui-creative-link effect="fallDown" content="chatInvitation"
+                             on-select="selectInvitationContent('chatInvitation')">
+                            <span class="icon-chat-before icon-chat-person-before">Chat Invitation</span>
+                        </div>
+                    </div>
+                    <div class="invitationContent">
+                        <div content="invitation" class="fs-x-small" ui-data="animo('select', 'swashIn')">
+                            <div class="invitationItem" ng-repeat="item in invitationList">
+                                <div class="userAvatar fs-x-huge-before icon-chat-before icon-chat-portrait-before">
+                                    <img ng-src="api/public/avatar/userId={{item.senderId}}"
+                                         onerror="this.src='images/image-chat/transparent.png'">
+                                </div>
+                                <span>{{item.creatorName}} wants to become friend of you.</span>
+                                <div class="invitationButton" ng-click="once(this, null, 'acceptInvitation', item)">
+                                    Accept
+                                </div>
+                                <div class="invitationButton"
+                                     ng-click="once(this, null, 'declineInvitation', item)">Decline
+                                </div>
+                            </div>
+                        </div>
+                        <div content="chatInvitation" class="fs-x-small" ui-data="animo('select', 'swashIn')">
+                            <div class="chatInvitationItem" ng-repeat="item in chatInvitationList">
+                                <div class="userAvatar fs-x-huge-before icon-chat-before icon-chat-portrait-before">
+                                    <img ng-src="api/public/avatar/userId={{item.senderId}}"
+                                         onerror="this.src='images/image-chat/transparent.png'">
+                                </div>
+                                <span>{{item.creatorName}} invites you to join a chat {{item.chatName}}.</span>
+                                <div class="invitationButton"
+                                     ng-click="once(this, null, 'acceptChatInvitation', item)">Accept
+                                </div>
+                                <div class="invitationButton"
+                                     ng-click="once(this, null, 'declineChatInvitation', item)">Decline
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

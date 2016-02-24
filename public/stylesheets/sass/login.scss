@@ -34,7 +34,7 @@
             top: -2.5em;
             width: 5em;
             height: 5em;
-            color: $green;
+            color: $green2;
 
             &:before {
                 position: absolute;
@@ -91,7 +91,7 @@
                     overflow: hidden;
                     text-align: center;
                     color: #fff;
-                    @include background(linear-gradient(left, ($green 0%, rgba($green, $activeDarkenPercent) 50%, $green 100%)));
+                    @include background(linear-gradient(left, ($green2 0%, rgba($green2, $activeDarkenPercent) 50%, $green2 100%)));
 
                     &:active {
                         opacity: 0.4;

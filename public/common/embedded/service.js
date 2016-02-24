@@ -222,6 +222,22 @@ define(
                 return this.cordovaPromise("getChat").apply(this, [userId]);
             }
 
+            appService.prototype.acceptInvitation = function (creatorId, inviteeId, route) {
+                return this.cordovaPromise("acceptInvitation").apply(this, [creatorId, inviteeId, route, 1]);
+            }
+
+            appService.prototype.declineInvitation = function (creatorId, inviteeId, route) {
+                return this.cordovaPromise("acceptInvitation").apply(this, [creatorId, inviteeId, route, 0]);
+            }
+
+            appService.prototype.acceptChatInvitation = function (chatId, userId, deviceId, route) {
+                return this.cordovaPromise("acceptChatInvitation").apply(this, [chatId, userId, deviceId, route, 1]);
+            }
+
+            appService.prototype.declineChatInvitation = function (chatId, userId, deviceId, route) {
+                return this.cordovaPromise("declineChatInvitation").apply(this, [chatId, userId, deviceId, route, 0]);
+            }
+
             window.cordova && appModule.config(["$provide", "$injector", function ($provide, $injector) {
                 $provide.decorator("appService", ["$delegate", function ($delegate) {
                     _.extend($delegate.constructor.prototype, appService.prototype);

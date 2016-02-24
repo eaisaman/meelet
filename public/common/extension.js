@@ -26,8 +26,28 @@ define(
                                         $element.removeData("animoInterval");
                                     }
                                     Velocity.animate.apply($element, ['stop']);
+                                    callback && callback();
+                                } else {
+                                    if (classAnimo.calls && classAnimo.calls.length) {
+                                        Velocity.animate.apply($element, [classAnimo.calls[0][0], _.extend({
+                                            complete: function () {
+                                                callback && callback();
+                                            }
+                                        })]);
+                                    } else {
+                                        var packagedAnimation = Velocity.RegisterEffect.packagedEffects[animation];
+                                        if (packagedAnimation) {
+                                            Velocity.animate.apply($element, [packagedAnimation.calls[0][0], _.extend({
+                                                complete: function () {
+                                                    callback && callback();
+                                                }
+                                            })]);
+                                        } else {
+                                            callback && callback();
+                                        }
+                                    }
                                 }
-                                callback && callback();
+                                //callback && callback();
                             } else {
                                 if (classAnimo.settings.loop) {
                                     animoInterval = $interval(function () {
@@ -55,8 +75,14 @@ define(
                         if ($element.hasClass(clazz)) {
                             if (classAnimo.settings.loop) {
                                 Velocity.animate.apply($element, ['stop']);
+                                callback && callback();
+                            } else {
+                                Velocity.animate.apply($element, ['reverse', _.extend({
+                                    complete: function () {
+                                        callback && callback();
+                                    }
+                                })]);
                             }
-                            callback && callback();
                         } else {
                             if (classAnimo.settings.loop) {
                                 Velocity.animate.apply($element, [animation, classAnimo.settings]);

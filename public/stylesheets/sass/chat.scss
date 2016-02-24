@@ -5,7 +5,8 @@
 @import "animation/directive_animation";
 @import "creative-link";
 
-$reveal-value-map: map-merge($default-creative-link-value-map, (color: #3fa46a));
+$reveal-value-map: map-merge($default-creative-link-value-map, (color: $green1));
+$fallDown-value-map: map-merge($default-creative-link-value-map, (color: $blue0, inactiveColor: $blue3));
 $chatColor: #666;
 
 .chatContainer {
@@ -174,7 +175,7 @@ $chatColor: #666;
                             width: 2em;
                             text-align: center;
                             line-height: 2;
-                            color: $green;
+                            color: $green2;
                         }
 
                         &:active {
@@ -262,7 +263,7 @@ $chatColor: #666;
                         background: #E6E6E6;
                         @include gradient-vertical-three-colors(#E6E6E6, rgba(#E6E6E6, 0.9), 50%, #E6E6E6);
 
-                        .userName {
+                        .userName, .chat {
                             position: relative;
                             float: left;
                             width: 100%;
@@ -289,7 +290,7 @@ $chatColor: #666;
                                 background: darken(#E6E6E6, 10%);
                             }
 
-                            .userAvatar {
+                            .userAvatar, .chatThumbnail {
                                 position: relative;
                                 float: left;
                                 width: 3em;
@@ -681,7 +682,7 @@ $chatColor: #666;
                     line-height: 1;
                     text-align: center;
                     opacity: 0;
-                    color: $green;
+                    color: $green1;
 
                     @include transition(opacity 0.3s);
                 }
@@ -740,5 +741,200 @@ $chatColor: #666;
     }
 
     #create-discussion-control {
+    }
+
+    #invitation-control {
+        .invitationTopBar {
+            position: relative;
+            float: left;
+            width: 100%;
+            height: 2em;
+            z-index: 1;
+
+            @include box-shadow(0px 2px 3px black);
+
+            > [ui-creative-link] {
+                position: relative;
+                float: left;
+                width: 30%;
+                height: 2em;
+
+                &:not(:last-child):before {
+                    margin-right: 1em;
+                }
+
+                .linkContent span {
+                    text-align: center;
+                }
+            }
+
+            @include creative-link($fallDown-value-map...);
+        }
+
+        .invitationContent {
+            position: relative;
+            float: left;
+            width: 100%;
+            height: calc(100% - 2em);
+
+            > div {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                overflow-y: auto;
+                background-color: #888;
+                opacity: 0;
+
+                @include backface-visibility(hidden);
+                @include transform-style(preserve-3d);
+                @include transform-origin(50% 50%);
+                @include transform(scale(0, 0));
+
+                &.select {
+                    pointer-events: auto;
+                }
+
+                &[content='invitation'] {
+                    @include gradient-vertical-three-colors(#E6E6E6, rgba(#E6E6E6, 0.9), 50%, #E6E6E6);
+
+                    .invitationItem {
+                        @include display-flex;
+                        @include flex-direction(row);
+                        @include justify-content(center);
+                        @include align-items(center);
+
+                        .userAvatar {
+                            position: relative;
+                            float: left;
+                            width: 3em;
+                            height: 3em;
+
+                            &:before {
+                                position: absolute;
+                                width: 1em;
+                                height: 1em;
+                                left: calc(50% - 0.5em);
+                                top: calc(50% - 0.5em);
+                                color: white;
+                            }
+
+                            img {
+                                width: calc(100% - 10px);
+                                height: calc(100% - 10px);
+                                margin: 5px;
+                            }
+                        }
+
+                        span {
+                            @include flex(1);
+                            line-height: 3;
+                            color: $blue3;
+                        }
+
+                        .invitationButton {
+                            position: relative;
+                            float: right;
+                            top: 0.5em;
+                            width: 4em;
+                            height: 2em;
+                            line-height: 2;
+                            text-align: center;
+                            background-color: #ddd;
+                            box-shadow: inset 0 -2px 0 rgba(0, 0, 0, .135);
+                            border-radius: 0.2em;
+                            display: inline-block;
+                            margin-right: 0.5em;
+                            color: $color;
+                            overflow: hidden;
+
+                            &:active {
+                                background-color: #555;
+                                color: $activeColor;
+                                box-shadow: none;
+                            }
+
+                            &:before {
+                                position: absolute;
+                                width: 100%;
+                                height: 100%;
+                                text-align: center;
+                                line-height: 2;
+                            }
+                        }
+                    }
+                }
+
+                &[content='chatInvitation'] {
+                    @include gradient-vertical-three-colors(#7f8c8d, rgba(#7f8c8d, 0.9), 50%, #7f8c8d);
+
+                    .chatInvitationItem {
+                        @include display-flex;
+                        @include flex-direction(row);
+                        @include justify-content(center);
+                        @include align-items(center);
+
+                        .userAvatar {
+                            position: relative;
+                            float: left;
+                            width: 3em;
+                            height: 3em;
+
+                            &:before {
+                                position: absolute;
+                                width: 1em;
+                                height: 1em;
+                                left: calc(50% - 0.5em);
+                                top: calc(50% - 0.5em);
+                                color: white;
+                            }
+
+                            img {
+                                width: calc(100% - 10px);
+                                height: calc(100% - 10px);
+                                margin: 5px;
+                            }
+                        }
+
+                        span {
+                            @include flex(1);
+                            line-height: 3;
+                            color: $blue0;
+                        }
+
+                        .invitationButton {
+                            position: relative;
+                            float: right;
+                            top: 0.5em;
+                            width: 4em;
+                            height: 2em;
+                            line-height: 2;
+                            text-align: center;
+                            background-color: #ddd;
+                            box-shadow: inset 0 -2px 0 rgba(0, 0, 0, .135);
+                            border-radius: 0.2em;
+                            display: inline-block;
+                            margin-right: 0.5em;
+                            color: $color;
+                            overflow: hidden;
+
+                            &:active {
+                                background-color: #555;
+                                color: $activeColor;
+                                box-shadow: none;
+                            }
+
+                            &:before {
+                                position: absolute;
+                                width: 100%;
+                                height: 100%;
+                                text-align: center;
+                                line-height: 2;
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }

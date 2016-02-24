@@ -18,7 +18,9 @@ $blue3: #4f7698;
 $blue4: #1d5b8b;
 $blue5: #114975;
 $blue6: #033865;
-$green: #40bf6c;
+$green0: #16a085;
+$green1: #3fa46a;
+$green2: #40bf6c;
 
 @mixin emboss-title($pseudo: "", $onActive:true) {
     &#{$pseudo} {

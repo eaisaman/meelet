@@ -10,7 +10,7 @@ define(
                     "$q": $q,
                     "angularConstants": angularConstants,
                     "utilService": utilService,
-                    "element": $("#rootBody"),
+                    "element": $scope.$element = $("#rootBody"),
                     "scope": $scope
                 });
 
@@ -146,7 +146,7 @@ define(
                     "$q": $q,
                     "angularConstants": angularConstants,
                     "utilService": utilService,
-                    "element": $("#loginContainer"),
+                    "element": $scope.$element = $("#loginContainer"),
                     "scope": $scope
                 });
 
@@ -192,7 +192,7 @@ define(
                     "$q": $q,
                     "angularConstants": angularConstants,
                     "utilService": utilService,
-                    "element": $("#frameSketchContainer"),
+                    "element": $scope.$element = $("#frameSketchContainer"),
                     "scope": $scope
                 });
 
@@ -1311,7 +1311,7 @@ define(
                     "$q": $q,
                     "angularConstants": angularConstants,
                     "utilService": utilService,
-                    "element": $(".projectContainer"),
+                    "element": $scope.$element = $(".projectContainer"),
                     "scope": $scope
                 });
 
@@ -1529,7 +1529,17 @@ define(
                 $scope._ = _;
             }
 
-            function RepoLibController($scope, $rootScope, $timeout, $interval, $q, angularConstants, appService, urlService) {
+            function RepoLibController($scope, $rootScope, $timeout, $interval, $q, angularConstants, appService, urlService, utilService) {
+                extension && extension.attach && extension.attach($scope, {
+                    "$timeout": $timeout,
+                    "$interval": $interval,
+                    "$q": $q,
+                    "angularConstants": angularConstants,
+                    "utilService": utilService,
+                    "element": $scope.$element = $(".repoLibContainer"),
+                    "scope": $scope
+                });
+
                 $scope.getCurrentVersion = function (repoArtifact) {
                     if ($scope.dependencyRecord) {
                         var artifact = _.findWhere($scope.dependencyRecord.artifactList, {artifactId: repoArtifact._id});
@@ -1659,7 +1669,7 @@ define(
                     "$q": $q,
                     "angularConstants": angularConstants,
                     "utilService": utilService,
-                    "element": $(".repoContainer"),
+                    "element": $scope.$element = $(".repoContainer"),
                     "scope": $scope
                 });
 
@@ -1722,7 +1732,7 @@ define(
                     "$q": $q,
                     "angularConstants": angularConstants,
                     "utilService": utilService,
-                    "element": $(".flowContainer"),
+                    "element": $scope.$element = $(".flowContainer"),
                     "scope": $scope
                 });
 
@@ -2027,7 +2037,7 @@ define(
                     "$q": $q,
                     "angularConstants": angularConstants,
                     "utilService": utilService,
-                    "element": $(".bookContainer"),
+                    "element": $scope.$element = $(".bookContainer"),
                     "scope": $scope
                 });
 
@@ -2244,14 +2254,14 @@ define(
                 init();
             }
 
-            function ChatController($scope, $rootScope, $timeout, $interval, $q, $log, $exceptionHandler, $compile, $parse, $templateCache, angularEventTypes, angularConstants, urlService, appService, uiService, utilService) {
+            function ChatController($scope, $rootScope, $timeout, $interval, $q, $log, $exceptionHandler, $compile, $parse, $templateCache, angularEventTypes, angularConstants, urlService, appService, uiService, utilService, pinyinService) {
                 extension && extension.attach && extension.attach($scope, {
                     "$timeout": $timeout,
                     "$interval": $interval,
                     "$q": $q,
                     "angularConstants": angularConstants,
                     "utilService": utilService,
-                    "element": $(".chatContainer"),
+                    "element": $scope.$element = $(".chatContainer"),
                     "scope": $scope
                 });
 
@@ -2266,7 +2276,7 @@ define(
                 }
 
                 $scope.selectContent = function (content) {
-                    var $content = $(".contactContent").children("[content='" + content + "']");
+                    var $content = $scope.$element.find(".contactContent").children("[content='" + content + "']");
 
                     if (!$content.hasClass("select")) {
                         $content.siblings(".select").removeClass("select");
@@ -2274,6 +2284,24 @@ define(
                     }
 
                     var $siblingNav = $(".contactNav").children("[content='" + content + "']").siblings(".select");
+                    if ($siblingNav.length) {
+                        var siblingScope = angular.element($siblingNav.children(0)).scope();
+                        if (siblingScope) {
+                            siblingScope.toggleSelectLink && siblingScope.toggleSelectLink(false);
+                        }
+                    }
+                }
+
+                $scope.selectInvitationContent = function (content) {
+                    var $content = $scope.$element.find(".invitationContent").children("[content='" + content + "']");
+
+                    if (!$content.hasClass("select")) {
+                        $scope.toggleSelect($content.siblings(".select")).then(function () {
+                            $scope.toggleSelect($content, null, true);
+                        });
+                    }
+
+                    var $siblingNav = $scope.$element.find(".invitationTopBar").children("[content='" + content + "']").siblings(".select");
                     if ($siblingNav.length) {
                         var siblingScope = angular.element($siblingNav.children(0)).scope();
                         if (siblingScope) {
@@ -2399,6 +2427,138 @@ define(
                     return utilService.getResolveDefer();
                 }
 
+                $scope.displayInvitation = function (event) {
+                    event && event.stopPropagation && event.stopPropagation();
+
+                    $scope.modalUsage = "DisplayInvitation";
+                    var scope = angular.element($(".chatContainer > .modalWindowContainer > .md-modal")).scope();
+
+                    return scope.toggleModalWindow().then(function () {
+                        return $scope.selectInvitationContent('invitation');
+                    });
+                }
+
+                $scope.acceptInvitation = function (invitationObj) {
+                    return appService.acceptInvitation(invitationObj.creatorId, $rootScope.loginUser._id, $rootScope.loginUser.route).then(
+                        function () {
+                            var index;
+                            if (!$scope.invitationList.every(function (item, i) {
+                                    if (item._id == invitationObj._id) {
+                                        index = i;
+                                        return false;
+                                    }
+
+                                    return true;
+                                })) {
+                                $scope.invitationList.splice(index, 1);
+                            }
+
+                            return appService.getUser({_id: invitationObj.creatorId}).then(function (friendList) {
+                                addFriend(friendList);
+
+                                return utilService.getResolveDefer();
+                            });
+                        },
+                        function (err) {
+                            return $scope.showAlert(
+                                {
+                                    title: err,
+                                    category: 3
+                                }
+                            );
+                        }
+                    );
+                }
+
+                $scope.declineInvitation = function (invitationObj) {
+                    return appService.declineInvitation(invitationObj.creatorId, $rootScope.loginUser._id, $rootScope.loginUser.route).then(
+                        function () {
+                            var index;
+                            if (!$scope.invitationList.every(function (item, i) {
+                                    if (item._id == invitationObj._id) {
+                                        index = i;
+                                        return false;
+                                    }
+
+                                    return true;
+                                })) {
+                                $scope.invitationList.splice(index, 1);
+                            }
+
+                            return utilService.getResolveDefer();
+                        },
+                        function (err) {
+                            return $scope.showAlert(
+                                {
+                                    title: err,
+                                    category: 3
+                                }
+                            );
+                        }
+                    );
+
+                }
+
+                $scope.acceptChatInvitation = function (chatInvitationObj) {
+                    return appService.acceptChatInvitation(chatInvitationObj.chatId, $rootScope.loginUser._id, window.pomeloContext.options.deviceId, $rootScope.loginUser.route).then(
+                        function () {
+                            var index;
+                            if (!$scope.chatInvitationList.every(function (item, i) {
+                                    if (item._id == chatInvitationObj._id) {
+                                        index = i;
+                                        return false;
+                                    }
+
+                                    return true;
+                                })) {
+                                $scope.chatInvitationList.splice(index, 1);
+                            }
+
+                            return appService.getChat($rootScope.loginUser._id, chatInvitationObj.chatId).then(function (chatList) {
+                                addChat(chatList);
+
+                                return utilService.getResolveDefer();
+                            });
+                        },
+                        function (err) {
+                            return $scope.showAlert(
+                                {
+                                    title: err,
+                                    category: 3
+                                }
+                            );
+                        }
+                    );
+                }
+
+                $scope.declineChatInvitation = function (chatInvitationObj) {
+                    return appService.declineChatInvitation(chatInvitationObj.chatId, $rootScope.loginUser._id, window.pomeloContext.options.deviceId, $rootScope.loginUser.route).then(
+                        function () {
+                            var index;
+                            if (!$scope.chatInvitationList.every(function (item, i) {
+                                    if (item._id == chatInvitationObj._id) {
+                                        index = i;
+                                        return false;
+                                    }
+
+                                    return true;
+                                })) {
+                                $scope.chatInvitationList.splice(index, 1);
+                            }
+
+                            return utilService.getResolveDefer();
+                        },
+                        function (err) {
+                            return $scope.showAlert(
+                                {
+                                    title: err,
+                                    category: 3
+                                }
+                            );
+                        }
+                    );
+                }
+
                 $scope.sendMessage = function () {
                     return utilService.getResolveDefer();
                 }
@@ -2474,56 +2634,6 @@ define(
                         delete window.pomeloContext.chatId;
 
                         $scope.chatState = angularConstants.pomeloState.chatDestroyState;
-                        return utilService.getResolveDefer();
-                    }, function (err) {
-                        alert(err);
-                        return utilService.getRejectDefer(err);
-                    });
-                }
-
-                $scope.createTopic = function () {
-                    return appService.createTopic($scope.userId, $scope.chatId).then(function (result) {
-                        $scope.topicId = result.topicId;
-                        $scope.topicState = result.topicState;
-                        return utilService.getResolveDefer();
-                    }, function (err) {
-                        alert(err);
-                        return utilService.getRejectDefer(err);
-                    });
-                }
-
-                $scope.pauseTopic = function () {
-                    return appService.pauseTopic($scope.userId, $scope.chatId, {chatId: $scope.chatId}).then(function () {
-                        $scope.topicState = angularConstants.pomeloState.topicPauseState;
-                        return utilService.getResolveDefer();
-                    }, function (err) {
-                        alert(err);
-                        return utilService.getRejectDefer(err);
-                    });
-                }
-
-                $scope.resumeTopic = function () {
-                    return appService.resumeTopic($scope.userId, $scope.chatId, {chatId: $scope.chatId}).then(function () {
-                        $scope.topicState = angularConstants.pomeloState.topicOpenState;
-                        return utilService.getResolveDefer();
-                    }, function (err) {
-                        alert(err);
-                        return utilService.getRejectDefer(err);
-                    });
-                }
-
-                $scope.inviteTopic = function () {
-                    return appService.inviteTopic($scope.userId, $scope.chatId, $scope.topicId, [$scope.inviteeId]).then(function () {
-                        return utilService.getResolveDefer();
-                    }, function (err) {
-                        alert(err);
-                        return utilService.getRejectDefer(err);
-                    });
-                }
-
-                $scope.closeTopic = function () {
-                    return appService.closeTopic($scope.userId, $scope.chatId, $scope.topicId).then(function () {
-                        $scope.topicState = angularConstants.pomeloState.topicDestroyState;
                         return utilService.getResolveDefer();
                     }, function (err) {
                         alert(err);
@@ -2628,6 +2738,95 @@ define(
                         childScope.item = conversationObj;
 
                         containerScope.toggleSelect($html);
+                    }
+                }
+
+                function addFriend(friend) {
+                    var friendList;
+                    if (toString.call(friend) === '[object Array]' && friend.length) {
+                        friendList = friend;
+                    } else if (typeof friend === 'object') {
+                        friendList = [friend];
+                    }
+                    if (friendList) {
+                        friendList.forEach(function (item) {
+                            if (item._id !== $rootScope.loginUser._id) {
+                                var pyStr = pinyinService.makePy(item.name),
+                                    initial = "#";
+
+                                if (pyStr && pyStr.length) {
+                                    initial = pyStr[0].charAt(0).toUpperCase();
+                                }
+                                $scope.friendList[initial] = $scope.friendList[initial] || [];
+                                if ($scope.friendList[initial].every(function (f) {
+                                        return f._id != item._id;
+                                    })) {
+                                    $scope.friendList[initial].push(item);
+                                }
+                            }
+                        });
+                    }
+                }
+
+                function addInvitation(invitation) {
+                    var invitationList;
+                    if (toString.call(invitation) === '[object Array]' && invitation.length) {
+                        invitationList = invitation;
+                    } else if (typeof invitation === 'object') {
+                        invitationList = [invitation];
+                    }
+                    if (invitationList) {
+                        invitationList.forEach(function (item) {
+                            if ($scope.invitationList.every(function (i) {
+                                    return i._id != item._id;
+                                })) {
+                                $scope.invitationList.push(item);
+                            }
+                        });
+                    }
+
+                    if ($scope.invitationList.length) {
+                        $scope.toggleSelect($scope.$element.find(".invitationFlag"), null, true);
+                    }
+                }
+
+                function addChatInvitation(chatInvitation) {
+                    var chatInvitationList;
+                    if (toString.call(chatInvitation) === '[object Array]' && chatInvitation.length) {
+                        chatInvitationList = chatInvitation;
+                    } else if (typeof chatInvitation === 'object') {
+                        chatInvitationList = [chatInvitation];
+                    }
+                    if (chatInvitationList) {
+                        chatInvitationList.forEach(function (item) {
+                            if ($scope.chatInvitationList.every(function (i) {
+                                    return i._id != item._id;
+                                })) {
+                                $scope.chatInvitationList.push(item);
+                            }
+                        });
+                    }
+
+                    if ($scope.chatInvitationList.length) {
+                        $scope.toggleSelect($scope.$element.find(".invitationFlag"), null, true);
+                    }
+                }
+
+                function addChat(chat) {
+                    var chatList;
+                    if (toString.call(chat) === '[object Array]' && chat.length) {
+                        chatList = chat;
+                    } else if (typeof chat === 'object') {
+                        chatList = [chat];
+                    }
+                    if (chatList) {
+                        chatList.forEach(function (item) {
+                            if ($scope.chatList.every(function (i) {
+                                    return i._id != item._id;
+                                })) {
+                                $scope.chatList.push(item);
+                            }
+                        });
                     }
                 }
 
@@ -2764,7 +2963,17 @@ define(
                         });
                     }
 
-                    $scope.nameList = {
+                    $scope.conversationList = [
+                        {_id: "52591a12c763d5e45855637a", name: "安亦斐", updateTime: "", conversationArray: []},
+                        {_id: "52591a12c763d5e4585563b2", name: "葛晟宏", updateTime: "", conversationArray: []},
+                        {_id: "52591a12c763d5e4585563a4", name: "钱辛杰", updateTime: "", conversationArray: []},
+                        {_id: "52591a12c763d5e458556398", name: "Victor", updateTime: "", conversationArray: []},
+                        {_id: "52591a12c763d5e4585563b4", name: "毕嘉利", updateTime: "", conversationArray: []}
+                    ];
+
+                    $scope.chatList = [];//The list of chats the login user join in
+                    $scope.inviteeList = [];//The list of people the login user will send invitation to
+                    $scope.friendList = {
                         "A": [{_id: "52591a12c763d5e45855637a", name: "安亦斐"}],
                         "B": [{_id: "52591a12c763d5e4585563b4", name: "毕嘉利"}],
                         "C": [{_id: "52591a12c763d5e4585563ba", name: "蔡智先"}, {
@@ -2799,20 +3008,8 @@ define(
                         }],
                         "Z": [{_id: "52591a12c763d5e4585563cc", name: "周璎泓"}],
                     };
-
-                    $scope.conversationList = [
-                        {_id: "52591a12c763d5e45855637a", name: "安亦斐", updateTime: "", conversationArray: []},
-                        {_id: "52591a12c763d5e4585563b2", name: "葛晟宏", updateTime: "", conversationArray: []},
-                        {_id: "52591a12c763d5e4585563a4", name: "钱辛杰", updateTime: "", conversationArray: []},
-                        {_id: "52591a12c763d5e458556398", name: "Victor", updateTime: "", conversationArray: []},
-                        {_id: "52591a12c763d5e4585563b4", name: "毕嘉利", updateTime: "", conversationArray: []}
-                    ];
-
-                    $scope.userId = "52591a12c763d5e4585563d0";
-                    $scope.projectId = "56104bec2ac815961944b8bf";
-                    $scope.inviteeId = "52591a12c763d5e4585563ce";
-                    $scope.chatList = [];
-                    $scope.inviteeList = [];
+                    $scope.invitationList = [];//The list of invitations for the login user to accept
+                    $scope.chatInvitationList = [];//The list of chat invitations for the login user to accept
 
                     $scope.$on('$destroy', function () {
                         unregisterPomeloListeners();
@@ -2845,10 +3042,17 @@ define(
                             }
                         })
                     ]).then(function (results) {
-                        var friendList = results[0] || [],
+                        var groupUserList = results[0] || [],
                             invitationList = results[1] || [],
-                            chatList = results[1] || [],
-                            chatInvitationList = results[1] || [];
+                            chatList = results[2] || [],
+                            chatInvitationList = results[3] || [];
+
+                        if (groupUserList.length) {
+                            addFriend(groupUserList[0].userList);
+                        }
+                        addInvitation(invitationList);
+                        addChat(chatList);
+                        addChatInvitation(chatInvitationList);
 
                         return utilService.getResolveDefer();
                     }, function (err) {
@@ -2865,6 +3069,6 @@ define(
                 init();
             }
 
-            appModule.controller("RootController", ["$scope", "$rootScope", "$q", "$timeout", "$interval", "angularEventTypes", "angularConstants", "appService", "serviceRegistry", "urlService", "utilService", RootController]).controller("LoginController", ["$scope", "$rootScope", "$timeout", "$interval", "$q", "angularConstants", "appService", "urlService", "utilService", LoginController]).controller("FrameSketchController", ["$scope", "$rootScope", "$timeout", "$interval", "$q", "$log", "$exceptionHandler", "$compile", "$parse", "angularEventTypes", "angularConstants", "appService", "uiService", "utilService", "uiCanvasService", FrameSketchController]).controller("BookController", ["$scope", "$rootScope", "$timeout", "$interval", "$q", "$log", "$exceptionHandler", "$compile", "$parse", "$templateCache", "angularEventTypes", "angularConstants", "appService", "uiService", "uiBookService", "bookService", "utilService", "uiCanvasService", BookController]).controller("FlowController", ["$scope", "$rootScope", "$timeout", "$interval", "$q", "angularConstants", "appService", "uiService", "uiFlowService", "flowService", "urlService", "utilService", FlowController]).controller("ProjectController", ["$scope", "$rootScope", "$timeout", "$interval", "$q", "angularConstants", "appService", "uiService", "uiFlowService", "uiBookService", "urlService", "utilService", ProjectController]).controller("RepoController", ["$scope", "$rootScope", "$timeout", "$interval", "$q", "angularConstants", "appService", "urlService", "utilService", RepoController]).controller("RepoLibController", ["$scope", "$rootScope", "$timeout", "$interval", "$q", "angularConstants", "appService", "urlService", RepoLibController]).controller("ChatController", ["$scope", "$rootScope", "$timeout", "$interval", "$q", "$log", "$exceptionHandler", "$compile", "$parse", "$templateCache", "angularEventTypes", "angularConstants", "urlService", "appService", "uiService", "utilService", ChatController]);
+            appModule.controller("RootController", ["$scope", "$rootScope", "$q", "$timeout", "$interval", "angularEventTypes", "angularConstants", "appService", "serviceRegistry", "urlService", "utilService", RootController]).controller("LoginController", ["$scope", "$rootScope", "$timeout", "$interval", "$q", "angularConstants", "appService", "urlService", "utilService", LoginController]).controller("FrameSketchController", ["$scope", "$rootScope", "$timeout", "$interval", "$q", "$log", "$exceptionHandler", "$compile", "$parse", "angularEventTypes", "angularConstants", "appService", "uiService", "utilService", "uiCanvasService", FrameSketchController]).controller("BookController", ["$scope", "$rootScope", "$timeout", "$interval", "$q", "$log", "$exceptionHandler", "$compile", "$parse", "$templateCache", "angularEventTypes", "angularConstants", "appService", "uiService", "uiBookService", "bookService", "utilService", "uiCanvasService", BookController]).controller("FlowController", ["$scope", "$rootScope", "$timeout", "$interval", "$q", "angularConstants", "appService", "uiService", "uiFlowService", "flowService", "urlService", "utilService", FlowController]).controller("ProjectController", ["$scope", "$rootScope", "$timeout", "$interval", "$q", "angularConstants", "appService", "uiService", "uiFlowService", "uiBookService", "urlService", "utilService", ProjectController]).controller("RepoController", ["$scope", "$rootScope", "$timeout", "$interval", "$q", "angularConstants", "appService", "urlService", "utilService", RepoController]).controller("RepoLibController", ["$scope", "$rootScope", "$timeout", "$interval", "$q", "angularConstants", "appService", "urlService", "utilService", RepoLibController]).controller("ChatController", ["$scope", "$rootScope", "$timeout", "$interval", "$q", "$log", "$exceptionHandler", "$compile", "$parse", "$templateCache", "angularEventTypes", "angularConstants", "urlService", "appService", "uiService", "utilService", "pinyinService", ChatController]);
         }
     });

@@ -8433,7 +8433,7 @@
   background-repeat: no-repeat;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFE6E6E6', endColorstr='#FFE6E6E6', GradientType=0);
 }
-.chatContainer .contactPanel .contactDetail .contactContent > div[content='message'] .userName {
+.chatContainer .contactPanel .contactDetail .contactContent > div[content='message'] .userName, .chatContainer .contactPanel .contactDetail .contactContent > div[content='message'] .chat {
   position: relative;
   float: left;
   width: 100%;
@@ -8449,7 +8449,7 @@
   -webkit-align-items: center;
   align-items: center;
 }
-.chatContainer .contactPanel .contactDetail .contactContent > div[content='message'] .userName:after {
+.chatContainer .contactPanel .contactDetail .contactContent > div[content='message'] .userName:after, .chatContainer .contactPanel .contactDetail .contactContent > div[content='message'] .chat:after {
   position: absolute;
   right: 0;
   bottom: 0;
@@ -8462,16 +8462,16 @@
   background: -webkit-linear-gradient(right, #ebebeb 0%, #ebebeb 50%, #ffffff 100%);
   background: linear-gradient(to left, #ebebeb 0%, #ebebeb 50%, #ffffff 100%);
 }
-.chatContainer .contactPanel .contactDetail .contactContent > div[content='message'] .userName.select {
+.chatContainer .contactPanel .contactDetail .contactContent > div[content='message'] .userName.select, .chatContainer .contactPanel .contactDetail .contactContent > div[content='message'] .chat.select {
   background: #cdcdcd;
 }
-.chatContainer .contactPanel .contactDetail .contactContent > div[content='message'] .userName .userAvatar {
+.chatContainer .contactPanel .contactDetail .contactContent > div[content='message'] .userName .userAvatar, .chatContainer .contactPanel .contactDetail .contactContent > div[content='message'] .userName .chatThumbnail, .chatContainer .contactPanel .contactDetail .contactContent > div[content='message'] .chat .userAvatar, .chatContainer .contactPanel .contactDetail .contactContent > div[content='message'] .chat .chatThumbnail {
   position: relative;
   float: left;
   width: 3em;
   height: 3em;
 }
-.chatContainer .contactPanel .contactDetail .contactContent > div[content='message'] .userName .userAvatar:before {
+.chatContainer .contactPanel .contactDetail .contactContent > div[content='message'] .userName .userAvatar:before, .chatContainer .contactPanel .contactDetail .contactContent > div[content='message'] .userName .chatThumbnail:before, .chatContainer .contactPanel .contactDetail .contactContent > div[content='message'] .chat .userAvatar:before, .chatContainer .contactPanel .contactDetail .contactContent > div[content='message'] .chat .chatThumbnail:before {
   position: absolute;
   width: 1em;
   height: 1em;
@@ -8479,12 +8479,12 @@
   top: calc(50% - 0.5em);
   color: white;
 }
-.chatContainer .contactPanel .contactDetail .contactContent > div[content='message'] .userName .userAvatar img {
+.chatContainer .contactPanel .contactDetail .contactContent > div[content='message'] .userName .userAvatar img, .chatContainer .contactPanel .contactDetail .contactContent > div[content='message'] .userName .chatThumbnail img, .chatContainer .contactPanel .contactDetail .contactContent > div[content='message'] .chat .userAvatar img, .chatContainer .contactPanel .contactDetail .contactContent > div[content='message'] .chat .chatThumbnail img {
   width: calc(100% - 10px);
   height: calc(100% - 10px);
   margin: 5px;
 }
-.chatContainer .contactPanel .contactDetail .contactContent > div[content='message'] .userName span {
+.chatContainer .contactPanel .contactDetail .contactContent > div[content='message'] .userName span, .chatContainer .contactPanel .contactDetail .contactContent > div[content='message'] .chat span {
   -webkit-flex: 1;
   flex: 1;
   line-height: 3;
@@ -8829,7 +8829,7 @@
   line-height: 1;
   text-align: center;
   opacity: 0;
-  color: #40bf6c;
+  color: #3fa46a;
   -moz-transition: opacity 0.3s;
   -o-transition: opacity 0.3s;
   -webkit-transition: opacity 0.3s;
@@ -8879,4 +8879,679 @@
   text-overflow: ellipsis;
   text-align: center;
   overflow: hidden;
+}
+.chatContainer #invitation-control .invitationTopBar {
+  position: relative;
+  float: left;
+  width: 100%;
+  height: 2em;
+  z-index: 1;
+  -moz-box-shadow: 0px 2px 3px black;
+  -webkit-box-shadow: 0px 2px 3px black;
+  box-shadow: 0px 2px 3px black;
+}
+.chatContainer #invitation-control .invitationTopBar > [ui-creative-link] {
+  position: relative;
+  float: left;
+  width: 30%;
+  height: 2em;
+}
+.chatContainer #invitation-control .invitationTopBar > [ui-creative-link]:not(:last-child):before {
+  margin-right: 1em;
+}
+.chatContainer #invitation-control .invitationTopBar > [ui-creative-link] .linkContent span {
+  text-align: center;
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer > .linkContent {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer > .linkContent span {
+  position: absolute;
+  left: 0;
+  top: calc(50% - 0.5em);
+  width: 100%;
+  height: 1em;
+  text-align: center;
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=brackets] {
+  color: #f1f6fa;
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=brackets]:before, .chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=brackets]:after {
+  position: absolute;
+  top: calc(50% - 0.5em);
+  height: 1em;
+  width: 1em;
+  display: inline-block;
+  opacity: 0;
+  pointer-events: none;
+  background: transparent;
+  -webkit-transition: -webkit-transform 0.3s, opacity 0.2s;
+  -moz-transition: -moz-transform 0.3s, opacity 0.2s;
+  transition: transform 0.3s, opacity 0.2s;
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=brackets]:before {
+  left: 0;
+  text-align: center;
+  margin-right: 0.5em;
+  content: '[';
+  -moz-transform: translateX(1em);
+  -ms-transform: translateX(1em);
+  -webkit-transform: translateX(1em);
+  transform: translateX(1em);
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=brackets]:after {
+  right: 0;
+  text-align: center;
+  margin-left: 0.5em;
+  content: ']';
+  -moz-transform: translateX(-1em);
+  -ms-transform: translateX(-1em);
+  -webkit-transform: translateX(-1em);
+  transform: translateX(-1em);
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=brackets].select:before, .chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=brackets].select:after {
+  opacity: 1;
+  -moz-transform: translateX(0px);
+  -ms-transform: translateX(0px);
+  -webkit-transform: translateX(0px);
+  transform: translateX(0px);
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=slideUpLine] {
+  color: #f1f6fa;
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=slideUpLine]:after {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 0.2em;
+  content: '';
+  opacity: 0;
+  background: #ffffff;
+  -webkit-transition: opacity 0.3s, -webkit-transform 0.3s;
+  -moz-transition: opacity 0.3s, -moz-transform 0.3s;
+  transition: opacity 0.3s, transform 0.3s;
+  -moz-transform: translateY(0.25em);
+  -ms-transform: translateY(0.25em);
+  -webkit-transform: translateY(0.25em);
+  transform: translateY(0.25em);
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=slideUpLine].select:after {
+  opacity: 1;
+  -moz-transform: translateY(0px);
+  -ms-transform: translateY(0px);
+  -webkit-transform: translateY(0px);
+  transform: translateY(0px);
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=slideDownLine] {
+  color: #f1f6fa;
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=slideDownLine]:after {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 0px;
+  content: '';
+  opacity: 0;
+  background: #ffffff;
+  -webkit-transition: height 0.3s, opacity 0.3s, -webkit-transform 0.3s;
+  -moz-transition: height 0.3s, opacity 0.3s, -moz-transform 0.3s;
+  transition: height 0.3s, opacity 0.3s, transform 0.3s;
+  -moz-transform: translateY(-0.25em);
+  -ms-transform: translateY(-0.25em);
+  -webkit-transform: translateY(-0.25em);
+  transform: translateY(-0.25em);
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=slideDownLine].select:after {
+  opacity: 1;
+  height: 0.2em;
+  -moz-transform: translateY(0px);
+  -ms-transform: translateY(0px);
+  -webkit-transform: translateY(0px);
+  transform: translateY(0px);
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=slideUpSecondLine] {
+  color: #f1f6fa;
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=slideUpSecondLine]:before, .chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=slideUpSecondLine]:after {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  content: '';
+  background: #ffffff;
+  -webkit-transition: -webkit-transform 0.3s;
+  -moz-transition: -moz-transform 0.3s;
+  transition: transform 0.3s;
+  -moz-transform: scale(0.85);
+  -ms-transform: scale(0.85);
+  -webkit-transform: scale(0.85);
+  transform: scale(0.85);
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=slideUpSecondLine]:after {
+  opacity: 0;
+  -webkit-transition: top 0.3s, opacity 0.3s, -webkit-transform 0.3s;
+  -moz-transition: top 0.3s, opacity 0.3s, -moz-transform 0.3s;
+  transition: top 0.3s, opacity 0.3s, transform 0.3s;
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=slideUpSecondLine].select:before {
+  -moz-transform: scale(1);
+  -ms-transform: scale(1);
+  -webkit-transform: scale(1);
+  transform: scale(1);
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=slideUpSecondLine].select:after {
+  top: 0%;
+  opacity: 1;
+  -moz-transform: scale(1);
+  -ms-transform: scale(1);
+  -webkit-transform: scale(1);
+  transform: scale(1);
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=translateLine] {
+  color: #f1f6fa;
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=translateLine]:before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  content: '';
+  background: #ffffff;
+  -webkit-transition: top 0.3s;
+  -moz-transition: top 0.3s;
+  transition: top 0.3s;
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=translateLine]:after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 2px;
+  content: '';
+  background: #ffffff;
+  -webkit-transition: height 0.3s;
+  -moz-transition: height 0.3s;
+  transition: height 0.3s;
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=translateLine].select:before {
+  top: 100%;
+  opacity: 1;
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=translateLine].select:after {
+  height: 100%;
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=slightTranslateLine] {
+  color: #f1f6fa;
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=slightTranslateLine]:before, .chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=slightTranslateLine]:after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 3px solid;
+  content: '';
+  border-color: #95a5a6;
+  -webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
+  -moz-transition: -moz-transform 0.3s, opacity 0.3s;
+  transition: transform 0.3s, opacity 0.3s;
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=slightTranslateLine]:after {
+  opacity: 0;
+  border-color: #ffffff;
+  -moz-transform: translateY(-7px) translateX(6px);
+  -ms-transform: translateY(-7px) translateX(6px);
+  -webkit-transform: translateY(-7px) translateX(6px);
+  transform: translateY(-7px) translateX(6px);
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=slightTranslateLine].select:before {
+  opacity: 0;
+  -moz-transform: translateY(5px) translateX(-5px);
+  -ms-transform: translateY(5px) translateX(-5px);
+  -webkit-transform: translateY(5px) translateX(-5px);
+  transform: translateY(5px) translateX(-5px);
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=slightTranslateLine].select:after {
+  opacity: 1;
+  -moz-transform: translateY(0px) translateX(0px);
+  -ms-transform: translateY(0px) translateX(0px);
+  -webkit-transform: translateY(0px) translateX(0px);
+  transform: translateY(0px) translateX(0px);
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=reveal] {
+  overflow: hidden;
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=reveal] .linkContent {
+  -webkit-transition: -webkit-transform 0.4s, opacity 0.2s;
+  -moz-transition: -moz-transform 0.4s, opacity 0.2s;
+  transition: transform 0.4s, opacity 0.2s;
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=reveal] .linkContent:nth-of-type(1) {
+  opacity: 0;
+  color: #f1f6fa;
+  background: #ffffff;
+  -moz-transform: translateX(-25%);
+  -ms-transform: translateX(-25%);
+  -webkit-transform: translateX(-25%);
+  transform: translateX(-25%);
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=reveal] .linkContent:nth-of-type(2) {
+  color: #ffffff;
+  background: #f1f6fa;
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=reveal].select .linkContent:nth-of-type(1) {
+  opacity: 1;
+  -moz-transform: translateX(0%);
+  -ms-transform: translateX(0%);
+  -webkit-transform: translateX(0%);
+  transform: translateX(0%);
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=reveal].select .linkContent:nth-of-type(2) {
+  opacity: 0;
+  pointer-events: none;
+  -moz-transform: translateX(100%);
+  -ms-transform: translateX(100%);
+  -webkit-transform: translateX(100%);
+  transform: translateX(100%);
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=switchLine] {
+  color: #f1f6fa;
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=switchLine] .lineBox {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=switchLine] .lineBox .leftLine, .chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=switchLine] .lineBox .rightLine {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 5px;
+  opacity: 0.2;
+  background: #ffffff;
+  -moz-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=switchLine] .lineBox .leftLine {
+  left: 0;
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=switchLine] .lineBox .rightLine {
+  right: 0;
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=switchLine].select .lineBox .leftLine {
+  opacity: 1;
+  left: 50%;
+  top: -50%;
+  -moz-transform: rotateZ(90deg);
+  -ms-transform: rotateZ(90deg);
+  -webkit-transform: rotateZ(90deg);
+  transform: rotateZ(90deg);
+  -moz-transform-origin: 0 0 50%;
+  -ms-transform-origin: 0 0 50%;
+  -webkit-transform-origin: 0 0 50%;
+  transform-origin: 0 0 50%;
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=switchLine].select .lineBox .rightLine {
+  opacity: 1;
+  right: 50%;
+  top: 50%;
+  -moz-transform: rotateZ(-90deg);
+  -ms-transform: rotateZ(-90deg);
+  -webkit-transform: rotateZ(-90deg);
+  transform: rotateZ(-90deg);
+  -moz-transform-origin: 100% 0 50%;
+  -ms-transform-origin: 100% 0 50%;
+  -webkit-transform-origin: 100% 0 50%;
+  transform-origin: 100% 0 50%;
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=scaleDown] .linkContent:nth-of-type(1) {
+  color: #4f7698;
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=scaleDown] .linkContent:nth-of-type(2) {
+  color: #4f7698;
+  -moz-transition: -moz-transform 0.3s, opacity 0.7s;
+  -o-transition: -o-transform 0.3s, opacity 0.7s;
+  -webkit-transition: -webkit-transform 0.3s, opacity 0.7s;
+  transition: transform 0.3s, opacity 0.7s;
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=scaleDown].select .linkContent:nth-of-type(1) {
+  color: #f1f6fa;
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=scaleDown].select .linkContent:nth-of-type(2) {
+  opacity: 0;
+  -moz-transform: scale(0.7);
+  -ms-transform: scale(0.7);
+  -webkit-transform: scale(0.7);
+  transform: scale(0.7);
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=fallDown] .linkContent:nth-of-type(1) {
+  color: #4f7698;
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=fallDown] .linkContent:nth-of-type(2) {
+  opacity: 0;
+  color: #f1f6fa;
+  text-shadow: 0 0 1px rgba(255, 255, 255, 0.3);
+  -webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
+  -moz-transition: -moz-transform 0.3s, opacity 0.3s;
+  transition: transform 0.3s, opacity 0.3s;
+  -moz-transform: scale(1.1) translateX(10px) translateY(-10px) rotate(4deg);
+  -ms-transform: scale(1.1) translateX(10px) translateY(-10px) rotate(4deg);
+  -webkit-transform: scale(1.1) translateX(10px) translateY(-10px) rotate(4deg);
+  transform: scale(1.1) translateX(10px) translateY(-10px) rotate(4deg);
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=fallDown].select .linkContent:nth-of-type(2) {
+  opacity: 1;
+  -moz-transform: scale(1) translateX(0px) translateY(0px) rotate(0deg);
+  -ms-transform: scale(1) translateX(0px) translateY(0px) rotate(0deg);
+  -webkit-transform: scale(1) translateX(0px) translateY(0px) rotate(0deg);
+  transform: scale(1) translateX(0px) translateY(0px) rotate(0deg);
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=fadeOut] .linkContent:nth-of-type(1) {
+  color: #f1f6fa;
+  background: #ffffff;
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=fadeOut] .linkContent:nth-of-type(2) {
+  color: #4f7698;
+  background: #ffffff;
+  -webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
+  -moz-transition: -moz-transform 0.3s, opacity 0.3s;
+  transition: transform 0.3s, opacity 0.3s;
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=fadeOut]:after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  opacity: 0;
+  background: #ffffff;
+  -webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
+  -moz-transition: -moz-transform 0.3s, opacity 0.3s;
+  transition: transform 0.3s, opacity 0.3s;
+  -moz-transform: translateY(5px);
+  -ms-transform: translateY(5px);
+  -webkit-transform: translateY(5px);
+  transform: translateY(5px);
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=fadeOut].select .linkContent:nth-of-type(2) {
+  opacity: 0;
+  -moz-transform: translateY(-2px);
+  -ms-transform: translateY(-2px);
+  -webkit-transform: translateY(-2px);
+  transform: translateY(-2px);
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=fadeOut].select:after {
+  opacity: 1;
+  -moz-transform: translateY(0px);
+  -ms-transform: translateY(0px);
+  -webkit-transform: translateY(0px);
+  transform: translateY(0px);
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=flipUp] {
+  -moz-perspective: 800px;
+  -webkit-perspective: 800px;
+  perspective: 800px;
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=flipUp] .linkContent:nth-of-type(1) {
+  color: #f1f6fa;
+  background: #ffffff;
+  -webkit-transition: -webkit-transform 0.6s;
+  -moz-transition: -moz-transform 0.6s;
+  transition: transform 0.6s;
+  -webkit-transform-origin: 0 0;
+  -moz-transform-origin: 0 0;
+  transform-origin: 0 0;
+  -moz-transform: rotateX(270deg);
+  -ms-transform: rotateX(270deg);
+  -webkit-transform: rotateX(270deg);
+  transform: rotateX(270deg);
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=flipUp] .linkContent:nth-of-type(2) {
+  opacity: 1;
+  color: #4f7698;
+  background: #000000;
+  -moz-transition: opacity 0.6s;
+  -o-transition: opacity 0.6s;
+  -webkit-transition: opacity 0.6s;
+  transition: opacity 0.6s;
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=flipUp].select .linkContent:nth-of-type(1) {
+  -moz-transform: rotateX(0deg);
+  -ms-transform: rotateX(0deg);
+  -webkit-transform: rotateX(0deg);
+  transform: rotateX(0deg);
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=flipUp].select .linkContent:nth-of-type(2) {
+  opacity: 0;
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=slightTranslate] {
+  color: #f1f6fa;
+  -moz-transition: color 0.3s;
+  -o-transition: color 0.3s;
+  -webkit-transition: color 0.3s;
+  transition: color 0.3s;
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=slightTranslate]:before, .chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=slightTranslate]:after {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  content: '';
+  opacity: 0;
+  background: #ffffff;
+  -webkit-transition: opacity 0.3s, -webkit-transform 0.3s;
+  -moz-transition: opacity 0.3s, -moz-transform 0.3s;
+  transition: opacity 0.3s, transform 0.3s;
+  -moz-transform: translateY(-10px);
+  -ms-transform: translateY(-10px);
+  -webkit-transform: translateY(-10px);
+  transform: translateY(-10px);
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=slightTranslate]:before {
+  top: 0;
+  -moz-transform: translateY(-10px);
+  -ms-transform: translateY(-10px);
+  -webkit-transform: translateY(-10px);
+  transform: translateY(-10px);
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=slightTranslate]:after {
+  bottom: 0;
+  -moz-transform: translateY(10px);
+  -ms-transform: translateY(10px);
+  -webkit-transform: translateY(10px);
+  transform: translateY(10px);
+}
+.chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=slightTranslate].select:before, .chatContainer #invitation-control .invitationTopBar ._creativeLinkContainer[link-effect=slightTranslate].select:after {
+  color: #fff;
+  opacity: 1;
+  -moz-transform: translateY(0px);
+  -ms-transform: translateY(0px);
+  -webkit-transform: translateY(0px);
+  transform: translateY(0px);
+}
+.chatContainer #invitation-control .invitationContent {
+  position: relative;
+  float: left;
+  width: 100%;
+  height: calc(100% - 2em);
+}
+.chatContainer #invitation-control .invitationContent > div {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow-y: auto;
+  background-color: #888;
+  opacity: 0;
+  -moz-backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -moz-transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -moz-transform-origin: 50% 50% 50%;
+  -ms-transform-origin: 50% 50% 50%;
+  -webkit-transform-origin: 50% 50% 50%;
+  transform-origin: 50% 50% 50%;
+  -moz-transform: scale(0, 0);
+  -ms-transform: scale(0, 0);
+  -webkit-transform: scale(0, 0);
+  transform: scale(0, 0);
+}
+.chatContainer #invitation-control .invitationContent > div.select {
+  pointer-events: auto;
+}
+.chatContainer #invitation-control .invitationContent > div[content='invitation'] {
+  background-image: -webkit-linear-gradient(#E6E6E6, rgba(230, 230, 230, 0.9) 50%, #E6E6E6);
+  background-image: -o-linear-gradient(#E6E6E6, rgba(230, 230, 230, 0.9) 50%, #E6E6E6);
+  background-image: linear-gradient(#e6e6e6, rgba(230, 230, 230, 0.9) 50%, #e6e6e6);
+  background-repeat: no-repeat;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFE6E6E6', endColorstr='#FFE6E6E6', GradientType=0);
+}
+.chatContainer #invitation-control .invitationContent > div[content='invitation'] .invitationItem {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+.chatContainer #invitation-control .invitationContent > div[content='invitation'] .invitationItem .userAvatar {
+  position: relative;
+  float: left;
+  width: 3em;
+  height: 3em;
+}
+.chatContainer #invitation-control .invitationContent > div[content='invitation'] .invitationItem .userAvatar:before {
+  position: absolute;
+  width: 1em;
+  height: 1em;
+  left: calc(50% - 0.5em);
+  top: calc(50% - 0.5em);
+  color: white;
+}
+.chatContainer #invitation-control .invitationContent > div[content='invitation'] .invitationItem .userAvatar img {
+  width: calc(100% - 10px);
+  height: calc(100% - 10px);
+  margin: 5px;
+}
+.chatContainer #invitation-control .invitationContent > div[content='invitation'] .invitationItem span {
+  -webkit-flex: 1;
+  flex: 1;
+  line-height: 3;
+  color: #4f7698;
+}
+.chatContainer #invitation-control .invitationContent > div[content='invitation'] .invitationItem .invitationButton {
+  position: relative;
+  float: right;
+  top: 0.5em;
+  width: 4em;
+  height: 2em;
+  line-height: 2;
+  text-align: center;
+  background-color: #ddd;
+  box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.135);
+  border-radius: 0.2em;
+  display: inline-block;
+  margin-right: 0.5em;
+  color: rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+}
+.chatContainer #invitation-control .invitationContent > div[content='invitation'] .invitationItem .invitationButton:active {
+  background-color: #555;
+  color: #669933;
+  box-shadow: none;
+}
+.chatContainer #invitation-control .invitationContent > div[content='invitation'] .invitationItem .invitationButton:before {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  line-height: 2;
+}
+.chatContainer #invitation-control .invitationContent > div[content='chatInvitation'] {
+  background-image: -webkit-linear-gradient(#7f8c8d, rgba(127, 140, 141, 0.9) 50%, #7f8c8d);
+  background-image: -o-linear-gradient(#7f8c8d, rgba(127, 140, 141, 0.9) 50%, #7f8c8d);
+  background-image: linear-gradient(#7f8c8d, rgba(127, 140, 141, 0.9) 50%, #7f8c8d);
+  background-repeat: no-repeat;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF7F8C8D', endColorstr='#FF7F8C8D', GradientType=0);
+}
+.chatContainer #invitation-control .invitationContent > div[content='chatInvitation'] .chatInvitationItem {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+.chatContainer #invitation-control .invitationContent > div[content='chatInvitation'] .chatInvitationItem .userAvatar {
+  position: relative;
+  float: left;
+  width: 3em;
+  height: 3em;
+}
+.chatContainer #invitation-control .invitationContent > div[content='chatInvitation'] .chatInvitationItem .userAvatar:before {
+  position: absolute;
+  width: 1em;
+  height: 1em;
+  left: calc(50% - 0.5em);
+  top: calc(50% - 0.5em);
+  color: white;
+}
+.chatContainer #invitation-control .invitationContent > div[content='chatInvitation'] .chatInvitationItem .userAvatar img {
+  width: calc(100% - 10px);
+  height: calc(100% - 10px);
+  margin: 5px;
+}
+.chatContainer #invitation-control .invitationContent > div[content='chatInvitation'] .chatInvitationItem span {
+  -webkit-flex: 1;
+  flex: 1;
+  line-height: 3;
+  color: #f1f6fa;
+}
+.chatContainer #invitation-control .invitationContent > div[content='chatInvitation'] .chatInvitationItem .invitationButton {
+  position: relative;
+  float: right;
+  top: 0.5em;
+  width: 4em;
+  height: 2em;
+  line-height: 2;
+  text-align: center;
+  background-color: #ddd;
+  box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.135);
+  border-radius: 0.2em;
+  display: inline-block;
+  margin-right: 0.5em;
+  color: rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+}
+.chatContainer #invitation-control .invitationContent > div[content='chatInvitation'] .chatInvitationItem .invitationButton:active {
+  background-color: #555;
+  color: #669933;
+  box-shadow: none;
+}
+.chatContainer #invitation-control .invitationContent > div[content='chatInvitation'] .chatInvitationItem .invitationButton:before {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  line-height: 2;
 }

@@ -276,9 +276,8 @@ UserController.prototype.getGroupUser = function (userId, userUpdateTime, isFrie
             }
         ],
         function (err, data) {
-            fail("Fake error");
             if (!err) {
-                //success(data);
+                success(data);
             } else {
                 fail(err);
             }
@@ -600,30 +599,29 @@ UserController.prototype.postInvitation = function (userId, inviteeList, route, 
  * @param creatorId{string}
  * @param inviteeId{string}
  * @param route{string}
+ * @param accepted{number}
  * @param success{function}
  * @param fail{function}
  */
-UserController.prototype.putAcceptInvitation = function (creatorId, inviteeId, route, success, fail) {
+UserController.prototype.putAcceptInvitation = function (creatorId, inviteeId, route, accepted, success, fail) {
     var self = this,
         now = new Date();
 
     creatorId = new self.db.Types.ObjectId(commons.getFormString(creatorId));
     inviteeId = new self.db.Types.ObjectId(commons.getFormString(inviteeId));
     route = commons.getFormString(route) || self.chatConstants.chatRoute;
+    accepted = commons.getFormInt(accepted);
 
     (!self.isDBReady && fail(new Error('DB not initialized'))) || async.waterfall([
         function (next) {
             self.schema.User.find({_id: creatorId}, function (err, data) {
                 if (!err) {
-                    if (data && data.length) {
-                        next(null, data[0]);
-                        return;
-                    } else {
+                    if (!data || !data.length) {
                         err = self.__('Account Not Found');
                     }
                 }
 
-                next(err);
+                next(err, data && data.length && data[0]);
             });
         },
         function (creatorObj, next) {
@@ -631,113 +629,121 @@ UserController.prototype.putAcceptInvitation = function (creatorId, inviteeId, r
                 creatorId: creatorId,
                 inviteeId: inviteeId,
                 active: 1
-            }, {accepted: 1, processed: 1, updateTime: now.getTime()}, {multi: true}, function (err) {
+            }, {accepted: accepted, processed: 1, updateTime: now.getTime()}, {multi: true}, function (err) {
                 next(err, creatorObj);
             });
         },
         function (creatorObj, next) {
-            commons.acceptInvitation(creatorId.toString(), creatorObj.loginChannel, inviteeId.toString(), route, function (err) {
-                //Although fail to send accept signal on socket, new friend info can still be fetched by db query
-                if (err) {
-                    self.config.logger.error(err);
-                }
+            if (accepted) {
+                commons.acceptInvitation(creatorId.toString(), creatorObj.loginChannel, inviteeId.toString(), route, function (err) {
+                    //Although fail to send accept signal on socket, new friend info can still be fetched by db query
+                    if (err) {
+                        self.config.logger.error(err);
+                    }
 
-                next(null, creatorObj);
-            });
+                    next(null, creatorObj);
+                });
+            } else {
+                next(null, null);
+            }
         },
         function (creatorObj, next) {
-            async.parallel([
-                function (callback) {
-                    async.waterfall([
-                        function (cb) {
-                            self.schema.UserGroup.update({_id: creatorObj.friendGroupId}, {
-                                    updateTime: now.getTime()
-                                },
-                                function (err) {
-                                    cb(err);
-                                });
-                        },
-                        function (cb) {
-                            self.schema.UserGroupXref.update(
-                                {
-                                    groupId: creatorObj.friendGroupId,
-                                    userId: inviteeId
-                                },
-                                {
-                                    $set: {
-                                        groupUpdateTime: now.getTime(),
-                                        updateTime: now.getTime(),
-                                        createTime: now.getTime(),
-                                        userId: inviteeId,
+            if (accepted) {
+                async.parallel([
+                    function (callback) {
+                        async.waterfall([
+                            function (cb) {
+                                self.schema.UserGroup.update({_id: creatorObj.friendGroupId}, {
+                                        updateTime: now.getTime()
+                                    },
+                                    function (err) {
+                                        cb(err);
+                                    });
+                            },
+                            function (cb) {
+                                self.schema.UserGroupXref.update(
+                                    {
                                         groupId: creatorObj.friendGroupId,
-                                        groupType: 1,
-                                        active: 1
+                                        userId: inviteeId
+                                    },
+                                    {
+                                        $set: {
+                                            groupUpdateTime: now.getTime(),
+                                            updateTime: now.getTime(),
+                                            createTime: now.getTime(),
+                                            userId: inviteeId,
+                                            groupId: creatorObj.friendGroupId,
+                                            groupType: 1,
+                                            active: 1
+                                        }
+                                    },
+                                    {upsert: true},
+                                    function (err) {
+                                        cb(err);
                                     }
-                                },
-                                {upsert: true},
-                                function (err) {
-                                    cb(err);
-                                }
-                            );
-                        }
-                    ], function (err) {
-                        callback(err);
-                    });
-                },
-                function (callback) {
-                    async.waterfall([
-                        function (cb) {
-                            self.schema.User.find({_id: inviteeId}, function (err, data) {
-                                if (!err) {
-                                    if (data && data.length) {
-                                        cb(null, data[0]);
-                                        return;
-                                    } else {
-                                        err = self.__('Account Not Found');
+                                );
+                            }
+                        ], function (err) {
+                            callback(err);
+                        });
+                    },
+                    function (callback) {
+                        async.waterfall([
+                            function (cb) {
+                                self.schema.User.find({_id: inviteeId}, function (err, data) {
+                                    if (!err) {
+                                        if (data && data.length) {
+                                            cb(null, data[0]);
+                                            return;
+                                        } else {
+                                            err = self.__('Account Not Found');
+                                        }
                                     }
-                                }
 
-                                cb(err);
-                            });
-                        },
-                        function (userObj, cb) {
-                            self.schema.UserGroup.update({_id: userObj.friendGroupId}, {
-                                    updateTime: now.getTime()
-                                },
-                                function (err) {
-                                    cb(err, userObj);
-                                });
-                        },
-                        function (userObj, cb) {
-                            self.schema.UserGroupXref.update(
-                                {
-                                    groupId: userObj.friendGroupId,
-                                    userId: creatorId
-                                },
-                                {
-                                    $set: {
-                                        groupUpdateTime: now.getTime(),
-                                        updateTime: now.getTime(),
-                                        createTime: now.getTime(),
-                                        userId: creatorId,
-                                        groupId: userObj.friendGroupId,
-                                        groupType: 1,
-                                        active: 1
-                                    }
-                                },
-                                {upsert: true},
-                                function (err) {
                                     cb(err);
-                                }
-                            );
-                        }
-                    ], function (err) {
-                        callback(err);
-                    });
-                }
-            ], function (err) {
-                next(err);
-            });
+                                });
+                            },
+                            function (userObj, cb) {
+                                self.schema.UserGroup.update({_id: userObj.friendGroupId}, {
+                                        updateTime: now.getTime()
+                                    },
+                                    function (err) {
+                                        cb(err, userObj);
+                                    });
+                            },
+                            function (userObj, cb) {
+                                self.schema.UserGroupXref.update(
+                                    {
+                                        groupId: userObj.friendGroupId,
+                                        userId: creatorId
+                                    },
+                                    {
+                                        $set: {
+                                            groupUpdateTime: now.getTime(),
+                                            updateTime: now.getTime(),
+                                            createTime: now.getTime(),
+                                            userId: creatorId,
+                                            groupId: userObj.friendGroupId,
+                                            groupType: 1,
+                                            active: 1
+                                        }
+                                    },
+                                    {upsert: true},
+                                    function (err) {
+                                        cb(err);
+                                    }
+                                );
+                            }
+                        ], function (err) {
+                            callback(err);
+                        });
+                    }
+                ], function (err) {
+                    next(err);
+                });
+            } else {
+                next(null);
+            }
         }
     ], function (err) {
         if (!err) {

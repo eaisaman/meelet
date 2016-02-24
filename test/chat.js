@@ -390,7 +390,8 @@ describe('Chat', function () {
                             function (cb) {
                                 var formData = {
                                     creatorId: userHostObj._id,
-                                    inviteeId: userObj._id
+                                    inviteeId: userObj._id,
+                                    accepted: 1
                                 };
 
                                 request.put({
@@ -562,7 +563,8 @@ describe('Chat', function () {
                                         chatId: userHostObj.chatId,
                                         userId: userObj._id,
                                         deviceId: userObj.deviceId,
-                                        route: chatroute
+                                        route: chatroute,
+                                        accepted: 1
                                     };
 
                                     request.put({
@@ -822,7 +824,8 @@ describe('Chat', function () {
                 async.each([userGuest1Obj, userGuest2Obj], function (userObj, eCallback) {
                     var formData = {
                         topicId: userHostObj.topicId,
-                        inviteeId: userObj._id
+                        inviteeId: userObj._id,
+                        accepted: 1
                     };
 
                     request.put({
