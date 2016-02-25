@@ -103,6 +103,8 @@ Commons.prototype.spawn = function (cmd, args, opts, done) {
 Commons.prototype.getFormString = function (value) {
     if (typeof value === 'string') {
         return value;
+    }  else if (typeof value === 'string') {
+        return value;
     } else if (toString.call(value) === '[object Array]') {
         return value[0] || "";
     }
@@ -112,6 +114,8 @@ Commons.prototype.getFormString = function (value) {
 Commons.prototype.getFormInt = function (value) {
     if (typeof value === 'number') {
         return value;
+    } else if (typeof value === 'string') {
+        return parseInt(value);
     } else if (toString.call(value) === '[object Array]') {
         return parseInt(value[0]);
     }

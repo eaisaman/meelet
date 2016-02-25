@@ -2352,7 +2352,7 @@ define(
                     if (searchName) {
                         searchName = searchName.trim();
                         if (searchName) {
-                            return appService.getUser({name: "/" + searchName + "/"}).then(
+                            return appService.getUser({name: "/" + searchName + "/i"}).then(
                                 function (result) {
                                     $scope.inviteeList.splice(0);
                                     $scope.searchUserList = result && result.data.result == "OK" && result.data.resultValue || [];
@@ -2441,19 +2441,11 @@ define(
                 $scope.acceptInvitation = function (invitationObj) {
                     return appService.acceptInvitation(invitationObj.creatorId, $rootScope.loginUser._id, $rootScope.loginUser.route).then(
                         function () {
-                            var index;
-                            if (!$scope.invitationList.every(function (item, i) {
-                                    if (item._id == invitationObj._id) {
-                                        index = i;
-                                        return false;
-                                    }
+                            removeInvitation(invitationObj);
 
-                                    return true;
-                                })) {
-                                $scope.invitationList.splice(index, 1);
-                            }
+                            return appService.getUser({_id: invitationObj.creatorId}).then(function (result) {
+                                var friendList = result && result.data.result == "OK" && result.data.resultValue[0] || [];
 
-                            return appService.getUser({_id: invitationObj.creatorId}).then(function (friendList) {
                                 addFriend(friendList);
 
                                 return utilService.getResolveDefer();
@@ -2473,17 +2465,7 @@ define(
                 $scope.declineInvitation = function (invitationObj) {
                     return appService.declineInvitation(invitationObj.creatorId, $rootScope.loginUser._id, $rootScope.loginUser.route).then(
                         function () {
-                            var index;
-                            if (!$scope.invitationList.every(function (item, i) {
-                                    if (item._id == invitationObj._id) {
-                                        index = i;
-                                        return false;
-                                    }
-
-                                    return true;
-                                })) {
-                                $scope.invitationList.splice(index, 1);
-                            }
+                            removeInvitation(invitationObj);
 
                             return utilService.getResolveDefer();
                         },
@@ -2502,17 +2484,7 @@ define(
                 $scope.acceptChatInvitation = function (chatInvitationObj) {
                     return appService.acceptChatInvitation(chatInvitationObj.chatId, $rootScope.loginUser._id, window.pomeloContext.options.deviceId, $rootScope.loginUser.route).then(
                         function () {
-                            var index;
-                            if (!$scope.chatInvitationList.every(function (item, i) {
-                                    if (item._id == chatInvitationObj._id) {
-                                        index = i;
-                                        return false;
-                                    }
-
-                                    return true;
-                                })) {
-                                $scope.chatInvitationList.splice(index, 1);
-                            }
+                            removeChatInvitation(chatInvitationObj);
 
                             return appService.getChat($rootScope.loginUser._id, chatInvitationObj.chatId).then(function (chatList) {
                                 addChat(chatList);
@@ -2534,17 +2506,7 @@ define(
                 $scope.declineChatInvitation = function (chatInvitationObj) {
                     return appService.declineChatInvitation(chatInvitationObj.chatId, $rootScope.loginUser._id, window.pomeloContext.options.deviceId, $rootScope.loginUser.route).then(
                         function () {
-                            var index;
-                            if (!$scope.chatInvitationList.every(function (item, i) {
-                                    if (item._id == chatInvitationObj._id) {
-                                        index = i;
-                                        return false;
-                                    }
-
-                                    return true;
-                                })) {
-                                $scope.chatInvitationList.splice(index, 1);
-                            }
+                            removeChatInvitation(chatInvitationObj);
 
                             return utilService.getResolveDefer();
                         },
@@ -2665,12 +2627,45 @@ define(
                     $scope.pomeloListeners[eventType] = $scope.pomeloListeners[eventType] || $scope.$on(eventType, function (event, data) {
                             var userId = data.userId;
 
+                            appService.getInvitation({
+                                creatorId: userId,
+                                inviteeId: $rootScope.loginUser._id,
+                                accepted: 0
+                            }).then(function (result) {
+                                var invitationList = result || [];
+                                addInvitation(invitationList);
+                            }, function (err) {
+                                if (typeof err === "object") err = err.data || "Unknow error";
+                                return $scope.showAlert(
+                                    {
+                                        title: err,
+                                        category: 3
+                                    }
+                                );
+                            });
                         });
                     eventType = angularConstants.pomeloEventType.messageEvent;
                     $scope.pomeloListeners[eventType] = $scope.pomeloListeners[eventType] || $scope.$on(eventType, function (event, data) {
                         });
                     eventType = angularConstants.pomeloEventType.acceptEvent;
                     $scope.pomeloListeners[eventType] = $scope.pomeloListeners[eventType] || $scope.$on(eventType, function (event, data) {
+                            var userId = data.userId;
+
+                            appService.getUser({
+                                _id: userId
+                            }).then(function (result) {
+                                var friendList = result && result.data.result == "OK" && result.data.resultValue[0] || [];
+                                addFriend(friendList);
+                            }, function (err) {
+                                if (typeof err === "object") err = err.data || "Unknow error";
+                                return $scope.showAlert(
+                                    {
+                                        title: err,
+                                        category: 3
+                                    }
+                                );
+                            });
+
                         });
                     eventType = angularConstants.pomeloEventType.chatInviteEvent;
                     $scope.pomeloListeners[eventType] = $scope.pomeloListeners[eventType] || $scope.$on(eventType, function (event, data) {
@@ -2743,9 +2738,9 @@ define(
 
                 function addFriend(friend) {
                     var friendList;
-                    if (toString.call(friend) === '[object Array]' && friend.length) {
-                        friendList = friend;
-                    } else if (typeof friend === 'object') {
+                    if (toString.call(friend) === '[object Array]') {
+                        if (friend.length) friendList = friend;
+                    } else if (toString.call(friend) === '[object Object]') {
                         friendList = [friend];
                     }
                     if (friendList) {
@@ -2770,9 +2765,9 @@ define(
 
                 function addInvitation(invitation) {
                     var invitationList;
-                    if (toString.call(invitation) === '[object Array]' && invitation.length) {
-                        invitationList = invitation;
-                    } else if (typeof invitation === 'object') {
+                    if (toString.call(invitation) === '[object Array]') {
+                        if (invitation.length) invitationList = invitation;
+                    } else if (toString.call(invitation) === '[object Object]') {
                         invitationList = [invitation];
                     }
                     if (invitationList) {
@@ -2790,11 +2785,39 @@ define(
                     }
                 }
 
+                function removeInvitation(invitation) {
+                    var invitationList;
+                    if (toString.call(invitation) === '[object Array]') {
+                        if (invitation.length) invitationList = invitation;
+                    } else if (toString.call(invitation) === '[object Object]') {
+                        invitationList = [invitation];
+                    }
+                    if (invitationList) {
+                        invitationList.forEach(function (item) {
+                            var index;
+                            if (!$scope.invitationList.every(function (i, idx) {
+                                    if (i._id == item._id) {
+                                        index = idx;
+                                        return false;
+                                    }
+
+                                    return true;
+                                })) {
+                                $scope.invitationList.splice(index, 1);
+                            }
+                        });
+                    }
+
+                    if (!$scope.invitationList.length && !$scope.chatInvitationList.length) {
+                        $scope.toggleSelect($scope.$element.find(".invitationFlag"), null, false);
+                    }
+                }
+
                 function addChatInvitation(chatInvitation) {
                     var chatInvitationList;
-                    if (toString.call(chatInvitation) === '[object Array]' && chatInvitation.length) {
-                        chatInvitationList = chatInvitation;
-                    } else if (typeof chatInvitation === 'object') {
+                    if (toString.call(chatInvitation) === '[object Array]') {
+                        if (chatInvitation.length) chatInvitationList = chatInvitation;
+                    } else if (toString.call(chatInvitation) === '[object Object]') {
                         chatInvitationList = [chatInvitation];
                     }
                     if (chatInvitationList) {
@@ -2812,11 +2835,39 @@ define(
                     }
                 }
 
+                function removeChatInvitation(chatInvitation) {
+                    var chatInvitationList;
+                    if (toString.call(chatInvitation) === '[object Array]') {
+                        if (chatInvitation.length) chatInvitationList = chatInvitation;
+                    } else if (toString.call(chatInvitation) === '[object Object]') {
+                        chatInvitationList = [chatInvitation];
+                    }
+                    if (chatInvitationList) {
+                        chatInvitationList.forEach(function (item) {
+                            var index;
+                            if (!$scope.chatInvitationList.every(function (i, idx) {
+                                    if (i._id == item._id) {
+                                        index = idx;
+                                        return false;
+                                    }
+
+                                    return true;
+                                })) {
+                                $scope.chatInvitationList.splice(index, 1);
+                            }
+                        });
+                    }
+
+                    if (!$scope.invitationList.length && !$scope.chatInvitationList.length) {
+                        $scope.toggleSelect($scope.$element.find(".invitationFlag"), null, false);
+                    }
+                }
+
                 function addChat(chat) {
                     var chatList;
-                    if (toString.call(chat) === '[object Array]' && chat.length) {
-                        chatList = chat;
-                    } else if (typeof chat === 'object') {
+                    if (toString.call(chat) === '[object Array]') {
+                        if (chat.length) chatList = chat;
+                    } else if (toString.call(chat) === '[object Object]') {
                         chatList = [chat];
                     }
                     if (chatList) {
@@ -2974,39 +3025,33 @@ define(
                     $scope.chatList = [];//The list of chats the login user join in
                     $scope.inviteeList = [];//The list of people the login user will send invitation to
                     $scope.friendList = {
-                        "A": [{_id: "52591a12c763d5e45855637a", name: "安亦斐"}],
-                        "B": [{_id: "52591a12c763d5e4585563b4", name: "毕嘉利"}],
-                        "C": [{_id: "52591a12c763d5e4585563ba", name: "蔡智先"}, {
-                            _id: "52591a12c763d5e4585563b8",
-                            name: "陈妍文"
-                        }],
-                        "D": [{_id: "52591a12c763d5e458556378", name: "董俊杰"}],
-                        "E": [{_id: "52591a12c763d5e458556380", name: "Edward"}],
-                        "F": [{_id: "52591a12c763d5e4585563bc", name: "冯婷晖"}],
-                        "G": [{_id: "52591a12c763d5e4585563be", name: "管悦欣"}, {
-                            _id: "52591a12c763d5e4585563b2",
-                            name: "葛晟宏"
-                        }],
-                        "H": [{_id: "52591a12c763d5e4585563c0", name: "黄文轩"}],
-                        "I": [{_id: "52591a12c763d5e458556384", name: "Icely"}],
-                        "J": [{_id: "52591a12c763d5e458556382", name: "蒋韵"}],
-                        "K": [{_id: "52591a12c763d5e458556384", name: "孔若凝"}],
-                        "L": [{_id: "52591a12c763d5e4585563a2", name: "林振远"}],
-                        "M": [{_id: "52591a12c763d5e45855638a", name: "马瑞旸"}],
-                        "N": [{_id: "52591a12c763d5e4585563c2", name: "倪晨怡"}],
-                        "P": [{_id: "52591a12c763d5e458556394", name: "潘依璐"}],
-                        "Q": [{_id: "52591a12c763d5e4585563a4", name: "钱辛杰"}],
-                        "R": [{_id: "52591a12c763d5e458556396", name: "Robin"}],
-                        "S": [{_id: "52591a12c763d5e4585563a6", name: "孙越凡"}],
-                        "T": [{_id: "52591a12c763d5e4585563c4", name: "田奕霖"}],
-                        "V": [{_id: "52591a12c763d5e458556398", name: "Victor"}],
-                        "W": [{_id: "52591a12c763d5e4585563d0", name: "王欣芸"}],
-                        "X": [{_id: "52591a12c763d5e4585563ce", name: "许景凯"}],
-                        "Y": [{_id: "52591a12c763d5e4585563ca", name: "殷奕蕊"}, {
-                            _id: "52591a12c763d5e4585563c8",
-                            name: "喻王玮"
-                        }],
-                        "Z": [{_id: "52591a12c763d5e4585563cc", name: "周璎泓"}],
+                        "#": [],
+                        "A": [],
+                        "B": [],
+                        "C": [],
+                        "D": [],
+                        "E": [],
+                        "F": [],
+                        "G": [],
+                        "H": [],
+                        "I": [],
+                        "J": [],
+                        "K": [],
+                        "L": [],
+                        "M": [],
+                        "N": [],
+                        "O": [],
+                        "P": [],
+                        "Q": [],
+                        "R": [],
+                        "S": [],
+                        "T": [],
+                        "U": [],
+                        "V": [],
+                        "W": [],
+                        "X": [],
+                        "Y": [],
+                        "Z": [],
                     };
                     $scope.invitationList = [];//The list of invitations for the login user to accept
                     $scope.chatInvitationList = [];//The list of chat invitations for the login user to accept
@@ -3022,7 +3067,7 @@ define(
 
                     return $q.all([
                         appService.getGroupUser($rootScope.loginUser._id, true),
-                        appService.getInvitation($rootScope.loginUser._id),
+                        appService.getUnprocessedInvitation($rootScope.loginUser._id),
                         appService.getChat($rootScope.loginUser._id),
                         appService.getChatInvitation($rootScope.loginUser._id),
                         utilService.chain([

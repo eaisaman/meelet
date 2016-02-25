@@ -1538,8 +1538,11 @@ UserFileController.prototype.getProject = function (projectFilter, success, fail
     }
     for (var key in projectFilter) {
         var value = projectFilter[key];
-        if (value != null && typeof value === "string" && value.match(/^\/.+\/$/)) {
-            projectFilter[key] = new RegExp(value.substr(1, value.length - 2));
+        if (value != null && typeof value === "string") {
+            var match = value.match(/^\/(.+)\/([igm]?)$/);
+            if (match) {
+                projectFilter[key] = new RegExp(match[1], match[2]);
+            }
         }
     }
 
@@ -1713,8 +1716,11 @@ UserFileController.prototype.putProject = function (projectFilter, project, succ
     }
     for (var key in projectFilter) {
         var value = projectFilter[key];
-        if (value != null && typeof value === "string" && value.match(/^\/.+\/$/)) {
-            projectFilter[key] = new RegExp(value.substr(1, value.length - 2));
+        if (value != null && typeof value === "string") {
+            var match = value.match(/^\/(.+)\/([igm]?)$/);
+            if (match) {
+                projectFilter[key] = new RegExp(match[1], match[2]);
+            }
         }
     }
 
@@ -1762,8 +1768,11 @@ UserFileController.prototype.deleteProject = function (projectFilter, success, f
     }
     for (var key in projectFilter) {
         var value = projectFilter[key];
-        if (value != null && typeof value === "string" && value.match(/^\/.+\/$/)) {
-            projectFilter[key] = new RegExp(value.substr(1, value.length - 2));
+        if (value != null && typeof value === "string") {
+            var match = value.match(/^\/(.+)\/([igm]?)$/);
+            if (match) {
+                projectFilter[key] = new RegExp(match[1], match[2]);
+            }
         }
     }
 

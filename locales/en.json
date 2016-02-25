@@ -8,6 +8,8 @@
   "Account Not Found": "Cannot find account.",
   "Chat Not Found": "Cannot find chat.",
   "Topic Not Found": "Cannot find topic.",
+  "Invitation Not Created": "Cannot create invitation.",
+  "Chat Invitation Not Created": "Cannot create chat invitation.",
   "File Not Exist": "File %s not exist.",
   "Invalidate Date String": "Invalid date string %s",
   "Delete Locked Project": "Only unlocked project can be deleted.",

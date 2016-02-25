@@ -210,8 +210,16 @@ define(
                 return this.cordovaPromise("sendInvitation").apply(this, [userId, JSON.stringify(inviteeList)]);
             }
 
-            appService.prototype.getInvitation = function (inviteeId) {
-                return this.cordovaPromise("getInvitation").apply(this, [inviteeId]);
+            appService.prototype.getInvitation = function (invitationFilter) {
+                return this.cordovaPromise("getInvitation").apply(this, [JSON.stringify(invitationFilter)]);
+            }
+
+            appService.prototype.getUnprocessedInvitation = function (inviteeId) {
+                return this.getInvitation({
+                    inviteeId: inviteeId,
+                    processed: 0,
+                    active: 1
+                });
             }
 
             appService.prototype.getChatInvitation = function (inviteeId) {

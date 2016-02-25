@@ -51,8 +51,11 @@ UserController.prototype.getUser = function (userFilter, success, fail) {
 
     for (var key in userFilter) {
         var value = userFilter[key];
-        if (value != null && typeof value === "string" && value.match(/^\/.+\/$/)) {
-            userFilter[key] = new RegExp(value.substr(1, value.length - 2));
+        if (value != null && typeof value === "string") {
+            var match = value.match(/^\/(.+)\/([igm]?)$/);
+            if (match) {
+                userFilter[key] = new RegExp(match[1], match[2]);
+            }
         }
     }
 
@@ -146,8 +149,11 @@ UserController.prototype.getUserGroup = function (groupFilter, sort, userId, upd
     }
     for (var key in groupFilter) {
         var value = groupFilter[key];
-        if (value != null && typeof value === "string" && value.match(/^\/.+\/$/)) {
-            groupFilter[key] = new RegExp(value.substr(1, value.length - 2));
+        if (value != null && typeof value === "string") {
+            var match = value.match(/^\/(.+)\/([igm]?)$/);
+            if (match) {
+                groupFilter[key] = new RegExp(match[1], match[2]);
+            }
         }
     }
     sort = (sort && JSON.parse(sort)) || {};
@@ -312,8 +318,11 @@ UserController.prototype.getUserProjectDetail = function (userFilter, success, f
     }
     for (var key in userFilter) {
         var value = userFilter[key];
-        if (value != null && typeof value === "string" && value.match(/^\/.+\/$/)) {
-            userFilter[key] = new RegExp(value.substr(1, value.length - 2));
+        if (value != null && typeof value === "string") {
+            var match = value.match(/^\/(.+)\/([igm]?)$/);
+            if (match) {
+                userFilter[key] = new RegExp(match[1], match[2]);
+            }
         }
     }
 
@@ -486,74 +495,57 @@ UserController.prototype.postInvitation = function (userId, inviteeList, route, 
             async.waterfall(
                 [
                     function (callback) {
+                        self.schema.User.find({_id: userId}, function (err, data) {
+                            if (!err) {
+                                if (!data || !data.length) {
+                                    err = self.__('Account Not Found');
+                                }
+                            }
+
+                            callback(err, data && data.length && data[0]);
+                        });
+                    },
+                    function (creatorObj, callback) {
+                        var expires = now.adjust(Date.DAY, self.chatConstants.recordTTL);
+
+                        self.schema.Invitation.update(
+                            {
+                                inviteeId: inviteeId,
+                                creatorId: userId
+                            },
+                            {
+                                $set: {
+                                    updateTime: now.getTime(),
+                                    createTime: now.getTime(),
+                                    creatorId: userId,
+                                    creatorName: creatorObj.name,
+                                    inviteeId: inviteeId,
+                                    route: route,
+                                    accepted: 0,
+                                    processed: 0,
+                                    expires: expires,
+                                    active: 1
+                                }
+                            },
+                            {upsert: true},
+                            function (err) {
+                                callback(err);
+                            }
+                        );
+                    },
+                    function (callback) {
                         self.schema.Invitation.find({
                             inviteeId: inviteeId,
                             creatorId: userId
                         }, function (err, data) {
+                            if (!err) {
+                                if (!data || !data.length) {
+                                    err = self.__("Invitation Not Created");
+                                }
+                            }
+
                             callback(err, data && data.length && data[0]);
                         });
-                    },
-                    function (invitationObj, callback) {
-                        var expires = now.adjust(Date.DAY, self.chatConstants.recordTTL);
-
-                        if (invitationObj) {
-                            _.extend(invitationObj, {
-                                updateTime: now.getTime(),
-                                route: self.chatConstants.chatRoute,
-                                accepted: 0,
-                                processed: 0,
-                                expires: expires,
-                                active: 1
-                            });
-
-                            self.schema.Invitation.update(
-                                {
-                                    _id: invitationObj._id
-                                },
-                                {
-                                    "$set": _.pick(invitationObj, ["updateTime", "route", "accepted", "processed", "expires", "active"])
-                                }, function (err) {
-                                    callback(err, invitationObj);
-                                }
-                            );
-                        } else {
-                            async.waterfall([
-                                function (cb) {
-                                    self.schema.User.find({_id: userId}, function (err, data) {
-                                        if (!err) {
-                                            if (data && data.length) {
-                                                cb(null, data[0]);
-                                                return;
-                                            } else {
-                                                err = self.__('Account Not Found');
-                                            }
-                                        }
-
-                                        cb(err);
-                                    });
-                                },
-                                function (creatorObj, cb) {
-                                    self.schema.Invitation.create(
-                                        {
-                                            updateTime: now.getTime(),
-                                            createTime: now.getTime(),
-                                            creatorId: userId,
-                                            creatorName: creatorObj.name,
-                                            inviteeId: inviteeId,
-                                            route: self.chatConstants.chatRoute,
-                                            accepted: 0,
-                                            processed: 0,
-                                            expires: expires,
-                                            active: 1
-                                        }, function (err, data) {
-                                            cb(err, data);
-                                        }
-                                    );
-                                }
-                            ], function (err, data) {
-                                callback(err, data);
-                            });
-                        }
                     }
                 ], function (err, invitationObj) {
                     next(err, invitationObj);

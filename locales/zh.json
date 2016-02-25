@@ -8,6 +8,8 @@
   "Account Not Found": "帐号不存在.",
   "Chat Not Found": "讨论不存在.",
   "Topic Not Found": "讨论标题不存在.",
+  "Invitation Not Created": "无法创建邀请",
+  "Chat Invitation Not Created": "无法创建讨论邀请",
   "File Not Exist": "文件%s不存在.",
   "Invalidate Date String": "非法日期字符串 %s",
   "Delete Locked Project": "只有解锁项目可以删除.",

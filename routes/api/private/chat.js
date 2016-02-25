@@ -322,14 +322,14 @@ ChatController.prototype.getChat = function (userId, chatId, success, fail) {
     var self = this;
 
     userId = new self.db.Types.ObjectId(userId);
-    if (chatId != null) {
+    if (chatId) {
         chatId = new self.db.Types.ObjectId(chatId);
     }
 
     (!self.isDBReady && fail(new Error('DB not initialized'))) || async.waterfall([
         function (next) {
             var invitationFilter = {active: 1, accepted: 1, $or: [{userId: userId}, {inviteeId: userId}]};
-            if (chatId != null) {
+            if (chatId) {
                 invitationFilter.chatId = chatId;
             }
 

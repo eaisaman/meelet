@@ -81,7 +81,7 @@
                             </div>
                         </div>
                         <div content="friend" class="fs-x-small" ng-click="once(this, $event, 'selectFriend', $event)">
-                            <div ng-repeat="(key, userList) in nameList">
+                            <div ng-repeat="(key, userList) in friendList" ng-show="userList && userList.length">
                                 <span class="initial">{{key}}</span>
                                 <div class="userName" ng-repeat="user in userList">
                                     <div class="userAvatar fs-x-huge-before icon-chat-before icon-chat-portrait-before">
@@ -148,7 +148,8 @@
                 <div id="create-discussion-control">
                 </div>
             </div>
-            <div id="invitationModal" ng-show="modalUsage === 'DisplayInvitation'">
+            <div id="invitationModal" ng-show="modalUsage === 'DisplayInvitation'"
+                 ng-click="stopEvent($event, '#invitation-control')">
                 <div id="invitation-control">
                     <div class="invitationTopBar">
                         <div ui-creative-link effect="fallDown" content="invitation" class="select"

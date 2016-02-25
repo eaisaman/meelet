@@ -2003,16 +2003,14 @@ define(
                 });
             }
 
-            appService.prototype.getInvitation = function (inviteeId) {
+            appService.prototype.getInvitation = function (invitationFilter) {
                 var self = this;
 
                 return self.$http({
                     method: 'GET',
                     url: (window.serverUrl || "") + '/api/private/invitation',
                     params: {
-                        inviteeId: inviteeId,
-                        processed: 0,
-                        active: 1
+                        invitationFilter: JSON.stringify(invitationFilter)
                     }
                 }).then(function (result) {
                     if (result.data.result === "OK") {
@@ -2022,6 +2020,16 @@ define(
                     }
                 }, function (err) {
                     return self.utilService.getRejectDefer(typeof err === "object" && err.data || err);
+                });
+            }
+
+            appService.prototype.getUnprocessedInvitation = function (inviteeId) {
+                var self = this;
+
+                return self.getInvitation({
+                    inviteeId: inviteeId,
+                    processed: 0,
+                    active: 1
                 });
             }
 
@@ -2054,7 +2062,7 @@ define(
                     method: 'GET',
                     url: (window.serverUrl || "") + '/api/private/chat',
                     params: {
-                        inviteeId: userId,
+                        userId: userId,
                         chatId: chatId || ""
                     }
                 }).then(function (result) {
@@ -2098,8 +2106,8 @@ define(
                     method: 'PUT',
                     url: (window.serverUrl || "") + '/api/private/acceptInvitation',
                     params: {
-                        userId: userId,
-                        chatId: chatId,
+                        creatorId: creatorId,
+                        inviteeId: inviteeId,
                         route: route,
                         accepted: 0
                     }
@@ -2161,6 +2169,7 @@ define(
                     return self.utilService.getRejectDefer(typeof err === "object" && err.data || err);
                 });
             }
+
 
             appService.prototype.createChat = function (userId, projectId) {
                 var self = this;
