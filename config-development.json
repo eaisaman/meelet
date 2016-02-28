@@ -132,7 +132,7 @@
       "function": "instantiateMongooseDb",
       "parameters": [
         {
-          "url": "mongodb://meelet:meelet@192.168.168.110/meelet",
+          "url": "mongodb://meelet:meelet@192.168.0.106/meelet",
           "dbSchema": "./schema.json"
         }
       ]
@@ -143,7 +143,7 @@
       "function": "instantiateMongoDb",
       "parameters": [
         {
-          "url": "mongodb://meelet:meelet@192.168.168.110/meelet",
+          "url": "mongodb://meelet:meelet@192.168.0.106/meelet",
           "auto_reconnect": true
         }
       ]
@@ -154,7 +154,7 @@
       "function": "initServer",
       "parameters": [
         {
-          "host": "192.168.168.110",
+          "host": "192.168.0.106",
           "port": 3010,
           "transport": "websocket",
           "isSecure": false

@@ -99,6 +99,30 @@
     content: "\e60c";
 }
 
+.icon-chat-circle-plus:before {
+    content: "\e60d";
+}
+
+.icon-chat-circle-minus:before {
+    content: "\e60e";
+}
+
+.icon-chat-circle-check:before {
+    content: "\e60f";
+}
+
+.icon-chat-circle-cross:before {
+    content: "\e610";
+}
+
+.icon-chat-trash:before {
+    content: "\e611";
+}
+
+.icon-chat-exit_to_app:before {
+    content: "\e612";
+}
+
 .icon-chat-talk-before:before {
     content: "\e600";
 }
@@ -149,6 +173,30 @@
 
 .icon-chat-send-before:before {
     content: "\e60c";
+}
+
+.icon-chat-circle-plus-before:before {
+    content: "\e60d";
+}
+
+.icon-chat-circle-minus-before:before {
+    content: "\e60e";
+}
+
+.icon-chat-circle-check-before:before {
+    content: "\e60f";
+}
+
+.icon-chat-circle-cross-before:before {
+    content: "\e610";
+}
+
+.icon-chat-trash-before:before {
+    content: "\e611";
+}
+
+.icon-chat-exit_to_app-before:before {
+    content: "\e612";
 }
 
 .icon-chat-talk-after:after {
@@ -202,3 +250,28 @@
 .icon-chat-send-after:after {
     content: "\e60c";
 }
+
+.icon-chat-circle-plus-after:after {
+    content: "\e60d";
+}
+
+.icon-chat-circle-minus-after:after {
+    content: "\e60e";
+}
+
+.icon-chat-circle-check-after:after {
+    content: "\e60f";
+}
+
+.icon-chat-circle-cross-after:after {
+    content: "\e610";
+}
+
+.icon-chat-trash-after:after {
+    content: "\e611";
+}
+
+.icon-chat-exit_to_app-after:after {
+    content: "\e612";
+}
+

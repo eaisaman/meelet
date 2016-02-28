@@ -2171,22 +2171,23 @@ define(
             }
 
 
-            appService.prototype.createChat = function (userId, projectId) {
+            appService.prototype.createChat = function (userId, deviceId, name, uids, route, payload) {
                 var self = this;
 
                 return self.$http({
                     method: 'POST',
-                    url: (window.serverUrl || "") + '/api/public/chat',
+                    url: (window.serverUrl || "") + '/api/private/chat',
                     params: {
                         userId: userId,
-                        projectId: projectId,
-                        route: window.pomeloContext.route
+                        deviceId: deviceId,
+                        name: name,
+                        uids: JSON.stringify(uids),
+                        route: route,
+                        payload: JSON.stringify(payload)
                     }
                 }).then(function (result) {
                     if (result.data.result === "OK") {
-                        var chatId = result.data.resultValue;
-
-                        return self.utilService.getResolveDefer(chatId);
+                        return self.utilService.getResolveDefer(result.data.resultValue);
                     } else {
                         return self.utilService.getRejectDefer(result.data.reason);
                     }

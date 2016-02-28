@@ -8702,7 +8702,7 @@
   position: relative;
   width: 100%;
   height: 3em;
-  background: #a6c1ce;
+  background: #888;
   z-index: 100;
 }
 .chatContainer .chatTopBar .chatButton {
@@ -8720,6 +8720,11 @@
   overflow: hidden;
 }
 .chatContainer .chatTopBar .chatButton:active {
+  background-color: #555;
+  color: #669933;
+  box-shadow: none;
+}
+.chatContainer .chatTopBar .chatButton.chatToggleButton.select {
   background-color: #555;
   color: #669933;
   box-shadow: none;
@@ -8863,6 +8868,7 @@
   margin: 5px;
 }
 .chatContainer #add-friend-control .searchUserContent .searchUserItem .itemName {
+  width: 100%;
   -webkit-flex: 1;
   flex: 1;
 }
@@ -8879,6 +8885,352 @@
   text-overflow: ellipsis;
   text-align: center;
   overflow: hidden;
+}
+.chatContainer #create-discussion-control #discussionList {
+  position: relative;
+  float: left;
+  height: 100%;
+}
+.chatContainer #create-discussion-control #discussionList #chatListContent {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  color: #666;
+  overflow-y: auto;
+}
+.chatContainer #create-discussion-control #discussionList #chatListContent #pendingChat {
+  position: relative;
+  float: left;
+  width: 100%;
+  height: 3em;
+  color: #666;
+  background: #aaa;
+  overflow: hidden;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+.chatContainer #create-discussion-control #discussionList #chatListContent #pendingChat.select + .chat {
+  margin-top: 3em;
+  -moz-transition: margin 1s;
+  -o-transition: margin 1s;
+  -webkit-transition: margin 1s;
+  transition: margin 1s;
+}
+.chatContainer #create-discussion-control #discussionList #chatListContent #pendingChat .chatInput {
+  margin: 0 0.5em;
+  -webkit-flex: 1;
+  flex: 1;
+}
+.chatContainer #create-discussion-control #discussionList #chatListContent #pendingChat .chatButton {
+  position: relative;
+  float: right;
+  width: 2em;
+  height: 2em;
+  background-color: #ddd;
+  box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.135);
+  border-radius: 0.2em;
+  display: inline-block;
+  margin-right: 0.5em;
+  color: rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+}
+.chatContainer #create-discussion-control #discussionList #chatListContent #pendingChat .chatButton:active {
+  background-color: #555;
+  color: #669933;
+  box-shadow: none;
+}
+.chatContainer #create-discussion-control #discussionList #chatListContent #pendingChat .chatButton:before {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  line-height: 2;
+}
+.chatContainer #create-discussion-control #discussionList #chatListContent .chat {
+  position: relative;
+  float: left;
+  width: 100%;
+  height: 3em;
+  color: #666;
+  cursor: pointer;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  align-items: center;
+  -moz-transition: margin 1s;
+  -o-transition: margin 1s;
+  -webkit-transition: margin 1s;
+  transition: margin 1s;
+}
+.chatContainer #create-discussion-control #discussionList #chatListContent .chat:after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  content: '';
+  width: 100%;
+  height: 2px;
+  background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjEuMCIgeTE9IjAuNSIgeDI9IjAuMCIgeTI9IjAuNSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ViZWJlYiIvPjxzdG9wIG9mZnNldD0iNTAlIiBzdG9wLWNvbG9yPSIjZWJlYmViIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjZmZmZmZmIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g');
+  background: -webkit-gradient(linear, 100% 50%, 0% 50%, color-stop(0%, #ebebeb), color-stop(50%, #ebebeb), color-stop(100%, #ffffff));
+  background: -moz-linear-gradient(right, #ebebeb 0%, #ebebeb 50%, #ffffff 100%);
+  background: -webkit-linear-gradient(right, #ebebeb 0%, #ebebeb 50%, #ffffff 100%);
+  background: linear-gradient(to left, #ebebeb 0%, #ebebeb 50%, #ffffff 100%);
+}
+.chatContainer #create-discussion-control #discussionList #chatListContent .chat.select {
+  background: #cdcdcd;
+}
+.chatContainer #create-discussion-control #discussionList #chatListContent .chat .chatThumbnail {
+  position: relative;
+  float: left;
+  width: 3em;
+  height: 3em;
+}
+.chatContainer #create-discussion-control #discussionList #chatListContent .chat .chatThumbnail:before {
+  position: absolute;
+  width: 1em;
+  height: 1em;
+  left: calc(50% - 0.5em);
+  top: calc(50% - 0.5em);
+  color: white;
+}
+.chatContainer #create-discussion-control #discussionList #chatListContent .chat .chatThumbnail img {
+  width: calc(100% - 10px);
+  height: calc(100% - 10px);
+  margin: 5px;
+}
+.chatContainer #create-discussion-control #discussionList #chatListContent .chat span {
+  -webkit-flex: 1;
+  flex: 1;
+  line-height: 3;
+}
+.chatContainer #create-discussion-control #discussionUserContent {
+  position: relative;
+  float: left;
+  height: 100%;
+}
+.chatContainer #create-discussion-control #discussionUserContent #chatUserContainer {
+  position: relative;
+  float: left;
+  width: 100%;
+  height: 50%;
+  overflow-y: auto;
+  background-image: -webkit-linear-gradient(#3fa46a, rgba(63, 164, 106, 0.9) 50%, #3fa46a);
+  background-image: -o-linear-gradient(#3fa46a, rgba(63, 164, 106, 0.9) 50%, #3fa46a);
+  background-image: linear-gradient(#3fa46a, rgba(63, 164, 106, 0.9) 50%, #3fa46a);
+  background-repeat: no-repeat;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF3FA46A', endColorstr='#FF3FA46A', GradientType=0);
+}
+.chatContainer #create-discussion-control #discussionUserContent #chatUserContainer .chatUser {
+  position: relative;
+  float: left;
+  width: 150px;
+  height: 150px;
+  margin: 15px;
+  overflow: visible;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+.chatContainer #create-discussion-control #discussionUserContent #chatUserContainer .chatUser:active {
+  opacity: 0.4;
+}
+.chatContainer #create-discussion-control #discussionUserContent #chatUserContainer .chatUser:after {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 1em;
+  height: 1em;
+  line-height: 1;
+  text-align: center;
+  opacity: 0;
+  color: #3fa46a;
+  -moz-transition: opacity 0.3s;
+  -o-transition: opacity 0.3s;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+.chatContainer #create-discussion-control #discussionUserContent #chatUserContainer .chatUser.select:after {
+  opacity: 1;
+}
+.chatContainer #create-discussion-control #discussionUserContent #chatUserContainer .chatUser .itemAvatar {
+  position: relative;
+  float: left;
+  width: 60px;
+  height: 60px;
+  border-radius: 100%;
+  color: #a6c1ce;
+  background: #ecf0f1;
+}
+.chatContainer #create-discussion-control #discussionUserContent #chatUserContainer .chatUser .itemAvatar:before {
+  position: relative;
+  left: calc(50% - 0.5em);
+  top: calc(50% - 0.5em);
+  width: 1em;
+  height: 1em;
+  line-height: 1;
+  font-size: 32px;
+  color: white;
+}
+.chatContainer #create-discussion-control #discussionUserContent #chatUserContainer .chatUser .itemAvatar img {
+  width: calc(100% - 10px);
+  height: calc(100% - 10px);
+  margin: 5px;
+}
+.chatContainer #create-discussion-control #discussionUserContent #chatUserContainer .chatUser .itemName {
+  width: 100%;
+  -webkit-flex: 1;
+  flex: 1;
+}
+.chatContainer #create-discussion-control #discussionUserContent #chatUserContainer .chatUser .itemName span {
+  position: relative;
+  float: left;
+  width: 100%;
+  line-height: 3;
+  height: 3em;
+  color: #a6c1ce;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  text-overflow: ellipsis;
+  text-align: center;
+  overflow: hidden;
+}
+.chatContainer #create-discussion-control #discussionUserContent #chatFriendContainer {
+  position: relative;
+  float: left;
+  width: 100%;
+  height: 50%;
+  overflow-y: auto;
+  background-image: -webkit-linear-gradient(#4f7698, rgba(79, 118, 152, 0.9) 50%, #4f7698);
+  background-image: -o-linear-gradient(#4f7698, rgba(79, 118, 152, 0.9) 50%, #4f7698);
+  background-image: linear-gradient(#4f7698, rgba(79, 118, 152, 0.9) 50%, #4f7698);
+  background-repeat: no-repeat;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF4F7698', endColorstr='#FF4F7698', GradientType=0);
+}
+.chatContainer #create-discussion-control #discussionUserContent #chatFriendContainer #chatFriendList {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+.chatContainer #create-discussion-control #discussionUserContent #chatFriendContainer #chatFriendList .chatFriend {
+  position: relative;
+  float: left;
+  width: 150px;
+  height: 150px;
+  margin: 15px;
+  overflow: visible;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+.chatContainer #create-discussion-control #discussionUserContent #chatFriendContainer #chatFriendList .chatFriend:active {
+  opacity: 0.4;
+}
+.chatContainer #create-discussion-control #discussionUserContent #chatFriendContainer #chatFriendList .chatFriend:after {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 1em;
+  height: 1em;
+  line-height: 1;
+  text-align: center;
+  opacity: 0;
+  color: #3fa46a;
+  -moz-transition: opacity 0.3s;
+  -o-transition: opacity 0.3s;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+.chatContainer #create-discussion-control #discussionUserContent #chatFriendContainer #chatFriendList .chatFriend.select:after {
+  opacity: 1;
+}
+.chatContainer #create-discussion-control #discussionUserContent #chatFriendContainer #chatFriendList .chatFriend .itemAvatar {
+  position: relative;
+  float: left;
+  width: 60px;
+  height: 60px;
+  border-radius: 100%;
+  color: #a6c1ce;
+  background: #ecf0f1;
+}
+.chatContainer #create-discussion-control #discussionUserContent #chatFriendContainer #chatFriendList .chatFriend .itemAvatar:before {
+  position: relative;
+  left: calc(50% - 0.5em);
+  top: calc(50% - 0.5em);
+  width: 1em;
+  height: 1em;
+  line-height: 1;
+  font-size: 32px;
+  color: white;
+}
+.chatContainer #create-discussion-control #discussionUserContent #chatFriendContainer #chatFriendList .chatFriend .itemAvatar img {
+  width: calc(100% - 10px);
+  height: calc(100% - 10px);
+  margin: 5px;
+}
+.chatContainer #create-discussion-control #discussionUserContent #chatFriendContainer #chatFriendList .chatFriend .itemName {
+  width: 100%;
+  -webkit-flex: 1;
+  flex: 1;
+}
+.chatContainer #create-discussion-control #discussionUserContent #chatFriendContainer #chatFriendList .chatFriend .itemName span {
+  position: relative;
+  float: left;
+  width: 100%;
+  line-height: 3;
+  height: 3em;
+  color: #a6c1ce;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  text-overflow: ellipsis;
+  text-align: center;
+  overflow: hidden;
+}
+.chatContainer #create-discussion-control #discussionUserContent #chatFriendContainer #chatInvitationButton {
+  position: absolute;
+  bottom: 0.5em;
+  right: 0.5em;
+  width: 2em;
+  height: 2em;
+  background-color: #ddd;
+  box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.135);
+  border-radius: 0.2em;
+  display: inline-block;
+  color: rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+}
+.chatContainer #create-discussion-control #discussionUserContent #chatFriendContainer #chatInvitationButton:active {
+  background-color: #555;
+  color: #669933;
+  box-shadow: none;
+}
+.chatContainer #create-discussion-control #discussionUserContent #chatFriendContainer #chatInvitationButton:before {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  line-height: 2;
 }
 .chatContainer #invitation-control .invitationTopBar {
   position: relative;

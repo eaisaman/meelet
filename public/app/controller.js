@@ -2340,6 +2340,7 @@ define(
                 $scope.startCreateDiscussion = function (event) {
                     event && event.stopPropagation && event.stopPropagation();
 
+                    $scope.chatInviteeList.splice(0);
                     $scope.modalUsage = "CreateDiscussion";
                     var scope = angular.element($(".chatContainer > .modalWindowContainer > .md-modal")).scope();
 
@@ -2481,6 +2482,50 @@ define(
 
                 }
 
+                $scope.selectChatForChange = function (event, chatObj) {
+                    event && event.stopPropagation && event.stopPropagation();
+
+                    if (!chatObj.friendList) {
+                        chatObj.friendList = _.filter($scope.friendList, function (friend) {
+                            return chatObj.userList.every(function (user) {
+                                return user._id !== friend._id;
+                            });
+                        });
+
+                    }
+                    $scope.selectedChangingChat = chatObj;
+
+                    return utilService.getResolveDefer();
+                }
+
+                $scope.toggleChatFriendItem = function (event, userItem) {
+                    if (event && event.target && userItem) {
+                        var toChatInvite = !$(event.target).hasClass("select");
+
+                        if (userItem) {
+                            if (toChatInvite) {
+                                $scope.chatInviteeList.push(userItem);
+                            } else {
+                                var index;
+                                if (!$scope.chatInviteeList.every(function (item, i) {
+                                        if (item._id === userItem._id) {
+                                            index = i;
+                                            return false;
+                                        }
+
+                                        return true;
+                                    })) {
+                                    $scope.chatInviteeList.splice(index, 1);
+                                }
+                            }
+                        }
+
+                        return $scope.toggleSelect(event);
+                    }
+
+                    return utilService.getResolveDefer();
+                }
+
                 $scope.acceptChatInvitation = function (chatInvitationObj) {
                     return appService.acceptChatInvitation(chatInvitationObj.chatId, $rootScope.loginUser._id, window.pomeloContext.options.deviceId, $rootScope.loginUser.route).then(
                         function () {
@@ -2521,19 +2566,82 @@ define(
                     );
                 }
 
-                $scope.sendMessage = function () {
+                $scope.toggleChatCreation = function (event) {
+                    event && event.stopPropagation && event.stopPropagation();
+
+                    if (event) {
+                        if (event.target.classList.contains("select")) {
+                            delete $scope.selectedChangingChat;
+                        } else {
+                            $scope.selectedChangingChat = {
+                                creatorId: $rootScope.loginUser._id,
+                                name: "",
+                                userList: [],
+                                friendList: Array.prototype.concat.apply(Array.prototype, _.values($scope.friendList))
+                            };
+                        }
+
+                        return $scope.toggleSelect(event.target, null, true).then(function () {
+                            return $scope.toggleSelect($scope.$element.find("#pendingChat"), null, true);
+                        });
+                    }
+
                     return utilService.getResolveDefer();
                 }
 
                 $scope.createChat = function () {
-                    return appService.createChat($scope.userId, $scope.projectId).then(function (chatId) {
-                        $scope.chatId = chatId;
-                        $scope.chatState = undefined;
-                        return utilService.getResolveDefer();
-                    }, function (err) {
-                        alert(err);
-                        return utilService.getRejectDefer(err);
+                    if ($scope.selectedChangingChat.name) {
+                        return appService.createChat($scope.selectedChangingChat.creatorId, window.pomeloContext.options.deviceId, $scope.selectedChangingChat.name, _.pluck($scope.chatInviteeList, "_id"), $rootScope.loginUser.route, $scope.selectedChangingChat.payload).then(function (chatObj) {
+                            chatObj.friendList = $scope.friendList;
+                            $scope.selectedChangingChat = chatObj;
+                            addChat(chatObj);
+
+                            return $scope.showAlert(
+                                {
+                                    title: "Chat {0} is created.".format(chatObj.name),
+                                    category: 1
+                                }
+                            ).then(function () {
+                                return $scope.toggleSelect($scope.$element.find("#chatCreateButton"), null, false).then(function () {
+                                    return $scope.toggleSelect($scope.$element.find("#pendingChat"), null, false);
+                                });
+                            });
+                        }, function (err) {
+                            if (typeof err === "object") err = err.data || "Unknow error";
+                            return $scope.showAlert(
+                                {
+                                    title: err,
+                                    category: 3
+                                }
+                            );
+                        });
+                    } else {
+                        return $scope.showAlert(
+                            {
+                                title: "Chat name is empty.",
+                                category: 3
+                            }
+                        );
+                    }
+                }
+
+                $scope.cancelCreateChat = function () {
+                    delete $scope.selectedChangingChat;
+                    return $scope.toggleSelect($scope.$element.find("#chatCreateButton"), null, false).then(function () {
+                        return $scope.toggleSelect($scope.$element.find("#pendingChat"), null, false);
                     });
+                }
+
+                $scope.closeChat = function () {
+
+                }
+
+                $scope.deleteChat = function () {
+
+                }
+
+                $scope.sendMessage = function () {
+                    return utilService.getResolveDefer();
                 }
 
                 $scope.startChat = function () {
@@ -3024,6 +3132,7 @@ define(
 
                     $scope.chatList = [];//The list of chats the login user join in
                     $scope.inviteeList = [];//The list of people the login user will send invitation to
+                    $scope.chatInviteeList = [];//The list of people the login user will send chat invitation to
                     $scope.friendList = {
                         "#": [],
                         "A": [],

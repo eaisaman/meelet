@@ -14,6 +14,58 @@
         "duration": 300
       }
     },
+    "slideDown": {
+      "animation": "callout.slideDown",
+      "calls": [
+        [
+          {
+            "translateY": "0%"
+          },
+          0
+        ],
+        [
+          {
+            "translateY": "100%"
+          },
+          1
+        ]
+      ],
+      "settings": {
+        "defaultDuration": 500
+      }
+    },
+    "swashIn": {
+      "animation": "callout.swashIn",
+      "calls": [
+        [
+          {
+            "opacity": 0,
+            "scaleX": 0,
+            "scaleY": 0
+          },
+          0.1
+        ],
+        [
+          {
+            "opacity": 1,
+            "scaleX": 0.9,
+            "scaleY": 0.9
+          },
+          0.9
+        ],
+        [
+          {
+            "opacity": 1,
+            "scaleX": 1,
+            "scaleY": 1
+          },
+          1
+        ]
+      ],
+      "settings": {
+        "defaultDuration": 500
+      }
+    },
     "tinRightIn": {
       "animation": "callout.tinRightIn",
       "calls": [
@@ -77,38 +129,6 @@
             "scaleX": 1,
             "scaleY": 1,
             "translateX": 0
-          },
-          1
-        ]
-      ],
-      "settings": {
-        "defaultDuration": 500
-      }
-    },
-    "swashIn": {
-      "animation": "callout.swashIn",
-      "calls": [
-        [
-          {
-            "opacity": 0,
-            "scaleX": 0,
-            "scaleY": 0
-          },
-          0.1
-        ],
-        [
-          {
-            "opacity": 1,
-            "scaleX": 0.9,
-            "scaleY": 0.9
-          },
-          0.9
-        ],
-        [
-          {
-            "opacity": 1,
-            "scaleX": 1,
-            "scaleY": 1
           },
           1
         ]
