@@ -480,6 +480,7 @@ describe('Chat', function () {
         });
     });
 
+    //TODO add test of postChatInvitation
     it("Chat with friends", function (done) {
         var uids = [];
 

@@ -2033,16 +2033,14 @@ define(
                 });
             }
 
-            appService.prototype.getChatInvitation = function (inviteeId) {
+            appService.prototype.getChatInvitation = function (invitationFilter) {
                 var self = this;
 
                 return self.$http({
                     method: 'GET',
                     url: (window.serverUrl || "") + '/api/private/chatInvitation',
                     params: {
-                        inviteeId: inviteeId,
-                        processed: 0,
-                        active: 1
+                        invitationFilter: JSON.stringify(invitationFilter)
                     }
                 }).then(function (result) {
                     if (result.data.result === "OK") {
@@ -2188,6 +2186,29 @@ define(
                 }).then(function (result) {
                     if (result.data.result === "OK") {
                         return self.utilService.getResolveDefer(result.data.resultValue);
+                    } else {
+                        return self.utilService.getRejectDefer(result.data.reason);
+                    }
+                }, function (err) {
+                    return self.utilService.getRejectDefer(typeof err === "object" && err.data || err);
+                });
+            }
+
+            appService.prototype.sendChatInvitation = function (userId, chatId, chatInviteeList, route) {
+                var self = this;
+
+                return self.$http({
+                    method: 'POST',
+                    url: (window.serverUrl || "") + '/api/private/chatInvitation',
+                    params: {
+                        userId: userId,
+                        chatId: chatId,
+                        chatInviteeList: JSON.stringify(self.utilService.arrayPick(chatInviteeList, ["_id", "loginChannel"])),
+                        route: route
+                    }
+                }).then(function (result) {
+                    if (result.data.result === "OK") {
+                        return self.utilService.getResolveDefer();
                     } else {
                         return self.utilService.getRejectDefer(result.data.reason);
                     }

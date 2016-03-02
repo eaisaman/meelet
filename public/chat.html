@@ -162,7 +162,7 @@
                                  ng-click="once(this, $event, 'closeChat')"></div>
                             <div class="chatButton icon-chat-before"
                                  ng-if="selectedChangingChat && selectedChangingChat._id"
-                                 ng-class="{'icon-chat-play-before':selectedChangingChat.state == pomeloState.chatPauseState,
+                                 ng-class="{'icon-chat-play-before':selectedChangingChat.state == pomeloState.chatCreateState || selectedChangingChat.state == pomeloState.chatPauseState,
                                  'icon-chat-pause-before':selectedChangingChat.state == pomeloState.chatOpenState}"
                                  ng-click="once(this, $event, 'pauseResumeChat')"></div>
                         </div>
@@ -177,7 +177,6 @@
                                 <div class="chatButton fs-x-small icon-chat-before icon-chat-circle-cross-before"
                                      ng-click="once(this, $event, 'cancelCreateChat')"></div>
                             </div>
-                            <div class="chat"/>
                             <div class="chat" ng-repeat="chat in chatList"
                                  ng-click="once(this, $event, 'selectChatForChange', $event, chat)">
                                 <div class="chatThumbnail fs-x-huge-before icon-chat-before icon-chat-talk-before">

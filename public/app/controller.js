@@ -2445,9 +2445,7 @@ define(
                             removeInvitation(invitationObj);
 
                             return appService.getUser({_id: invitationObj.creatorId}).then(function (result) {
-                                var friendList = result && result.data.result == "OK" && result.data.resultValue[0] || [];
-
-                                addFriend(friendList);
+                                addFriend(result && result.data.result == "OK" && result.data.resultValue[0]);
 
                                 return utilService.getResolveDefer();
                             });
@@ -2486,12 +2484,16 @@ define(
                     event && event.stopPropagation && event.stopPropagation();
 
                     if (!chatObj.friendList) {
-                        chatObj.friendList = _.filter($scope.friendList, function (friend) {
-                            return chatObj.userList.every(function (user) {
-                                return user._id !== friend._id;
+                        var friendList = Array.prototype.concat.apply(Array.prototype, _.values($scope.friendList));
+                        if (chatObj.userList) {
+                            chatObj.friendList = _.filter(friendList, function (friend) {
+                                return chatObj.userList.every(function (user) {
+                                    return user._id !== friend._id;
+                                });
                             });
-                        });
-
+                        } else {
+                            chatObj.friendList = friendList;
+                        }
                     }
                     $scope.selectedChangingChat = chatObj;
 
@@ -2580,21 +2582,18 @@ define(
                                 friendList: Array.prototype.concat.apply(Array.prototype, _.values($scope.friendList))
                             };
                         }
-
-                        return $scope.toggleSelect(event.target, null, true).then(function () {
-                            return $scope.toggleSelect($scope.$element.find("#pendingChat"), null, true);
-                        });
                     }
 
-                    return utilService.getResolveDefer();
+                    return $scope.toggleSelect(event.target).then(function () {
+                        return $scope.toggleSelect($scope.$element.find("#pendingChat"));
+                    });
                 }
 
                 $scope.createChat = function () {
                     if ($scope.selectedChangingChat.name) {
-                        return appService.createChat($scope.selectedChangingChat.creatorId, window.pomeloContext.options.deviceId, $scope.selectedChangingChat.name, _.pluck($scope.chatInviteeList, "_id"), $rootScope.loginUser.route, $scope.selectedChangingChat.payload).then(function (chatObj) {
-                            chatObj.friendList = $scope.friendList;
-                            $scope.selectedChangingChat = chatObj;
-                            addChat(chatObj);
+                        return appService.createChat($scope.selectedChangingChat.creatorId, window.pomeloContext.options.deviceId, $scope.selectedChangingChat.name, utilService.arrayPick($scope.chatInviteeList, "_id", "loginChannel"), $rootScope.loginUser.route, $scope.selectedChangingChat.payload).then(function (chatObj) {
+                            _.extend($scope.selectedChangingChat, chatObj);
+                            addChat($scope.selectedChangingChat);
 
                             return $scope.showAlert(
                                 {
@@ -2630,6 +2629,31 @@ define(
                     return $scope.toggleSelect($scope.$element.find("#chatCreateButton"), null, false).then(function () {
                         return $scope.toggleSelect($scope.$element.find("#pendingChat"), null, false);
                     });
+                }
+
+                $scope.sendChatInvitation = function () {
+                    if ($scope.chatInviteeList.length) {
+                        return appService.sendChatInvitation($rootScope.loginUser._id, $scope.selectedChangingChat._id, $scope.chatInviteeList).then(
+                            function () {
+                                return $scope.showAlert(
+                                    {
+                                        title: "Invitation sent successfully.",
+                                        category: 1
+                                    }
+                                );
+                            },
+                            function (err) {
+                                return $scope.showAlert(
+                                    {
+                                        title: err,
+                                        category: 3
+                                    }
+                                );
+                            }
+                        );
+                    }
+
+                    return utilService.getResolveDefer();
                 }
 
                 $scope.closeChat = function () {
@@ -2740,8 +2764,7 @@ define(
                                 inviteeId: $rootScope.loginUser._id,
                                 accepted: 0
                             }).then(function (result) {
-                                var invitationList = result || [];
-                                addInvitation(invitationList);
+                                addInvitation(result);
                             }, function (err) {
                                 if (typeof err === "object") err = err.data || "Unknow error";
                                 return $scope.showAlert(
@@ -2762,8 +2785,7 @@ define(
                             appService.getUser({
                                 _id: userId
                             }).then(function (result) {
-                                var friendList = result && result.data.result == "OK" && result.data.resultValue[0] || [];
-                                addFriend(friendList);
+                                addFriend(result && result.data.result == "OK" && result.data.resultValue[0]);
                             }, function (err) {
                                 if (typeof err === "object") err = err.data || "Unknow error";
                                 return $scope.showAlert(
@@ -2777,6 +2799,23 @@ define(
                         });
                     eventType = angularConstants.pomeloEventType.chatInviteEvent;
                     $scope.pomeloListeners[eventType] = $scope.pomeloListeners[eventType] || $scope.$on(eventType, function (event, data) {
+                            var chatId = data.chatId;
+
+                            appService.getChatInvitation({
+                                chatId: chatId,
+                                inviteeId: $rootScope.loginUser._id,
+                                accepted: 0
+                            }).then(function (result) {
+                                addChatInvitation(result);
+                            }, function (err) {
+                                if (typeof err === "object") err = err.data || "Unknow error";
+                                return $scope.showAlert(
+                                    {
+                                        title: err,
+                                        category: 3
+                                    }
+                                );
+                            });
                         });
                     eventType = angularConstants.pomeloEventType.chatConnectEvent;
                     $scope.pomeloListeners[eventType] = $scope.pomeloListeners[eventType] || $scope.$on(eventType, function (event, data) {
@@ -2795,6 +2834,49 @@ define(
                         });
                     eventType = angularConstants.pomeloEventType.chatAcceptEvent;
                     $scope.pomeloListeners[eventType] = $scope.pomeloListeners[eventType] || $scope.$on(eventType, function (event, data) {
+                            var useId = data.userId, chatId = data.chatId, userList;
+
+                            $scope.chatList.every(function (chatObj) {
+                                if (chatObj._id == chatId) {
+                                    userList = chatObj.userList = chatObj.userList || [];
+
+                                    var index;
+                                    if (!chatObj.friendList.every(function (f, i) {
+                                            if (f._id == userId) {
+                                                index = i;
+                                                return false;
+                                            }
+
+                                            return true;
+                                        })) {
+                                        chatObj.friendList.splice(index, 1);
+                                    }
+
+                                    return false;
+                                }
+
+                                return true;
+                            })
+
+                            if (userList) {
+                                appService.getUser({_id: useId}).then(
+                                    function (result) {
+                                        if (result && result.data.result == "OK" && result.data.resultValue.length) {
+                                            userList.push(result.data.resultValue[0]);
+                                        }
+
+                                        return utilService.getResolveDefer();
+                                    },
+                                    function (err) {
+                                        return $scope.showAlert(
+                                            {
+                                                title: err,
+                                                category: 3
+                                            }
+                                        );
+                                    }
+                                );
+                            }
                         });
                     eventType = angularConstants.pomeloEventType.chatCloseEvent;
                     $scope.pomeloListeners[eventType] = $scope.pomeloListeners[eventType] || $scope.$on(eventType, function (event, data) {
@@ -2845,51 +2927,55 @@ define(
                 }
 
                 function addFriend(friend) {
-                    var friendList;
-                    if (toString.call(friend) === '[object Array]') {
-                        if (friend.length) friendList = friend;
-                    } else if (toString.call(friend) === '[object Object]') {
-                        friendList = [friend];
-                    }
-                    if (friendList) {
-                        friendList.forEach(function (item) {
-                            if (item._id !== $rootScope.loginUser._id) {
-                                var pyStr = pinyinService.makePy(item.name),
-                                    initial = "#";
+                    if (friend) {
+                        var friendList;
+                        if (toString.call(friend) === '[object Array]') {
+                            if (friend.length) friendList = friend;
+                        } else if (toString.call(friend) === '[object Object]') {
+                            friendList = [friend];
+                        }
+                        if (friendList) {
+                            friendList.forEach(function (item) {
+                                if (item._id !== $rootScope.loginUser._id) {
+                                    var pyStr = pinyinService.makePy(item.name),
+                                        initial = "#";
 
-                                if (pyStr && pyStr.length) {
-                                    initial = pyStr[0].charAt(0).toUpperCase();
+                                    if (pyStr && pyStr.length) {
+                                        initial = pyStr[0].charAt(0).toUpperCase();
+                                    }
+                                    $scope.friendList[initial] = $scope.friendList[initial] || [];
+                                    if ($scope.friendList[initial].every(function (f) {
+                                            return f._id != item._id;
+                                        })) {
+                                        $scope.friendList[initial].push(item);
+                                    }
                                 }
-                                $scope.friendList[initial] = $scope.friendList[initial] || [];
-                                if ($scope.friendList[initial].every(function (f) {
-                                        return f._id != item._id;
-                                    })) {
-                                    $scope.friendList[initial].push(item);
-                                }
-                            }
-                        });
+                            });
+                        }
                     }
                 }
 
                 function addInvitation(invitation) {
-                    var invitationList;
-                    if (toString.call(invitation) === '[object Array]') {
-                        if (invitation.length) invitationList = invitation;
-                    } else if (toString.call(invitation) === '[object Object]') {
-                        invitationList = [invitation];
-                    }
-                    if (invitationList) {
-                        invitationList.forEach(function (item) {
-                            if ($scope.invitationList.every(function (i) {
-                                    return i._id != item._id;
-                                })) {
-                                $scope.invitationList.push(item);
-                            }
-                        });
-                    }
+                    if (invitation) {
+                        var invitationList;
+                        if (toString.call(invitation) === '[object Array]') {
+                            if (invitation.length) invitationList = invitation;
+                        } else if (toString.call(invitation) === '[object Object]') {
+                            invitationList = [invitation];
+                        }
+                        if (invitationList) {
+                            invitationList.forEach(function (item) {
+                                if ($scope.invitationList.every(function (i) {
+                                        return i._id != item._id;
+                                    })) {
+                                    $scope.invitationList.push(item);
+                                }
+                            });
+                        }
 
-                    if ($scope.invitationList.length) {
-                        $scope.toggleSelect($scope.$element.find(".invitationFlag"), null, true);
+                        if ($scope.invitationList.length) {
+                            $scope.toggleSelect($scope.$element.find(".invitationFlag"), null, true);
+                        }
                     }
                 }
 
@@ -2922,24 +3008,26 @@ define(
                 }
 
                 function addChatInvitation(chatInvitation) {
-                    var chatInvitationList;
-                    if (toString.call(chatInvitation) === '[object Array]') {
-                        if (chatInvitation.length) chatInvitationList = chatInvitation;
-                    } else if (toString.call(chatInvitation) === '[object Object]') {
-                        chatInvitationList = [chatInvitation];
-                    }
-                    if (chatInvitationList) {
-                        chatInvitationList.forEach(function (item) {
-                            if ($scope.chatInvitationList.every(function (i) {
-                                    return i._id != item._id;
-                                })) {
-                                $scope.chatInvitationList.push(item);
-                            }
-                        });
-                    }
+                    if (chatInvitation) {
+                        var chatInvitationList;
+                        if (toString.call(chatInvitation) === '[object Array]') {
+                            if (chatInvitation.length) chatInvitationList = chatInvitation;
+                        } else if (toString.call(chatInvitation) === '[object Object]') {
+                            chatInvitationList = [chatInvitation];
+                        }
+                        if (chatInvitationList) {
+                            chatInvitationList.forEach(function (item) {
+                                if ($scope.chatInvitationList.every(function (i) {
+                                        return i._id != item._id;
+                                    })) {
+                                    $scope.chatInvitationList.push(item);
+                                }
+                            });
+                        }
 
-                    if ($scope.chatInvitationList.length) {
-                        $scope.toggleSelect($scope.$element.find(".invitationFlag"), null, true);
+                        if ($scope.chatInvitationList.length) {
+                            $scope.toggleSelect($scope.$element.find(".invitationFlag"), null, true);
+                        }
                     }
                 }
 
@@ -2972,20 +3060,22 @@ define(
                 }
 
                 function addChat(chat) {
-                    var chatList;
-                    if (toString.call(chat) === '[object Array]') {
-                        if (chat.length) chatList = chat;
-                    } else if (toString.call(chat) === '[object Object]') {
-                        chatList = [chat];
-                    }
-                    if (chatList) {
-                        chatList.forEach(function (item) {
-                            if ($scope.chatList.every(function (i) {
-                                    return i._id != item._id;
-                                })) {
-                                $scope.chatList.push(item);
-                            }
-                        });
+                    if (chat) {
+                        var chatList;
+                        if (toString.call(chat) === '[object Array]') {
+                            if (chat.length) chatList = chat;
+                        } else if (toString.call(chat) === '[object Object]') {
+                            chatList = [chat];
+                        }
+                        if (chatList) {
+                            chatList.forEach(function (item) {
+                                if ($scope.chatList.every(function (i) {
+                                        return i._id != item._id;
+                                    })) {
+                                    $scope.chatList.push(item);
+                                }
+                            });
+                        }
                     }
                 }
 
@@ -3178,7 +3268,10 @@ define(
                         appService.getGroupUser($rootScope.loginUser._id, true),
                         appService.getUnprocessedInvitation($rootScope.loginUser._id),
                         appService.getChat($rootScope.loginUser._id),
-                        appService.getChatInvitation($rootScope.loginUser._id),
+                        appService.getChatInvitation({
+                            inviteeId: $rootScope.loginUser._id,
+                            accepted: 0
+                        }),
                         utilService.chain([
                             appService.loadPomelo.bind(appService),
                             appService.initPomelo.bind(appService),
@@ -3196,12 +3289,12 @@ define(
                             }
                         })
                     ]).then(function (results) {
-                        var groupUserList = results[0] || [],
-                            invitationList = results[1] || [],
-                            chatList = results[2] || [],
-                            chatInvitationList = results[3] || [];
+                        var groupUserList = results[0],
+                            invitationList = results[1],
+                            chatList = results[2],
+                            chatInvitationList = results[3];
 
-                        if (groupUserList.length) {
+                        if (groupUserList && groupUserList.length) {
                             addFriend(groupUserList[0].userList);
                         }
                         addInvitation(invitationList);

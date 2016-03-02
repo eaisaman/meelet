@@ -105,9 +105,9 @@ ChatController.prototype.getJoinItems = function (userId, success, fail) {
                                     if (chatIdList && chatIdList.length) {
                                         var now = new Date();
                                         self.schema.Chat.find({
-                                            state: {$ne: 3},
+                                            state: {$ne: self.chatConstants.chatCloseState},
                                             endTime: null,
-                                            expectEndTime: {$lt: now.getTime()},
+                                            $or: [{expectEndTime: null}, {expectEndTime: {$lt: now.getTime()}}],
                                             _id: {$in: chatIdList}
                                         }, function (err, data) {
                                             if (!err) {
@@ -303,7 +303,7 @@ ChatController.prototype.getChatInvitation = function (invitationFilter, success
 
     (!self.isDBReady && fail(new Error('DB not initialized'))) || self.schema.ChatInvitation.find(invitationFilter, function (err, data) {
         if (!err) {
-            success(commons.arrayPick(data, _.without(self.schema.Invitation.fields, "createTime")));
+            success(commons.arrayPick(data, _.without(self.schema.ChatInvitation.fields, "createTime")));
         } else {
             fail(err);
         }
@@ -328,48 +328,43 @@ ChatController.prototype.getChat = function (userId, chatId, success, fail) {
 
     (!self.isDBReady && fail(new Error('DB not initialized'))) || async.waterfall([
         function (next) {
-            var invitationFilter = {active: 1, accepted: 1, $or: [{userId: userId}, {inviteeId: userId}]};
+            self.schema.User.find({_id: userId}, function (err, data) {
+                var userObj;
+                if (!err) {
+                    if (data && data.length) {
+                        userObj = _.pick(data[0], _.without(self.schema.User.fields, "password", "createTime"));
+                    }
+                }
+                if (!userObj) err = self.__('Account Not Found');
+                next(err, userObj);
+            });
+        },
+        function (userObj, next) {
+            var invitationFilter = {active: 1, accepted: 1, inviteeId: userId};
             if (chatId) {
                 invitationFilter.chatId = chatId;
             }
 
             self.schema.ChatInvitation.find(invitationFilter, function (err, data) {
-                next(err, data);
+                next(err, userObj, data);
             });
         },
-        function (invitationList, next) {
-            if (invitationList && invitationList.length) {
-                var userMap = {}, arr = invitationList.map(function (invitationObj) {
-                    return function (callback) {
-                        async.waterfall([
-                            function (cb) {
-                                self.schema.Chat.find({_id: invitationObj.chatId}, function (err, data) {
-                                    cb(err, data && data.length && data[0]);
-                                });
-                            }, function (chatObj, cb) {
-                                if (chatObj) {
-                                    chatObj.userList = [];
-                                    self.schema.ChatInvitation.find({chatId: chatObj._id}, function (err, data) {
-                                        if (!err) {
-                                            _.each(data, function (item) {
-                                                chatObj.userList.push(userMap[item.inviteeId] = userMap[item.inviteeId] || {_id: item.inviteeId});
-                                            })
-                                        }
+        function (userObj, invitationList, next) {
+            var userMap = {}, arr;
 
-                                        cb(null, chatObj);
-                                    });
-                                } else {
-                                    cb(null, null);
-                                }
-                            }
-                        ], function (err, data) {
-                            callback(err, data);
+            if (invitationList && invitationList.length) {
+                arr = invitationList.map(function (invitationObj) {
+                    return function (callback) {
+                        self.schema.Chat.find({_id: invitationObj.chatId}, function (err, data) {
+                            callback(err, data && data.length && data[0]);
                         });
                     }
                 });
+            }
 
-                async.waterfall([
-                    function (wCallback) {
+            async.waterfall([
+                function (wCallback) {
+                    if (arr) {
                         async.parallel(arr, function (err, results) {
                             //Reject null values in results
                             wCallback(err, _.reject(results, function (result) {
@@ -378,26 +373,59 @@ ChatController.prototype.getChat = function (userId, chatId, success, fail) {
                                 }
                                 return result;
                             }));
-                        })
-                    },
-                    function (chatList, wCallback) {
-                        async.each(_.values(userMap), function (userObj, eCallback) {
-                            self.schema.User.find({_id: userObj._id}, function (err, data) {
-                                if (!err && data && data.length) {
-                                    _.extend(userObj, _.pick(data[0], ["loginChannel", "name", "sex", "tel"]));
-                                }
-                                eCallback(err, data);
-                            })
-                        }, function (err) {
-                            wCallback(err, chatList);
                         });
+                    } else {
+                        wCallback(null, []);
                     }
-                ], function (err, data) {
-                    next(err, data);
-                });
-            } else {
-                next(null, null);
-            }
+                },
+                function (chatList, wCallback) {
+                    self.schema.Chat.find({creatorId: userId, active: 1}, function (err, data) {
+                        if (!err) {
+                            if (data && data.length) {
+                                chatList = Array.prototype.concat.apply(Array.prototype, [chatList, commons.arrayPick(data, _.without(self.schema.Chat.fields, "createTime", "active"))]);
+                                chatList.forEach(function (chatObj) {
+                                    chatObj.userList = [userObj];
+                                });
+                            }
+                        }
+
+                        wCallback(err, chatList);
+                    });
+                },
+                function (chatList, wCallback) {
+                    async.each(chatList, function (chatObj, cb) {
+                        self.schema.ChatInvitation.find({
+                            chatId: chatObj._id,
+                            inviteeId: {$ne: userId},
+                            accepted: 1
+                        }, function (err, data) {
+                            if (!err) {
+                                _.each(data, function (item) {
+                                    chatObj.userList.push(userMap[item.inviteeId] = userMap[item.inviteeId] || {_id: item.inviteeId});
+                                })
+                            }
+
+                            cb(null);
+                        });
+                    }, function (err) {
+                        wCallback(err, chatList);
+                    });
+                },
+                function (chatList, wCallback) {
+                    async.each(_.values(userMap), function (userObj, eCallback) {
+                        self.schema.User.find({_id: userObj._id}, function (err, data) {
+                            if (!err && data && data.length) {
+                                _.extend(userObj, _.pick(data[0], _.without(self.schema.User.fields, "password", "createTime")));
+                            }
+                            eCallback(err, data);
+                        })
+                    }, function (err) {
+                        wCallback(err, chatList);
+                    });
+                }
+            ], function (err, data) {
+                next(err, data);
+            });
         }
     ], function (err, data) {
         if (!err) {
@@ -1138,7 +1166,7 @@ ChatController.prototype.putCloseChat = function (userId, chatId, route, success
  *
  * @param {string} userId
  * @param {string} chatId
- * @param {Array} uids
+ * @param {Array} chatInviteeList
  * @param {string} route
  * @param success
  * @param fail
@@ -1146,145 +1174,139 @@ ChatController.prototype.putCloseChat = function (userId, chatId, route, success
  * @return {Void}
  *
  **/
-ChatController.prototype.postChatInvitation = function (userId, chatId, uids, route, success, fail) {
+ChatController.prototype.postChatInvitation = function (userId, chatId, chatInviteeList, route, success, fail) {
     var self = this,
         now = new Date();
 
     userId = new self.db.Types.ObjectId(commons.getFormString(userId));
     chatId = new self.db.Types.ObjectId(commons.getFormString(chatId));
-    uids = JSON.parse(uids) || [];
-    if (!uids.length) {
-        success();
-    }
-    uids = uids.map(function (uid) {
-        return new self.db.Types.ObjectId(uid);
-    });
+    chatInviteeList = (chatInviteeList && JSON.parse(chatInviteeList)) || [];
     route = commons.getFormString(route) || self.chatConstants.chatRoute;
 
-    (!self.isDBReady && fail(new Error('DB not initialized'))) || async.waterfall(
-        [
-            function (next) {
-                self.schema.Chat.find({
-                    _id: chatId,
-                    state: {$ne: self.chatConstants.chatCloseState},
-                    endTime: null,
-                    expectEndTime: {$lt: now.getTime()}
-                }, function (err, data) {
-                    if (!err) {
-                        if (data && data.length) {
-                            next(null, data[0]);
-                        } else {
-                            next(self.__('Chat Not Found'));
-                        }
-                    } else {
-                        next(err);
-                    }
-                })
-            },
-            function (chatObj, next) {
-                //Won't send chat invitation if already accepted
-                self.schema.ChatInvitation.find({
-                    chatId: chatId,
-                    accepted: 1,
-                    inviteeId: {$in: uids}
-                }, function (err, data) {
-                    if (!err) {
-                        var inviteeIdList = uids;
-                        if (data && data.length) {
-                            inviteeIdList = _.filter(uids, function (uid) {
-                                var index;
-                                if (!data.every(function (item, i) {
-                                        if (item.inviteeId.toString() === uid.toString()) {
-                                            index = i;
-                                            return false;
-                                        }
-
-                                        return true;
-                                    })) {
-                                    data.splice(index, 1);
-                                }
-
-                                return index == null;
-                            })
+    if (chatInviteeList.length) {
+        (!self.isDBReady && fail(new Error('DB not initialized'))) || async.waterfall(
+            [
+                function (next) {
+                    self.schema.User.find({_id: userId}, function (err, data) {
+                        if (!err) {
+                            if (!data || !data.length) {
+                                err = self.__('Account Not Found');
+                            }
                         }
 
-                        next(null, inviteeIdList, chatObj);
-                    } else {
-                        next(err);
-                    }
-                });
-            },
-            function (inviteeIdList, chatObj, next) {
-                if (inviteeIdList && inviteeIdList.length) {
-                    var expires = now.clone().adjust(Date.DAY, self.chatConstants.recordTTL);
+                        next(err, data && data.length && data[0]);
+                    });
+                },
+                function (creatorObj, next) {
+                    self.schema.Chat.find({
+                        _id: chatId,
+                        state: {$ne: self.chatConstants.chatCloseState},
+                        endTime: null,
+                        $or: [{expectEndTime: null}, {expectEndTime: {$lt: now.getTime()}}]
+                    }, function (err, data) {
+                        var chatObj;
+                        if (!err) {
+                            if (data && data.length) {
+                                chatObj = data[0];
+                            } else {
+                                err = self.__('Chat Not Found');
+                            }
+                        }
 
-                    async.each(inviteeIdList, function (inviteeId, callback) {
-                        async.waterfall(
-                            [
-                                function (cb) {
-                                    commons.sendChatInvitation(chatId.toString(), userId.toString(), inviteeId, cb);
-                                },
-                                function (cb) {
-                                    self.schema.ChatInvitation.update(
-                                        {
-                                            chatId: chatObj._id,
-                                            inviteeId: inviteeId,
-                                        },
-                                        {
-                                            $set: {
-                                                chatUpdateTime: chatObj.updateTime,
-                                                updateTime: now.getTime(),
-                                                createTime: now.getTime(),
+                        next(err, creatorObj, chatObj);
+                    })
+                },
+                function (creatorObj, chatObj, next) {
+                    var arr = [];
+
+                    chatInviteeList.forEach(function (invitee) {
+                        var inviteeId = new self.db.Types.ObjectId(invitee._id);
+
+                        arr.push(function (next) {
+                            async.waterfall(
+                                [
+                                    function (callback) {
+                                        var expires = now.adjust(Date.DAY, self.chatConstants.recordTTL);
+
+                                        self.schema.ChatInvitation.update(
+                                            {
                                                 chatId: chatId,
                                                 userId: userId,
-                                                inviteeId: inviteeId,
-                                                route: route,
-                                                accepted: 0,
-                                                processed: 0,
-                                                expires: expires,
-                                                active: 1
+                                                inviteeId: inviteeId
+                                            },
+                                            {
+                                                $set: {
+                                                    updateTime: now.getTime(),
+                                                    chatUpdateTime: now.getTime(),
+                                                    createTime: now.getTime(),
+                                                    creatorName: creatorObj.name,
+                                                    chatName: chatObj.name,
+                                                    chatId: chatId,
+                                                    userId: userId,
+                                                    inviteeId: inviteeId,
+                                                    route: route,
+                                                    accepted: 0,
+                                                    processed: 0,
+                                                    expires: expires,
+                                                    active: 1
+                                                }
+                                            },
+                                            {upsert: true},
+                                            function (err) {
+                                                callback(err);
                                             }
-                                        },
-                                        {upsert: true},
-                                        function (err) {
-                                            cb(err);
-                                        }
-                                    );
+                                        );
+                                    },
+                                    function (callback) {
+                                        self.schema.ChatInvitation.find({
+                                            inviteeId: inviteeId,
+                                            chatId: chatId,
+                                            userId: userId,
+                                            accepted: 0,
+                                            processed: 0,
+                                            active: 1
+                                        }, function (err, data) {
+                                            if (!err) {
+                                                if (!data || !data.length) {
+                                                    err = self.__("Chat Invitation Not Created");
+                                                }
+                                            }
+
+                                            callback(err, data && data.length && data[0]);
+                                        });
+                                    }
+                                ], function (err, chatInvitationObj) {
+                                    next(err, chatInvitationObj);
                                 }
-                            ],
-                            function (err) {
-                                callback(err);
-                            }
-                        );
-                    }, function (err) {
-                        next(err, inviteeIdList);
+                            );
+                        });
                     });
-                } else {
-                    next(null, null);
+
+                    async.parallel(arr, function (err, results) {
+                        next(err, results);
+                    });
+                },
+                function (chatInvitationArr, next) {
+                    var uids = chatInviteeList.map(function (invitee) {
+                        return {uid: invitee._id, loginChannel: invitee.loginChannel}
+                    });
+
+                    commons.sendChatInvitation(userId.toString(), uids, chatId.toString(), route, function (err) {
+                        next(err, chatInvitationArr);
+                    });
                 }
-            },
-            function (inviteeIdList, next) {
-                if (inviteeIdList && inviteeIdList.length) {
-                    self.schema.ChatInvitation.find({
-                        chatId: chatId,
-                        inviteeId: {"$in": inviteeIdList}
-                    }, function (err, data) {
-                        next(err, data);
-                    });
+            ],
+            function (err, data) {
+                if (!err) {
+                    success(commons.arrayPick(data, _.without(self.schema.ChatInvitation.fields, "createTime", "expires")));
                 } else {
-                    next(null);
+                    fail(err);
                 }
             }
-        ],
-        function (err, data) {
-            if (!err) {
-                success(commons.arrayPick(data, _.without(self.schema.ChatInvitation.fields, "createTime", "expires")));
-            } else {
-                fail(err);
-            }
-        }
-    )
-    ;
+        );
+    } else {
+        success();
+    }
 }
 
 /**
@@ -1317,7 +1339,7 @@ ChatController.prototype.putAcceptChatInvitation = function (chatId, userId, dev
                 chatId: chatId,
                 active: 1
             }, {
-                "$set": {updateTime: now.getTime(), accepted: accepted},
+                "$set": {updateTime: now.getTime(), processed: 1, accepted: accepted},
                 "$unset": {expires: 1}
             }, {multi: true}, function (err) {
                 next(err);
@@ -1670,7 +1692,7 @@ ChatController.prototype.putAcceptTopicInvitation = function (inviteeId, topicId
                 topicId: topicId,
                 active: 1
             }, {
-                "$set": {updateTime: now.getTime(), accepted: accepted},
+                "$set": {updateTime: now.getTime(), processed: 1, accepted: accepted},
                 "$unset": {expires: 1}
             }, {multi: true}, function (err) {
                 next(err, topicObj);

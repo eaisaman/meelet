@@ -867,6 +867,7 @@ $chatColor: #666;
                     span {
                         @include flex(1);
                         line-height: 3;
+                        color: #fff;
                     }
                 }
             }

@@ -481,82 +481,86 @@ UserController.prototype.postUserGroup = function (groupObj, uids, success, fail
  */
 UserController.prototype.postInvitation = function (userId, inviteeList, route, success, fail) {
     var self = this,
-        now = new Date(),
-        arr = [];
+        now = new Date();
 
     userId = new self.db.Types.ObjectId(commons.getFormString(userId));
     inviteeList = (inviteeList && JSON.parse(inviteeList)) || [];
     route = commons.getFormString(route) || self.chatConstants.chatRoute;
 
-    inviteeList.forEach(function (invitee) {
-        var inviteeId = new self.db.Types.ObjectId(invitee._id);
-
-        arr.push(function (next) {
-            async.waterfall(
-                [
-                    function (callback) {
-                        self.schema.User.find({_id: userId}, function (err, data) {
-                            if (!err) {
-                                if (!data || !data.length) {
-                                    err = self.__('Account Not Found');
-                                }
-                            }
-
-                            callback(err, data && data.length && data[0]);
-                        });
-                    },
-                    function (creatorObj, callback) {
-                        var expires = now.adjust(Date.DAY, self.chatConstants.recordTTL);
-
-                        self.schema.Invitation.update(
-                            {
-                                inviteeId: inviteeId,
-                                creatorId: userId
-                            },
-                            {
-                                $set: {
-                                    updateTime: now.getTime(),
-                                    createTime: now.getTime(),
-                                    creatorId: userId,
-                                    creatorName: creatorObj.name,
-                                    inviteeId: inviteeId,
-                                    route: route,
-                                    accepted: 0,
-                                    processed: 0,
-                                    expires: expires,
-                                    active: 1
-                                }
-                            },
-                            {upsert: true},
-                            function (err) {
-                                callback(err);
-                            }
-                        );
-                    },
-                    function (callback) {
-                        self.schema.Invitation.find({
-                            inviteeId: inviteeId,
-                            creatorId: userId
-                        }, function (err, data) {
-                            if (!err) {
-                                if (!data || !data.length) {
-                                    err = self.__("Invitation Not Created");
-                                }
-                            }
-
-                            callback(err, data && data.length && data[0]);
-                        });
-                    }
-                ], function (err, invitationObj) {
-                    next(err, invitationObj);
-                }
-            );
-        });
-    });
-
-    if (arr.length) {
+    if (inviteeList.length) {
         (!self.isDBReady && fail(new Error('DB not initialized'))) || async.waterfall([
             function (next) {
+                self.schema.User.find({_id: userId}, function (err, data) {
+                    if (!err) {
+                        if (!data || !data.length) {
+                            err = self.__('Account Not Found');
+                        }
+                    }
+
+                    next(err, data && data.length && data[0]);
+                });
+            },
+            function (creatorObj, next) {
+                var arr = [];
+
+                inviteeList.forEach(function (invitee) {
+                    var inviteeId = new self.db.Types.ObjectId(invitee._id);
+
+                    arr.push(function (next) {
+                        async.waterfall(
+                            [
+                                function (callback) {
+                                    var expires = now.adjust(Date.DAY, self.chatConstants.recordTTL);
+
+                                    self.schema.Invitation.update(
+                                        {
+                                            inviteeId: inviteeId,
+                                            creatorId: userId
+                                        },
+                                        {
+                                            $set: {
+                                                updateTime: now.getTime(),
+                                                createTime: now.getTime(),
+                                                creatorId: userId,
+                                                creatorName: creatorObj.name,
+                                                inviteeId: inviteeId,
+                                                route: route,
+                                                accepted: 0,
+                                                processed: 0,
+                                                expires: expires,
+                                                active: 1
+                                            }
+                                        },
+                                        {upsert: true},
+                                        function (err) {
+                                            callback(err);
+                                        }
+                                    );
+                                },
+                                function (callback) {
+                                    self.schema.Invitation.find({
+                                        inviteeId: inviteeId,
+                                        creatorId: userId,
+                                        accepted: 0,
+                                        processed: 0,
+                                        active: 1
+                                    }, function (err, data) {
+                                        if (!err) {
+                                            if (!data || !data.length) {
+                                                err = self.__("Invitation Not Created");
+                                            }
+                                        }
+
+                                        callback(err, data && data.length && data[0]);
+                                    });
+                                }
+                            ], function (err, invitationObj) {
+                                next(err, invitationObj);
+                            }
+                        );
+                    });
+                });
+
                 async.parallel(arr, function (err, results) {
                     next(err, results);
                 });

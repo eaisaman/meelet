@@ -174,6 +174,7 @@ requirejs(["jquery-lib", "jquery-plugins-lib", "hammer-lib", "jquery-ui-lib", "j
                 fileType: 6
             },
             pomeloState: {
+                chatCreateState: 0,
                 chatOpenState: 1,
                 chatPauseState: 2,
                 chatCloseState: 3,
