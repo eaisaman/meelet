@@ -2,9 +2,9 @@ define(
     ["angular-lib", "jquery-lib"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$parse", "$rootScope", "$http", "$timeout", "$q", "$exceptionHandler", "angularConstants", "angularEventTypes", "utilService", "appService"];
+            var inject = ["$parse", "$rootScope", "$http", "$timeout", "$q", "$interval", "$exceptionHandler", "angularConstants", "angularEventTypes", "utilService", "appService"];
 
-            appModule.directive("uiBoxShadowEditor", _.union(inject, [function ($parse, $rootScope, $http, $timeout, $q, $exceptionHandler, angularConstants, angularEventTypes, utilService, appService) {
+            appModule.directive("uiBoxShadowEditor", _.union(inject, [function ($parse, $rootScope, $http, $timeout, $q, $interval, $exceptionHandler, angularConstants, angularEventTypes, utilService, appService) {
                 'use strict';
 
                 var boundProperties = {boxShadow: "="},

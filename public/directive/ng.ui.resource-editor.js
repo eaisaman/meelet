@@ -2,9 +2,9 @@ define(
     ["angular-lib", "jquery-lib"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$rootScope", "$http", "$timeout", "$q", "$exceptionHandler", "angularEventTypes", "angularConstants", "utilService", "uiWaveVisualizerService"];
+            var inject = ["$rootScope", "$http", "$timeout", "$q", "$interval", "$exceptionHandler", "angularEventTypes", "angularConstants", "utilService", "uiWaveVisualizerService"];
 
-            appModule.directive("uiResourceEditor", _.union(inject, [function ($rootScope, $http, $timeout, $q, $exceptionHandler, angularEventTypes, angularConstants, utilService, uiWaveVisualizerService) {
+            appModule.directive("uiResourceEditor", _.union(inject, [function ($rootScope, $http, $timeout, $q, $interval, $exceptionHandler, angularEventTypes, angularConstants, utilService, uiWaveVisualizerService) {
                 'use strict';
 
                 var boundProperties = {},

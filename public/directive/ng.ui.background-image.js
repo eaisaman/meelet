@@ -2,9 +2,9 @@ define(
     ["angular-lib", "jquery-lib"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$rootScope", "$http", "$timeout", "$q", "$exceptionHandler", "angularConstants", "angularEventTypes", "appService", "utilService"];
+            var inject = ["$rootScope", "$http", "$timeout", "$q", "$interval", "$exceptionHandler", "angularConstants", "angularEventTypes", "appService", "utilService"];
 
-            appModule.directive("uiBackgroundImage", _.union(inject, [function ($rootScope, $http, $timeout, $q, $exceptionHandler, angularConstants, angularEventTypes, appService, utilService) {
+            appModule.directive("uiBackgroundImage", _.union(inject, [function ($rootScope, $http, $timeout, $q, $interval, $exceptionHandler, angularConstants, angularEventTypes, appService, utilService) {
                 'use strict';
 
                 var boundProperties = {backgroundImage: "="},

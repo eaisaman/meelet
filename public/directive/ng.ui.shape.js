@@ -1,10 +1,10 @@
 define(
     ["angular-lib", "jquery-lib", "hammer-lib"],
     function () {
-        var inject = ["$rootScope", "$http", "$timeout", "$q", "$exceptionHandler", "$parse", "$compile", "angularConstants", "angularEventTypes", "appService", "utilService", "uiService"];
+        var inject = ["$rootScope", "$http", "$timeout", "$q", "$interval", "$exceptionHandler", "$parse", "$compile", "angularConstants", "angularEventTypes", "appService", "utilService", "uiService"];
 
         return function (appModule, extension, opts) {
-            appModule.directive("uiShape", _.union(inject, [function ($rootScope, $http, $timeout, $q, $exceptionHandler, $parse, $compile, angularConstants, angularEventTypes, appService, utilService, uiService) {
+            appModule.directive("uiShape", _.union(inject, [function ($rootScope, $http, $timeout, $q, $interval, $exceptionHandler, $parse, $compile, angularConstants, angularEventTypes, appService, utilService, uiService) {
                 'use strict';
 
                 var defaults = {},

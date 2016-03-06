@@ -2,9 +2,9 @@ define(
     ["angular-lib", "jquery-lib"],
     function () {
         return function (appModule, extension, opts) {
-            var inject = ["$timeout", "$q", "$exceptionHandler", "utilService", "angularConstants"];
+            var inject = ["$timeout", "$q", "$interval", "$exceptionHandler", "utilService", "angularConstants"];
 
-            appModule.directive("uiDock", _.union(inject, [function ($timeout, $q, $exceptionHandler, utilService, angularConstants) {
+            appModule.directive("uiDock", _.union(inject, [function ($timeout, $q, $interval, $exceptionHandler, utilService, angularConstants) {
                 'use strict';
 
                 var defaults = {},
