@@ -59,7 +59,7 @@ ChatController.prototype.getJoinItems = function (userId, success, fail) {
                         chat: function (callback) {
                             async.waterfall([
                                 function (next) {
-                                    self.schema.Chat.find({creatorId: userId}).sort({createTime: -1}).exec(function (err, data) {
+                                    self.schema.Chat.find({creatorId: userId, active: 1}).sort({createTime: -1}).exec(function (err, data) {
                                         next(err, data);
                                     });
                                 },
@@ -108,7 +108,8 @@ ChatController.prototype.getJoinItems = function (userId, success, fail) {
                                             state: {$ne: self.chatConstants.chatCloseState},
                                             endTime: null,
                                             $or: [{expectEndTime: null}, {expectEndTime: {$lt: now.getTime()}}],
-                                            _id: {$in: chatIdList}
+                                            _id: {$in: chatIdList},
+                                            active: 1
                                         }, function (err, data) {
                                             if (!err) {
                                                 next(null, _.filter(invitationList, function (invitation) {
@@ -217,7 +218,7 @@ ChatController.prototype.getJoinItems = function (userId, success, fail) {
             function (itemList, wCallback) {
                 if (itemList && itemList.length) {
                     async.eachLimit(itemList, 2, function (item, cb) {
-                        self.schema.User.find({_id: item.userId}, function (err, data) {
+                        self.schema.User.find({_id: item.userId, active: 1}, function (err, data) {
                             if (!err) {
                                 if (data && data.length) {
                                     item.userName = data[0].name;
@@ -300,6 +301,7 @@ ChatController.prototype.getChatInvitation = function (invitationFilter, success
     if (invitationFilter.updateTime) {
         invitationFilter.updateTime = {$gt: invitationFilter.updateTime};
     }
+    invitationFilter.active = 1;
 
     (!self.isDBReady && fail(new Error('DB not initialized'))) || self.schema.ChatInvitation.find(invitationFilter, function (err, data) {
         if (!err) {
@@ -328,7 +330,7 @@ ChatController.prototype.getChat = function (userId, chatId, success, fail) {
 
     (!self.isDBReady && fail(new Error('DB not initialized'))) || async.waterfall([
         function (next) {
-            self.schema.User.find({_id: userId}, function (err, data) {
+            self.schema.User.find({_id: userId, active: 1}, function (err, data) {
                 var userObj;
                 if (!err) {
                     if (data && data.length) {
@@ -355,7 +357,7 @@ ChatController.prototype.getChat = function (userId, chatId, success, fail) {
             if (invitationList && invitationList.length) {
                 arr = invitationList.map(function (invitationObj) {
                     return function (callback) {
-                        self.schema.Chat.find({_id: invitationObj.chatId}, function (err, data) {
+                        self.schema.Chat.find({_id: invitationObj.chatId, active: 1}, function (err, data) {
                             callback(err, data && data.length && data[0]);
                         });
                     }
@@ -367,12 +369,16 @@ ChatController.prototype.getChat = function (userId, chatId, success, fail) {
                     if (arr) {
                         async.parallel(arr, function (err, results) {
                             //Reject null values in results
-                            wCallback(err, _.reject(results, function (result) {
+                            var resultsArr = [];
+                            results && results.forEach(function (result) {
                                 if (result) {
-                                    result = _.omit(result, "createTime", "active");
+                                    result = _.pick(result, _.without(self.schema.Chat.fields, "createTime", "active"));
+                                    result.userList = [userObj];
+                                    resultsArr.push(result);
                                 }
-                                return result;
-                            }));
+                            });
+
+                            wCallback(err, resultsArr);
                         });
                     } else {
                         wCallback(null, []);
@@ -397,7 +403,8 @@ ChatController.prototype.getChat = function (userId, chatId, success, fail) {
                         self.schema.ChatInvitation.find({
                             chatId: chatObj._id,
                             inviteeId: {$ne: userId},
-                            accepted: 1
+                            accepted: 1,
+                            active: 1
                         }, function (err, data) {
                             if (!err) {
                                 _.each(data, function (item) {
@@ -413,7 +420,7 @@ ChatController.prototype.getChat = function (userId, chatId, success, fail) {
                 },
                 function (chatList, wCallback) {
                     async.each(_.values(userMap), function (userObj, eCallback) {
-                        self.schema.User.find({_id: userObj._id}, function (err, data) {
+                        self.schema.User.find({_id: userObj._id, active: 1}, function (err, data) {
                             if (!err && data && data.length) {
                                 _.extend(userObj, _.pick(data[0], _.without(self.schema.User.fields, "password", "createTime")));
                             }
@@ -467,7 +474,8 @@ ChatController.prototype.getChatHistory = function (chatHistoryFilter, success, 
                         chat: function (callback) {
                             var chatFilter = {
                                 creatorId: chatHistoryFilter.userId,
-                                updateTime: chatHistoryFilter.chatTime
+                                updateTime: chatHistoryFilter.chatTime,
+                                active: 1
                             };
 
                             self.schema.Chat.find(chatFilter, function (err, data) {
@@ -485,7 +493,8 @@ ChatController.prototype.getChatHistory = function (chatHistoryFilter, success, 
                                         var chatInvitationFilter = {
                                             inviteeId: chatHistoryFilter.userId,
                                             accepted: 1,
-                                            chatUpdateTime: chatHistoryFilter.chatInvitationTime
+                                            chatUpdateTime: chatHistoryFilter.chatInvitationTime,
+                                            active: 1
                                         };
 
                                         self.schema.ChatInvitation.find(chatInvitationFilter, function (err, data) {
@@ -494,7 +503,7 @@ ChatController.prototype.getChatHistory = function (chatHistoryFilter, success, 
                                     },
                                     function (chatIdList, cb) {
                                         if (chatIdList && chatIdList.length) {
-                                            self.schema.Chat.find({"_id": {"$in": chatIdList}}, function (err, data) {
+                                            self.schema.Chat.find({active: 1, "_id": {"$in": chatIdList}}, function (err, data) {
                                                 cb(err, data);
                                             });
                                         } else {
@@ -521,13 +530,15 @@ ChatController.prototype.getChatHistory = function (chatHistoryFilter, success, 
                     async.each(chatList, function (chatItem, cb) {
                         var chatInvitationFilter = {
                             chatId: chatItem._id,
-                            updateTime: chatHistoryFilter.chatInvitationTime
+                            updateTime: chatHistoryFilter.chatInvitationTime,
+                            active: 1
                         };
                         var conversationFilter = {chatId: chatItem._id, updateTime: chatHistoryFilter.conversationTime};
                         var topicFilter = {chatId: chatItem._id, updateTime: chatHistoryFilter.topicTime};
                         var topicInvitationFilter = {
                             chatId: chatItem._id,
-                            updateTime: chatHistoryFilter.topicInvitationTime
+                            updateTime: chatHistoryFilter.topicInvitationTime,
+                            active: 1
                         };
 
                         //If user is not the creator of chat, he only needs to care the new joiners of chat and topic.
@@ -552,7 +563,7 @@ ChatController.prototype.getChatHistory = function (chatHistoryFilter, success, 
 
                                             if (activeInvitationList && activeInvitationList.length) {
                                                 async.each(activeInvitationList, function (chatInvitation, eCallback) {
-                                                    self.schema.User.find({_id: chatInvitation.inviteeId}, function (err, data) {
+                                                    self.schema.User.find({_id: chatInvitation.inviteeId, active: 1}, function (err, data) {
                                                         if (!err) {
                                                             var user = data[0];
                                                             chatInvitation.chatUser = _.pick(user, _.without(self.schema.User.fields, "password", "createTime"));
@@ -639,7 +650,8 @@ ChatController.prototype.getChatUser = function (chatId, chatUserTime, succcess,
 
     (!self.isDBReady && fail(new Error('DB not initialized'))) || self.schema.ChatInvitation.find({
         chatId: chatId,
-        updateTime: chatUserTime
+        updateTime: chatUserTime,
+        active: 1
     }, function (err, data) {
         if (!err) {
             var activeInvitationList = _.where(data, {active: 1}),
@@ -653,7 +665,7 @@ ChatController.prototype.getChatUser = function (chatId, chatUserTime, succcess,
 
             if (activeInvitationList && activeInvitationList.length) {
                 async.each(activeInvitationList, function (chatInvitation, eCallback) {
-                    self.schema.User.find({_id: chatInvitation.inviteeId}, function (err, data) {
+                    self.schema.User.find({_id: chatInvitation.inviteeId, active: 1}, function (err, data) {
                         if (!err) {
                             var user = data[0];
                             chatInvitation.chatUser = _.pick(user, _.without(self.schema.User.fields, "password", "createTime"));
@@ -766,7 +778,7 @@ ChatController.prototype.postChat = function (userId, deviceId, name, uids, rout
 
     (!self.isDBReady && fail(new Error('DB not initialized'))) || async.waterfall([
         function (next) {
-            self.schema.User.find({_id: userId}, function (err, data) {
+            self.schema.User.find({_id: userId, active: 1}, function (err, data) {
                 if (!err) {
                     if (!data || !data.length) {
                         err = self.__('Account Not Found');
@@ -912,7 +924,7 @@ ChatController.prototype.putStartChat = function (userId, deviceId, chatId, uids
 
             async.waterfall([
                 function (callback) {
-                    self.schema.Chat.find({_id: chatId}, function (err, data) {
+                    self.schema.Chat.find({_id: chatId, active: 1}, function (err, data) {
                         if (!err) {
                             if (!data || !data.length) {
                                 err = self.__('Chat Not Found');
@@ -922,6 +934,31 @@ ChatController.prototype.putStartChat = function (userId, deviceId, chatId, uids
                         callback(err, data && data.length && data[0]);
                     });
 
+                },
+                function (chatObj, callback) {
+                    self.schema.ChatInvitation.find({
+                        chatId: chatId,
+                        accepted: 1,
+                        active: 1
+                    }, function (err, chatInvitationList) {
+                        if (!err) {
+                            chatInvitationList && chatInvitationList.forEach(function (chatInvitation) {
+                                var index;
+                                if (!uids.every(function (uid, i) {
+                                        if (uid._id === chatInvitation.inviteeId.toString()) {
+                                            index = i;
+                                            return false;
+                                        }
+
+                                        return true;
+                                    })) {
+                                    uids.splice(index, 1);
+                                }
+                            });
+                        }
+
+                        callback(err, chatObj);
+                    });
                 },
                 function (chatObj, callback) {
                     commons.sendChatInvitation(userId.toString(),
@@ -942,37 +979,43 @@ ChatController.prototype.putStartChat = function (userId, deviceId, chatId, uids
                         arr.push(function (cb) {
                             var inviteeId = new self.db.Types.ObjectId(item._id);
 
-                            self.schema.ChatInvitation.create(
+                            self.schema.ChatInvitation.update(
                                 {
-                                    "createTime": now.getTime(),
-                                    "updateTime": now.getTime(),
-                                    "chatUpdateTime": now.getTime(),
-                                    "chatId": chatId,
-                                    "userId": userId,
-                                    "chatName": chatObj.name,
-                                    "creatorName": chatObj.creatorName,
-                                    'inviteeId': inviteeId,
-                                    'route': route,
-                                    "accepted": 0,
-                                    "processed": 0,
-                                    "expires": expires,
-                                    "active": 1
-                                }, function (err, data) {
-                                    cb(err, data)
-                                });
+                                    chatId: chatId,
+                                    userId: userId,
+                                    inviteeId: inviteeId
+                                },
+                                {
+                                    $set: {
+                                        "createTime": now.getTime(),
+                                        "updateTime": now.getTime(),
+                                        "chatUpdateTime": now.getTime(),
+                                        "chatId": chatId,
+                                        "userId": userId,
+                                        "chatName": chatObj.name,
+                                        "creatorName": chatObj.creatorName,
+                                        'inviteeId': inviteeId,
+                                        'route': route,
+                                        "accepted": 0,
+                                        "processed": 0,
+                                        "expires": expires,
+                                        "active": 1
+                                    }
+                                },
+                                {upsert: true},
+                                function (err) {
+                                    cb(err)
+                                }
+                            );
                         });
                     });
 
-                    async.parallel(arr, function (err, results) {
-                        callback(err, results);
+                    async.parallel(arr, function (err) {
+                        callback(err);
                     })
                 }
-            ], function (err, invitationList) {
-                if (!err) {
-                    invitationList = commons.arrayPick(invitationList, _.without(self.schema.ChatInvitation.fields, "createTime", "expires"));
-                }
-
-                next(err, invitationList);
+            ], function (err) {
+                next(err);
             });
         }
     ], function (err, data) {
@@ -1013,7 +1056,7 @@ ChatController.prototype.putChangeChatState = function (userId, chatId, state, r
 
     if (state === self.chatConstants.chatOpenState) {
         arr.push(function (callback) {
-            self.schema.Chat.find({_id: chatId}, function (err, data) {
+            self.schema.Chat.find({_id: chatId, active: 1}, function (err, data) {
                 if (!err) {
                     if (data && data.length) {
                         if (data[0].startTime == null) {
@@ -1162,6 +1205,34 @@ ChatController.prototype.putCloseChat = function (userId, chatId, route, success
 /**
  * @description
  *
+ * Close chat first, then mark chat as inactive for later purging.
+ *
+ * @param userId
+ * @param chatId
+ * @param route
+ * @param success
+ * @param fail
+ */
+ChatController.prototype.deleteChat = function (userId, chatId, route, success, fail) {
+    var self = this;
+
+    self.putCloseChat(userId, chatId, route, function () {
+        var now = new Date();
+        chatId = new self.db.Types.ObjectId(commons.getFormString(chatId));
+
+        self.schema.Chat.update({_id: chatId}, {state: self.chatConstants.chatDestroyState, active: 0}, function (err) {
+            if (!err) {
+                success({updateTime: now.getTime()});
+            } else {
+                fail(err);
+            }
+        });
+    }, fail);
+}
+
+/**
+ * @description
+ *
  * Create new chat invitation for invitees who rejected or did not receive previously, and send it to them.
  *
  * @param {string} userId
@@ -1187,7 +1258,7 @@ ChatController.prototype.postChatInvitation = function (userId, chatId, chatInvi
         (!self.isDBReady && fail(new Error('DB not initialized'))) || async.waterfall(
             [
                 function (next) {
-                    self.schema.User.find({_id: userId}, function (err, data) {
+                    self.schema.User.find({_id: userId, active: 1}, function (err, data) {
                         if (!err) {
                             if (!data || !data.length) {
                                 err = self.__('Account Not Found');
@@ -1200,6 +1271,7 @@ ChatController.prototype.postChatInvitation = function (userId, chatId, chatInvi
                 function (creatorObj, next) {
                     self.schema.Chat.find({
                         _id: chatId,
+                        active: 1,
                         state: {$ne: self.chatConstants.chatCloseState},
                         endTime: null,
                         $or: [{expectEndTime: null}, {expectEndTime: {$lt: now.getTime()}}]
@@ -1404,7 +1476,7 @@ ChatController.prototype.postTopic = function (chatId, deviceId, topicObj, route
 
     (!self.isDBReady && fail(new Error('DB not initialized'))) || async.waterfall([
         function (next) {
-            self.schema.Chat.find({_id: chatId}, function (err, data) {
+            self.schema.Chat.find({_id: chatId, active: 1}, function (err, data) {
                 if (!err) {
                     if (data && data.length) {
                         next(null, data[0]);
@@ -1446,7 +1518,7 @@ ChatController.prototype.postTopic = function (chatId, deviceId, topicObj, route
                 next(err, topicObj);
             });
         }, function (topicObj, next) {
-            self.schema.ChatInvitation.find({chatId: topicObj.chatId, accepted: 1}, function (err, data) {
+            self.schema.ChatInvitation.find({chatId: topicObj.chatId, accepted: 1, active: 1}, function (err, data) {
                 next(err, topicObj, _.pluck(data, "inviteeId"));
             });
         }, function (topicObj, inviteeIdList, next) {
@@ -1553,7 +1625,8 @@ ChatController.prototype.postTopicInvitation = function (topicId, uids, success,
                 self.schema.TopicInvitation.find({
                     topicId: topicObj._id,
                     accepted: 1,
-                    inviteeId: {$in: uids}
+                    inviteeId: {$in: uids},
+                    active: 1
                 }, function (err, data) {
                     if (!err) {
                         var inviteeIdList = uids;
@@ -1635,7 +1708,8 @@ ChatController.prototype.postTopicInvitation = function (topicId, uids, success,
                 if (inviteeIdList && inviteeIdList.length) {
                     self.schema.TopicInvitation.find({
                         topicId: topicId,
-                        inviteeId: {"$in": inviteeIdList}
+                        inviteeId: {"$in": inviteeIdList},
+                        active: 1
                     }, function (err, data) {
                         next(err, data);
                     });

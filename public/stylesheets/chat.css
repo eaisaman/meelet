@@ -8489,6 +8489,18 @@
   flex: 1;
   line-height: 3;
 }
+.chatContainer .contactPanel .contactDetail .contactContent > div[content='message'] .chat.pause > *, .chatContainer .contactPanel .contactDetail .contactContent > div[content='message'] .chat.stop > * {
+  -webkit-filter: blur(1px);
+  filter: blur(1px);
+}
+.chatContainer .contactPanel .contactDetail .contactContent > div[content='message'] .chat:before {
+  position: absolute;
+  width: 100%;
+  height: 1em;
+  line-height: 1;
+  top: calc(50% - 0.5em);
+  text-align: center;
+}
 .chatContainer .contactPanel .contactDetail .contactContent > div[content='friend'] {
   background-image: -webkit-linear-gradient(#7f8c8d, rgba(127, 140, 141, 0.9) 50%, #7f8c8d);
   background-image: -o-linear-gradient(#7f8c8d, rgba(127, 140, 141, 0.9) 50%, #7f8c8d);
@@ -8973,6 +8985,15 @@
   -webkit-transition: margin 1s;
   transition: margin 1s;
 }
+.chatContainer #create-discussion-control #discussionList #chatListContent .chat:before {
+  position: absolute;
+  width: 100%;
+  height: 1em;
+  line-height: 1;
+  top: calc(50% - 0.5em);
+  text-align: center;
+  color: #a6c1ce;
+}
 .chatContainer #create-discussion-control #discussionList #chatListContent .chat:after {
   position: absolute;
   right: 0;
@@ -8988,6 +9009,10 @@
 }
 .chatContainer #create-discussion-control #discussionList #chatListContent .chat.select {
   background: #cdcdcd;
+}
+.chatContainer #create-discussion-control #discussionList #chatListContent .chat.pause > *, .chatContainer #create-discussion-control #discussionList #chatListContent .chat.stop > * {
+  -webkit-filter: blur(1px);
+  filter: blur(1px);
 }
 .chatContainer #create-discussion-control #discussionList #chatListContent .chat .chatThumbnail {
   position: relative;

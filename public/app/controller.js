@@ -2254,7 +2254,7 @@ define(
                 init();
             }
 
-            function ChatController($scope, $rootScope, $timeout, $interval, $q, $log, $exceptionHandler, $compile, $parse, $templateCache, angularEventTypes, angularConstants, urlService, appService, uiService, utilService, pinyinService) {
+            function ChatController($scope, $rootScope, $timeout, $interval, $q, $log, $exceptionHandler, $compile, $interpolate, $templateCache, angularEventTypes, angularConstants, urlService, appService, uiService, utilService, pinyinService) {
                 extension && extension.attach && extension.attach($scope, {
                     "$timeout": $timeout,
                     "$interval": $interval,
@@ -2320,11 +2320,22 @@ define(
                     return utilService.getResolveDefer();
                 }
 
-                $scope.selectConversationUser = function (event) {
+                $scope.selectConversationUser = function (event, userObj) {
                     event && event.stopPropagation && event.stopPropagation();
 
+                    $scope.selectedUser = userObj;
+                    $scope.chatMode = "Single";
                     var $name = $(event.target).closest(".userName");
                     return $scope.toggleExclusiveSelect($name, null);
+                }
+
+                $scope.selectChat = function (event, chatObj) {
+                    event && event.stopPropagation && event.stopPropagation();
+
+                    $scope.selectedChat = chatObj;
+                    $scope.chatMode = "Chat";
+                    var $chat = $(event.target).closest(".chat");
+                    return $scope.toggleExclusiveSelect($chat, null);
                 }
 
                 $scope.startAddFriend = function (event) {
@@ -2440,7 +2451,7 @@ define(
                 }
 
                 $scope.acceptInvitation = function (invitationObj) {
-                    return appService.acceptInvitation(invitationObj.creatorId, $rootScope.loginUser._id, $rootScope.loginUser.route).then(
+                    return appService.acceptInvitation(invitationObj.creatorId, $rootScope.loginUser._id, window.pomeloContext.options.chatRoute).then(
                         function () {
                             removeInvitation(invitationObj);
 
@@ -2462,7 +2473,7 @@ define(
                 }
 
                 $scope.declineInvitation = function (invitationObj) {
-                    return appService.declineInvitation(invitationObj.creatorId, $rootScope.loginUser._id, $rootScope.loginUser.route).then(
+                    return appService.declineInvitation(invitationObj.creatorId, $rootScope.loginUser._id, window.pomeloContext.options.chatRoute).then(
                         function () {
                             removeInvitation(invitationObj);
 
@@ -2529,7 +2540,7 @@ define(
                 }
 
                 $scope.acceptChatInvitation = function (chatInvitationObj) {
-                    return appService.acceptChatInvitation(chatInvitationObj.chatId, $rootScope.loginUser._id, window.pomeloContext.options.deviceId, $rootScope.loginUser.route).then(
+                    return appService.acceptChatInvitation(chatInvitationObj.chatId, $rootScope.loginUser._id, window.pomeloContext.options.deviceId, window.pomeloContext.options.chatRoute).then(
                         function () {
                             removeChatInvitation(chatInvitationObj);
 
@@ -2551,7 +2562,7 @@ define(
                 }
 
                 $scope.declineChatInvitation = function (chatInvitationObj) {
-                    return appService.declineChatInvitation(chatInvitationObj.chatId, $rootScope.loginUser._id, window.pomeloContext.options.deviceId, $rootScope.loginUser.route).then(
+                    return appService.declineChatInvitation(chatInvitationObj.chatId, $rootScope.loginUser._id, window.pomeloContext.options.deviceId, window.pomeloContext.options.chatRoute).then(
                         function () {
                             removeChatInvitation(chatInvitationObj);
 
@@ -2591,7 +2602,7 @@ define(
 
                 $scope.createChat = function () {
                     if ($scope.selectedChangingChat.name) {
-                        return appService.createChat($scope.selectedChangingChat.creatorId, window.pomeloContext.options.deviceId, $scope.selectedChangingChat.name, utilService.arrayPick($scope.chatInviteeList, "_id", "loginChannel"), $rootScope.loginUser.route, $scope.selectedChangingChat.payload).then(function (chatObj) {
+                        return appService.createChat($scope.selectedChangingChat.creatorId, window.pomeloContext.options.deviceId, $scope.selectedChangingChat.name, utilService.arrayPick($scope.chatInviteeList, "_id", "loginChannel"), window.pomeloContext.options.chatRoute, $scope.selectedChangingChat.payload).then(function (chatObj) {
                             _.extend($scope.selectedChangingChat, chatObj);
                             addChat($scope.selectedChangingChat);
 
@@ -2657,100 +2668,165 @@ define(
                 }
 
                 $scope.closeChat = function () {
+                    if ($scope.selectedChangingChat && $scope.selectedChangingChat.state !== angularConstants.pomeloState.chatCloseState) {
+                        return appService.closeChat($rootScope.loginUser._id, $scope.selectedChangingChat._id, window.pomeloContext.options.chatRoute).then(function () {
+                            $scope.selectedChangingChat.state = angularConstants.pomeloState.chatCloseState;
 
+                            return $scope.showAlert(
+                                {
+                                    title: "Chat {0} is closed.".format($scope.selectedChangingChat.name),
+                                    category: 1
+                                }
+                            );
+                        }, function (err) {
+                            if (typeof err === "object") err = err.data || "Unknow error";
+                            return $scope.showAlert(
+                                {
+                                    title: err,
+                                    category: 3
+                                }
+                            );
+                        });
+                    } else {
+                        return utilService.getResolveDefer();
+                    }
                 }
 
                 $scope.deleteChat = function () {
+                    if ($scope.selectedChangingChat) {
+                        return appService.deleteChat($rootScope.loginUser._id, $scope.selectedChangingChat._id, window.pomeloContext.options.chatRoute).then(function () {
+                            var index;
+                            if (!$scope.chatList.every(function (chat, i) {
+                                    if (chat._id === $scope.selectedChangingChat._id) {
+                                        index = i;
+                                        return false;
+                                    }
 
+                                    return true;
+                                })) {
+                                $scope.chatList.splice(index, 1);
+                            }
+
+                            var chatName = $scope.selectedChangingChat.name;
+                            delete $scope.selectedChangingChat;
+                            return $scope.showAlert(
+                                {
+                                    title: "Chat {0} is deleted.".format(chatName),
+                                    category: 1
+                                }
+                            );
+                        }, function (err) {
+                            if (typeof err === "object") err = err.data || "Unknow error";
+                            return $scope.showAlert(
+                                {
+                                    title: err,
+                                    category: 3
+                                }
+                            );
+                        });
+                    } else {
+                        return utilService.getResolveDefer();
+                    }
+                }
+
+                $scope.pauseResumeChat = function () {
+                    if ($scope.selectedChangingChat && $scope.selectedChangingChat._id && $scope.selectedChangingChat.state !== angularConstants.pomeloState.chatCloseState) {
+                        if ($scope.selectedChangingChat.state == angularConstants.pomeloState.chatCreateState) {
+                            return appService.startChat($rootScope.loginUser._id, window.pomeloContext.options.deviceId, $scope.selectedChangingChat._id, $scope.selectedChangingChat.userList, window.pomeloContext.options.chatRoute).then(function () {
+                                $scope.selectedChangingChat.state = angularConstants.pomeloState.chatOpenState;
+                                return $scope.showAlert(
+                                    {
+                                        title: "Chat {0} is started.".format($scope.selectedChangingChat.name),
+                                        category: 1
+                                    }
+                                );
+                            }, function (err) {
+                                if (typeof err === "object") err = err.data || "Unknow error";
+                                return $scope.showAlert(
+                                    {
+                                        title: err,
+                                        category: 3
+                                    }
+                                );
+                            });
+                        } else if ($scope.selectedChangingChat.state == angularConstants.pomeloState.chatPauseState) {
+                            return appService.resumeChat($rootScope.loginUser._id, $scope.selectedChangingChat._id, window.pomeloContext.options.chatRoute).then(function () {
+                                $scope.selectedChangingChat.state = angularConstants.pomeloState.chatOpenState;
+                                return $scope.showAlert(
+                                    {
+                                        title: "Chat {0} is started.".format($scope.selectedChangingChat.name),
+                                        category: 1
+                                    }
+                                );
+                            }, function (err) {
+                                if (typeof err === "object") err = err.data || "Unknow error";
+                                return $scope.showAlert(
+                                    {
+                                        title: err,
+                                        category: 3
+                                    }
+                                );
+                            });
+                        } else {
+                            return appService.pauseChat($rootScope.loginUser._id, $scope.selectedChangingChat._id, window.pomeloContext.options.chatRoute).then(function () {
+                                $scope.selectedChangingChat.state = angularConstants.pomeloState.chatPauseState;
+                                return $scope.showAlert(
+                                    {
+                                        title: "Chat {0} is paused.".format($scope.selectedChangingChat.name),
+                                        category: 1
+                                    }
+                                );
+                            }, function (err) {
+                                if (typeof err === "object") err = err.data || "Unknow error";
+                                return $scope.showAlert(
+                                    {
+                                        title: err,
+                                        category: 3
+                                    }
+                                );
+                            });
+                        }
+                    } else {
+                        return utilService.getResolveDefer();
+                    }
                 }
 
                 $scope.sendMessage = function () {
+                    var message = $scope.$element.find("#chatTextArea").val();
+
+                    if (message) {
+                        if ($scope.chatMode === "Chat") {
+                            if ($scope.selectedChat) {
+                                return appService.sendChatMessage($rootScope.loginUser._id, $scope.selectedChangingChat._id, window.pomeloContext.options.chatRoute, message).then(function (conversationList) {
+                                    return addConversation(conversationList);
+                                }, function (err) {
+                                    if (typeof err === "object") err = err.data || "Unknow error";
+                                    return $scope.showAlert(
+                                        {
+                                            title: err,
+                                            category: 3
+                                        }
+                                    );
+                                });
+                            }
+                        } else if ($scope.chatMode === "Single") {
+                            if ($scope.selectedUser) {
+                                return appService.sendSingleMessage($rootScope.loginUser._id, [$scope.selectedUser], window.pomeloContext.options.chatRoute, message).then(function (conversationList) {
+                                    return addConversation(conversationList);
+                                }, function (err) {
+                                    if (typeof err === "object") err = err.data || "Unknow error";
+                                    return $scope.showAlert(
+                                        {
+                                            title: err,
+                                            category: 3
+                                        }
+                                    );
+                                });
+                            }
+                        }
+                    }
+
                     return utilService.getResolveDefer();
-                }
-
-                $scope.startChat = function () {
-                    return appService.startChat($scope.userId, $scope.chatId).then(function () {
-                        window.pomeloContext.chatId = $scope.chatId;
-
-                        $scope.chatState = angularConstants.pomeloState.chatOpenState;
-                        $scope.registerPomeloListeners();
-                        return utilService.getResolveDefer();
-                    }, function (err) {
-                        alert(err);
-                        return utilService.getRejectDefer(err);
-                    });
-                }
-
-                $scope.connectChat = function () {
-                    var chatId = $scope.chatId || angularConstants.pomeloChannel.loginChannel;
-
-                    return appService.connectChat($scope.userId, chatId).then(function () {
-                        $scope.registerPomeloListeners();
-
-                        return utilService.getResolveDefer();
-                    }, function (err) {
-                        alert(err);
-                        return utilService.getRejectDefer(err);
-                    });
-                }
-
-                $scope.pauseChat = function () {
-                    return appService.pauseChat($scope.userId, $scope.chatId).then(function () {
-                        $scope.chatState = angularConstants.pomeloState.chatPauseState;
-                        return utilService.getResolveDefer();
-                    }, function (err) {
-                        alert(err);
-                        return utilService.getRejectDefer(err);
-                    });
-                }
-
-                $scope.resumeChat = function () {
-                    return appService.resumeChat($scope.userId, $scope.chatId).then(function () {
-                        $scope.chatState = angularConstants.pomeloState.chatOpenState;
-                        return utilService.getResolveDefer();
-                    }, function (err) {
-                        alert(err);
-                        return utilService.getRejectDefer(err);
-                    });
-                }
-
-                $scope.inviteChat = function () {
-                    return appService.inviteChat($scope.userId, $scope.chatId, [$scope.inviteeId]).then(function () {
-                        return utilService.getResolveDefer();
-                    }, function (err) {
-                        alert(err);
-                        return utilService.getRejectDefer(err);
-                    });
-                }
-
-                $scope.closeChat = function () {
-                    return appService.closeChat($scope.userId, $scope.chatId).then(function () {
-                        delete window.pomeloContext.chatId;
-
-                        $scope.chatState = angularConstants.pomeloState.chatDestroyState;
-                        return utilService.getResolveDefer();
-                    }, function (err) {
-                        alert(err);
-                        return utilService.getRejectDefer(err);
-                    });
-                }
-
-                $scope.sendChatMessage = function () {
-                    return appService.sendChatMessage($scope.userId, $scope.chatId, null, $scope.message).then(function () {
-                        return utilService.getResolveDefer();
-                    }, function (err) {
-                        alert(err);
-                        return utilService.getRejectDefer(err);
-                    });
-                }
-
-                $scope.sendTopicMessage = function () {
-                    return appService.sendTopicMessage($scope.userId, $scope.chatId, $scope.topicId, $scope.message).then(function () {
-                        return utilService.getResolveDefer();
-                    }, function (err) {
-                        alert(err);
-                        return utilService.getRejectDefer(err);
-                    });
                 }
 
                 function registerPomeloListeners() {
@@ -2777,6 +2853,9 @@ define(
                         });
                     eventType = angularConstants.pomeloEventType.messageEvent;
                     $scope.pomeloListeners[eventType] = $scope.pomeloListeners[eventType] || $scope.$on(eventType, function (event, data) {
+                            var useId = data.userId, payload = data.payload;
+
+                            addConversation({message: payload.message, userId: useId});
                         });
                     eventType = angularConstants.pomeloEventType.acceptEvent;
                     $scope.pomeloListeners[eventType] = $scope.pomeloListeners[eventType] || $scope.$on(eventType, function (event, data) {
@@ -2825,16 +2904,39 @@ define(
                         });
                     eventType = angularConstants.pomeloEventType.chatPauseEvent;
                     $scope.pomeloListeners[eventType] = $scope.pomeloListeners[eventType] || $scope.$on(eventType, function (event, data) {
+                            var chatId = data.chatId;
+
+                            $scope.chatList.every(function (chatObj) {
+                                if (chatObj._id == chatId) {
+                                    chatObj.state = angularConstants.pomeloState.chatPauseState;
+                                    return false;
+                                }
+
+                                return true;
+                            })
                         });
                     eventType = angularConstants.pomeloEventType.chatResumeEvent;
                     $scope.pomeloListeners[eventType] = $scope.pomeloListeners[eventType] || $scope.$on(eventType, function (event, data) {
+                            var chatId = data.chatId;
+
+                            $scope.chatList.every(function (chatObj) {
+                                if (chatObj._id == chatId) {
+                                    chatObj.state = angularConstants.pomeloState.chatOpenState;
+                                    return false;
+                                }
+
+                                return true;
+                            })
                         });
                     eventType = angularConstants.pomeloEventType.chatMessageEvent;
                     $scope.pomeloListeners[eventType] = $scope.pomeloListeners[eventType] || $scope.$on(eventType, function (event, data) {
+                            var useId = data.userId, chatId = data.chatId, payload = data.payload;
+
+                            addConversation({message: payload.message, userId: useId, chatId:chatId});
                         });
                     eventType = angularConstants.pomeloEventType.chatAcceptEvent;
                     $scope.pomeloListeners[eventType] = $scope.pomeloListeners[eventType] || $scope.$on(eventType, function (event, data) {
-                            var useId = data.userId, chatId = data.chatId, userList;
+                            var userId = data.userId, chatId = data.chatId, userList;
 
                             $scope.chatList.every(function (chatObj) {
                                 if (chatObj._id == chatId) {
@@ -2859,7 +2961,7 @@ define(
                             })
 
                             if (userList) {
-                                appService.getUser({_id: useId}).then(
+                                appService.getUser({_id: userId}).then(
                                     function (result) {
                                         if (result && result.data.result == "OK" && result.data.resultValue.length) {
                                             userList.push(result.data.resultValue[0]);
@@ -2880,6 +2982,16 @@ define(
                         });
                     eventType = angularConstants.pomeloEventType.chatCloseEvent;
                     $scope.pomeloListeners[eventType] = $scope.pomeloListeners[eventType] || $scope.$on(eventType, function (event, data) {
+                            var chatId = data.chatId;
+
+                            $scope.chatList.every(function (chatObj) {
+                                if (chatObj._id == chatId) {
+                                    chatObj.state = angularConstants.pomeloState.chatCloseState;
+                                    return false;
+                                }
+
+                                return true;
+                            })
                         });
                     eventType = angularConstants.pomeloEventType.topicInviteEvent;
                     $scope.pomeloListeners[eventType] = $scope.pomeloListeners[eventType] || $scope.$on(eventType, function (event, data) {
@@ -2908,21 +3020,32 @@ define(
                 }
 
                 function addConversation(conversationObj) {
-                    var $items = $('#conversationItems');
+                    if (conversationObj) {
+                        var conversationList;
+                        if (toString.call(conversationObj) === '[object Array]') {
+                            if (conversationObj.length) conversationList = conversationObj;
+                        } else if (toString.call(conversationObj) === '[object Object]') {
+                            conversationList = [conversationObj];
+                        }
 
-                    var containerScope = angular.element($items).scope();
-                    if (containerScope) {
-                        var templateHtml = $templateCache.get("_chatConversation.html"),
-                            $html = $(templateHtml);
+                        var $items = $scope.$element.find('#conversationItems');
 
-                        $items.append($html);
+                        if (!$scope.chatConversationFn) {
+                            var templateHtml = $templateCache.get("_chatConversation.html");
 
-                        $compile($html)(containerScope);
+                            $scope.chatConversationFn = $interpolate(templateHtml);
+                        }
 
-                        var childScope = angular.element($html).scope();
-                        childScope.item = conversationObj;
+                        conversationList.forEach(function (item) {
+                            var $html = $($scope.chatConversationFn({
+                                item: item,
+                                isSentByMe: item.userId === $rootScope.loginUser._id
+                            }));
 
-                        containerScope.toggleSelect($html);
+                            $compile($html.appendTo($items))($scope);
+
+                            $scope.toggleSelect($html);
+                        });
                     }
                 }
 
@@ -3166,52 +3289,9 @@ define(
                             message: "ABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABC",
                             userId: $rootScope.loginUser._id
                         });
-                        addConversation({
-                            message: "ABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABC",
-                            userId: $rootScope.loginUser._id
-                        });
-                        addConversation({
-                            message: "ABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABC",
-                            userId: $rootScope.loginUser._id
-                        });
-                        addConversation({
-                            message: "ABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABC",
-                            userId: $rootScope.loginUser._id
-                        });
-                        addConversation({
-                            message: "ABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABC",
-                            userId: $rootScope.loginUser._id
-                        });
-                        addConversation({
-                            message: "ABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABC",
-                            userId: $rootScope.loginUser._id
-                        });
-                        addConversation({
-                            message: "ABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABC",
-                            userId: $rootScope.loginUser._id
-                        });
-                        addConversation({
-                            message: "ABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABC",
-                            userId: $rootScope.loginUser._id
-                        });
-                        addConversation({
-                            message: "ABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABC",
-                            userId: $rootScope.loginUser._id
-                        });
-                        addConversation({
-                            message: "ABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABC",
-                            userId: $rootScope.loginUser._id
-                        });
-                        addConversation({
-                            message: "ABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABC",
-                            userId: $rootScope.loginUser._id
-                        });
-                        addConversation({
-                            message: "ABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABC",
-                            userId: $rootScope.loginUser._id
-                        });
                     }
 
+                    $scope.pomeloState = angularConstants.pomeloState;
                     $scope.conversationList = [
                         {_id: "52591a12c763d5e45855637a", name: "安亦斐", updateTime: "", conversationArray: []},
                         {_id: "52591a12c763d5e4585563b2", name: "葛晟宏", updateTime: "", conversationArray: []},
@@ -3316,6 +3396,6 @@ define(
                 init();
             }
 
-            appModule.controller("RootController", ["$scope", "$rootScope", "$q", "$timeout", "$interval", "angularEventTypes", "angularConstants", "appService", "serviceRegistry", "urlService", "utilService", RootController]).controller("LoginController", ["$scope", "$rootScope", "$timeout", "$interval", "$q", "angularConstants", "appService", "urlService", "utilService", LoginController]).controller("FrameSketchController", ["$scope", "$rootScope", "$timeout", "$interval", "$q", "$log", "$exceptionHandler", "$compile", "$parse", "angularEventTypes", "angularConstants", "appService", "uiService", "utilService", "uiCanvasService", FrameSketchController]).controller("BookController", ["$scope", "$rootScope", "$timeout", "$interval", "$q", "$log", "$exceptionHandler", "$compile", "$parse", "$templateCache", "angularEventTypes", "angularConstants", "appService", "uiService", "uiBookService", "bookService", "utilService", "uiCanvasService", BookController]).controller("FlowController", ["$scope", "$rootScope", "$timeout", "$interval", "$q", "angularConstants", "appService", "uiService", "uiFlowService", "flowService", "urlService", "utilService", FlowController]).controller("ProjectController", ["$scope", "$rootScope", "$timeout", "$interval", "$q", "angularConstants", "appService", "uiService", "uiFlowService", "uiBookService", "urlService", "utilService", ProjectController]).controller("RepoController", ["$scope", "$rootScope", "$timeout", "$interval", "$q", "angularConstants", "appService", "urlService", "utilService", RepoController]).controller("RepoLibController", ["$scope", "$rootScope", "$timeout", "$interval", "$q", "angularConstants", "appService", "urlService", "utilService", RepoLibController]).controller("ChatController", ["$scope", "$rootScope", "$timeout", "$interval", "$q", "$log", "$exceptionHandler", "$compile", "$parse", "$templateCache", "angularEventTypes", "angularConstants", "urlService", "appService", "uiService", "utilService", "pinyinService", ChatController]);
+            appModule.controller("RootController", ["$scope", "$rootScope", "$q", "$timeout", "$interval", "angularEventTypes", "angularConstants", "appService", "serviceRegistry", "urlService", "utilService", RootController]).controller("LoginController", ["$scope", "$rootScope", "$timeout", "$interval", "$q", "angularConstants", "appService", "urlService", "utilService", LoginController]).controller("FrameSketchController", ["$scope", "$rootScope", "$timeout", "$interval", "$q", "$log", "$exceptionHandler", "$compile", "$parse", "angularEventTypes", "angularConstants", "appService", "uiService", "utilService", "uiCanvasService", FrameSketchController]).controller("BookController", ["$scope", "$rootScope", "$timeout", "$interval", "$q", "$log", "$exceptionHandler", "$compile", "$parse", "$templateCache", "angularEventTypes", "angularConstants", "appService", "uiService", "uiBookService", "bookService", "utilService", "uiCanvasService", BookController]).controller("FlowController", ["$scope", "$rootScope", "$timeout", "$interval", "$q", "angularConstants", "appService", "uiService", "uiFlowService", "flowService", "urlService", "utilService", FlowController]).controller("ProjectController", ["$scope", "$rootScope", "$timeout", "$interval", "$q", "angularConstants", "appService", "uiService", "uiFlowService", "uiBookService", "urlService", "utilService", ProjectController]).controller("RepoController", ["$scope", "$rootScope", "$timeout", "$interval", "$q", "angularConstants", "appService", "urlService", "utilService", RepoController]).controller("RepoLibController", ["$scope", "$rootScope", "$timeout", "$interval", "$q", "angularConstants", "appService", "urlService", "utilService", RepoLibController]).controller("ChatController", ["$scope", "$rootScope", "$timeout", "$interval", "$q", "$log", "$exceptionHandler", "$compile", "$interpolate", "$templateCache", "angularEventTypes", "angularConstants", "urlService", "appService", "uiService", "utilService", "pinyinService", ChatController]);
         }
     });

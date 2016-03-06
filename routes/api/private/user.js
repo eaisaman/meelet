@@ -58,6 +58,7 @@ UserController.prototype.getUser = function (userFilter, success, fail) {
             }
         }
     }
+    userFilter.active = 1;
 
     (!self.isDBReady && fail(new Error('DB not initialized'))) || async.waterfall(
         [
@@ -266,7 +267,7 @@ UserController.prototype.getGroupUser = function (userId, userUpdateTime, isFrie
             function (groupList, refreshUserList, next) {
                 if (refreshUserList && refreshUserList.length) {
                     async.each(refreshUserList, function (userItem, cb) {
-                        self.schema.User.find({_id: userItem._id}, function (err, data) {
+                        self.schema.User.find({_id: userItem._id, active: 1}, function (err, data) {
                             if (data && data.length) {
                                 _.extend(userItem, _.pick(data[0], _.without(self.schema.User.fields, "password", "createTime")));
                             }
@@ -325,6 +326,7 @@ UserController.prototype.getUserProjectDetail = function (userFilter, success, f
             }
         }
     }
+    userFilter.active = 1;
 
     (!self.isDBReady && fail(new Error('DB not initialized'))) || async.waterfall([
         function (next) {
@@ -490,7 +492,7 @@ UserController.prototype.postInvitation = function (userId, inviteeList, route, 
     if (inviteeList.length) {
         (!self.isDBReady && fail(new Error('DB not initialized'))) || async.waterfall([
             function (next) {
-                self.schema.User.find({_id: userId}, function (err, data) {
+                self.schema.User.find({_id: userId, active: 1}, function (err, data) {
                     if (!err) {
                         if (!data || !data.length) {
                             err = self.__('Account Not Found');
@@ -610,7 +612,7 @@ UserController.prototype.putAcceptInvitation = function (creatorId, inviteeId, r
 
     (!self.isDBReady && fail(new Error('DB not initialized'))) || async.waterfall([
         function (next) {
-            self.schema.User.find({_id: creatorId}, function (err, data) {
+            self.schema.User.find({_id: creatorId, active: 1}, function (err, data) {
                 if (!err) {
                     if (!data || !data.length) {
                         err = self.__('Account Not Found');
@@ -686,7 +688,7 @@ UserController.prototype.putAcceptInvitation = function (creatorId, inviteeId, r
                     function (callback) {
                         async.waterfall([
                             function (cb) {
-                                self.schema.User.find({_id: inviteeId}, function (err, data) {
+                                self.schema.User.find({_id: inviteeId, active: 1}, function (err, data) {
                                     if (!err) {
                                         if (data && data.length) {
                                             cb(null, data[0]);

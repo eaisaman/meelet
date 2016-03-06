@@ -1902,7 +1902,11 @@ define(
 
                 if (window.pomeloContext) {
                     var pomeloInstance = window.pomeloContext.pomeloInstance;
-                    pomeloInstance && pomeloInstance.disconnect();
+                    if (pomeloInstance) {
+                        pomeloInstance.disconnect();
+                        pomeloInstance = null;
+                        delete window.pomeloContext.pomeloInstance;
+                    }
 
                     return self.utilService.timeout(
                         function () {
@@ -2217,42 +2221,20 @@ define(
                 });
             }
 
-            appService.prototype.startChat = function (userId, chatId) {
+            appService.prototype.deleteChat = function (userId, chatId, route) {
                 var self = this;
 
                 return self.$http({
-                    method: 'PUT',
-                    url: (window.serverUrl || "") + '/api/public/startChat',
+                    method: 'DELETE',
+                    url: (window.serverUrl || "") + '/api/private/chat',
                     params: {
                         userId: userId,
                         chatId: chatId,
-                        deviceId: window.pomeloContext.deviceId
+                        route: route
                     }
                 }).then(function (result) {
                     if (result.data.result === "OK") {
-                        return self.utilService.callPomelo(
-                            function (pomelo, deviceId) {
-                                var defer = self.$q.defer();
-
-                                pomelo.request("chat.chatHandler.create", {
-                                    userId: userId,
-                                    chatId: chatId,
-                                    deviceId: deviceId
-                                }, function (data) {
-                                    switch (data.code) {
-                                        case 500:
-                                            defer.reject(data.msg);
-                                            break;
-                                        case 200:
-                                            defer.resolve();
-                                            break;
-                                        default:
-                                            defer.reject("Unkown return code " + data.code);
-                                    }
-                                });
-                                return defer.promise;
-                            }
-                        );
+                        return self.utilService.getResolveDefer();
                     } else {
                         return self.utilService.getRejectDefer(result.data.reason);
                     }
@@ -2261,155 +2243,20 @@ define(
                 });
             }
 
-            appService.prototype.connectChat = function (userId, chatId) {
-                var self = this;
-
-                return self.utilService.callPomelo(
-                    function (pomelo, deviceId) {
-                        var defer = self.$q.defer();
-
-                        pomelo.request("chat.chatHandler.connect", {
-                            userId: userId,
-                            chatId: chatId,
-                            deviceId: deviceId
-                        }, function (data) {
-                            switch (data.code) {
-                                case 500:
-                                    defer.reject(data.msg);
-                                    break;
-                                case 200:
-                                    defer.resolve(data.msg);
-                                    break;
-                                default:
-                                    defer.reject("Unkown return code " + data.code);
-                            }
-                        });
-                        return defer.promise;
-                    }
-                );
-            }
-
-            appService.prototype.pauseChat = function (userId, chatId) {
+            appService.prototype.closeChat = function (userId, chatId, route) {
                 var self = this;
 
                 return self.$http({
                     method: 'PUT',
-                    url: (window.serverUrl || "") + '/api/public/pauseChat',
-                    params: {
-                        userId: userId,
-                        chatId: chatId
-                    }
-                }).then(function (result) {
-                    if (result.data.result === "OK") {
-                        return self.utilService.callPomelo(
-                            function (pomelo, deviceId) {
-                                var defer = self.$q.defer();
-
-                                pomelo.request("chat.chatHandler.pause", {
-                                    userId: userId,
-                                    chatId: chatId
-                                }, function (data) {
-                                    switch (data.code) {
-                                        case 500:
-                                            defer.reject(data.msg);
-                                            break;
-                                        case 200:
-                                            defer.resolve();
-                                            break;
-                                        default:
-                                            defer.reject("Unkown return code " + data.code);
-                                    }
-                                });
-                                return defer.promise;
-                            }
-                        );
-                    } else {
-                        return self.utilService.getRejectDefer(result.data.reason);
-                    }
-                }, function (err) {
-                    return self.utilService.getRejectDefer(typeof err === "object" && err.data || err);
-                });
-            }
-
-            appService.prototype.resumeChat = function (userId, chatId) {
-                var self = this;
-
-                return self.$http({
-                    method: 'PUT',
-                    url: (window.serverUrl || "") + '/api/public/resumeChat',
-                    params: {
-                        userId: userId,
-                        chatId: chatId
-                    }
-                }).then(function (result) {
-                    if (result.data.result === "OK") {
-                        return self.utilService.callPomelo(
-                            function (pomelo, deviceId) {
-                                var defer = self.$q.defer();
-
-                                pomelo.request("chat.chatHandler.resume", {
-                                    userId: userId,
-                                    chatId: chatId
-                                }, function (data) {
-                                    switch (data.code) {
-                                        case 500:
-                                            defer.reject(data.msg);
-                                            break;
-                                        case 200:
-                                            defer.resolve();
-                                            break;
-                                        default:
-                                            defer.reject("Unkown return code " + data.code);
-                                    }
-                                });
-                                return defer.promise;
-                            }
-                        );
-                    } else {
-                        return self.utilService.getRejectDefer(result.data.reason);
-                    }
-                }, function (err) {
-                    return self.utilService.getRejectDefer(typeof err === "object" && err.data || err);
-                });
-            }
-
-            appService.prototype.inviteChat = function (userId, chatId, uids) {
-                var self = this;
-
-                return self.$http({
-                    method: 'PUT',
-                    url: (window.serverUrl || "") + '/api/public/inviteChat',
+                    url: (window.serverUrl || "") + '/api/private/closeChat',
                     params: {
                         userId: userId,
                         chatId: chatId,
-                        uids: JSON.stringify(uids),
-                        route: widnow.pomeloContext.route
+                        route: route
                     }
                 }).then(function (result) {
                     if (result.data.result === "OK") {
-                        return self.utilService.callPomelo(
-                            function (pomelo, deviceId) {
-                                var defer = self.$q.defer();
-
-                                pomelo.request("chat.chatHandler.invite", {
-                                    userId: userId,
-                                    chatId: chatId,
-                                    uids: JSON.stringify(uids)
-                                }, function (data) {
-                                    switch (data.code) {
-                                        case 500:
-                                            defer.reject(data.msg);
-                                            break;
-                                        case 200:
-                                            defer.resolve();
-                                            break;
-                                        default:
-                                            defer.reject("Unkown return code " + data.code);
-                                    }
-                                });
-                                return defer.promise;
-                            }
-                        );
+                        return self.utilService.getResolveDefer();
                     } else {
                         return self.utilService.getRejectDefer(result.data.reason);
                     }
@@ -2418,40 +2265,22 @@ define(
                 });
             }
 
-            appService.prototype.closeChat = function (userId, chatId) {
+            appService.prototype.startChat = function (userId, deviceId, chatId, chatUserList, route) {
                 var self = this;
 
                 return self.$http({
                     method: 'PUT',
-                    url: (window.serverUrl || "") + '/api/public/closeChat',
+                    url: (window.serverUrl || "") + '/api/private/startChat',
                     params: {
                         userId: userId,
-                        chatId: chatId
+                        deviceId: deviceId,
+                        chatId: chatId,
+                        uids: JSON.stringify(self.utilService.arrayPick(chatUserList, ["_id", "loginChannel"])),
+                        route: route
                     }
                 }).then(function (result) {
                     if (result.data.result === "OK") {
-                        return self.utilService.callPomelo(
-                            function (pomelo, deviceId) {
-                                var defer = self.$q.defer();
-
-                                pomelo.request("chat.chatHandler.close", {
-                                    userId: userId,
-                                    chatId: chatId
-                                }, function (data) {
-                                    switch (data.code) {
-                                        case 500:
-                                            defer.reject(data.msg);
-                                            break;
-                                        case 200:
-                                            defer.resolve();
-                                            break;
-                                        default:
-                                            defer.reject("Unkown return code " + data.code);
-                                    }
-                                });
-                                return defer.promise;
-                            }
-                        );
+                        return self.utilService.getResolveDefer();
                     } else {
                         return self.utilService.getRejectDefer(result.data.reason);
                     }
@@ -2460,62 +2289,126 @@ define(
                 });
             }
 
-            appService.prototype.sendChatMessage = function (userId, chatId, uids, payload) {
+            appService.prototype.connectChat = function (userId, deviceId, chatId, loginChannel, route) {
                 var self = this;
 
-                return self.utilService.callPomelo(
-                    function (pomelo) {
-                        var defer = self.$q.defer();
+                if (window.pomeloContext.pomeloInstance) {
+                    var defer = self.$q.defer();
+                    window.pomeloContext.pomeloInstance.request("chat.chatHandler.connect", {
+                        userId: userId,
+                        chatId: chatId,
+                        deviceId: deviceId,
+                        loginChannel: loginChannel,
+                        route: route
+                    }, function (data) {
+                        switch (data.code) {
+                            case 500:
+                                defer.reject(data.msg);
+                                break;
+                            case 200:
+                                defer.resolve(data.msg);
+                                break;
+                            default:
+                                defer.reject("Unkown return code " + data.code);
+                        }
+                    });
 
-                        pomelo.request("chat.chatHandler.push", {
-                            userId: userId,
-                            chatId: chatId,
-                            uids: uids,
-                            payload: payload
-                        }, function (data) {
-                            switch (data.code) {
-                                case 500:
-                                    defer.reject(data.msg);
-                                    break;
-                                case 200:
-                                    defer.resolve();
-                                    break;
-                                default:
-                                    defer.reject("Unkown return code " + data.code);
-                            }
-                        });
-                        return defer.promise;
-                    }
-                );
+                    return defer.promise;
+                }
+
+                return self.utilService.getRejectDefer("Chat server not connected.");
             }
 
-            appService.prototype.sendTopicMessage = function (userId, chatId, topicId, payload) {
+            appService.prototype.pauseChat = function (userId, chatId, route) {
                 var self = this;
 
-                return self.utilService.callPomelo(
-                    function (pomelo) {
-                        var defer = self.$q.defer();
-
-                        pomelo.request("chat.chatHandler.pushTopic", {
-                            userId: userId,
-                            chatId: chatId,
-                            topicId: topicId,
-                            payload: payload
-                        }, function (data) {
-                            switch (data.code) {
-                                case 500:
-                                    defer.reject(data.msg);
-                                    break;
-                                case 200:
-                                    defer.resolve();
-                                    break;
-                                default:
-                                    defer.reject("Unkown return code " + data.code);
-                            }
-                        });
-                        return defer.promise;
+                return self.$http({
+                    method: 'PUT',
+                    url: (window.serverUrl || "") + '/api/private/pauseChat',
+                    params: {
+                        userId: userId,
+                        chatId: chatId,
+                        route: route
                     }
-                );
+                }).then(function (result) {
+                    if (result.data.result === "OK") {
+                        return self.utilService.getResolveDefer();
+                    } else {
+                        return self.utilService.getRejectDefer(result.data.reason);
+                    }
+                }, function (err) {
+                    return self.utilService.getRejectDefer(typeof err === "object" && err.data || err);
+                });
+            }
+
+            appService.prototype.resumeChat = function (userId, chatId, route) {
+                var self = this;
+
+                return self.$http({
+                    method: 'PUT',
+                    url: (window.serverUrl || "") + '/api/private/resumeChat',
+                    params: {
+                        userId: userId,
+                        chatId: chatId,
+                        route: route
+                    }
+                }).then(function (result) {
+                    if (result.data.result === "OK") {
+                        return self.utilService.getResolveDefer();
+                    } else {
+                        return self.utilService.getRejectDefer(result.data.reason);
+                    }
+                }, function (err) {
+                    return self.utilService.getRejectDefer(typeof err === "object" && err.data || err);
+                });
+            }
+
+            appService.prototype.sendChatMessage = function (userId, chatId, route, message) {
+                var self = this;
+
+                return self.$http({
+                    method: 'POST',
+                    url: (window.serverUrl || "") + '/api/private/conversation',
+                    params: {
+                        userId: userId,
+                        chatId: chatId,
+                        type: self.angularConstants.pomeloConversationType.textType,
+                        message: message,
+                        route: route
+                    }
+                }).then(function (result) {
+                    if (result.data.result === "OK") {
+                        return self.utilService.getResolveDefer();
+                    } else {
+                        return self.utilService.getRejectDefer(result.data.reason);
+                    }
+                }, function (err) {
+                    return self.utilService.getRejectDefer(typeof err === "object" && err.data || err);
+                });
+            }
+
+            appService.prototype.sendSingleMessage = function (userId, userList, route, message) {
+                var self = this, uids = JSON.stringify(self.utilService.arrayPick(userList, ["_id", "loginChannel"]));
+
+                return self.$http({
+                    method: 'POST',
+                    url: (window.serverUrl || "") + '/api/private/singleConversation',
+                    params: {
+                        userId: userId,
+                        uids: uids,
+                        type: self.angularConstants.pomeloConversationType.textType,
+                        message: message,
+                        route: route
+                    }
+                }).then(function (result) {
+                    if (result.data.result === "OK") {
+                        return self.utilService.getResolveDefer();
+                    } else {
+                        return self.utilService.getRejectDefer(result.data.reason);
+                    }
+                }, function (err) {
+                    return self.utilService.getRejectDefer(typeof err === "object" && err.data || err);
+                });
             }
 
             appModule.config(['$httpProvider',

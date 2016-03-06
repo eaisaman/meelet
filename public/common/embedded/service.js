@@ -247,11 +247,46 @@ define(
             }
 
             appService.prototype.createChat = function (userId, deviceId, name, uids, route, payload) {
-                return this.cordovaPromise("createChat").apply(this, [userId, deviceId, name, uids, route, payload]);
+                return this.cordovaPromise("createChat").apply(this, [userId, deviceId, name, JSON.stringify(uids), route, JSON.stringify(payload)]);
             }
 
-            appService.prototype.sendChatInvitation = function (userId, chatId, uids, route) {
-                return this.cordovaPromise("sendChatInvitation").apply(this, [userId, chatId, uids, route]);
+            appService.prototype.sendChatInvitation = function (userId, chatId, chatInviteeList, route) {
+                var uids = JSON.stringify(self.utilService.arrayPick(chatInviteeList, ["_id", "loginChannel"]));
+                return this.cordovaPromise("sendChatInvitation").apply(this, [userId, chatId, JSON.stringify(uids), route]);
+            }
+
+            appService.prototype.deleteChat = function (userId, chatId, route) {
+                return this.cordovaPromise("deleteChat").apply(this, [userId, chatId, route]);
+            }
+
+            appService.prototype.closeChat = function (userId, chatId, route) {
+                return this.cordovaPromise("closeChat").apply(this, [userId, chatId, route]);
+            }
+
+            appService.prototype.startChat = function (userId, deviceId, chatId, chatUserList, route) {
+
+                return this.cordovaPromise("startChat").apply(this, [userId, deviceId, chatId, JSON.stringify(uids), route]);
+            }
+
+            appService.prototype.connectChat = function (userId, deviceId, chatId, route) {
+                return this.cordovaPromise("connectChat").apply(this, [userId, deviceId, chatId, route]);
+            }
+
+            appService.prototype.pauseChat = function (userId, chatId, route) {
+                return this.cordovaPromise("pauseChat").apply(this, [userId, chatId, route]);
+            }
+
+            appService.prototype.resumeChat = function (userId, chatId, route) {
+                return this.cordovaPromise("resumeChat").apply(this, [userId, chatId, route]);
+            }
+
+            appService.prototype.sendChatMessage = function (userId, chatId, route, payload) {
+                return this.cordovaPromise("sendChatMessage").apply(this, [userId, chatId, route, JSON.stringify(payload)]);
+            }
+
+            appService.prototype.sendSingleMessage = function (userId, userList, route, payload) {
+                var uids = JSON.stringify(self.utilService.arrayPick(userList, ["_id", "loginChannel"]));
+                return this.cordovaPromise("sendSingleMessage").apply(this, [userId, JSON.stringify(uids), route, JSON.stringify(payload)]);
             }
 
             window.cordova && appModule.config(["$provide", "$injector", function ($provide, $injector) {
