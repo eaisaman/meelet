@@ -1860,6 +1860,13 @@ define(
                 return this.utilService.getResolveDefer({data: {result: "OK", resultValue: uuid.v4()}});
             };
 
+            /**
+             * @description
+             *
+             * Load pomelo client js library for once.
+             *
+             * @returns {*}
+             */
             appService.prototype.loadPomelo = function () {
                 var self = this;
 
@@ -2378,7 +2385,7 @@ define(
                     }
                 }).then(function (result) {
                     if (result.data.result === "OK") {
-                        return self.utilService.getResolveDefer();
+                        return self.utilService.getResolveDefer(result.data.resultValue);
                     } else {
                         return self.utilService.getRejectDefer(result.data.reason);
                     }
@@ -2402,7 +2409,7 @@ define(
                     }
                 }).then(function (result) {
                     if (result.data.result === "OK") {
-                        return self.utilService.getResolveDefer();
+                        return self.utilService.getResolveDefer(result.data.resultValue);
                     } else {
                         return self.utilService.getRejectDefer(result.data.reason);
                     }

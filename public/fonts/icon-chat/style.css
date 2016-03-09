@@ -47,280 +47,303 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-chat-pause_flag:before {
+.icon-chat-arrow-up:before {
     content: "\e600";
 }
 
-.icon-chat-stop_flag:before {
+.icon-chat-arrow-down:before {
     content: "\e601";
-}
-
-.icon-chat-talk:before {
-    content: "\e602";
-}
-
-.icon-chat-exit:before {
-    content: "\e603";
 }
 
 .icon-chat-play:before {
-    content: "\e604";
+    content: "\e602";
 }
 
 .icon-chat-pause:before {
-    content: "\e605";
+    content: "\e603";
 }
 
 .icon-chat-qr-code:before {
-    content: "\e606";
+    content: "\e604";
 }
 
 .icon-chat-textsms:before {
-    content: "\e607";
+    content: "\e605";
 }
 
 .icon-chat-menu:before {
-    content: "\e608";
+    content: "\e606";
 }
 
 .icon-chat-close:before {
-    content: "\e609";
+    content: "\e607";
 }
 
 .icon-chat-person:before {
-    content: "\e60a";
+    content: "\e608";
 }
 
 .icon-chat-search:before {
-    content: "\e60b";
+    content: "\e609";
 }
 
 .icon-chat-portrait:before {
-    content: "\e60c";
+    content: "\e60a";
 }
 
 .icon-chat-person_add:before {
-    content: "\e60d";
+    content: "\e60b";
 }
 
 .icon-chat-group_add:before {
-    content: "\e60e";
+    content: "\e60c";
 }
 
 .icon-chat-local_florist:before {
-    content: "\e60f";
+    content: "\e60d";
 }
 
 .icon-chat-send:before {
-    content: "\e610";
+    content: "\e60e";
 }
 
 .icon-chat-circle-plus:before {
-    content: "\e611";
+    content: "\e60f";
 }
 
 .icon-chat-circle-minus:before {
-    content: "\e612";
+    content: "\e610";
 }
 
 .icon-chat-circle-check:before {
-    content: "\e613";
+    content: "\e611";
 }
 
 .icon-chat-circle-cross:before {
-    content: "\e614";
+    content: "\e612";
 }
 
 .icon-chat-trash:before {
-    content: "\e616";
+    content: "\e613";
 }
 
 .icon-chat-exit_to_app:before {
+    content: "\e614";
+}
+
+.icon-chat-pause_flag:before {
     content: "\e615";
 }
 
-.icon-chat-pause_flag-before:before {
+.icon-chat-stop_flag:before {
+    content: "\e616";
+}
+
+.icon-chat-talk:before {
+    content: "\e617";
+}
+
+.icon-chat-exit:before {
+    content: "\e618";
+}
+
+.icon-chat-arrow-up-before:before {
     content: "\e600";
 }
 
-.icon-chat-stop_flag-before:before {
+.icon-chat-arrow-down-before:before {
     content: "\e601";
-}
-
-.icon-chat-talk-before:before {
-    content: "\e602";
-}
-
-.icon-chat-exit-before:before {
-    content: "\e603";
 }
 
 .icon-chat-play-before:before {
-    content: "\e604";
-}
-
-.icon-chat-pause-before:before {
-    content: "\e605";
-}
-
-.icon-chat-qr-code-before:before {
-    content: "\e606";
-}
-
-.icon-chat-textsms-before:before {
-    content: "\e607";
-}
-
-.icon-chat-menu-before:before {
-    content: "\e608";
-}
-
-.icon-chat-close-before:before {
-    content: "\e609";
-}
-
-.icon-chat-person-before:before {
-    content: "\e60a";
-}
-
-.icon-chat-search-before:before {
-    content: "\e60b";
-}
-
-.icon-chat-portrait-before:before {
-    content: "\e60c";
-}
-
-.icon-chat-person_add-before:before {
-    content: "\e60d";
-}
-
-.icon-chat-group_add-before:before {
-    content: "\e60e";
-}
-
-.icon-chat-local_florist-before:before {
-    content: "\e60f";
-}
-
-.icon-chat-send-before:before {
-    content: "\e610";
-}
-
-.icon-chat-circle-plus-before:before {
-    content: "\e611";
-}
-
-.icon-chat-circle-minus-before:before {
-    content: "\e612";
-}
-
-.icon-chat-circle-check-before:before {
-    content: "\e613";
-}
-
-.icon-chat-circle-cross-before:before {
-    content: "\e614";
-}
-
-.icon-chat-trash-before:before {
-    content: "\e616";
-}
-
-.icon-chat-exit_to_app-before:before {
-    content: "\e615";
-}
-
-.icon-chat-pause_flag-after:after {
-    content: "\e600";
-}
-
-.icon-chat-stop_flag-after:after {
-    content: "\e601";
-}
-
-.icon-chat-talk-after:after {
     content: "\e602";
 }
 
-.icon-chat-exit-after:after {
+.icon-chat-pause-before:before {
     content: "\e603";
 }
 
-.icon-chat-play-after:after {
+.icon-chat-qr-code-before:before {
     content: "\e604";
 }
 
-.icon-chat-pause-after:after {
+.icon-chat-textsms-before:before {
     content: "\e605";
 }
 
-.icon-chat-qr-code-after:after {
+.icon-chat-menu-before:before {
     content: "\e606";
 }
 
-.icon-chat-textsms-after:after {
+.icon-chat-close-before:before {
     content: "\e607";
 }
 
-.icon-chat-menu-after:after {
+.icon-chat-person-before:before {
     content: "\e608";
 }
 
-.icon-chat-close-after:after {
+.icon-chat-search-before:before {
     content: "\e609";
 }
 
-.icon-chat-person-after:after {
+.icon-chat-portrait-before:before {
     content: "\e60a";
 }
 
-.icon-chat-search-after:after {
+.icon-chat-person_add-before:before {
     content: "\e60b";
 }
 
-.icon-chat-portrait-after:after {
+.icon-chat-group_add-before:before {
     content: "\e60c";
 }
 
-.icon-chat-person_add-after:after {
+.icon-chat-local_florist-before:before {
     content: "\e60d";
 }
 
-.icon-chat-group_add-after:after {
+.icon-chat-send-before:before {
     content: "\e60e";
 }
 
-.icon-chat-local_florist-after:after {
+.icon-chat-circle-plus-before:before {
     content: "\e60f";
 }
 
-.icon-chat-send-after:after {
+.icon-chat-circle-minus-before:before {
     content: "\e610";
 }
 
-.icon-chat-circle-plus-after:after {
+.icon-chat-circle-check-before:before {
     content: "\e611";
 }
 
-.icon-chat-circle-minus-after:after {
+.icon-chat-circle-cross-before:before {
     content: "\e612";
 }
 
-.icon-chat-circle-check-after:after {
+.icon-chat-trash-before:before {
     content: "\e613";
 }
 
-.icon-chat-circle-cross-after:after {
+.icon-chat-exit_to_app-before:before {
     content: "\e614";
 }
 
-.icon-chat-trash-after:after {
-    content: "\e616";
-}
-
-.icon-chat-exit_to_app-after:after {
+.icon-chat-pause_flag-before:before {
     content: "\e615";
 }
 
+.icon-chat-stop_flag-before:before {
+    content: "\e616";
+}
+
+.icon-chat-talk-before:before {
+    content: "\e617";
+}
+
+.icon-chat-exit-before:before {
+    content: "\e618";
+}
+
+.icon-chat-arrow-up-after:after {
+    content: "\e600";
+}
+
+.icon-chat-arrow-down-after:after {
+    content: "\e601";
+}
+
+.icon-chat-play-after:after {
+    content: "\e602";
+}
+
+.icon-chat-pause-after:after {
+    content: "\e603";
+}
+
+.icon-chat-qr-code-after:after {
+    content: "\e604";
+}
+
+.icon-chat-textsms-after:after {
+    content: "\e605";
+}
+
+.icon-chat-menu-after:after {
+    content: "\e606";
+}
+
+.icon-chat-close-after:after {
+    content: "\e607";
+}
+
+.icon-chat-person-after:after {
+    content: "\e608";
+}
+
+.icon-chat-search-after:after {
+    content: "\e609";
+}
+
+.icon-chat-portrait-after:after {
+    content: "\e60a";
+}
+
+.icon-chat-person_add-after:after {
+    content: "\e60b";
+}
+
+.icon-chat-group_add-after:after {
+    content: "\e60c";
+}
+
+.icon-chat-local_florist-after:after {
+    content: "\e60d";
+}
+
+.icon-chat-send-after:after {
+    content: "\e60e";
+}
+
+.icon-chat-circle-plus-after:after {
+    content: "\e60f";
+}
+
+.icon-chat-circle-minus-after:after {
+    content: "\e610";
+}
+
+.icon-chat-circle-check-after:after {
+    content: "\e611";
+}
+
+.icon-chat-circle-cross-after:after {
+    content: "\e612";
+}
+
+.icon-chat-trash-after:after {
+    content: "\e613";
+}
+
+.icon-chat-exit_to_app-after:after {
+    content: "\e614";
+}
+
+.icon-chat-pause_flag-after:after {
+    content: "\e615";
+}
+
+.icon-chat-stop_flag-after:after {
+    content: "\e616";
+}
+
+.icon-chat-talk-after:after {
+    content: "\e617";
+}
+
+.icon-chat-exit-after:after {
+    content: "\e618";
+}
 

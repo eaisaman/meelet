@@ -2313,29 +2313,49 @@ define(
                 $scope.selectFriend = function (event) {
                     event && event.stopPropagation && event.stopPropagation();
 
-                    var $name = $(event.target).closest(".userName");
-                    $(".contactContent .userName").not($name).removeClass("select");
-                    $name.toggleClass("select");
+                    $scope.$element.find(".contactContent > [content=message]").find(".userName.select, .chat.select").removeClass("select");
 
-                    return utilService.getResolveDefer();
+                    $(event.currentTarget).find(".userName.select").removeClass("select");
+
+                    var $name = $(event.target).closest(".userName"),
+                        userObj = $name.data("userObj");
+                    $scope.selectedChat = null;
+                    $scope.selectedUser = userObj;
+                    $scope.chatMode = "Single";
+
+                    if (!_.findWhere($scope.conversationList, {_id: userObj._id})) {
+                        $scope.conversationList.push({
+                            _id: userObj._id,
+                            name: userObj.name,
+                            updateTime: 0,
+                            conversationArray: []
+                        })
+                    }
+
+                    return $scope.toggleSelect($name, null, true);
                 }
 
                 $scope.selectConversationUser = function (event, userObj) {
                     event && event.stopPropagation && event.stopPropagation();
 
+                    $scope.$element.find(".contactContent > [content=friend]").find(".userName.select").removeClass("select");
+                    $scope.selectedChat = null;
                     $scope.selectedUser = userObj;
                     $scope.chatMode = "Single";
                     var $name = $(event.target).closest(".userName");
-                    return $scope.toggleExclusiveSelect($name, null);
+                    return $scope.toggleExclusiveSelect($name, null, true);
                 }
 
                 $scope.selectChat = function (event, chatObj) {
                     event && event.stopPropagation && event.stopPropagation();
 
+                    $scope.$element.find(".contactContent > [content=friend]").find(".userName.select").removeClass("select");
+                    $scope.selectedUser = null;
                     $scope.selectedChat = chatObj;
                     $scope.chatMode = "Chat";
                     var $chat = $(event.target).closest(".chat");
-                    return $scope.toggleExclusiveSelect($chat, null);
+                    $chat.siblings().removeClass("select");
+                    return $scope.toggleExclusiveSelect($chat, null, true);
                 }
 
                 $scope.startAddFriend = function (event) {
@@ -2356,6 +2376,14 @@ define(
                     var scope = angular.element($(".chatContainer > .modalWindowContainer > .md-modal")).scope();
 
                     return scope.toggleModalWindow();
+                }
+
+                $scope.expandChatHeader = function (event) {
+                    event && event.stopPropagation && event.stopPropagation();
+
+                    return $scope.toggleSelect(event.target, null).then(function (target) {
+                        return $scope.toggleSelect($scope.$element.find("#chatHeader .chatDetailsContainer"), null, target.classList.contains("select"));
+                    });
                 }
 
                 $scope.doSearch = function () {
@@ -2644,7 +2672,9 @@ define(
 
                 $scope.sendChatInvitation = function () {
                     if ($scope.chatInviteeList.length) {
-                        return appService.sendChatInvitation($rootScope.loginUser._id, $scope.selectedChangingChat._id, $scope.chatInviteeList).then(
+                        return appService.sendChatInvitation($rootScope.loginUser._id, $scope.selectedChangingChat._id, _.reject($scope.chatInviteeList, function (chatInvitee) {
+                            return chatInvitee._id == $rootScope.loginUser._id;
+                        })).then(
                             function () {
                                 return $scope.showAlert(
                                     {
@@ -2797,7 +2827,7 @@ define(
                     if (message) {
                         if ($scope.chatMode === "Chat") {
                             if ($scope.selectedChat) {
-                                return appService.sendChatMessage($rootScope.loginUser._id, $scope.selectedChangingChat._id, window.pomeloContext.options.chatRoute, message).then(function (conversationList) {
+                                return appService.sendChatMessage($rootScope.loginUser._id, $scope.selectedChat._id, window.pomeloContext.options.chatRoute, message).then(function (conversationList) {
                                     return addConversation(conversationList);
                                 }, function (err) {
                                     if (typeof err === "object") err = err.data || "Unknow error";
@@ -2932,7 +2962,7 @@ define(
                     $scope.pomeloListeners[eventType] = $scope.pomeloListeners[eventType] || $scope.$on(eventType, function (event, data) {
                             var useId = data.userId, chatId = data.chatId, payload = data.payload;
 
-                            addConversation({message: payload.message, userId: useId, chatId:chatId});
+                            addConversation({message: payload.message, userId: useId, chatId: chatId});
                         });
                     eventType = angularConstants.pomeloEventType.chatAcceptEvent;
                     $scope.pomeloListeners[eventType] = $scope.pomeloListeners[eventType] || $scope.$on(eventType, function (event, data) {
@@ -3028,7 +3058,7 @@ define(
                             conversationList = [conversationObj];
                         }
 
-                        var $items = $scope.$element.find('#conversationItems');
+                        var $items = $scope.$element.find('.conversationItems.select');
 
                         if (!$scope.chatConversationFn) {
                             var templateHtml = $templateCache.get("_chatConversation.html");
@@ -3036,10 +3066,66 @@ define(
                             $scope.chatConversationFn = $interpolate(templateHtml);
                         }
 
-                        conversationList.forEach(function (item) {
+                        conversationList.forEach(function (conversationItem) {
+                            var arr;
+                            if (conversationItem.chatId) {
+                                var chatId = conversationItem.chatId,
+                                    chatObj;
+                                $scope.chatList.every(function (chat) {
+                                    if (chat._id === chatId) {
+                                        chatObj = chat;
+                                        return false;
+                                    }
+
+                                    return true;
+                                });
+
+                                chatObj.updateTime = conversationItem.updateTime;
+                                arr = (chatObj.conversationList = chatObj.conversationList || []);
+                            } else {
+                                var userId = conversationItem.senderId;
+                                if (userId === $rootScope.loginUser._id) {
+                                    userId = conversationItem.receiverId;
+                                }
+
+                                var friendObj,
+                                    friendList = Array.prototype.concat.apply(Array.prototype, _.values($scope.friendList));
+
+                                friendList.every(function (friend) {
+                                    if (friend._id === userId) {
+                                        friendObj = friend;
+                                        return false;
+                                    }
+
+                                    return true;
+                                });
+
+                                if (friendObj) {
+                                    if ($scope.conversationList.every(function (conversationUser) {
+                                            if (conversationUser._id === userId) {
+                                                conversationUser.updateTime = conversationItem.updateTime;
+                                                arr = conversationUser.conversationArray;
+                                                return false;
+                                            }
+
+                                            return true;
+                                        })) {
+                                        arr = [];
+                                        $scope.conversationList.push({
+                                            _id: userId,
+                                            name: friendObj.name,
+                                            updateTime: conversationObj.updateTime,
+                                            conversationArray: arr
+                                        })
+                                    }
+                                }
+                            }
+
+                            arr && arr.push(conversationItem);
+
                             var $html = $($scope.chatConversationFn({
-                                item: item,
-                                isSentByMe: item.userId === $rootScope.loginUser._id
+                                item: conversationItem,
+                                isSentByMe: conversationItem.userId === $rootScope.loginUser._id
                             }));
 
                             $compile($html.appendTo($items))($scope);
@@ -3285,6 +3371,27 @@ define(
                             clickBar: 1
                         });
 
+                        var $chatDetailsContainer = $scope.$element.find('#chatHeader .chatDetailsContainer');
+
+                        $chatDetailsContainer.sly({
+                            smart: 1,
+                            horizontal: true,
+                            activateOn: 'click',
+                            mouseDragging: 1,
+                            touchDragging: 1,
+                            releaseSwing: 1,
+                            scrollBar: null,
+                            scrollBy: 10,
+                            pagesBar: null,
+                            activatePageOn: 'click',
+                            speed: 300,
+                            elasticBounds: 1,
+                            easing: 'easeOutExpo',
+                            dragHandle: 1,
+                            dynamicHandle: 1,
+                            clickBar: 1
+                        });
+
                         addConversation({
                             message: "ABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABC",
                             userId: $rootScope.loginUser._id
@@ -3293,12 +3400,8 @@ define(
 
                     $scope.pomeloState = angularConstants.pomeloState;
                     $scope.conversationList = [
-                        {_id: "52591a12c763d5e45855637a", name: "安亦斐", updateTime: "", conversationArray: []},
-                        {_id: "52591a12c763d5e4585563b2", name: "葛晟宏", updateTime: "", conversationArray: []},
-                        {_id: "52591a12c763d5e4585563a4", name: "钱辛杰", updateTime: "", conversationArray: []},
-                        {_id: "52591a12c763d5e458556398", name: "Victor", updateTime: "", conversationArray: []},
-                        {_id: "52591a12c763d5e4585563b4", name: "毕嘉利", updateTime: "", conversationArray: []}
                     ];
+                    //{_id: "52591a12c763d5e45855637a", name: "安亦斐", updateTime: "", conversationArray: []}
 
                     $scope.chatList = [];//The list of chats the login user join in
                     $scope.inviteeList = [];//The list of people the login user will send invitation to
@@ -3340,8 +3443,8 @@ define(
                         var pomeloInstance = window.pomeloContext.pomeloInstance;
                         if (pomeloInstance) {
                             pomeloInstance.disconnect();
-                            window.pomeloContext.pomeloInstance = null;
                         }
+                        delete window.pomeloContext;
                     });
 
                     return $q.all([

@@ -410,7 +410,9 @@ $chatColor: #666;
             position: relative;
             float: left;
             height: 3em;
+            width: 100%;
             line-height: 3;
+            overflow: visible;
 
             &:after {
                 position: absolute;
@@ -421,6 +423,155 @@ $chatColor: #666;
                 height: 2px;
 
                 @include background(linear-gradient(left, $underlineLinearGradient));
+            }
+
+            .userName {
+                pointer-events: none;
+                opacity: 0;
+                position: absolute;
+                width: 100%;
+                width: 100%;
+                height: 100%;
+                color: white;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 1;
+                text-overflow: ellipsis;
+                text-align: center;
+                overflow: hidden;
+
+                &.show {
+                    pointer-events: auto;
+                    opacity: 1;
+                }
+            }
+
+            .chatName {
+                pointer-events: none;
+                opacity: 0;
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                color: white;
+
+                &.show {
+                    pointer-events: auto;
+                    opacity: 1;
+                }
+
+                .chatTitle {
+                    position: relative;
+                    float: left;
+                    left: 50%;
+                    @include transform(translateX(-50%));
+
+                    span {
+                        position: relative;
+                        float: left;
+                    }
+
+                    .chatHeaderButton {
+                        position: relative;
+                        float: left;
+                        width: 3em;
+                        height: 3em;
+
+                        &:before {
+                            position: absolute;
+                            width: 100%;
+                            height: 100%;
+                            text-align: center;
+                            line-height: 3;
+                        }
+                    }
+                }
+
+                .chatDetailsContainer {
+                    position: absolute;
+                    width: 100%;
+                    height: 180px;
+                    top: calc(100% - 180px);
+                    opacity: 0;
+                    pointer-events: none;
+                    background: #666;
+
+                    @include transition(opacity 0.3s);
+
+                    &.select {
+                        pointer-events: auto;
+                        opacity: 1;
+                        z-index: 1;
+                    }
+
+                    .chatDetails {
+                        position: relative;
+                        float: left;
+                        width: 300%;
+                        height: 100%;
+                        background: transparent;
+
+                        .chatUser {
+                            position: relative;
+                            float: left;
+                            width: 150px;
+                            height: 150px;
+                            margin: 15px;
+                            overflow: visible;
+
+                            @include display-flex;
+                            @include flex-direction(column);
+                            @include justify-content(center);
+                            @include align-items(center);
+
+                            .itemAvatar {
+                                position: relative;
+                                float: left;
+                                width: 60px;
+                                height: 60px;
+                                border-radius: 100%;
+                                color: $blue1;
+                                background: $lightColor;
+
+                                &:before {
+                                    position: relative;
+                                    left: calc(50% - 0.5em);
+                                    top: calc(50% - 0.5em);
+                                    width: 1em;
+                                    height: 1em;
+                                    line-height: 1;
+                                    font-size: 32px;
+                                    color: white;
+                                }
+
+                                img {
+                                    width: calc(100% - 10px);
+                                    height: calc(100% - 10px);
+                                    margin: 5px;
+                                }
+                            }
+
+                            .itemName {
+                                width: 100%;
+                                @include flex(1);
+
+                                span {
+                                    position: relative;
+                                    float: left;
+                                    width: 100%;
+                                    line-height: 3;
+                                    height: 3em;
+                                    color: $blue1;
+                                    display: -webkit-box;
+                                    -webkit-box-orient: vertical;
+                                    -webkit-line-clamp: 1;
+                                    text-overflow: ellipsis;
+                                    text-align: center;
+                                    overflow: hidden;
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
 
@@ -439,12 +590,18 @@ $chatColor: #666;
                 @include flex(1);
                 width: 100%;
 
-                #conversationItems {
-                    position: relative;
-                    float: left;
+                .conversationItems {
+                    opacity: 0;
+                    pointer-events: none;
+                    position: absolute;
                     width: 100%;
                     height: 300%;
                     background: transparent;
+
+                    &.select {
+                        opacity: 1;
+                        pointer-events: auto;
+                    }
                 }
 
                 .chatConversation {
