@@ -191,8 +191,8 @@ requirejs(["jquery-lib", "jquery-plugins-lib", "hammer-lib", "jquery-ui-lib", "j
             pomeloChannel: {
                 loginChannel: "SIRIUS_LOGIN_CHANNEL"
             },
-            pomeloInitTimeout: 500,
-            pomeloPushTimeout: 800,
+            pomeloInitTimeout: 3000,
+            pomeloPushTimeout: 3000,
             anchorAttr: "widget-anchor",
             repoWidgetClass: "ui-widget",
             stateGroupEventPattern: "State Change Event of State Group {0}",

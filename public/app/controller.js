@@ -3444,7 +3444,8 @@ define(
                         if (pomeloInstance) {
                             pomeloInstance.disconnect();
                         }
-                        delete window.pomeloContext;
+                        delete window.pomeloContext.pomeloInstance;
+                        delete window.pomeloContext.userId;
                     });
 
                     return $q.all([

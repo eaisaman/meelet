@@ -1938,7 +1938,7 @@ define(
                         self.angularConstants.pomeloInitTimeout
                     );
                 } else {
-                    return self.getRejectDefer("Pomelo context not initialized.");
+                    return self.utilService.getRejectDefer("Pomelo context not initialized.");
                 }
             }
 

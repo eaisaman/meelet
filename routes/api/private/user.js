@@ -241,7 +241,7 @@ UserController.prototype.getGroupUser = function (userId, userUpdateTime, isFrie
                         next(err, data);
                     });
                 } else {
-                    next(null);
+                    next(null, null);
                 }
             },
             function (xrefList, next) {
