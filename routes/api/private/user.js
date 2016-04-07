@@ -226,12 +226,59 @@ UserController.prototype.getGroupUser = function (userId, userUpdateTime, isFrie
     (!self.isDBReady && fail(new Error('DB not initialized'))) || async.waterfall(
         [
             function (next) {
-                var xrefFilter = {userId: userId, active: 1};
-                if (isFriend != null) xrefFilter.groupType = isFriend ? 1 : 0;
+                var xrefFilter = {userId: userId, active: 1, groupType: 0};
 
-                self.schema.UserGroupXref.find(xrefFilter, function (err, data) {
-                    next(err, data);
-                });
+                if (isFriend != null) {
+                    if (isFriend) {
+                        //Find user's friends
+                        self.schema.User.find({_id:userId}, function(err, data) {
+                            var xrefList = null;
+                            if (!err) {
+                                if (data && data.length) {
+                                    xrefList = [{groupId:data[0].friendGroupId}];
+                                } else {
+                                    err = new Error(self.__('Account Not Found'));
+                                }
+                            }
+
+                            next(err, xrefList);
+                        });
+                    } else {
+                        //Find members belonging to groups other than friend group
+                        self.schema.UserGroupXref.find(xrefFilter, function (err, data) {
+                            next(err, data);
+                        });
+                    }
+                } else {
+                    //Find user's friends and members belonging to groups other than friend group
+                    async.parallel({
+                        friendXref: function(pCallback) {
+                            self.schema.User.find({_id:userId}, function(err, data) {
+                                var xrefList = null;
+                                if (!err) {
+                                    if (data && data.length) {
+                                        xrefList = [{groupId:data[0].friendGroupId}];
+                                    } else {
+                                        err = new Error(self.__('Account Not Found'));
+                                    }
+                                }
+
+                                pCallback(err, xrefList);
+                            });
+                        },
+                        memberXref: function(pCallback) {
+                            self.schema.UserGroupXref.find(xrefFilter, function (err, data) {
+                                pCallback(err, data);
+                            });
+                        }
+                    }, function(err, results) {
+                        if (!err) {
+                            next(null, Array.prototype.concat.call(Array.prototype, results.friendXref, results.memberXref||[]));
+                        } else {
+                            next(err);
+                        }
+                    });
+                }
             },
             function (xrefList, next) {
                 if (xrefList && xrefList.length) {

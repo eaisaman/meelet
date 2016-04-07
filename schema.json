@@ -40,7 +40,8 @@
     "forbidden": "boolean",
     "lock": "boolean",
     "lockUser": "ObjectId",
-    "thumbnail": "string"
+    "thumbnail": "string",
+    "active": "number"
   },
   "RepoLibrary": {
     "updateTime": "number",

@@ -132,7 +132,7 @@ UserController.prototype.postUser = function (request, userObj, success, fail) {
                 async.waterfall(
                     [
                         function (cb) {
-                            mkdirp(userContentPath, 0755, function (err) {
+                            mkdirp(userContentPath, 0x0755, function (err) {
                                 cb(err);
                             });
                         },
@@ -147,7 +147,7 @@ UserController.prototype.postUser = function (request, userObj, success, fail) {
                             ].forEach(function (folder) {
                                 arr.push(
                                     function (pCallback) {
-                                        mkdirp(folder, 0755, function (err) {
+                                        mkdirp(folder, 0x0755, function (err) {
                                             pCallback(err);
                                         });
                                     }

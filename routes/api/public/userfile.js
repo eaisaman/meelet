@@ -116,7 +116,7 @@ UserFileController.prototype.postSketch = function (projectId, sketchWorks, stag
         async.waterfall(
             [
                 function (next) {
-                    fs.mkdir(projectPath, 0777, function (fsError) {
+                    fs.mkdir(projectPath, 0o777, function (fsError) {
                         if (!fsError || fsError.code === "EEXIST") {
                             var filePath = path.join(projectPath, "meelet.json"),
                                 out = fs.createWriteStream(filePath);
@@ -295,7 +295,7 @@ UserFileController.prototype.postSketch = function (projectId, sketchWorks, stag
             }
         );
     } else {
-        fail("Empty project id");
+        fail("Empty Project Id");
     }
 };
 
@@ -319,7 +319,7 @@ UserFileController.prototype.postFlow = function (projectId, flowWorks, request,
         async.waterfall(
             [
                 function (next) {
-                    fs.mkdir(projectPath, 0777, function (fsError) {
+                    fs.mkdir(projectPath, 0o777, function (fsError) {
                         if (!fsError || fsError.code === "EEXIST") {
                             var filePath = path.join(projectPath, "flow.json"),
                                 out = fs.createWriteStream(filePath);
@@ -348,7 +348,7 @@ UserFileController.prototype.postFlow = function (projectId, flowWorks, request,
             }
         );
     } else {
-        fail("Empty project id");
+        fail("Empty Project Id");
     }
 };
 
@@ -377,7 +377,7 @@ UserFileController.prototype.postConfigurableArtifact = function (projectId, wid
             }
         })
     } else {
-        fail("Empty project id");
+        fail("Empty Project Id");
     }
 };
 
@@ -402,7 +402,7 @@ UserFileController.prototype.deleteConfigurableArtifact = function (projectId, w
             }
         })
     } else {
-        fail("Empty project id");
+        fail("Empty Project Id");
     }
 };
 
@@ -429,7 +429,7 @@ UserFileController.prototype.putConfigurableArtifact = function (projectId, widg
             }
         })
     } else {
-        fail("Empty project id");
+        fail("Empty Project Id");
     }
 };
 
@@ -449,7 +449,7 @@ UserFileController.prototype.getSketch = function (projectId, success, fail) {
     if (projectId) {
         var projectPath = path.join(self.config.userFile.sketchFolder, projectId);
 
-        fs.mkdir(projectPath, 0777, function (fsError) {
+        fs.mkdir(projectPath, 0o777, function (fsError) {
             if (!fsError || fsError.code === "EEXIST") {
                 var filePath = path.join(projectPath, "meelet.json"),
                     rs = fs.createReadStream(filePath),
@@ -472,7 +472,7 @@ UserFileController.prototype.getSketch = function (projectId, success, fail) {
             }
         });
     } else {
-        fail("Empty project id");
+        fail("Empty Project Id");
     }
 };
 
@@ -491,7 +491,7 @@ UserFileController.prototype.getFlow = function (projectId, success, fail) {
     if (projectId) {
         var projectPath = path.join(self.config.userFile.sketchFolder, projectId);
 
-        fs.mkdir(projectPath, 0777, function (fsError) {
+        fs.mkdir(projectPath, 0o777, function (fsError) {
             if (!fsError || fsError.code === "EEXIST") {
                 var filePath = path.join(projectPath, "flow.json"),
                     rs = fs.createReadStream(filePath),
@@ -514,7 +514,7 @@ UserFileController.prototype.getFlow = function (projectId, success, fail) {
             }
         });
     } else {
-        fail("Empty project id");
+        fail("Empty Project Id");
     }
 };
 
@@ -535,7 +535,7 @@ UserFileController.prototype.getExternal = function (projectId, success, fail) {
 
         async.waterfall([
             function (next) {
-                fs.mkdir(projectPath, 0777, function (fsError) {
+                fs.mkdir(projectPath, 0o777, function (fsError) {
                     if (!fsError || fsError.code === "EEXIST") {
                         next(null);
                     } else {
@@ -572,58 +572,7 @@ UserFileController.prototype.getExternal = function (projectId, success, fail) {
             err && fail(err) || success(result);
         });
     } else {
-        fail("Empty project id");
-    }
-};
-
-/**
- * @description
- *
- * Download project's image by chunks.
- *
- * @param request
- * @param projectId
- * @param flowChunkNumber
- * @param flowFilename
- * @param success
- * @param fail
- */
-UserFileController.prototype.getProjectImageChunk = function (request, projectId, flowChunkNumber, flowFilename, success, fail) {
-    var self = this;
-
-    if (projectId) {
-        var projectPath = path.join(self.config.userFile.sketchFolder, projectId);
-
-        async.waterfall(
-            [
-                function (next) {
-                    fs.mkdir(projectPath, 0777, function (fsError) {
-                        if (!fsError || fsError.code === "EEXIST") {
-                            next(null);
-                        } else {
-                            next(fsError);
-                        }
-                    });
-                },
-                function (next) {
-                    fs.mkdir(path.join(projectPath, "images"), 0777, function (fsError) {
-                        if (!fsError || fsError.code === "EEXIST") {
-                            next(null);
-                        } else {
-                            next(fsError);
-                        }
-                    });
-                }
-            ], function (err) {
-                if (!err) {
-                    fail("", {statusCode: 404});
-                } else {
-                    fail(err, {statusCode: 500});
-                }
-            }
-        );
-    } else {
-        fail(new Error(self.__('Empty Project Id')), {statusCode: 500});
+        fail("Empty Project Id");
     }
 };
 
@@ -658,7 +607,7 @@ UserFileController.prototype.postProjectImageChunk = function (request, projectI
         async.waterfall(
             [
                 function (next) {
-                    fs.mkdir(projectPath, 0777, function (fsError) {
+                    fs.mkdir(projectPath, 0o777, function (fsError) {
                         if (!fsError || fsError.code === "EEXIST") {
                             next(null);
                         } else {
@@ -667,7 +616,7 @@ UserFileController.prototype.postProjectImageChunk = function (request, projectI
                     });
                 },
                 function (next) {
-                    fs.mkdir(path.join(projectPath, "images"), 0777, function (fsError) {
+                    fs.mkdir(path.join(projectPath, "images"), 0o777, function (fsError) {
                         if (!fsError || fsError.code === "EEXIST") {
                             next(null);
                         } else {
@@ -805,7 +754,7 @@ UserFileController.prototype.postProjectImageChunk = function (request, projectI
             }
         );
     } else {
-        fail("Empty project id", {statusCode: 500});
+        fail("Empty Project Id", {statusCode: 500});
     }
 };
 
@@ -831,14 +780,14 @@ UserFileController.prototype.deleteProjectImage = function (projectId, fileName,
                 success();
         })
     } else {
-        fail("Empty project id or file name", {statusCode: 500});
+        fail("Empty Project Id or file name", {statusCode: 500});
     }
 };
 
 /**
  * @description
  *
- * Get json contetn listing project's resources.
+ * Get json content listing project's resources.
  *
  * @param projectId
  * @param success
@@ -854,7 +803,7 @@ UserFileController.prototype.getProjectResource = function (projectId, success, 
         async.waterfall(
             [
                 function (next) {
-                    fs.mkdir(resourceAllPath, 0777, function (fsError) {
+                    fs.mkdir(resourceAllPath, 0o777, function (fsError) {
                         if (!fsError || fsError.code === "EEXIST") {
                             next(null);
                         } else {
@@ -923,7 +872,7 @@ UserFileController.prototype.getProjectResource = function (projectId, success, 
             }
         );
     } else {
-        fail("Empty project id", {statusCode: 500});
+        fail("Empty Project Id", {statusCode: 500});
     }
 };
 
@@ -964,7 +913,7 @@ UserFileController.prototype.postProjectResourceChunk = function (request, proje
         async.waterfall(
             [
                 function (next) {
-                    fs.mkdir(projectPath, 0777, function (fsError) {
+                    fs.mkdir(projectPath, 0o777, function (fsError) {
                         if (!fsError || fsError.code === "EEXIST") {
                             next(null);
                         } else {
@@ -973,7 +922,7 @@ UserFileController.prototype.postProjectResourceChunk = function (request, proje
                     });
                 },
                 function (next) {
-                    fs.mkdir(resourceAllPath, 0777, function (fsError) {
+                    fs.mkdir(resourceAllPath, 0o777, function (fsError) {
                         if (!fsError || fsError.code === "EEXIST") {
                             next(null);
                         } else {
@@ -982,7 +931,7 @@ UserFileController.prototype.postProjectResourceChunk = function (request, proje
                     });
                 },
                 function (next) {
-                    fs.mkdir(resourcePath, 0777, function (fsError) {
+                    fs.mkdir(resourcePath, 0o777, function (fsError) {
                         if (!fsError || fsError.code === "EEXIST") {
                             next(null);
                         } else {
@@ -1301,7 +1250,7 @@ UserFileController.prototype.postProjectResourceChunk = function (request, proje
             }
         );
     } else {
-        fail("Empty project id or resource type", {statusCode: 500});
+        fail("Empty Project Id or resource type", {statusCode: 500});
     }
 };
 
@@ -1447,7 +1396,7 @@ UserFileController.prototype.deleteProjectResource = function (projectId, resour
             fail("Cannot find path.", {statusCode: 500});
         }
     } else {
-        fail("Empty project id or resource type or file name", {statusCode: 500});
+        fail("Empty Project Id or resource type or file name", {statusCode: 500});
     }
 };
 
@@ -1605,7 +1554,7 @@ UserFileController.prototype.postProject = function (project, sketchWorks, succe
                     stagingProjectPath = path.join(self.config.userFile.stagingFolder, projectId);
 
                 async.each([projectPath, stagingProjectPath], function (pathItem, callback) {
-                    fs.mkdir(pathItem, 0777, function (fsError) {
+                    fs.mkdir(pathItem, 0o777, function (fsError) {
                         if (!fsError || fsError.code === "EEXIST") {
                             callback(null);
                         } else {
@@ -2025,15 +1974,15 @@ UserFileController.prototype.deleteProjectArtifactXref = function (xrefFilter, s
         xrefFilter.libraryId = new self.db.Types.ObjectId(xrefFilter.libraryId);
     }
     //Cannot delete record with refCount greater than 0
-    xrefFilter["artifactList.refCount"] = {$not: {$gt: 0}}
+    xrefFilter["artifactList.refCount"] = {$not: {$gt: 0}};
 
-        (!self.isDBReady && fail(new Error('DB not initialized'))) || self.schema.ProjectArtifactXref.remove(xrefFilter, function (err, data) {
-            if (!err) {
-                success(data);
-            } else {
-                fail(err);
-            }
-        });
+    (!self.isDBReady && fail(new Error('DB not initialized'))) || self.schema.ProjectArtifactXref.remove(xrefFilter, function (err, data) {
+        if (!err) {
+            success(data);
+        } else {
+            fail(err);
+        }
+    });
 };
 
 /**
@@ -2107,7 +2056,7 @@ UserFileController.prototype.postConvertToHtml = function (userId, projectId, su
             }
         );
     } else {
-        fail("Empty project id");
+        fail("Empty Project Id");
     }
 };
 
@@ -2237,7 +2186,7 @@ UserFileController.prototype.getProjectFile = function (projectId, request, succ
             fail("Project does not exist");
         }
     } else {
-        fail("Empty project id");
+        fail(self._("Empty Project Id"));
     }
 };
 

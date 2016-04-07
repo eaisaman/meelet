@@ -1663,7 +1663,7 @@ ChatController.prototype.postTopicInvitation = function (topicId, uids, success,
                         async.waterfall(
                             [
                                 function (cb) {
-                                    commons.sendTopicInvitation(chatId, topicObj._id, topicObj.creatorId, inviteeId, cb);
+                                    commons.sendTopicInvitation(topicObj.chatId, topicObj._id, topicObj.creatorId, inviteeId, cb);
                                 },
                                 function (cb) {
                                     self.schema.TopicInvitation.update(

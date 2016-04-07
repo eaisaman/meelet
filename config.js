@@ -101,6 +101,7 @@ Configuration.prototype.postConfigure = function () {
         self.on(self.ResourceReadyEvent, function (resource) {
             //instance is of type mongodb.db
             if (resource.name == self.settings["applicationDb"] && resource.instance) {
+                
                 self.em.emit(self.ApplicationDBConnectedEvent, resource);
             }
         });
