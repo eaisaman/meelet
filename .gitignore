@@ -4,6 +4,8 @@ Common
 .idea
 .sass-cache
 results.txt
+*-compiled.js
+*-compiled.js.map
 project
 tmp
 download
