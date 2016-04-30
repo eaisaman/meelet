@@ -1001,7 +1001,7 @@ ChatController.prototype.putCloseChat = function (userId, chatId, deviceId, rout
             function (callback) {
                 self.putChangeTopicState(chatId.toString(), JSON.stringify({
                         state: {$ne: self.chatConstants.topicCloseState}
-                    }), deviceId, self.chatConstants.topicCloseState, route, function () {
+                    }), deviceId, "", self.chatConstants.topicCloseState, route, function () {
                         callback(null);
                     }, function (err) {
                         callback(err);
@@ -1790,12 +1790,11 @@ ChatController.prototype.putResumeTopic = function (chatId, topicFilter, deviceI
  * @param chatId
  * @param topicId
  * @param deviceId
- * @param creatorEncryption
  * @param route
  * @param success
  * @param fail
  */
-ChatController.prototype.putCloseTopic = function (chatId, topicId, deviceId, creatorEncryption, route, success, fail) {
+ChatController.prototype.putCloseTopic = function (chatId, topicId, deviceId, route, success, fail) {
     var self = this,
         now = new Date();
 
@@ -1804,7 +1803,7 @@ ChatController.prototype.putCloseTopic = function (chatId, topicId, deviceId, cr
     (!self.isDBReady && fail(new Error('DB not initialized'))) || async.parallel(
         [
             function (callback) {
-                self.putChangeTopicState(chatId, JSON.stringify({_id: topicId}), deviceId, creatorEncryption, self.chatConstants.topicCloseState, route, function () {
+                self.putChangeTopicState(chatId, JSON.stringify({_id: topicId}), deviceId, "", self.chatConstants.topicCloseState, route, function () {
                         callback(null);
                     }, function (err) {
                         callback(err);
