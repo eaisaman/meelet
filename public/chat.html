@@ -3,15 +3,13 @@
 
 <script type="text/ng-template" id="_chatConversation.html">
     <div class="chatConversation fs-x-small" ui-data="animo('select', 'tinRightIn')">
-        <div ng-class="{'sender':!isSentByMe}"
-             class="conversationAvatar fs-x-huge-before icon-chat-before icon-chat-portrait-before">
-            <img ng-src="api/public/avatar/userId={{item.userId}}"
+        <div class="conversationAvatar fs-x-huge-before icon-chat-before icon-chat-portrait-before">
+            <img ng-src="api/public/avatar/userId={{item.senderId}}"
                  onerror="this.src='images/image-chat/transparent.png'">
         </div>
 
-        <div ng-class="{'sender':isSentByMe}"
-             class="conversationAvatar fs-x-huge-before icon-chat-before icon-chat-portrait-before">
-            <img ng-src="api/public/avatar/userId={{item.userId}}"
+        <div class="conversationAvatar fs-x-huge-before icon-chat-before icon-chat-portrait-before">
+            <img ng-src="api/public/avatar/userId={{item.senderId}}"
                  onerror="this.src='images/image-chat/transparent.png'">
         </div>
 
@@ -126,10 +124,10 @@
                 </div>
                 <div id="chatContent" class="col-as-12 no-padding">
                     <div id="chatListContainer">
-                        <div class="conversationItems" ng-repeat="chat in chatList"
+                        <div class="conversationItems chatConversationItems" ng-attr-chat="{{chat._id}}" ng-repeat="chat in chatList"
                              ng-class="{'select':selectedChat && selectedChat._id === chat._id}">
                         </div>
-                        <div class="conversationItems" ng-repeat="conversationUser in conversationList"
+                        <div class="conversationItems" ng-attr-user="{{conversationUser._id}}" ng-repeat="conversationUser in conversationList"
                              ng-class="{'select':selectedUser && selectedUser._id === conversationUser._id}"></div>
                     </div>
                     <div id="chatInputContainer">

@@ -2885,7 +2885,7 @@ define(
                     $scope.pomeloListeners[eventType] = $scope.pomeloListeners[eventType] || $scope.$on(eventType, function (event, data) {
                             var useId = data.userId, payload = data.payload;
 
-                            addConversation({message: payload.message, userId: useId});
+                            addConversation({message: payload.message, senderId: useId});
                         });
                     eventType = angularConstants.pomeloEventType.acceptEvent;
                     $scope.pomeloListeners[eventType] = $scope.pomeloListeners[eventType] || $scope.$on(eventType, function (event, data) {
@@ -2962,7 +2962,7 @@ define(
                     $scope.pomeloListeners[eventType] = $scope.pomeloListeners[eventType] || $scope.$on(eventType, function (event, data) {
                             var useId = data.userId, chatId = data.chatId, payload = data.payload;
 
-                            addConversation({message: payload.message, userId: useId, chatId: chatId});
+                            addConversation({message: payload.message, senderId: useId, chatId: chatId});
                         });
                     eventType = angularConstants.pomeloEventType.chatAcceptEvent;
                     $scope.pomeloListeners[eventType] = $scope.pomeloListeners[eventType] || $scope.$on(eventType, function (event, data) {
@@ -3058,7 +3058,7 @@ define(
                             conversationList = [conversationObj];
                         }
 
-                        var $items = $scope.$element.find('.conversationItems.select');
+                        var itemsSelector = null, $htmlArr = [];
 
                         if (!$scope.chatConversationFn) {
                             var templateHtml = $templateCache.get("_chatConversation.html");
@@ -3082,6 +3082,9 @@ define(
 
                                 chatObj.updateTime = conversationItem.updateTime;
                                 arr = (chatObj.conversationList = chatObj.conversationList || []);
+                                if (!itemsSelector) {
+                                    itemsSelector = '.conversationItems[chat=' + chatId + ']';
+                                }
                             } else {
                                 var userId = conversationItem.senderId;
                                 if (userId === $rootScope.loginUser._id) {
@@ -3101,6 +3104,10 @@ define(
                                 });
 
                                 if (friendObj) {
+                                    if (!itemsSelector) {
+                                        itemsSelector = '.conversationItems[user=' + userId + ']';
+                                    }
+
                                     if ($scope.conversationList.every(function (conversationUser) {
                                             if (conversationUser._id === userId) {
                                                 conversationUser.updateTime = conversationItem.updateTime;
@@ -3124,14 +3131,27 @@ define(
                             arr && arr.push(conversationItem);
 
                             var $html = $($scope.chatConversationFn({
-                                item: conversationItem,
-                                isSentByMe: conversationItem.userId === $rootScope.loginUser._id
+                                item: conversationItem
                             }));
-
-                            $compile($html.appendTo($items))($scope);
-
-                            $scope.toggleSelect($html);
+                            $html.addClass(conversationItem.senderId === $rootScope.loginUser._id ? "sender" : "receiver");
+                            $htmlArr.push($html);
                         });
+
+                        $htmlArr.length && utilService.whilst(
+                            function () {
+                                return !$scope.$element.find(itemsSelector).length;
+                            }, function (err) {
+                                var $items = $scope.$element.find(itemsSelector);
+                                $htmlArr.forEach(function($html) {
+                                    $compile($html.appendTo($items))($scope);
+
+                                    $scope.toggleSelect($html);
+                                });
+                            },
+                            angularConstants.checkInterval,
+                            "ChatController.addConversation",
+                            angularConstants.renderTimeout
+                        );
                     }
                 }
 
@@ -3394,7 +3414,7 @@ define(
 
                         addConversation({
                             message: "ABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABC",
-                            userId: $rootScope.loginUser._id
+                            senderId: $rootScope.loginUser._id
                         });
                     }
 

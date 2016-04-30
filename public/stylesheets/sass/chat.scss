@@ -614,6 +614,52 @@ $chatColor: #666;
                     @include justify-content(center);
                     @include align-items(center);
 
+                    &.receiver {
+                        .conversationAvatar {
+                            &:nth-of-type(1) {
+                                opacity: 1;
+
+                                &:before {
+                                    position: absolute;
+                                    width: 1em;
+                                    height: 1em;
+                                    left: calc(50% - 0.5em);
+                                    top: calc(50% - 0.5em);
+                                    color: white;
+                                }
+
+                                img {
+                                    width: calc(100% - 10px);
+                                    height: calc(100% - 10px);
+                                    margin: 5px;
+                                }
+                            }
+                        }
+                    }
+
+                    &.sender {
+                        .conversationAvatar {
+                            &:nth-of-type(2) {
+                                opacity: 1;
+
+                                &:before {
+                                    position: absolute;
+                                    width: 1em;
+                                    height: 1em;
+                                    left: calc(50% - 0.5em);
+                                    top: calc(50% - 0.5em);
+                                    color: white;
+                                }
+
+                                img {
+                                    width: calc(100% - 10px);
+                                    height: calc(100% - 10px);
+                                    margin: 5px;
+                                }
+                            }
+                        }
+                    }
+
                     p {
                         @include flex(1);
                         word-wrap: break-word;
@@ -636,25 +682,6 @@ $chatColor: #666;
 
                         &:nth-of-type(2) {
                             float: right;
-                        }
-
-                        &.sender {
-                            opacity: 1;
-
-                            &:before {
-                                position: absolute;
-                                width: 1em;
-                                height: 1em;
-                                left: calc(50% - 0.5em);
-                                top: calc(50% - 0.5em);
-                                color: white;
-                            }
-
-                            img {
-                                width: calc(100% - 10px);
-                                height: calc(100% - 10px);
-                                margin: 5px;
-                            }
                         }
                     }
 

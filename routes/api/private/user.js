@@ -4,6 +4,7 @@ var fs = require('fs');
 var rimraf = require('rimraf');
 var mime = require('mime');
 var _ = require('underscore');
+_.string = require('underscore.string');
 var gm = require('gm');
 var commons = require('../../../commons');
 
@@ -157,6 +158,7 @@ UserController.prototype.getUserGroup = function (groupFilter, sort, userId, upd
             }
         }
     }
+    groupFilter.active = 1;
     sort = (sort && JSON.parse(sort)) || {};
 
     (!self.isDBReady && fail(new Error('DB not initialized'))) || async.waterfall(
@@ -178,7 +180,7 @@ UserController.prototype.getUserGroup = function (groupFilter, sort, userId, upd
                         }
                     });
                 } else {
-                    next(null);
+                    next(null, null);
                 }
             },
             function (xrefList, next) {
@@ -194,7 +196,7 @@ UserController.prototype.getUserGroup = function (groupFilter, sort, userId, upd
                         }
                     });
                 } else {
-                    next(null);
+                    next(null, null);
                 }
             }
         ], function (err, data) {
@@ -231,7 +233,7 @@ UserController.prototype.getGroupUser = function (userId, userUpdateTime, isFrie
                 if (isFriend != null) {
                     if (isFriend) {
                         //Find user's friends
-                        self.schema.User.find({_id:userId}, function(err, data) {
+                        self.schema.User.find({_id: userId, active: 1}, function (err, data) {
                             var xrefList = null;
                             if (!err) {
                                 if (data && data.length) {
@@ -253,7 +255,7 @@ UserController.prototype.getGroupUser = function (userId, userUpdateTime, isFrie
                     //Find user's friends and members belonging to groups other than friend group
                     async.parallel({
                         friendXref: function(pCallback) {
-                            self.schema.User.find({_id:userId}, function(err, data) {
+                            self.schema.User.find({_id: userId, active: 1}, function (err, data) {
                                 var xrefList = null;
                                 if (!err) {
                                     if (data && data.length) {
@@ -325,7 +327,7 @@ UserController.prototype.getGroupUser = function (userId, userUpdateTime, isFrie
                         next(err, groupList);
                     });
                 } else {
-                    next(null);
+                    next(null, null);
                 }
             }
         ],
@@ -655,7 +657,7 @@ UserController.prototype.putAcceptInvitation = function (creatorId, inviteeId, r
     creatorId = new self.db.Types.ObjectId(commons.getFormString(creatorId));
     inviteeId = new self.db.Types.ObjectId(commons.getFormString(inviteeId));
     route = commons.getFormString(route) || self.chatConstants.chatRoute;
-    accepted = commons.getFormInt(accepted);
+    accepted = commons.getFormInt(accepted, 1);
 
     (!self.isDBReady && fail(new Error('DB not initialized'))) || async.waterfall([
         function (next) {
@@ -923,7 +925,7 @@ UserController.prototype.putUser = function (userFilter, userObj, success, fail)
                         self.schema.UserGroupXref.update({
                             userId: {"$in": userIdList},
                             active: 1
-                        }, {updateTime: now.getTime()}, {multi: true}, function (err) {
+                        }, {$set: {updateTime: now.getTime()}}, {multi: true}, function (err) {
                             cb(err);
                         });
                     },

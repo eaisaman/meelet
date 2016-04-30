@@ -122,19 +122,21 @@ ChatCommons.prototype.createChat = function (userId, deviceId, chatId, route, ne
                 next(data.msg);
                 break;
             case 200:
-                next(null);
+                next(null, data.msg);
                 break;
         }
     });
 }
 
-ChatCommons.prototype.sendChatInvitation = function (userId, uids, chatId, route, next) {
+ChatCommons.prototype.sendChatInvitation = function (userId, uids, chatId, deviceId, enc, route, next) {
     var self = this;
 
     (!self.isServerReady && next(new Error('Server connection not established'))) || self.pomelo.request("chat.chatHandler.inviteChat", {
         userId: userId,
         uids: uids,
         chatId: chatId,
+        deviceId: deviceId,
+        enc: enc || "",
         route: route
     }, function (data) {
         switch (data.code) {
@@ -148,13 +150,14 @@ ChatCommons.prototype.sendChatInvitation = function (userId, uids, chatId, route
     });
 }
 
-ChatCommons.prototype.acceptChatInvitation = function (userId, deviceId, chatId, route, next) {
+ChatCommons.prototype.acceptChatInvitation = function (userId, deviceId, chatId, enc, route, next) {
     var self = this;
 
     (!self.isServerReady && next(new Error('Server connection not established'))) || self.pomelo.request("chat.chatHandler.acceptChatInvitation", {
         chatId: chatId,
         userId: userId,
         deviceId: deviceId,
+        enc: enc || "",
         route: route
     }, function (data) {
         switch (data.code) {
@@ -168,7 +171,26 @@ ChatCommons.prototype.acceptChatInvitation = function (userId, deviceId, chatId,
     });
 }
 
-ChatCommons.prototype.createTopic = function (userId, deviceId, chatId, topicId, route, next) {
+ChatCommons.prototype.disconnectChatUser = function (userId, chatId, route, next) {
+    var self = this;
+
+    (!self.isServerReady && next(new Error('Server connection not established'))) || self.pomelo.request("chat.chatHandler.disconnectChat", {
+        chatId: [chatId],
+        userId: userId,
+        route: route
+    }, function (data) {
+        switch (data.code) {
+            case 500:
+                next(data.msg);
+                break;
+            case 200:
+                next(null);
+                break;
+        }
+    });
+}
+
+ChatCommons.prototype.createTopic = function (userId, deviceId, chatId, topicId, enc, route, next) {
     var self = this;
 
     (!self.isServerReady && next(new Error('Server connection not established'))) || self.pomelo.request("chat.chatHandler.createTopic", {
@@ -176,6 +198,7 @@ ChatCommons.prototype.createTopic = function (userId, deviceId, chatId, topicId,
         chatId: chatId,
         topicId: topicId,
         deviceId: deviceId,
+        enc: enc || "",
         route: route
     }, function (data) {
         switch (data.code) {
@@ -189,13 +212,15 @@ ChatCommons.prototype.createTopic = function (userId, deviceId, chatId, topicId,
     });
 }
 
-ChatCommons.prototype.sendTopicInvitation = function (userId, chatId, topicId, route, next) {
+ChatCommons.prototype.sendTopicInvitation = function (userId, chatId, topicId, deviceId, enc, route, next) {
     var self = this;
 
     (!self.isServerReady && next(new Error('Server connection not established'))) || self.pomelo.request("chat.chatHandler.inviteTopic", {
         userId: userId,
         chatId: chatId,
         topicId: topicId,
+        deviceId: deviceId,
+        enc: enc,
         route: route
     }, function (data) {
         switch (data.code) {
@@ -209,7 +234,7 @@ ChatCommons.prototype.sendTopicInvitation = function (userId, chatId, topicId, r
     });
 }
 
-ChatCommons.prototype.notifyChatState = function (userId, chatId, route, state, next) {
+ChatCommons.prototype.notifyChatState = function (userId, chatId, route, state, deviceId, enc, next) {
     var self = this,
         requestRoute;
 
@@ -233,6 +258,8 @@ ChatCommons.prototype.notifyChatState = function (userId, chatId, route, state, 
     (!self.isServerReady && next(new Error('Server connection not established'))) || self.pomelo.request(requestRoute, {
         userId: userId,
         chatId: chatId,
+        deviceId: deviceId,
+        enc: enc || "",
         route: route
     }, function (data) {
         switch (data.code) {
@@ -246,7 +273,7 @@ ChatCommons.prototype.notifyChatState = function (userId, chatId, route, state, 
     });
 }
 
-ChatCommons.prototype.notifyTopicState = function (userId, chatId, topicId, route, state, next) {
+ChatCommons.prototype.notifyTopicState = function (userId, chatId, topicId, route, state, deviceId, enc, next) {
     var self = this,
         requestRoute;
 
@@ -271,6 +298,8 @@ ChatCommons.prototype.notifyTopicState = function (userId, chatId, topicId, rout
         userId: userId,
         chatId: chatId,
         topicId: topicId,
+        deviceId: deviceId,
+        enc: enc || "",
         route: route
     }, function (data) {
         switch (data.code) {

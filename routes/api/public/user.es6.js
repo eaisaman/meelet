@@ -118,27 +118,6 @@ class UserController {
                         }
                     });
                 }.bind(self, userObj));
-
-                yield new Promise(function (userObj, resolve, reject) {
-                    self.schema.UserGroupXref.create(
-                        {
-                            groupUpdateTime: now.getTime(),
-                            updateTime: now.getTime(),
-                            createTime: now.getTime(),
-                            userId: userObj._id,
-                            groupId: userObj.friendGroupId,
-                            groupType: 1,
-                            active: 1
-                        },
-                        function (err) {
-                            if (err) {
-                                reject(err);
-                            } else {
-                                resolve();
-                            }
-                        }
-                    );
-                }.bind(self, userObj));
             });
 
             //File operations

@@ -8775,6 +8775,38 @@
   -webkit-align-items: center;
   align-items: center;
 }
+.chatContainer #chatPanel #chatContent #chatListContainer .chatConversation.receiver .conversationAvatar:nth-of-type(1) {
+  opacity: 1;
+}
+.chatContainer #chatPanel #chatContent #chatListContainer .chatConversation.receiver .conversationAvatar:nth-of-type(1):before {
+  position: absolute;
+  width: 1em;
+  height: 1em;
+  left: calc(50% - 0.5em);
+  top: calc(50% - 0.5em);
+  color: white;
+}
+.chatContainer #chatPanel #chatContent #chatListContainer .chatConversation.receiver .conversationAvatar:nth-of-type(1) img {
+  width: calc(100% - 10px);
+  height: calc(100% - 10px);
+  margin: 5px;
+}
+.chatContainer #chatPanel #chatContent #chatListContainer .chatConversation.sender .conversationAvatar:nth-of-type(2) {
+  opacity: 1;
+}
+.chatContainer #chatPanel #chatContent #chatListContainer .chatConversation.sender .conversationAvatar:nth-of-type(2):before {
+  position: absolute;
+  width: 1em;
+  height: 1em;
+  left: calc(50% - 0.5em);
+  top: calc(50% - 0.5em);
+  color: white;
+}
+.chatContainer #chatPanel #chatContent #chatListContainer .chatConversation.sender .conversationAvatar:nth-of-type(2) img {
+  width: calc(100% - 10px);
+  height: calc(100% - 10px);
+  margin: 5px;
+}
 .chatContainer #chatPanel #chatContent #chatListContainer .chatConversation p {
   -webkit-flex: 1;
   flex: 1;
@@ -8795,22 +8827,6 @@
 }
 .chatContainer #chatPanel #chatContent #chatListContainer .chatConversation .conversationAvatar:nth-of-type(2) {
   float: right;
-}
-.chatContainer #chatPanel #chatContent #chatListContainer .chatConversation .conversationAvatar.sender {
-  opacity: 1;
-}
-.chatContainer #chatPanel #chatContent #chatListContainer .chatConversation .conversationAvatar.sender:before {
-  position: absolute;
-  width: 1em;
-  height: 1em;
-  left: calc(50% - 0.5em);
-  top: calc(50% - 0.5em);
-  color: white;
-}
-.chatContainer #chatPanel #chatContent #chatListContainer .chatConversation .conversationAvatar.sender img {
-  width: calc(100% - 10px);
-  height: calc(100% - 10px);
-  margin: 5px;
 }
 .chatContainer #chatPanel #chatContent #chatInputContainer {
   position: relative;

@@ -1,7 +1,25 @@
-//TODO Fill test description
 /**
  * @description
  *
+ * Test communication between host user and his friends. The host user can chat or perform single
+ * chat with friend, create a topic and receive messages on the topic from users.
+ *
+ * 1. Clean all left testing data, if the user record with the same fake user or group record
+ *    with the same fake group name exists in db
+ * 2. Create host user & user group created by the user, along with guest user records
+ * 3. Connect to messaging server
+ * 4. Make friends. Guest user receives invitation and accept.
+ * 5. Single Chat with friend.
+ * 6. Chat with friends. Guest user receives chat invitation and accept.
+ * 7. Pause chat. Chat member users can receive signal.
+ * 8. Resume chat. Chat member users can receive signal.
+ * 9. Start a topic. Guest user receives topic invitation and accept.
+ * 10. Send message to topic. Host user create a topic and receive messages on the topic from chat member users.
+ * 11. Pause topic. Chat member users can receive signal.
+ * 12. Resume topic. Chat member users can receive signal.
+ * 13. End topic. Chat member users can receive signal.
+ * 14. End chat. Chat member users can receive signal.
+ * 15. Leave the messaging server.
  *
  */
 var chathost = process.env['mocha.chathost'];
@@ -11,10 +29,8 @@ var chattransport = process.env['mocha.chattransport'];
 var pomeloclient;
 
 if (chattransport === "websocket") {
-    global.WebSocket = require('ws');
     pomeloclient = require('../pomelo-websocket-client').pomelo;
 } else if (chattransport === "sio") {
-    global.io = require("socket.io-client");
     pomeloclient = require('../pomeloclient').pomelo;
 }
 
@@ -36,11 +52,12 @@ var mongouser = process.env['mocha.mongouser'];
 var mongopwd = process.env['mocha.mongopwd'];
 var mongodb = process.env['mocha.mongodb'];
 
+var testTime = new Date().getTime();
 var userHostObj = {
     deviceId: uuid.v4(),
     plainPassword: "*",
     loginName: "13341692882",
-    name: "王强",
+    name: "Mocha Fake User1",
     sex: "M",
     tel: "13341692882",
     emitter: new (require('events').EventEmitter)(),
@@ -50,7 +67,7 @@ var userGuest1Obj = {
     deviceId: uuid.v4(),
     plainPassword: "*",
     loginName: "13988781193",
-    name: "张思懿",
+    name: "Mocha Fake User2",
     sex: "M",
     tel: "13988781193",
     emitter: new (require('events').EventEmitter)(),
@@ -60,7 +77,7 @@ var userGuest2Obj = {
     deviceId: uuid.v4(),
     plainPassword: "*",
     loginName: "18041552870",
-    name: "赵明扬",
+    name: "Mocha Fake User3",
     sex: "M",
     tel: "18041552870",
     emitter: new (require('events').EventEmitter)(),
@@ -170,48 +187,109 @@ describe('Chat', function () {
         MongoClient.connect(dbUrl, function (err, db) {
             should.not.exist(err);
 
-            async.parallel([
-                function (next) {
-                    db.collection('User').remove({}, {multi: true}, next);
-                },
-                function (next) {
-                    db.collection('UserGroup').remove({}, {multi: true}, next);
-                },
-                function (next) {
-                    db.collection('UserGroupXref').remove({}, {multi: true}, next);
-                },
-                function (next) {
-                    db.collection('Chat').remove({}, {multi: true}, next);
-                },
-                function (next) {
-                    db.collection('Topic').remove({}, {multi: true}, next);
-                },
-                function (next) {
-                    db.collection('Conversation').remove({}, {multi: true}, next);
-                },
-                function (next) {
-                    db.collection('Invitation').remove({}, {multi: true}, next);
-                },
-                function (next) {
-                    db.collection('ChatInvitation').remove({}, {multi: true}, next);
-                },
-                function (next) {
-                    db.collection('TopicInvitation').remove({}, {multi: true}, next);
-                }
-            ], function (err) {
+            db.collection('User').findOne({loginName: userHostObj.loginName}, function (err, existingUserObj) {
+                should.not.exist(err);
+
                 try {
                     db.close();
                 } catch (e) {
                 }
 
-                should.not.exist(err);
+                if (existingUserObj != null) {
+                    async.waterfall([
+                        function (next) {
+                            request.put({
+                                    url: url + "api/private/inactivateUserGroup",
+                                    formData: {
+                                        groupFilter: JSON.stringify({name: groupObj.name})
+                                    }
+                                }, function (err, httpResponse, body) {
+                                    if (!err) {
+                                        if (httpResponse.statusCode !== 200) err = body;
+                                        else {
+                                            var ret = JSON.parse(body);
+                                            if (ret.result !== "OK") {
+                                                err = ret.reason;
+                                            }
+                                        }
+                                    }
+                                    next(err);
+                                }
+                            ).auth(userHostObj.loginName, userHostObj.plainPassword, true);
+                        },
+                        function (next) {
+                            request.put({
+                                    url: url + "api/private/inactivateUser",
+                                    formData: {
+                                        userFilter: JSON.stringify({loginName: userHostObj.loginName})
+                                    }
+                                }, function (err, httpResponse, body) {
+                                    if (!err) {
+                                        if (httpResponse.statusCode !== 200) err = body;
+                                        else {
+                                            var ret = JSON.parse(body);
+                                            if (ret.result !== "OK") {
+                                                err = ret.reason;
+                                            }
+                                        }
+                                    }
+                                    next(err);
+                                }
+                            ).auth(userHostObj.loginName, userHostObj.plainPassword, true);
+                        },
+                        function (next) {
+                            request.del({
+                                    url: url + "api/private/userGroup",
+                                    formData: {
+                                        groupFilter: JSON.stringify({name: groupObj.name})
+                                    }
+                                }, function (err, httpResponse, body) {
+                                    if (!err) {
+                                        if (httpResponse.statusCode !== 200) err = body;
+                                        else {
+                                            var ret = JSON.parse(body);
+                                            if (ret.result !== "OK") {
+                                                err = ret.reason;
+                                            }
+                                        }
+                                    }
+                                    next(err);
+                                }
+                            ).auth(userHostObj.loginName, userHostObj.plainPassword, true);
+                        },
+                        function (next) {
+                            request.del({
+                                    url: url + "api/private/user",
+                                    formData: {
+                                        userFilter: JSON.stringify({loginName: userHostObj.loginName})
+                                    }
+                                }, function (err, httpResponse, body) {
+                                    if (!err) {
+                                        if (httpResponse.statusCode !== 200) err = body;
+                                        else {
+                                            var ret = JSON.parse(body);
+                                            if (ret.result !== "OK") {
+                                                err = ret.reason;
+                                            }
+                                        }
+                                    }
+                                    next(err);
+                                }
+                            ).auth(userHostObj.loginName, userHostObj.plainPassword, true);
+                        },
+                    ], function (err) {
+                        should.not.exist(err);
 
-                done();
+                        done();
+                    });
+                } else {
+                    done();
+                }
             });
         });
-    });
+    })
 
-    before("Create user & user group", function (done) {
+    before("Create host user & user group created by the user, along with guest user records", function (done) {
         async.waterfall([
             function (next) {
                 async.each([userHostObj, userGuest1Obj, userGuest2Obj], function (userObj, cb) {
@@ -243,7 +321,7 @@ describe('Chat', function () {
             },
             function (next) {
                 groupObj.creatorId = userHostObj._id;
-                var uids = [userHostObj._id];
+                var uids = [userGuest1Obj._id, userGuest2Obj._id];
 
                 request.post({
                     url: url + "api/private/userGroup",
@@ -274,13 +352,15 @@ describe('Chat', function () {
         })
     });
 
-    before("Log in", function (done) {
+    before("Connect to messaging server", function (done) {
         async.waterfall([
             function (next) {
                 async.each([userHostObj, userGuest1Obj, userGuest2Obj], function (userObj, cb) {
-                    userObj.pomelo.init({host: chathost, port: chatport,
-                            deviceId: userObj.deviceId,
-                            reconnect: true}, function () {
+                    userObj.pomelo.init({
+                        host: chathost, port: chatport,
+                        deviceId: userObj.deviceId,
+                        reconnect: true
+                    }, function () {
                         userObj.pomelo.on(chatroute, onEvent(userObj.emitter));
 
                         cb(null);
@@ -390,8 +470,7 @@ describe('Chat', function () {
                             function (cb) {
                                 var formData = {
                                     creatorId: userHostObj._id,
-                                    inviteeId: userObj._id,
-                                    accepted: 1
+                                    inviteeId: userObj._id
                                 };
 
                                 request.put({
@@ -480,7 +559,6 @@ describe('Chat', function () {
         });
     });
 
-    //TODO add test of postChatInvitation
     it("Chat with friends", function (done) {
         var uids = [];
 
@@ -528,7 +606,7 @@ describe('Chat', function () {
                                                 else {
                                                     var ret = JSON.parse(body);
                                                     if (ret.result === "OK") {
-                                                        should(ret.resultValue).have.enumerables(['_id', 'updateTime', 'route', 'payload', 'thumbnail', 'creatorId', 'state', 'active']);
+                                                        should(ret.resultValue).have.enumerables(['_id', 'updateTime', 'route', 'payload', 'thumbnail', 'creatorId', 'creatorEncryption', 'state']);
 
                                                         userHostObj.chatId = ret.resultValue._id;
                                                     } else {
@@ -564,8 +642,7 @@ describe('Chat', function () {
                                         chatId: userHostObj.chatId,
                                         userId: userObj._id,
                                         deviceId: userObj.deviceId,
-                                        route: chatroute,
-                                        accepted: 1
+                                        route: chatroute
                                     };
 
                                     request.put({
@@ -678,6 +755,7 @@ describe('Chat', function () {
             var formData = {
                 userId: userHostObj._id,
                 chatId: userHostObj.chatId,
+                deviceId: userHostObj.deviceId,
                 route: chatroute
             };
 
@@ -725,6 +803,7 @@ describe('Chat', function () {
             var formData = {
                 userId: userHostObj._id,
                 chatId: userHostObj.chatId,
+                deviceId: userHostObj.deviceId,
                 route: chatroute
             };
 
@@ -825,8 +904,7 @@ describe('Chat', function () {
                 async.each([userGuest1Obj, userGuest2Obj], function (userObj, eCallback) {
                     var formData = {
                         topicId: userHostObj.topicId,
-                        inviteeId: userObj._id,
-                        accepted: 1
+                        inviteeId: userObj._id
                     };
 
                     request.put({
@@ -878,7 +956,7 @@ describe('Chat', function () {
                     var formData = {
                         userId: userObj._id,
                         chatId: userHostObj.chatId,
-                        topicId:userHostObj.topicId,
+                        topicId: userHostObj.topicId,
                         type: conversationType.TextConversation,
                         message: msg,
                         route: chatroute
@@ -915,7 +993,9 @@ describe('Chat', function () {
 
         arr.push(function (pCallback) {
             var formData = {
+                chatId: userHostObj.chatId,
                 topicFilter: JSON.stringify({_id: userHostObj.topicId}),
+                deviceId: userHostObj.deviceId,
                 route: chatroute
             };
 
@@ -961,7 +1041,9 @@ describe('Chat', function () {
 
         arr.push(function (pCallback) {
             var formData = {
+                chatId: userHostObj.chatId,
                 topicFilter: JSON.stringify({_id: userHostObj.topicId}),
+                deviceId: userHostObj.deviceId,
                 route: chatroute
             };
 
@@ -1007,7 +1089,9 @@ describe('Chat', function () {
 
         arr.push(function (pCallback) {
             var formData = {
+                chatId: userHostObj.chatId,
                 topicId: userHostObj.topicId,
+                deviceId: userHostObj.deviceId,
                 route: chatroute
             };
 
@@ -1055,6 +1139,7 @@ describe('Chat', function () {
             var formData = {
                 userId: userHostObj._id,
                 chatId: userHostObj.chatId,
+                deviceId: userHostObj.deviceId,
                 route: chatroute
             };
 
@@ -1095,7 +1180,7 @@ describe('Chat', function () {
         })
     });
 
-    after("Log out", function (done) {
+    after("Leave the messaging server", function (done) {
         async.waterfall([
             function (next) {
                 async.each([userHostObj, userGuest1Obj, userGuest2Obj], function (userObj, cb) {
@@ -1149,22 +1234,22 @@ describe('Chat', function () {
 
                     async.parallel([
                         function (cb) {
-                            db.collection('Chat').remove({}, {multi: true}, cb);
+                            db.collection('Chat').remove({updateTime: {$gt: testTime}}, {multi: true}, cb);
                         },
                         function (cb) {
-                            db.collection('Topic').remove({}, {multi: true}, cb);
+                            db.collection('Topic').remove({updateTime: {$gt: testTime}}, {multi: true}, cb);
                         },
                         function (cb) {
-                            db.collection('Conversation').remove({}, {multi: true}, cb);
+                            db.collection('Conversation').remove({updateTime: {$gt: testTime}}, {multi: true}, cb);
                         },
                         function (cb) {
-                            db.collection('Invitation').remove({}, {multi: true}, cb);
+                            db.collection('Invitation').remove({updateTime: {$gt: testTime}}, {multi: true}, cb);
                         },
                         function (cb) {
-                            db.collection('ChatInvitation').remove({}, {multi: true}, cb);
+                            db.collection('ChatInvitation').remove({updateTime: {$gt: testTime}}, {multi: true}, cb);
                         },
                         function (cb) {
-                            db.collection('TopicInvitation').remove({}, {multi: true}, cb);
+                            db.collection('TopicInvitation').remove({updateTime: {$gt: testTime}}, {multi: true}, cb);
                         }
                     ], function (err) {
                         try {

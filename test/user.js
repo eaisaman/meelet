@@ -1,7 +1,19 @@
-//TODO Fill test description
 /**
  * @description
  *
+ * Test creating and deleting user&group record
+ *
+ * 1. Clean all left testing data, if the user record with the same fake user or group record
+ *    with the same fake group name exists in db
+ * 2. Create user with attached avatar, his friend user group should be created as well.
+ * 3. Create user group with group members.
+ * 4. Upload user's avatar.
+ * 5. Get user record.
+ * 6. Get user's avatar.
+ * 7. Get user group along with its members.
+ * 8. Get the members in groups the given user belongs to.
+ * 9. Clean group record.
+ * 10. Clean user record.
  *
  */
 var path = require('path');
@@ -26,7 +38,7 @@ var mongodb = process.env['mocha.mongodb'];
 var userObj = {
     plainPassword: "*",
     loginName: "13341692882",
-    name: "王强",
+    name: "Mocha Fake User",
     sex: "M",
     tel: "13341692882"
 };
@@ -43,25 +55,104 @@ describe('User', function () {
         MongoClient.connect(url, function (err, db) {
             should.not.exist(err);
 
-            async.parallel([
-                function (next) {
-                    db.collection('User').remove({}, {multi: true}, next);
-                },
-                function (next) {
-                    db.collection('UserGroup').remove({}, {multi: true}, next);
-                },
-                function (next) {
-                    db.collection('UserGroupXref').remove({}, {multi: true}, next);
-                }
-            ], function (err) {
+            db.collection('User').findOne({loginName: userObj.loginName}, function (err, existingUserObj) {
+                should.not.exist(err);
+
                 try {
                     db.close();
                 } catch (e) {
                 }
 
-                should.not.exist(err);
+                if (existingUserObj != null) {
+                    async.waterfall([
+                        function (next) {
+                            request.put({
+                                    url: url + "api/private/inactivateUserGroup",
+                                    formData: {
+                                        groupFilter: JSON.stringify({name: groupObj.name})
+                                    }
+                                }, function (err, httpResponse, body) {
+                                    if (!err) {
+                                        if (httpResponse.statusCode !== 200) err = body;
+                                        else {
+                                            var ret = JSON.parse(body);
+                                            if (ret.result !== "OK") {
+                                                err = ret.reason;
+                                            }
+                                        }
+                                    }
+                                    next(err);
+                                }
+                            ).auth(userObj.loginName, userObj.plainPassword, true);
+                        },
+                        function (next) {
+                            request.put({
+                                    url: url + "api/private/inactivateUser",
+                                    formData: {
+                                        userFilter: JSON.stringify({loginName: userObj.loginName})
+                                    }
+                                }, function (err, httpResponse, body) {
+                                    if (!err) {
+                                        if (httpResponse.statusCode !== 200) err = body;
+                                        else {
+                                            var ret = JSON.parse(body);
+                                            if (ret.result !== "OK") {
+                                                err = ret.reason;
+                                            }
+                                        }
+                                    }
+                                    next(err);
+                                }
+                            ).auth(userObj.loginName, userObj.plainPassword, true);
+                        },
+                        function (next) {
+                            request.del({
+                                    url: url + "api/private/userGroup",
+                                    formData: {
+                                        groupFilter: JSON.stringify({name: groupObj.name})
+                                    }
+                                }, function (err, httpResponse, body) {
+                                    if (!err) {
+                                        if (httpResponse.statusCode !== 200) err = body;
+                                        else {
+                                            var ret = JSON.parse(body);
+                                            if (ret.result !== "OK") {
+                                                err = ret.reason;
+                                            }
+                                        }
+                                    }
+                                    next(err);
+                                }
+                            ).auth(userObj.loginName, userObj.plainPassword, true);
+                        },
+                        function (next) {
+                            request.del({
+                                    url: url + "api/private/user",
+                                    formData: {
+                                        userFilter: JSON.stringify({loginName: userObj.loginName})
+                                    }
+                                }, function (err, httpResponse, body) {
+                                    if (!err) {
+                                        if (httpResponse.statusCode !== 200) err = body;
+                                        else {
+                                            var ret = JSON.parse(body);
+                                            if (ret.result !== "OK") {
+                                                err = ret.reason;
+                                            }
+                                        }
+                                    }
+                                    next(err);
+                                }
+                            ).auth(userObj.loginName, userObj.plainPassword, true);
+                        },
+                    ], function (err) {
+                        should.not.exist(err);
 
-                done();
+                        done();
+                    });
+                } else {
+                    done();
+                }
             });
         });
     });
@@ -161,7 +252,7 @@ describe('User', function () {
         }).auth(userObj.loginName, userObj.plainPassword, true);
     });
 
-    it('Get user.', function (done) {
+    it('Get user record.', function (done) {
         should.exist(userObj._id);
 
         request.get({
@@ -198,7 +289,7 @@ describe('User', function () {
             }
         ).on('response', function (response) {
                 should(response.statusCode).be.exactly(200);
-                should(response.headers['content-type']).be.exactly('image/jpeg');
+                should(response.headers['content-type']).be.exactly('image/png');
                 should(parseInt(response.headers['content-length'])).be.above(0);
                 done();
             }

@@ -108,7 +108,7 @@ Commons.prototype.getFormString = function (value) {
     } else if (toString.call(value) === '[object Array]') {
         return value[0] || "";
     }
-    return "";
+    return arguments.length > 1 && arguments[1] || "";
 }
 
 Commons.prototype.getFormInt = function (value) {
@@ -119,7 +119,7 @@ Commons.prototype.getFormInt = function (value) {
     } else if (toString.call(value) === '[object Array]') {
         return parseInt(value[0]);
     }
-    return NaN;
+    return arguments.length > 1 && arguments[1] || NaN;
 }
 
 /**
@@ -188,7 +188,7 @@ Commons.prototype.arrayOmit = function (objects) {
         arr = [];
 
     objects && objects.forEach(function (obj) {
-        arr.push(_.omit(obj, keys));
+        obj && arr.push(_.omit(obj, keys));
     });
 
     return arr;
@@ -204,7 +204,7 @@ Commons.prototype.arrayPick = function (objects) {
         arr = [];
 
     objects && objects.forEach(function (obj) {
-        arr.push(_.pick(obj, keys));
+        obj && arr.push(_.pick(obj, keys));
     });
 
     return arr;

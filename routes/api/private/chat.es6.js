@@ -146,7 +146,7 @@ ChatController.prototype.getChat = function (userId, chatId, success, fail) {
                 invitationList.map(function (invitationObj) {
                     return new Promise(function (resolve, reject) {
                         self.schema.Chat.find({_id: invitationObj.chatId, active: 1}, function (err, data) {
-                            err && reject(err) || resolve(data && data.length && _.pick(data[0], _.without(self.schema.Chat.fields, "createTime", "active")));
+                            err && reject(err) || resolve(data && data.length && _.pick(data[0], _.without(self.schema.Chat.fields, "createTime", "creatorEncryption")));
                         });
                     });
                 })
@@ -225,6 +225,15 @@ ChatController.prototype.getChat = function (userId, chatId, success, fail) {
  *
  * Get recent change to chat and its relevant topic, topic invitation, conversation.
  *
+ * 1. Find the chat user created(chat), with chat user joined recently(inviteChat)
+ * 2. Find all chat invitations(active and inactive), along with the invitee user object,
+ * which can by used by user's client app to determine whether add new chat user or delete
+ * 3. Find active conversations in the chat
+ * 4. Find all topic(active and inactive) in the chat, which can by used by user's client app
+ * to determine whether add new topic or delete
+ * 5. Find all topic invitation(active and inactive) in the chat, which can by used by user's client app
+ * to determine whether add new topic invitation or delete
+ *
  * @param chatHistoryFilter
  * @param success
  * @param fail
@@ -292,10 +301,9 @@ ChatController.prototype.getChatHistory = function (chatHistoryFilter, success, 
                     return co.wrap(function*(chatHistoryFilter, chatItem) {
                         var chatInvitationFilter = {
                             chatId: chatItem._id,
-                            updateTime: chatHistoryFilter.chatInvitationTime,
-                            active: 1
+                            updateTime: chatHistoryFilter.chatInvitationTime
                         };
-                        var conversationFilter = {chatId: chatItem._id, updateTime: chatHistoryFilter.conversationTime};
+                        var conversationFilter = {chatId: chatItem._id, updateTime: chatHistoryFilter.conversationTime, active: 1};
                         var topicFilter = {chatId: chatItem._id, updateTime: chatHistoryFilter.topicTime};
                         var topicInvitationFilter = {
                             chatId: chatItem._id,
@@ -337,11 +345,13 @@ ChatController.prototype.getChatHistory = function (chatHistoryFilter, success, 
                                                     if (err) {
                                                         reject(err);
                                                     } else {
-                                                        var user = data[0];
-                                                        chatInvitation.chatUser = _.pick(user, _.without(self.schema.User.fields, "password", "createTime"));
-                                                        chatInvitation.chatUser.chatId = chatInvitation.chatId;
-                                                        chatInvitation.chatUser.active = 1;
-                                                        chatInvitation.chatUser.updateTime = chatInvitation.updateTime;
+                                                        if (data && data.length) {
+                                                            var user = data[0];
+                                                            chatInvitation.chatUser = _.pick(user, _.without(self.schema.User.fields, "password", "createTime"));
+                                                            chatInvitation.chatUser.chatId = chatInvitation.chatId;
+                                                            chatInvitation.chatUser.active = 1;
+                                                            chatInvitation.chatUser.updateTime = chatInvitation.updateTime;
+                                                        }
 
                                                         resolve();
                                                     }
@@ -379,7 +389,7 @@ ChatController.prototype.getChatHistory = function (chatHistoryFilter, success, 
                 })
             );
 
-            yield commons.arrayPick(chatList, ["chatUser", "chatInvitation", "conversation", "topic", "topicInvitation"], _.without(self.schema.Chat.fields, "createTime"));
+            yield commons.arrayPick(chatList, ["chatUser", "chatInvitation", "conversation", "topic", "topicInvitation"], _.without(self.schema.Chat.fields, "createTime", "creatorEncryption"));
         } else {
             yield [];
         }
@@ -496,6 +506,7 @@ ChatController.prototype.getConversation = function (conversationFilter, success
     }
     if (conversationFilter.updateTime != null)
         conversationFilter.updateTime = {$gt: conversationFilter.updateTime};
+    conversationFilter.active = 1;
 
     (!self.isDBReady && fail(new Error('DB not initialized'))) || self.schema.Conversation.find(conversationFilter, function (err, data) {
         if (!err) {
@@ -574,26 +585,32 @@ ChatController.prototype.postChat = function (userId, deviceId, name, uids, rout
         });
 
         if (uids && uids.length) {
-            yield new Promise(function (userId, deviceId, route, resolve, reject) {
-                commons.createChat(userId.toString(), deviceId, chatObj._id.toString(), route, function (err) {
-                    return err && reject(err) || resolve();
+            let creatorEncryption = yield new Promise(function (userId, deviceId, route, resolve, reject) {
+                commons.createChat(userId.toString(), deviceId, chatObj._id.toString(), route, function (err, msg) {
+                    return err && reject(err) || resolve(msg.creatorEncryption);
                 });
             }.bind(self, userId, deviceId, route));
 
+            yield new Promise(function(resolve, reject) {
+                self.schema.Chat.update({_id: chatObj._id}, {$set: {creatorEncryption: creatorEncryption}}, function (err) {
+                    return err && reject(err) || resolve();
+                });
+            });
+
             let expires = now.clone().adjust(Date.DAY, self.chatConstants.recordTTL);
 
-            yield new Promise(function (resolve, reject) {
+            yield new Promise(function (userId, deviceId, route, resolve, reject) {
                 commons.sendChatInvitation(userId.toString(),
                     uids.map(function (item) {
                         return {uid: item._id, loginChannel: item.loginChannel}
-                    }), chatObj._id.toString(), route, function (err) {
+                    }), chatObj._id.toString(), deviceId, creatorEncryption, route, function (err) {
                         if (err) {
                             self.config.logger.error(err);
                         }
 
                         resolve();
                     });
-            });
+            }.bind(self, userId, deviceId, route));
 
             let invitationList = yield Promise.all(
                 uids.map(function (item) {
@@ -625,7 +642,7 @@ ChatController.prototype.postChat = function (userId, deviceId, name, uids, rout
             chatObj.invitationList = commons.arrayPick(invitationList, _.without(self.schema.ChatInvitation.fields, "createTime", "expires"));
         }
 
-        yield _.pick(chatObj, "invitationList", _.without(self.schema.Chat.fields, "createTime"));
+        yield _.pick(chatObj, "invitationList", _.without(self.schema.Chat.fields, "createTime", "active"));
     }).then(function (result) {
         success(result);
     }, function (err) {
@@ -710,7 +727,7 @@ ChatController.prototype.putStartChat = function (userId, deviceId, chatId, uids
             commons.sendChatInvitation(userId.toString(),
                 uids.map(function (item) {
                     return {uid: item._id, loginChannel: item.loginChannel}
-                }), chatObj._id.toString(), route, function (err) {
+                }), chatObj._id.toString(), deviceId, chatObj.creatorEncryption, route, function (err) {
                     if (err) {
                         self.config.logger.error(err);
                     }
@@ -770,17 +787,19 @@ ChatController.prototype.putStartChat = function (userId, deviceId, chatId, uids
  * @param userId
  * @param chatId
  * @param state
+ * @param deviceId
  * @param route
  * @param success
  * @param fail
  */
-ChatController.prototype.putChangeChatState = function (userId, chatId, state, route, success, fail) {
+ChatController.prototype.putChangeChatState = function (userId, chatId, state, deviceId, route, success, fail) {
     var self = this,
         now = new Date();
 
     userId = commons.getFormString(userId);
     chatId = new self.db.Types.ObjectId(commons.getFormString(chatId));
     state = commons.getFormInt(state);
+    deviceId = commons.getFormString(deviceId);
     route = commons.getFormString(route) || self.chatConstants.chatRoute;
 
     var arr = [],
@@ -790,8 +809,10 @@ ChatController.prototype.putChangeChatState = function (userId, chatId, state, r
         };
 
     (!self.isDBReady && fail(new Error('DB not initialized'))) || co(function*() {
+        let chatObj = null;
+
         if (state === self.chatConstants.chatOpenState) {
-            yield new Promise(function (chatId, setObj, resolve, reject) {
+            chatObj = yield new Promise(function (chatId, setObj, resolve, reject) {
                 self.schema.Chat.find({_id: chatId, active: 1}, function (err, data) {
                     if (err) {
                         reject(err);
@@ -801,7 +822,7 @@ ChatController.prototype.putChangeChatState = function (userId, chatId, state, r
                                 setObj.startTime = now.getTime();
                                 setObj.expectEndTime = now.clone().adjust(Date.DAY, self.chatConstants.expectEndInterval).getTime();
                             }
-                            resolve();
+                            resolve(data[0]);
                         } else {
                             reject(self.__('Chat Not Found'));
                         }
@@ -810,6 +831,19 @@ ChatController.prototype.putChangeChatState = function (userId, chatId, state, r
             }.bind(self, chatId, setObj));
         } else {
             setObj.endTime = now.getTime();
+            chatObj = yield new Promise(function (chatId, resolve, reject) {
+                self.schema.Chat.find({_id: chatId, active: 1}, function (err, data) {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        if (data && data.length) {
+                            resolve(data[0]);
+                        } else {
+                            reject(self.__('Chat Not Found'));
+                        }
+                    }
+                });
+            }.bind(self, chatId));
         }
 
         yield new Promise(function (chatId, setObj, resolve, reject) {
@@ -821,6 +855,12 @@ ChatController.prototype.putChangeChatState = function (userId, chatId, state, r
                 });
         }.bind(self, chatId, setObj));
 
+        yield new Promise(function (resolve, reject) {
+            commons.notifyChatState(userId, chatId.toString(), route, state, deviceId, chatObj.creatorEncryption, function (err) {
+                return err && reject(err) || resolve();
+            });
+        });
+
         yield new Promise(function (chatId, resolve, reject) {
             self.schema.ChatInvitation.update(
                 {chatId: chatId}, {
@@ -831,12 +871,6 @@ ChatController.prototype.putChangeChatState = function (userId, chatId, state, r
                     return err && reject(err) || resolve();
                 });
         }.bind(self, chatId));
-
-        yield new Promise(function (resolve, reject) {
-            commons.notifyChatState(userId, chatId.toString(), route, state, function (err) {
-                return err && reject(err) || resolve();
-            });
-        });
     }).then(function () {
         success({updateTime: now.getTime()});
     }, function (err) {
@@ -849,14 +883,15 @@ ChatController.prototype.putChangeChatState = function (userId, chatId, state, r
  *
  * @param userId
  * @param chatId
+ * @param deviceId
  * @param route
  * @param success
  * @param fail
  */
-ChatController.prototype.putPauseChat = function (userId, chatId, route, success, fail) {
+ChatController.prototype.putPauseChat = function (userId, chatId, deviceId, route, success, fail) {
     var self = this;
 
-    self.putChangeChatState(userId, chatId, self.chatConstants.chatPauseState, route, success, fail);
+    self.putChangeChatState(userId, chatId, self.chatConstants.chatPauseState, deviceId, route, success, fail);
 }
 
 /**
@@ -864,14 +899,15 @@ ChatController.prototype.putPauseChat = function (userId, chatId, route, success
  *
  * @param userId
  * @param chatId
+ * @param deviceId
  * @param route
  * @param success
  * @param fail
  */
-ChatController.prototype.putResumeChat = function (userId, chatId, route, success, fail) {
+ChatController.prototype.putResumeChat = function (userId, chatId, deviceId, route, success, fail) {
     var self = this;
 
-    self.putChangeChatState(userId, chatId, self.chatConstants.chatOpenState, route, success, fail);
+    self.putChangeChatState(userId, chatId, self.chatConstants.chatOpenState, deviceId, route, success, fail);
 }
 
 /**
@@ -882,11 +918,12 @@ ChatController.prototype.putResumeChat = function (userId, chatId, route, succes
  *
  * @param userId
  * @param chatId
+ * @param deviceId
  * @param route
  * @param success
  * @param fail
  */
-ChatController.prototype.putCloseChat = function (userId, chatId, route, success, fail) {
+ChatController.prototype.putCloseChat = function (userId, chatId, deviceId, route, success, fail) {
     var self = this,
         now = new Date();
 
@@ -894,13 +931,14 @@ ChatController.prototype.putCloseChat = function (userId, chatId, route, success
 
     (!self.isDBReady && fail(new Error('DB not initialized'))) || Promise.all(
         new Promise(function (resolve, reject) {
-            self.putChangeChatState(userId, chatId.toString(), self.chatConstants.chatCloseState, route, resolve, reject);
+            self.putChangeChatState(userId, chatId.toString(), self.chatConstants.chatCloseState, deviceId, route, resolve, reject);
         }),
         new Promise(function (resolve, reject) {
-            self.putChangeTopicState(JSON.stringify({
-                chatId: chatId,
+            self.putChangeTopicState(
+                chatId.toString(),
+                JSON.stringify({
                 state: {$ne: self.chatConstants.topicCloseState}
-            }), self.chatConstants.topicCloseState, route, resolve, reject);
+            }), deviceId, self.chatConstants.topicCloseState, route, resolve, reject);
         }),
         new Promise(function (resolve, reject) {
             self.schema.ChatInvitation.remove(
@@ -935,7 +973,13 @@ ChatController.prototype.deleteChat = function (userId, chatId, route, success, 
         var now = new Date();
         chatId = new self.db.Types.ObjectId(commons.getFormString(chatId));
 
-        self.schema.Chat.update({_id: chatId}, {state: self.chatConstants.chatDestroyState, active: 0}, function (err) {
+        self.schema.Chat.update({_id: chatId}, {
+            $set: {
+                state: self.chatConstants.chatDestroyState,
+                updateTime: now.getTime(),
+                active: 0
+            }
+        }, function (err) {
             if (!err) {
                 success({updateTime: now.getTime()});
             } else {
@@ -1075,10 +1119,16 @@ ChatController.prototype.postChatInvitation = function (userId, chatId, chatInvi
                 });
 
                 yield new Promise(function (userId, uids, chatId, route, resolve, reject) {
-                    commons.sendChatInvitation(userId.toString(), uids, chatId.toString(), route, function (err) {
-                        return err && reject(err) || resolve();
+                    commons.sendChatInvitation(userId.toString(), uids, chatId.toString(), deviceId, chatObj.creatorEncryption, route, function (err) {
+                        err && reject(err) || resolve();
                     });
                 }.bind(self, userId, uids, chatId, route));
+
+                yield new Promise(function () {
+                    self.schema.Chat.update({_id: chatObj._id}, {$set: {updateTime: now.getTime()}}, function (err) {
+                        err && reject(err) || resolve();
+                    });
+                });
 
                 yield commons.arrayPick(chatInvitationArr, _.without(self.schema.ChatInvitation.fields, "createTime", "expires"))
             }
@@ -1096,8 +1146,9 @@ ChatController.prototype.postChatInvitation = function (userId, chatId, chatInvi
 /**
  * @description
  *
- * Accept chat invitation. Modify 'chatUpdateTime' of other chat invitation in the same chat. Send message
- * to users in the chat.
+ * Accept chat invitation. Modify 'chatUpdateTime' of other chat invitation in the same chat, so that other users may
+ * know who else join the chat, or user from different client app know which new chat he has joined.
+ * Send message to users in the chat. If unaccepted, update chat invitation and kick user from session.
  *
  * @param userId
  * @param chatId
@@ -1114,47 +1165,83 @@ ChatController.prototype.putAcceptChatInvitation = function (chatId, userId, dev
     deviceId = commons.getFormString(deviceId);
     chatId = new self.db.Types.ObjectId(commons.getFormString(chatId));
     route = commons.getFormString(route) || self.chatConstants.chatRoute;
-    accepted = commons.getFormInt(accepted);
+    accepted = commons.getFormInt(accepted, 1);
 
-    (!self.isDBReady && fail(new Error('DB not initialized'))) || Promise.all(
-        new Promise(function (resolve, reject) {
-            self.schema.ChatInvitation.update({
-                inviteeId: userId,
-                chatId: chatId,
+    (!self.isDBReady && fail(new Error('DB not initialized'))) || co(function*() {
+        let chatObj = yield new Promise(function (resolve, reject) {
+            self.schema.Chat.find({
+                _id: chatId,
                 active: 1
-            }, {
-                "$set": {updateTime: now.getTime(), processed: 1, accepted: accepted},
-                "$unset": {expires: 1}
-            }, {multi: true}, function (err) {
-                return err && reject(err) || resolve();
+            }, function (err, data) {
+                var chatObj;
+                if (!err) {
+                    if (data && data.length) {
+                        chatObj = data[0];
+                    } else {
+                        err = self.__('Chat Not Found');
+                    }
+                }
+
+                err && reject(err) || resolve(chatObj);
             });
-        }),
-        new Promise(function (resolve, reject) {
-            if (accepted) {
+        });
+
+        yield Promise.all(
+            new Promise(function (resolve, reject) {
                 self.schema.ChatInvitation.update({
+                    inviteeId: userId,
                     chatId: chatId,
                     active: 1
-                }, {"$set": {chatUpdateTime: now.getTime()}}, {multi: true}, function (err) {
+                }, {
+                    "$set": {updateTime: now.getTime(), processed: 1, accepted: accepted},
+                    "$unset": {expires: 1}
+                }, {multi: true}, function (err) {
                     return err && reject(err) || resolve();
                 });
-            } else {
-                resolve();
-            }
-        }),
-        new Promise(function (resolve, reject) {
-            if (accepted) {
-                commons.acceptChatInvitation(userId.toString(), deviceId, chatId.toString(), route, function (err) {
-                    if (err) {
-                        self.config.logger.error(err);
-                    }
-
+            }),
+            new Promise(function (resolve, reject) {
+                if (accepted) {
+                    self.schema.ChatInvitation.update({
+                        chatId: chatId,
+                        active: 1
+                    }, {"$set": {chatUpdateTime: now.getTime()}}, {multi: true}, function (err) {
+                        return err && reject(err) || resolve();
+                    });
+                } else {
                     resolve();
-                });
-            } else {
-                resolve();
-            }
-        })
-    );
+                }
+            }),
+            new Promise(function (resolve, reject) {
+                if (accepted) {
+                    commons.acceptChatInvitation(userId.toString(), deviceId, chatId.toString(), chatObj.creatorEncryption, route, function (err) {
+                        if (err) {
+                            self.config.logger.error(err);
+                        }
+
+                        resolve();
+                    });
+                } else {
+                    commons.disconnectChatUser(userId.toString(), deviceId, chatId.toString(), route, function (err) {
+                        if (err) {
+                            self.config.logger.error(err);
+                        }
+
+                        resolve();
+                    });
+                }
+            })
+        );
+
+        yield new Promise(function(resolve, reject) {
+            self.schema.Chat.update({_id: chatId}, {$set: {updateTime: now.getTime()}}, function (err) {
+                err && reject(err) || resolve();
+            });
+        });
+    }).then(function (result) {
+            success(result);
+        }, function (err) {
+            fail(err);
+        });
 }
 
 /**
@@ -1167,17 +1254,19 @@ ChatController.prototype.putAcceptChatInvitation = function (chatId, userId, dev
  * @param chatId
  * @param deviceId
  * @param topicObj
+ * @param creatorEncryption
  * @param route
  * @param success
  * @param fail
  */
-ChatController.prototype.postTopic = function (chatId, deviceId, topicObj, route, success, fail) {
+ChatController.prototype.postTopic = function (chatId, deviceId, topicObj, creatorEncryption, route, success, fail) {
     var self = this,
         now = new Date();
 
     chatId = new self.db.Types.ObjectId(commons.getFormString(chatId));
     deviceId = commons.getFormString(deviceId);
     topicObj = topicObj && JSON.parse(commons.getFormString(topicObj)) || {};
+    creatorEncryption = commons.getFormString(creatorEncryption);
     route = commons.getFormString(route) || self.chatConstants.chatRoute;
 
     (!self.isDBReady && fail(new Error('DB not initialized'))) || co(function*() {
@@ -1219,8 +1308,8 @@ ChatController.prototype.postTopic = function (chatId, deviceId, topicObj, route
             });
         }.bind(self, topicObj));
 
-        yield new Promise(function (topicObj, deviceId, route, resolve, reject) {
-            commons.createTopic(topicObj.creatorId.toString(), deviceId, topicObj.chatId.toString(), topicObj._id.toString(), route, function (err) {
+        yield new Promise(function (topicObj, deviceId, creatorEncryption, route, resolve, reject) {
+            commons.createTopic(topicObj.creatorId.toString(), deviceId, topicObj.chatId.toString(), topicObj._id.toString(), creatorEncryption, route, function (err) {
                 if (err) {
                     self.config.logger.error(err);
                     reject(err);
@@ -1228,7 +1317,7 @@ ChatController.prototype.postTopic = function (chatId, deviceId, topicObj, route
                     resolve();
                 }
             });
-        }.bind(self, topicObj, deviceId, route));
+        }.bind(self, topicObj, deviceId, creatorEncryption, route));
 
         let inviteeIdList = yield new Promise(function (topicObj, resolve, reject) {
             self.schema.ChatInvitation.find({chatId: topicObj.chatId, accepted: 1, active: 1}, function (err, data) {
@@ -1268,15 +1357,15 @@ ChatController.prototype.postTopic = function (chatId, deviceId, topicObj, route
             topicObj.invitationList = commons.arrayPick(invitationList, _.without(self.schema.TopicInvitation.fields, "createTime", "expires"));
         }
 
-        yield new Promise(function (topicObj, route, resolve, reject) {
-            commons.sendTopicInvitation(topicObj.creatorId.toString(), topicObj.chatId.toString(), topicObj._id.toString(), route, function (err) {
+        yield new Promise(function (topicObj, deviceId, creatorEncryption, route, resolve, reject) {
+            commons.sendTopicInvitation(topicObj.creatorId.toString(), topicObj.chatId.toString(), topicObj._id.toString(), deviceId, creatorEncryption, route, function (err) {
                 if (err) {
                     self.config.logger.error(err);
                 }
 
                 resolve();
             });
-        }.bind(self, topicObj, route));
+        }.bind(self, topicObj, deviceId, creatorEncryption, route));
 
         yield _.pick(topicObj, "invitationList", _.without(self.schema.Topic.fields, "createTime"));
     }).then(function (result) {
@@ -1293,13 +1382,17 @@ ChatController.prototype.postTopic = function (chatId, deviceId, topicObj, route
  *
  * @param topicId
  * @param uids
+ * @param deviceId
+ * @param creatorEncryption
  * @param success
  * @param fail
  */
-ChatController.prototype.postTopicInvitation = function (topicId, uids, success, fail) {
+ChatController.prototype.postTopicInvitation = function (topicId, uids, deviceId, creatorEncryption, success, fail) {
     var self = this;
 
     topicId = new self.db.Types.ObjectId(commons.getFormString(topicId));
+    deviceId = commons.getFormString(deviceId);
+    creatorEncryption = commons.getFormString(creatorEncryption);
     uids = JSON.parse(uids) || [];
     if (!uids.length) {
         success();
@@ -1313,7 +1406,8 @@ ChatController.prototype.postTopicInvitation = function (topicId, uids, success,
             self.schema.Topic.find({
                 _id: topicId,
                 state: {$ne: self.chatConstants.topicCloseState},
-                endTime: null
+                endTime: null,
+                active: 1
             }, function (err, data) {
                 if (err) {
                     reject(err);
@@ -1369,11 +1463,11 @@ ChatController.prototype.postTopicInvitation = function (topicId, uids, success,
             yield Promise.all(
                 inviteeIdList.map(function (inviteeId) {
                     return co(function*() {
-                        yield new Promise(function (topicObj, resolve, reject) {
-                            commons.sendTopicInvitation(topicObj.chatId, topicObj._id, topicObj.creatorId, inviteeId, function (err) {
+                        yield new Promise(function (topicObj, deviceId, creatorEncryption, resolve, reject) {
+                            commons.sendTopicInvitation(topicObj.chatId, topicObj._id, topicObj.creatorId, inviteeId, deviceId, creatorEncryption, function (err) {
                                 return err && reject(err) || resolve();
                             });
-                        }.bind(self, topicObj));
+                        }.bind(self, topicObj, deviceId, creatorEncryption));
 
                         yield new Promise(function (topicObj, inviteeId, resolve, reject) {
                             self.schema.TopicInvitation.update(
@@ -1442,14 +1536,15 @@ ChatController.prototype.putAcceptTopicInvitation = function (inviteeId, topicId
 
     inviteeId = new self.db.Types.ObjectId(commons.getFormString(inviteeId));
     topicId = new self.db.Types.ObjectId(commons.getFormString(topicId));
-    accepted = commons.getFormInt(accepted);
+    accepted = commons.getFormInt(accepted, 1);
 
     (!self.isDBReady && fail(new Error('DB not initialized'))) || co(function*() {
         let topicObj = yield new Promise(function (resolve, reject) {
             self.schema.Topic.find({
                 _id: topicId,
                 state: {$ne: self.chatConstants.topicCloseState},
-                endTime: null
+                endTime: null,
+                active: 1
             }, function (err, data) {
                 if (err) {
                     reject(err);
@@ -1487,29 +1582,35 @@ ChatController.prototype.putAcceptTopicInvitation = function (inviteeId, topicId
  *
  * Change topic state. Send state change message to users accepting topic invitation.
  *
+ * @param chatId
  * @param topicFilter
+ * @param deviceId
+ * @param creatorEncryption
+ * @param state
+ * @param route
  * @param success
  * @param fail
  */
-ChatController.prototype.putChangeTopicState = function (topicFilter, state, route, success, fail) {
+ChatController.prototype.putChangeTopicState = function (chatId, topicFilter, deviceId, creatorEncryption, state, route, success, fail) {
     var self = this,
         now = new Date();
 
+    chatId = new self.db.Types.ObjectId(commons.getFormString(chatId));
     state = commons.getFormInt(state);
     route = commons.getFormString(route) || self.chatConstants.chatRoute;
+    deviceId = commons.getFormString(deviceId);
+    creatorEncryption = commons.getFormString(creatorEncryption);
 
     topicFilter = topicFilter && JSON.parse(commons.getFormString(topicFilter));
     if (topicFilter) {
         if (topicFilter._id) {
             topicFilter._id = new self.db.Types.ObjectId(topicFilter._id);
         }
-        if (topicFilter.chatId) {
-            topicFilter.chatId = new self.db.Types.ObjectId(topicFilter.chatId);
-        }
     } else {
         fail(self.__('Empty Filter'));
         return;
     }
+    topicFilter.active = 1;
 
     (!self.isDBReady && fail(new Error('DB not initialized'))) || co(function*() {
         let topicList = new Promise(function (topicFilter, resolve, reject) {
@@ -1541,11 +1642,11 @@ ChatController.prototype.putChangeTopicState = function (topicFilter, state, rou
                                     return err && reject(err) || resolve();
                                 });
                             }.bind(self, topicObj)),
-                            new Promise(function (resolve, reject) {
-                                commons.notifyTopicState(topicObj.creatorId.toString(), topicObj.chatId.toString(), topicObj._id.toString(), route, state, function (err) {
+                            new Promise(function (creatorEncryption, resolve, reject) {
+                                commons.notifyTopicState(topicObj.creatorId.toString(), chatId.toString(), topicObj._id.toString(), route, state, deviceId, creatorEncryption, function (err) {
                                     return err && reject(err) || resolve();
                                 });
-                            })
+                            }.bind(self, creatorEncryption))
                         ];
                     })(route, state);
                 })
@@ -1561,29 +1662,35 @@ ChatController.prototype.putChangeTopicState = function (topicFilter, state, rou
 /**
  * @description
  *
+ * @param chatId
  * @param topicFilter
+ * @param deviceId
+ * @param creatorEncryption
  * @param route
  * @param success
  * @param fail
  */
-ChatController.prototype.putPauseTopic = function (topicFilter, route, success, fail) {
+ChatController.prototype.putPauseTopic = function (chatId, topicFilter, deviceId, creatorEncryption, route, success, fail) {
     var self = this;
 
-    self.putChangeTopicState(topicFilter, self.chatConstants.topicPauseState, route, success, fail);
+    self.putChangeTopicState(chatId, topicFilter, deviceId, creatorEncryption, self.chatConstants.topicPauseState, route, success, fail);
 }
 
 /**
  * @description
  *
+ * @param chatId
  * @param topicFilter
+ * @param deviceId
+ * @param creatorEncryption
  * @param route
  * @param success
  * @param fail
  */
-ChatController.prototype.putResumeTopic = function (topicFilter, route, success, fail) {
+ChatController.prototype.putResumeTopic = function (chatId, topicFilter, deviceId, creatorEncryption, route, success, fail) {
     var self = this;
 
-    self.putChangeTopicState(topicFilter, self.chatConstants.topicOpenState, route, success, fail);
+    self.putChangeTopicState(chatId, topicFilter, deviceId, creatorEncryption, self.chatConstants.topicOpenState, route, success, fail);
 }
 
 /**
@@ -1591,12 +1698,15 @@ ChatController.prototype.putResumeTopic = function (topicFilter, route, success,
  *
  * Close topic, remove unaccepted topic invitation so that user won't see them before they expire and get removed.
  *
+ * @param chatId
  * @param topicId
+ * @param deviceId
+ * @param creatorEncryption
  * @param route
  * @param success
  * @param fail
  */
-ChatController.prototype.putCloseTopic = function (topicId, route, success, fail) {
+ChatController.prototype.putCloseTopic = function (chatId, topicId, deviceId, creatorEncryption, route, success, fail) {
     var self = this,
         now = new Date();
 
@@ -1604,7 +1714,7 @@ ChatController.prototype.putCloseTopic = function (topicId, route, success, fail
 
     (!self.isDBReady && fail(new Error('DB not initialized'))) || Promise.all(
         new Promise(function (resolve, reject) {
-            self.putChangeTopicState(JSON.stringify({_id: topicId}), self.chatConstants.topicCloseState, route, function () {
+            self.putChangeTopicState(chatId, JSON.stringify({_id: topicId}), deviceId, creatorEncryption, self.chatConstants.topicCloseState, route, function () {
                     resolve();
                 }, function (err) {
                     reject(err);

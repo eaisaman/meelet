@@ -111,22 +111,6 @@ UserController.prototype.postUser = function (request, userObj, success, fail) {
                 });
             },
             function (userObj, next) {
-                self.schema.UserGroupXref.create(
-                    {
-                        groupUpdateTime: now.getTime(),
-                        updateTime: now.getTime(),
-                        createTime: now.getTime(),
-                        userId: userObj._id,
-                        groupId: userObj.friendGroupId,
-                        groupType: 1,
-                        active: 1
-                    },
-                    function (err) {
-                        next(err, userObj);
-                    }
-                );
-            },
-            function (userObj, next) {
                 //Make user content folder
                 var userContentPath = path.join(self.config.userFile.userContentPath, userObj._id.toString());
                 async.waterfall(
