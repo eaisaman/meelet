@@ -103,8 +103,6 @@ Commons.prototype.spawn = function (cmd, args, opts, done) {
 Commons.prototype.getFormString = function (value) {
     if (typeof value === 'string') {
         return value;
-    }  else if (typeof value === 'string') {
-        return value;
     } else if (toString.call(value) === '[object Array]') {
         return value[0] || "";
     }
@@ -656,12 +654,6 @@ Commons.prototype.authenticate = function (options) {
                             });
                         }));
 
-                        passport.use(new httpStrategies.DigestStrategy(function (username, password, done) {
-                            initPassport.collection.findOne({loginName: username, forbidden: 0}, function (err, data) {
-                                return done(err, !err && data != null && checkPassword(password, data.password, data.salt || options.salt || self.config.settings.salt) && data);
-                            });
-                        }));
-
                         passport.serializeUser(function (user, done) {
                             done(null, user._id);
                         });
@@ -679,7 +671,7 @@ Commons.prototype.authenticate = function (options) {
         if (req.isAuthenticated()) {
             next();
         } else {
-            passport.authenticate(['basic', 'digest'])(req, res, function (err) {
+            passport.authenticate(['basic'])(req, res, function (err) {
                 if (!err) {
                     //res.cookie("XXX", encodeURIComponent(JSON.stringify(obj)), self.sessionOptions.cookie || {});
                 }

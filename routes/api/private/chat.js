@@ -574,7 +574,7 @@ ChatController.prototype.postChat = function (userId, deviceId, name, uids, rout
     deviceId = commons.getFormString(deviceId);
     name = commons.getFormString(name);
     route = commons.getFormString(route) || self.chatConstants.chatRoute;
-    payload = payload && JSON.parse(payload) || {};
+    payload = payload && JSON.parse(commons.getFormString(payload)) || {};
 
     uids = uids && JSON.parse(uids) || [];
 
@@ -1850,7 +1850,7 @@ ChatController.prototype.postSingleConversation = function (userId, uids, type, 
     route = commons.getFormString(route) || self.chatConstants.chatRoute;
     type = commons.getFormInt(type);
     message = commons.getFormString(message);
-    payload = payload && JSON.parse(payload) || {};
+    payload = payload && JSON.parse(commons.getFormString(payload)) || {};
 
     if (uids) uids = JSON.parse(uids);
 
@@ -1932,7 +1932,7 @@ ChatController.prototype.postConversation = function (userId, chatId, uids, type
     route = commons.getFormString(route) || self.chatConstants.chatRoute;
     type = commons.getFormInt(type);
     message = commons.getFormString(message);
-    payload = payload && JSON.parse(payload) || {};
+    payload = payload && JSON.parse(commons.getFormString(payload)) || {};
 
     if (uids) uids = JSON.parse(uids);
 
@@ -2001,7 +2001,7 @@ ChatController.prototype.postTopicConversation = function (userId, chatId, topic
     route = commons.getFormString(route) || self.chatConstants.chatRoute;
     type = commons.getFormString(type);
     message = commons.getFormString(message);
-    payload = payload && JSON.parse(payload) || {};
+    payload = payload && JSON.parse(commons.getFormString(payload)) || {};
 
     (!self.isDBReady && fail(new Error('DB not initialized'))) || async.waterfall([
         function (next) {

@@ -284,7 +284,11 @@ UserController.prototype.getGroupUser = function (userId, userUpdateTime, isFrie
             },
             function (xrefList, next) {
                 if (xrefList && xrefList.length) {
-                    var xrefFilter = {groupId: {$in: _.pluck(xrefList, "groupId")}, updateTime: userUpdateTime};
+                    var xrefFilter = {
+                        groupId: {$in: _.pluck(xrefList, "groupId")},
+                        updateTime: userUpdateTime,
+                        active: 1
+                    };
 
                     self.schema.UserGroupXref.find(xrefFilter, function (err, data) {
                         next(err, data);
