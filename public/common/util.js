@@ -896,6 +896,10 @@ define(
                 }
             } else if (styleName === "background-image") {
                 if (styleValue) {
+                    var m = styleValue.match(/[^\/]+$/);
+                    if (m && m.length) {
+                        styleValue = styleValue.replace(/[^\/]+$/, encodeURIComponent(m[0]));
+                    }
                     styleObj = {"background-image": "url({0})".format(styleValue)};
                 } else {
                     styleObj = {"background-image": ""};

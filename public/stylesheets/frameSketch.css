@@ -16498,11 +16498,19 @@
   min-width: 40em;
   background: #fff;
 }
-#page-control .pageContent > .pageDetails .effectArtifactTitle, #page-control .pageContent > .pageDetails .effectArtifactContainer, #page-control .pageContent > .pageDetails .pageEffectMultilevelMenu {
+#page-control .pageContent > .pageDetails .effectArtifactTitle, #page-control .pageContent > .pageDetails .pageEffectMultilevelMenu {
   position: relative;
   float: left;
   width: calc(100% - 1em);
   height: 2em;
+  line-height: 2;
+  margin: 0.5em;
+}
+#page-control .pageContent > .pageDetails .effectArtifactContainer {
+  position: relative;
+  float: left;
+  width: calc(100% - 1em);
+  height: auto;
   line-height: 2;
   margin: 0.5em;
 }

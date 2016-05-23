@@ -255,11 +255,20 @@ $pageControlBackground: #ecf0f1;
                     background: #fff;
                 }
 
-                .effectArtifactTitle, .effectArtifactContainer, .pageEffectMultilevelMenu {
+                .effectArtifactTitle, .pageEffectMultilevelMenu {
                     position: relative;
                     float: left;
                     width: calc(100% - 1em);
                     height: 2em;
+                    line-height: 2;
+                    margin: 0.5em;
+                }
+
+                .effectArtifactContainer {
+                    position: relative;
+                    float: left;
+                    width: calc(100% - 1em);
+                    height: auto;
                     line-height: 2;
                     margin: 0.5em;
                 }
